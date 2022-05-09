@@ -1,0 +1,48 @@
+{
+  "name": "react-native-ama",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "yarn lint --fix",
+    "test": "yarn jest"
+  },
+  "author": "Alessandro Senese <senesealessandro@gmail.com>",
+  "license": "MIT",
+  "jest": {
+    "preset": "react-native",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  },
+  "dependencies": {
+    "react": "17.0.2",
+    "react-native": "0.66.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.15",
+    "@babel/runtime": "^7.13.10",
+    "@ianvs/prettier-plugin-sort-imports": "^3.3.1",
+    "@react-native-community/eslint-config": "^2.0.0",
+    "@testing-library/react-hooks": "^7.0.2",
+    "@testing-library/react-native": "^9.0.0",
+    "@types/jest": "^26.0.19",
+    "@types/react-native": "^0.67.6",
+    "babel-jest": "^26.6.3",
+    "eslint": "^7.24.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.3.5",
+    "eslint-plugin-react-native-a11y": "^2.0.4",
+    "jest": "^26.6.3",
+    "prettier": "^2.4.1",
+    "react-test-renderer": "^17.0.2",
+    "ts-jest": "^26.4.4",
+    "typescript": "^4.4.4"
+  }
+}
