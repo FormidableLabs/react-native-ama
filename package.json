@@ -2,8 +2,10 @@
   "name": "react-native-ama",
   "version": "0.1.0",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
+    "build": "tsc",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "yarn lint --fix",
     "test": "yarn jest",
@@ -11,9 +13,9 @@
   },
   "author": "Alessandro Senese <senesealessandro@gmail.com>",
   "license": "MIT",
-  "dependencies": {
+  "peerDependencies": {
     "react": "17.0.2",
-    "react-native": "^0.67.4"
+    "react-native": "^0.68.1"
   },
   "devDependencies": {
     "@babel/core": "^7.13.15",
@@ -34,7 +36,7 @@
     "prettier": "^2.4.1",
     "react-test-renderer": "^17.0.2",
     "ts-jest": "^26.4.4",
-    "typescript": "^4.0.7"
+    "typescript": "^4.4.4"
   },
   "resolutions": {
     "@types/react": "^17"

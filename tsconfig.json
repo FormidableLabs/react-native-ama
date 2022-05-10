@@ -2,19 +2,21 @@
   "compilerOptions": {
     "target": "esnext",
     "lib": [
-      "es2019"
+      "es2017"
     ],
+    "jsx": "react-native",
     "module": "commonjs",
     "rootDir": "./lib",
+    "resolveJsonModule": true,
+    "declaration": true,
     "outDir": "./dist",
-    "allowJs": true,
-    "jsx": "react-native",
-    "noEmit": true,
-    "isolatedModules": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "moduleResolution": "node"
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "skipLibCheck": true
   },
   "include": [
     "lib/**/*",
