@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "lib": [
+      "es2019"
+    ],
+    "module": "commonjs",
+    "rootDir": "./lib",
+    "outDir": "./dist",
+    "allowJs": true,
+    "jsx": "react-native",
+    "noEmit": true,
+    "isolatedModules": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "moduleResolution": "node"
+  },
+  "include": [
+    "lib/**/*",
+    "lib/jest-config.json"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
