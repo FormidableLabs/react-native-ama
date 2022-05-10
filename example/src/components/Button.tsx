@@ -1,13 +1,13 @@
 import React from 'react';
-import {Pressable} from 'react-native-ama';
-import {StyleSheet, Text} from 'react-native';
-import {theme} from '../theme';
+import { Pressable } from 'react-native-ama';
+import { StyleSheet, Text } from 'react-native';
+import { theme } from '../theme';
 
 type ButtonProps = {
   title: string;
 };
 
-export const Button: React.FC<ButtonProps> = ({title}) => {
+export const Button: React.FC<ButtonProps> = ({ title }) => {
   return (
     <Pressable accessibilityRole="button" style={styles.button}>
       <Text style={styles.text}>{title}</Text>

@@ -1,8 +1,8 @@
 import React from 'react';
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import {AMAProvider} from 'react-native-ama';
-import {theme} from './src/theme';
+import { AMAProvider } from 'react-native-ama';
+import { theme } from './src/theme';
 
 const App = () => {
   return (

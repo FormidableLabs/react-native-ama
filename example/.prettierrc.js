@@ -1,7 +1,10 @@
 module.exports = {
-  arrowParens: 'avoid',
-  bracketSameLine: true,
-  bracketSpacing: false,
-  singleQuote: true,
-  trailingComma: 'all',
+    bracketSpacing: true,
+    jsxBracketSameLine: true,
+    singleQuote: true,
+    trailingComma: 'all',
+    arrowParens: 'avoid',
+    importOrder: ['<THIRD_PARTY_MODULES>', '^~(.*)/(.*)$', '^[./]'],
+    importOrderSeparation: true,
+    importOrderSortSpecifiers: true,
 };
