@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "yarn lint --fix",
-    "test": "yarn jest"
+    "test": "yarn jest",
+    "ts:check": "tsc --noEmit"
   },
   "author": "Alessandro Senese <senesealessandro@gmail.com>",
   "license": "MIT",
