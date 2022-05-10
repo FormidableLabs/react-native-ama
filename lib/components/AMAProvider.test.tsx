@@ -70,10 +70,32 @@ describe('AMAProvider', () => {
       expect(result.current[valueName]).toBe(false);
     },
   );
+
+  it.each`
+    eventName
+    ${'reduceMotionChanged'}
+    ${'screenReaderChanged'}
+  `(
+    'remove the "$eventName" subscription when the provider is unmounted',
+    ({ eventName }) => {
+      const removeMock = jest.fn();
+      jest
+        .spyOn(AccessibilityInfo, 'addEventListener')
+        // @ts-ignore
+        .mockImplementation((name, _callback) => {
+          return { remove: name === eventName ? removeMock : jest.fn() };
+        });
+
+      const a = renderAMAProvider();
+      a.unmount();
+
+      expect(removeMock).toHaveBeenCalledWith();
+    },
+  );
 });
 
 function renderAMAProvider() {
-  render(
+  return render(
     <AMAProvider>
       <></>
     </AMAProvider>,
