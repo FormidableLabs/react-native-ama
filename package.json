@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "react": "17.0.2",
-    "react-native": "0.66.0"
+    "react-native": "^0.68.2"
   },
   "devDependencies": {
     "@babel/core": "^7.13.15",
@@ -35,6 +35,7 @@
     "@testing-library/react-native": "^9.0.0",
     "@types/jest": "^26.0.19",
     "@types/react-native": "^0.67.6",
+    "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^26.6.3",
     "eslint": "^7.24.0",
     "eslint-plugin-import": "^2.22.1",
@@ -45,5 +46,8 @@
     "react-test-renderer": "^17.0.2",
     "ts-jest": "^26.4.4",
     "typescript": "^4.4.4"
+  },
+  "resolutions": {
+    "@types/react": "^17"
   }
 }
