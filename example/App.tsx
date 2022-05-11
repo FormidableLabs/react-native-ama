@@ -1,35 +1,47 @@
+import { NavigationContainer } from '@react-navigation/native';
+import {
+  NativeStackNavigationOptions,
+  createNativeStackNavigator,
+} from '@react-navigation/native-stack';
 import React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
-
 import { AMAProvider } from 'react-native-ama';
-import { theme } from './src/theme';
+
+import { BackButton } from './src/components/BackButton';
+import { Header } from './src/components/Header';
+import { HomeScreen } from './src/screens/Home.screen';
+import { PressableScreen } from './src/screens/Pressable.screen';
+
+const Stack = createNativeStackNavigator();
+
+const BaseNavigatorOptions: NativeStackNavigationOptions = {
+  headerTitleAlign: 'center',
+  headerBackVisible: false,
+};
 
 const App = () => {
   return (
-    <SafeAreaView>
-      <AMAProvider>
-        <Text style={styles.title}>React Native AMA Demo</Text>
-        <View style={styles.spacer} />
-        <ScrollView style={styles.list} />
-      </AMAProvider>
-    </SafeAreaView>
+    <AMAProvider>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={BaseNavigatorOptions}>
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{
+              headerTitle: () => <Header title={'AMA Demo'} />,
+            }}
+          />
+          <Stack.Screen
+            name="Pressable"
+            component={PressableScreen}
+            options={{
+              headerLeft: () => <BackButton />,
+              headerTitle: () => <Header title={'Pressable Demo'} autofocus />,
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AMAProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  title: {
-    fontWeight: 'bold',
-    paddingVertical: theme.padding.big,
-    textAlign: 'center',
-    fontSize: theme.fontSize.big,
-    color: 'black',
-  },
-  spacer: {
-    paddingTop: theme.padding.normal,
-  },
-  list: {
-    paddingHorizontal: theme.padding.big,
-  },
-});
 
 export default App;

@@ -30,8 +30,8 @@ jobs:
       - name: Lint
         run: yarn lint
 
-      #      - name: TypeScript Check
-      #        run: yarn ts:check
+      - name: TypeScript Check
+        run: yarn ts:check
 
       - name: Tests
         run: yarn test
