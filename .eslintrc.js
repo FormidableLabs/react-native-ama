@@ -6,5 +6,5 @@ module.exports = {
   },
   extends: ['@react-native-community'],
   plugins: ['jest', 'import'],
-  ignorePatterns: ['metro.config.js', 'dist/**/*'],
+  ignorePatterns: ['metro.config.js', 'dist/**/*', 'website/**/*'],
 };

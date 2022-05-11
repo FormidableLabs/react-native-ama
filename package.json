@@ -1,7 +1,7 @@
 {
   "name": "react-native-ama",
   "version": "0.1.0",
-  "description": "",
+  "description": "Accessible Mobile App Library for React Native",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
@@ -11,7 +11,7 @@
     "test": "yarn jest",
     "ts:check": "tsc --noEmit"
   },
-  "author": "Alessandro Senese <senesealessandro@gmail.com>",
+  "author": "Alessandro Senese <alessandro.senese@formidable>",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.13.15",
