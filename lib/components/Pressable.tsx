@@ -6,7 +6,8 @@ import {
   PressableProps as RNPressableProps,
 } from 'react-native';
 
-import { amaNoUndefined } from '../internal/debug';
+import { amaNoUndefined } from '~internal/debug';
+
 import { AMAAccessibilityState } from '../types';
 
 export type PressableProps = Exclude<
