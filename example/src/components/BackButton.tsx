@@ -1,6 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
-import { Text } from 'react-native';
 import { Pressable } from 'react-native-ama';
 import Svg, { Path } from 'react-native-svg';
 

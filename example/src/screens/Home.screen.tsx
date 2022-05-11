@@ -10,7 +10,7 @@ export const HomeScreen = () => {
   const { navigate } = useNavigation();
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.view}>
       <Spacer height={theme.padding.normal} />
       <ScrollView style={styles.list}>
         <Text style={styles.header} accessibilityRole="header">
@@ -22,7 +22,11 @@ export const HomeScreen = () => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
+  view: {
+    flex: 1,
+  },
   list: {
     paddingHorizontal: theme.padding.big,
   },
