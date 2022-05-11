@@ -32,7 +32,7 @@ describe('useA11yFocus', () => {
 
     const { result } = renderHook(() => useA11yFocus());
 
-    result.current.focus('component' as any);
+    result.current.setFocus('component' as any);
 
     expect(findNodeHandleMock).toHaveBeenCalledWith('component');
     expect(setAccessibilityFocusMock).toHaveBeenNthCalledWith(

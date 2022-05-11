@@ -2,7 +2,7 @@ import * as React from 'react';
 import { AccessibilityInfo, findNodeHandle } from 'react-native';
 
 export const useA11yFocus = (refComponent?: React.RefObject<any>) => {
-  const focus = (component: React.Component) => {
+  const setFocus = (component: React.Component) => {
     const elementId = findNodeHandle(component);
 
     if (elementId) {
@@ -18,10 +18,10 @@ export const useA11yFocus = (refComponent?: React.RefObject<any>) => {
       return;
     }
 
-    focus(refComponent.current);
+    setFocus(refComponent.current);
   }, [refComponent]);
 
   return {
-    focus,
+    setFocus,
   };
 };
