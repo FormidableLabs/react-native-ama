@@ -17,19 +17,6 @@
     "strictNullChecks": true,
     "noUnusedLocals": true,
     "skipLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "~hooks/*": [
-        "./lib/hooks/*"
-      ],
-      "~components/*": [
-        "./lib/components/*"
-      ],
-      "~internal/*": [
-        "./lib/internal/*"
-      ]
-    }
-
   },
   "include": [
     "lib/**/*",
