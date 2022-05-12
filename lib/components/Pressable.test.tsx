@@ -2,7 +2,8 @@ import { render } from '@testing-library/react-native';
 import * as React from 'react';
 
 import * as AMADebugUtils from '../internal/debug';
-import { Pressable } from './Pressable';
+import { Pressable, PressableProps } from './Pressable';
+import type { Omit } from 'react-native';
 
 afterEach(() => {
   jest.clearAllMocks();
@@ -14,7 +15,7 @@ describe('AMA Pressable', () => {
 
     try {
       // @ts-ignore
-      render(<Pressable />);
+      renderPressable({});
     } catch {}
 
     expect(amaNoUndefined).toHaveBeenCalledWith({}, 'accessibilityRole');
@@ -24,12 +25,12 @@ describe('AMA Pressable', () => {
     'sets the "disabled" accessibility state when it is passed a property',
     disabled => {
       const { getByTestId } = render(
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="test"
-          disabled={disabled}
-          testID="pressable-disabled-test"
-        />,
+        renderPressable({
+          accessibilityRole: 'button',
+          accessibilityLabel: 'test',
+          testID: 'pressable-disabled-test',
+          disabled,
+        }),
       );
 
       expect(getByTestId('pressable-disabled-test').props).toMatchObject(
@@ -46,12 +47,12 @@ describe('AMA Pressable', () => {
     'sets the "selected" accessibility state when it is passed a property',
     selected => {
       const { getByTestId } = render(
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="test"
-          selected={selected}
-          testID="pressable-selected-test"
-        />,
+        renderPressable({
+          accessibilityRole: 'button',
+          accessibilityLabel: 'test',
+          testID: 'pressable-selected-test',
+          selected,
+        }),
       );
 
       expect(getByTestId('pressable-selected-test').props).toMatchObject(
@@ -68,12 +69,12 @@ describe('AMA Pressable', () => {
     'sets the "busy" accessibility state when it is passed a property',
     busy => {
       const { getByTestId } = render(
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="test"
-          busy={busy}
-          testID="pressable-busy-test"
-        />,
+        renderPressable({
+          accessibilityRole: 'button',
+          accessibilityLabel: 'test',
+          testID: 'pressable-busy-test',
+          busy,
+        }),
       );
 
       expect(getByTestId('pressable-busy-test').props).toMatchObject(
@@ -87,21 +88,21 @@ describe('AMA Pressable', () => {
   );
 
   it.each([true, false])(
-    'sets the "busy" accessibility state when it is passed a property',
-    busy => {
+    'sets the "checked" accessibility state when it is passed a property',
+    checked => {
       const { getByTestId } = render(
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="test"
-          busy={busy}
-          testID="pressable-busy-test"
-        />,
+        renderPressable({
+          accessibilityRole: 'button',
+          accessibilityLabel: 'test',
+          testID: 'pressable-checked-test',
+          checked,
+        }),
       );
 
       expect(getByTestId('pressable-busy-test').props).toMatchObject(
         expect.objectContaining({
           accessibilityState: {
-            busy: busy,
+            checked: checked,
           },
         }),
       );
@@ -112,12 +113,12 @@ describe('AMA Pressable', () => {
     'sets the "expanded" accessibility state when it is passed a property',
     expanded => {
       const { getByTestId } = render(
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="test"
-          expanded={expanded}
-          testID="pressable-expanded-test"
-        />,
+        renderPressable({
+          accessibilityRole: 'button',
+          accessibilityLabel: 'test',
+          testID: 'pressable-expanded-test',
+          expanded,
+        }),
       );
 
       expect(getByTestId('pressable-expanded-test').props).toMatchObject(
@@ -130,5 +131,13 @@ describe('AMA Pressable', () => {
     },
   );
 });
+
+function renderPressable(props: Omit<PressableProps, 'children'>) {
+  return (
+    <Pressable {...props}>
+      <></>
+    </Pressable>
+  );
+}
 
 jest.mock('../internal/debug');

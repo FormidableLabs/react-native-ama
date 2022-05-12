@@ -5,10 +5,9 @@ import {
   Pressable as RNPressable,
   PressableProps as RNPressableProps,
 } from 'react-native';
+import type { AMAAccessibilityState } from 'lib/types';
 
-import { amaNoUndefined } from '~internal/debug';
-
-import { AMAAccessibilityState } from '../types';
+import { amaNoUndefined } from '../internal/debug';
 
 export type PressableProps = Exclude<
   RNPressableProps,
@@ -28,7 +27,7 @@ export const Pressable = (props: PressableProps) => {
     expanded: props.expanded,
   };
 
-  amaNoUndefined(props, 'accessibilityRole');
+  __DEV__ && amaNoUndefined(props, 'accessibilityRole');
 
   return <RNPressable accessibilityState={accessibilityState} {...props} />;
 };

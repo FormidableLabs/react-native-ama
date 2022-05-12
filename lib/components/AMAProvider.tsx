@@ -1,8 +1,23 @@
 import * as React from 'react';
-import { AccessibilityInfo } from 'react-native';
+import { AccessibilityChangeEventName, AccessibilityInfo } from 'react-native';
 
 type AMAProviderProps = {
   children: React.ReactNode;
+};
+
+type AccessibilityEvents = Exclude<AccessibilityChangeEventName, 'change'>;
+
+type AccessibilityInfoEvents = {
+  [key in AccessibilityEvents]: keyof AMAContextValue;
+};
+
+const eventsMapping: AccessibilityInfoEvents = {
+  reduceTransparencyChanged: 'isReduceTransparencyEnabled',
+  reduceMotionChanged: 'isReduceMotionEnabled',
+  grayscaleChanged: 'isGrayscaleEnabled',
+  boldTextChanged: 'isBoldTextEnabled',
+  invertColorsChanged: 'isInvertColorsEnabled',
+  screenReaderChanged: 'isScreenReaderEnabled',
 };
 
 export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
@@ -18,19 +33,28 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
   };
 
   React.useEffect(() => {
-    const subscriptions = [
-      AccessibilityInfo.addEventListener(
-        'reduceMotionChanged',
-        handleAccessibilityInfoChanged('reduceMotion'),
-      ),
-      AccessibilityInfo.addEventListener(
-        'screenReaderChanged',
-        handleAccessibilityInfoChanged('screenReaderEnabled'),
-      ),
-    ];
+    const subscriptions = Object.entries(eventsMapping).forEach(
+      ([eventName, contextKey]) => {
+        return AccessibilityInfo.addEventListener(
+          eventName as AccessibilityEvents,
+          handleAccessibilityInfoChanged(contextKey),
+        );
+      },
+    );
 
     return () => {
-      subscriptions.forEach(subscription => subscription.remove());
+      // @ts-ignore - RN >= 0.65
+      if (typeof subscriptions[0]?.remove === 'function') {
+        // @ts-ignore
+        return subscriptions.forEach(subscription => subscription.remove());
+      }
+
+      Object.entries(eventsMapping).forEach(([eventName, contextKey]) => {
+        return AccessibilityInfo.removeEventListener(
+          eventName as AccessibilityEvents,
+          handleAccessibilityInfoChanged(contextKey),
+        );
+      });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -39,13 +63,21 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
 };
 
 export type AMAContextValue = {
-  screenReaderEnabled: boolean;
-  reduceMotion: boolean;
+  isBoldTextEnabled: boolean;
+  isScreenReaderEnabled: boolean;
+  isGrayscaleEnabled: boolean;
+  isInvertColorsEnabled: boolean;
+  isReduceMotionEnabled: boolean;
+  isReduceTransparencyEnabled: boolean;
 };
 
 const DEFAULT_VALUES: AMAContextValue = {
-  screenReaderEnabled: false,
-  reduceMotion: false,
+  isReduceTransparencyEnabled: false,
+  isBoldTextEnabled: false,
+  isGrayscaleEnabled: false,
+  isInvertColorsEnabled: false,
+  isReduceMotionEnabled: false,
+  isScreenReaderEnabled: false,
 };
 
 const AMAContext = React.createContext<AMAContextValue>(DEFAULT_VALUES);

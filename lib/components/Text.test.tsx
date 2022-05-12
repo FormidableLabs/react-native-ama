@@ -1,8 +1,7 @@
 import { render } from '@testing-library/react-native';
 import * as React from 'react';
 
-import * as UseA11yFocus from '~hooks/useA11yFocus';
-
+import * as UseA11yFocus from '../hooks/useA11yFocus';
 import { Text } from './Text';
 
 describe('Text', () => {
