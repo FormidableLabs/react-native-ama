@@ -4,7 +4,11 @@ module.exports = {
     browser: true,
     'jest/globals': true,
   },
+  rules: {
+    '@typescript-eslint/consistent-type-imports': 'error',
+    '@typescript-eslint/no-unused-vars': 'off',
+  },
   extends: ['@react-native-community'],
   plugins: ['jest', 'import'],
-  ignorePatterns: ['metro.config.js'],
+  ignorePatterns: ['metro.config.js', 'dist/**/*', 'website/**/*'],
 };

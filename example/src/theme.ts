@@ -1,5 +1,6 @@
 export const theme = {
   padding: {
+    small: 6,
     normal: 12,
     big: 24,
   },
@@ -11,5 +12,7 @@ export const theme = {
   color: {
     black: '#000',
     white: '#fff',
+    hover: '#005D85',
+    disabled: '#5C5757',
   },
 };
