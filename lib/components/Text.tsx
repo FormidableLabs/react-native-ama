@@ -7,18 +7,10 @@ export type TextProps = RNTextProps & {
   autofocus?: boolean;
 };
 
-export const Text: React.FC<TextProps> = ({
-  autofocus,
-  children,
-  ...props
-}) => {
+export const Text: React.FC<TextProps> = ({ autofocus, ...props }) => {
   const textRef = React.useRef<RNText>(null);
 
   useA11yFocus(autofocus ? textRef : undefined);
 
-  return (
-    <RNText ref={textRef} {...props}>
-      {children}
-    </RNText>
-  );
+  return <RNText ref={textRef} {...props} />;
 };

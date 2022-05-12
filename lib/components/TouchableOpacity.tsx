@@ -2,23 +2,22 @@ import * as React from 'react';
 import {
   AccessibilityRole,
   AccessibilityState,
-  Pressable as RNPressable,
-  PressableProps as RNPressableProps,
+  TouchableOpacity as RNTouchableOpacity,
+  TouchableOpacityProps,
 } from 'react-native';
 import type { AMAAccessibilityState } from 'lib/types';
 
 import { amaNoUndefined } from '../internal/debug';
 
-export type PressableProps = Exclude<
-  RNPressableProps,
-  'accessibilityRole' | 'disabled' | 'accessibilityLabel'
+type AMAPressableProps = Exclude<
+  TouchableOpacityProps,
+  'accessibilityRole' | 'disabled'
 > &
   AMAAccessibilityState & {
     accessibilityRole: AccessibilityRole;
-    accessibilityLabel: string;
   };
 
-export const Pressable = (props: PressableProps) => {
+export const TouchableOpacity = (props: AMAPressableProps) => {
   const accessibilityState: AccessibilityState = {
     disabled: props.disabled,
     selected: props.selected,
@@ -27,7 +26,9 @@ export const Pressable = (props: PressableProps) => {
     expanded: props.expanded,
   };
 
-  __DEV__ && amaNoUndefined(props, 'accessibilityRole');
+  amaNoUndefined(props, 'accessibilityRole');
 
-  return <RNPressable accessibilityState={accessibilityState} {...props} />;
+  return (
+    <RNTouchableOpacity accessibilityState={accessibilityState} {...props} />
+  );
 };

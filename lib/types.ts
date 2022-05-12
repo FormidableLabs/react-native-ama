@@ -1,4 +1,4 @@
-import { AccessibilityState } from 'react-native';
+import type { AccessibilityState } from 'react-native';
 
 export type AMAAccessibilityState = Pick<
   AccessibilityState,
