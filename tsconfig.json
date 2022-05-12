@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "react-native-ama": ["./src/index"]
+      "react-native-ama": ["./lib/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
