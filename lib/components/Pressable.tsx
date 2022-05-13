@@ -7,8 +7,9 @@ import {
   PressableProps as RNPressableProps,
 } from 'react-native';
 
-import { contrastChecker } from '../internal/contrast-checker';
+import { contrastChecker } from '../internal/contrastChecker';
 import { amaNoUndefined } from '../internal/debug';
+import { checkMinimumSize } from '../internal/checkMinimumSize';
 
 export type PressableProps = Exclude<
   RNPressableProps,
@@ -38,7 +39,10 @@ export const Pressable: React.FC<PressableProps> = ({ children, ...rest }) => {
     }, [rest.style, children]);
 
   return (
-    <RNPressable accessibilityState={accessibilityState} {...rest}>
+    <RNPressable
+      accessibilityState={accessibilityState}
+      onLayout={checkMinimumSize}
+      {...rest}>
       {children}
     </RNPressable>
   );

@@ -3,7 +3,7 @@ import * as React from 'react';
 import type { Omit } from 'react-native';
 import { Text } from 'react-native';
 
-import * as ContrastChecker from '../internal/contrast-checker';
+import * as ContrastChecker from '../internal/contrastChecker';
 import * as AMADebugUtils from '../internal/debug';
 import { Pressable, PressableProps } from './Pressable';
 

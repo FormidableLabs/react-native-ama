@@ -14,6 +14,10 @@ export const contrastChecker = (
     const childStyle = child?.props?.style || {};
     const { color } = childStyle;
 
+    // TODO: Fix style
+    // @ts-ignore
+    const displayName = child?.displayName;
+
     if (color == null) {
       return;
     }
@@ -22,7 +26,10 @@ export const contrastChecker = (
 
     switch (result) {
       case 'Fail':
-        log('CONTRAST_CHECKER', 'Fails all the contrast check');
+        log(
+          'CONTRAST_CHECKER',
+          `"${displayName}" fails all the contrast check`,
+        );
         break;
       case 'AA Large':
         if (
@@ -33,11 +40,11 @@ export const contrastChecker = (
 
         log(
           'CONTRAST_CHECKER',
-          'Fails AA Normal Text, but ✅ passes AA Large Text',
+          `"${displayName}" fails AA Normal Text, but ✅ passes AA Large Text`,
         );
         break;
       case 'AA':
-        log('CONTRAST_CHECKER_AAA', 'Fails the AAA Level');
+        log('CONTRAST_CHECKER_AAA', `"${displayName}" fails the AAA Level`);
     }
   });
 };

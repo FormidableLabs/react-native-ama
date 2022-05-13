@@ -1,5 +1,5 @@
-import * as Logger from '../internal/logger';
-import { contrastChecker } from './contrast-checker';
+import * as Logger from './logger';
+import { contrastChecker } from './contrastChecker';
 
 beforeEach(() => {
   jest.resetAllMocks();
@@ -21,7 +21,7 @@ describe('Contrast Checker', () => {
 
     expect(log).toHaveBeenCalledWith(
       'CONTRAST_CHECKER',
-      'Fails all the contrast check',
+      '"Component 1" fails all the contrast check',
     );
   });
 
@@ -41,7 +41,7 @@ describe('Contrast Checker', () => {
 
       expect(log).toHaveBeenCalledWith(
         'CONTRAST_CHECKER',
-        'Fails AA Normal Text, but ✅ passes AA Large Text',
+        '"Component 2" fails AA Normal Text, but ✅ passes AA Large Text',
       );
     });
 
@@ -103,12 +103,12 @@ describe('Contrast Checker', () => {
 
     expect(log).toHaveBeenCalledWith(
       'CONTRAST_CHECKER_AAA',
-      'Fails the AAA Level',
+      '"Component 2" fails the AAA Level',
     );
   });
 });
 
-jest.mock('../internal/logger');
+jest.mock('./logger');
 jest.mock('react', () => {
   return {
     Children: {
