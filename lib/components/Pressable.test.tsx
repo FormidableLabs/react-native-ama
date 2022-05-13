@@ -190,6 +190,34 @@ describe('AMA Pressable', () => {
         <Text style={{ color: '#fff' }}>Test</Text>,
       );
     });
+
+    it('if style is a function then performs the contrast ratio check on both pressed and not pressed state', () => {
+      const contrastChecker = jest.spyOn(ContrastChecker, 'contrastChecker');
+
+      render(
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Test"
+          style={({ pressed }) => {
+            return pressed
+              ? { backgroundColor: '#7a7a7a' }
+              : { backgroundColor: 'yellow' };
+          }}>
+          <Text style={{ color: '#fff' }}>Test</Text>
+        </Pressable>,
+      );
+
+      expect(contrastChecker).toHaveBeenCalledTimes(2);
+
+      expect(contrastChecker).toHaveBeenCalledWith(
+        { backgroundColor: '#7a7a7a' },
+        <Text style={{ color: '#fff' }}>Test</Text>,
+      );
+      expect(contrastChecker).toHaveBeenCalledWith(
+        { backgroundColor: 'yellow' },
+        <Text style={{ color: '#fff' }}>Test</Text>,
+      );
+    });
   });
 });
 
@@ -202,4 +230,4 @@ function renderPressable(props: Omit<PressableProps, 'children'>) {
 }
 
 jest.mock('../internal/debug');
-jest.mock('../internal/contrast-checker');
+jest.mock('../internal/contrastChecker');

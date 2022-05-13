@@ -35,7 +35,14 @@ export const Pressable: React.FC<PressableProps> = ({ children, ...rest }) => {
   __DEV__ &&
     // eslint-disable-next-line react-hooks/rules-of-hooks
     React.useEffect(() => {
-      contrastChecker(rest.style, children);
+      const style = rest?.style;
+
+      if (typeof style === 'function') {
+        contrastChecker(style({ pressed: false }), children);
+        contrastChecker(style({ pressed: true }), children);
+      } else {
+        contrastChecker(rest.style, children);
+      }
     }, [rest.style, children]);
 
   return (

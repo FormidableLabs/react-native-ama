@@ -8,25 +8,26 @@ export const contrastChecker = (
   style: StyleProp<any> | undefined,
   children: React.ReactNode,
 ) => {
-  const { backgroundColor } = style || {};
+  const backgroundColor = getPropertyFromStyle(style, 'backgroundColor');
+
+  if (backgroundColor === undefined) {
+    return;
+  }
 
   React.Children.forEach(children as any, (child: JSX.Element | undefined) => {
     const childStyle = child?.props?.style || {};
-    const { color } = childStyle;
-
-    // TODO: Fix style
-    // @ts-ignore
-    const displayName = child?.displayName;
+    const color = getPropertyFromStyle(childStyle, 'color');
 
     if (color == null) {
       return;
     }
 
+    const testFailed = `background: ${backgroundColor} with foreground: ${color}: `;
     const result = getContrastScore(backgroundColor, color);
 
     switch (result) {
       case 'Fail':
-        log('CONTRAST_FAILED', `"${displayName}" fails all the contrast check`);
+        log('CONTRAST_FAILED', `"${testFailed}" fails all the contrast check`);
         break;
       case 'AA Large':
         if (
@@ -37,13 +38,22 @@ export const contrastChecker = (
 
         log(
           'CONTRAST_FAILED',
-          `"${displayName}" fails AA Normal Text, but ✅ passes AA Large Text`,
+          `"${testFailed}" fails AA Normal Text, but ✅ passes AA Large Text`,
         );
         break;
       case 'AA':
-        log('CONTRAST_FAILED_AAA', `"${displayName}" fails the AAA Level`);
+        log('CONTRAST_FAILED_AAA', `"${testFailed}" fails the AAA Level`);
     }
   });
+};
+
+const getPropertyFromStyle = (
+  style: StyleProp<any> | StyleProp<any>[] | null,
+  key: keyof StyleProp<any>,
+) => {
+  return Array.isArray(style)
+    ? style.find(theStyle => theStyle[key])?.[key]
+    : style?.[key];
 };
 
 const getContrastScore = (c1: string, c2: string) => {
