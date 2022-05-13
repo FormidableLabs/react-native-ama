@@ -1,23 +1,23 @@
-import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { Button } from '../components/Button';
+import { CTAPressable } from '../components/CTAPressable';
 import { Spacer } from '../components/Spacer';
 import { theme } from '../theme';
+import { useTypedNavigation } from '../utils/useTypedNavigation';
 
 export const HomeScreen = () => {
-  const { navigate } = useNavigation();
+  const { navigate } = useTypedNavigation();
 
   return (
     <View style={styles.view}>
-      <Spacer height={theme.padding.normal} />
+      <Spacer height={'normal'} />
       <ScrollView style={styles.list}>
         <Text style={styles.header} accessibilityRole="header">
           Example components:
         </Text>
-        <Spacer height={theme.padding.normal} />
-        <Button title="Pressable" onPress={() => navigate('Pressable')} />
+        <Spacer height={'normal'} />
+        <CTAPressable title="Pressable" onPress={() => navigate('Pressable')} />
       </ScrollView>
     </View>
   );

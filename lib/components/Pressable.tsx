@@ -1,3 +1,4 @@
+import type { AMAAccessibilityState } from 'lib/types';
 import * as React from 'react';
 import {
   AccessibilityRole,
@@ -5,29 +6,51 @@ import {
   Pressable as RNPressable,
   PressableProps as RNPressableProps,
 } from 'react-native';
-import type { AMAAccessibilityState } from 'lib/types';
 
+import { contrastChecker } from '../internal/contrastChecker';
 import { amaNoUndefined } from '../internal/debug';
+import { checkMinimumSize } from '../internal/checkMinimumSize';
 
 export type PressableProps = Exclude<
   RNPressableProps,
-  'accessibilityRole' | 'disabled' | 'accessibilityLabel'
+  'accessibilityRole' | 'disabled' | 'accessibilityLabel' | 'accessibilityState'
 > &
   AMAAccessibilityState & {
     accessibilityRole: AccessibilityRole;
     accessibilityLabel: string;
   };
 
-export const Pressable = (props: PressableProps) => {
+export const Pressable: React.FC<PressableProps> = ({ children, ...rest }) => {
   const accessibilityState: AccessibilityState = {
-    disabled: props.disabled,
-    selected: props.selected,
-    checked: props.checked,
-    busy: props.busy,
-    expanded: props.expanded,
+    disabled: rest.disabled,
+    selected: rest.selected,
+    checked: rest.checked,
+    busy: rest.busy,
+    expanded: rest.expanded,
   };
 
-  __DEV__ && amaNoUndefined(props, 'accessibilityRole');
+  __DEV__ && amaNoUndefined(rest, 'accessibilityRole');
+  __DEV__ && amaNoUndefined(rest, 'accessibilityLabel');
 
-  return <RNPressable accessibilityState={accessibilityState} {...props} />;
+  __DEV__ &&
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    React.useEffect(() => {
+      const style = rest?.style;
+
+      if (typeof style === 'function') {
+        contrastChecker(style({ pressed: false }), children);
+        contrastChecker(style({ pressed: true }), children);
+      } else {
+        contrastChecker(rest.style, children);
+      }
+    }, [rest.style, children]);
+
+  return (
+    <RNPressable
+      accessibilityState={accessibilityState}
+      onLayout={checkMinimumSize}
+      {...rest}>
+      {children}
+    </RNPressable>
+  );
 };

@@ -1,8 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
-import {
-  NativeStackNavigationOptions,
-  createNativeStackNavigator,
-} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import type { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import React from 'react';
 import { AMAProvider } from 'react-native-ama';
 
@@ -10,13 +8,7 @@ import { BackButton } from './src/components/BackButton';
 import { Header } from './src/components/Header';
 import { HomeScreen } from './src/screens/Home.screen';
 import { PressableScreen } from './src/screens/Pressable.screen';
-
-const Stack = createNativeStackNavigator();
-
-const BaseNavigatorOptions: NativeStackNavigationOptions = {
-  headerTitleAlign: 'center',
-  headerBackVisible: false,
-};
+import type { RootStackParamList } from './src/types';
 
 const App = () => {
   return (
@@ -42,6 +34,13 @@ const App = () => {
       </NavigationContainer>
     </AMAProvider>
   );
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
+const BaseNavigatorOptions: NativeStackNavigationOptions = {
+  headerTitleAlign: 'center',
+  headerBackVisible: false,
 };
 
 export default App;
