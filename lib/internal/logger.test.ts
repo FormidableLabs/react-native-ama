@@ -18,10 +18,10 @@ describe('Logger', () => {
     });
 
     it('log: console.log and throws an error when the rule is "throw"', () => {
-      const errorMessage = '❌ [AMA CONTRAST_CHECKER] - Error Message';
+      const errorMessage = '❌ [AMA CONTRAST_FAILED] - Error Message';
       const consoleError = jest.spyOn(console, 'error');
 
-      expect(() => log('CONTRAST_CHECKER', 'Error Message')).toThrowError(
+      expect(() => log('CONTRAST_FAILED', 'Error Message')).toThrowError(
         errorMessage,
       );
 
@@ -32,7 +32,7 @@ describe('Logger', () => {
       const errorMessage = '❌ [AMA UPPERCASE_TEXT] - Error Message';
       const consoleWarn = jest.spyOn(console, 'warn');
 
-      log('UPPERCASE_TEXT', 'Error Message');
+      log('CONTRAST_FAILED_AAA', 'Error Message');
       expect(consoleWarn).toHaveBeenCalledWith(errorMessage);
     });
   });
@@ -43,10 +43,10 @@ describe('Logger', () => {
     });
 
     it('it uses the the override rules first', () => {
-      const errorMessage = '❌ [AMA CONTRAST_CHECKER] - Error Message';
+      const errorMessage = '❌ [AMA CONTRAST_FAILED] - Error Message';
       const consoleWarn = jest.spyOn(console, 'warn');
 
-      log('CONTRAST_CHECKER', 'Error Message');
+      log('CONTRAST_FAILED', 'Error Message');
 
       expect(consoleWarn).toHaveBeenCalledWith(errorMessage);
     });
@@ -59,7 +59,7 @@ jest.mock(
   `${__dirname}/../../ama.json`,
   () => {
     return {
-      CONTRAST_CHECKER: 'warn',
+      CONTRAST_FAILED: 'warn',
     };
   },
   { virtual: true },
@@ -68,8 +68,8 @@ jest.mock(
 jest.mock('./logger.rules.ts', () => {
   return {
     loggerRules: {
-      CONTRAST_CHECKER: 'throw',
-      UPPERCASE_TEXT: 'warn',
+      CONTRAST_FAILED: 'throw',
+      CONTRAST_FAILED_AAA: 'warn',
     },
   };
 });

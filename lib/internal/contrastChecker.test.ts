@@ -20,7 +20,7 @@ describe('Contrast Checker', () => {
     ]);
 
     expect(log).toHaveBeenCalledWith(
-      'CONTRAST_CHECKER',
+      'CONTRAST_FAILED',
       '"Component 1" fails all the contrast check',
     );
   });
@@ -40,7 +40,7 @@ describe('Contrast Checker', () => {
       ]);
 
       expect(log).toHaveBeenCalledWith(
-        'CONTRAST_CHECKER',
+        'CONTRAST_FAILED',
         '"Component 2" fails AA Normal Text, but ✅ passes AA Large Text',
       );
     });
@@ -102,7 +102,7 @@ describe('Contrast Checker', () => {
     ]);
 
     expect(log).toHaveBeenCalledWith(
-      'CONTRAST_CHECKER_AAA',
+      'CONTRAST_FAILED_AAA',
       '"Component 2" fails the AAA Level',
     );
   });

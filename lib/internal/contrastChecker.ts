@@ -26,10 +26,7 @@ export const contrastChecker = (
 
     switch (result) {
       case 'Fail':
-        log(
-          'CONTRAST_CHECKER',
-          `"${displayName}" fails all the contrast check`,
-        );
+        log('CONTRAST_FAILED', `"${displayName}" fails all the contrast check`);
         break;
       case 'AA Large':
         if (
@@ -39,12 +36,12 @@ export const contrastChecker = (
         }
 
         log(
-          'CONTRAST_CHECKER',
+          'CONTRAST_FAILED',
           `"${displayName}" fails AA Normal Text, but ✅ passes AA Large Text`,
         );
         break;
       case 'AA':
-        log('CONTRAST_CHECKER_AAA', `"${displayName}" fails the AAA Level`);
+        log('CONTRAST_FAILED_AAA', `"${displayName}" fails the AAA Level`);
     }
   });
 };

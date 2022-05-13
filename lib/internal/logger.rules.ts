@@ -1,13 +1,13 @@
 export type Rule =
-  | 'CONTRAST_CHECKER'
-  | 'CONTRAST_CHECKER_AAA'
-  | 'UPPERCASE_TEXT'
-  | 'MINIMUM_SIZE';
+  | 'CONTRAST_FAILED'
+  | 'CONTRAST_FAILED_AAA'
+  | 'MINIMUM_SIZE'
+  | 'PROPERTY_UNDEFINED';
 export type RuleValue = 'warn' | 'throw';
 
 export const loggerRules: Record<Rule, RuleValue> = {
-  CONTRAST_CHECKER: 'throw',
-  CONTRAST_CHECKER_AAA: 'warn',
-  UPPERCASE_TEXT: 'throw',
+  CONTRAST_FAILED: 'throw',
+  CONTRAST_FAILED_AAA: 'warn',
   MINIMUM_SIZE: 'throw',
+  PROPERTY_UNDEFINED: 'throw',
 };
