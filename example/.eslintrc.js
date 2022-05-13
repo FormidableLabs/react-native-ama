@@ -5,7 +5,6 @@ module.exports = {
     'jest/globals': true,
   },
   rules: {
-    '@typescript-eslint/consistent-type-imports': 'error',
     '@typescript-eslint/no-unused-vars': 'off',
   },
   extends: ['@react-native-community'],
