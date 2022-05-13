@@ -1,6 +1,7 @@
 import { score } from 'wcag-color';
 import type { StyleProp } from 'react-native';
 import React from 'react';
+import { log } from './logger';
 
 export const contrastChecker = (
   style: StyleProp<any> | undefined,
@@ -9,7 +10,7 @@ export const contrastChecker = (
   const { backgroundColor } = style || {};
 
   React.Children.forEach(children as any, (child: JSX.Element | undefined) => {
-    const childStyle = child?.props.style || {};
+    const childStyle = child?.props?.style || {};
     const { color } = childStyle;
 
     if (color == null) {
@@ -20,8 +21,7 @@ export const contrastChecker = (
 
     switch (result) {
       case 'Fail':
-        console.error('failed');
-
+        log('CONTRAST_CHECKER', 'Fails all the contrast check');
         break;
       case 'AA Large':
         if (
@@ -30,7 +30,13 @@ export const contrastChecker = (
           return;
         }
 
-        console.error('❌ Fails AA Normal Text, but ✅ passes AA Large Text');
+        log(
+          'CONTRAST_CHECKER',
+          'Fails AA Normal Text, but ✅ passes AA Large Text',
+        );
+        break;
+      case 'AA':
+        log('CONTRAST_CHECKER_AAA', 'Fails the AAA Level');
     }
   });
 };
