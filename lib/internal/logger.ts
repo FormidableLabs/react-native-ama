@@ -1,4 +1,5 @@
 import fs from 'fs';
+
 import type { Rule, RuleValue } from './logger.rules';
 import { loggerRules } from './logger.rules';
 

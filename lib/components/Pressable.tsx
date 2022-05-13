@@ -1,3 +1,4 @@
+import type { AMAAccessibilityState } from 'lib/types';
 import * as React from 'react';
 import {
   AccessibilityRole,
@@ -5,10 +6,9 @@ import {
   Pressable as RNPressable,
   PressableProps as RNPressableProps,
 } from 'react-native';
-import type { AMAAccessibilityState } from 'lib/types';
 
-import { amaNoUndefined } from '../internal/debug';
 import { contrastChecker } from '../internal/contrast-checker';
+import { amaNoUndefined } from '../internal/debug';
 
 export type PressableProps = Exclude<
   RNPressableProps,

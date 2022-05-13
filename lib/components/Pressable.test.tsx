@@ -1,10 +1,11 @@
 import { render } from '@testing-library/react-native';
 import * as React from 'react';
-
-import * as AMADebugUtils from '../internal/debug';
-import { Pressable, PressableProps } from './Pressable';
 import type { Omit } from 'react-native';
 import { Text } from 'react-native';
+
+import * as ContrastChecker from '../internal/contrast-checker';
+import * as AMADebugUtils from '../internal/debug';
+import { Pressable, PressableProps } from './Pressable';
 
 afterEach(() => {
   jest.clearAllMocks();
@@ -172,7 +173,9 @@ describe('AMA Pressable', () => {
   });
 
   describe('contrast checker', () => {
-    it('throws an error if the contrast ratio is ', () => {
+    it('checks the contrast ratio between the component and its direct children', () => {
+      const contrastChecker = jest.spyOn(ContrastChecker, 'contrastChecker');
+
       render(
         <Pressable
           accessibilityRole="button"
@@ -180,6 +183,11 @@ describe('AMA Pressable', () => {
           style={{ backgroundColor: '#7a7a7a' }}>
           <Text style={{ color: '#fff' }}>Test</Text>
         </Pressable>,
+      );
+
+      expect(contrastChecker).toHaveBeenCalledWith(
+        { backgroundColor: '#7a7a7a' },
+        <Text style={{ color: '#fff' }}>Test</Text>,
       );
     });
   });
@@ -194,3 +202,4 @@ function renderPressable(props: Omit<PressableProps, 'children'>) {
 }
 
 jest.mock('../internal/debug');
+jest.mock('../internal/contrast-checker');

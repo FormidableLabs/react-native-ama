@@ -1,5 +1,6 @@
-import { log } from './logger';
 import * as fs from 'fs';
+
+import { log } from './logger';
 
 beforeEach(() => {
   console.error = jest.fn();

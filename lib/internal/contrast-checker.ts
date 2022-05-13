@@ -1,6 +1,7 @@
-import { score } from 'wcag-color';
-import type { StyleProp } from 'react-native';
 import React from 'react';
+import type { StyleProp } from 'react-native';
+import { score } from 'wcag-color';
+
 import { log } from './logger';
 
 export const contrastChecker = (
@@ -41,7 +42,7 @@ export const contrastChecker = (
   });
 };
 
-export const getContrastScore = (c1: string, c2: string) => {
+const getContrastScore = (c1: string, c2: string) => {
   return score(c1, c2);
 };
 

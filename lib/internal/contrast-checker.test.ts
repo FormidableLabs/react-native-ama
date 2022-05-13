@@ -1,5 +1,5 @@
-import { contrastChecker } from './contrast-checker';
 import * as Logger from '../internal/logger';
+import { contrastChecker } from './contrast-checker';
 
 beforeEach(() => {
   jest.resetAllMocks();
