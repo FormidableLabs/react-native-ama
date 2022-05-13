@@ -11,10 +11,10 @@ import type { Rule, RuleValue } from './logger.rules';
 import { loggerRules } from './logger.rules';
 
 export const log = (rule: Rule, message: string) => {
-  console.info({ overrideRules });
   const action = overrideRules?.[rule] || loggerRules[rule];
 
   const formattedMessage = `❌ [AMA ${rule}] - ${message}`;
+
   switch (action) {
     case 'throw':
       console.error(formattedMessage);

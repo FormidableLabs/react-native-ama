@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
     paddingVertical: theme.padding.normal,
     backgroundColor: theme.color.black,
     flex: 1,
+    width: 22,
   },
   pressed: {
     backgroundColor: theme.color.hover,
