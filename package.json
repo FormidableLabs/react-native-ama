@@ -21,7 +21,7 @@
     "!**/__mocks__"
   ],
   "scripts": {
-    "prepare": "yarn build",
+    "prepare": "husky install",
     "test": "jest",
     "ts:check": "tsc --noEmit",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
@@ -32,6 +32,11 @@
     "pods": "cd example && pod-install --quiet",
     "bootstrap": "yarn example && yarn && yarn pods",
     "postinstall": "./scripts/init.sh"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   },
   "keywords": [
     "react-native",
@@ -51,7 +56,8 @@
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
-    "@commitlint/config-conventional": "^11.0.0",
+    "@commitlint/cli": "^17.0.0",
+    "@commitlint/config-conventional": "^17.0.0",
     "@react-native-community/eslint-config": "^2.0.0",
     "@react-navigation/stack": "^6.2.1",
     "@release-it/conventional-changelog": "^2.0.0",
@@ -65,7 +71,7 @@
     "eslint-config-prettier": "^7.0.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^3.1.3",
-    "husky": "^6.0.0",
+    "husky": "^8.0.1",
     "jest": "^26.0.1",
     "pod-install": "^0.1.0",
     "prettier": "^2.0.5",
