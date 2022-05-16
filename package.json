@@ -35,6 +35,7 @@
   },
   "husky": {
     "hooks": {
+      "pre-push": "echo '[Husky] pre-push' && yarn lint && yarn ts:check"
       "pre-commit": "echo '[Husky] pre-commit' && yarn lint && yarn ts:check"
     }
   },
