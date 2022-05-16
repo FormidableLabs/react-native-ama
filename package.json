@@ -33,6 +33,11 @@
     "bootstrap": "yarn example && yarn && yarn pods",
     "postinstall": "./scripts/init.sh"
   },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
   "keywords": [
     "react-native",
     "ios",
@@ -51,7 +56,8 @@
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
-    "@commitlint/config-conventional": "^11.0.0",
+    "@commitlint/cli": "^17.0.0",
+    "@commitlint/config-conventional": "^17.0.0",
     "@react-native-community/eslint-config": "^2.0.0",
     "@react-navigation/stack": "^6.2.1",
     "@release-it/conventional-changelog": "^2.0.0",
