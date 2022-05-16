@@ -21,7 +21,7 @@
     "!**/__mocks__"
   ],
   "scripts": {
-    "prepare": "yarn build",
+    "prepare": "husky install",
     "test": "jest",
     "ts:check": "tsc --noEmit",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
@@ -32,12 +32,6 @@
     "pods": "cd example && pod-install --quiet",
     "bootstrap": "yarn example && yarn && yarn pods",
     "postinstall": "./scripts/init.sh"
-  },
-  "husky": {
-    "hooks": {
-      "pre-push": "echo '[Husky] pre-push' && yarn lint && yarn ts:check"
-      "pre-commit": "echo '[Husky] pre-commit' && yarn lint && yarn ts:check"
-    }
   },
   "keywords": [
     "react-native",
