@@ -33,7 +33,7 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
   };
 
   React.useEffect(() => {
-    const subscriptions = Object.entries(eventsMapping).forEach(
+    const subscriptions = Object.entries(eventsMapping).map(
       ([eventName, contextKey]) => {
         return AccessibilityInfo.addEventListener(
           eventName as AccessibilityEvents,
@@ -44,7 +44,7 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
 
     return () => {
       // @ts-ignore - RN >= 0.65
-      if (typeof subscriptions[0]?.remove === 'function') {
+      if (typeof subscriptions?.[0]?.remove === 'function') {
         // @ts-ignore
         return subscriptions.forEach(subscription => subscription.remove());
       }

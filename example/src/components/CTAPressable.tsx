@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Pressable } from 'react-native-ama';
 import type { PressableProps } from 'react-native-ama';
 
@@ -66,7 +66,8 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    color: theme.color.white,
+    // color: theme.color.white,
+    color: '#5a5a5a',
     fontSize: theme.fontSize.medium,
   },
 });

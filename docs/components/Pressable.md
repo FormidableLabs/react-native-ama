@@ -6,7 +6,7 @@ Pressable is an extension of the React Native [Pressable](https://reactnative.de
 import { Pressable } from 'react-native-ama';
 
 <Pressable accessibilityRole="button" accessibilityLabel="I'm pressable!">
-  <Text>I'm pressable</Text>
+    <Text>I'm pressable</Text>
 </Pressable>;
 ```
 
@@ -21,12 +21,15 @@ The component exposes all the React Native [Pressable](https://reactnative.dev/d
 
 ### Contrast checker
 
-The component performs a contrast check between its background color and its direct child foreground in dev mode.
-The test throws a [CONTRAST_FAILED](/react-native-ama/docs/advanced/custom-log-rules#contrast_failed) error in case fails the [AA](https://www.w3.org/TR/WCAG21/#contrast-minimum) level, and a [CONTRAST_FAILED_AAA](/react-native-ama/docs/advanced/custom-log-rules#contrast_failed_aaa) error if fails the [AAA](https://www.w3.org/TR/WCAG21/#contrast-enhanced) one.
+The component performs a [contrast check](/docs/settings/contrast) between its background colour and the children's foreground when in dev mode.
+
+:::note
+AMA performs the check on both pressed and non-pressed states when passing a function as style.
+:::
 
 ### Minimum size
 
-The component uses the [onLayout](https://reactnative.dev/docs/layoutevent) prop to determin its size at runtime. If the size is less than [44x44px on iOS](https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/adaptivity-and-layout/) or [48x48dp on Android](https://support.google.com/accessibility/android/answer/7101858?hl=en-GB), then it logs the [MINIMUM_SIZE](/react-native-ama/docs/advanced/custom-log-rules#minimum_size) error.
+The component uses the [onLayout](https://reactnative.dev/docs/layoutevent) prop to perform the [minium size check](/docs/settings/minimum-size).
 
 ## Additional Props
 
@@ -45,25 +48,25 @@ import { ActivityIndicator } from 'react-native';
 import { Pressable, Text } from 'react-native-ama';
 
 const Test = () => {
-  const [isLoading, setIsLoading] = React.useState(false);
+    const [isLoading, setIsLoading] = React.useState(false);
 
-  const doSometing = async () => {
-    setIsLoading(true);
+    const doSometing = async () => {
+        setIsLoading(true);
 
-    await slowCall();
+        await slowCall();
 
-    setIsLoading(true);
-  };
+        setIsLoading(true);
+    };
 
-  return (
-    <Pressable
-      accessiblityRole="button"
-      accessibilityLabel="Do it"
-      busy={isLoading}
-      onPress={doSometing}>
-      {isLoading ? <ActivityIndicator /> : <Text>Do it</Text>}
-    </Pressable>
-  );
+    return (
+        <Pressable
+            accessiblityRole="button"
+            accessibilityLabel="Do it"
+            busy={isLoading}
+            onPress={doSometing}>
+            {isLoading ? <ActivityIndicator /> : <Text>Do it</Text>}
+        </Pressable>
+    );
 };
 ```
 
@@ -98,19 +101,19 @@ import { ActivityIndicator } from 'react-native';
 import { Pressable, Text } from 'react-native-ama';
 
 const Test = () => {
-  const [isExpanded, setIsExpanded] = React.useState(false);
+    const [isExpanded, setIsExpanded] = React.useState(false);
 
-  return (
-    <>
-      <Pressable
-        accessiblityRole="button"
-        accessibilityLabel={isExpanded ? 'Less' : 'More'}
-        expanded={isExpanded}
-        onPress={() => setIsExpanded(expanded => !expanded)}>
-        {isExpanded ? <MinumIcon /> : <PlusIcon />}
-      </Pressable>
-      {isExpanded ? <>{/* content goes here */}</> : null}
-    </>
-  );
+    return (
+        <>
+            <Pressable
+                accessiblityRole="button"
+                accessibilityLabel={isExpanded ? 'Less' : 'More'}
+                expanded={isExpanded}
+                onPress={() => setIsExpanded(expanded => !expanded)}>
+                {isExpanded ? <MinumIcon /> : <PlusIcon />}
+            </Pressable>
+            {isExpanded ? <>{/* content goes here */}</> : null}
+        </>
+    );
 };
 ```

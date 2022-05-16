@@ -7,17 +7,17 @@ import * as ContrastChecker from '../internal/contrastChecker';
 import * as AMADebugUtils from '../internal/debug';
 import { Pressable, PressableProps } from './Pressable';
 
+beforeEach(() => {
+  // @ts-ignore
+  global.__DEV__ = true;
+});
+
 afterEach(() => {
   jest.clearAllMocks();
 });
 
 describe('AMA Pressable', () => {
   describe('When __DEV__ is true', () => {
-    beforeEach(() => {
-      // @ts-ignore
-      global.__DEV__ = true;
-    });
-
     it('checks that the "accessibilityRole" property is not UNDEFINED', () => {
       const amaNoUndefined = jest.spyOn(AMADebugUtils, 'amaNoUndefined');
 
@@ -173,7 +173,7 @@ describe('AMA Pressable', () => {
   });
 
   describe('contrast checker', () => {
-    it('checks the contrast ratio between the component and its direct children', () => {
+    it('checks the contrast ratio between the component and its children', () => {
       const contrastChecker = jest.spyOn(ContrastChecker, 'contrastChecker');
 
       render(

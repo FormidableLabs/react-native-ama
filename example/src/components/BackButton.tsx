@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
+import { StyleSheet } from 'react-native';
 import { Pressable } from 'react-native-ama';
 import Svg, { Path } from 'react-native-svg';
 
@@ -10,7 +11,8 @@ export const BackButton = () => {
     <Pressable
       accessibilityRole="button"
       onPress={navigation.goBack}
-      accessibilityLabel="Back">
+      accessibilityLabel="Back"
+      style={styles.button}>
       <Svg width={32} height={32} viewBox="0 0 8.467 8.467">
         <Path
           d="M5.283 1.907l-2.251 2.25L5.434 6.56"
@@ -27,3 +29,10 @@ export const BackButton = () => {
     </Pressable>
   );
 };
+
+const styles = StyleSheet.create({
+  button: {
+    // width: 48,
+    // height: 48,
+  },
+});
