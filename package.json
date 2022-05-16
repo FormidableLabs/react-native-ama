@@ -33,6 +33,11 @@
     "bootstrap": "yarn example && yarn && yarn pods",
     "postinstall": "./scripts/init.sh"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "echo '[Husky] pre-commit' && yarn lint && yarn ts:check"
+    }
+  },
   "keywords": [
     "react-native",
     "ios",
@@ -65,7 +70,7 @@
     "eslint-config-prettier": "^7.0.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^3.1.3",
-    "husky": "^6.0.0",
+    "husky": "^8.0.1",
     "jest": "^26.0.1",
     "pod-install": "^0.1.0",
     "prettier": "^2.0.5",
