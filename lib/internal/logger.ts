@@ -28,7 +28,7 @@ export const log = (rule: Rule, message: string, extra?: any) => {
         console.info(extra, '\n');
       }
 
-      console.warn(formattedMessage);
+      console.warn(formattedMessage, '\n');
   }
 };
 

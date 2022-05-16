@@ -15,6 +15,7 @@
     "@react-navigation/native-stack": "^6.6.2",
     "react": "17.0.2",
     "react-native": "0.68.1",
+    "react-native-error-boundary": "^1.1.13",
     "react-native-safe-area-context": "^4.2.5",
     "react-native-screens": "^3.13.1",
     "react-native-svg": "^12.3.0"

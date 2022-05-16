@@ -3,6 +3,7 @@ import * as React from 'react';
 import {
   AccessibilityRole,
   AccessibilityState,
+  Omit,
   Pressable as RNPressable,
   PressableProps as RNPressableProps,
 } from 'react-native';
@@ -11,7 +12,7 @@ import { contrastChecker } from '../internal/contrastChecker';
 import { amaNoUndefined } from '../internal/debug';
 import { checkMinimumSize } from '../internal/checkMinimumSize';
 
-export type PressableProps = Exclude<
+export type PressableProps = Omit<
   RNPressableProps,
   'accessibilityRole' | 'disabled' | 'accessibilityLabel' | 'accessibilityState'
 > &

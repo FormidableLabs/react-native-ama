@@ -18,6 +18,8 @@ export const HomeScreen = () => {
         </Text>
         <Spacer height={'normal'} />
         <CTAPressable title="Pressable" onPress={() => navigate('Pressable')} />
+        <Spacer height={'normal'} />
+        <CTAPressable title="Text" onPress={() => navigate('Text')} />
       </ScrollView>
     </View>
   );

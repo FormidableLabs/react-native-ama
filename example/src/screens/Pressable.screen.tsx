@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
-import type { AMAAccessibilityState } from 'react-native-ama';
+import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import { AMAAccessibilityState, Pressable } from 'react-native-ama';
 import { Text } from 'react-native-ama';
 
 import { CTAPressable } from '../components/CTAPressable';
@@ -10,32 +10,42 @@ import { theme } from '../theme';
 
 export const PressableScreen = () => {
   return (
-    <ScrollView style={styles.list}>
-      {/*  Disabled */}
-      <PressableExample state="disabled">
-        <CTAPressable title="This button is 'disabled'" disabled />
-      </PressableExample>
+    <SafeAreaView>
+      <ScrollView style={styles.list}>
+        <Spacer height="big" />
 
-      {/*  Busy */}
-      <PressableExample state="busy">
-        <CTAPressable title="This button is 'busy'" busy />
-      </PressableExample>
+        {/*  Disabled */}
+        <PressableExample state="disabled">
+          <CTAPressable title="This button is 'disabled'" disabled />
+        </PressableExample>
 
-      {/*  Checked */}
-      <PressableExample state="checked">
-        <CheckedButton />
-      </PressableExample>
+        {/*  Busy */}
+        <PressableExample state="busy">
+          <CTAPressable title="This button is 'busy'" busy />
+        </PressableExample>
 
-      {/*  Selected*/}
-      <PressableExample state="selected">
-        <SelectedButton />
-      </PressableExample>
+        {/*  Checked */}
+        <PressableExample state="checked">
+          <CheckedButton />
+        </PressableExample>
 
-      {/*  Expanded*/}
-      <PressableExample state="expanded">
-        <ExpandedButton />
-      </PressableExample>
-    </ScrollView>
+        {/*  Selected*/}
+        <PressableExample state="selected">
+          <SelectedButton />
+        </PressableExample>
+
+        {/*  Expanded*/}
+        <PressableExample state="expanded">
+          <ExpandedButton />
+        </PressableExample>
+
+        {/*  Test rule breakage */}
+        <ContrastCheckerFailing />
+
+        {/*  Test minimum size failing  */}
+        <MinimumSizeFailing />
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -129,10 +139,80 @@ const ExpandedButton = () => {
   );
 };
 
+const ContrastCheckerFailing = () => {
+  const [activeButton, setActiveButton] = React.useState<
+    null | 'all' | 'aa' | 'aaa'
+  >(null);
+
+  // @ts-ignore
+  const failingStyle = styles[`failingText_${activeButton || ''}`];
+
+  return (
+    <>
+      <Spacer height={'big'} />
+      <Header title="Test 'Contrast checker failing'" />
+      <View style={styles.testButtons}>
+        <CTAPressable
+          title="ALL"
+          onPress={() => setActiveButton('all')}
+          checked={activeButton === 'all'}
+        />
+        <CTAPressable
+          title="AA"
+          marginLeft={theme.padding.small}
+          marginRight={theme.padding.small}
+          onPress={() => setActiveButton('aa')}
+          checked={activeButton === 'aa'}
+        />
+        <CTAPressable
+          title="AAA"
+          onPress={() => setActiveButton('aaa')}
+          checked={activeButton === 'aaa'}
+        />
+      </View>
+      {activeButton === null ? null : (
+        <Pressable
+          style={styles.failingButtonStyle}
+          accessibilityRole="button"
+          accessibilityLabel="This fails">
+          <>
+            <Text style={failingStyle}>This fails</Text>
+          </>
+        </Pressable>
+      )}
+    </>
+  );
+};
+
+const MinimumSizeFailing = () => {
+  const [isButtonVisible, setIsButtonVisible] = React.useState(false);
+
+  return (
+    <>
+      <Spacer height={'big'} />
+      <Header title="Test Minimum size failing" />
+      <Spacer height="normal" />
+      <CTAPressable
+        title="Make it fail"
+        onPress={() => setIsButtonVisible(true)}
+      />
+      {isButtonVisible ? (
+        <Pressable
+          style={styles.minSizeFailing}
+          accessibilityRole="button"
+          accessibilityLabel="This fails">
+          <>
+            <Text style={{ color: theme.color.white }}>This fails</Text>
+          </>
+        </Pressable>
+      ) : null}
+    </>
+  );
+};
+
 const styles = StyleSheet.create({
   list: {
     paddingHorizontal: theme.padding.big,
-    paddingTop: theme.padding.big,
   },
   checkButton: {
     flexDirection: 'row',
@@ -141,5 +221,34 @@ const styles = StyleSheet.create({
   },
   checkLabel: {
     paddingLeft: theme.padding.normal,
+  },
+  testButtons: {
+    paddingTop: theme.padding.normal,
+    flexDirection: 'row',
+  },
+  failingButtonStyle: {
+    backgroundColor: theme.color.black,
+    flex: 1,
+    minHeight: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: theme.padding.normal,
+  },
+  failingText_all: {
+    color: '#5a5a5a',
+  },
+  failingText_aa: {
+    color: '#c70000',
+  },
+  failingText_aaa: {
+    color: '#FF0000',
+  },
+  minSizeFailing: {
+    backgroundColor: theme.color.black,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: theme.padding.normal,
+    height: 40,
+    flex: 1,
   },
 });
