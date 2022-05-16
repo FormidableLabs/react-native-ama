@@ -21,7 +21,7 @@ The component exposes all the React Native [Pressable](https://reactnative.dev/d
 
 ### Contrast checker
 
-The component performs a [contrast check](/docs/settings/contrast) between its background colour and the children's foreground when in dev mode.
+The component performs a [contrast check](/docs/rules/contrast) between its background colour and the children's foreground when in dev mode.
 
 :::note
 AMA performs the check on both pressed and non-pressed states when passing a function as style.
@@ -29,7 +29,7 @@ AMA performs the check on both pressed and non-pressed states when passing a fun
 
 ### Minimum size
 
-The component uses the [onLayout](https://reactnative.dev/docs/layoutevent) prop to perform the [minium size check](/docs/settings/minimum-size).
+The component uses the [onLayout](https://reactnative.dev/docs/layoutevent) prop to perform the [minium size check](/docs/rules/minimum-size).
 
 ## Additional Props
 

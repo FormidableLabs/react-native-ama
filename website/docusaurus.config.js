@@ -65,8 +65,8 @@ const config = {
                         to: '/docs/hooks/',
                     },
                     {
-                        label: 'Settings',
-                        to: '/docs/settings/',
+                        label: 'Rules',
+                        to: '/docs/rules/',
                     },
                 ],
             },

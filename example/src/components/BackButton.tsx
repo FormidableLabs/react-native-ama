@@ -32,7 +32,7 @@ export const BackButton = () => {
 
 const styles = StyleSheet.create({
   button: {
-    // width: 48,
-    // height: 48,
+    width: 48,
+    height: 48,
   },
 });

@@ -14,5 +14,8 @@ export const theme = {
     white: '#fff',
     hover: '#005D85',
     disabled: '#5C5757',
+    checked: '#820085',
+    mixed: '#006602',
+    selected: '#660000',
   },
 };

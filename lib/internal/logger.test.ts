@@ -37,6 +37,7 @@ describe('Logger', () => {
 
       expect(consoleWarn).toHaveBeenCalledWith(
         `${SHELL_COLORS.RED}❌ [AMA CONTRAST_FAILED_AAA]${SHELL_COLORS.RESET} - ${SHELL_COLORS.YELLOW}Error Message${SHELL_COLORS.RESET}\n\n${RULES_HELP.CONTRAST_FAILED_AAA}`,
+        '\n',
       );
     });
   });
@@ -57,6 +58,7 @@ describe('Logger', () => {
 
       expect(consoleWarn).toHaveBeenCalledWith(
         `${SHELL_COLORS.RED}❌ [AMA CONTRAST_FAILED]${SHELL_COLORS.RESET} - ${SHELL_COLORS.YELLOW}Another message${SHELL_COLORS.RESET}\n\n${RULES_HELP.CONTRAST_FAILED}`,
+        '\n',
       );
     });
   });

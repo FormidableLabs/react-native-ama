@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Log rules
+# Rules
 
 In dev mode, AMA components try to enforce fundamental accessibility issues by throwing an error (in dev build only) by throwing an error or a warning if a rule is broken. For example, missing accessibility label, poor color contrast, minimum size not met, etc.
 
