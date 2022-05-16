@@ -57,8 +57,16 @@ const config = {
                 },
                 items: [
                     {
+                        label: 'Components',
+                        to: '/docs/components/',
+                    },
+                    {
                         label: 'Hooks',
                         to: '/docs/hooks/',
+                    },
+                    {
+                        label: 'Settings',
+                        to: '/docs/settings/',
                     },
                 ],
             },

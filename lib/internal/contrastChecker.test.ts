@@ -12,9 +12,8 @@ describe('Contrast Checker', () => {
     contrastChecker(
       [{ width: 100 }],
       [
-        { displayName: 'Component 2', props: { style: { color: 'fff' } } },
+        { props: { style: { color: 'fff' } } },
         {
-          displayName: 'Component 1',
           props: {
             style: [{ textTransform: 'uppercase' }, { color: '#4a4a4a' }],
           },
@@ -30,9 +29,8 @@ describe('Contrast Checker', () => {
       const log = jest.spyOn(Logger, 'log');
 
       contrastChecker({ backgroundColor: '#000' }, [
-        { displayName: 'Component 2', props: { style: { color: 'fff' } } },
+        { props: { style: { color: 'fff' } } },
         {
-          displayName: 'Component 1',
           props: {
             style: { color: '#4a4a4a' },
           },
@@ -41,7 +39,8 @@ describe('Contrast Checker', () => {
 
       expect(log).toHaveBeenCalledWith(
         'CONTRAST_FAILED',
-        '"Component 1" fails all the contrast check',
+        '"background: #000 with foreground: #4a4a4a: " fails all the contrast check',
+        { props: { style: { color: '#4a4a4a' } } },
       );
     });
 
@@ -49,9 +48,8 @@ describe('Contrast Checker', () => {
       const log = jest.spyOn(Logger, 'log');
 
       contrastChecker({ backgroundColor: '#000' }, [
-        { displayName: 'Component 2', props: { style: { color: 'fff' } } },
+        { props: { style: { color: 'fff' } } },
         {
-          displayName: 'Component 1',
           props: {
             style: [{ textTransform: 'uppercase' }, { color: '#4a4a4a' }],
           },
@@ -60,7 +58,12 @@ describe('Contrast Checker', () => {
 
       expect(log).toHaveBeenCalledWith(
         'CONTRAST_FAILED',
-        '"Component 1" fails all the contrast check',
+        '"background: #000 with foreground: #4a4a4a: " fails all the contrast check',
+        {
+          props: {
+            style: [{ textTransform: 'uppercase' }, { color: '#4a4a4a' }],
+          },
+        },
       );
     });
 
@@ -70,9 +73,8 @@ describe('Contrast Checker', () => {
       contrastChecker(
         [{ backgroundColor: '#000' }],
         [
-          { displayName: 'Component 2', props: { style: { color: 'fff' } } },
+          { props: { style: { color: 'fff' } } },
           {
-            displayName: 'Component 1',
             props: {
               style: [{ textTransform: 'uppercase' }, { color: '#4a4a4a' }],
             },
@@ -82,8 +84,79 @@ describe('Contrast Checker', () => {
 
       expect(log).toHaveBeenCalledWith(
         'CONTRAST_FAILED',
-        '"Component 1" fails all the contrast check',
+        '"background: #000 with foreground: #4a4a4a: " fails all the contrast check',
+        {
+          props: {
+            style: [{ textTransform: 'uppercase' }, { color: '#4a4a4a' }],
+          },
+        },
       );
+    });
+
+    it('handles nested children', () => {
+      const log = jest.spyOn(Logger, 'log');
+
+      contrastChecker(
+        [{ backgroundColor: '#000' }],
+        [
+          {
+            props: {
+              style: { color: 'fff' },
+              children: [
+                {
+                  props: {
+                    style: [
+                      { textTransform: 'uppercase' },
+                      { color: '#4a4a4a' },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      );
+
+      expect(log).toHaveBeenCalledWith(
+        'CONTRAST_FAILED',
+        '"background: #000 with foreground: #4a4a4a: " fails all the contrast check',
+        {
+          props: {
+            style: [{ textTransform: 'uppercase' }, { color: '#4a4a4a' }],
+          },
+        },
+      );
+    });
+
+    it('handles nested children up to the specified level', () => {
+      const log = jest.spyOn(Logger, 'log');
+
+      contrastChecker(
+        [{ backgroundColor: '#000' }],
+        [
+          {
+            props: {
+              style: { color: 'fff' },
+              children: [
+                {
+                  props: {
+                    children: [
+                      {
+                        style: [
+                          { textTransform: 'uppercase' },
+                          { color: '#4a4a4a' },
+                        ],
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      );
+
+      expect(log).not.toHaveBeenCalled();
     });
   });
 
@@ -92,9 +165,8 @@ describe('Contrast Checker', () => {
       const log = jest.spyOn(Logger, 'log');
 
       contrastChecker({ backgroundColor: '#000' }, [
-        { displayName: 'Component 2', props: { style: { color: '#6B6B6B' } } },
+        { props: { style: { color: '#6B6B6B' } } },
         {
-          displayName: 'Component 1',
           props: {
             style: { color: '#fff' },
           },
@@ -103,7 +175,8 @@ describe('Contrast Checker', () => {
 
       expect(log).toHaveBeenCalledWith(
         'CONTRAST_FAILED',
-        '"Component 2" fails AA Normal Text, but ✅ passes AA Large Text',
+        '"background: #000 with foreground: #6B6B6B: " fails AA Normal Text, but ✅ passes AA Large Text',
+        { props: { style: { color: '#6B6B6B' } } },
       );
     });
 
@@ -112,13 +185,11 @@ describe('Contrast Checker', () => {
 
       contrastChecker({ backgroundColor: '#000' }, [
         {
-          displayName: 'Component 2',
           props: {
             style: { color: '#6B6B6B', fontSize: 14, fontWeight: 'bold' },
           },
         },
         {
-          displayName: 'Component 1',
           props: {
             style: { color: '#fff' },
           },
@@ -133,13 +204,11 @@ describe('Contrast Checker', () => {
 
       contrastChecker({ backgroundColor: '#000' }, [
         {
-          displayName: 'Component 2',
           props: {
             style: { color: '#6B6B6B', fontSize: 18 },
           },
         },
         {
-          displayName: 'Component 1',
           props: {
             style: { color: '#fff' },
           },
@@ -154,9 +223,8 @@ describe('Contrast Checker', () => {
     const log = jest.spyOn(Logger, 'log');
 
     contrastChecker({ backgroundColor: '#000' }, [
-      { displayName: 'Component 2', props: { style: { color: '#757575' } } },
+      { props: { style: { color: '#757575' } } },
       {
-        displayName: 'Component 1',
         props: {
           style: { color: '#fff' },
         },
@@ -165,12 +233,19 @@ describe('Contrast Checker', () => {
 
     expect(log).toHaveBeenCalledWith(
       'CONTRAST_FAILED_AAA',
-      '"Component 2" fails the AAA Level',
+      '"background: #000 with foreground: #757575: " fails the AAA Level',
+      { props: { style: { color: '#757575' } } },
     );
   });
 });
 
-jest.mock('./logger');
+jest.mock('./logger', () => {
+  return {
+    log: jest.fn(),
+    getContrastCheckerMaxDepth: () => 2,
+  };
+});
+
 jest.mock('react', () => {
   return {
     Children: {

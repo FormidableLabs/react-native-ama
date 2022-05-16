@@ -1,25 +1,39 @@
-const overrideRules: Record<Partial<Rule>, RuleValue> | null = null;
-// (() => {
-//   try {
-//     return require('./../../ama.json');
-//   } catch {}
-//
-//   return null;
-// })();
+const overrideRules: Record<
+  Partial<Rule> | 'CONTRAST_CHECKER_MAX_DEPTH',
+  RuleValue | number
+> | null = require('./../../ama.rules.json');
 
-import type { Rule, RuleValue } from './logger.rules';
-import { loggerRules } from './logger.rules';
+import { Rule, RuleValue, SHELL_COLORS } from './logger.rules';
+import {
+  LOGGER_RULES,
+  CONTRAST_CHECKER_MAX_DEPTH,
+  RULES_HELP,
+} from './logger.rules';
 
-export const log = (rule: Rule, message: string) => {
-  const action = overrideRules?.[rule] || loggerRules[rule];
+export const log = (rule: Rule, message: string, extra?: any) => {
+  const action = overrideRules?.[rule] || LOGGER_RULES[rule];
 
-  const formattedMessage = `❌ [AMA ${rule}] - ${message}`;
+  const formattedMessage = `${SHELL_COLORS.RED}❌ [AMA ${rule}]${SHELL_COLORS.RESET} - ${SHELL_COLORS.YELLOW}${message}${SHELL_COLORS.RESET}\n\n${RULES_HELP[rule]}`;
 
   switch (action) {
     case 'throw':
-      console.error(formattedMessage);
-      throw new Error(formattedMessage);
+      if (extra) {
+        console.info(extra, '\n');
+      }
+      console.error(formattedMessage, '\n');
+
+      throw new Error(`❌ [AMA ${rule}] - ${message}`);
     case 'warn':
+      if (extra) {
+        console.info(extra, '\n');
+      }
+
       console.warn(formattedMessage);
   }
+};
+
+export const getContrastCheckerMaxDepth = () => {
+  return (
+    overrideRules?.CONTRAST_CHECKER_MAX_DEPTH || CONTRAST_CHECKER_MAX_DEPTH
+  );
 };

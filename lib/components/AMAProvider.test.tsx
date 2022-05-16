@@ -33,9 +33,13 @@ describe('AMAProvider', () => {
   });
 
   it.each`
-    eventName                | valueName
-    ${'reduceMotionChanged'} | ${'reduceMotion'}
-    ${'screenReaderChanged'} | ${'screenReaderEnabled'}
+    eventName                      | valueName
+    ${'reduceMotionChanged'}       | ${'isReduceMotionEnabled'}
+    ${'screenReaderChanged'}       | ${'isScreenReaderEnabled'}
+    ${'reduceTransparencyChanged'} | ${'isReduceTransparencyEnabled'}
+    ${'grayscaleChanged'}          | ${'isGrayscaleEnabled'}
+    ${'boldTextChanged'}           | ${'isBoldTextEnabled'}
+    ${'invertColorsChanged'}       | ${'isInvertColorsEnabled'}
   `(
     'reacts to the events change',
     ({
@@ -75,13 +79,16 @@ describe('AMAProvider', () => {
     eventName
     ${'reduceMotionChanged'}
     ${'screenReaderChanged'}
+    ${'reduceTransparencyChanged'}
+    ${'grayscaleChanged'}
+    ${'boldTextChanged'}
+    ${'invertColorsChanged'}
   `(
     'remove the "$eventName" subscription when the provider is unmounted',
     ({ eventName }) => {
       const removeMock = jest.fn();
       jest
         .spyOn(AccessibilityInfo, 'addEventListener')
-        // @ts-ignore
         .mockImplementation((name, _callback) => {
           return { remove: name === eventName ? removeMock : jest.fn() };
         });
