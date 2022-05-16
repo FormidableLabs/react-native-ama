@@ -26,7 +26,8 @@ const checkContrastInChildren = (
 ) => {
   React.Children.forEach(children as any, (child: JSX.Element | undefined) => {
     const childStyle = child?.props?.style || {};
-    const color = getPropertyFromStyle(childStyle, 'color');
+    const color =
+      getPropertyFromStyle(childStyle, 'color') || child?.props?.stroke;
 
     if (color) {
       performContrastCheck(backgroundColor, color, child, childStyle);
