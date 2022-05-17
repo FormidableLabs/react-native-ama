@@ -9,6 +9,7 @@ import { BackButton } from './src/components/BackButton';
 import { Header } from './src/components/Header';
 import { HomeScreen } from './src/screens/Home.screen';
 import { PressableScreen } from './src/screens/Pressable.screen';
+import { TextScreen } from './src/screens/Text.screen';
 import type { RootStackParamList } from './src/types';
 
 const App = () => {
@@ -32,6 +33,14 @@ const App = () => {
                 headerTitle: () => (
                   <Header title={'Pressable Demo'} autofocus />
                 ),
+              }}
+            />
+            <Stack.Screen
+              name="Text"
+              component={TextScreen}
+              options={{
+                headerLeft: () => <BackButton />,
+                headerTitle: () => <Header title={'Text Demo'} autofocus />,
               }}
             />
           </Stack.Navigator>

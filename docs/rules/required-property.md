@@ -11,6 +11,6 @@ To avoid being a TypeScript-only library, AMA also performs the required propert
 The Log level type can be customised, [here for more info](/docs/advanced/custom-log-rules)
 :::
 
-#### PROPERTY_UNDEFINED
+## PROPERTY_UNDEFINED
 
 This is used when a property marked as required in TS is not present, for example: `accessibilityRole` for the [Pressable](/react-native-ama/docs/components/Pressable) component.

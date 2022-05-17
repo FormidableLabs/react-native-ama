@@ -11,6 +11,7 @@ import {
 import { contrastChecker } from '../internal/contrastChecker';
 import { amaNoUndefined } from '../internal/debug';
 import { checkMinimumSize } from '../internal/checkMinimumSize';
+import { accessibilityLabelChecker } from '../internal/accessibilityLabelChecker';
 
 export type PressableProps = Omit<
   RNPressableProps,
@@ -44,7 +45,9 @@ export const Pressable: React.FC<PressableProps> = ({ children, ...rest }) => {
       } else {
         contrastChecker(rest.style, children);
       }
-    }, [rest.style, children]);
+
+      accessibilityLabelChecker(rest.accessibilityLabel);
+    }, [rest.style, rest.accessibilityLabel, children]);
 
   return (
     <RNPressable
