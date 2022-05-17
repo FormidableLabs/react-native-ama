@@ -3,6 +3,7 @@ import type { StyleProp } from 'react-native';
 import { score } from 'wcag-color';
 
 import { getContrastCheckerMaxDepth, log } from './logger';
+import { getPropertyFromStyle } from './styleHandler';
 
 const MAX_DEPTH_LEVEL = getContrastCheckerMaxDepth();
 
@@ -76,15 +77,6 @@ const performContrastCheck = (
     case 'AA':
       log('CONTRAST_FAILED_AAA', `"${testFailed}" fails the AAA Level`, child);
   }
-};
-
-const getPropertyFromStyle = (
-  style: StyleProp<any> | StyleProp<any>[] | null,
-  key: keyof StyleProp<any>,
-) => {
-  return Array.isArray(style)
-    ? style.find(theStyle => theStyle[key])?.[key]
-    : style?.[key];
 };
 
 const getContrastScore = (c1: string, c2: string) => {

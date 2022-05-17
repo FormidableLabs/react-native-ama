@@ -1,5 +1,3 @@
-import * as fs from 'fs';
-
 import { log } from './logger';
 import { RULES_HELP, SHELL_COLORS } from './logger.rules';
 
@@ -13,10 +11,6 @@ beforeEach(() => {
 
 describe('Logger', () => {
   describe('When no custom logger rules have been defined uses the default ones', () => {
-    beforeEach(() => {
-      jest.spyOn(fs, 'existsSync').mockReturnValue(false);
-    });
-
     it('log: console.log and throws an error when the rule is "throw"', () => {
       const consoleError = jest.spyOn(console, 'error');
 

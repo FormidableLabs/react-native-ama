@@ -4,6 +4,8 @@ import { StyleSheet } from 'react-native';
 import { Pressable } from 'react-native-ama';
 import Svg, { Path } from 'react-native-svg';
 
+import { theme } from '../theme';
+
 export const BackButton = () => {
   const navigation = useNavigation();
 
@@ -32,7 +34,10 @@ export const BackButton = () => {
 
 const styles = StyleSheet.create({
   button: {
+    backgroundColor: theme.color.white,
     width: 48,
     height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

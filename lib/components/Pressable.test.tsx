@@ -6,6 +6,7 @@ import { Text } from 'react-native';
 import * as ContrastChecker from '../internal/contrastChecker';
 import * as AMADebugUtils from '../internal/debug';
 import { Pressable, PressableProps } from './Pressable';
+import * as AccessibilityLabelChecker from '../internal/accessibilityLabelChecker';
 
 beforeEach(() => {
   // @ts-ignore
@@ -218,6 +219,20 @@ describe('AMA Pressable', () => {
         <Text style={{ color: '#fff' }}>Test</Text>,
       );
     });
+  });
+
+  it('calls accessibilityLabelChecker for the accessibilityLabel', () => {
+    const spy = jest.spyOn(
+      AccessibilityLabelChecker,
+      'accessibilityLabelChecker',
+    );
+
+    renderPressable({
+      accessibilityLabel: 'test accessibilityLabel',
+      accessibilityRole: 'button',
+    });
+
+    expect(spy).toHaveBeenCalledWith('test accessibilityLabel');
   });
 });
 
