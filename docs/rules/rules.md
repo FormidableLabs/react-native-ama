@@ -37,10 +37,25 @@ AMA allows two-level of logs:
 | -------------------------- | ----- |
 | CONTRAST_CHECKER_MAX_DEPTH | 5     |
 
+### accessibilityLabelExceptions
+
+This field is empty by default and can be overriden by specifying a list of accessibilityLabel to be excluded from the all caps check.
 
 ## Customising the log levels
 
 To customise the log rules, create a JSON file called `ama.json` in the project's root folder, then specify the custom log level to use for the wanted key.
+
+### Example:
+
+```json
+{
+    "rules": {
+        "CONTRAST_FAILED": "warn",
+        "CONTRAST_CHECKER_MAX_DEPTH": 0
+    },
+    "accessibilityLabelExceptions": ["A A"]
+}
+```
 
 :::note
 

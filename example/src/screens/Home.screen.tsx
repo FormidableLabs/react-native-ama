@@ -48,8 +48,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   spanStyle: {
-    fontSize: 42,
     fontWeight: 'bold',
-    backgroundColor: 'red',
+    color: 'red',
   },
 });

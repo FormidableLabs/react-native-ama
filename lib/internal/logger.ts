@@ -1,7 +1,4 @@
-const overrideRules: Record<
-  Partial<Rule> | 'CONTRAST_CHECKER_MAX_DEPTH',
-  RuleValue | number
-> | null = require('./../../ama.rules.json');
+const overrideRules: OverrideRule = require('./../../ama.rules.json');
 
 import { Rule, RuleValue, SHELL_COLORS } from './logger.rules';
 import {
@@ -10,8 +7,16 @@ import {
   RULES_HELP,
 } from './logger.rules';
 
+type OverrideRule = {
+  rules: Record<
+    Partial<Rule> | 'CONTRAST_CHECKER_MAX_DEPTH',
+    RuleValue | number
+  > | null;
+  accessibilityLabelExceptions: string[];
+};
+
 export const log = (rule: Rule, message: string, extra?: any) => {
-  const action = overrideRules?.[rule] || LOGGER_RULES[rule];
+  const action = overrideRules?.rules?.[rule] || LOGGER_RULES[rule];
 
   const formattedMessage = `${SHELL_COLORS.RED}❌ [AMA ${rule}]${SHELL_COLORS.RESET} - ${SHELL_COLORS.YELLOW}${message}${SHELL_COLORS.RESET}\n\n${RULES_HELP[rule]}`;
 
@@ -34,6 +39,13 @@ export const log = (rule: Rule, message: string, extra?: any) => {
 
 export const getContrastCheckerMaxDepth = () => {
   return (
-    overrideRules?.CONTRAST_CHECKER_MAX_DEPTH || CONTRAST_CHECKER_MAX_DEPTH
+    overrideRules?.rules?.CONTRAST_CHECKER_MAX_DEPTH ||
+    CONTRAST_CHECKER_MAX_DEPTH
+  );
+};
+
+export const isAccessibilityLabelAllowed = (accessibilityLabel: string) => {
+  return overrideRules?.accessibilityLabelExceptions?.includes(
+    accessibilityLabel,
   );
 };

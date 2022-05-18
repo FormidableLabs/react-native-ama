@@ -1,39 +1,75 @@
 import React from 'react';
-import { TextProps, requireNativeComponent } from 'react-native';
+import { ColorValue, TextProps, requireNativeComponent } from 'react-native';
 
-type AMASpanProps = {
-  content: SpanItem[];
-  style: Pick<TextProps, 'style'>;
+type SpanProps = {
+  style: Pick<TextProps, 'style'>['style'];
+  linkColor?: ColorValue | undefined;
+  linkBackgroundColor?: ColorValue | undefined;
 };
 
-type SpanItem = {
+export const Span: React.FC<SpanProps> = ({ children, ...rest }) => {
+  const parts: SpanPart[] = [];
+  const callbacks: any[] = [];
+
+  React.Children.forEach(children, child => {
+    const part = extractParts(child);
+
+    if (part) {
+      // @ts-ignore
+      parts.push(part.item);
+      callbacks.push(part.onPress);
+    }
+  });
+
+  const handleOnPress = (event: AMASpanViewEvent) => {
+    const { spanIndex } = event.nativeEvent;
+    const onPress = callbacks?.[spanIndex];
+
+    if (onPress) {
+      onPress();
+    }
+  };
+
+  return <AMASpan {...rest} onPress={handleOnPress} content={parts || []} />;
+};
+
+type AMASpanProps = {
+  content: SpanPart[];
+  style: Pick<TextProps, 'style'>['style'];
+  onPress: Function;
+};
+
+type SpanPart = {
   text: string;
-  onPress?: any;
+  onPress?: Function;
+};
+
+type AMASpanViewEvent = {
+  nativeEvent: {
+    spanIndex: number;
+  };
 };
 
 const AMASpan = requireNativeComponent<AMASpanProps>('AMASpan');
 
-export const Span: React.FC<{ style: Pick<TextProps, 'style'> }> = ({
-  children,
-  style,
-}) => {
-  const parts = React.Children.map(children, child => {
-    if (typeof child === 'string') {
-      return { text: child };
-    }
+function extractParts(child: React.ReactNode) {
+  if (typeof child === 'string') {
+    return { item: { text: child } };
+  }
 
-    // @ts-ignore
-    if (typeof child === 'object' && child?.type?.name === 'ClickableSpan') {
+  // @ts-ignore
+  if (typeof child === 'object' && child?.type?.name === 'ClickableSpan') {
+    return {
       // @ts-ignore
-      return { text: child?.props?.children, onPress: 'ciao' };
-    }
+      item: { text: child?.props?.children, onPress: 'link' },
+      // @ts-ignore
+      onPress: child?.props?.onPress,
+    };
+  }
 
-    if (__DEV__) {
-      throw new Error(
-        'Only String & <ClickableSpan /> components are supported as child of <Span />!',
-      );
-    }
-  });
-
-  return <AMASpan style={style} content={parts || []} />;
-};
+  if (__DEV__) {
+    throw new Error(
+      'Only String & <ClickableSpan /> components are supported as child of <Span />!',
+    );
+  }
+}
