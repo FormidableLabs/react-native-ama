@@ -40,7 +40,9 @@ describe('Logger', () => {
     it('it uses the the override rules first', () => {
       jest.doMock('./../../ama.rules.json', () => {
         return {
-          CONTRAST_FAILED: 'warn',
+          rules: {
+            CONTRAST_FAILED: 'warn',
+          },
         };
       });
 
