@@ -23,7 +23,7 @@ export const Text: React.FC<TextProps> = ({ autofocus, ...rest }) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     React.useEffect(() => {
       uppercaseChecker(rest.style, rest.accessibilityLabel);
-      accessibilityLabelChecker(rest.accessibilityLabel, rest);
+      accessibilityLabelChecker(rest.accessibilityLabel);
     }, [rest, rest.accessibilityLabel, rest.style]);
 
   return <RNText ref={textRef} {...rest} />;

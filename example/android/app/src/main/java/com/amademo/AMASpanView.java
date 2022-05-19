@@ -1,13 +1,15 @@
 package com.amademo;
 
-import android.graphics.Canvas;
+import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.ClickableSpan;
+import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.TextView;
 
@@ -22,23 +24,20 @@ import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
+import com.facebook.react.views.text.ReactTextView;
 import com.facebook.react.views.text.ReactTypefaceUtils;
 
-public class AMASpanView extends androidx.appcompat.widget.AppCompatTextView {
-    private final AMATextShadowNode mAMATextShadowNode;
+public class AMASpanView extends ReactTextView {
     private String mFontFamily;
     private int mFontWeight;
     private int mFontStyle;
-    private int oldHeight;
-    private ReadableArray mContent;
     private int mLinkBackgroundColor = Color.TRANSPARENT;
+    private int mLinkStyle = Typeface.NORMAL;
+    private ReadableArray mContent;
 
-    public AMASpanView(ThemedReactContext reactContext, AMATextShadowNode amaTextShadowNode) {
-        super(reactContext);
-
-        mAMATextShadowNode = amaTextShadowNode;
+    public AMASpanView(Context context) {
+        super(context);
 
         ViewCompat.setAccessibilityDelegate(this, new AccessibilityDelegateCompat() {
             @Override
@@ -54,13 +53,17 @@ public class AMASpanView extends androidx.appcompat.widget.AppCompatTextView {
         });
     }
 
-    public void setContent(@NonNull ReadableArray spans) {
-        mContent = spans;
+    public void setText(@NonNull ReadableArray content) {
+        mContent = content;
 
         update();
     }
 
-    private void update() {
+    public void update() {
+        if (mContent == null) {
+            return;
+        }
+
         SpannableStringBuilder spanText = new SpannableStringBuilder();
         int start = 0;
 
@@ -73,12 +76,12 @@ public class AMASpanView extends androidx.appcompat.widget.AppCompatTextView {
 
             if (callback != null) {
                 int end = start + text.length();
-                int finalIndex = index;
+                int spanIndex = index;
 
                 spanText.setSpan(new ClickableSpan() {
                     @Override
                     public void onClick(@NonNull View view) {
-                        dispatchOnPress(finalIndex);
+                        dispatchOnPress(spanIndex);
                     }
                 }, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -87,11 +90,12 @@ public class AMASpanView extends androidx.appcompat.widget.AppCompatTextView {
                         start,
                         end,
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                spanText.setSpan(new StyleSpan(mLinkStyle), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
 
             start += text.length();
         }
-
 
         setMovementMethod(LinkMovementMethod.getInstance());
         setText(spanText, TextView.BufferType.SPANNABLE);
@@ -105,31 +109,8 @@ public class AMASpanView extends androidx.appcompat.widget.AppCompatTextView {
                         getTypeface(), mFontStyle, mFontWeight, mFontFamily, getContext().getAssets());
 
         setTypeface(newTypeface);
-        requestLayout();
-    }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
 
         requestLayout();
-    }
-
-    @Override
-    protected void onLayout(boolean changed, int textViewLeft, int textViewTop, int textViewRight, int textViewBottom) {
-        super.onLayout(changed, textViewLeft, textViewTop, textViewRight, textViewBottom);
-
-        setWidth(textViewRight - textViewLeft);
-        measure(0, 0);
-
-        int newHeight = getMeasuredHeight();
-
-        if (newHeight == oldHeight) {
-            return;
-        }
-
-        oldHeight = newHeight;
-        mAMATextShadowNode.update(oldHeight);
     }
 
     public void setFontFamily(String fontFamily) {
@@ -152,16 +133,12 @@ public class AMASpanView extends androidx.appcompat.widget.AppCompatTextView {
 
     public void setFontSize(float fontSize) {
         this.setTextSize(fontSize);
-
-        requestLayout();
     }
 
     public void setLinkBackgroundColor(int color) {
         mLinkBackgroundColor = color;
 
-        if (mContent != null) {
-            update();
-        }
+        update();
     }
 
     private void dispatchOnPress(int index) {
@@ -174,6 +151,19 @@ public class AMASpanView extends androidx.appcompat.widget.AppCompatTextView {
                 onPressEvent.EVENT_NAME,
                 map
         );
+    }
+
+    public void setLinkStyle(int linkStyle) {
+        mLinkStyle = linkStyle;
+
+        update();
+    }
+
+    @Override
+    public void setTextColor(int color) {
+        super.setTextColor(color);
+
+        update();
     }
 }
 

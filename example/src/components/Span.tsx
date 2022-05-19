@@ -2,13 +2,14 @@ import React from 'react';
 import { ColorValue, TextProps, requireNativeComponent } from 'react-native';
 
 type SpanProps = {
-  style: Pick<TextProps, 'style'>['style'];
+  style?: Pick<TextProps, 'style'>['style'];
   linkColor?: ColorValue | undefined;
   linkBackgroundColor?: ColorValue | undefined;
+  linkStyle?: LinkStyle;
 };
 
 export const Span: React.FC<SpanProps> = ({ children, ...rest }) => {
-  const parts: SpanPart[] = [];
+  const parts: TextPart[] = [];
   const callbacks: any[] = [];
 
   React.Children.forEach(children, child => {
@@ -30,16 +31,23 @@ export const Span: React.FC<SpanProps> = ({ children, ...rest }) => {
     }
   };
 
-  return <AMASpan {...rest} onPress={handleOnPress} content={parts || []} />;
+  return <AMASpan {...rest} onPress={handleOnPress} text={parts} />;
 };
 
-type AMASpanProps = {
-  content: SpanPart[];
-  style: Pick<TextProps, 'style'>['style'];
+export enum LinkStyle {
+  NORMAL,
+  BOLD,
+  ITALIC,
+  BOLD_ITALIC,
+}
+
+type NativeAMASpanProps = {
+  text: TextPart[];
+  style?: Pick<TextProps, 'style'>['style'];
   onPress: Function;
 };
 
-type SpanPart = {
+type TextPart = {
   text: string;
   onPress?: Function;
 };
@@ -50,7 +58,7 @@ type AMASpanViewEvent = {
   };
 };
 
-const AMASpan = requireNativeComponent<AMASpanProps>('AMASpan');
+export const AMASpan = requireNativeComponent<NativeAMASpanProps>('AMASpan');
 
 function extractParts(child: React.ReactNode) {
   if (typeof child === 'string') {
