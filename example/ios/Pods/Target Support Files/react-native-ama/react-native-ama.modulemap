@@ -1,0 +1,6 @@
+module react_native_ama {
+  umbrella header "react-native-ama-umbrella.h"
+
+  export *
+  module * { export * }
+}
