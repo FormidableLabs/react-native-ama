@@ -1,53 +1,38 @@
 {
-  "name": "react-native-ama-demo",
+  "name": "react-native-ama-example",
+  "description": "Example app for react-native-ama",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "start": "react-native start",
-    "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "start": "react-native start"
   },
   "dependencies": {
-    "@ianvs/prettier-plugin-sort-imports": "^3.3.1",
-    "@react-navigation/native": "^6.0.10",
-    "@react-navigation/native-stack": "^6.6.2",
-    "react": "17.0.2",
-    "react-native": "0.68.1",
-    "react-native-error-boundary": "^1.1.13",
-    "react-native-safe-area-context": "^4.2.5",
-    "react-native-screens": "^3.13.1",
-    "react-native-svg": "^12.3.0"
+    "react": "16.13.1",
+    "react-native": "0.64"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9",
+    "@babel/core": "^7.12.10",
     "@babel/runtime": "^7.12.5",
+    "@ianvs/prettier-plugin-sort-imports": "^3.3.1",
     "@react-native-community/eslint-config": "^2.0.0",
+    "@react-navigation/native": "^6.0.10",
+    "@react-navigation/native-stack": "^6.6.2",
     "@types/jest": "^26.0.23",
-    "@types/react-native": "^0.67.3",
     "@types/react-test-renderer": "^17.0.1",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
     "babel-jest": "^26.6.3",
+    "babel-plugin-module-resolver": "^4.0.0",
     "eslint": "^7.32.0",
     "jest": "^26.6.3",
-    "metro-react-native-babel-preset": "^0.67.0",
+    "metro-react-native-babel-preset": "^0.64.0",
+    "react-native-error-boundary": "^1.1.13",
+    "react-native-safe-area-context": "3.2.0",
+    "react-native-screens": "^3.13.1",
+    "react-native-svg": "^12.3.0",
     "react-test-renderer": "17.0.2",
     "typescript": "^4.4.4"
-  },
-  "resolutions": {
-    "@types/react": "^17"
-  },
-  "jest": {
-    "preset": "react-native",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
   }
 }
