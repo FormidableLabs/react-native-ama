@@ -16,6 +16,7 @@ describe('accessibilityLabelChecker', () => {
       expect(logSpy).toHaveBeenCalledWith(
         'UPPERCASE_ACCESSIBILITY_LABEL',
         'The accessibilityLabel cannot be all CAPS',
+        accessibilityLabel,
       );
     },
   );

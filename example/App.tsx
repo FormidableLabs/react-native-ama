@@ -9,6 +9,7 @@ import { BackButton } from './src/components/BackButton';
 import { Header } from './src/components/Header';
 import { HomeScreen } from './src/screens/Home.screen';
 import { PressableScreen } from './src/screens/Pressable.screen';
+import { SpanScreen } from './src/screens/Span.screen';
 import { TextScreen } from './src/screens/Text.screen';
 import type { RootStackParamList } from './src/types';
 
@@ -41,6 +42,14 @@ const App = () => {
               options={{
                 headerLeft: () => <BackButton />,
                 headerTitle: () => <Header title={'Text Demo'} autofocus />,
+              }}
+            />
+            <Stack.Screen
+              name="Span"
+              component={SpanScreen}
+              options={{
+                headerLeft: () => <BackButton />,
+                headerTitle: () => <Header title={'Span Demo'} autofocus />,
               }}
             />
           </Stack.Navigator>

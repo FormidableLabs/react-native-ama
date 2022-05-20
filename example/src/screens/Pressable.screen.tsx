@@ -154,11 +154,13 @@ const ContrastCheckerFailing = () => {
       <View style={styles.testButtons}>
         <CTAPressable
           title="ALL"
+          accessibilityLabel="All"
           onPress={() => setActiveButton('all')}
           checked={activeButton === 'all'}
         />
         <CTAPressable
           title="AA"
+          accessibilityLabel="A A"
           marginLeft={theme.padding.small}
           marginRight={theme.padding.small}
           onPress={() => setActiveButton('aa')}
@@ -166,6 +168,7 @@ const ContrastCheckerFailing = () => {
         />
         <CTAPressable
           title="AAA"
+          accessibilityLabel="A A A"
           onPress={() => setActiveButton('aaa')}
           checked={activeButton === 'aaa'}
         />

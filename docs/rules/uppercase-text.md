@@ -66,6 +66,11 @@ This is used when a component uses the `textTransform: uppercase` style without 
 
 This is used when a component has the `accessibilityLabel` prop in all caps.
 
+:::tip
+
+Is possible to specify a list of allowed all caps accessibility labels, [more info here](/docs/rules/)
+:::
+
 ## Resources
 
 Some helpful resources about accessibility and all caps.

@@ -18,4 +18,9 @@ export const theme = {
     mixed: '#006602',
     selected: '#660000',
   },
+  lineHeight: {
+    normal: 1,
+    medium: 1.5,
+    big: 2,
+  },
 };

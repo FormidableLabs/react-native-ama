@@ -24,7 +24,7 @@ export const Text: React.FC<TextProps> = ({ autofocus, ...rest }) => {
     React.useEffect(() => {
       uppercaseChecker(rest.style, rest.accessibilityLabel);
       accessibilityLabelChecker(rest.accessibilityLabel);
-    }, [rest.accessibilityLabel, rest.style]);
+    }, [rest, rest.accessibilityLabel, rest.style]);
 
   return <RNText ref={textRef} {...rest} />;
 };
