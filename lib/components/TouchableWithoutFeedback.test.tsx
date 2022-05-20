@@ -1,10 +1,13 @@
 import { render } from '@testing-library/react-native';
 import * as React from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 
 import * as ContrastChecker from '../internal/contrastChecker';
 import * as AMADebugUtils from '../internal/debug';
-import { TouchableOpacity, TouchableOpacityProps } from './TouchableOpacity';
+import {
+  TouchableWithoutFeedback,
+  TouchableWithoutFeedbackProps,
+} from './TouchableWithoutFeedback';
 import * as AccessibilityLabelChecker from '../internal/accessibilityLabelChecker';
 
 beforeEach(() => {
@@ -16,14 +19,14 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-describe('AMA TouchableOpacity', () => {
+describe('AMA TouchableWithoutFeedback', () => {
   describe('When __DEV__ is true', () => {
     it('checks that the "accessibilityRole" property is not UNDEFINED', () => {
       const amaNoUndefined = jest.spyOn(AMADebugUtils, 'amaNoUndefined');
 
       try {
         // @ts-ignore
-        renderTouchableOpacity({});
+        renderTouchableWithoutFeedback({});
       } catch {}
 
       expect(amaNoUndefined).toHaveBeenCalledWith({}, 'accessibilityRole');
@@ -34,7 +37,7 @@ describe('AMA TouchableOpacity', () => {
 
       try {
         // @ts-ignore
-        renderTouchableOpacity({});
+        renderTouchableWithoutFeedback({});
       } catch {}
 
       expect(amaNoUndefined).toHaveBeenCalledWith({}, 'accessibilityLabel');
@@ -52,7 +55,7 @@ describe('AMA TouchableOpacity', () => {
 
       try {
         // @ts-ignore
-        renderTouchableOpacity({});
+        renderTouchableWithoutFeedback({});
       } catch {}
 
       expect(amaNoUndefined).not.toHaveBeenCalled();
@@ -63,7 +66,7 @@ describe('AMA TouchableOpacity', () => {
 
       try {
         // @ts-ignore
-        renderTouchableOpacity({});
+        renderTouchableWithoutFeedback({});
       } catch {}
 
       expect(amaNoUndefined).not.toHaveBeenCalled();
@@ -74,7 +77,7 @@ describe('AMA TouchableOpacity', () => {
     it.each([true, false])(
       'sets the "disabled" accessibility state when it is passed a property',
       disabled => {
-        const { getByTestId } = renderTouchableOpacity({
+        const { getByTestId } = renderTouchableWithoutFeedback({
           accessibilityRole: 'button',
           accessibilityLabel: 'test',
           testID: 'touchable-disabled-test',
@@ -94,7 +97,7 @@ describe('AMA TouchableOpacity', () => {
     it.each([true, false])(
       'sets the "selected" accessibility state when it is passed a property',
       selected => {
-        const { getByTestId } = renderTouchableOpacity({
+        const { getByTestId } = renderTouchableWithoutFeedback({
           accessibilityRole: 'button',
           accessibilityLabel: 'test',
           testID: 'touchable-selected-test',
@@ -114,7 +117,7 @@ describe('AMA TouchableOpacity', () => {
     it.each([true, false])(
       'sets the "busy" accessibility state when it is passed a property',
       busy => {
-        const { getByTestId } = renderTouchableOpacity({
+        const { getByTestId } = renderTouchableWithoutFeedback({
           accessibilityRole: 'button',
           accessibilityLabel: 'test',
           testID: 'touchable-busy-test',
@@ -134,7 +137,7 @@ describe('AMA TouchableOpacity', () => {
     it.each([true, false])(
       'sets the "checked" accessibility state when it is passed a property',
       checked => {
-        const { getByTestId } = renderTouchableOpacity({
+        const { getByTestId } = renderTouchableWithoutFeedback({
           accessibilityRole: 'button',
           accessibilityLabel: 'test',
           testID: 'touchable-checked-test',
@@ -154,7 +157,7 @@ describe('AMA TouchableOpacity', () => {
     it.each([true, false])(
       'sets the "expanded" accessibility state when it is passed a property',
       expanded => {
-        const { getByTestId } = renderTouchableOpacity({
+        const { getByTestId } = renderTouchableWithoutFeedback({
           accessibilityRole: 'button',
           accessibilityLabel: 'test',
           testID: 'touchable-expanded-test',
@@ -177,12 +180,12 @@ describe('AMA TouchableOpacity', () => {
       const contrastChecker = jest.spyOn(ContrastChecker, 'contrastChecker');
 
       render(
-        <TouchableOpacity
+        <TouchableWithoutFeedback
           accessibilityRole="button"
           accessibilityLabel="Test"
           style={{ backgroundColor: '#7a7a7a' }}>
           <Text style={{ color: '#fff' }}>Test</Text>
-        </TouchableOpacity>,
+        </TouchableWithoutFeedback>,
       );
 
       expect(contrastChecker).toHaveBeenCalledWith(
@@ -198,7 +201,7 @@ describe('AMA TouchableOpacity', () => {
       'accessibilityLabelChecker',
     );
 
-    renderTouchableOpacity({
+    renderTouchableWithoutFeedback({
       accessibilityLabel: 'test accessibilityLabel',
       accessibilityRole: 'button',
     });
@@ -207,11 +210,13 @@ describe('AMA TouchableOpacity', () => {
   });
 });
 
-function renderTouchableOpacity(props: TouchableOpacityProps) {
+function renderTouchableWithoutFeedback(props: TouchableWithoutFeedbackProps) {
   return render(
-    <TouchableOpacity {...props}>
-      <></>
-    </TouchableOpacity>,
+    <TouchableWithoutFeedback {...props}>
+      <View>
+        <Text>Content</Text>
+      </View>
+    </TouchableWithoutFeedback>,
   );
 }
 
