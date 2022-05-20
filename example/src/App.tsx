@@ -13,6 +13,7 @@ import { SpanScreen } from './screens/Span.screen';
 import { TextScreen } from './screens/Text.screen';
 import type { RootStackParamList } from './types';
 import { TouchableOpacityScreen } from './screens/TouchableOpacity.screen';
+import { TouchableWithoutFeedbackScreen } from './screens/TouchableWithoutFeedback';
 
 const App = () => {
   return (
@@ -24,7 +25,7 @@ const App = () => {
               name="Home"
               component={HomeScreen}
               options={{
-                headerTitle: () => <Header title={'AMA Demo'} />,
+                headerTitle: () => <Header title={'AMA Examples'} />,
               }}
             />
             <Stack.Screen
@@ -44,6 +45,16 @@ const App = () => {
                 headerLeft: () => <BackButton />,
                 headerTitle: () => (
                   <Header title={'TouchableOpacity Demo'} autofocus />
+                ),
+              }}
+            />
+            <Stack.Screen
+              name="TouchableWithoutFeedback"
+              component={TouchableWithoutFeedbackScreen}
+              options={{
+                headerLeft: () => <BackButton />,
+                headerTitle: () => (
+                  <Header title={'TouchableWithoutFeedback Demo'} autofocus />
                 ),
               }}
             />

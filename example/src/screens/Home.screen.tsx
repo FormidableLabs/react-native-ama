@@ -24,6 +24,11 @@ export const HomeScreen = () => {
           onPress={() => navigate('TouchableOpacity')}
         />
         <Spacer height={'normal'} />
+        <CTAPressable
+          title="TouchableWithoutFeedback"
+          onPress={() => navigate('TouchableWithoutFeedback')}
+        />
+        <Spacer height={'normal'} />
         <CTAPressable title="Text" onPress={() => navigate('Text')} />
         <Spacer height={'normal'} />
         <CTAPressable title="Span" onPress={() => navigate('Span')} />
