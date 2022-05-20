@@ -12,6 +12,7 @@ import { PressableScreen } from './screens/Pressable.screen';
 import { SpanScreen } from './screens/Span.screen';
 import { TextScreen } from './screens/Text.screen';
 import type { RootStackParamList } from './types';
+import { TouchableOpacityScreen } from './screens/TouchableOpacity.screen';
 
 const App = () => {
   return (
@@ -33,6 +34,16 @@ const App = () => {
                 headerLeft: () => <BackButton />,
                 headerTitle: () => (
                   <Header title={'Pressable Demo'} autofocus />
+                ),
+              }}
+            />
+            <Stack.Screen
+              name="TouchableOpacity"
+              component={TouchableOpacityScreen}
+              options={{
+                headerLeft: () => <BackButton />,
+                headerTitle: () => (
+                  <Header title={'TouchableOpacity Demo'} autofocus />
                 ),
               }}
             />

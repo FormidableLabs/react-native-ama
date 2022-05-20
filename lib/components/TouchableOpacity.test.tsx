@@ -4,7 +4,7 @@ import { Text } from 'react-native';
 
 import * as ContrastChecker from '../internal/contrastChecker';
 import * as AMADebugUtils from '../internal/debug';
-import { Pressable, PressableProps } from './Pressable';
+import { TouchableOpacity, TouchableOpacityProps } from './TouchableOpacity';
 import * as AccessibilityLabelChecker from '../internal/accessibilityLabelChecker';
 
 beforeEach(() => {
@@ -16,14 +16,14 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-describe('AMA Pressable', () => {
+describe('AMA TouchableOpacity', () => {
   describe('When __DEV__ is true', () => {
     it('checks that the "accessibilityRole" property is not UNDEFINED', () => {
       const amaNoUndefined = jest.spyOn(AMADebugUtils, 'amaNoUndefined');
 
       try {
         // @ts-ignore
-        renderPressable({});
+        renderTouchableOpacity({});
       } catch {}
 
       expect(amaNoUndefined).toHaveBeenCalledWith({}, 'accessibilityRole');
@@ -34,7 +34,7 @@ describe('AMA Pressable', () => {
 
       try {
         // @ts-ignore
-        renderPressable({});
+        renderTouchableOpacity({});
       } catch {}
 
       expect(amaNoUndefined).toHaveBeenCalledWith({}, 'accessibilityLabel');
@@ -52,7 +52,7 @@ describe('AMA Pressable', () => {
 
       try {
         // @ts-ignore
-        renderPressable({});
+        renderTouchableOpacity({});
       } catch {}
 
       expect(amaNoUndefined).not.toHaveBeenCalled();
@@ -63,7 +63,7 @@ describe('AMA Pressable', () => {
 
       try {
         // @ts-ignore
-        renderPressable({});
+        renderTouchableOpacity({});
       } catch {}
 
       expect(amaNoUndefined).not.toHaveBeenCalled();
@@ -74,7 +74,7 @@ describe('AMA Pressable', () => {
     it.each([true, false])(
       'sets the "disabled" accessibility state when it is passed a property',
       disabled => {
-        const { getByTestId } = renderPressable({
+        const { getByTestId } = renderTouchableOpacity({
           accessibilityRole: 'button',
           accessibilityLabel: 'test',
           testID: 'pressable-disabled-test',
@@ -94,7 +94,7 @@ describe('AMA Pressable', () => {
     it.each([true, false])(
       'sets the "selected" accessibility state when it is passed a property',
       selected => {
-        const { getByTestId } = renderPressable({
+        const { getByTestId } = renderTouchableOpacity({
           accessibilityRole: 'button',
           accessibilityLabel: 'test',
           testID: 'pressable-selected-test',
@@ -114,7 +114,7 @@ describe('AMA Pressable', () => {
     it.each([true, false])(
       'sets the "busy" accessibility state when it is passed a property',
       busy => {
-        const { getByTestId } = renderPressable({
+        const { getByTestId } = renderTouchableOpacity({
           accessibilityRole: 'button',
           accessibilityLabel: 'test',
           testID: 'pressable-busy-test',
@@ -134,7 +134,7 @@ describe('AMA Pressable', () => {
     it.each([true, false])(
       'sets the "checked" accessibility state when it is passed a property',
       checked => {
-        const { getByTestId } = renderPressable({
+        const { getByTestId } = renderTouchableOpacity({
           accessibilityRole: 'button',
           accessibilityLabel: 'test',
           testID: 'pressable-checked-test',
@@ -154,7 +154,7 @@ describe('AMA Pressable', () => {
     it.each([true, false])(
       'sets the "expanded" accessibility state when it is passed a property',
       expanded => {
-        const { getByTestId } = renderPressable({
+        const { getByTestId } = renderTouchableOpacity({
           accessibilityRole: 'button',
           accessibilityLabel: 'test',
           testID: 'pressable-expanded-test',
@@ -177,44 +177,16 @@ describe('AMA Pressable', () => {
       const contrastChecker = jest.spyOn(ContrastChecker, 'contrastChecker');
 
       render(
-        <Pressable
+        <TouchableOpacity
           accessibilityRole="button"
           accessibilityLabel="Test"
           style={{ backgroundColor: '#7a7a7a' }}>
           <Text style={{ color: '#fff' }}>Test</Text>
-        </Pressable>,
+        </TouchableOpacity>,
       );
 
       expect(contrastChecker).toHaveBeenCalledWith(
         { backgroundColor: '#7a7a7a' },
-        <Text style={{ color: '#fff' }}>Test</Text>,
-      );
-    });
-
-    it('if style is a function then performs the contrast ratio check on both pressed and not pressed state', () => {
-      const contrastChecker = jest.spyOn(ContrastChecker, 'contrastChecker');
-
-      render(
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="Test"
-          style={({ pressed }) => {
-            return pressed
-              ? { backgroundColor: '#7a7a7a' }
-              : { backgroundColor: 'yellow' };
-          }}>
-          <Text style={{ color: '#fff' }}>Test</Text>
-        </Pressable>,
-      );
-
-      expect(contrastChecker).toHaveBeenCalledTimes(2);
-
-      expect(contrastChecker).toHaveBeenCalledWith(
-        { backgroundColor: '#7a7a7a' },
-        <Text style={{ color: '#fff' }}>Test</Text>,
-      );
-      expect(contrastChecker).toHaveBeenCalledWith(
-        { backgroundColor: 'yellow' },
         <Text style={{ color: '#fff' }}>Test</Text>,
       );
     });
@@ -226,7 +198,7 @@ describe('AMA Pressable', () => {
       'accessibilityLabelChecker',
     );
 
-    renderPressable({
+    renderTouchableOpacity({
       accessibilityLabel: 'test accessibilityLabel',
       accessibilityRole: 'button',
     });
@@ -235,11 +207,11 @@ describe('AMA Pressable', () => {
   });
 });
 
-function renderPressable(props: Omit<PressableProps, 'children'>) {
+function renderTouchableOpacity(props: TouchableOpacityProps) {
   return render(
-    <Pressable {...props}>
+    <TouchableOpacity {...props}>
       <></>
-    </Pressable>,
+    </TouchableOpacity>,
   );
 }
 
