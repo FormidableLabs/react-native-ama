@@ -1,13 +1,13 @@
 import React from 'react';
 import { ActivityIndicator, Omit, StyleSheet, Text } from 'react-native';
-import { AMAAccessibilityState, Pressable } from 'react-native-ama';
-import type { PressableProps } from 'react-native-ama';
+import { AMAAccessibilityState, TouchableOpacity } from 'react-native-ama';
+import type { TouchableOpacityProps } from 'react-native-ama';
 
 import { theme } from '../theme';
 
-type CTAPressableProps = Omit<
-  PressableProps,
-  'children' | 'accessibilityRole' | 'accessibilityLabel'
+type CTATouchableOpacityProps = Omit<
+  TouchableOpacityProps,
+  'accessibilityRole' | 'accessibilityLabel'
 > & {
   title: string;
   accessibilityLabel?: string;
@@ -17,7 +17,7 @@ type CTAPressableProps = Omit<
   marginRight?: number;
 };
 
-export const CTAPressable = ({
+export const CTATouchableOpacity = ({
   title,
   onPress,
   disabled,
@@ -26,45 +26,33 @@ export const CTAPressable = ({
   marginRight,
   accessibilityLabel,
   ...rest
-}: CTAPressableProps) => {
+}: CTATouchableOpacityProps) => {
+  const style = {
+    ...styles.button,
+    ...getButtonStyle(disabled, rest?.checked, rest?.selected),
+  };
+
   return (
-    <Pressable
+    <TouchableOpacity
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel || title}
       disabled={disabled}
-      style={({ pressed }) => {
-        const buttonStyles = getButtonStyle({
-          pressed,
-          disabled,
-          checked: rest?.checked,
-          selected: rest?.selected,
-        });
-
-        return [styles.button, buttonStyles, { marginLeft, marginRight }];
-      }}
+      style={style}
       onPress={onPress}
       {...rest}>
       {rest.busy ? <ActivityIndicator color={theme.color.white} /> : null}
       <Text style={[styles.text, { textTransform }]}>{title}</Text>
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 
-function getButtonStyle({
-  pressed,
-  disabled,
-  checked,
-  selected,
-}: {
-  pressed: boolean;
-  disabled?: AMAAccessibilityState['disabled'];
-  checked?: AMAAccessibilityState['checked'];
-  selected?: AMAAccessibilityState['selected'];
-}) {
+function getButtonStyle(
+  disabled?: AMAAccessibilityState['disabled'],
+  checked?: AMAAccessibilityState['checked'],
+  selected?: AMAAccessibilityState['selected'],
+) {
   if (disabled) {
     return styles.disabled;
-  } else if (pressed) {
-    return styles.pressed;
   } else if (checked) {
     return checked === 'mixed' ? styles.mixed : styles.checked;
   } else if (selected) {
