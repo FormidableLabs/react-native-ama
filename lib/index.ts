@@ -5,3 +5,6 @@ export * from './components/TouchableWithoutFeedback';
 export * from './components/Text';
 export * from './hooks/useA11yFocus';
 export * from './types/types';
+export * from './hooks/useAccessibleAnimationDuration';
+export * from './hooks/useAccessibleAnimation';
+export * from './utils/isMotionAnimation';

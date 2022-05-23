@@ -9,6 +9,7 @@ import { BackButton } from './components/BackButton';
 import { Header } from './components/Header';
 import { HomeScreen } from './screens/Home.screen';
 import { PressableScreen } from './screens/Pressable.screen';
+import { ReanimatedReduceMotionScreen } from './screens/ReanimatedReduceMotion.screen';
 import { ReduceMotionScreen } from './screens/ReduceMotion.screen';
 import { SpanScreen } from './screens/Span.screen';
 import { TextScreen } from './screens/Text.screen';
@@ -81,7 +82,17 @@ const App = () => {
               options={{
                 headerLeft: () => <BackButton />,
                 headerTitle: () => (
-                  <Header title={'ReduceMotion Demo'} autofocus />
+                  <Header title={'Reduce Motion Demo'} autofocus />
+                ),
+              }}
+            />
+            <Stack.Screen
+              name="ReanimatedReduceMotion"
+              component={ReanimatedReduceMotionScreen}
+              options={{
+                headerLeft: () => <BackButton />,
+                headerTitle: () => (
+                  <Header title={'Reanimated Reduce Motion Demo'} autofocus />
                 ),
               }}
             />

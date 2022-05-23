@@ -1,5 +1,7 @@
 import type { Animated, ViewStyle } from 'react-native';
 
+import { MOTION_ANIMATIONS } from './costants';
+
 export const interpolateAnimationStates = (
   from: Record<string, any>,
   to: Record<string, any>,
@@ -52,19 +54,3 @@ export const interpolateAnimationStates = (
     { __hasOnlyMotionAnimation: true } as Record<string, any>,
   );
 };
-
-export const MOTION_ANIMATIONS: (Partial<keyof ViewStyle> | 'scale')[] = [
-  'left',
-  'bottom',
-  'top',
-  'right',
-  'transform',
-  'translateX',
-  'translateY',
-  'scaleX',
-  'scaleY',
-  'scale',
-  'width',
-  'height',
-  'marginTop',
-];

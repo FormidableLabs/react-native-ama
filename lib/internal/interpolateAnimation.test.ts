@@ -1,7 +1,5 @@
-import {
-  MOTION_ANIMATIONS,
-  interpolateAnimationStates,
-} from './interpolateAnimationStates';
+import { MOTION_ANIMATIONS } from './costants';
+import { interpolateAnimationStates } from './interpolateAnimationStates';
 
 describe('interpolateAnimationStates', () => {
   describe('Given isReduceMotionEnabled is false', () => {

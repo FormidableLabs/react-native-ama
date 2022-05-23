@@ -1,6 +1,5 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useAMAContext } from 'react-native-ama';
 
 import { CTAPressable } from '../components/CTAPressable';
 import { Header } from '../components/Header';
@@ -10,8 +9,6 @@ import { useTypedNavigation } from '../utils/useTypedNavigation';
 
 export const HomeScreen = () => {
   const { navigate } = useTypedNavigation();
-
-  const { isReduceMotionEnabled } = useAMAContext();
 
   return (
     <View style={styles.view}>
@@ -42,6 +39,11 @@ export const HomeScreen = () => {
         <CTAPressable
           title="useAccessibleAnimations"
           onPress={() => navigate('ReduceMotion')}
+        />
+        <Spacer height={'normal'} />
+        <CTAPressable
+          title="useReanimatedAccessibleAnimation"
+          onPress={() => navigate('ReanimatedReduceMotion')}
         />
       </ScrollView>
     </View>

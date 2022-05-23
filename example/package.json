@@ -29,6 +29,7 @@
     "jest": "^26.6.3",
     "metro-react-native-babel-preset": "^0.64.0",
     "react-native-error-boundary": "^1.1.13",
+    "react-native-reanimated": "^2.8.0",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "^3.13.1",
     "react-native-svg": "^12.3.0",

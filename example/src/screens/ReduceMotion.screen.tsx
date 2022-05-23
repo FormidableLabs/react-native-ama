@@ -1,8 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Animated, Dimensions, StyleSheet, View } from 'react-native';
 import { Pressable, Text } from 'react-native-ama';
+import { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 
-import { useAccessibleAnimations } from '../../../lib/hooks/useAccessibleAnimations';
+import { useAccessibleAnimation } from '../../../lib/hooks/useAccessibleAnimation';
+import { useReanimatedAccessibleAnimation } from '../../../lib/hooks/useReanimatedAccessibleAnimation';
 import { CTAPressable } from '../components/CTAPressable';
 import { Spacer } from '../components/Spacer';
 import { theme } from '../theme';
@@ -13,7 +15,7 @@ export const ReduceMotionScreen = () => {
   const animationProgress = useRef<Animated.Value>(
     new Animated.Value(0),
   ).current;
-  const { play, animatedStyle, progress } = useAccessibleAnimations({
+  const { play, animatedStyle, progress } = useAccessibleAnimation({
     duration: 300,
     useNativeDriver: true,
     from: {
@@ -29,7 +31,7 @@ export const ReduceMotionScreen = () => {
     play: play2,
     animatedStyle: animatedStyle2,
     progress: progress2,
-  } = useAccessibleAnimations({
+  } = useAccessibleAnimation({
     duration: 300,
     useNativeDriver: false,
     from: {
@@ -42,8 +44,8 @@ export const ReduceMotionScreen = () => {
     },
     skipIfReduceMotionEnabled: true,
   });
-  const { play: play3, animatedStyle: animatedStyle3 } =
-    useAccessibleAnimations({
+  const { play: play3, animatedStyle: animatedStyle3 } = useAccessibleAnimation(
+    {
       duration: 300,
       useNativeDriver: false,
       from: {
@@ -54,7 +56,8 @@ export const ReduceMotionScreen = () => {
         height: 200,
         marginTop: -100,
       },
-    });
+    },
+  );
 
   const overlayStyle = {
     opacity: overlayProgressValue || 0,
