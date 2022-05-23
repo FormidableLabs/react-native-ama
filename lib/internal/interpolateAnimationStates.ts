@@ -6,7 +6,6 @@ export const interpolateAnimationStates = (
   isReduceMotionEnabled: boolean,
   progressValue: Animated.Value,
   reduceMotionProgressValue: Animated.Value,
-  skipIfReduceMotionEnabled: boolean,
 ): Record<string, any> => {
   return Object.keys(from).reduce(
     (outputAnimation, key) => {
@@ -14,8 +13,7 @@ export const interpolateAnimationStates = (
         key as keyof ViewStyle,
       );
       const progressKey =
-        isReduceMotionEnabled &&
-        (isMotionAnimation || skipIfReduceMotionEnabled)
+        isReduceMotionEnabled && isMotionAnimation
           ? reduceMotionProgressValue
           : progressValue;
 
@@ -29,7 +27,6 @@ export const interpolateAnimationStates = (
                 isReduceMotionEnabled,
                 progressValue,
                 reduceMotionProgressValue,
-                skipIfReduceMotionEnabled,
               );
 
             outputAnimation.__hasOnlyMotionAnimation =

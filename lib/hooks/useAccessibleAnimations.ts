@@ -54,20 +54,12 @@ export const useAccessibleAnimations = ({
       isReduceMotionEnabled,
       progress,
       reduceMotionProgress,
-      skipIfReduceMotionEnabled,
     );
 
     hasOnlyMotionAnimation.current = __hasOnlyMotionAnimation;
 
     return style;
-  }, [
-    from,
-    to,
-    isReduceMotionEnabled,
-    progress,
-    reduceMotionProgress,
-    skipIfReduceMotionEnabled,
-  ]);
+  }, [from, to, isReduceMotionEnabled, progress, reduceMotionProgress]);
 
   return {
     animatedStyle,

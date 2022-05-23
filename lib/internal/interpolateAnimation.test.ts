@@ -33,7 +33,11 @@ describe('interpolateAnimationStates', () => {
 
       expect(reduceMotionInterpolate).not.toHaveBeenCalled();
 
-      expect(output).toEqual({ left: 'done', opacity: 'done' });
+      expect(output).toEqual({
+        left: 'done',
+        opacity: 'done',
+        __hasOnlyMotionAnimation: false,
+      });
     });
 
     it('Then interpolate arrays correctly', () => {
@@ -70,6 +74,7 @@ describe('interpolateAnimationStates', () => {
       expect(output).toEqual({
         opacity: 'done',
         transform: [{ translateX: 'done' }],
+        __hasOnlyMotionAnimation: false,
       });
     });
   });
@@ -100,18 +105,21 @@ describe('interpolateAnimationStates', () => {
         );
 
         expect(normalInterpolate).toHaveBeenCalledTimes(1);
-        expect(normalInterpolate).toBeCalledWith(1, {
+        expect(normalInterpolate).toBeCalledWith({
           inputRange: [0, 1],
           outputRange: [0, 1],
         });
 
         expect(reduceMotionInterpolate).toHaveBeenCalledTimes(1);
-        expect(reduceMotionInterpolate).toBeCalledWith(1, {
+        expect(reduceMotionInterpolate).toBeCalledWith({
           inputRange: [0, 1],
           outputRange: [142, 42],
         });
 
-        const expectedOutput: Record<string, any> = { opacity: 'done' };
+        const expectedOutput: Record<string, any> = {
+          opacity: 'done',
+          __hasOnlyMotionAnimation: false,
+        };
         expectedOutput[motionAnimationKey] = 'done';
 
         expect(output).toEqual(expectedOutput);
@@ -152,6 +160,7 @@ describe('interpolateAnimationStates', () => {
       expect(output).toEqual({
         opacity: 'done',
         transform: [{ translateX: 'done' }],
+        __hasOnlyMotionAnimation: false,
       });
     });
   });

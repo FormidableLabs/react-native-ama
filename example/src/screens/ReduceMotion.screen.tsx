@@ -4,8 +4,8 @@ import { Pressable, Text } from 'react-native-ama';
 
 import { useAccessibleAnimations } from '../../../lib/hooks/useAccessibleAnimations';
 import { CTAPressable } from '../components/CTAPressable';
-import { theme } from '../theme';
 import { Spacer } from '../components/Spacer';
+import { theme } from '../theme';
 
 export const ReduceMotionScreen = () => {
   const [overlayProgressValue, setOverlayProgressValue] =
