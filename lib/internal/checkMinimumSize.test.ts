@@ -1,5 +1,4 @@
 import type { LayoutChangeEvent } from 'react-native';
-
 import { Platform } from 'react-native';
 
 beforeEach(() => {

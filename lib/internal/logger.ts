@@ -1,11 +1,11 @@
-const overrideRules: OverrideRule = require('./../../ama.rules.json');
-
 import { Rule, RuleValue, SHELL_COLORS } from './logger.rules';
 import {
-  LOGGER_RULES,
   CONTRAST_CHECKER_MAX_DEPTH,
+  LOGGER_RULES,
   RULES_HELP,
 } from './logger.rules';
+
+const overrideRules: OverrideRule = require('./../../ama.rules.json');
 
 type OverrideRule = {
   rules: Record<

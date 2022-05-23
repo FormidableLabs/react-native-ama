@@ -4,4 +4,4 @@ export * from './components/TouchableOpacity';
 export * from './components/TouchableWithoutFeedback';
 export * from './components/Text';
 export * from './hooks/useA11yFocus';
-export * from './types';
+export * from './types/types';

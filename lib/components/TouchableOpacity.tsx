@@ -5,11 +5,12 @@ import {
   TouchableOpacity as RNTouchableOpacity,
   TouchableOpacityProps as RNTouchableOpacityProps,
 } from 'react-native';
-import type { AMAAccessibilityState } from '../types';
-import { amaNoUndefined } from '../internal/debug';
-import { contrastChecker } from '../internal/contrastChecker';
+
 import { accessibilityLabelChecker } from '../internal/accessibilityLabelChecker';
 import { checkMinimumSize } from '../internal/checkMinimumSize';
+import { contrastChecker } from '../internal/contrastChecker';
+import { amaNoUndefined } from '../internal/debug';
+import type { AMAAccessibilityState } from '../types/types';
 
 export type TouchableOpacityProps = Omit<
   RNTouchableOpacityProps,

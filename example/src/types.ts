@@ -5,4 +5,5 @@ export type RootStackParamList = {
   TouchableWithoutFeedback: undefined;
   Text: undefined;
   Span: undefined;
+  ReduceMotion: undefined;
 };

@@ -58,6 +58,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.0.0",
     "@commitlint/config-conventional": "^17.0.0",
+    "@ianvs/prettier-plugin-sort-imports": "^3.4.2",
     "@react-native-community/eslint-config": "^2.0.0",
     "@react-navigation/stack": "^6.2.1",
     "@release-it/conventional-changelog": "^2.0.0",

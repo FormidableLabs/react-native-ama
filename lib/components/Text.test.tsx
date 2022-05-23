@@ -2,8 +2,8 @@ import { render } from '@testing-library/react-native';
 import * as React from 'react';
 
 import * as UseA11yFocus from '../hooks/useA11yFocus';
-import * as UppercaseChecker from '../internal/uppercaseChecker';
 import * as AccessibilityLabelChecker from '../internal/accessibilityLabelChecker';
+import * as UppercaseChecker from '../internal/uppercaseChecker';
 import { Text } from './Text';
 
 describe('Text', () => {
