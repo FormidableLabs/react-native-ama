@@ -1,3 +1,18 @@
+# isMotionAnimation
+
+`isMotionAnimation` can be used to check if a style key is considered a motion animation, i.e.: `translateX`, `left`, `right`, etc...
+
+## Usage
+
+```ts
+import { isMotionAnimation } from 'react-native-ama';
+
+isMotionAnimation('left');
+```
+
+## Example
+
+```tsx
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import {
@@ -12,10 +27,6 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import { CTAPressable } from '../components/CTAPressable';
-import { Spacer } from '../components/Spacer';
-import { theme } from '../theme';
-
 export const ReanimatedReduceMotionScreen = () => {
   const { getAccessibleDuration } = useAccessibleAnimationDuration();
   const { isReduceMotionEnabled } = useAMAContext();
@@ -26,13 +37,6 @@ export const ReanimatedReduceMotionScreen = () => {
       transform: [{ translateX: value.value * 255 }],
     };
   });
-
-  const testWithTiming = () => {
-    value.value = withTiming(
-      Math.random(),
-      getAccessibleDuration('translateX', 300),
-    );
-  };
 
   const testWithSpring = () => {
     const to = Math.random();
@@ -45,12 +49,8 @@ export const ReanimatedReduceMotionScreen = () => {
 
   return (
     <View style={styles.view}>
-      <Spacer height="big" />
       <Animated.View style={[styles.box, animatedStyles]} />
 
-      <Spacer height="big" />
-      <CTAPressable title="Test: withTiming" onPress={testWithTiming} />
-      <Spacer height="normal" />
       <CTAPressable title="Test: withSpring" onPress={testWithSpring} />
     </View>
   );
@@ -58,12 +58,13 @@ export const ReanimatedReduceMotionScreen = () => {
 
 const styles = StyleSheet.create({
   view: {
-    paddingHorizontal: theme.padding.big,
+    paddingHorizontal: 24,
   },
   box: {
     width: 100,
     height: 100,
     borderRadius: 20,
-    backgroundColor: theme.color.mixed,
+    backgroundColor: 'red',
   },
 });
+```

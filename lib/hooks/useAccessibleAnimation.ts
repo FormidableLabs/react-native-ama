@@ -64,7 +64,6 @@ export const useAccessibleAnimation = ({
   return {
     animatedStyle,
     progress,
-    reduceMotionProgress,
     play,
   };
 };

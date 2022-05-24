@@ -1,13 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Animated, Dimensions, StyleSheet, View } from 'react-native';
 import { Pressable, Text } from 'react-native-ama';
-import { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
+import { useAccessibleAnimation } from 'react-native-ama';
 
-import { useAccessibleAnimation } from '../../../lib/hooks/useAccessibleAnimation';
-import { useReanimatedAccessibleAnimation } from '../../../lib/hooks/useReanimatedAccessibleAnimation';
 import { CTAPressable } from '../components/CTAPressable';
 import { Spacer } from '../components/Spacer';
 import { theme } from '../theme';
+
+const MAX_LINE_WIDTH = Dimensions.get('window').width - theme.padding.big * 2;
 
 export const ReduceMotionScreen = () => {
   const [overlayProgressValue, setOverlayProgressValue] =
@@ -37,10 +37,12 @@ export const ReduceMotionScreen = () => {
     from: {
       opacity: 0,
       width: 0,
+      left: MAX_LINE_WIDTH / 2,
     },
     to: {
       opacity: 1,
-      width: Dimensions.get('window').width - theme.padding.big * 2,
+      width: MAX_LINE_WIDTH,
+      left: theme.padding.big,
     },
     skipIfReduceMotionEnabled: true,
   });
