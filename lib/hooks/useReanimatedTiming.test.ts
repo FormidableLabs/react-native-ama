@@ -25,7 +25,11 @@ describe('useReanimatedTiming', () => {
       const { result } = renderHook(() => useReanimatedTiming());
 
       result.current.withTiming('left', 42, { duration: 100 });
-      expect(reanimatedWithTiming).toHaveBeenCalledWith(42, { duration: 100 });
+      expect(reanimatedWithTiming).toHaveBeenCalledWith(
+        42,
+        { duration: 100 },
+        undefined,
+      );
     });
 
     it.each(MOTION_ANIMATIONS)(
@@ -44,7 +48,11 @@ describe('useReanimatedTiming', () => {
         const { result } = renderHook(() => useReanimatedTiming());
 
         result.current.withTiming(key as any, 42, { duration: 100 });
-        expect(reanimatedWithTiming).toHaveBeenCalledWith(42, { duration: 0 });
+        expect(reanimatedWithTiming).toHaveBeenCalledWith(
+          42,
+          { duration: 0 },
+          undefined,
+        );
       },
     );
   });
@@ -64,7 +72,11 @@ describe('useReanimatedTiming', () => {
       const { result } = renderHook(() => useReanimatedTiming());
 
       result.current.withSpring('left', 42, { damping: 42 });
-      expect(reanimatedWithSpring).toHaveBeenCalledWith(42, { damping: 42 });
+      expect(reanimatedWithSpring).toHaveBeenCalledWith(
+        42,
+        { damping: 42 },
+        undefined,
+      );
     });
 
     it.each(MOTION_ANIMATIONS)(
@@ -89,7 +101,11 @@ describe('useReanimatedTiming', () => {
 
         result.current.withTiming(key as any, 42, { duration: 100 });
 
-        expect(reanimatedWithTiming).toHaveBeenCalledWith(42, { duration: 0 });
+        expect(reanimatedWithTiming).toHaveBeenCalledWith(
+          42,
+          { duration: 0 },
+          undefined,
+        );
         expect(reanimatedWithSpring).not.toHaveBeenCalled();
       },
     );
