@@ -1,11 +1,9 @@
 import React from 'react';
 import { Linking, ScrollView, StyleSheet } from 'react-native';
-import { Text } from 'react-native-ama';
+import { ClickableSpan, LinkStyle, Span, Text } from 'react-native-ama';
 
-import { ClickableSpan } from '../components/ClickableSpan';
 import { Header } from '../components/Header';
 import { Spacer } from '../components/Spacer';
-import { LinkStyle, Span } from '../components/Span';
 import { theme } from '../theme';
 
 export const SpanScreen = () => {

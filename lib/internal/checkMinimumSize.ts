@@ -1,5 +1,6 @@
 import type { LayoutChangeEvent } from 'react-native';
 import { Platform } from 'react-native';
+
 import { log } from './logger';
 
 const MINIMUM_SIZE = Platform.OS === 'android' ? 48 : 44;

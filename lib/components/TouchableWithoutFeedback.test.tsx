@@ -2,13 +2,13 @@ import { render } from '@testing-library/react-native';
 import * as React from 'react';
 import { Text, View } from 'react-native';
 
+import * as AccessibilityLabelChecker from '../internal/accessibilityLabelChecker';
 import * as ContrastChecker from '../internal/contrastChecker';
 import * as AMADebugUtils from '../internal/debug';
 import {
   TouchableWithoutFeedback,
   TouchableWithoutFeedbackProps,
 } from './TouchableWithoutFeedback';
-import * as AccessibilityLabelChecker from '../internal/accessibilityLabelChecker';
 
 beforeEach(() => {
   // @ts-ignore

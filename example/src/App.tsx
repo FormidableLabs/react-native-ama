@@ -9,11 +9,13 @@ import { BackButton } from './components/BackButton';
 import { Header } from './components/Header';
 import { HomeScreen } from './screens/Home.screen';
 import { PressableScreen } from './screens/Pressable.screen';
+import { ReanimatedReduceMotionScreen } from './screens/ReanimatedReduceMotion.screen';
+import { ReduceMotionScreen } from './screens/ReduceMotion.screen';
 import { SpanScreen } from './screens/Span.screen';
 import { TextScreen } from './screens/Text.screen';
-import type { RootStackParamList } from './types';
 import { TouchableOpacityScreen } from './screens/TouchableOpacity.screen';
 import { TouchableWithoutFeedbackScreen } from './screens/TouchableWithoutFeedback';
+import type { RootStackParamList } from './types';
 
 const App = () => {
   return (
@@ -72,6 +74,26 @@ const App = () => {
               options={{
                 headerLeft: () => <BackButton />,
                 headerTitle: () => <Header title={'Span Demo'} autofocus />,
+              }}
+            />
+            <Stack.Screen
+              name="ReduceMotion"
+              component={ReduceMotionScreen}
+              options={{
+                headerLeft: () => <BackButton />,
+                headerTitle: () => (
+                  <Header title={'Reduce Motion Demo'} autofocus />
+                ),
+              }}
+            />
+            <Stack.Screen
+              name="ReanimatedReduceMotion"
+              component={ReanimatedReduceMotionScreen}
+              options={{
+                headerLeft: () => <BackButton />,
+                headerTitle: () => (
+                  <Header title={'Reanimated Reduce Motion Demo'} autofocus />
+                ),
               }}
             />
           </Stack.Navigator>

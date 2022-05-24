@@ -1,4 +1,4 @@
-import type { AMAAccessibilityState } from 'lib/types';
+import type { AMAAccessibilityState } from 'lib/types/types';
 import * as React from 'react';
 import {
   AccessibilityRole,
@@ -8,10 +8,10 @@ import {
   PressableProps as RNPressableProps,
 } from 'react-native';
 
+import { accessibilityLabelChecker } from '../internal/accessibilityLabelChecker';
+import { checkMinimumSize } from '../internal/checkMinimumSize';
 import { contrastChecker } from '../internal/contrastChecker';
 import { amaNoUndefined } from '../internal/debug';
-import { checkMinimumSize } from '../internal/checkMinimumSize';
-import { accessibilityLabelChecker } from '../internal/accessibilityLabelChecker';
 
 export type PressableProps = Omit<
   RNPressableProps,

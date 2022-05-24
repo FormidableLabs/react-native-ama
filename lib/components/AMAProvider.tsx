@@ -1,5 +1,13 @@
 import * as React from 'react';
-import { AccessibilityChangeEventName, AccessibilityInfo } from 'react-native';
+import {
+  AccessibilityChangeEventName,
+  AccessibilityInfo,
+  AppState,
+  AppStateStatus,
+  Platform,
+} from 'react-native';
+
+import { areAnimationsEnabled } from '../modules/AMAAnimationsStatusModule';
 
 type AMAProviderProps = {
   children: React.ReactNode;
@@ -22,6 +30,7 @@ const eventsMapping: AccessibilityInfoEvents = {
 
 export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
   const [values, setValues] = React.useState(DEFAULT_VALUES);
+  const appState = React.useRef('inactive');
 
   const handleAccessibilityInfoChanged = (key: keyof AMAContextValue) => {
     return (newValue: boolean) => {
@@ -30,6 +39,19 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
 
       setValues(newValues);
     };
+  };
+
+  const checkAndroidAnimationStatus = (nextAppState: AppStateStatus) => {
+    if (
+      appState.current.match(/inactive|background/) &&
+      nextAppState === 'active'
+    ) {
+      areAnimationsEnabled().then(enabled => {
+        handleAccessibilityInfoChanged('isReduceMotionEnabled')(!enabled);
+      });
+    }
+
+    appState.current = nextAppState;
   };
 
   React.useEffect(() => {
@@ -41,6 +63,14 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
         );
       },
     );
+
+    if (Platform.OS === 'android') {
+      subscriptions.push(
+        AppState.addEventListener('change', checkAndroidAnimationStatus),
+      );
+
+      checkAndroidAnimationStatus('active');
+    }
 
     return () => {
       // @ts-ignore - RN >= 0.65
@@ -55,6 +85,8 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
           handleAccessibilityInfoChanged(contextKey),
         );
       });
+
+      AppState.removeEventListener('change', checkAndroidAnimationStatus);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

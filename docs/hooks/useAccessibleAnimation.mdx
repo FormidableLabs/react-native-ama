@@ -1,0 +1,248 @@
+import ReactPlayer from 'react-player';
+
+# useAccessibleAnimation
+
+`useAccessibleAnimation` is a hook that helps create accessible animations by honouring the user [Reduce Motion](https://reactnative.dev/docs/accessibilityinfo) preference.
+
+:::note
+
+This hook uses the react-native built-in [Animated API](https://reactnative.dev/docs/animations), [check here](/docs/hooks/useReanimatedTiming) for accessible animations in Reanimated.
+:::
+
+## Usage
+
+```ts
+import { useAccessibleAnimation } from 'react-native-ama';
+
+const { animatedStyle, progress, play } = useAccessibleAnimation({
+  duration,
+  useNativeDriver,
+  from: {},
+  to: {},
+  skipIfReduceMotionEnabled,
+});
+```
+
+| Property                  | Type      | Description                                                                                         |
+| ------------------------- | --------- | --------------------------------------------------------------------------------------------------- |
+| duration                  | number    | the animation duration                                                                              |
+| useNativeDriver           | boolean   | [Using the native driver](https://reactnative.dev/docs/animations#using-the-native-driver)          |
+| from                      | ViewStyle | the initial state of the animation                                                                  |
+| to                        | ViewStyle | the final state of the animation                                                                    |
+| skipIfReduceMotionEnabled | boolean   | _(Optional)_ if true, the animation will be played with duration 0 when `Reduce Motion` is enabled. |
+
+### Returns
+
+| Property      | Type                             | Description                                      |
+| ------------- | -------------------------------- | ------------------------------------------------ |
+| animatedStyle | Object                           | the animation style to apply at the component    |
+| progress      | Animated.Value                   | The Animated.Value used to trigger the animation |
+| play          | (toValue = 1) => Animated.timing | Returns the Animated.timing                      |
+
+## Example
+
+The following animations translate in, with fading, an absolute positioned view:
+
+```ts
+import React, { useRef } from 'react';
+import { Animated, Dimensions, StyleSheet, View } from 'react-native';
+import { Pressable, Text } from 'react-native-ama';
+import { useAccessibleAnimation } from 'react-native-ama';
+
+export const ReduceMotionScreen = () => {
+  const [overlayProgressValue, setOverlayProgressValue] =
+    React.useState<Animated.Value | null>(null);
+  const animationProgress = useRef<Animated.Value>(
+    new Animated.Value(0),
+  ).current;
+  const { play, animatedStyle, progress } = useAccessibleAnimation({
+    duration: 300,
+    useNativeDriver: true,
+    from: {
+      opacity: 0,
+      transform: [{ translateY: 200 }],
+    },
+    to: {
+      opacity: 1,
+      transform: [{ translateY: 0 }],
+    },
+  });
+
+  const overlayStyle = {
+    opacity: overlayProgressValue || 0,
+  };
+
+  const playAnimation = () => {
+    setOverlayProgressValue(progress);
+    play().start();
+  };
+
+  return (
+    <>
+      <View style={styles.container}>
+        <Pressable title="Test Animation 1" onPress={playAnimation1} />
+      </View>
+      {overlayProgressValue ? (
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Close popup"
+          style={StyleSheet.absoluteFill}
+          onPress={() => reverseAnimation()}>
+          <Animated.View style={[styles.overlay, overlayStyle]} />
+        </Pressable>
+      ) : null}
+      <Animated.View style={[styles.animation1, animatedStyle]}>
+        <Text style={styles.text}>Content goes here</Text>
+      </Animated.View>
+    </>
+  );
+};
+```
+
+This is the result when we play the animation with Reduce Motion off and on:
+
+| Reduce Motion: **off**                                                                                                                          | Reduce Motion: **on**                                                                                                                 |
+| ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| <ReactPlayer url="/open-source/react-native-ama/videos/reduce-motion-off.mov" playing={false} loop={false} controls width={300} height={700} /> | <ReactPlayer url="/open-source/react-native-ama/videos/reduce-motion-on.mov" playing={false} loop={false} width={300} height={700} /> | <ReactPlayer url="/open-source/react-native-ama/videos/reduce-motion-on.mov" playing={false} loop={false} controls width={300} height={700} /> |
+
+When reduce Motion is off, the animation is played as specified; while when is **on** any [motion](/docs/utils/isMotionAnimation) animation is played instantaneity (using a duration of 0), while other properties, like opacity, are played as specified.
+
+## Sequential animation
+
+Let's consider the following animation:
+
+<ReactPlayer
+  url="/open-source/react-native-ama/videos/sequential-reduce-motion-off.mov"
+  playing={false}
+  loop={false}
+  controls
+  width={300}
+  height={700}
+/>
+
+<br />
+The animation is defined as:
+
+```tsx
+const {
+  play: play2,
+  animatedStyle: animatedStyle2,
+  progress: progress2,
+} = useAccessibleAnimation({
+  duration: 300,
+  useNativeDriver: false,
+  from: {
+    opacity: 0,
+    width: 0,
+    left: MAX_LINE_WIDTH / 2,
+  },
+  to: {
+    opacity: 1,
+    width: MAX_LINE_WIDTH,
+    left: theme.padding.big,
+  },
+});
+const { play: play3, animatedStyle: animatedStyle3 } = useAccessibleAnimation({
+  duration: 300,
+  useNativeDriver: false,
+  from: {
+    height: 2,
+    marginTop: -1,
+  },
+  to: {
+    height: 200,
+    marginTop: -100,
+  },
+});
+
+const playAnimation = () => {
+  play2().start(() => {
+    play3().start();
+  });
+};
+```
+
+It's a two-part animation, where the first one the animates the view width and opacity:
+
+```js
+from: {
+  opacity: 0,
+  width: 0,
+  left: MAX_LINE_WIDTH / 2,
+},
+to: {
+  opacity: 1,
+  width: MAX_LINE_WIDTH,
+  left: theme.padding.big,
+}
+```
+
+The second one the height:
+
+```js
+from: {
+  height: 2,
+  marginTop: -1,
+},
+to: {
+  height: 200,
+  marginTop: -100,
+},
+```
+
+Let's play the animation when **reduce motion** is enabled:
+
+<ReactPlayer
+  url="/open-source/react-native-ama/videos/sequential-reduce-motion-on.mov"
+  playing={false}
+  loop={false}
+  controls
+  width={300}
+  height={700}
+/>
+
+<br />
+
+The animation doesn't look right. The first animation is played correctly, but:
+
+- the width animation is played with a duration of 0s
+- the fade animation is played with a duration of 300ms
+
+After that, the height jumps instantly from **2** to **200**.
+
+### skipIfReduceMotionEnabled
+
+One way to fix the animation is using the `skipIfReduceMotionEnabled` parameter; as this makes all the animations defined to be played instantly:
+
+```ts
+const {
+  play: play2,
+  animatedStyle: animatedStyle2,
+  progress: progress2,
+} = useAccessibleAnimation({
+  duration: 300,
+  useNativeDriver: false,
+  skipIfReduceMotionEnabled: true,
+  from: {
+    opacity: 0,
+    width: 0,
+    left: MAX_LINE_WIDTH / 2,
+  },
+  to: {
+    opacity: 1,
+    width: MAX_LINE_WIDTH,
+    left: theme.padding.big,
+  },
+});
+```
+
+The result is:
+
+<ReactPlayer
+  url="/open-source/react-native-ama/videos/sequential-reduce-motion-on-fixed.mov"
+  playing={false}
+  loop={false}
+  controls
+  width={300}
+  height={700}
+/>

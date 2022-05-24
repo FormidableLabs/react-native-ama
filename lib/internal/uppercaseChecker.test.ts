@@ -1,6 +1,5 @@
-import { uppercaseChecker } from './uppercaseChecker';
-
 import * as Logger from './logger';
+import { uppercaseChecker } from './uppercaseChecker';
 
 beforeEach(() => {
   jest.clearAllMocks();

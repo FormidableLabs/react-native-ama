@@ -19,8 +19,8 @@ export const theme = {
     selected: '#660000',
   },
   lineHeight: {
-    normal: 1,
-    medium: 1.5,
-    big: 2,
+    normal: 16,
+    medium: 24,
+    big: 48,
   },
 };
