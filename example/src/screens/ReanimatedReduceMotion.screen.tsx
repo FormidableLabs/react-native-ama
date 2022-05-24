@@ -1,13 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
-import {
-  ClickableSpan,
-  Span,
-  isMotionAnimation,
-  useAMAContext,
-  useAnimationDuration,
-  useReanimatedTiming,
-} from 'react-native-ama';
+import { ClickableSpan, Span, useReanimatedTiming } from 'react-native-ama';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,

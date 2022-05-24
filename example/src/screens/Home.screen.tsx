@@ -42,7 +42,7 @@ export const HomeScreen = () => {
         />
         <Spacer height={'normal'} />
         <CTAPressable
-          title="useAccessibleAnimationDuration"
+          title="useReanimatedTiming"
           onPress={() => navigate('ReanimatedReduceMotion')}
         />
       </ScrollView>
