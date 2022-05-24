@@ -15,7 +15,7 @@ describe('useReanimatedTiming', () => {
       jest.spyOn(AMAProvider, 'useAMAContext').mockReturnValue({
         ...amaContextValues,
         isReduceMotionEnabled: false,
-      });
+      } as any);
 
       const reanimatedWithTiming = jest.spyOn(
         ReactNativeReanimated,
@@ -38,7 +38,7 @@ describe('useReanimatedTiming', () => {
         jest.spyOn(AMAProvider, 'useAMAContext').mockReturnValue({
           ...amaContextValues,
           isReduceMotionEnabled: true,
-        });
+        } as any);
 
         const reanimatedWithTiming = jest.spyOn(
           ReactNativeReanimated,
@@ -62,7 +62,7 @@ describe('useReanimatedTiming', () => {
       jest.spyOn(AMAProvider, 'useAMAContext').mockReturnValue({
         ...amaContextValues,
         isReduceMotionEnabled: false,
-      });
+      } as any);
 
       const reanimatedWithSpring = jest.spyOn(
         ReactNativeReanimated,
@@ -85,7 +85,7 @@ describe('useReanimatedTiming', () => {
         jest.spyOn(AMAProvider, 'useAMAContext').mockReturnValue({
           ...amaContextValues,
           isReduceMotionEnabled: true,
-        });
+        } as any);
 
         const reanimatedWithTiming = jest.spyOn(
           ReactNativeReanimated,

@@ -8,7 +8,7 @@ describe('useAnimationDuration', () => {
     jest.spyOn(AMAProvider, 'useAMAContext').mockReturnValue({
       ...amaContextValues,
       isReduceMotionEnabled: false,
-    });
+    } as any);
 
     const { result } = renderHook(() => useAnimationDuration());
 
@@ -19,7 +19,7 @@ describe('useAnimationDuration', () => {
     jest.spyOn(AMAProvider, 'useAMAContext').mockReturnValue({
       ...amaContextValues,
       isReduceMotionEnabled: true,
-    });
+    } as any);
 
     const { result } = renderHook(() => useAnimationDuration());
 

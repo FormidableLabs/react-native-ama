@@ -16,7 +16,7 @@ describe('useAccessibleAnimations', () => {
       jest.spyOn(AMAProvider, 'useAMAContext').mockReturnValue({
         ...amaContextValues,
         isReduceMotionEnabled: false,
-      });
+      } as any);
     });
 
     it('Then plays only the main timing', () => {
@@ -51,7 +51,7 @@ describe('useAccessibleAnimations', () => {
       jest.spyOn(AMAProvider, 'useAMAContext').mockReturnValue({
         ...amaContextValues,
         isReduceMotionEnabled: true,
-      });
+      } as any);
     });
 
     it('Then plays the reduceMotion and the main progress', () => {
@@ -153,6 +153,10 @@ const amaContextValues = {
   isInvertColorsEnabled: false,
   isReduceMotionEnabled: false,
   isScreenReaderEnabled: false,
+  reactNavigationScreenOptions: {
+    animationEnabled: true,
+    animation: 'default',
+  },
 };
 
 jest.mock('../components/AMAProvider');
