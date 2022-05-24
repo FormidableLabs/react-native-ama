@@ -1,15 +1,16 @@
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import {
+  ClickableSpan,
+  Span,
   isMotionAnimation,
   useAMAContext,
-  useAccessibleAnimationDuration,
+  useAnimationDuration,
+  useReanimatedTiming,
 } from 'react-native-ama';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
-  withSpring,
-  withTiming,
 } from 'react-native-reanimated';
 
 import { CTAPressable } from '../components/CTAPressable';
@@ -17,9 +18,8 @@ import { Spacer } from '../components/Spacer';
 import { theme } from '../theme';
 
 export const ReanimatedReduceMotionScreen = () => {
-  const { getAccessibleDuration } = useAccessibleAnimationDuration();
-  const { isReduceMotionEnabled } = useAMAContext();
   const value = useSharedValue(0);
+  const { withTiming, withSpring } = useReanimatedTiming();
 
   const animatedStyles = useAnimatedStyle(() => {
     return {
@@ -28,23 +28,21 @@ export const ReanimatedReduceMotionScreen = () => {
   });
 
   const testWithTiming = () => {
-    value.value = withTiming(
-      Math.random(),
-      getAccessibleDuration('translateX', 300),
-    );
+    value.value = withTiming('translateX', Math.random(), { duration: 300 });
   };
 
   const testWithSpring = () => {
-    const to = Math.random();
-
-    value.value =
-      isReduceMotionEnabled && isMotionAnimation('translateX')
-        ? withTiming(to, { duration: 0 })
-        : withSpring(to);
+    value.value = withSpring('translateX', Math.random());
   };
 
   return (
     <View style={styles.view}>
+      <Spacer height="big" />
+      <Span style={styles.intro}>
+        This example shows how to use the{' '}
+        <ClickableSpan onPress={() => {}}>getAnimationDuration</ClickableSpan>{' '}
+        with Reanimated for a more accessible animations.
+      </Span>
       <Spacer height="big" />
       <Animated.View style={[styles.box, animatedStyles]} />
 
@@ -65,5 +63,8 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 20,
     backgroundColor: theme.color.mixed,
+  },
+  intro: {
+    lineHeight: theme.lineHeight.medium,
   },
 });

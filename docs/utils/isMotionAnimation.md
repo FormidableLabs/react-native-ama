@@ -2,13 +2,15 @@
 
 `isMotionAnimation` can be used to check if a style key is considered a motion animation, i.e.: `translateX`, `left`, `right`, etc...
 
-## Usage
+## Syntax
 
-```ts
-import { isMotionAnimation } from 'react-native-ama';
-
-isMotionAnimation('left');
+```js
+function isMotionAnimation(property: ViewStyle): boolean {}
 ```
+
+| Property | Description           |
+| -------- | --------------------- |
+| property | The property to check |
 
 ## Example
 
@@ -28,7 +30,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 export const ReanimatedReduceMotionScreen = () => {
-  const { getAccessibleDuration } = useAccessibleAnimationDuration();
+  const { getAnimationDuration } = useAccessibleAnimationDuration();
   const { isReduceMotionEnabled } = useAMAContext();
   const value = useSharedValue(0);
 

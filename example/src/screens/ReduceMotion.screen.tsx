@@ -60,19 +60,29 @@ export const ReduceMotionScreen = () => {
       },
     },
   );
-
-  const overlayStyle = {
-    opacity: overlayProgressValue || 0,
-  };
+  const { play: overlayPlay, animatedStyle: overlayStyle } =
+    useAccessibleAnimation({
+      duration: 300,
+      useNativeDriver: true,
+      from: {
+        opacity: 0,
+      },
+      to: {
+        opacity: 1,
+      },
+    });
 
   const playAnimation1 = () => {
     setOverlayProgressValue(progress);
+
+    overlayPlay().start();
     play().start();
   };
 
   const playAnimation2 = () => {
     setOverlayProgressValue(progress2);
 
+    overlayPlay().start();
     play2().start(() => {
       play3().start();
     });
@@ -81,11 +91,12 @@ export const ReduceMotionScreen = () => {
   const reverseAnimation = () => {
     if (overlayProgressValue === progress) {
       play(0).start(() => setOverlayProgressValue(null));
+      overlayPlay(0).start();
     } else {
+      overlayPlay(0).start(() => setOverlayProgressValue(null));
+
       play3(0).start(() => {
-        play2(0).start(() => {
-          setOverlayProgressValue(null);
-        });
+        play2(0).start();
       });
     }
   };
