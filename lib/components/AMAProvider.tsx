@@ -16,7 +16,10 @@ type AMAProviderProps = {
 type AccessibilityEvents = Exclude<AccessibilityChangeEventName, 'change'>;
 
 type AccessibilityInfoEvents = {
-  [key in AccessibilityEvents]: keyof AMAContextValue;
+  [key in AccessibilityEvents]: Exclude<
+    keyof AMAContextValue,
+    'reactNavigationScreenOptions'
+  >;
 };
 
 const eventsMapping: AccessibilityInfoEvents = {
@@ -32,10 +35,19 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
   const [values, setValues] = React.useState(DEFAULT_VALUES);
   const appState = React.useRef('inactive');
 
-  const handleAccessibilityInfoChanged = (key: keyof AMAContextValue) => {
+  const handleAccessibilityInfoChanged = (
+    key: Exclude<keyof AMAContextValue, 'reactNavigationScreenOptions'>,
+  ) => {
     return (newValue: boolean) => {
       const newValues = values;
       newValues[key] = newValue;
+
+      if (key === 'isReduceMotionEnabled') {
+        newValues.reactNavigationScreenOptions.animationEnabled = !newValue;
+        newValues.reactNavigationScreenOptions.animation = newValue
+          ? 'fade'
+          : 'default';
+      }
 
       setValues(newValues);
     };
@@ -101,6 +113,10 @@ export type AMAContextValue = {
   isInvertColorsEnabled: boolean;
   isReduceMotionEnabled: boolean;
   isReduceTransparencyEnabled: boolean;
+  reactNavigationScreenOptions: {
+    animationEnabled: boolean;
+    animation: 'default' | 'fade';
+  };
 };
 
 const DEFAULT_VALUES: AMAContextValue = {
@@ -110,6 +126,10 @@ const DEFAULT_VALUES: AMAContextValue = {
   isInvertColorsEnabled: false,
   isReduceMotionEnabled: false,
   isScreenReaderEnabled: false,
+  reactNavigationScreenOptions: {
+    animationEnabled: true,
+    animation: 'default',
+  },
 };
 
 const AMAContext = React.createContext<AMAContextValue>(DEFAULT_VALUES);
