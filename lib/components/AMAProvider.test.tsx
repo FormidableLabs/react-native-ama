@@ -1,9 +1,10 @@
-import { renderHook } from '@testing-library/react-hooks';
-import { render } from '@testing-library/react-native';
+import { act, render } from '@testing-library/react-native';
 import * as React from 'react';
 import { AccessibilityInfo } from 'react-native';
 
-import { AMAContextValue, AMAProvider, useAMAContext } from './AMAProvider';
+import { AMAContextValue, AMAProvider } from './AMAProvider';
+
+var mockProvider: jest.Mock;
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -41,7 +42,7 @@ describe('AMAProvider', () => {
     ${'boldTextChanged'}           | ${'isBoldTextEnabled'}
     ${'invertColorsChanged'}       | ${'isInvertColorsEnabled'}
   `(
-    'reacts to the events change',
+    'reacts to the events change $eventName',
     ({
       eventName,
       valueName,
@@ -61,17 +62,43 @@ describe('AMAProvider', () => {
 
       renderAMAProvider();
 
-      const { result } = renderHook(() => useAMAContext());
+      const state: any = {};
+      state[valueName] = false;
 
-      expect(result.current[valueName]).toBe(false);
+      expect(mockProvider).toHaveBeenCalledWith(
+        expect.objectContaining({
+          value: expect.objectContaining(state),
+        }),
+        {},
+      );
 
-      handler!(true);
+      jest.clearAllMocks();
 
-      expect(result.current[valueName]).toBe(true);
+      act(() => {
+        handler!(true);
+      });
 
-      handler!(false);
+      state[valueName] = true;
+      expect(mockProvider).toHaveBeenCalledWith(
+        expect.objectContaining({
+          value: expect.objectContaining(state),
+        }),
+        {},
+      );
 
-      expect(result.current[valueName]).toBe(false);
+      jest.clearAllMocks();
+
+      act(() => {
+        handler!(false);
+      });
+
+      state[valueName] = false;
+      expect(mockProvider).toHaveBeenCalledWith(
+        expect.objectContaining({
+          value: expect.objectContaining(state),
+        }),
+        {},
+      );
     },
   );
 
@@ -108,3 +135,24 @@ function renderAMAProvider() {
     </AMAProvider>,
   );
 }
+
+function mockCreateContext() {
+  const original = jest.requireActual('react');
+
+  mockProvider = jest.fn().mockReturnValue(null);
+
+  return {
+    ...original,
+    createContext: () => {
+      return {
+        Provider: mockProvider,
+        Consumer: () => {},
+        displayName: '',
+      };
+    },
+  };
+}
+
+jest.mock('react', () => {
+  return mockCreateContext();
+});

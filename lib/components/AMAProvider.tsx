@@ -39,7 +39,7 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
     key: Exclude<keyof AMAContextValue, 'reactNavigationScreenOptions'>,
   ) => {
     return (newValue: boolean) => {
-      const newValues = values;
+      const newValues = { ...values };
       newValues[key] = newValue;
 
       if (key === 'isReduceMotionEnabled') {
