@@ -39,10 +39,6 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
     key: Exclude<keyof AMAContextValue, 'reactNavigationScreenOptions'>,
   ) => {
     return (newValue: boolean) => {
-      if (values[key] === newValue) {
-        return;
-      }
-
       const newValues = { ...values };
       newValues[key] = newValue;
 
