@@ -1,7 +1,3 @@
----
-sidebar_position: 3
----
-
 # Minimum Size
 
 AMA performs a minimum size check for tappable elements like Pressable, Button, etc. The expected minimum size is:

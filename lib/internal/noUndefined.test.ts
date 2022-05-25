@@ -1,18 +1,18 @@
-import { amaNoUndefined } from './debug';
 import * as Logger from './logger';
+import { noUndefined } from './noUndefined';
 
 afterEach(() => {
   jest.clearAllMocks();
 });
 
 describe('AMA Internal Debug utilities', () => {
-  it('amaNoUndefined: prints and throws an Error if the given property is undefined', () => {
+  it('noUndefined: prints and throws an Error if the given property is undefined', () => {
     const log = jest.spyOn(Logger, 'log');
 
-    amaNoUndefined({} as any, 'test');
+    noUndefined({} as any, 'test', 'RANDOM_RULE' as any);
 
     expect(log).toHaveBeenCalledWith(
-      'PROPERTY_UNDEFINED',
+      'RANDOM_RULE',
       'The property "test" cannot be UNDEFINED',
     );
   });

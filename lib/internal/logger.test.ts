@@ -1,5 +1,9 @@
 import { log } from './logger';
-import { RULES_HELP, SHELL_COLORS } from './logger.rules';
+import {
+  NON_OVERRIDABLE_RULES,
+  RULES_HELP,
+  SHELL_COLORS,
+} from './logger.rules';
 
 beforeEach(() => {
   jest.resetModules();
@@ -58,6 +62,24 @@ describe('Logger', () => {
       );
     });
   });
+
+  it.each(NON_OVERRIDABLE_RULES)(
+    'prevent some rules from being overridded',
+    rule => {
+      const rules = {};
+
+      // @ts-ignore
+      rules[rule] = 'warn';
+
+      jest.doMock('./../../ama.rules.json', () => {
+        return {
+          rules,
+        };
+      });
+
+      expect(() => log(rule, 'Error Message')).toThrow();
+    },
+  );
 });
 
 jest.mock('./../../ama.rules.json', () => {
@@ -72,6 +94,11 @@ jest.mock('./logger.rules', () => {
     LOGGER_RULES: {
       CONTRAST_FAILED: 'throw',
       CONTRAST_FAILED_AAA: 'warn',
+      MINIMUM_SIZE: 'throw',
+      UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL: 'throw',
+      UPPERCASE_ACCESSIBILITY_LABEL: 'throw',
+      NO_ACCESSIBILITY_LABEL: 'throw',
+      NO_ACCESSIBILITY_ROLE: 'throw',
     },
   };
 });

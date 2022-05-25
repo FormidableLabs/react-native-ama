@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 
 import * as AccessibilityLabelChecker from '../internal/accessibilityLabelChecker';
 import * as ContrastChecker from '../internal/contrastChecker';
-import * as AMADebugUtils from '../internal/debug';
+import * as AMADebugUtils from '../internal/noUndefined';
 import {
   TouchableWithoutFeedback,
   TouchableWithoutFeedbackProps,
@@ -22,25 +22,33 @@ afterEach(() => {
 describe('AMA TouchableWithoutFeedback', () => {
   describe('When __DEV__ is true', () => {
     it('checks that the "accessibilityRole" property is not UNDEFINED', () => {
-      const amaNoUndefined = jest.spyOn(AMADebugUtils, 'amaNoUndefined');
+      const noUndefined = jest.spyOn(AMADebugUtils, 'noUndefined');
 
       try {
         // @ts-ignore
         renderTouchableWithoutFeedback({});
       } catch {}
 
-      expect(amaNoUndefined).toHaveBeenCalledWith({}, 'accessibilityRole');
+      expect(noUndefined).toHaveBeenCalledWith(
+        {},
+        'accessibilityRole',
+        'NO_ACCESSIBILITY_ROLE',
+      );
     });
 
     it('checks that the "accessibilityLabel" property is not UNDEFINED', () => {
-      const amaNoUndefined = jest.spyOn(AMADebugUtils, 'amaNoUndefined');
+      const noUndefined = jest.spyOn(AMADebugUtils, 'noUndefined');
 
       try {
         // @ts-ignore
         renderTouchableWithoutFeedback({});
       } catch {}
 
-      expect(amaNoUndefined).toHaveBeenCalledWith({}, 'accessibilityLabel');
+      expect(noUndefined).toHaveBeenCalledWith(
+        {},
+        'accessibilityLabel',
+        'NO_ACCESSIBILITY_LABEL',
+      );
     });
   });
 
@@ -51,25 +59,25 @@ describe('AMA TouchableWithoutFeedback', () => {
     });
 
     it('does not throw when the "accessibilityRole" property is UNDEFINED', () => {
-      const amaNoUndefined = jest.spyOn(AMADebugUtils, 'amaNoUndefined');
+      const noUndefined = jest.spyOn(AMADebugUtils, 'noUndefined');
 
       try {
         // @ts-ignore
         renderTouchableWithoutFeedback({});
       } catch {}
 
-      expect(amaNoUndefined).not.toHaveBeenCalled();
+      expect(noUndefined).not.toHaveBeenCalled();
     });
 
     it('does not throw when the "accessibilityLabel" property is UNDEFINED', () => {
-      const amaNoUndefined = jest.spyOn(AMADebugUtils, 'amaNoUndefined');
+      const noUndefined = jest.spyOn(AMADebugUtils, 'noUndefined');
 
       try {
         // @ts-ignore
         renderTouchableWithoutFeedback({});
       } catch {}
 
-      expect(amaNoUndefined).not.toHaveBeenCalled();
+      expect(noUndefined).not.toHaveBeenCalled();
     });
   });
 
@@ -220,5 +228,5 @@ function renderTouchableWithoutFeedback(props: TouchableWithoutFeedbackProps) {
   );
 }
 
-jest.mock('../internal/debug');
+jest.mock('../internal/noUndefined');
 jest.mock('../internal/contrastChecker');

@@ -1,7 +1,3 @@
----
-sidebar_position: 2
----
-
 # Contrast
 
 AMA performs a contrast check between the component background and its children for tappable elements like Pressable, Button, etc.
