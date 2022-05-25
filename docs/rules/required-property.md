@@ -1,7 +1,3 @@
----
-sidebar_position: 3
----
-
 # Required property
 
 To avoid being a TypeScript-only library, AMA also performs the required property checks at runtime. For example if the [Pressable](/react-native-ama/docs/components/Pressable) does not have the `accessibilityRole` property specified AMA throws an error.

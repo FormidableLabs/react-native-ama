@@ -1,7 +1,3 @@
----
-sidebar_position: 4
----
-
 # Uppercase Text
 
 For [<Text />](/docs/components/Text) elements AMA checks if the style has the `textTransform` property set to `uppercase`, and if so throws an error if the `accessibilityLabel` one is not set.

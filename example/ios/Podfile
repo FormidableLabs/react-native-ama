@@ -10,15 +10,16 @@ target 'AmaExample' do
 
   pod 'react-native-ama', :path => '../..'
 
-  projects.each do |project|
-    project.build_configurations.each do |config|
+  arm_value = `/usr/sbin/sysctl -n hw.optional.arm64 2>&1`.to_i
+
+  post_install do |installer|
+    react_native_post_install(installer)
+    installer.pods_project.build_configurations.each do |config|
       if arm_value == 1 then
-        config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = excluded_archs_default
+        config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
       else
-        config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64 " + excluded_archs_default
+        config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = ""
       end
     end
-
-    project.save()
   end
 end

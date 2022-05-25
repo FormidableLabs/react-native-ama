@@ -11,7 +11,7 @@ import {
 import { accessibilityLabelChecker } from '../internal/accessibilityLabelChecker';
 import { checkMinimumSize } from '../internal/checkMinimumSize';
 import { contrastChecker } from '../internal/contrastChecker';
-import { amaNoUndefined } from '../internal/debug';
+import { noUndefined } from '../internal/noUndefined';
 
 export type PressableProps = Omit<
   RNPressableProps,
@@ -31,8 +31,8 @@ export const Pressable: React.FC<PressableProps> = ({ children, ...rest }) => {
     expanded: rest.expanded,
   };
 
-  __DEV__ && amaNoUndefined(rest, 'accessibilityRole');
-  __DEV__ && amaNoUndefined(rest, 'accessibilityLabel');
+  __DEV__ && noUndefined(rest, 'accessibilityRole', 'NO_ACCESSIBILITY_ROLE');
+  __DEV__ && noUndefined(rest, 'accessibilityLabel', 'NO_ACCESSIBILITY_LABEL');
 
   __DEV__ &&
     // eslint-disable-next-line react-hooks/rules-of-hooks

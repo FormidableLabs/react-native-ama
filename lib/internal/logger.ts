@@ -1,4 +1,9 @@
-import { Rule, RuleValue, SHELL_COLORS } from './logger.rules';
+import {
+  Rule,
+  RuleValue,
+  SHELL_COLORS,
+  canRuleBeOverridden,
+} from './logger.rules';
 import {
   CONTRAST_CHECKER_MAX_DEPTH,
   LOGGER_RULES,
@@ -16,7 +21,10 @@ type OverrideRule = {
 };
 
 export const log = (rule: Rule, message: string, extra?: any) => {
-  const action = overrideRules?.rules?.[rule] || LOGGER_RULES[rule];
+  const customRule = canRuleBeOverridden(rule)
+    ? overrideRules?.rules?.[rule]
+    : undefined;
+  const action = customRule || LOGGER_RULES[rule];
 
   const formattedMessage = `${SHELL_COLORS.RED}❌ [AMA ${rule}]${SHELL_COLORS.RESET} - ${SHELL_COLORS.YELLOW}${message}${SHELL_COLORS.RESET}\n\n${RULES_HELP[rule]}`;
 
