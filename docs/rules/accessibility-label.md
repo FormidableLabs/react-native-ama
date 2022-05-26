@@ -1,3 +1,5 @@
+import { MustNot } from '@site/src/components';
+
 # Accessibility Label
 
 The [accessibilityLabel](https://reactnative.dev/docs/accessibility#accessibilitylabel) is the text that assistive technology reads when the component is focused and AMA requires it by tappable elements.
@@ -58,7 +60,7 @@ The `accessibilityLabel` is announced first, then the __role__ and the action th
 For this reason, AMA requires that tappable elements have the `accessibilityLabel` defined.
 
 
-## NO_ACCESSIBILITY_LABEL
+## NO_ACCESSIBILITY_LABEL  <MustNot />
 
 This error is used when a pressable element has no [accessibilityLabel](https://reactnative.dev/docs/accessibility#accessibilitylabel) defined.
 

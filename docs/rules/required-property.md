@@ -1,12 +1,12 @@
 # Required property
 
-To avoid being a TypeScript-only library, AMA also performs the required property checks at runtime. For example if the [Pressable](/react-native-ama/docs/components/Pressable) does not have the `accessibilityRole` property specified AMA throws an error.
+To avoid being a TypeScript-only library, AMA also performs the required property checks at runtime. For example if the [TextInput](/docs/components/Text) does not have the `label` property specified AMA throws an error.
 
-:::tip
+## NO_UNDEFINED
 
-The Log level type can be customised, [here for more info](/docs/advanced/custom-log-rules)
+This is used when a property marked as required in TS is not present at runtime.
+
+:::note
+
+The error is only thrown for the __DEV__ version of the app
 :::
-
-## PROPERTY_UNDEFINED
-
-This is used when a property marked as required in TS is not present, for example: `accessibilityRole` for the [Pressable](/react-native-ama/docs/components/Pressable) component.

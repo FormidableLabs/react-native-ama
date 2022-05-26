@@ -7,6 +7,7 @@ import ErrorBoundary from 'react-native-error-boundary';
 
 import { BackButton } from './components/BackButton';
 import { Header } from './components/Header';
+import { FormScreen } from './screens/Form.screen';
 import { HomeScreen } from './screens/Home.screen';
 import { PressableScreen } from './screens/Pressable.screen';
 import { ReanimatedReduceMotionScreen } from './screens/ReanimatedReduceMotion.screen';
@@ -106,6 +107,14 @@ const AppNavigator = () => {
             headerTitle: () => (
               <Header title={'Reanimated Reduce Motion Demo'} autofocus />
             ),
+          }}
+        />
+        <Stack.Screen
+          name="Form"
+          component={FormScreen}
+          options={{
+            headerLeft: () => <BackButton />,
+            headerTitle: () => <Header title={'Form Demo'} autofocus />,
           }}
         />
       </Stack.Navigator>

@@ -1,3 +1,5 @@
+import { MustNot } from '@site/src/components';
+
 # Accessibility Role
 
 The [accessibilityRole](https://reactnative.dev/docs/accessibility#accessibilityrole) communicates the purpose of a component to the assistive technology user and so AMA requires it by tappable elements.
@@ -21,7 +23,7 @@ Let's consider the following example:
 
 In both cases, the user has no clue about the nature of the component the screen reader landed and what could be the outcome of interacting with it.
 
-## NO_ACCESSIBILITY_ROLE
+## NO_ACCESSIBILITY_ROLE <MustNot />
 
 This error is used when a pressable element has no [accessibilityRole](https://reactnative.dev/docs/accessibility#accessibilityrole) defined.
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const Highlight = ({ children, rule }) => {
+const Highlight = ({ children, rule, small }) => {
   const color = rule === 'MUST_NOT' ? '#b60000' : '#807700';
 
   return (
@@ -10,6 +10,9 @@ const Highlight = ({ children, rule }) => {
         borderRadius: '2px',
         color: '#fff',
         padding: '0.4rem 0.6rem',
+        fontSize: 16,
+        display: 'inline-block',
+        verticalAlign: 'middle'
       }}>
       {children}
     </span>

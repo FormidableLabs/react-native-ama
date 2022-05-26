@@ -1,3 +1,5 @@
+import { MustNot } from '@site/src/components';
+
 # Uppercase Text
 
 For [<Text />](/docs/components/Text) elements AMA checks if the style has the `textTransform` property set to `uppercase`, and if so throws an error if the `accessibilityLabel` one is not set.
@@ -54,11 +56,11 @@ The remaining words are read correctly by both screen readers.
 
 The word `CONTACT` is read correctly, but both screen readers do the spelling of the word `US` as it is interpreted as `U.S.` for `United States.
 
-## UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL
+## UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL <MustNot />
 
 This is used when a component uses the `textTransform: uppercase` style without providing an accessible label.
 
-## UPPERCASE_ACCESSIBILITY_LABEL
+## UPPERCASE_ACCESSIBILITY_LABEL <MustNot />
 
 This is used when a component has the `accessibilityLabel` prop in all caps.
 
