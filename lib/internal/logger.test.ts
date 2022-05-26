@@ -64,7 +64,7 @@ describe('Logger', () => {
   });
 
   it.each(NON_OVERRIDABLE_RULES)(
-    'prevent some rules from being overridded',
+    'prevent some rules from being overridden',
     rule => {
       const rules = {};
 
@@ -92,13 +92,13 @@ jest.mock('./logger.rules', () => {
   return {
     ...original,
     LOGGER_RULES: {
-      CONTRAST_FAILED: 'throw',
-      CONTRAST_FAILED_AAA: 'warn',
-      MINIMUM_SIZE: 'throw',
-      UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL: 'throw',
-      UPPERCASE_ACCESSIBILITY_LABEL: 'throw',
-      NO_ACCESSIBILITY_LABEL: 'throw',
-      NO_ACCESSIBILITY_ROLE: 'throw',
+      CONTRAST_FAILED: 'MUST_NOT',
+      CONTRAST_FAILED_AAA: 'SHOULD_NOT',
+      MINIMUM_SIZE: 'MUST_NOT',
+      UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL: 'MUST_NOT',
+      UPPERCASE_ACCESSIBILITY_LABEL: 'MUST_NOT',
+      NO_ACCESSIBILITY_LABEL: 'MUST_NOT',
+      NO_ACCESSIBILITY_ROLE: 'MUST_NOT',
     },
   };
 });
