@@ -146,7 +146,7 @@ describe('TextInput', () => {
 
     const fn = jest.fn();
     const focus = jest.fn();
-    const fakeRef = { current: 'hello', focus };
+    const fakeRef = { current: { focus } };
 
     const renderAPI = render(
       <TextInput
