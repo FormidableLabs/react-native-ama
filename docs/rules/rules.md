@@ -1,4 +1,4 @@
-import { MustNot, ShouldNot } from '@site/src/components/rules';
+import { MustNot, ShouldNot } from '@site/src/components';
 
 # Rules
 
@@ -20,15 +20,17 @@ AMA guidelines are categorised as:
 
 ### Default Rules
 
-| Log key                                                                                                   | Guidelin      |
-| --------------------------------------------------------------------------------------------------------- | ------------- |
-| [CONTRAST_FAILED](/docs/advanced/contrast#contrast_failed)                                                | <MustNot />   |
-| [CONTRAST_FAILED_AAA](/docs/advanced/contrast#contrast_failed_aaa)                                        | <ShouldNot /> |
-| [MINIMUM_SIZE](/docs/advanced/minimum-size)                                                               | <MustNot />   |
-| [NO_ACCESSIBILITY_LABEL](docs/rules/accessibility-label#no_accessibility_label)<sup>\*</sup>              | <MustNot />   |
-| [NO_ACCESSIBILITY_ROLE](/docs/rules/accessibility-role#no_accessibility_role) <sup>\*</sup>               | <MustNot />   |
-| [UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL](/docs/rules/uppercase-text#uppercase_text_no_accessibility_label) | <MustNot />   |
-| [UPPERCASE_ACCESSIBILITY_LABEL](/docs/rules/uppercase-text#uppercase_accessibility_label)                 | <MustNot />   |
+| Log key                                                               | Guideline     |
+| --------------------------------------------------------------------- | ------------- |
+| [CONTRAST_FAILED](/docs/advanced/contrast)                            | <MustNot />   |
+| [CONTRAST_FAILED_AAA](/docs/advanced/contrast)                        | <ShouldNot /> |
+| [MINIMUM_SIZE](/docs/advanced/minimum-size)                           | <MustNot />   |
+| [NO_ACCESSIBILITY_LABEL](docs/rules/accessibility-label)<sup>\*</sup> | <MustNot />   |
+| [NO_ACCESSIBILITY_ROLE](/docs/rules/accessibility-role) <sup>\*</sup> | <MustNot />   |
+| [NO_KEYBOARD_TRAP](/docs/rules/keyboard-trap) <sup>\*</sup>           | <MustNot />   |
+| [UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL](/docs/rules/uppercase-text)   | <MustNot />   |
+| [UPPERCASE_ACCESSIBILITY_LABEL](/docs/rules/uppercase-text)           | <MustNot />   |
+| [NO_UNDEFINED](/docs/rules/required-property)                         | <MustNot />   |
 
 ### Constants
 
@@ -44,7 +46,7 @@ This field is empty by default and can be overridden by specifying a list of acc
 
 Create a JSON file called `ama.json` in the project's root folder to customise the log rules, then specify the custom log level for the wanted key.
 
-### Example:
+### Example
 
 ```json
 {

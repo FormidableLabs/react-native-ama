@@ -1,9 +1,9 @@
 # Text
 
-Pressable is an extension of the React Native Pressable component, focused on accessibility.
+Text is an extension of the [React Native Text](https://reactnative.dev/docs/text) component, focused on accessibility.
 
 ```tsx
-import { Pressable } from 'react-native-ama';
+import { Text } from 'react-native-ama';
 
 <Text autofocus>I'm pressable</Text>;
 ```

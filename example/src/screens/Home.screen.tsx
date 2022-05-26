@@ -12,7 +12,6 @@ export const HomeScreen = () => {
 
   return (
     <View style={styles.view}>
-      <Spacer height={'normal'} />
       <ScrollView style={styles.list}>
         <Header title="Example components" />
         <Spacer height={'normal'} />
@@ -24,6 +23,7 @@ export const HomeScreen = () => {
         />
         <Spacer height={'normal'} />
         <CTAPressable
+          g
           title="TouchableWithoutFeedback"
           onPress={() => navigate('TouchableWithoutFeedback')}
         />
@@ -31,6 +31,10 @@ export const HomeScreen = () => {
         <CTAPressable title="Text" onPress={() => navigate('Text')} />
         <Spacer height={'normal'} />
         <CTAPressable title="Span" onPress={() => navigate('Span')} />
+
+        {/* */}
+        <Spacer height={'big'} />
+        <CTAPressable title="Form" onPress={() => navigate('Form')} />
 
         {/* */}
         <Spacer height={'big'} />
@@ -53,6 +57,7 @@ export const HomeScreen = () => {
 const styles = StyleSheet.create({
   view: {
     flex: 1,
+    paddingVertical: theme.padding.normal,
   },
   list: {
     paddingHorizontal: theme.padding.big,

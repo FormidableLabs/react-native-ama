@@ -29,14 +29,15 @@ export const log = (rule: Rule, message: string, extra?: any) => {
   const formattedMessage = `${SHELL_COLORS.RED}❌ [AMA ${rule}]${SHELL_COLORS.RESET} - ${SHELL_COLORS.YELLOW}${message}${SHELL_COLORS.RESET}\n\n${RULES_HELP[rule]}`;
 
   switch (action) {
-    case 'throw':
+    case 'MUST_NOT':
       if (extra) {
         console.info(extra, '\n');
       }
       console.error(formattedMessage, '\n');
 
       throw new Error(`❌ [AMA ${rule}] - ${message}`);
-    case 'warn':
+    case 'SHOULD_NOT':
+    default:
       if (extra) {
         console.info(extra, '\n');
       }
