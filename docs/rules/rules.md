@@ -1,3 +1,5 @@
+import { MustNot, ShouldNot } from '@site/src/components/rules';
+
 # Rules
 
 In dev mode, AMA components try to enforce fundamental accessibility issues by throwing an error (in dev build only) by throwing an error or a warning if a rule is broken. For example, missing accessibility label, poor color contrast, minimum size not met, etc.
@@ -11,24 +13,22 @@ The library does not perform any accessibility check on the production build!
 
 ## The log levels
 
-AMA allows two-level of logs:
+AMA guidelines are categorised as:
 
-- **throw**: Throws an error
-- **warn**: prints the error message using `console.warn`
+- <MustNot />: Those best practices are <b>enforced</b> and AMA to throw an error when fail
+- <ShouldNot />: Those best practices are <b>preferred</b> and AMA prints only prints a warning message when fail
 
-## Default values
+### Default Rules
 
-### Log Levels
-
-| Log key                                                                                                   | Log level |
-| --------------------------------------------------------------------------------------------------------- | --------- |
-| [CONTRAST_FAILED](/docs/advanced/contrast#contrast_failed)                                                | throw     |
-| [CONTRAST_FAILED_AAA](/docs/advanced/contrast#contrast_failed_aaa)                                        | warn      |
-| [MINIMUM_SIZE](/docs/advanced/minimum-size)                                                               | throw     |
-| [NO_ACCESSIBILITY_LABEL](docs/rules/accessibility-label#no_accessibility_label)<sup>\*</sup>              | throw     |
-| [NO_ACCESSIBILITY_ROLE](/docs/rules/accessibility-role#no_accessibility_role) <sup>\*</sup>               | throw     |
-| [UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL](/docs/rules/uppercase-text#uppercase_text_no_accessibility_label) | throw     |
-| [UPPERCASE_ACCESSIBILITY_LABEL](/docs/rules/uppercase-text#uppercase_accessibility_label)                 | throw     |
+| Log key                                                                                                   | Guidelin      |
+| --------------------------------------------------------------------------------------------------------- | ------------- |
+| [CONTRAST_FAILED](/docs/advanced/contrast#contrast_failed)                                                | <MustNot />   |
+| [CONTRAST_FAILED_AAA](/docs/advanced/contrast#contrast_failed_aaa)                                        | <ShouldNot /> |
+| [MINIMUM_SIZE](/docs/advanced/minimum-size)                                                               | <MustNot />   |
+| [NO_ACCESSIBILITY_LABEL](docs/rules/accessibility-label#no_accessibility_label)<sup>\*</sup>              | <MustNot />   |
+| [NO_ACCESSIBILITY_ROLE](/docs/rules/accessibility-role#no_accessibility_role) <sup>\*</sup>               | <MustNot />   |
+| [UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL](/docs/rules/uppercase-text#uppercase_text_no_accessibility_label) | <MustNot />   |
+| [UPPERCASE_ACCESSIBILITY_LABEL](/docs/rules/uppercase-text#uppercase_accessibility_label)                 | <MustNot />   |
 
 ### Constants
 
@@ -42,7 +42,7 @@ This field is empty by default and can be overridden by specifying a list of acc
 
 ## Customising the log levels
 
-To customise the log rules, create a JSON file called `ama.json` in the project's root folder, then specify the custom log level for the wanted key.
+Create a JSON file called `ama.json` in the project's root folder to customise the log rules, then specify the custom log level for the wanted key.
 
 ### Example:
 
@@ -61,8 +61,7 @@ To customise the log rules, create a JSON file called `ama.json` in the project'
 The JSON file does not need to contain all the log keys, as AMA defaults to the default rule if not present in the JSON one.
 :::
 
-
 :::note
 
-<sup>*</sup> The rule cannot be overridden
+<sup>\*</sup> The rule cannot be overridden
 :::
