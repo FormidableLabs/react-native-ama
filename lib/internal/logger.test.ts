@@ -64,12 +64,12 @@ describe('Logger', () => {
   });
 
   it.each(NON_OVERRIDABLE_RULES)(
-    'prevent some rules from being overridden',
+    'prevent the rules %s from being overridden',
     rule => {
       const rules = {};
 
       // @ts-ignore
-      rules[rule] = 'warn';
+      rules[rule] = 'SHOULD_NOT';
 
       jest.doMock('./../../ama.rules.json', () => {
         return {
@@ -99,6 +99,8 @@ jest.mock('./logger.rules', () => {
       UPPERCASE_ACCESSIBILITY_LABEL: 'MUST_NOT',
       NO_ACCESSIBILITY_LABEL: 'MUST_NOT',
       NO_ACCESSIBILITY_ROLE: 'MUST_NOT',
+      NO_KEYBOARD_TRAP: 'MUST_NOT',
+      NO_UNDEFINED: 'MUST_NOT',
     },
   };
 });
