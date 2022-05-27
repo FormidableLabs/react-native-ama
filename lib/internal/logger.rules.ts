@@ -34,21 +34,21 @@ export const CONTRAST_CHECKER_MAX_DEPTH = 5;
 export const RULES_HELP: Record<Rule, string> = {
   NO_UNDEFINED: '',
   CONTRAST_FAILED:
-    'https://formidable.com/open-source/react-native-ama/docs/advanced/contrast#contrast_failed',
+    'https://formidable.com/open-source/react-native-ama/docs/guidelines/contrast',
   CONTRAST_FAILED_AAA:
-    'https://formidable.com/open-source/react-native-ama/docs/advanced/contrast#contrast_failed_aaa',
+    'https://formidable.com/open-source/react-native-ama/docs/guidelines/contrast',
   MINIMUM_SIZE:
-    'https://formidable.com/open-source/react-native-ama/docs/advanced/minimum-size',
+    'https://formidable.com/open-source/react-native-ama/docs/guidelines/minimum-size',
   UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL:
-    'https://formidable.com/open-source/react-native-ama//docs/rules/uppercase-text#uppercase_text_no_accessibility_label',
+    'https://formidable.com/open-source/react-native-ama/docs/guidelines/uppercase-text',
   UPPERCASE_ACCESSIBILITY_LABEL:
-    'https://formidable.com/open-source/react-native-ama//docs/rules/uppercase-text#uppercase_accessibility_label',
+    'https://formidable.com/open-source/react-native-ama/docs/guidelines/uppercase-text',
   NO_ACCESSIBILITY_LABEL:
-    'https://formidable.com/open-source/react-native-ama/docs/rules/accessibility-labels#no_accessibility_label',
+    'https://formidable.com/open-source/react-native-ama/docs/guidelines/accessibility-labels',
   NO_ACCESSIBILITY_ROLE:
-    'https://formidable.com/open-source/react-native-ama/docs/rules/accessibility-role#no_accessibility_role',
+    'https://formidable.com/open-source/react-native-ama/docs/guidelines/accessibility-role',
   NO_KEYBOARD_TRAP:
-    'https://formidable.com/open-source/react-native-ama/docs/rules/accessibility-role#no_accessibility_role',
+    'https://formidable.com/open-source/react-native-ama/docs/guidelines/accessibility-role',
 };
 
 export const canRuleBeOverridden = (rule: Rule) => {

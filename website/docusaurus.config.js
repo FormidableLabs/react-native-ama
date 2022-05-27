@@ -65,8 +65,8 @@ const config = {
                         to: '/docs/hooks/',
                     },
                     {
-                        label: 'Rules',
-                        to: '/docs/rules/',
+                        label: 'Guidelines',
+                        to: '/docs/guidelines/',
                     },
                 ],
             },
