@@ -1,6 +1,6 @@
 # Text
 
-Text is an extension of the [React Native Text](https://reactnative.dev/docs/text) component, focused on accessibility.
+Text is an extension of the [React Native Text](https://reactnative.dev/docs/text) component, [focused on accessibility](#accessibility-improvements).
 
 ```tsx
 import { Text } from 'react-native-ama';
@@ -8,12 +8,12 @@ import { Text } from 'react-native-ama';
 <Text autofocus>I'm pressable</Text>;
 ```
 
-## The differences
+## Accessibility improvements
 
 Compared to the default React Native component, this one performs the following checks at runtime:
 
-- [Missing accessibilityLabel when using `textTransform: uppercase` style](/docs/rules/uppercase-text#uppercase_text_no_accessibility_label)
-- [accessibilityLabel in all caps](/docs/rules/uppercase-text#uppercase_accessibility_label)
+- [Missing accessibilityLabel when using `textTransform: uppercase` style](/docs/guidelines/uppercase-text#uppercase_text_no_accessibility_label)
+- [accessibilityLabel in all caps](/docs/guidelines/uppercase-text#uppercase_accessibility_label)
 
 ## Additional Props
 

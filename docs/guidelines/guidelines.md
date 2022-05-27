@@ -1,10 +1,10 @@
 import { MustNot, ShouldNot } from '@site/src/components';
 
-# Rules
+# Guidelines
 
 In dev mode, AMA components try to enforce fundamental accessibility issues by throwing an error (in dev build only) by throwing an error or a warning if a rule is broken. For example, missing accessibility label, poor color contrast, minimum size not met, etc.
 
-Conscious that there might be edge cases where a rule or two might need to be broken, AMA provides a way to change the logging level of each rule tested.
+Conscious that there might be edge cases where a rule or two might need to be broken, AMA provides a way to change the logging level of each guideline tested.
 
 :::note
 
@@ -25,12 +25,12 @@ AMA guidelines are categorised as:
 | [CONTRAST_FAILED](/docs/advanced/contrast)                            | <MustNot />   |
 | [CONTRAST_FAILED_AAA](/docs/advanced/contrast)                        | <ShouldNot /> |
 | [MINIMUM_SIZE](/docs/advanced/minimum-size)                           | <MustNot />   |
-| [NO_ACCESSIBILITY_LABEL](docs/rules/accessibility-label)<sup>\*</sup> | <MustNot />   |
-| [NO_ACCESSIBILITY_ROLE](/docs/rules/accessibility-role) <sup>\*</sup> | <MustNot />   |
-| [NO_KEYBOARD_TRAP](/docs/rules/keyboard-trap) <sup>\*</sup>           | <MustNot />   |
-| [UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL](/docs/rules/uppercase-text)   | <MustNot />   |
-| [UPPERCASE_ACCESSIBILITY_LABEL](/docs/rules/uppercase-text)           | <MustNot />   |
-| [NO_UNDEFINED](/docs/rules/required-property)                         | <MustNot />   |
+| [NO_ACCESSIBILITY_LABEL](docs/guidelines/accessibility-label)[^1] | <MustNot />   |
+| [NO_ACCESSIBILITY_ROLE](/docs/guidelines/accessibility-role) [^1] | <MustNot />   |
+| [NO_KEYBOARD_TRAP](/docs/guidelines/keyboard-trap) [^1]           | <MustNot />   |
+| [UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL](/docs/guidelines/uppercase-text)   | <MustNot />   |
+| [UPPERCASE_ACCESSIBILITY_LABEL](/docs/guidelines/uppercase-text)           | <MustNot />   |
+| [NO_UNDEFINED](/docs/guidelines/required-property)                         | <MustNot />   |
 
 ### Constants
 
@@ -63,7 +63,4 @@ Create a JSON file called `ama.json` in the project's root folder to customise t
 The JSON file does not need to contain all the log keys, as AMA defaults to the default rule if not present in the JSON one.
 :::
 
-:::note
-
-<sup>\*</sup> The rule cannot be overridden
-:::
+[^1]: The rule cannot be overridden

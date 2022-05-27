@@ -1,6 +1,6 @@
 # TouchableWithoutFeedback
 
-TouchableWithoutFeedback is an extension of the React Native [TouchableWithoutFeedback](https://reactnative.dev/docs/touchablewithoutfeedback) component, focused on accessibility.
+TouchableWithoutFeedback is an extension of the React Native [TouchableWithoutFeedback](https://reactnative.dev/docs/touchablewithoutfeedback) component, [focused on accessibility](#accessibility-improvements).
 
 ```tsx
 import { TouchableWithoutFeedback } from 'react-native-ama';
@@ -15,18 +15,44 @@ import { View } from 'react-native';
 </TouchableWithoutFeedback>;
 ```
 
-## The differences
+## Accessibility improvements
 
-### Properties
+Compared to the default React Native component, this custom component:
 
-The component exposes all the React Native [TouchableWithoutFeedback](https://reactnative.dev/docs/pressable) props with the following exceptions:
-
-- `accessibilityRole` and `accessibilityLabel` are mandatory properties, and if omitted, the app will throw an error (in dev mode only)
+- Forces the use of `accessibilityRole` and `accessibilityLabel`
 - `accessibilityState` has been removed as its states `busy`, `checked`, `selected`, `expanded` are exposed as a property
+- [Contrast checker](/docs/guidelines/contrast) before the component background color and its children color
+
+### accessibilityRole
+
+The `accessibilityRole` property is used by the screen reader to announce the kind of element focused on. If the property is omitted, the user might have little to no clue what could happen if the element is triggered.
+
+[Check here for more info](/docs/guidelines/accessibility-role)
+
+### accessibilityLabel
+
+The `accessibilityLabel` property is the first thing announced by the screen reader when the elements gain the focus; then, it announces its role. If the property is omitted, the user might have little to no clue what could happen if the element is triggered.
+
+[Check here for more info](/docs/guidelines/accessibility-label)
+
+### Accessibility states
+
+The default `accessibilityState` property does accept an object like:
+
+```js
+accessibilityState={{
+    busy: boolean;
+    checked: boolean | 'mixed';
+    selected: boolean;
+    expanded: boolean;
+}}
+```
+
+To simply the syntax, the custom component allows passing those states as property for the component, handling the generation of the object under the hood.
 
 ### Contrast checker
 
-The component performs a [contrast check](/docs/rules/contrast) between its background colour and the children's foreground when in dev mode.
+The component performs a [contrast check](/docs/guidelines/contrast) between its background colour and the children's foreground when in dev mode.
 
 :::note
 AMA performs the check on both pressed and non-pressed states when passing a function as style.
@@ -34,7 +60,7 @@ AMA performs the check on both pressed and non-pressed states when passing a fun
 
 ### Minimum size
 
-The component uses the [onLayout](https://reactnative.dev/docs/layoutevent) prop to perform the [minium size check](/docs/rules/minimum-size).
+The component uses the [onLayout](https://reactnative.dev/docs/layoutevent) prop to perform the [minium size check](/docs/guidelines/minimum-size).
 
 ## Additional Props
 
