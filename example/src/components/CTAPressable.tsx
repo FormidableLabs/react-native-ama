@@ -45,7 +45,12 @@ export const CTAPressable = ({
       onPress={onPress}
       {...rest}>
       {rest.busy ? <ActivityIndicator color={theme.color.white} /> : null}
-      <Text style={[styles.text, { textTransform }]}>{title}</Text>
+      <Text
+        style={[styles.text, { textTransform }]}
+        accessibilityElementsHidden={rest.accessibilityElementsHidden}
+        importantForAccessibility={rest.importantForAccessibility}>
+        {title}
+      </Text>
     </Pressable>
   );
 };

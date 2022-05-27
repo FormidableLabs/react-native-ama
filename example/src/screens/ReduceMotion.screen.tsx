@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Animated, Dimensions, StyleSheet, View } from 'react-native';
-import { Pressable, Text } from 'react-native-ama';
+import { Pressable, Text, useA11yFocus } from 'react-native-ama';
 import { useAccessibleAnimation } from 'react-native-ama';
 
 import { CTAPressable } from '../components/CTAPressable';
@@ -12,9 +12,10 @@ const MAX_LINE_WIDTH = Dimensions.get('window').width - theme.padding.big * 2;
 export const ReduceMotionScreen = () => {
   const [overlayProgressValue, setOverlayProgressValue] =
     React.useState<Animated.Value | null>(null);
-  const animationProgress = useRef<Animated.Value>(
-    new Animated.Value(0),
-  ).current;
+  const viewRef = React.useRef(null);
+
+  const { setFocus } = useA11yFocus();
+
   const { play, animatedStyle, progress } = useAccessibleAnimation({
     duration: 300,
     useNativeDriver: true,
@@ -77,6 +78,10 @@ export const ReduceMotionScreen = () => {
 
     overlayPlay().start();
     play().start();
+
+    setTimeout(() => {
+      setFocus(viewRef.current);
+    }, 0);
   };
 
   const playAnimation2 = () => {
@@ -86,6 +91,10 @@ export const ReduceMotionScreen = () => {
     play2().start(() => {
       play3().start();
     });
+
+    setTimeout(() => {
+      setFocus(viewRef.current);
+    }, 0);
   };
 
   const reverseAnimation = () => {
@@ -104,9 +113,23 @@ export const ReduceMotionScreen = () => {
   return (
     <>
       <View style={styles.container}>
-        <CTAPressable title="Test Animation 1" onPress={playAnimation1} />
+        <CTAPressable
+          title="Test Animation 1"
+          onPress={playAnimation1}
+          importantForAccessibility={
+            overlayProgressValue === null ? 'yes' : 'no'
+          }
+          accessibilityElementsHidden={overlayProgressValue !== null}
+        />
         <Spacer height="big" />
-        <CTAPressable title="Test Animation 2" onPress={playAnimation2} />
+        <CTAPressable
+          title="Test Animation 2"
+          onPress={playAnimation2}
+          importantForAccessibility={
+            overlayProgressValue === null ? 'yes' : 'no'
+          }
+          accessibilityElementsHidden={overlayProgressValue !== null}
+        />
       </View>
       {overlayProgressValue ? (
         <Pressable
@@ -114,7 +137,7 @@ export const ReduceMotionScreen = () => {
           accessibilityLabel="Close popup"
           style={StyleSheet.absoluteFill}
           onPress={() => reverseAnimation()}>
-          <Animated.View style={[styles.overlay, overlayStyle]} />
+          <Animated.View style={[styles.overlay, overlayStyle]} ref={viewRef} />
         </Pressable>
       ) : null}
       <Animated.View style={[styles.animation1, animatedStyle]}>
