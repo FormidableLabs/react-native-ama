@@ -223,5 +223,5 @@ function renderTouchableOpacity(props: TouchableOpacityProps) {
   );
 }
 
-jest.mock('../internal/noUndefined');
+jest.mock('../internal/noUndefinedProperty');
 jest.mock('../internal/contrastChecker');
