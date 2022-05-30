@@ -22,7 +22,7 @@ export const useFormField = ({
     return item ? allRefs.indexOf(item) : -1;
   };
 
-  const focusNextInput = (nextFormField?: React.RefObject<any>) => {
+  const focusNextFormField = (nextFormField?: React.RefObject<any>) => {
     const allRefs = refs!;
     const myIndex = getMyIndex();
     const isLastItem = myIndex === allRefs.length - 1;
@@ -56,7 +56,7 @@ export const useFormField = ({
 
     const currentRef = allRefs[myIndex];
     if (currentRef.hasFocusCallback) {
-      __DEV__ && checkFocusTrap(currentRef.ref, false);
+      __DEV__ && checkFocusTrap(currentRef.ref.current, false);
     }
   };
 
@@ -78,8 +78,7 @@ export const useFormField = ({
   }, []);
 
   return {
-    fieldRef,
-    focusNextInput,
+    focusNextFormField,
     isLastField,
   };
 };

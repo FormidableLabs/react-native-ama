@@ -16,7 +16,7 @@ export const generateAccessibilityLabelFromLabel = (
     return child.props.children;
   });
 
-  const containsJSXPiece = pieces.some(piece => React.isValidElement(piece));
+  const containsJSXPiece = pieces?.some(piece => React.isValidElement(piece));
 
   if (containsJSXPiece) {
     console.info(pieces);

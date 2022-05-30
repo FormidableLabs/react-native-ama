@@ -2,7 +2,7 @@ import { fireEvent, render } from '@testing-library/react-native';
 import * as React from 'react';
 import { Text } from 'react-native';
 
-import * as CheckFocusTrap from '../internal/checkFocusTrap';
+import * as UseFormField from '../hooks/useFormField';
 import * as Logger from '../internal/logger';
 import { TextInput } from './TextInput';
 
@@ -11,6 +11,13 @@ beforeEach(() => {
 });
 
 describe('TextInput', () => {
+  beforeEach(() => {
+    jest
+      .spyOn(UseFormField, 'useFormField')
+      // @ts-ignore
+      .mockReturnValue({});
+  });
+
   it('logs the error if no label is specified', () => {
     const log = jest.spyOn(Logger, 'log');
 
@@ -23,6 +30,20 @@ describe('TextInput', () => {
       'NO_UNDEFINED',
       'The property "label" cannot be UNDEFINED',
     );
+  });
+
+  it('register itself as form field by using the useFormField hook', () => {
+    const useFormField = jest
+      .spyOn(UseFormField, 'useFormField')
+      // @ts-ignore
+      .mockReturnValue({});
+
+    render(<TextInput label={<Text testID="text" />} returnKeyType="done" />);
+
+    expect(useFormField).toHaveBeenCalledWith({
+      hasFocusCallback: true,
+      ref: null,
+    });
   });
 
   it('renders the given label before the text input when labelPosition is undefined', () => {
@@ -40,6 +61,7 @@ describe('TextInput', () => {
         <TextInput
           accessibilityLabel=""
           allowFontScaling={true}
+          onLayout={[Function]}
           onSubmitEditing={[Function]}
           rejectResponderTermination={true}
           returnKeyType="done"
@@ -63,6 +85,7 @@ describe('TextInput', () => {
         <TextInput
           accessibilityLabel=""
           allowFontScaling={true}
+          onLayout={[Function]}
           onSubmitEditing={[Function]}
           rejectResponderTermination={true}
           returnKeyType="done"
@@ -92,6 +115,78 @@ describe('TextInput', () => {
     expect(
       renderAPI.getByTestId('text').props.accessibilityElementsHidden,
     ).toBe(true);
+  });
+
+  describe('returnKeyType', () => {
+    it('sets the `returnKeyType="next"` if more fields have been registered', async () => {
+      const isLastField = jest.fn().mockReturnValue(false);
+
+      jest.spyOn(UseFormField, 'useFormField').mockReturnValue({
+        isLastField,
+      } as any);
+
+      const renderAPI = render(
+        <TextInput
+          label={<Text testID="text" />}
+          labelPosition="afterInput"
+          testID="test-id"
+        />,
+      );
+
+      await fireEvent(renderAPI.getByTestId('test-id'), 'onLayout');
+
+      expect(renderAPI.getByTestId('test-id').props.returnKeyType).toEqual(
+        'next',
+      );
+    });
+
+    it('sets the `returnKeyType="done"` if is last field registered', async () => {
+      const isLastField = jest.fn().mockReturnValue(true);
+
+      jest.spyOn(UseFormField, 'useFormField').mockReturnValue({
+        isLastField,
+      } as any);
+
+      const renderAPI = render(
+        <TextInput
+          label={<Text testID="text" />}
+          labelPosition="afterInput"
+          testID="test-id"
+        />,
+      );
+
+      await fireEvent(renderAPI.getByTestId('test-id'), 'onLayout');
+
+      expect(renderAPI.getByTestId('test-id').props.returnKeyType).toEqual(
+        'done',
+      );
+    });
+
+    it.each([true, false])(
+      'keeps the `returnKeyType` value passed as prop',
+      async isLastFieldValue => {
+        const isLastField = jest.fn().mockReturnValue(isLastFieldValue);
+
+        jest.spyOn(UseFormField, 'useFormField').mockReturnValue({
+          isLastField,
+        } as any);
+
+        const renderAPI = render(
+          <TextInput
+            label={<Text testID="text" />}
+            labelPosition="afterInput"
+            testID="test-id"
+            returnKeyType="google"
+          />,
+        );
+
+        await fireEvent(renderAPI.getByTestId('test-id'), 'onLayout');
+
+        expect(renderAPI.getByTestId('test-id').props.returnKeyType).toEqual(
+          'google',
+        );
+      },
+    );
   });
 
   describe('accessibilityLabel', () => {
@@ -141,12 +236,14 @@ describe('TextInput', () => {
     });
   });
 
-  it('focus the next element and checks for focus trap onSubmitEditing event', () => {
-    const checkFocusTrap = jest.spyOn(CheckFocusTrap, 'checkFocusTrap');
+  it('calls focusNextFormField onSubmitEditing event', () => {
+    const focusNextFormField = jest.fn();
+
+    jest.spyOn(UseFormField, 'useFormField').mockReturnValue({
+      focusNextFormField,
+    } as any);
 
     const fn = jest.fn();
-    const focus = jest.fn();
-    const fakeRef = { current: { focus } };
 
     const renderAPI = render(
       <TextInput
@@ -155,7 +252,6 @@ describe('TextInput', () => {
         testID="text-input"
         accessibilityLabel="Please insert your first name"
         onSubmitEditing={fn}
-        nextFormField={fakeRef as any}
       />,
     );
 
@@ -166,10 +262,9 @@ describe('TextInput', () => {
     );
 
     expect(fn).toHaveBeenCalledWith('whatever');
-    expect(focus).toHaveBeenCalledWith();
-    expect(checkFocusTrap).toHaveBeenCalledWith(fakeRef);
   });
 });
 
 jest.mock('../internal/checkFocusTrap');
 jest.mock('../internal/logger');
+jest.mock('../hooks/useFormField');

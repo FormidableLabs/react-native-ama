@@ -72,3 +72,14 @@ By default, the component uses the [React Native switch](https://reactnative.dev
 ```
 
 In this case, a custom `FancySwitch` component is used instead of the React Native one.
+
+:::note
+
+When using the default Switch, the components automatically set this two props:
+
+- `accessibilityElementsHidden={true}`
+- `importantForAccessibility="no"`
+
+To avoid the switch being individually focusable on Android.
+
+:::

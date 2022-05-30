@@ -18,9 +18,15 @@ export type TextInputProps = RNTextInputProps & {
 };
 
 export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
-  (props, ref) => {
-    const { fieldRef, focusNextInput, isLastField } = useFormField({
-      ref,
+  (props, forwardedRef) => {
+    const inputRef = React.useRef<React.ElementRef<typeof TextInput> | null>(
+      null,
+    );
+
+    React.useImperativeHandle(forwardedRef, () => inputRef.current!);
+
+    const { focusNextFormField, isLastField } = useFormField({
+      ref: inputRef,
       hasFocusCallback: true,
     });
     const [returnKeyType, setReturnKeyType] = React.useState(
@@ -59,11 +65,14 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
     ) => {
       rest?.onSubmitEditing?.(event);
 
-      focusNextInput(nextFormField);
+      focusNextFormField(nextFormField);
     };
 
     const checkReturnKeyType = (event: LayoutChangeEvent) => {
-      if (isLastField() && props.returnKeyType == null) {
+      const setReturnKeyTypeAsDone =
+        isLastField() && props.returnKeyType == null;
+
+      if (setReturnKeyTypeAsDone) {
         setReturnKeyType('done');
       }
 
@@ -75,7 +84,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
         {showLabelBeforeInput ? clonedLabel : null}
         <RNTextInput
           // @ts-ignore
-          ref={ref || fieldRef}
+          ref={inputRef}
           key={returnKeyType}
           accessibilityLabel={accessibilityLabel}
           returnKeyType={returnKeyType}
