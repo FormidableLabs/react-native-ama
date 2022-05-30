@@ -155,7 +155,7 @@ describe('TextInput', () => {
         testID="text-input"
         accessibilityLabel="Please insert your first name"
         onSubmitEditing={fn}
-        nextTextInput={fakeRef as any}
+        nextFormField={fakeRef as any}
       />,
     );
 

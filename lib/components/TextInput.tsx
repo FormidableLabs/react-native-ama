@@ -1,47 +1,44 @@
 import * as React from 'react';
 import {
+  LayoutChangeEvent,
   NativeSyntheticEvent,
   TextInput as RNTextInput,
   TextInputProps as RNTextInputProps,
-  ReturnKeyTypeOptions,
   TextInputSubmitEditingEventData,
 } from 'react-native';
 
-import { checkFocusTrap } from '../internal/checkFocusTrap';
-import { noUndefined } from '../internal/noUndefined';
+import { useFormField } from '../hooks/useFormField';
+import { generateAccessibilityLabelFromLabel } from '../internal/generateAccessibilityLabelFromLabel';
 
-export type TextInputProps = Omit<RNTextInputProps, 'returnKeyType'> & {
+export type TextInputProps = RNTextInputProps & {
   label: JSX.Element;
   labelPosition?: 'beforeInput' | 'afterInput';
-} & (
-    | {
-        returnKeyType: Exclude<ReturnKeyTypeOptions, 'next'>;
-      }
-    | {
-        returnKeyType: 'next';
-        nextTextInput: React.RefObject<RNTextInput>;
-      }
-  );
+} & {
+  nextFormField?: React.RefObject<RNTextInput>;
+};
 
 export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
   (props, ref) => {
-    const { label, labelPosition = 'beforeInput', ...rest } = props;
+    const { fieldRef, focusNextInput, isLastField } = useFormField({
+      ref,
+      hasFocusCallback: true,
+    });
+    const [returnKeyType, setReturnKeyType] = React.useState(
+      props.returnKeyType || 'next',
+    );
+    const {
+      label,
+      labelPosition = 'beforeInput',
+      nextFormField,
+      ...rest
+    } = props;
 
     const showLabelBeforeInput = labelPosition === 'beforeInput';
 
-    const accessibilityLabel = React.useMemo(() => {
-      __DEV__ && noUndefined(props, 'label');
-
-      if (props.accessibilityLabel) {
-        return '';
-      }
-
-      return React.Children.map(label, child => {
-        return child.props.children;
-      })
-        ?.join(',')
-        ?.replace(/\*$/, '');
-    }, [label, props]);
+    const accessibilityLabel = React.useMemo(
+      () => generateAccessibilityLabelFromLabel(label, props),
+      [label, props],
+    );
 
     const clonedLabel = React.useMemo(() => {
       return React.Children.map(label, child => {
@@ -62,24 +59,29 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
     ) => {
       rest?.onSubmitEditing?.(event);
 
-      if (rest.returnKeyType === 'next') {
-        // @ts-ignore
-        __DEV__ && noUndefined(props, 'nextTextInput');
+      focusNextInput(nextFormField);
+    };
 
-        rest.nextTextInput.current?.focus();
-
-        __DEV__ && checkFocusTrap(rest.nextTextInput);
+    const checkReturnKeyType = (event: LayoutChangeEvent) => {
+      if (isLastField()) {
+        setReturnKeyType('done');
       }
+
+      props.onLayout?.(event);
     };
 
     return (
       <>
         {showLabelBeforeInput ? clonedLabel : null}
         <RNTextInput
-          ref={ref}
+          // @ts-ignore
+          ref={ref || fieldRef}
+          key={returnKeyType}
           accessibilityLabel={accessibilityLabel}
+          returnKeyType={returnKeyType}
           {...rest}
           onSubmitEditing={handleOnSubmitEditing}
+          onLayout={checkReturnKeyType}
         />
         {showLabelBeforeInput ? null : clonedLabel}
       </>

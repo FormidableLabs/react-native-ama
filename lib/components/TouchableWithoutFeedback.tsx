@@ -9,7 +9,7 @@ import {
 import { accessibilityLabelChecker } from '../internal/accessibilityLabelChecker';
 import { checkMinimumSize } from '../internal/checkMinimumSize';
 import { contrastChecker } from '../internal/contrastChecker';
-import { noUndefined } from '../internal/noUndefined';
+import { noUndefinedProperty } from '../internal/noUndefinedProperty';
 import type { AMAAccessibilityState } from '../types/types';
 
 export type TouchableWithoutFeedbackProps = Omit<
@@ -32,8 +32,10 @@ export const TouchableWithoutFeedback: React.FC<
     expanded: rest.expanded,
   };
 
-  __DEV__ && noUndefined(rest, 'accessibilityRole', 'NO_ACCESSIBILITY_ROLE');
-  __DEV__ && noUndefined(rest, 'accessibilityLabel', 'NO_ACCESSIBILITY_LABEL');
+  __DEV__ &&
+    noUndefinedProperty(rest, 'accessibilityRole', 'NO_ACCESSIBILITY_ROLE');
+  __DEV__ &&
+    noUndefinedProperty(rest, 'accessibilityLabel', 'NO_ACCESSIBILITY_LABEL');
 
   __DEV__ &&
     // eslint-disable-next-line react-hooks/rules-of-hooks

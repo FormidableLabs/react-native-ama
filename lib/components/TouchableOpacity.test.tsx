@@ -4,7 +4,7 @@ import { Text } from 'react-native';
 
 import * as AccessibilityLabelChecker from '../internal/accessibilityLabelChecker';
 import * as ContrastChecker from '../internal/contrastChecker';
-import * as AMADebugUtils from '../internal/noUndefined';
+import * as AMADebugUtils from '../internal/noUndefinedProperty';
 import { TouchableOpacity, TouchableOpacityProps } from './TouchableOpacity';
 
 beforeEach(() => {
@@ -19,7 +19,7 @@ afterEach(() => {
 describe('AMA TouchableOpacity', () => {
   describe('When __DEV__ is true', () => {
     it('checks that the "accessibilityRole" property is not UNDEFINED', () => {
-      const noUndefined = jest.spyOn(AMADebugUtils, 'noUndefined');
+      const noUndefined = jest.spyOn(AMADebugUtils, 'noUndefinedProperty');
 
       try {
         // @ts-ignore
@@ -34,7 +34,7 @@ describe('AMA TouchableOpacity', () => {
     });
 
     it('checks that the "accessibilityLabel" property is not UNDEFINED', () => {
-      const noUndefined = jest.spyOn(AMADebugUtils, 'noUndefined');
+      const noUndefined = jest.spyOn(AMADebugUtils, 'noUndefinedProperty');
 
       try {
         // @ts-ignore
@@ -56,7 +56,7 @@ describe('AMA TouchableOpacity', () => {
     });
 
     it('does not throw when the "accessibilityRole" property is UNDEFINED', () => {
-      const noUndefined = jest.spyOn(AMADebugUtils, 'noUndefined');
+      const noUndefined = jest.spyOn(AMADebugUtils, 'noUndefinedProperty');
 
       try {
         // @ts-ignore
@@ -67,7 +67,7 @@ describe('AMA TouchableOpacity', () => {
     });
 
     it('does not throw when the "accessibilityLabel" property is UNDEFINED', () => {
-      const noUndefined = jest.spyOn(AMADebugUtils, 'noUndefined');
+      const noUndefined = jest.spyOn(AMADebugUtils, 'noUndefinedProperty');
 
       try {
         // @ts-ignore

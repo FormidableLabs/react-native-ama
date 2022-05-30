@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks';
 import * as ReactNativeReanimated from 'react-native-reanimated';
 
-import * as AMAProvider from '../components/AMAProvider';
 import { MOTION_ANIMATIONS } from '../internal/costants';
+import * as AMAProvider from '../providers/AMAProvider';
 import { useReanimatedTiming } from './useReanimatedTiming';
 
 beforeEach(() => {

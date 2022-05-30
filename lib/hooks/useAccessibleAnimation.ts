@@ -2,8 +2,8 @@ import * as React from 'react';
 import type { ViewStyle } from 'react-native';
 import { Animated } from 'react-native';
 
-import { useAMAContext } from '../components/AMAProvider';
 import { interpolateAnimationStates } from '../internal/interpolateAnimationStates';
+import { useAMAContext } from '../providers/AMAProvider';
 
 type UseAccessibleAnimation = {
   from: ViewStyle;

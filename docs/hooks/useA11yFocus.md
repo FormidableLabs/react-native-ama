@@ -55,7 +55,7 @@ const MyFancyScreen = () => {
 
   return (
     <View>
-      <Pressable onPress={() => setFocus(componentRef)}>
+      <Pressable onPress={() => setFocus(componentRef.current)}>
         <Text>Focus Text</Text>
       </Pressable>
 

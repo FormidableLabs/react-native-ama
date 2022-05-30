@@ -23,4 +23,7 @@ export const theme = {
     medium: 24,
     big: 48,
   },
+  flex1: {
+    flex: 1,
+  },
 };

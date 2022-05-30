@@ -48,7 +48,7 @@ export const RULES_HELP: Record<Rule, string> = {
   NO_ACCESSIBILITY_ROLE:
     'https://formidable.com/open-source/react-native-ama/docs/guidelines/accessibility-role',
   NO_KEYBOARD_TRAP:
-    'https://formidable.com/open-source/react-native-ama/docs/guidelines/accessibility-role',
+    'https://formidable.com/open-source/react-native-ama/docs/guidelines/keyboard-trap',
 };
 
 export const canRuleBeOverridden = (rule: Rule) => {
