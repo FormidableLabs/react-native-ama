@@ -15,6 +15,7 @@ export * from './hooks/useA11yFocus';
 export * from './hooks/useAccessibleAnimation';
 export * from './hooks/useAnimationDuration';
 export * from './hooks/useReanimatedTiming';
+export * from './hooks/useFormField';
 
 // Types
 export * from './types/types';

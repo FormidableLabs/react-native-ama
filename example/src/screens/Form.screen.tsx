@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Switch, View } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { Form, Text, TextInput } from 'react-native-ama';
 
 import { SwitchListItem } from '../../../lib/components/SwitchListItem';
@@ -20,7 +20,7 @@ export const FormScreen = () => {
 
   return (
     <Form onSubmit={handleOnSubmit}>
-      <View style={styles.view}>
+      <ScrollView style={styles.view}>
         <TextInput
           style={styles.input}
           placeholder=""
@@ -36,7 +36,6 @@ export const FormScreen = () => {
               Test keyboard trap on next field
             </Text>
           }
-          labelPosition={'left'}
           style={styles.switchListItem}
           value={testKeyboardTrap}
           onValueChange={toggleSwitch}
@@ -71,7 +70,7 @@ export const FormScreen = () => {
           defaultValue={text}
           label={<Text style={styles.label}>Email address:</Text>}
         />
-      </View>
+      </ScrollView>
     </Form>
   );
 };

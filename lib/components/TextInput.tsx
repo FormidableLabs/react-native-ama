@@ -63,7 +63,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
     };
 
     const checkReturnKeyType = (event: LayoutChangeEvent) => {
-      if (isLastField()) {
+      if (isLastField() && props.returnKeyType == null) {
         setReturnKeyType('done');
       }
 

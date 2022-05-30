@@ -11,7 +11,7 @@ type SwitchListItemProps = Omit<
   'style' | 'value' | 'onValueChange'
 > & {
   label: JSX.Element;
-  labelPosition: 'left' | 'right';
+  labelPosition?: 'left' | 'right';
   style?: StyleProp<ViewStyle>;
   switchStyle?: StyleProp<ViewStyle>;
   value: boolean;
@@ -24,7 +24,7 @@ export const SwitchListItem: React.FC<SwitchListItemProps> = ({
 }) => {
   const {
     label,
-    labelPosition = 'beforeInput',
+    labelPosition = 'left',
     style = {},
     switchStyle = {},
     value,

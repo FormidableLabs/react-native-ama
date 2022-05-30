@@ -49,9 +49,14 @@ export const useFormField = ({
     if (callFocus) {
       nextRefElement.current?.focus();
 
-      __DEV__ && checkFocusTrap(nextRefElement);
+      __DEV__ && checkFocusTrap(nextRefElement, true);
     } else if (nextRefElement.current) {
       setFocus(nextRefElement.current);
+    }
+
+    const currentRef = allRefs[myIndex];
+    if (currentRef.hasFocusCallback) {
+      __DEV__ && checkFocusTrap(currentRef.ref, false);
     }
   };
 
@@ -63,6 +68,12 @@ export const useFormField = ({
 
   React.useEffect(() => {
     refs?.push({ ref: fieldRef, hasFocusCallback });
+
+    return () => {
+      const myIndex = getMyIndex();
+
+      refs?.splice(myIndex, 1);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

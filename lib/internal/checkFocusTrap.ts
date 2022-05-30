@@ -3,9 +3,12 @@ import type { TextInput } from 'react-native';
 
 import { log } from './logger';
 
-export const checkFocusTrap = (ref: React.RefObject<TextInput>) => {
+export const checkFocusTrap = (
+  ref: React.RefObject<TextInput>,
+  shouldHaveFocus: boolean,
+) => {
   setTimeout(() => {
-    const hasFocus = ref.current?.isFocused();
+    const hasFocus = ref.current?.isFocused() === shouldHaveFocus;
 
     if (!hasFocus) {
       log(
