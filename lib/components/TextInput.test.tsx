@@ -42,7 +42,7 @@ describe('TextInput', () => {
 
     expect(useFormField).toHaveBeenCalledWith({
       hasFocusCallback: true,
-      ref: null,
+      ref: expect.objectContaining({ current: expect.any(Object) }),
     });
   });
 
