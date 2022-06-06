@@ -33,14 +33,19 @@ describe('FormField', () => {
     );
 
     expect(toJSON()).toMatchInlineSnapshot(`
-      <View
+      <Text
         accessible={true}
-        focusable={true}
+        focusable={false}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
       >
-        <Text>
-          Test
-        </Text>
-      </View>
+        Test
+      </Text>
     `);
   });
 });
