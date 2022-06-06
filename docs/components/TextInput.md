@@ -22,7 +22,7 @@ import { TextInput } from 'react-native-ama';
 Compared to the default React Native component, this custom component:
 
 - Uses the given label text as `accessibilityLabel`; if none is provided
-- Hides the label from the screen reader (as it would provide a redundant information)
+- Hides the label from the screen reader (as it would provide redundant information)
 - Handles the value `returnKeyType`
 - Handles focusing the next form field when `returnKeyType` is **next**
 - Checks for keyboard trap
@@ -33,7 +33,7 @@ The input field must have an `accessibilityLabel`, and also its corresponding mu
 
 ### returnKeyType
 
-When the user lands on a `<TextInput />` the [`returnKeyType`](https://reactnative.dev/docs/textinput#returnkeytype) needs to be handle allowing them to either focus the next field, when `returnKeyType="next"`, or submit the form, when `returnKeyType="done"`. The React Native default `<TextInput />` allows customing the `returnKeyType` prop but leaves the developer to handle the action when the button is pressed.
+When the user lands on a `<TextInput />` the [`returnKeyType`](https://reactnative.dev/docs/textinput#returnkeytype) needs to be handled allowing them to either focus the next control, when `returnKeyType="next"`, or submit the form, when `returnKeyType="done"`. The React Native default `<TextInput />` allows customing the `returnKeyType` prop but leaves the developer to handle the action when the button is pressed.
 
 Instead, the AMA customised `TextInput` automatically handles the property `returnKeyType` and its action:
 
@@ -43,7 +43,7 @@ Instead, the AMA customised `TextInput` automatically handles the property `retu
 
 :::note
 
-AMA does not alter the "returnKeyType" passed as a prop!
+AMA does not alter the "returnKeyType" when manually passed as a prop.
 :::
 
 ### Keyboard trap

@@ -4,6 +4,21 @@ The `<Form />` component provides a "local" context for the [`TextInput`](/docs/
 
 The provider hosts the hosts the `ref` values used by the [TextInput](/docs/hooks/TextInput) to know which [`returnKey`](/docs/components/TextInput#returnkeytype) and what would be the next field to focus.
 
+## Usage
+
+```jsx
+<Form onSubmit={handleSubmit}>
+    {...}
+</Form>
+```
+
+## Props
+
+### `onSubmit`
+
+The callback to be called when the [`TextInput`](/docs/components/TextInput) `returnKeyboardType` is **done**.
+
+## Example
 ```jsx
 <Form onSubmit={handleSubmit}>
   <TextInput
