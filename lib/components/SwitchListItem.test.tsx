@@ -23,9 +23,17 @@ describe('SwitchListItem', () => {
       <View
         accessibilityLabel="Label"
         accessibilityRole="switch"
+        accessibilityState={
+          Object {
+            "busy": undefined,
+            "checked": false,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
         accessible={true}
         checked={false}
-        collapsable={false}
         focusable={false}
         onBlur={[Function]}
         onClick={[Function]}
