@@ -67,19 +67,17 @@ By default, the component uses the [React Native switch](https://reactnative.dev
   style={styles.switchListItem}
   value={isSwitchOn}
   onValueChange={toggleSwitch}>
-  <FancySwitch value={isSwitchOn} onValueChange={toggleSwitch} />
+  <CustomSwitch value={isSwitchOn} onValueChange={toggleSwitch} />
 </SwitchListItem>
 ```
 
-In this case, a custom `FancySwitch` component is used instead of the React Native one.
+In this case, the custom `CustomSwitch` component is used instead of the React Native one.
 
 :::note
 
-When using the default Switch, the components automatically set this two props:
+The `SwitchListItem` component, to avoid the switch being individually focusable on Android, automatically sets the following properties for all the children:
 
 - `accessibilityElementsHidden={true}`
 - `importantForAccessibility="no"`
-
-To avoid the switch being individually focusable on Android.
 
 :::

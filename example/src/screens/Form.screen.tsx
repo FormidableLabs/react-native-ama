@@ -26,7 +26,11 @@ export const FormScreen = () => {
           placeholder=""
           onChangeText={newText => setText(newText)}
           defaultValue={text}
-          label={<Text style={styles.label}>First name:</Text>}
+          label={
+            <>
+              <Text style={styles.label}>First name:</Text>
+            </>
+          }
         />
 
         <Spacer height="normal" />

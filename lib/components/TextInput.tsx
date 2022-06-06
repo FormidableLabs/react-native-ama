@@ -8,7 +8,9 @@ import {
 } from 'react-native';
 
 import { useFormField } from '../hooks/useFormField';
-import { generateAccessibilityLabelFromLabel } from '../internal/generateAccessibilityLabelFromLabel';
+import { generateAccessibilityLabelFromProps } from '../internal/generateAccessibilityLabelFromProps';
+import { noUndefinedProperty } from '../internal/noUndefinedProperty';
+import { HideChildrenFromAccessibilityTree } from './HideFromAccessibilityTree';
 
 export type TextInputProps = RNTextInputProps & {
   label: JSX.Element;
@@ -42,23 +44,18 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
     const showLabelBeforeInput = labelPosition === 'beforeInput';
 
     const accessibilityLabel = React.useMemo(
-      () => generateAccessibilityLabelFromLabel(label, props),
-      [label, props],
+      () => generateAccessibilityLabelFromProps(props),
+      [props],
     );
 
-    const clonedLabel = React.useMemo(() => {
-      return React.Children.map(label, child => {
-        if (React.isValidElement(child)) {
-          return React.cloneElement(child, {
-            // @ts-ignore
-            importantForAccessibility: 'no',
-            accessibilityElementsHidden: true,
-          });
-        }
-
-        return child;
-      });
-    }, [label]);
+    const accessibilityHiddenLabel = React.useMemo(
+      () => (
+        <HideChildrenFromAccessibilityTree>
+          {label}
+        </HideChildrenFromAccessibilityTree>
+      ),
+      [label],
+    );
 
     const handleOnSubmitEditing = (
       event: NativeSyntheticEvent<TextInputSubmitEditingEventData>,
@@ -79,9 +76,11 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       props.onLayout?.(event);
     };
 
+    __DEV__ && noUndefinedProperty(props, 'label', 'NO_FORM_LABEL');
+
     return (
       <>
-        {showLabelBeforeInput ? clonedLabel : null}
+        {showLabelBeforeInput ? accessibilityHiddenLabel : null}
         <RNTextInput
           // @ts-ignore
           ref={inputRef}
@@ -92,7 +91,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
           onSubmitEditing={handleOnSubmitEditing}
           onLayout={checkReturnKeyType}
         />
-        {showLabelBeforeInput ? null : clonedLabel}
+        {showLabelBeforeInput ? null : accessibilityHiddenLabel}
       </>
     );
   },

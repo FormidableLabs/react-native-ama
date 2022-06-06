@@ -18,7 +18,7 @@ describe('TextInput', () => {
       .mockReturnValue({});
   });
 
-  it('logs the error if no label is specified', () => {
+  it('checks that the label property is defined', () => {
     const log = jest.spyOn(Logger, 'log');
 
     render(
@@ -267,4 +267,5 @@ describe('TextInput', () => {
 
 jest.mock('../internal/checkFocusTrap');
 jest.mock('../internal/logger');
+jest.mock('../internal/noUndefinedProperty');
 jest.mock('../hooks/useFormField');

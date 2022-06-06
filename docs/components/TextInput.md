@@ -22,7 +22,7 @@ import { TextInput } from 'react-native-ama';
 Compared to the default React Native component, this custom component:
 
 - Uses the given label text as `accessibilityLabel`; if none is provided
-- Hides the label from the screen reader
+- Hides the label from the screen reader (as it would provide a redundant information)
 - Handles the value `returnKeyType`
 - Handles focusing the next form field when `returnKeyType` is **next**
 - Checks for keyboard trap
@@ -71,7 +71,7 @@ Also, the label is modified, and the following prop added:
 
 So, the label itself is made hidden from the screen reader.
 
-:::note
+:::info
 
 If the label content ends with a \*, this is stripped from the `accessibilityLabel`, example:
 

@@ -7,6 +7,7 @@ export type Rule =
   | 'UPPERCASE_ACCESSIBILITY_LABEL'
   | 'NO_ACCESSIBILITY_ROLE'
   | 'NO_ACCESSIBILITY_LABEL'
+  | 'NO_FORM_LABEL'
   | 'NO_KEYBOARD_TRAP';
 export type RuleValue = 'SHOULD_NOT' | 'MUST_NOT';
 
@@ -15,6 +16,7 @@ export const NON_OVERRIDABLE_RULES: Partial<Rule>[] = [
   'NO_ACCESSIBILITY_LABEL',
   'NO_KEYBOARD_TRAP',
   'NO_UNDEFINED',
+  'NO_FORM_LABEL',
 ];
 
 export const LOGGER_RULES: Record<Rule, RuleValue> = {
@@ -27,6 +29,7 @@ export const LOGGER_RULES: Record<Rule, RuleValue> = {
   NO_ACCESSIBILITY_ROLE: 'MUST_NOT',
   NO_KEYBOARD_TRAP: 'MUST_NOT',
   NO_UNDEFINED: 'MUST_NOT',
+  NO_FORM_LABEL: 'MUST_NOT',
 };
 
 export const CONTRAST_CHECKER_MAX_DEPTH = 5;
@@ -49,6 +52,8 @@ export const RULES_HELP: Record<Rule, string> = {
     'https://formidable.com/open-source/react-native-ama/docs/guidelines/accessibility-role',
   NO_KEYBOARD_TRAP:
     'https://formidable.com/open-source/react-native-ama/docs/guidelines/keyboard-trap',
+  NO_FORM_LABEL:
+    'https://formidable.com/open-source/react-native-ama/docs/guidelines/labels',
 };
 
 export const canRuleBeOverridden = (rule: Rule) => {
