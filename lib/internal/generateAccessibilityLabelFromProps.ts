@@ -3,11 +3,12 @@ import * as React from 'react';
 import { noUndefinedProperty } from './noUndefinedProperty';
 
 export const generateAccessibilityLabelFromProps = (
-  props: Record<any, any>,
+  props: Record<string, any>,
+  labelComponent = 'label',
 ) => {
-  const label: JSX.Element = props?.label;
+  const label: JSX.Element = props?.[labelComponent];
 
-  __DEV__ && noUndefinedProperty(props, 'label');
+  __DEV__ && noUndefinedProperty(props, labelComponent);
 
   if (props.accessibilityLabel) {
     return props.accessibilityLabel;

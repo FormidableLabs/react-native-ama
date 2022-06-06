@@ -1,11 +1,12 @@
 import React from 'react';
 import type { StyleProp, SwitchProps, ViewStyle } from 'react-native';
 import { StyleSheet, Switch } from 'react-native';
-import { MINIMUM_TOUCHABLE_SIZE, Pressable } from 'react-native-ama';
 
 import { generateAccessibilityLabelFromProps } from '../internal/generateAccessibilityLabelFromProps';
+import { MINIMUM_TOUCHABLE_SIZE } from '../utils/minimumTouchableSize';
 import { FormField } from './FormField';
-import { HideChildrenFromAccessibilityTree } from './HideFromAccessibilityTree';
+import { HideChildrenFromAccessibilityTree } from './HideChildrenFromAccessibilityTree';
+import { Pressable } from './Pressable';
 
 type SwitchListItemProps = Omit<
   SwitchProps,
@@ -21,6 +22,7 @@ type SwitchListItemProps = Omit<
 
 export const SwitchListItem: React.FC<SwitchListItemProps> = ({
   children,
+  testID,
   ...props
 }) => {
   const {
@@ -46,7 +48,8 @@ export const SwitchListItem: React.FC<SwitchListItemProps> = ({
         accessibilityLabel={accessibilityLabel}
         style={[allStyles.container, style]}
         onPress={onValueChange}
-        checked={value}>
+        checked={value}
+        testID={testID}>
         {isLabelPositionLeft ? label : null}
         <HideChildrenFromAccessibilityTree>
           {children ? (
@@ -58,6 +61,7 @@ export const SwitchListItem: React.FC<SwitchListItemProps> = ({
               style={switchStyle}
               value={value}
               onValueChange={onValueChange}
+              testID={`${testID}-switch`}
             />
           )}
         </HideChildrenFromAccessibilityTree>

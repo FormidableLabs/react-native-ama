@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Text } from 'react-native';
 
 import * as UseFormField from '../hooks/useFormField';
-import * as Logger from '../internal/logger';
 import { TextInput } from './TextInput';
 
 beforeEach(() => {
@@ -18,27 +17,18 @@ describe('TextInput', () => {
       .mockReturnValue({});
   });
 
-  it('checks that the label property is defined', () => {
-    const log = jest.spyOn(Logger, 'log');
-
-    render(
-      // @ts-ignore
-      <TextInput />,
-    );
-
-    expect(log).toHaveBeenCalledWith(
-      'NO_UNDEFINED',
-      'The property "label" cannot be UNDEFINED',
-    );
-  });
-
   it('register itself as form field by using the useFormField hook', () => {
     const useFormField = jest
       .spyOn(UseFormField, 'useFormField')
       // @ts-ignore
       .mockReturnValue({});
 
-    render(<TextInput label={<Text testID="text" />} returnKeyType="done" />);
+    render(
+      <TextInput
+        label={<Text testID="text">Test</Text>}
+        returnKeyType="done"
+      />,
+    );
 
     expect(useFormField).toHaveBeenCalledWith({
       hasFocusCallback: true,
@@ -48,7 +38,10 @@ describe('TextInput', () => {
 
   it('renders the given label before the text input when labelPosition is undefined', () => {
     const renderAPI = render(
-      <TextInput label={<Text testID="text" />} returnKeyType="done" />,
+      <TextInput
+        label={<Text testID="text">Label</Text>}
+        returnKeyType="done"
+      />,
     );
 
     expect(renderAPI.toJSON()).toMatchInlineSnapshot(`
@@ -57,9 +50,11 @@ describe('TextInput', () => {
           accessibilityElementsHidden={true}
           importantForAccessibility="no"
           testID="text"
-        />,
+        >
+          Label
+        </Text>,
         <TextInput
-          accessibilityLabel=""
+          accessibilityLabel="Label"
           allowFontScaling={true}
           onLayout={[Function]}
           onSubmitEditing={[Function]}
@@ -74,7 +69,7 @@ describe('TextInput', () => {
   it('renders the given label after the text input when labelPosition is "afterInput"', () => {
     const renderAPI = render(
       <TextInput
-        label={<Text testID="text" />}
+        label={<Text testID="text"> Label after</Text>}
         labelPosition="afterInput"
         returnKeyType="done"
       />,
@@ -83,7 +78,7 @@ describe('TextInput', () => {
     expect(renderAPI.toJSON()).toMatchInlineSnapshot(`
       Array [
         <TextInput
-          accessibilityLabel=""
+          accessibilityLabel=" Label after"
           allowFontScaling={true}
           onLayout={[Function]}
           onSubmitEditing={[Function]}
@@ -95,7 +90,9 @@ describe('TextInput', () => {
           accessibilityElementsHidden={true}
           importantForAccessibility="no"
           testID="text"
-        />,
+        >
+           Label after
+        </Text>,
       ]
     `);
   });
@@ -103,7 +100,7 @@ describe('TextInput', () => {
   it('hides the label from the screen readers', () => {
     const renderAPI = render(
       <TextInput
-        label={<Text testID="text" />}
+        label={<Text testID="text">Test</Text>}
         labelPosition="afterInput"
         returnKeyType="done"
       />,
@@ -127,7 +124,7 @@ describe('TextInput', () => {
 
       const renderAPI = render(
         <TextInput
-          label={<Text testID="text" />}
+          label={<Text testID="text">Label</Text>}
           labelPosition="afterInput"
           testID="test-id"
         />,
@@ -149,7 +146,7 @@ describe('TextInput', () => {
 
       const renderAPI = render(
         <TextInput
-          label={<Text testID="text" />}
+          label={<Text testID="text">Label</Text>}
           labelPosition="afterInput"
           testID="test-id"
         />,
@@ -173,7 +170,7 @@ describe('TextInput', () => {
 
         const renderAPI = render(
           <TextInput
-            label={<Text testID="text" />}
+            label={<Text testID="text">Label</Text>}
             labelPosition="afterInput"
             testID="test-id"
             returnKeyType="google"

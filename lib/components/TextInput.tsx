@@ -10,7 +10,7 @@ import {
 import { useFormField } from '../hooks/useFormField';
 import { generateAccessibilityLabelFromProps } from '../internal/generateAccessibilityLabelFromProps';
 import { noUndefinedProperty } from '../internal/noUndefinedProperty';
-import { HideChildrenFromAccessibilityTree } from './HideFromAccessibilityTree';
+import { HideChildrenFromAccessibilityTree } from './HideChildrenFromAccessibilityTree';
 
 export type TextInputProps = RNTextInputProps & {
   label: JSX.Element;
