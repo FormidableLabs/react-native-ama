@@ -21,72 +21,59 @@ describe('SwitchListItem', () => {
 
     expect(toJSON()).toMatchInlineSnapshot(`
       <View
+        accessibilityLabel="Label"
+        accessibilityRole="switch"
         accessible={true}
-        focusable={true}
+        checked={false}
+        collapsable={false}
+        focusable={false}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onLayout={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Array [
+            Object {
+              "alignContent": "center",
+              "alignItems": "center",
+              "flexDirection": "row",
+              "minHeight": 44,
+              "width": "100%",
+            },
+            Object {},
+          ]
+        }
+        testID="switch"
       >
-        <View
+        <Text>
+          Label
+        </Text>
+        <RCTSwitch
+          accessibilityElementsHidden={true}
           accessibilityLabel="Label"
           accessibilityRole="switch"
-          accessibilityState={
-            Object {
-              "busy": undefined,
-              "checked": false,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessible={true}
-          checked={false}
-          focusable={true}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onLayout={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
+          importantForAccessibility="no"
+          onChange={[Function]}
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           style={
             Array [
               Object {
-                "alignContent": "center",
-                "alignItems": "center",
-                "flexDirection": "row",
-                "minHeight": 44,
-                "width": "100%",
+                "height": 31,
+                "width": 51,
               },
               Object {},
             ]
           }
-          testID="switch"
-        >
-          <Text>
-            Label
-          </Text>
-          <RCTSwitch
-            accessibilityElementsHidden={true}
-            accessibilityLabel="Label"
-            accessibilityRole="switch"
-            importantForAccessibility="no"
-            onChange={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Array [
-                Object {
-                  "height": 31,
-                  "width": 51,
-                },
-                Object {},
-              ]
-            }
-            testID="switch-switch"
-            value={false}
-          />
-        </View>
+          testID="switch-switch"
+          value={false}
+        />
       </View>
     `);
   });
