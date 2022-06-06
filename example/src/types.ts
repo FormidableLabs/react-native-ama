@@ -4,7 +4,6 @@ export type RootStackParamList = {
   TouchableOpacity: undefined;
   TouchableWithoutFeedback: undefined;
   Text: undefined;
-  Span: undefined;
   ReduceMotion: undefined;
   ReanimatedReduceMotion: undefined;
   Form: undefined;
