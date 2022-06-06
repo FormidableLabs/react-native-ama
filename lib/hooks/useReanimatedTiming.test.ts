@@ -121,5 +121,5 @@ const amaContextValues = {
   isScreenReaderEnabled: false,
 };
 
-jest.mock('../components/AMAProvider');
+jest.mock('../providers/AMAProvider');
 jest.mock('react-native-reanimated');

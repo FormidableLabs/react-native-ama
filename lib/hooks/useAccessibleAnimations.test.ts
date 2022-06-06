@@ -159,4 +159,4 @@ const amaContextValues = {
   },
 };
 
-jest.mock('../components/AMAProvider');
+jest.mock('../providers/AMAProvider');
