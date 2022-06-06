@@ -44,36 +44,36 @@ export const FormScreen = () => {
           value={testKeyboardTrap}
           onValueChange={toggleSwitch}
         />
-        {testKeyboardTrap ? (
-          <>
-            <Text>
-              Note: The following field causes the app to crash when pressing
-              the "next" button on the keyboard
-            </Text>
-            <Spacer height="normal" />
-          </>
-        ) : null}
+        {/*{testKeyboardTrap ? (*/}
+        {/*  <>*/}
+        {/*    <Text>*/}
+        {/*      Note: The following field causes the app to crash when pressing*/}
+        {/*      the "next" button on the keyboard*/}
+        {/*    </Text>*/}
+        {/*    <Spacer height="normal" />*/}
+        {/*  </>*/}
+        {/*) : null}*/}
 
-        <TextInput
-          style={styles.input}
-          placeholder=""
-          defaultValue={text}
-          label={<Text style={styles.label}>Last name:</Text>}
-          ref={lastNameRef}
-          onBlur={() => {
-            // @ts-ignore
-            testKeyboardTrap && lastNameRef.current?.focus();
-          }}
-        />
+        {/*<TextInput*/}
+        {/*  style={styles.input}*/}
+        {/*  placeholder=""*/}
+        {/*  defaultValue={text}*/}
+        {/*  label={<Text style={styles.label}>Last name:</Text>}*/}
+        {/*  ref={lastNameRef}*/}
+        {/*  onBlur={() => {*/}
+        {/*    // @ts-ignore*/}
+        {/*    testKeyboardTrap && lastNameRef.current?.focus();*/}
+        {/*  }}*/}
+        {/*/>*/}
 
-        <Spacer height="normal" />
+        {/*<Spacer height="normal" />*/}
 
-        <TextInput
-          style={styles.input}
-          placeholder=""
-          defaultValue={text}
-          label={<Text style={styles.label}>Email address:</Text>}
-        />
+        {/*<TextInput*/}
+        {/*  style={styles.input}*/}
+        {/*  placeholder=""*/}
+        {/*  defaultValue={text}*/}
+        {/*  label={<Text style={styles.label}>Email address:</Text>}*/}
+        {/*/>*/}
       </ScrollView>
     </Form>
   );

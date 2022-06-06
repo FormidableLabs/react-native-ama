@@ -55,8 +55,8 @@ export const useFormField = ({
     }
 
     const currentRef = allRefs[myIndex];
-    if (currentRef.hasFocusCallback) {
-      __DEV__ && checkFocusTrap(currentRef.ref.current, false);
+    if (currentRef.hasFocusCallback && __DEV__) {
+      checkFocusTrap(currentRef.ref.current, false);
     }
   };
 
