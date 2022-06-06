@@ -1,87 +1,97 @@
 import * as React from 'react';
 import {
+  LayoutChangeEvent,
   NativeSyntheticEvent,
   TextInput as RNTextInput,
   TextInputProps as RNTextInputProps,
-  ReturnKeyTypeOptions,
   TextInputSubmitEditingEventData,
 } from 'react-native';
 
-import { checkFocusTrap } from '../internal/checkFocusTrap';
-import { noUndefined } from '../internal/noUndefined';
+import { useFormField } from '../hooks/useFormField';
+import { generateAccessibilityLabelFromProps } from '../internal/generateAccessibilityLabelFromProps';
+import { noUndefinedProperty } from '../internal/noUndefinedProperty';
+import { HideChildrenFromAccessibilityTree } from './HideChildrenFromAccessibilityTree';
 
-export type TextInputProps = Omit<RNTextInputProps, 'returnKeyType'> & {
+export type TextInputProps = RNTextInputProps & {
   label: JSX.Element;
   labelPosition?: 'beforeInput' | 'afterInput';
-} & (
-    | {
-        returnKeyType: Exclude<ReturnKeyTypeOptions, 'next'>;
-      }
-    | {
-        returnKeyType: 'next';
-        nextTextInput: React.RefObject<RNTextInput>;
-      }
-  );
+} & {
+  nextFormField?: React.RefObject<RNTextInput>;
+};
 
 export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
-  (props, ref) => {
-    const { label, labelPosition = 'beforeInput', ...rest } = props;
+  (props, forwardedRef) => {
+    const inputRef = React.useRef<React.ElementRef<typeof TextInput> | null>(
+      null,
+    );
+
+    React.useImperativeHandle(forwardedRef, () => inputRef.current!);
+
+    const { focusNextFormField, isLastField } = useFormField({
+      ref: inputRef,
+      hasFocusCallback: true,
+    });
+    const [returnKeyType, setReturnKeyType] = React.useState(
+      props.returnKeyType || 'next',
+    );
+    const {
+      label,
+      labelPosition = 'beforeInput',
+      nextFormField,
+      ...rest
+    } = props;
 
     const showLabelBeforeInput = labelPosition === 'beforeInput';
 
-    const accessibilityLabel = React.useMemo(() => {
-      __DEV__ && noUndefined(props, 'label');
+    const accessibilityLabel = React.useMemo(
+      () => generateAccessibilityLabelFromProps(props),
+      [props],
+    );
 
-      if (props.accessibilityLabel) {
-        return '';
-      }
-
-      return React.Children.map(label, child => {
-        return child.props.children;
-      })
-        ?.join(',')
-        ?.replace(/\*$/, '');
-    }, [label, props]);
-
-    const clonedLabel = React.useMemo(() => {
-      return React.Children.map(label, child => {
-        if (React.isValidElement(child)) {
-          return React.cloneElement(child, {
-            // @ts-ignore
-            importantForAccessibility: 'no',
-            accessibilityElementsHidden: true,
-          });
-        }
-
-        return child;
-      });
-    }, [label]);
+    const accessibilityHiddenLabel = React.useMemo(
+      () => (
+        <HideChildrenFromAccessibilityTree>
+          {label}
+        </HideChildrenFromAccessibilityTree>
+      ),
+      [label],
+    );
 
     const handleOnSubmitEditing = (
       event: NativeSyntheticEvent<TextInputSubmitEditingEventData>,
     ) => {
       rest?.onSubmitEditing?.(event);
 
-      if (rest.returnKeyType === 'next') {
-        // @ts-ignore
-        __DEV__ && noUndefined(props, 'nextTextInput');
-
-        rest.nextTextInput.current?.focus();
-
-        __DEV__ && checkFocusTrap(rest.nextTextInput);
-      }
+      focusNextFormField(nextFormField);
     };
+
+    const checkReturnKeyType = (event: LayoutChangeEvent) => {
+      const setReturnKeyTypeAsDone =
+        isLastField() && props.returnKeyType == null;
+
+      if (setReturnKeyTypeAsDone) {
+        setReturnKeyType('done');
+      }
+
+      props.onLayout?.(event);
+    };
+
+    __DEV__ && noUndefinedProperty(props, 'label', 'NO_FORM_LABEL');
 
     return (
       <>
-        {showLabelBeforeInput ? clonedLabel : null}
+        {showLabelBeforeInput ? accessibilityHiddenLabel : null}
         <RNTextInput
-          ref={ref}
+          // @ts-ignore
+          ref={inputRef}
+          key={returnKeyType}
           accessibilityLabel={accessibilityLabel}
+          returnKeyType={returnKeyType}
           {...rest}
           onSubmitEditing={handleOnSubmitEditing}
+          onLayout={checkReturnKeyType}
         />
-        {showLabelBeforeInput ? null : clonedLabel}
+        {showLabelBeforeInput ? null : accessibilityHiddenLabel}
       </>
     );
   },

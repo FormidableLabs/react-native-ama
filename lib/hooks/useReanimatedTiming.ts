@@ -7,7 +7,7 @@ import {
   WithTimingConfig,
 } from 'react-native-reanimated';
 
-import { useAMAContext } from '../components/AMAProvider';
+import { useAMAContext } from '../providers/AMAProvider';
 import { isMotionAnimation } from '../utils/isMotionAnimation';
 
 export const useReanimatedTiming = () => {

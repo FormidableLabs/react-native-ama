@@ -13,7 +13,7 @@ import { TextInput } from 'react-native-ama';
   label={<Text style={styles.label}>First name:</Text>}
   labelPosition="afterText"
   returnKeyType="next"
-  nextTextInput={lastNameRef}
+  nextFormField={nextFormField}
 />;
 ```
 
@@ -22,22 +22,36 @@ import { TextInput } from 'react-native-ama';
 Compared to the default React Native component, this custom component:
 
 - Uses the given label text as `accessibilityLabel`; if none is provided
-- Hides the label from the screen reader
-- Handles focusing the `nextTextInput` when `returnKeyType` is **next**
+- Hides the label from the screen reader (as it would provide redundant information)
+- Handles the value `returnKeyType`
+- Handles focusing the next form field when `returnKeyType` is **next**
 - Checks for keyboard trap
-
-### The focus
-
-When the user interacts with a `<TextInput />` and specifies `returnKeyType="next"` then must be able to focus on the next field via the corresponding button on the keyboard. So, this component focuses on the `nextTextInput` specified and checks that the focus is passed and the user [hasn't been trapped](/docs/guidelines/keyboard-trap).
-
-:::note
-
-Although React Native supports displaying the **next** button by using `returnKeyType="next"` property, it does not automatically focus on the next input.
-:::
 
 ### accessibilityLabel
 
 The input field must have an `accessibilityLabel`, and also its corresponding must be hidden from the screen reader to avoid redundant announcement of the same label.
+
+### returnKeyType
+
+When the user lands on a `<TextInput />` the [`returnKeyType`](https://reactnative.dev/docs/textinput#returnkeytype) needs to be handled allowing them to either focus the next control, when `returnKeyType="next"`, or submit the form, when `returnKeyType="done"`. The React Native default `<TextInput />` allows customing the `returnKeyType` prop but leaves the developer to handle the action when the button is pressed.
+
+Instead, the AMA customised `TextInput` automatically handles the property `returnKeyType` and its action:
+
+- If the `TextInput` is the last one of the [Form](/docs/components/Form) then sets `returnKeyType="done"`, otherwise `returnKeyType="next"`
+- The next key focuses the next `TextInput` or [FormField](/docs/components/FormField)
+- The done button submits the [Form](/docs/components/Form)
+
+:::note
+
+AMA does not alter the "returnKeyType" when manually passed as a prop.
+:::
+
+### Keyboard trap
+
+Once the user presses the **next** key, AMA checks that the:
+
+- The current `TextInput` does no longer have the focus
+- If the next field is a `TextInput`, then check if it gained the focus
 
 ## Additional Props
 
@@ -57,7 +71,7 @@ Also, the label is modified, and the following prop added:
 
 So, the label itself is made hidden from the screen reader.
 
-:::note
+:::info
 
 If the label content ends with a \*, this is stripped from the `accessibilityLabel`, example:
 
@@ -86,13 +100,9 @@ Possible positions:
 - `beforeInput` _(default)_
 - `afterInput`
 
-### `nextTextInput`
+### `nextFormField` _(optional)_
 
-This parameter is used to focus the input when the next button is pressed.
-
-Once the user presses the key, AMA performs that the given text input has the focus to prevent any keyboard trap.
-
-For example, this will cause AMA to throw an error:
+This parameter specifies the next form field to focus on when the next button is pressed.
 
 ```jsx
 <TextInput
@@ -102,10 +112,7 @@ For example, this will cause AMA to throw an error:
   defaultValue={text}
   label={<Text style={styles.label}>Last name:</Text>}
   returnKeyType="next"
-  nextTextInput={emailRef}
+  nextFormField={emailRef}
   ref={lastNameRef}
-  onBlur={() => {
-    lastNameRef.current?.focus();
-  }}
 />
 ```

@@ -1,7 +1,7 @@
 import { log } from './logger';
 import type { Rule } from './logger.rules';
 
-export const noUndefined = <T>(
+export const noUndefinedProperty = <T>(
   properties: T,
   property: keyof T,
   rule: Rule = 'NO_UNDEFINED',

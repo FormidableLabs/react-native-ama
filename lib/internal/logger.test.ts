@@ -101,6 +101,7 @@ jest.mock('./logger.rules', () => {
       NO_ACCESSIBILITY_ROLE: 'MUST_NOT',
       NO_KEYBOARD_TRAP: 'MUST_NOT',
       NO_UNDEFINED: 'MUST_NOT',
+      NO_FORM_LABEL: 'MUST_NOT',
     },
   };
 });

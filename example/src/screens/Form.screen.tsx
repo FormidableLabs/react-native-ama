@@ -1,59 +1,81 @@
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Text, TextInput } from 'react-native-ama';
+import { ScrollView, StyleSheet } from 'react-native';
+import { Form, Text, TextInput } from 'react-native-ama';
 
+import { SwitchListItem } from '../../../lib/components/SwitchListItem';
 import { Spacer } from '../components/Spacer';
 import { theme } from '../theme';
 
 export const FormScreen = () => {
   const [text, setText] = React.useState('');
+  const [testKeyboardTrap, setTestKeyboardTrap] = React.useState(false);
+  const toggleSwitch = () =>
+    setTestKeyboardTrap(previousState => !previousState);
+
   const lastNameRef = React.useRef(null);
-  const emailRef = React.useRef(null);
+
+  const handleOnSubmit = () => {
+    console.info('Form submitted');
+  };
 
   return (
-    <View style={styles.view}>
-      <TextInput
-        style={styles.input}
-        placeholder=""
-        onChangeText={newText => setText(newText)}
-        defaultValue={text}
-        label={<Text style={styles.label}>First name:</Text>}
-        returnKeyType="next"
-        nextTextInput={lastNameRef}
-      />
+    <Form onSubmit={handleOnSubmit}>
+      <ScrollView style={styles.view}>
+        <TextInput
+          style={styles.input}
+          placeholder=""
+          onChangeText={newText => setText(newText)}
+          defaultValue={text}
+          label={
+            <>
+              <Text style={styles.label}>First name:</Text>
+            </>
+          }
+        />
 
-      <Spacer height="normal" />
-      <Text>
-        Note: The following field causes the app to crash when pressing the
-        "next" button on the keyboard
-      </Text>
-      <TextInput
-        style={styles.input}
-        placeholder=""
-        onChangeText={newText => setText(newText)}
-        defaultValue={text}
-        label={<Text style={styles.label}>Last name:</Text>}
-        returnKeyType="next"
-        nextTextInput={emailRef}
-        ref={lastNameRef}
-        onBlur={() => {
-          // @ts-ignore
-          lastNameRef.current?.focus();
-        }}
-      />
+        <Spacer height="normal" />
+        <SwitchListItem
+          label={
+            <Text style={styles.switchText}>
+              Test keyboard trap on next field
+            </Text>
+          }
+          style={styles.switchListItem}
+          value={testKeyboardTrap}
+          onValueChange={toggleSwitch}
+        />
+        {testKeyboardTrap ? (
+          <>
+            <Text>
+              Note: The following field causes the app to crash when pressing
+              the "next" button on the keyboard
+            </Text>
+            <Spacer height="normal" />
+          </>
+        ) : null}
 
-      <Spacer height="normal" />
+        <TextInput
+          style={styles.input}
+          placeholder=""
+          defaultValue={text}
+          label={<Text style={styles.label}>Last name:</Text>}
+          ref={lastNameRef}
+          onBlur={() => {
+            // @ts-ignore
+            testKeyboardTrap && lastNameRef.current?.focus();
+          }}
+        />
 
-      <TextInput
-        style={styles.input}
-        placeholder=""
-        onChangeText={newText => setText(newText)}
-        defaultValue={text}
-        label={<Text style={styles.label}>Email address:</Text>}
-        returnKeyType="done"
-        ref={emailRef}
-      />
-    </View>
+        <Spacer height="normal" />
+
+        <TextInput
+          style={styles.input}
+          placeholder=""
+          defaultValue={text}
+          label={<Text style={styles.label}>Email address:</Text>}
+        />
+      </ScrollView>
+    </Form>
   );
 };
 
@@ -69,5 +91,12 @@ const styles = StyleSheet.create({
   },
   label: {
     paddingBottom: theme.padding.small,
+  },
+  switchText: {
+    paddingRight: theme.padding.normal,
+    flex: 1,
+  },
+  switchListItem: {
+    marginVertical: theme.padding.normal,
   },
 });

@@ -36,7 +36,7 @@ describe('checkMinimumSize', () => {
 
       expect(logMock).toHaveBeenCalledWith(
         'MINIMUM_SIZE',
-        `The touchable are must have a minimum size of ${minimumSize}x${minimumSize} found instead: ${layoutSize}x${layoutSize}`,
+        `The touchable area must have a minimum size of ${minimumSize}x${minimumSize} found instead: ${layoutSize}x${layoutSize}`,
       );
     },
   );

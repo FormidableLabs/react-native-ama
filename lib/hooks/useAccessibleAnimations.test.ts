@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { Animated } from 'react-native';
 
-import * as AMAProvider from '../components/AMAProvider';
+import * as AMAProvider from '../providers/AMAProvider';
 import { useAccessibleAnimation } from './useAccessibleAnimation';
 
 beforeEach(() => {
@@ -159,4 +159,4 @@ const amaContextValues = {
   },
 };
 
-jest.mock('../components/AMAProvider');
+jest.mock('../providers/AMAProvider');
