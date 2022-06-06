@@ -13,6 +13,6 @@ class AmaPackage : ReactPackage {
     }
 
     override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {
-        return listOf(AMASpanManager())
+        return emptyList()
     }
 }

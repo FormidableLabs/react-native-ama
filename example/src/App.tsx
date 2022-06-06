@@ -12,7 +12,6 @@ import { HomeScreen } from './screens/Home.screen';
 import { PressableScreen } from './screens/Pressable.screen';
 import { ReanimatedReduceMotionScreen } from './screens/ReanimatedReduceMotion.screen';
 import { ReduceMotionScreen } from './screens/ReduceMotion.screen';
-import { SpanScreen } from './screens/Span.screen';
 import { TextScreen } from './screens/Text.screen';
 import { TouchableOpacityScreen } from './screens/TouchableOpacity.screen';
 import { TouchableWithoutFeedbackScreen } from './screens/TouchableWithoutFeedback';
@@ -79,14 +78,6 @@ const AppNavigator = () => {
           options={{
             headerLeft: () => <BackButton />,
             headerTitle: () => <Header title={'Text Demo'} autofocus />,
-          }}
-        />
-        <Stack.Screen
-          name="Span"
-          component={SpanScreen}
-          options={{
-            headerLeft: () => <BackButton />,
-            headerTitle: () => <Header title={'Span Demo'} autofocus />,
           }}
         />
         <Stack.Screen

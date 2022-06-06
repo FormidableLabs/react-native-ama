@@ -7,7 +7,6 @@ export * from './components/Pressable';
 export * from './components/TouchableOpacity';
 export * from './components/TouchableWithoutFeedback';
 export * from './components/Text';
-export * from './components/Span';
 export * from './components/TextInput';
 
 // Hooks
