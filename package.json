@@ -134,6 +134,8 @@
     ]
   },
   "dependencies": {
+    "invariant": "^2.2.4",
+    "memoize-one": "^6.0.0",
     "wcag-color": "^1.1.1"
   }
 }
