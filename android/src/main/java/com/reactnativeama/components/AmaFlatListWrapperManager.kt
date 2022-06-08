@@ -1,6 +1,5 @@
 package com.reactnativeama.components
 
-import android.graphics.Color
 import android.view.View
 import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.uimanager.ThemedReactContext
@@ -17,9 +16,14 @@ class AmaFlatListWrapperManager : ViewGroupManager<AmaFlatListWrapper>() {
     return container
   }
 
-  @ReactProp(name = "itemsCount")
-  fun setItemsCount(view: AmaFlatListWrapper, count: Int) {
-    view.setItemsCount(count)
+  @ReactProp(name = "rowsCount")
+  fun setRowsCount(view: AmaFlatListWrapper, count: Int) {
+    view.setRowsCount(count)
+  }
+
+  @ReactProp(name = "columnsCount")
+  fun setColumnsCount(view: AmaFlatListWrapper, count: Int) {
+    view.setColumnsCount(count)
   }
 
   override fun addView(parent: AmaFlatListWrapper?, child: View?, index: Int) {

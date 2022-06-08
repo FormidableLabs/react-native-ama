@@ -1,13 +1,8 @@
 import React from 'react';
-import {
-  NativeSyntheticEvent,
-  SafeAreaView,
-  StyleSheet,
-  TextInputChangeEventData,
-  View,
-} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { FlatList, Text, TextInput } from 'react-native-ama';
 
+import { Header } from '../components/Header';
 import { Spacer } from '../components/Spacer';
 import { theme } from '../theme';
 
@@ -35,6 +30,7 @@ const Item = ({ title }: { title: string }) => (
 export const FlatListScreen = () => {
   const [items, setItems] = React.useState(DATA);
   const [filterText, setFilterText] = React.useState('');
+
   const renderItem = ({ item }: { item: Record<any, any> }) => (
     <Item title={item.title} />
   );
@@ -51,6 +47,8 @@ export const FlatListScreen = () => {
 
   return (
     <View style={styles.container}>
+      <Header title="Dynamic list" />
+      <Spacer height="normal" />
       <TextInput
         label={<Text>Filter:</Text>}
         returnKeyType={'done'}
@@ -66,6 +64,15 @@ export const FlatListScreen = () => {
         listType="dynamic"
         accessibilitySingularMessage="%count% item found"
         accessibilityPluralMessage="%count% items found"
+      />
+      <Spacer height="big" />
+      <Header title="Static list" />
+      <Spacer height="normal" />
+      <FlatList
+        data={items}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+        listType="static"
       />
     </View>
   );

@@ -5,31 +5,39 @@ import {
   FlatListProps as RNFlatListProps,
 } from 'react-native';
 
-import { FlatListWrapper } from './FlatListWrapper';
+import { ListWrapper } from './ListWrapper';
 
 type FlatListProps<T> = RNFlatListProps<T> &
   (
-    | {
+    | ({
         listType: 'static';
-      }
-    | {
+      } & StaticFlatListProps)
+    | ({
         listType: 'dynamic';
-        accessibilitySingularMessage: string;
-        accessibilityPluralMessage: string;
-        isPlural?: (count: number) => boolean;
-      }
+      } & DynamicFlatListProps)
   );
 
-export const FlatList = React.forwardRef<RNFlatList, FlatListProps<any>>(
+type StaticFlatListProps = {
+  listType: 'static';
+  rowsCount?: number;
+  columnsCount?: number;
+};
+
+type DynamicFlatListProps = {
+  accessibilitySingularMessage: string;
+  accessibilityPluralMessage: string;
+  isPlural?: (count: number) => boolean;
+};
+
+const DynamicFlatList = React.forwardRef<
+  RNFlatList,
+  RNFlatListProps<any> & DynamicFlatListProps
+>(
   (
     {
       data,
-      listType,
-      // @ts-ignore
       accessibilitySingularMessage,
-      // @ts-ignore
       accessibilityPluralMessage,
-      // @ts-ignore
       isPlural = simpleIsPlural,
       ...rest
     },
@@ -40,10 +48,6 @@ export const FlatList = React.forwardRef<RNFlatList, FlatListProps<any>>(
     const lastItemsCount = React.useRef(-42);
 
     React.useEffect(() => {
-      if (listType !== 'dynamic') {
-        return;
-      }
-
       const itemsCount = data?.length || 0;
 
       if (
@@ -73,13 +77,41 @@ export const FlatList = React.forwardRef<RNFlatList, FlatListProps<any>>(
       accessibilitySingularMessage,
       data,
       isPlural,
-      listType,
     ]);
 
-    return (
-      <FlatListWrapper itemsCount={data?.length || 0}>
-        <RNFlatList data={data} {...rest} ref={ref} />
-      </FlatListWrapper>
+    return <RNFlatList data={data} {...rest} ref={ref} />;
+  },
+);
+
+const StaticFlatList = React.forwardRef<
+  RNFlatList,
+  RNFlatListProps<any> & StaticFlatListProps
+>(({ data, columnsCount, rowsCount, ...rest }, ref) => {
+  const columns = columnsCount || 1;
+
+  const rows = React.useMemo(() => {
+    if (rowsCount) {
+      return rowsCount;
+    }
+
+    const length = data?.length || 0;
+
+    return columns > 1 && length > 0 ? length / columns : length;
+  }, [columns, data?.length, rowsCount]);
+
+  return (
+    <ListWrapper rowsCount={rows} columnsCount={columns}>
+      <RNFlatList data={data} {...rest} ref={ref} />
+    </ListWrapper>
+  );
+});
+
+export const FlatList = React.forwardRef<RNFlatList, FlatListProps<any>>(
+  ({ listType, ...rest }, forwardRef) => {
+    return listType === 'dynamic' ? (
+      <DynamicFlatList ref={forwardRef} {...(rest as any)} />
+    ) : (
+      <StaticFlatList ref={forwardRef} {...(rest as any)} />
     );
   },
 );

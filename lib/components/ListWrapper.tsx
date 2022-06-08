@@ -2,17 +2,21 @@ import React from 'react';
 import { Platform, requireNativeComponent } from 'react-native';
 
 type FlatListWrapperProps = {
-  itemsCount: number;
+  rowsCount: number;
+  columnsCount: number;
 };
 
 const isAndroid = Platform.OS === 'android';
 
-export const FlatListWrapper: React.FC<FlatListWrapperProps> = ({
+export const ListWrapper: React.FC<FlatListWrapperProps> = ({
   children,
-  itemsCount,
+  rowsCount,
+  columnsCount,
 }) => {
   return (
-    <AMAFlatListWrapper itemsCount={itemsCount}>{children}</AMAFlatListWrapper>
+    <AMAFlatListWrapper rowsCount={rowsCount} columnsCount={columnsCount}>
+      {children}
+    </AMAFlatListWrapper>
   );
 };
 
