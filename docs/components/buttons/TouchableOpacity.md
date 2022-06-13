@@ -1,13 +1,13 @@
-# Pressable
+# TouchableOpacity
 
-Pressable is an extension of the React Native [Pressable](https://reactnative.dev/docs/pressable) component, [focused on accessibility](#accessibility-improvements).
+TouchableOpacity is an extension of the React Native [TouchableOpacity](https://reactnative.dev/docs/touchableopacity) component, [focused on accessibility](#accessibility-improvements).
 
 ```tsx
-import { Pressable } from 'react-native-ama';
+import { TouchableOpacity } from 'react-native-ama';
 
-<Pressable accessibilityRole="button" accessibilityLabel="I'm pressable!">
+<TouchableOpacity accessibilityRole="button" accessibilityLabel="I'm pressable!">
     <Text>I'm pressable</Text>
-</Pressable>;
+</TouchableOpacity>;
 ```
 
 ## Accessibility improvements
@@ -16,7 +16,7 @@ Compared to the default React Native component, this custom component:
 
 - Forces the use of `accessibilityRole` and `accessibilityLabel`
 - `accessibilityState` has been removed as its states `busy`, `checked`, `selected`, `expanded` are exposed as a property
-- [Contrast checker](/docs/guidelines/contrast) before the component background color and its children color
+- Performs a [contrast checker](/docs/guidelines/contrast) between its background color and its children color
 
 ### accessibilityRole
 
@@ -50,7 +50,7 @@ To simply the syntax, the custom component allows passing those states as proper
 The component performs a [contrast check](/docs/guidelines/contrast) between its background colour and the children's foreground when in dev mode.
 
 :::note
-AMA checks both pressed and non-pressed states when passing a function as style.
+AMA performs the check on both pressed and non-pressed states when passing a function as style.
 :::
 
 ### Minimum size
@@ -71,7 +71,7 @@ Indicates whether an element is currently busy or not.
 
 ```tsx
 import { ActivityIndicator } from 'react-native';
-import { Pressable, Text } from 'react-native-ama';
+import { TouchableOpacity, Text } from 'react-native-ama';
 
 const Test = () => {
     const [isLoading, setIsLoading] = React.useState(false);
@@ -85,13 +85,13 @@ const Test = () => {
     };
 
     return (
-        <Pressable
+        <TouchableOpacity
             accessiblityRole="button"
             accessibilityLabel="Do it"
             busy={isLoading}
             onPress={doSometing}>
             {isLoading ? <ActivityIndicator /> : <Text>Do it</Text>}
-        </Pressable>
+        </TouchableOpacity>
     );
 };
 ```
@@ -124,20 +124,20 @@ Indicates whether an expandable element is currently expanded or collapsed.
 
 ```tsx
 import { ActivityIndicator } from 'react-native';
-import { Pressable, Text } from 'react-native-ama';
+import { TouchableOpacity, Text } from 'react-native-ama';
 
 const Test = () => {
     const [isExpanded, setIsExpanded] = React.useState(false);
 
     return (
         <>
-            <Pressable
+            <TouchableOpacity
                 accessiblityRole="button"
                 accessibilityLabel={isExpanded ? 'Less' : 'More'}
                 expanded={isExpanded}
                 onPress={() => setIsExpanded(expanded => !expanded)}>
                 {isExpanded ? <MinumIcon /> : <PlusIcon />}
-            </Pressable>
+            </TouchableOpacity>
             {isExpanded ? <>{/* content goes here */}</> : null}
         </>
     );

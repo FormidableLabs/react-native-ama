@@ -1,5 +1,5 @@
+import * as Logger from '../logger';
 import { accessibilityLabelChecker } from './accessibilityLabelChecker';
-import * as Logger from './logger';
 
 beforeEach(() => {
   jest.clearAllMocks();

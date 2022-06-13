@@ -1,4 +1,6 @@
+import type { CHECK_STATUS } from './checks/types';
 import {
+  IGNORE_CONTRAST_FOR_DISABLED_ELEMENTS,
   Rule,
   RuleValue,
   SHELL_COLORS,
@@ -14,35 +16,32 @@ const overrideRules: OverrideRule = require('./../../ama.rules.json');
 
 type OverrideRule = {
   rules: Record<
-    Partial<Rule> | 'CONTRAST_CHECKER_MAX_DEPTH',
+    | Partial<Rule>
+    | 'CONTRAST_CHECKER_MAX_DEPTH'
+    | 'IGNORE_CONTRAST_FOR_DISABLED_ELEMENTS',
     RuleValue | number
   > | null;
   accessibilityLabelExceptions: string[];
 };
 
-export const log = (rule: Rule, message: string, extra?: any) => {
+export const log = (rule: Rule, message: string, extra?: any): CHECK_STATUS => {
   const customRule = canRuleBeOverridden(rule)
     ? overrideRules?.rules?.[rule]
     : undefined;
   const action = customRule || LOGGER_RULES[rule];
 
-  const formattedMessage = `${SHELL_COLORS.RED}❌ [AMA ${rule}]${SHELL_COLORS.RESET} - ${SHELL_COLORS.YELLOW}${message}${SHELL_COLORS.RESET}\n\n${RULES_HELP[rule]}`;
+  const formattedMessage = `${SHELL_COLORS.RED}❌ [AMA ${rule}]${SHELL_COLORS.RESET} - ${SHELL_COLORS.YELLOW}${message}${SHELL_COLORS.RESET}\n\n${RULES_HELP[rule]}\n\n`;
 
   switch (action) {
     case 'MUST_NOT':
-      if (extra) {
-        console.info(extra, '\n');
-      }
-      console.error(formattedMessage, '\n');
+      console.info(formattedMessage, extra || '', '\n');
 
-      throw new Error(`❌ [AMA ${rule}] - ${message}`);
+      return 'ERROR';
     case 'SHOULD_NOT':
     default:
-      if (extra) {
-        console.info(extra, '\n');
-      }
+      console.warn(formattedMessage, extra || '', '\n');
 
-      console.warn(formattedMessage, '\n');
+      return 'WARNING';
   }
 };
 
@@ -50,6 +49,13 @@ export const getContrastCheckerMaxDepth = () => {
   return (
     overrideRules?.rules?.CONTRAST_CHECKER_MAX_DEPTH ||
     CONTRAST_CHECKER_MAX_DEPTH
+  );
+};
+
+export const shouldIgnoreContrastCheckForDisabledElement = () => {
+  return (
+    overrideRules?.rules?.IGNORE_CONTRAST_FOR_DISABLED_ELEMENTS ||
+    IGNORE_CONTRAST_FOR_DISABLED_ELEMENTS
   );
 };
 

@@ -1,16 +1,16 @@
 import { render } from '@testing-library/react-native';
 import * as React from 'react';
 
-import * as UseA11yFocus from '../hooks/useA11yFocus';
-import * as AccessibilityLabelChecker from '../internal/accessibilityLabelChecker';
-import * as UppercaseChecker from '../internal/uppercaseChecker';
+import * as UseA11yFocus from '../hooks/useFocus';
+import * as AccessibilityLabelChecker from '../internal/checks/accessibilityLabelChecker';
+import * as UppercaseChecker from '../internal/checks/uppercaseChecker';
 import { Text } from './Text';
 
 describe('Text', () => {
   it.each([false, undefined])(
     'calls useA11yFocus with undefined if the "autofocus" property is %s',
     autofocus => {
-      const spy = jest.spyOn(UseA11yFocus, 'useA11yFocus');
+      const spy = jest.spyOn(UseA11yFocus, 'useFocus');
 
       render(<Text autofocus={autofocus} accessibilityRole="header" />);
 
@@ -19,7 +19,7 @@ describe('Text', () => {
   );
 
   it('calls useA11yFocus with the component ref if autofocus is true', () => {
-    const spy = jest.spyOn(UseA11yFocus, 'useA11yFocus').mockImplementation();
+    const spy = jest.spyOn(UseA11yFocus, 'useFocus').mockImplementation();
 
     render(<Text autofocus accessibilityRole="header" />);
 

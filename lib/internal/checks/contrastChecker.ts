@@ -2,22 +2,25 @@ import React from 'react';
 import type { StyleProp } from 'react-native';
 import { score } from 'wcag-color';
 
-import { getContrastCheckerMaxDepth, log } from './logger';
-import { getPropertyFromStyle } from './styleHandler';
+import { getPropertyFromStyle } from '../getPropertyFromStyle';
+import { getContrastCheckerMaxDepth, log } from '../logger';
+import type { CHECK_STATUS } from './types';
 
 const MAX_DEPTH_LEVEL = getContrastCheckerMaxDepth();
 
 export const contrastChecker = (
-  style: StyleProp<any> | undefined,
+  style: StyleProp<any> | undefined | StyleProp<any>[],
   children: React.ReactNode,
-) => {
+): CHECK_STATUS => {
   const backgroundColor = getPropertyFromStyle(style, 'backgroundColor');
 
   if (backgroundColor === undefined) {
-    return;
+    return 'SUCCEED';
   }
 
-  checkContrastInChildren(backgroundColor, children, 1);
+  const hasFailed = checkContrastInChildren(backgroundColor, children, 1);
+
+  return hasFailed ? 'ERROR' : 'SUCCEED';
 };
 
 const checkContrastInChildren = (
@@ -25,13 +28,24 @@ const checkContrastInChildren = (
   children: React.ReactNode,
   depthLevel: number,
 ) => {
+  let contrastFailed = false;
+
   React.Children.forEach(children as any, (child: JSX.Element | undefined) => {
     const childStyle = child?.props?.style || {};
     const color =
       getPropertyFromStyle(childStyle, 'color') || child?.props?.stroke;
 
     if (color) {
-      performContrastCheck(backgroundColor, color, child, childStyle);
+      const hasFailed = performContrastCheck(
+        backgroundColor,
+        color,
+        child,
+        childStyle,
+      );
+
+      if (hasFailed) {
+        contrastFailed = hasFailed;
+      }
     }
 
     if (depthLevel < MAX_DEPTH_LEVEL && child?.props?.children) {
@@ -42,6 +56,8 @@ const checkContrastInChildren = (
       );
     }
   });
+
+  return contrastFailed;
 };
 
 const performContrastCheck = (
@@ -60,12 +76,13 @@ const performContrastCheck = (
         `"${testFailed}" fails all the contrast check`,
         child,
       );
-      break;
+
+      return true;
     case 'AA Large':
       if (
         isFontSizeLarge(childStyle.fontSize, childStyle.fontWeight === 'bold')
       ) {
-        return;
+        return false;
       }
 
       log(
@@ -73,10 +90,13 @@ const performContrastCheck = (
         `"${testFailed}" fails AA Normal Text, but ✅ passes AA Large Text`,
         child,
       );
-      break;
+
+      return true;
     case 'AA':
       log('CONTRAST_FAILED_AAA', `"${testFailed}" fails the AAA Level`, child);
   }
+
+  return false;
 };
 
 const getContrastScore = (c1: string, c2: string) => {

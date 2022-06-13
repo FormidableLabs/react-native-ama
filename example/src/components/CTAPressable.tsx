@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   button: {
     paddingVertical: theme.padding.normal,
     backgroundColor: theme.color.black,
-    width: '100%',
+    flex: 1,
     minHeight: 48,
     minWidth: 48,
   },

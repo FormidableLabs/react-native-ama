@@ -5,8 +5,13 @@ import {
   AppState,
   AppStateStatus,
   Platform,
+  Pressable,
+  Text,
+  View,
 } from 'react-native';
 
+import { theme } from '../../example/src/theme';
+import { RED } from '../internal/error.style';
 import { areAnimationsEnabled } from '../modules/AMAAnimationsStatusModule';
 
 type AMAProviderProps = {
@@ -18,7 +23,7 @@ type AccessibilityEvents = Exclude<AccessibilityChangeEventName, 'change'>;
 type AccessibilityInfoEvents = {
   [key in AccessibilityEvents]: Exclude<
     keyof AMAContextValue,
-    'reactNavigationScreenOptions'
+    'reactNavigationScreenOptions' | 'showError'
   >;
 };
 
@@ -36,7 +41,10 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
   const appState = React.useRef('inactive');
 
   const handleAccessibilityInfoChanged = (
-    key: Exclude<keyof AMAContextValue, 'reactNavigationScreenOptions'>,
+    key: Exclude<
+      keyof AMAContextValue,
+      'reactNavigationScreenOptions' | 'showError'
+    >,
   ) => {
     return (newValue: boolean) => {
       const newValues = { ...values };
@@ -85,25 +93,35 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
     }
 
     return () => {
-      // @ts-ignore - RN >= 0.65
-      if (typeof subscriptions?.[0]?.remove === 'function') {
-        // @ts-ignore
-        return subscriptions.forEach(subscription => subscription.remove());
-      }
-
-      Object.entries(eventsMapping).forEach(([eventName, contextKey]) => {
-        return AccessibilityInfo.removeEventListener(
-          eventName as AccessibilityEvents,
-          handleAccessibilityInfoChanged(contextKey),
-        );
-      });
-
+      // @ts-ignore
+      subscriptions.forEach(subscription => subscription.remove());
       AppState.removeEventListener('change', checkAndroidAnimationStatus);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <AMAContext.Provider value={values}>{children}</AMAContext.Provider>;
+  /* test-code */
+  const [isErrorVisible, setIsErrorVisible] = React.useState(false);
+  /* end-test-code */
+
+  return (
+    /* test-code */
+    __DEV__ ? (
+      <AMAContext.Provider
+        value={{
+          ...values,
+          showError: () => setIsErrorVisible(true),
+        }}>
+        <View style={{ flex: 1 }}>
+          {children}
+          {isErrorVisible ? <AMAError /> : null}
+        </View>
+      </AMAContext.Provider>
+    ) : (
+      /* end-test-code */
+      <AMAContext.Provider value={values}>{children}</AMAContext.Provider>
+    )
+  );
 };
 
 export type AMAContextValue = {
@@ -117,6 +135,9 @@ export type AMAContextValue = {
     animationEnabled: boolean;
     animation: 'default' | 'fade';
   };
+  /* test-code */
+  showError: () => void;
+  /* end-test-code */
 };
 
 const DEFAULT_VALUES: AMAContextValue = {
@@ -130,7 +151,36 @@ const DEFAULT_VALUES: AMAContextValue = {
     animationEnabled: true,
     animation: 'default',
   },
+  /* test-code */
+  showError: () => {},
+  /* end-test-code */
 };
+
+/* test-code */
+const AMAError = () => {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel="One or more component didn't pass the accessibility check"
+      accessibilityHint="Please check the console for more info..."
+      style={{
+        paddingHorizontal: theme.padding.big,
+        paddingTop: theme.padding.big,
+        paddingBottom: theme.padding.big * 2,
+        backgroundColor: RED,
+      }}>
+      <View accessible={true}>
+        <Text style={{ color: 'white', fontSize: 16, lineHeight: 26 }}>
+          AMA: One or more component didn't pass the accessibility check.
+        </Text>
+        <Text style={{ color: 'white', fontSize: 16, lineHeight: 24 }}>
+          Please check the console for more info...
+        </Text>
+      </View>
+    </Pressable>
+  );
+};
+/* end-test-code */
 
 const AMAContext = React.createContext<AMAContextValue>(DEFAULT_VALUES);
 

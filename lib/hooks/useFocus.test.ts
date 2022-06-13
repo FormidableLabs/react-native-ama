@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 
-import { useA11yFocus } from './useA11yFocus';
+import { useFocus } from './useFocus';
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -12,7 +12,7 @@ let setAccessibilityFocusMock: jest.Mock;
 describe('useA11yFocus', () => {
   it.each([null, undefined])('does nothing if the Ref is %s', refElement => {
     // @ts-ignore
-    renderHook(() => useA11yFocus(refElement));
+    renderHook(() => useFocus(refElement));
 
     expect(findNodeHandleMock).not.toHaveBeenCalled();
   });
@@ -20,7 +20,7 @@ describe('useA11yFocus', () => {
   it('call setAccessibilityFocus on the given Ref Component', () => {
     findNodeHandleMock.mockReturnValue('element-id');
 
-    renderHook(() => useA11yFocus({ current: 'test-element' }));
+    renderHook(() => useFocus({ current: 'test-element' }));
 
     expect(findNodeHandleMock).toHaveBeenCalledWith('test-element');
     expect(setAccessibilityFocusMock).toHaveBeenNthCalledWith(1, 'element-id');
@@ -30,7 +30,7 @@ describe('useA11yFocus', () => {
   it('focus calls setAccessibilityFocus on the given component', () => {
     findNodeHandleMock.mockReturnValue('test-focus-id');
 
-    const { result } = renderHook(() => useA11yFocus());
+    const { result } = renderHook(() => useFocus());
 
     result.current.setFocus('component' as any);
 

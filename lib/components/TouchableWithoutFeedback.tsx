@@ -1,55 +1,21 @@
 import * as React from 'react';
 import {
-  AccessibilityRole,
-  AccessibilityState,
   TouchableWithoutFeedback as RNTouchableWithoutFeedback,
   TouchableWithoutFeedbackProps as RNTouchableWithoutFeedbackProps,
 } from 'react-native';
 
-import { accessibilityLabelChecker } from '../internal/accessibilityLabelChecker';
-import { checkMinimumSize } from '../internal/checkMinimumSize';
-import { contrastChecker } from '../internal/contrastChecker';
-import { noUndefinedProperty } from '../internal/noUndefinedProperty';
-import type { AMAAccessibilityState } from '../types/types';
+import { UsePressable, usePressable } from '../hooks/usePressable';
 
-export type TouchableWithoutFeedbackProps = Omit<
-  RNTouchableWithoutFeedbackProps,
-  'accessibilityRole' | 'disabled' | 'accessibilityLabel' | 'accessibilityState'
-> &
-  AMAAccessibilityState & {
-    accessibilityRole: AccessibilityRole;
-    accessibilityLabel: string;
-  };
+export type TouchableOpacityProps =
+  UsePressable<RNTouchableWithoutFeedbackProps>;
 
 export const TouchableWithoutFeedback: React.FC<
-  TouchableWithoutFeedbackProps
+  RNTouchableWithoutFeedbackProps
 > = ({ children, ...rest }) => {
-  const accessibilityState: AccessibilityState = {
-    disabled: rest.disabled,
-    selected: rest.selected,
-    checked: rest.checked,
-    busy: rest.busy,
-    expanded: rest.expanded,
-  };
-
-  __DEV__ &&
-    noUndefinedProperty(rest, 'accessibilityRole', 'NO_ACCESSIBILITY_ROLE');
-  __DEV__ &&
-    noUndefinedProperty(rest, 'accessibilityLabel', 'NO_ACCESSIBILITY_LABEL');
-
-  __DEV__ &&
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    React.useEffect(() => {
-      contrastChecker(rest?.style, children);
-
-      accessibilityLabelChecker(rest.accessibilityLabel);
-    }, [rest.style, rest.accessibilityLabel, children]);
+  const pressableProps = usePressable<TouchableOpacityProps>(rest, children);
 
   return (
-    <RNTouchableWithoutFeedback
-      accessibilityState={accessibilityState}
-      onLayout={checkMinimumSize}
-      {...rest}>
+    <RNTouchableWithoutFeedback {...rest} {...pressableProps}>
       {children}
     </RNTouchableWithoutFeedback>
   );

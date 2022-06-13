@@ -1,9 +1,11 @@
-import { isAccessibilityLabelAllowed, log } from './logger';
+import { ERROR_STYLE } from '../error.style';
+import { isAccessibilityLabelAllowed, log } from '../logger';
 
 export const accessibilityLabelChecker = (accessibilityLabel?: string) => {
   if (!accessibilityLabel) {
-    return;
+    return {};
   }
+
   const isAllowed = isAccessibilityLabelAllowed(accessibilityLabel);
 
   if (!isAllowed && isUpperCase(accessibilityLabel)) {
@@ -12,7 +14,11 @@ export const accessibilityLabelChecker = (accessibilityLabel?: string) => {
       'The accessibilityLabel cannot be all CAPS',
       accessibilityLabel,
     );
+
+    return ERROR_STYLE;
   }
+
+  return {};
 };
 
 const isUpperCase = (string: string) => string.toUpperCase() === string;

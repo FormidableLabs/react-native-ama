@@ -21,7 +21,7 @@ Compared to the default React Native component, this custom component:
 
 - Forces the use of `accessibilityRole` and `accessibilityLabel`
 - `accessibilityState` has been removed as its states `busy`, `checked`, `selected`, `expanded` are exposed as a property
-- [Contrast checker](/docs/guidelines/contrast) before the component background color and its children color
+- Performs a [contrast checker](/docs/guidelines/contrast) between its background color and its children color
 
 ### accessibilityRole
 

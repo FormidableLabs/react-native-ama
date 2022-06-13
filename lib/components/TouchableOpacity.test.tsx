@@ -2,9 +2,9 @@ import { render } from '@testing-library/react-native';
 import * as React from 'react';
 import { Text } from 'react-native';
 
-import * as AccessibilityLabelChecker from '../internal/accessibilityLabelChecker';
-import * as ContrastChecker from '../internal/contrastChecker';
-import * as AMADebugUtils from '../internal/noUndefinedProperty';
+import * as AccessibilityLabelChecker from '../internal/checks/accessibilityLabelChecker';
+import * as ContrastChecker from '../internal/checks/contrastChecker';
+import * as AMADebugUtils from '../internal/checks/noUndefinedProperty';
 import { TouchableOpacity, TouchableOpacityProps } from './TouchableOpacity';
 
 beforeEach(() => {

@@ -1,14 +1,14 @@
-# useA11yFocus
+# useFocus
 
-`useA11yFocus` is a hook that allows to focus a given component [automatically on mount](#autofocus-on-mount) or programmatically using
+`useFocus` is a hook that allows to focus a given component [automatically on mount](#autofocus-on-mount) or programmatically using
 the [setFocus](#set-focus-programmatically) function.
 
 ## Usage
 
 ```tsx
-import { useA11yFocus } from 'react-native-ama';
+import { useFocus } from 'react-native-ama';
 
-const { setFocus } = useA11yFocususeA11yFocus(refComponent);
+const { setFocus } = useFocus(refComponent);
 ```
 
 - **refComponent**: _(Optional)_ Is the [React Ref](https://reactjs.org/docs/refs-and-the-dom.html) of the component we
@@ -24,12 +24,12 @@ Automatically focus the `<Text />` component when _MyFancyScreen_ is mounted:
 ```tsx
 import * as React from 'react';
 import { Text } from 'react-native';
-import { useA11yFocus } from 'react-native-ama';
+import { useFocus } from 'react-native-ama';
 
 const MyFancyScreen = () => {
   const componentRef = React.useRef<Text>(null);
 
-  useA11yFocus(componentRef);
+  useFocus(componentRef);
 
   return (
     <View>
@@ -47,11 +47,11 @@ const MyFancyScreen = () => {
 ```tsx
 import * as React from 'react';
 import { Text } from 'react-native';
-import { Pressable, useA11yFocus } from 'react-native-ama';
+import { Pressable, useFocus } from 'react-native-ama';
 
 const MyFancyScreen = () => {
   const componentRef = React.useRef<Text>(null);
-  const { setFocus } = useA11yFocus();
+  const { setFocus } = useFocus();
 
   return (
     <View>

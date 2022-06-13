@@ -1,8 +1,8 @@
 import React from 'react';
 import { Text } from 'react-native';
 
+import * as AMANoUndefined from './checks/noUndefinedProperty';
 import { generateAccessibilityLabelFromProps } from './generateAccessibilityLabelFromProps';
-import * as AMANoUndefined from './noUndefinedProperty';
 
 beforeEach(() => {
   jest.clearAllMocks();

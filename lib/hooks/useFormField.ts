@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { checkFocusTrap } from '../internal/checkFocusTrap';
+import { checkFocusTrap } from '../internal/checks/checkFocusTrap';
 import { useForm } from '../providers/Form';
-import { useA11yFocus } from './useA11yFocus';
+import { useFocus } from './useFocus';
 
 export const useFormField = ({
   ref,
@@ -12,7 +12,7 @@ export const useFormField = ({
   hasFocusCallback: boolean;
 }) => {
   const { refs, onSubmit } = useForm();
-  const { setFocus } = useA11yFocus();
+  const { setFocus } = useFocus();
   const fieldRef = React.useRef(ref);
 
   const getMyIndex = () => {

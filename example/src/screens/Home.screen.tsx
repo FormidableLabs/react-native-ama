@@ -23,7 +23,6 @@ export const HomeScreen = () => {
         />
         <Spacer height={'normal'} />
         <CTAPressable
-          g
           title="TouchableWithoutFeedback"
           onPress={() => navigate('TouchableWithoutFeedback')}
         />

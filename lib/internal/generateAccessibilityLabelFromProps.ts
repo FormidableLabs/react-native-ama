@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { noUndefinedProperty } from './noUndefinedProperty';
+import { noUndefinedProperty } from './checks/noUndefinedProperty';
 
 export const generateAccessibilityLabelFromProps = (
   props: Record<string, any>,

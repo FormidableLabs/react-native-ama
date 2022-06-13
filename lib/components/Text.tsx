@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Text as RNText, TextProps as RNTextProps } from 'react-native';
 
-import { useA11yFocus } from '../hooks/useA11yFocus';
-import { accessibilityLabelChecker } from '../internal/accessibilityLabelChecker';
-import { uppercaseChecker } from '../internal/uppercaseChecker';
+import { useFocus } from '../hooks/useFocus';
+import { accessibilityLabelChecker } from '../internal/checks/accessibilityLabelChecker';
+import { uppercaseChecker } from '../internal/checks/uppercaseChecker';
 
 export type TextProps = RNTextProps &
   (
@@ -17,7 +17,7 @@ export type TextProps = RNTextProps &
 export const Text: React.FC<TextProps> = ({ autofocus, ...rest }) => {
   const textRef = React.useRef<RNText>(null);
 
-  useA11yFocus(autofocus ? textRef : undefined);
+  useFocus(autofocus ? textRef : undefined);
 
   __DEV__ &&
     // eslint-disable-next-line react-hooks/rules-of-hooks

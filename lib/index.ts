@@ -10,7 +10,7 @@ export * from './components/Text';
 export * from './components/TextInput';
 
 // Hooks
-export * from './hooks/useA11yFocus';
+export * from './hooks/useFocus';
 export * from './hooks/useAccessibleAnimation';
 export * from './hooks/useAnimationDuration';
 export * from './hooks/useReanimatedTiming';

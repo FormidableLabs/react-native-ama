@@ -1,7 +1,7 @@
 import type React from 'react';
 import type { TextInput } from 'react-native';
 
-import { log } from './logger';
+import { log } from '../logger';
 
 export const checkFocusTrap = (
   ref: React.RefObject<TextInput>,

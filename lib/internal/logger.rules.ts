@@ -33,6 +33,7 @@ export const LOGGER_RULES: Record<Rule, RuleValue> = {
 };
 
 export const CONTRAST_CHECKER_MAX_DEPTH = 5;
+export const IGNORE_CONTRAST_FOR_DISABLED_ELEMENTS = false;
 
 export const RULES_HELP: Record<Rule, string> = {
   NO_UNDEFINED: '',

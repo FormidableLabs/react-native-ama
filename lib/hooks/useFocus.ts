@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AccessibilityInfo, findNodeHandle } from 'react-native';
 
-export const useA11yFocus = (refComponent?: React.RefObject<any>) => {
+export const useFocus = (refComponent?: React.RefObject<any>) => {
   const setFocus = (
     component:
       | null
