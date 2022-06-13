@@ -34,6 +34,9 @@ export const HomeScreen = () => {
         {/* */}
         <CTAPressable title="Form" onPress={() => navigate('Form')} />
 
+        <Spacer height={'normal'} />
+        <CTAPressable title="FlatList" onPress={() => navigate('FlatList')} />
+
         {/* */}
         <Spacer height={'big'} />
         <Header title="Hooks" />

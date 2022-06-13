@@ -7,4 +7,5 @@ export type RootStackParamList = {
   ReduceMotion: undefined;
   ReanimatedReduceMotion: undefined;
   Form: undefined;
+  FlatList: undefined;
 };
