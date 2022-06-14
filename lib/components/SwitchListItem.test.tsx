@@ -25,19 +25,12 @@ describe('SwitchListItem', () => {
         accessibilityRole="switch"
         accessibilityState={
           Object {
-            "busy": undefined,
             "checked": false,
-            "disabled": undefined,
-            "expanded": undefined,
-            "selected": undefined,
           }
         }
         accessible={true}
-        checked={false}
         focusable={false}
-        onBlur={[Function]}
         onClick={[Function]}
-        onFocus={[Function]}
         onLayout={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -47,14 +40,18 @@ describe('SwitchListItem', () => {
         onStartShouldSetResponder={[Function]}
         style={
           Array [
+            Array [
+              Object {
+                "alignContent": "center",
+                "alignItems": "center",
+                "flexDirection": "row",
+                "width": "100%",
+              },
+            ],
             Object {
-              "alignContent": "center",
-              "alignItems": "center",
-              "flexDirection": "row",
               "minHeight": 44,
-              "width": "100%",
+              "minWidth": 44,
             },
-            Object {},
           ]
         }
         testID="switch"
@@ -64,7 +61,6 @@ describe('SwitchListItem', () => {
         </Text>
         <RCTSwitch
           accessibilityElementsHidden={true}
-          accessibilityLabel="Label"
           accessibilityRole="switch"
           importantForAccessibility="no"
           onChange={[Function]}

@@ -10,8 +10,8 @@ import { usePressable, UsePressable } from 'react-native-ama';
 const pressableProps = usePressable(props, children);
 ```
 
-- **children**: The component children
 - **props**: The component props
+- **children**: The component children
 
 ## Accessibility checks
 

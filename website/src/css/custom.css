@@ -6,76 +6,92 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
-  --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+    --ifm-color-primary: #2e8555;
+    --ifm-color-primary-dark: #29784c;
+    --ifm-color-primary-darker: #277148;
+    --ifm-color-primary-darkest: #205d3b;
+    --ifm-color-primary-light: #33925d;
+    --ifm-color-primary-lighter: #359962;
+    --ifm-color-primary-lightest: #3cad6e;
+    --ifm-code-font-size: 95%;
+    --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 
-  --platform-color: #555;
-  --platform-color-android: #455918;
+    --platform-color: #555;
+    --platform-color-android: #455918;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+    --ifm-color-primary: #25c2a0;
+    --ifm-color-primary-dark: #21af90;
+    --ifm-color-primary-darker: #1fa588;
+    --ifm-color-primary-darkest: #1a8870;
+    --ifm-color-primary-light: #29d5b0;
+    --ifm-color-primary-lighter: #32d8b4;
+    --ifm-color-primary-lightest: #4fddbf;
+    --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
 .platform {
-  position: relative;
-  display: inline-block;
-  padding-left: 24px;
-  font-size: 18px;
-  font-weight: 300;
-  background-color: var(--platform-color);
-  height: 26px;
-  top: -6px;
-  color: #fff;
-  padding-right: 10px;
-  line-height: 24px;
+    position: relative;
+    display: inline-block;
+    padding-left: 24px;
+    font-size: 18px;
+    font-weight: 300;
+    background-color: var(--platform-color);
+    height: 26px;
+    top: -6px;
+    color: #fff;
+    padding-right: 10px;
+    line-height: 24px;
 }
 
 .platform::before {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 13px 10px 13px 0;
-  border-color: #fff var(--platform-color) #fff #fff;
-  top: 0;
-  left: 0;
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 13px 10px 13px 0;
+    border-color: #fff var(--platform-color) #fff #fff;
+    top: 0;
+    left: 0;
 }
 
 .platform::after {
-  content: '';
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background-color: #fff;
-  border-radius: 50%;
-  left: 10px;
-  top: 10px;
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background-color: #fff;
+    border-radius: 50%;
+    left: 10px;
+    top: 10px;
 }
 
 .platform.android {
-  background-color: var(--platform-color-android);
+    background-color: var(--platform-color-android);
 }
+
 .platform.android::before {
-  border-right-color: var(--platform-color-android);
+    border-right-color: var(--platform-color-android);
 }
 
 .table-of-contents .platform {
-  display: none !important;
+    display: none !important;
+}
+
+.dev-only-wrap {
+    filter: drop-shadow(1px 3px 3px rgba(50, 50, 0, 0.4));
+    display: inline-block;
+}
+
+.dev-only {
+    border-left: 6px solid #000;
+    background-color: #24B6D2;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 4px 24px 4px 12px;
+    margin-left: 12px;
+    clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
 }

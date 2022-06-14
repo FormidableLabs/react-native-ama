@@ -3,10 +3,9 @@ import type { StyleProp, SwitchProps, ViewStyle } from 'react-native';
 import { StyleSheet, Switch } from 'react-native';
 
 import { generateAccessibilityLabelFromProps } from '../internal/generateAccessibilityLabelFromProps';
-import { MINIMUM_TOUCHABLE_SIZE } from '../utils/minimumTouchableSize';
 import { FormField } from './FormField';
 import { HideChildrenFromAccessibilityTree } from './HideChildrenFromAccessibilityTree';
-import { Pressable } from './Pressable';
+import { SwitchWrapper } from './SwitchWrapper';
 
 type SwitchListItemProps = Omit<
   SwitchProps,
@@ -20,7 +19,7 @@ type SwitchListItemProps = Omit<
   onValueChange: () => void;
 };
 
-export const SwitchListItem: React.FC<SwitchListItemProps> = ({
+export const SwitchListItemBase: React.FC<SwitchListItemProps> = ({
   children,
   testID,
   ...props
@@ -43,8 +42,7 @@ export const SwitchListItem: React.FC<SwitchListItemProps> = ({
 
   return (
     <FormField>
-      <Pressable
-        accessibilityRole="switch"
+      <SwitchWrapper
         accessibilityLabel={accessibilityLabel}
         style={[allStyles.container, style]}
         onPress={onValueChange}
@@ -57,7 +55,6 @@ export const SwitchListItem: React.FC<SwitchListItemProps> = ({
           ) : (
             <Switch
               {...rest}
-              accessibilityLabel={accessibilityLabel}
               style={switchStyle}
               value={value}
               onValueChange={onValueChange}
@@ -66,10 +63,12 @@ export const SwitchListItem: React.FC<SwitchListItemProps> = ({
           )}
         </HideChildrenFromAccessibilityTree>
         {isLabelPositionLeft ? null : label}
-      </Pressable>
+      </SwitchWrapper>
     </FormField>
   );
 };
+
+export const SwitchListItem = React.memo(SwitchListItemBase);
 
 const allStyles = StyleSheet.create({
   container: {
@@ -77,6 +76,5 @@ const allStyles = StyleSheet.create({
     width: '100%',
     alignContent: 'center',
     alignItems: 'center',
-    minHeight: MINIMUM_TOUCHABLE_SIZE,
   },
 });

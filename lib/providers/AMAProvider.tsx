@@ -100,12 +100,12 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  /* test-code */
+  /* block:start */
   const [isErrorVisible, setIsErrorVisible] = React.useState(false);
-  /* end-test-code */
+  /* block:end */
 
   return (
-    /* test-code */
+    /* block:start */
     __DEV__ ? (
       <AMAContext.Provider
         value={{
@@ -118,7 +118,7 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
         </View>
       </AMAContext.Provider>
     ) : (
-      /* end-test-code */
+      /* block:end */
       <AMAContext.Provider value={values}>{children}</AMAContext.Provider>
     )
   );
@@ -135,9 +135,9 @@ export type AMAContextValue = {
     animationEnabled: boolean;
     animation: 'default' | 'fade';
   };
-  /* test-code */
+  /* block:start */
   showError: () => void;
-  /* end-test-code */
+  /* block:end */
 };
 
 const DEFAULT_VALUES: AMAContextValue = {
@@ -151,9 +151,9 @@ const DEFAULT_VALUES: AMAContextValue = {
     animationEnabled: true,
     animation: 'default',
   },
-  /* test-code */
+  /* block:start */
   showError: () => {},
-  /* end-test-code */
+  /* block:end */
 };
 
 /* test-code */
@@ -180,7 +180,7 @@ const AMAError = () => {
     </Pressable>
   );
 };
-/* end-test-code */
+/* block:end */
 
 const AMAContext = React.createContext<AMAContextValue>(DEFAULT_VALUES);
 

@@ -1,62 +1,194 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react-hooks';
 
-import { accessibilityLabelChecker } from '../internal/checks/accessibilityLabelChecker';
+import { ERROR_STYLE } from '../internal/error.style';
+import * as UseChecks from '../internal/useChecks';
 import { usePressable } from './usePressable';
 
 beforeEach(() => {
   jest.clearAllMocks();
+  jest.restoreAllMocks();
 });
-
-let noUndefinedProperty: jest.Mock;
-let contrastChecker: jest.Mock;
-let checkMinimumSize: jest.Mock;
 
 describe('usePressable', () => {
-  it('checks that the "accessibilityRole" property is not UNDEFINED', () => {
-    renderHook(() => usePressable({}, {}));
+  describe('accessibilityState', () => {
+    it.each`
+      state         | value
+      ${'checked'}  | ${'mixed'}
+      ${'disabled'} | ${true}
+      ${'busy'}     | ${true}
+      ${'expanded'} | ${true}
+      ${'selected'} | ${true}
+    `('handles the accessibilityState prop $state', ({ state, value }) => {
+      const stateProp: Record<string, any> = {};
+      stateProp[state] = value;
 
-    expect(noUndefinedProperty).toHaveBeenCalledWith(
-      {},
-      'accessibilityRole',
-      'NO_ACCESSIBILITY_ROLE',
-    );
+      const { result } = renderHook(() =>
+        usePressable<any>(
+          {
+            accessibilityRole: 'button',
+            accessibilityLabel: 'Label here',
+            ...stateProp,
+          },
+          {},
+        ),
+      );
+
+      expect(result.current.accessibilityState).toEqual(stateProp);
+    });
   });
 
-  it('checks that the "accessibilityLabel" property is not UNDEFINED', () => {
-    renderHook(() => usePressable({}, {}));
+  describe('checks', () => {
+    let noUndefinedProperty: jest.Mock;
+    let contrastChecker: jest.Mock;
+    let checkMinimumSize: jest.Mock;
+    let accessibilityLabelChecker: jest.Mock;
 
-    expect(noUndefinedProperty).toHaveBeenCalledWith(
-      {},
-      'accessibilityLabel',
-      'NO_ACCESSIBILITY_LABEL',
-    );
-  });
+    beforeEach(function () {
+      noUndefinedProperty = jest.fn();
+      contrastChecker = jest.fn();
+      checkMinimumSize = jest.fn();
+      accessibilityLabelChecker = jest.fn();
 
-  it('performs a check on the accessibility label', () => {
-    renderHook(() => usePressable({}, {}));
-
-    expect(accessibilityLabelChecker).toHaveBeenCalledWith(
-      {},
-      'accessibilityLabel',
-      'NO_ACCESSIBILITY_LABEL',
-    );
-  });
-});
-
-jest.mock('../internal/useChecks', () => mockUseChecks());
-
-function mockUseChecks() {
-  noUndefinedProperty = jest.fn();
-  contrastChecker = jest.fn();
-  checkMinimumSize = jest.fn();
-
-  return {
-    useChecks: () => {
-      return {
+      jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
         noUndefinedProperty,
         contrastChecker,
         checkMinimumSize,
-      };
-    },
-  };
-}
+        accessibilityLabelChecker,
+      });
+    });
+
+    it('checks that the "accessibilityRole" property is not UNDEFINED', () => {
+      renderHook(() => usePressable({}, {}));
+
+      expect(noUndefinedProperty).toHaveBeenCalledWith(
+        {},
+        'accessibilityRole',
+        'NO_ACCESSIBILITY_ROLE',
+      );
+    });
+
+    it('checks that the "accessibilityLabel" property is not UNDEFINED', () => {
+      renderHook(() => usePressable({}, {}));
+
+      expect(noUndefinedProperty).toHaveBeenCalledWith(
+        {},
+        'accessibilityLabel',
+        'NO_ACCESSIBILITY_LABEL',
+      );
+    });
+
+    it('performs a check on the accessibility label', () => {
+      renderHook(() =>
+        usePressable<any>(
+          {
+            accessibilityLabel: 'This is the accessibility label',
+            accessibilityHint: 'This is the hint',
+          },
+          {},
+        ),
+      );
+
+      expect(accessibilityLabelChecker).toHaveBeenCalledWith(
+        'This is the accessibility label',
+        'This is the hint',
+      );
+    });
+  });
+
+  describe('style', () => {
+    beforeEach(function () {
+      jest.spyOn(console, 'info').mockImplementation(() => {});
+    });
+
+    it('applies the error style if the accessibilityRole is undefined', () => {
+      const { result } = renderHook(() =>
+        usePressable<any>({
+          accessibilityLabel: 'This is the accessibility label',
+          style: {
+            color: 'yellow',
+          },
+        }),
+      );
+
+      expect(result.current.style).toMatchObject({
+        color: 'yellow',
+        ...ERROR_STYLE,
+      });
+    });
+
+    it('applies the error style if the accessibilityLabel is undefined', () => {
+      const { result } = renderHook(() =>
+        usePressable<any>({
+          accessibilityRole: 'button',
+          style: {
+            color: 'yellow',
+          },
+        }),
+      );
+
+      expect(result.current.style).toMatchObject({
+        color: 'yellow',
+        ...ERROR_STYLE,
+      });
+    });
+
+    it('applies the error style if the accessibilityLabel check fails', () => {
+      const { result } = renderHook(() =>
+        usePressable<any>({
+          accessibilityLabel: 'ALL UPPERCASE IS NO GOOD',
+          style: {
+            color: 'yellow',
+          },
+        }),
+      );
+
+      expect(result.current.style).toMatchObject({
+        color: 'yellow',
+        ...ERROR_STYLE,
+      });
+    });
+
+    it('applies the error style if the accessibilityLabel check fails', () => {
+      const { result } = renderHook(() =>
+        usePressable<any>({
+          accessibilityLabel: 'ALL UPPERCASE IS NO GOOD',
+          style: {
+            color: 'yellow',
+          },
+        }),
+      );
+
+      expect(result.current.style).toMatchObject({
+        color: 'yellow',
+        ...ERROR_STYLE,
+      });
+    });
+
+    it('applies the error style if the minimum size layout check fails', () => {
+      const { result } = renderHook(() =>
+        usePressable<any>({
+          accessibilityRole: 'button',
+          accessibilityLabel: 'This is valid',
+          style: {
+            color: 'brown',
+          },
+        }),
+      );
+
+      expect(result.current.style).toMatchObject({
+        color: 'brown',
+      });
+
+      act(() => {
+        result.current.onLayout({
+          nativeEvent: { layout: { width: 20, height: 20 } },
+        } as any);
+      });
+
+      expect(result.current.style).toMatchObject({
+        color: 'brown',
+        ...ERROR_STYLE,
+      });
+    });
+  });
+});

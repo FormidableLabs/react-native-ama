@@ -9,32 +9,35 @@ beforeEach(() => {
   jest.resetModules();
   jest.clearAllMocks();
 
-  console.error = jest.fn();
   console.warn = jest.fn();
+  console.info = jest.fn();
 });
 
 describe('Logger', () => {
   describe('When no custom logger rules have been defined uses the default ones', () => {
-    it('log: console.log and throws an error when the rule is "throw"', () => {
-      const consoleError = jest.spyOn(console, 'error');
+    it('console.info the rules and returns ERROR', () => {
+      const consoleInfo = jest.spyOn(console, 'info');
+      const result = log('CONTRAST_FAILED', 'Error Message');
 
-      expect(() => log('CONTRAST_FAILED', 'Error Message')).toThrowError(
-        '❌ [AMA CONTRAST_FAILED] - Error Message',
-      );
+      expect(result).toBe('ERROR');
 
-      expect(consoleError).toHaveBeenCalledWith(
-        `${SHELL_COLORS.RED}❌ [AMA CONTRAST_FAILED]${SHELL_COLORS.RESET} - ${SHELL_COLORS.YELLOW}Error Message${SHELL_COLORS.RESET}\n\n${RULES_HELP.CONTRAST_FAILED}`,
+      expect(consoleInfo).toHaveBeenCalledWith(
+        `${SHELL_COLORS.RED}❌ [AMA CONTRAST_FAILED]${SHELL_COLORS.RESET} - ${SHELL_COLORS.YELLOW}Error Message${SHELL_COLORS.RESET}\n\n${RULES_HELP.CONTRAST_FAILED}\n\n`,
+        '',
         '\n',
       );
     });
 
-    it('log: console.warn the message when the rule is "warn"', () => {
+    it('console.warn the rules and returns WARNING', () => {
       const consoleWarn = jest.spyOn(console, 'warn');
 
-      log('CONTRAST_FAILED_AAA', 'Error Message');
+      const result = log('CONTRAST_FAILED_AAA', 'Yellow one');
+
+      expect(result).toBe('WARNING');
 
       expect(consoleWarn).toHaveBeenCalledWith(
-        `${SHELL_COLORS.RED}❌ [AMA CONTRAST_FAILED_AAA]${SHELL_COLORS.RESET} - ${SHELL_COLORS.YELLOW}Error Message${SHELL_COLORS.RESET}\n\n${RULES_HELP.CONTRAST_FAILED_AAA}`,
+        `${SHELL_COLORS.RED}❌ [AMA CONTRAST_FAILED_AAA]${SHELL_COLORS.RESET} - ${SHELL_COLORS.YELLOW}Yellow one${SHELL_COLORS.RESET}\n\n${RULES_HELP.CONTRAST_FAILED_AAA}\n\n`,
+        '',
         '\n',
       );
     });
@@ -54,10 +57,13 @@ describe('Logger', () => {
 
       const consoleWarn = jest.spyOn(console, 'warn');
 
-      newLog('CONTRAST_FAILED', 'Another message');
+      const result = newLog('CONTRAST_FAILED', 'Another message');
+
+      expect(result).toBe('WARNING');
 
       expect(consoleWarn).toHaveBeenCalledWith(
-        `${SHELL_COLORS.RED}❌ [AMA CONTRAST_FAILED]${SHELL_COLORS.RESET} - ${SHELL_COLORS.YELLOW}Another message${SHELL_COLORS.RESET}\n\n${RULES_HELP.CONTRAST_FAILED}`,
+        `${SHELL_COLORS.RED}❌ [AMA CONTRAST_FAILED]${SHELL_COLORS.RESET} - ${SHELL_COLORS.YELLOW}Another message${SHELL_COLORS.RESET}\n\n${RULES_HELP.CONTRAST_FAILED}\n\n`,
+        '',
         '\n',
       );
     });
@@ -77,7 +83,9 @@ describe('Logger', () => {
         };
       });
 
-      expect(() => log(rule, 'Error Message')).toThrow();
+      const result = log(rule, 'Error Message');
+
+      expect(result).toBe('ERROR');
     },
   );
 });

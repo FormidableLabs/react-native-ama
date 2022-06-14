@@ -18,10 +18,10 @@ Let's consider the following example:
 ```
 
 | VoiceOver  | TalkBack                           |
-| ---------- | ---------------------------------- |
+|------------|------------------------------------|
 | Contact us | Contact us, double-tap to activate |
 
-In both cases, the user has no clue about the nature of the component the screen reader landed and what could be the outcome of interacting with it.
+In both cases, the user has no clue about the nature of the component the screen reader landed and/or if any action could be triggered and what could be the outcome of interacting with it.
 
 ## NO_ACCESSIBILITY_ROLE <MustNot />
 

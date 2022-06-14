@@ -6,13 +6,16 @@ import {
 
 import { UsePressable, usePressable } from '../hooks/usePressable';
 
-export type TouchableOpacityProps =
+export type TouchableWithoutFeedbackProps =
   UsePressable<RNTouchableWithoutFeedbackProps>;
 
 export const TouchableWithoutFeedback: React.FC<
   RNTouchableWithoutFeedbackProps
 > = ({ children, ...rest }) => {
-  const pressableProps = usePressable<TouchableOpacityProps>(rest, children);
+  const pressableProps = usePressable<TouchableWithoutFeedbackProps>(
+    rest,
+    children,
+  );
 
   return (
     <RNTouchableWithoutFeedback {...rest} {...pressableProps}>

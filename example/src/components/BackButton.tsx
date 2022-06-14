@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
-import { Pressable, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { Pressable } from 'react-native-ama';
 import Svg, { Path } from 'react-native-svg';
 
 import { theme } from '../theme';

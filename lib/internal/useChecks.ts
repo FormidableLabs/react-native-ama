@@ -1,6 +1,7 @@
 import { InteractionManager } from 'react-native';
 
 import { useAMAContext } from '../providers/AMAProvider';
+import { accessibilityLabelChecker as accessibilityLabelCheckerImplementation } from './checks/accessibilityLabelChecker';
 import { checkMinimumSize as checkMinimumSizeImplementation } from './checks/checkMinimumSize';
 import { contrastChecker as contrastCheckerImplementation } from './checks/contrastChecker';
 import { noUndefinedProperty as noUndefinedPropertyImplementation } from './checks/noUndefinedProperty';
@@ -34,9 +35,14 @@ export const useChecks = () => {
 
   const checkMinimumSize = handleCheckResponse(checkMinimumSizeImplementation);
 
+  const accessibilityLabelChecker = handleCheckResponse(
+    accessibilityLabelCheckerImplementation,
+  );
+
   return {
     noUndefinedProperty,
     contrastChecker,
     checkMinimumSize,
+    accessibilityLabelChecker,
   };
 };

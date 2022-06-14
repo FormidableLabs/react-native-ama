@@ -12,7 +12,9 @@ beforeEach(() => {
 
 describe('AMAProvider', () => {
   it('adds event listener for "reduceMotionChanged"', () => {
-    const spy = jest.spyOn(AccessibilityInfo, 'addEventListener');
+    const spy = jest
+      .spyOn(AccessibilityInfo, 'addEventListener')
+      .mockReturnValue({ remove: jest.fn() } as any);
 
     renderAMAProvider();
 
@@ -23,7 +25,9 @@ describe('AMAProvider', () => {
   });
 
   it('adds event listener for "screenReaderChanged"', () => {
-    const spy = jest.spyOn(AccessibilityInfo, 'addEventListener');
+    const spy = jest
+      .spyOn(AccessibilityInfo, 'addEventListener')
+      .mockReturnValue({ remove: jest.fn() } as any);
 
     renderAMAProvider();
 
@@ -58,6 +62,10 @@ describe('AMAProvider', () => {
           if (name === eventName) {
             handler = callback;
           }
+
+          return {
+            remove: jest.fn(),
+          };
         });
 
       renderAMAProvider();

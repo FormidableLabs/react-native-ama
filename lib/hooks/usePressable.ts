@@ -5,15 +5,14 @@ import type {
   LayoutChangeEvent,
 } from 'react-native';
 
-import { accessibilityLabelChecker } from '../internal/checks/accessibilityLabelChecker';
-import { ERROR_STYLE } from '../internal/error.style';
+import { generateAccessibilityStateFromProp } from '../internal/generateAccessibilityStateFromProp';
 import { shouldIgnoreContrastCheckForDisabledElement } from '../internal/logger';
-import { useChecks } from '../internal/useChecks';
+import { useButtonChecks } from '../internal/useButtonChecks';
 import type { AMAAccessibilityState } from '../types/types';
 
 export type UsePressable<T> = Omit<
   T,
-  'accessibilityRole' | 'disabled' | 'accessibilityLabel' | 'accessibilityState'
+  'accessibilityRole' | 'accessibilityLabel'
 > &
   AMAAccessibilityState & {
     accessibilityRole: AccessibilityRole;
@@ -30,103 +29,29 @@ export const usePressable = <T>(
   props: Partial<UsePressable<T>>,
   children?: React.ReactNode,
 ): ReturnUsePressable<T> => {
-  const accessibilityState: AccessibilityState = React.useMemo(() => {
-    return {
-      disabled: props.disabled,
-      selected: props.selected,
-      checked: props.checked,
-      busy: props.busy,
-      expanded: props.expanded,
-    };
-  }, [
-    props.busy,
-    props.checked,
-    props.disabled,
-    props.expanded,
-    props.selected,
-  ]);
+  const accessibilityState = React.useMemo(
+    () => generateAccessibilityStateFromProp(props),
+    [props],
+  );
 
-  /* test-code */
-  const [minimumSizeFailed, setMinimumSizeFailed] = React.useState(false);
-  const { noUndefinedProperty, contrastChecker, checkMinimumSize } =
-    useChecks();
-
-  // @ts-ignore
-  let style = props.style || {};
-
+  /* block:start */
   const ignoreContrastCheck =
     props.disabled && shouldIgnoreContrastCheckForDisabledElement();
 
-  if (!ignoreContrastCheck) {
-    // @ts-ignore
-    const devStyle = {
-      ...noUndefinedProperty(
-        props,
-        'accessibilityRole',
-        'NO_ACCESSIBILITY_ROLE',
-      ),
-      ...noUndefinedProperty(
-        props,
-        'accessibilityLabel',
-        'NO_ACCESSIBILITY_LABEL',
-      ),
-      ...accessibilityLabelChecker(
-        props.accessibilityLabel,
-        // @ts-ignore
-        props.accessibilityHint,
-      ),
-      ...(minimumSizeFailed ? ERROR_STYLE : {}),
-    };
+  const { devStyle, onLayout } = useButtonChecks(
+    props,
+    children,
+    !ignoreContrastCheck,
+  );
 
-    if (typeof style === 'function') {
-      style = applyStyle(contrastChecker, style, devStyle, children);
-    } else {
-      style = {
-        ...style,
-        ...devStyle,
-        ...contrastChecker(style, children),
-      };
-    }
-  }
-
-  const checkSize = (event: LayoutChangeEvent) => {
-    const result = checkMinimumSize(event, children);
-
-    setMinimumSizeFailed('borderColor' in result);
-  };
-  /* end-test-code */
+  let style = devStyle;
+  /* block:end */
 
   return {
     accessibilityState,
-    /* test-code */
-    onLayout: checkSize,
+    /* block:start */
+    onLayout,
     style,
-    /* end-test-code */
+    /* block:end */
   };
 };
-
-function performChecks() {}
-function applyStyle(
-  contrastChecker: Function,
-  style: Function,
-  devStyle: Record<any, any>,
-  children: React.ReactNode,
-) {
-  return (...params: any) => {
-    const s = style(...params);
-    const contrastStyle = contrastChecker(s, children);
-
-    if (Array.isArray(s)) {
-      s.push(devStyle);
-      s.push(contrastStyle);
-
-      return s;
-    }
-
-    return {
-      ...s,
-      ...devStyle,
-      ...contrastStyle,
-    };
-  };
-}

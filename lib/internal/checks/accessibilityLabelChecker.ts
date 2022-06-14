@@ -1,9 +1,11 @@
-import { ERROR_STYLE } from '../error.style';
 import { isAccessibilityLabelAllowed, log } from '../logger';
+import type { CHECK_STATUS } from './types';
 
-export const accessibilityLabelChecker = (accessibilityLabel?: string) => {
+export const accessibilityLabelChecker = (
+  accessibilityLabel?: string,
+): CHECK_STATUS => {
   if (!accessibilityLabel) {
-    return {};
+    return 'SUCCEED';
   }
 
   const isAllowed = isAccessibilityLabelAllowed(accessibilityLabel);
@@ -15,10 +17,10 @@ export const accessibilityLabelChecker = (accessibilityLabel?: string) => {
       accessibilityLabel,
     );
 
-    return ERROR_STYLE;
+    return 'ERROR';
   }
 
-  return {};
+  return 'SUCCEED';
 };
 
 const isUpperCase = (string: string) => string.toUpperCase() === string;
