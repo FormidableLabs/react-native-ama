@@ -2,8 +2,7 @@ import * as React from 'react';
 import { Text as RNText, TextProps as RNTextProps } from 'react-native';
 
 import { useFocus } from '../hooks/useFocus';
-import { accessibilityLabelChecker } from '../internal/checks/accessibilityLabelChecker';
-import { uppercaseChecker } from '../internal/checks/uppercaseChecker';
+import { useChecks } from '../internal/useChecks';
 
 export type TextProps = RNTextProps &
   (
@@ -15,16 +14,25 @@ export type TextProps = RNTextProps &
   );
 
 export const Text: React.FC<TextProps> = ({ autofocus, ...rest }) => {
+  let style = rest.style || {};
   const textRef = React.useRef<RNText>(null);
 
   useFocus(autofocus ? textRef : undefined);
 
-  __DEV__ &&
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    React.useEffect(() => {
-      uppercaseChecker(rest.style, rest.accessibilityLabel);
-      accessibilityLabelChecker(rest.accessibilityLabel);
-    }, [rest, rest.accessibilityLabel, rest.style]);
+  /* block:start */
+  const { uppercaseChecker, accessibilityLabelChecker } = useChecks();
+  style = {
+    ...(style as Record<string, any>),
+    ...uppercaseChecker({
+      style,
+      extra: rest.children,
+      accessibilityLabel: rest.accessibilityLabel,
+    }),
+    ...accessibilityLabelChecker({
+      accessibilityLabel: rest.accessibilityLabel,
+    }),
+  };
+  /* block:end */
 
-  return <RNText ref={textRef} {...rest} />;
+  return <RNText ref={textRef} {...rest} style={style} />;
 };

@@ -2,23 +2,32 @@ import type { ReactNode } from 'react';
 import type { StyleProp } from 'react-native';
 
 import { getPropertyFromStyle } from '../getPropertyFromStyle';
-import { log } from '../logger';
+import type { LogParams } from '../logger';
 
-export const uppercaseChecker = (
-  style: StyleProp<Text> | undefined,
-  accessibilityLabel?: string,
-  component?: ReactNode,
-) => {
+export type UppercaseCheckerParams = {
+  style: StyleProp<Text> | undefined;
+  accessibilityLabel?: string;
+  extra?: ReactNode;
+};
+
+export const uppercaseChecker = ({
+  style,
+  extra,
+  accessibilityLabel,
+}: UppercaseCheckerParams): LogParams | null => {
   const textTransform = getPropertyFromStyle(style, 'textTransform');
   const isAccessibilityLabelEmpty = !accessibilityLabel?.trim();
 
   const fails = textTransform === 'uppercase' && isAccessibilityLabelEmpty;
 
   if (fails) {
-    log(
-      'UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL',
-      'accessibilityLabel cannot be empty when using `textTransform = uppercase`',
-      component,
-    );
+    return {
+      rule: 'UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL',
+      message:
+        'accessibilityLabel cannot be empty when using `textTransform = uppercase`',
+      extra: extra,
+    };
   }
+
+  return null;
 };

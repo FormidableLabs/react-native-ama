@@ -262,7 +262,4 @@ describe('TextInput', () => {
   });
 });
 
-jest.mock('../internal/checkFocusTrap');
-jest.mock('../internal/logger');
-jest.mock('../internal/noUndefinedProperty');
 jest.mock('../hooks/useFormField');

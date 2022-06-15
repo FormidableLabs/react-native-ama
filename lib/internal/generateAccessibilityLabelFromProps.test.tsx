@@ -49,5 +49,3 @@ describe('generateAccessibilityLabelFromProps', () => {
     ).toBe('This label is split in 3 parts');
   });
 });
-
-jest.mock('../internal/noUndefinedProperty');

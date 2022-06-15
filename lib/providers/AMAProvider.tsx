@@ -23,7 +23,7 @@ type AccessibilityEvents = Exclude<AccessibilityChangeEventName, 'change'>;
 type AccessibilityInfoEvents = {
   [key in AccessibilityEvents]: Exclude<
     keyof AMAContextValue,
-    'reactNavigationScreenOptions' | 'showError'
+    'reactNavigationScreenOptions' | 'trackError' | 'removeError' | '_idRefs'
   >;
 };
 
@@ -43,7 +43,7 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
   const handleAccessibilityInfoChanged = (
     key: Exclude<
       keyof AMAContextValue,
-      'reactNavigationScreenOptions' | 'showError'
+      'reactNavigationScreenOptions' | 'trackError' | '_idRefs' | 'removeError'
     >,
   ) => {
     return (newValue: boolean) => {
@@ -101,7 +101,29 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
   }, []);
 
   /* block:start */
-  const [isErrorVisible, setIsErrorVisible] = React.useState(false);
+  const [failedItems, setFailedItems] = React.useState<string[]>([]);
+
+  const trackError = (id: string) => {
+    if (failedItems.includes(id)) {
+      return;
+    }
+
+    setFailedItems(items => [...items, id]);
+
+    AccessibilityInfo.announceForAccessibility(
+      "One or more component didn't pass the accessibility check, please check the console for more info",
+    );
+  };
+
+  const removeError = (id: string) => {
+    setFailedItems(items => {
+      const index = items.indexOf(id);
+
+      items.splice(index);
+
+      return [...items];
+    });
+  };
   /* block:end */
 
   return (
@@ -110,11 +132,12 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
       <AMAContext.Provider
         value={{
           ...values,
-          showError: () => setIsErrorVisible(true),
+          trackError,
+          removeError,
         }}>
         <View style={{ flex: 1 }}>
           {children}
-          {isErrorVisible ? <AMAError /> : null}
+          {failedItems.length > 0 ? <AMAError /> : null}
         </View>
       </AMAContext.Provider>
     ) : (
@@ -136,7 +159,8 @@ export type AMAContextValue = {
     animation: 'default' | 'fade';
   };
   /* block:start */
-  showError: () => void;
+  trackError: (id: string) => void;
+  removeError: (id: string) => void;
   /* block:end */
 };
 
@@ -152,7 +176,8 @@ const DEFAULT_VALUES: AMAContextValue = {
     animation: 'default',
   },
   /* block:start */
-  showError: () => {},
+  trackError: (_: string) => {},
+  removeError: (_: string) => {},
   /* block:end */
 };
 
@@ -161,7 +186,7 @@ const AMAError = () => {
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityLabel="One or more component didn't pass the accessibility check"
+      accessibilityLabel="One or more components didn't pass the accessibility check"
       accessibilityHint="Please check the console for more info..."
       style={{
         paddingHorizontal: theme.padding.big,

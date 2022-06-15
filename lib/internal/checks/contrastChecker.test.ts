@@ -1,4 +1,3 @@
-import * as Logger from '../logger';
 import { contrastChecker } from './contrastChecker';
 
 beforeEach(() => {
@@ -7,11 +6,9 @@ beforeEach(() => {
 
 describe('Contrast Checker', () => {
   it('does not perform any check if the backgroundColor is not defined', () => {
-    const log = jest.spyOn(Logger, 'log');
-
-    contrastChecker(
-      [{ width: 100 }],
-      [
+    const result = contrastChecker({
+      style: [{ width: 100 }],
+      children: [
         { props: { style: { color: 'fff' } } },
         {
           props: {
@@ -19,57 +16,52 @@ describe('Contrast Checker', () => {
           },
         },
       ],
-    );
+    });
 
-    expect(log).not.toHaveBeenCalled();
+    expect(result).toBe(null);
   });
 
   describe('Fail', () => {
     it('logs the Fail result when at least one child fails all the levels', () => {
-      const log = jest.spyOn(Logger, 'log');
-
-      contrastChecker({ backgroundColor: '#000' }, [
-        { props: { style: { color: 'fff' } } },
-        {
-          props: {
-            style: { color: '#4a4a4a' },
+      const result = contrastChecker({
+        style: { backgroundColor: '#000' },
+        children: [
+          { props: { style: { color: 'fff' } } },
+          {
+            props: {
+              style: { color: '#4a4a4a' },
+            },
           },
+        ],
+      });
+
+      expect(result).toMatchObject([
+        {
+          extra: { props: { style: { color: '#4a4a4a' } } },
+          message:
+            '"background: #000 with foreground: #4a4a4a: " fails all the contrast check',
+          rule: 'CONTRAST_FAILED',
         },
       ]);
-
-      expect(log).toHaveBeenCalledWith(
-        'CONTRAST_FAILED',
-        '"background: #000 with foreground: #4a4a4a: " fails all the contrast check',
-        { props: { style: { color: '#4a4a4a' } } },
-      );
     });
 
     it('handles the styles passed as array', () => {
-      const log = jest.spyOn(Logger, 'log');
-
-      contrastChecker({ backgroundColor: '#000' }, [
-        { props: { style: { color: 'fff' } } },
-        {
-          props: {
-            style: [{ textTransform: 'uppercase' }, { color: '#4a4a4a' }],
+      const result = contrastChecker({
+        style: { backgroundColor: '#000' },
+        children: [
+          { props: { style: { color: 'fff' } } },
+          {
+            props: {
+              style: [{ textTransform: 'uppercase' }, { color: '#4a4a4a' }],
+            },
           },
-        },
-      ]);
+        ],
+      });
 
-      expect(log).toHaveBeenCalledWith(
-        'CONTRAST_FAILED',
-        '"background: #000 with foreground: #4a4a4a: " fails all the contrast check',
-        {
-          props: {
-            style: [{ textTransform: 'uppercase' }, { color: '#4a4a4a' }],
-          },
-        },
-      );
+      expect(result).toMatchObject({});
     });
 
     it('handles styles being an array', () => {
-      const log = jest.spyOn(Logger, 'log');
-
       contrastChecker(
         [{ backgroundColor: '#000' }],
         [
@@ -94,8 +86,6 @@ describe('Contrast Checker', () => {
     });
 
     it('handles nested children', () => {
-      const log = jest.spyOn(Logger, 'log');
-
       contrastChecker(
         [{ backgroundColor: '#000' }],
         [
@@ -129,8 +119,6 @@ describe('Contrast Checker', () => {
     });
 
     it('handles nested children up to the specified level', () => {
-      const log = jest.spyOn(Logger, 'log');
-
       contrastChecker(
         [{ backgroundColor: '#000' }],
         [
@@ -155,8 +143,6 @@ describe('Contrast Checker', () => {
           },
         ],
       );
-
-      expect(log).not.toHaveBeenCalled();
     });
   });
 
@@ -237,13 +223,6 @@ describe('Contrast Checker', () => {
       { props: { style: { color: '#757575' } } },
     );
   });
-});
-
-jest.mock('./logger', () => {
-  return {
-    log: jest.fn(),
-    getContrastCheckerMaxDepth: () => 2,
-  };
 });
 
 jest.mock('react', () => {

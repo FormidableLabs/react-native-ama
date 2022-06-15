@@ -38,13 +38,13 @@ export const usePressable = <T>(
   const ignoreContrastCheck =
     props.disabled && shouldIgnoreContrastCheckForDisabledElement();
 
-  const { devStyle, onLayout } = useButtonChecks(
+  const { debugStyle, onLayout } = useButtonChecks(
     props,
     children,
     !ignoreContrastCheck,
   );
 
-  let style = devStyle;
+  let style = debugStyle;
   /* block:end */
 
   return {

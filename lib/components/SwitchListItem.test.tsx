@@ -40,14 +40,7 @@ describe('SwitchListItem', () => {
         onStartShouldSetResponder={[Function]}
         style={
           Array [
-            Array [
-              Object {
-                "alignContent": "center",
-                "alignItems": "center",
-                "flexDirection": "row",
-                "width": "100%",
-              },
-            ],
+            Object {},
             Object {
               "minHeight": 44,
               "minWidth": 44,

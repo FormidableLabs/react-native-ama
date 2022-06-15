@@ -11,7 +11,7 @@ describe('accessibilityLabelChecker', () => {
     accessibilityLabel => {
       const logSpy = jest.spyOn(Logger, 'log');
 
-      accessibilityLabelChecker(accessibilityLabel);
+      accessibilityLabelChecker({ accessibilityLabel });
 
       expect(logSpy).toHaveBeenCalledWith(
         'UPPERCASE_ACCESSIBILITY_LABEL',

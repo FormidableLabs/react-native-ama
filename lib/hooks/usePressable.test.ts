@@ -1,4 +1,5 @@
 import { act, renderHook } from '@testing-library/react-hooks';
+import { waitFor } from '@testing-library/react-native';
 
 import { ERROR_STYLE } from '../internal/error.style';
 import * as UseChecks from '../internal/useChecks';
@@ -42,39 +43,42 @@ describe('usePressable', () => {
     let contrastChecker: jest.Mock;
     let checkMinimumSize: jest.Mock;
     let accessibilityLabelChecker: jest.Mock;
+    let uppercaseChecker: jest.Mock;
 
     beforeEach(function () {
       noUndefinedProperty = jest.fn();
       contrastChecker = jest.fn();
       checkMinimumSize = jest.fn();
       accessibilityLabelChecker = jest.fn();
+      uppercaseChecker = jest.fn();
 
       jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
         noUndefinedProperty,
         contrastChecker,
         checkMinimumSize,
         accessibilityLabelChecker,
-      });
+        uppercaseChecker,
+      } as any);
     });
 
     it('checks that the "accessibilityRole" property is not UNDEFINED', () => {
       renderHook(() => usePressable({}, {}));
 
-      expect(noUndefinedProperty).toHaveBeenCalledWith(
-        {},
-        'accessibilityRole',
-        'NO_ACCESSIBILITY_ROLE',
-      );
+      expect(noUndefinedProperty).toHaveBeenCalledWith({
+        properties: {},
+        property: 'accessibilityRole',
+        rule: 'NO_ACCESSIBILITY_ROLE',
+      });
     });
 
     it('checks that the "accessibilityLabel" property is not UNDEFINED', () => {
       renderHook(() => usePressable({}, {}));
 
-      expect(noUndefinedProperty).toHaveBeenCalledWith(
-        {},
-        'accessibilityLabel',
-        'NO_ACCESSIBILITY_LABEL',
-      );
+      expect(noUndefinedProperty).toHaveBeenCalledWith({
+        properties: {},
+        property: 'accessibilityLabel',
+        rule: 'NO_ACCESSIBILITY_LABEL',
+      });
     });
 
     it('performs a check on the accessibility label', () => {
@@ -164,7 +168,7 @@ describe('usePressable', () => {
       });
     });
 
-    it('applies the error style if the minimum size layout check fails', () => {
+    it('applies the error style if the minimum size layout check fails', async () => {
       const { result } = renderHook(() =>
         usePressable<any>({
           accessibilityRole: 'button',
@@ -185,10 +189,12 @@ describe('usePressable', () => {
         } as any);
       });
 
-      expect(result.current.style).toMatchObject({
-        color: 'brown',
-        ...ERROR_STYLE,
-      });
+      await waitFor(() =>
+        expect(result.current.style).toMatchObject({
+          color: 'brown',
+          ...ERROR_STYLE,
+        }),
+      );
     });
   });
 });

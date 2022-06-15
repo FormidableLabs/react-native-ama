@@ -1,4 +1,3 @@
-import { log } from './logger';
 import {
   NON_OVERRIDABLE_RULES,
   RULES_HELP,

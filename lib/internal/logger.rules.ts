@@ -8,8 +8,10 @@ export type Rule =
   | 'NO_ACCESSIBILITY_ROLE'
   | 'NO_ACCESSIBILITY_LABEL'
   | 'NO_FORM_LABEL'
-  | 'NO_KEYBOARD_TRAP';
-export type RuleValue = 'SHOULD_NOT' | 'MUST_NOT';
+  | 'NO_KEYBOARD_TRAP'
+  | 'NO_EXPANDED_CONTROL';
+
+export type RuleAction = 'SHOULD_NOT' | 'MUST_NOT' | 'MUST' | 'SHOULD';
 
 export const NON_OVERRIDABLE_RULES: Partial<Rule>[] = [
   'NO_ACCESSIBILITY_ROLE',
@@ -17,9 +19,10 @@ export const NON_OVERRIDABLE_RULES: Partial<Rule>[] = [
   'NO_KEYBOARD_TRAP',
   'NO_UNDEFINED',
   'NO_FORM_LABEL',
+  'NO_EXPANDED_CONTROL',
 ];
 
-export const LOGGER_RULES: Record<Rule, RuleValue> = {
+export const LOGGER_RULES: Record<Rule, RuleAction> = {
   CONTRAST_FAILED: 'MUST_NOT',
   CONTRAST_FAILED_AAA: 'SHOULD_NOT',
   MINIMUM_SIZE: 'MUST_NOT',
@@ -30,6 +33,7 @@ export const LOGGER_RULES: Record<Rule, RuleValue> = {
   NO_KEYBOARD_TRAP: 'MUST_NOT',
   NO_UNDEFINED: 'MUST_NOT',
   NO_FORM_LABEL: 'MUST_NOT',
+  NO_EXPANDED_CONTROL: 'MUST',
 };
 
 export const CONTRAST_CHECKER_MAX_DEPTH = 5;
@@ -65,4 +69,6 @@ export const SHELL_COLORS = {
   RED: '\x1b[31m',
   YELLOW: '\x1b[33m',
   RESET: '\x1b[0m',
+  BLUE: '\x1b[36m',
+  BG_BLUE: '\x1b[41m',
 };

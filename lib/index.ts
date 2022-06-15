@@ -11,6 +11,7 @@ export * from './components/TextInput';
 export * from './components/SwitchWrapper';
 export * from './components/SwitchListItem';
 export * from './components/HideChildrenFromAccessibilityTree';
+export * from './components/ExpandablePressable';
 
 // Hooks
 export * from './hooks/useFocus';

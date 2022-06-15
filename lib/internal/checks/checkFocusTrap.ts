@@ -11,12 +11,12 @@ export const checkFocusTrap = (
     const hasFocus = ref.current?.isFocused() === shouldHaveFocus;
 
     if (!hasFocus) {
-      log(
-        'NO_KEYBOARD_TRAP',
-        'The component specified did not receive the focus',
+      log({
+        rule: 'NO_KEYBOARD_TRAP',
+        message: 'The component specified did not receive the focus',
         // @ts-ignore
-        ref.current?._internalFiberInstanceHandleDEV?.memoizedProps,
-      );
+        extra: ref.current?._internalFiberInstanceHandleDEV?.memoizedProps,
+      });
     }
   }, 100);
 };

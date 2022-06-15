@@ -2,7 +2,7 @@ import type { CHECK_STATUS } from './checks/types';
 import {
   IGNORE_CONTRAST_FOR_DISABLED_ELEMENTS,
   Rule,
-  RuleValue,
+  RuleAction,
   SHELL_COLORS,
   canRuleBeOverridden,
 } from './logger.rules';
@@ -19,18 +19,36 @@ type OverrideRule = {
     | Partial<Rule>
     | 'CONTRAST_CHECKER_MAX_DEPTH'
     | 'IGNORE_CONTRAST_FOR_DISABLED_ELEMENTS',
-    RuleValue | number
+    RuleAction
   > | null;
   accessibilityLabelExceptions: string[];
 };
 
-export const log = (rule: Rule, message: string, extra?: any): CHECK_STATUS => {
+export type LogParams = {
+  rule: Rule;
+  message: string;
+  extra?: any;
+};
+
+export const getRuleAction = (rule: Rule): RuleAction => {
   const customRule = canRuleBeOverridden(rule)
     ? overrideRules?.rules?.[rule]
     : undefined;
-  const action = customRule || LOGGER_RULES[rule];
 
-  const formattedMessage = `${SHELL_COLORS.RED}❌ [AMA ${rule}]${SHELL_COLORS.RESET} - ${SHELL_COLORS.YELLOW}${message}${SHELL_COLORS.RESET}\n\n${RULES_HELP[rule]}\n\n`;
+  return customRule || LOGGER_RULES[rule];
+};
+
+type LogFailure = LogParams & {
+  action: RuleAction;
+};
+
+export const logFailure = ({
+  action,
+  rule,
+  message,
+  extra = '',
+}: LogFailure): CHECK_STATUS => {
+  const formattedMessage = `❌ ${SHELL_COLORS.BG_BLUE}[A.M.A]${SHELL_COLORS.RESET}: ${SHELL_COLORS.BLUE}${rule}${SHELL_COLORS.RESET} - ${SHELL_COLORS.YELLOW}${message}${SHELL_COLORS.RESET}\n\n${RULES_HELP[rule]}\n\n`;
 
   switch (action) {
     case 'MUST_NOT':

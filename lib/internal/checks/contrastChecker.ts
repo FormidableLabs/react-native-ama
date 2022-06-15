@@ -3,32 +3,36 @@ import type { StyleProp } from 'react-native';
 import { score } from 'wcag-color';
 
 import { getPropertyFromStyle } from '../getPropertyFromStyle';
-import { getContrastCheckerMaxDepth, log } from '../logger';
-import type { CHECK_STATUS } from './types';
+import { LogParams, getContrastCheckerMaxDepth } from '../logger';
 
 const MAX_DEPTH_LEVEL = getContrastCheckerMaxDepth();
 
-export const contrastChecker = (
-  style: StyleProp<any> | undefined | StyleProp<any>[],
-  children: React.ReactNode,
-): CHECK_STATUS => {
+export type ContrastCheckerParams = {
+  style: StyleProp<any> | undefined | StyleProp<any>[];
+  children: React.ReactNode;
+};
+
+export const contrastChecker = ({
+  style,
+  children,
+}: ContrastCheckerParams): LogParams[] | null => {
   const backgroundColor = getPropertyFromStyle(style, 'backgroundColor');
 
   if (backgroundColor === undefined) {
-    return 'SUCCEED';
+    return null;
   }
 
-  const hasFailed = checkContrastInChildren(backgroundColor, children, 1);
+  const failed = checkContrastInChildren(backgroundColor, children, 1);
 
-  return hasFailed ? 'ERROR' : 'SUCCEED';
+  return failed.length > 0 ? failed : null;
 };
 
 const checkContrastInChildren = (
   backgroundColor: string,
   children: React.ReactNode,
   depthLevel: number,
-) => {
-  let contrastFailed = false;
+): LogParams[] => {
+  let contrastFailed: LogParams[] = [];
 
   React.Children.forEach(children as any, (child: JSX.Element | undefined) => {
     const childStyle = child?.props?.style || {};
@@ -36,15 +40,15 @@ const checkContrastInChildren = (
       getPropertyFromStyle(childStyle, 'color') || child?.props?.stroke;
 
     if (color) {
-      const hasFailed = performContrastCheck(
+      const result = performContrastCheck(
         backgroundColor,
         color,
         child,
         childStyle,
       );
 
-      if (hasFailed) {
-        contrastFailed = hasFailed;
+      if (result) {
+        contrastFailed.push(result);
       }
     }
 
@@ -65,38 +69,38 @@ const performContrastCheck = (
   color: string,
   child: JSX.Element | undefined,
   childStyle: Record<string, any>,
-) => {
+): LogParams | null => {
   const testFailed = `background: ${backgroundColor} with foreground: ${color}: `;
   const result = getContrastScore(backgroundColor, color);
 
   switch (result) {
     case 'Fail':
-      log(
-        'CONTRAST_FAILED',
-        `"${testFailed}" fails all the contrast check`,
-        child,
-      );
-
-      return true;
+      return {
+        rule: 'CONTRAST_FAILED',
+        message: `"${testFailed}" fails all the contrast check`,
+        extra: child,
+      };
     case 'AA Large':
       if (
         isFontSizeLarge(childStyle.fontSize, childStyle.fontWeight === 'bold')
       ) {
-        return false;
+        return null;
       }
 
-      log(
-        'CONTRAST_FAILED',
-        `"${testFailed}" fails AA Normal Text, but ✅ passes AA Large Text`,
-        child,
-      );
-
-      return true;
+      return {
+        rule: 'CONTRAST_FAILED',
+        message: `"${testFailed}" fails AA Normal Text, but ✅ passes AA Large Text`,
+        extra: child,
+      };
     case 'AA':
-      log('CONTRAST_FAILED_AAA', `"${testFailed}" fails the AAA Level`, child);
+      return {
+        rule: 'CONTRAST_FAILED',
+        message: `"${testFailed}" fails the AAA Level`,
+        extra: child,
+      };
   }
 
-  return false;
+  return null;
 };
 
 const getContrastScore = (c1: string, c2: string) => {

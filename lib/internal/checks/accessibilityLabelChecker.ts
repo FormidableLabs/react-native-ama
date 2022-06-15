@@ -1,26 +1,27 @@
-import { isAccessibilityLabelAllowed, log } from '../logger';
-import type { CHECK_STATUS } from './types';
+import { LogParams, isAccessibilityLabelAllowed, log } from '../logger';
 
-export const accessibilityLabelChecker = (
-  accessibilityLabel?: string,
-): CHECK_STATUS => {
+export type AccessibilityLabelCheckerParams = {
+  accessibilityLabel?: string;
+};
+
+export const accessibilityLabelChecker = ({
+  accessibilityLabel,
+}: AccessibilityLabelCheckerParams = {}): LogParams | null => {
   if (!accessibilityLabel) {
-    return 'SUCCEED';
+    return null;
   }
 
   const isAllowed = isAccessibilityLabelAllowed(accessibilityLabel);
 
   if (!isAllowed && isUpperCase(accessibilityLabel)) {
-    log(
-      'UPPERCASE_ACCESSIBILITY_LABEL',
-      'The accessibilityLabel cannot be all CAPS',
-      accessibilityLabel,
-    );
-
-    return 'ERROR';
+    return {
+      rule: 'UPPERCASE_ACCESSIBILITY_LABEL',
+      message: 'The accessibilityLabel cannot be all CAPS',
+      extra: accessibilityLabel,
+    };
   }
 
-  return 'SUCCEED';
+  return null;
 };
 
 const isUpperCase = (string: string) => string.toUpperCase() === string;

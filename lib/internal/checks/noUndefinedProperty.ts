@@ -1,15 +1,23 @@
-import { log } from '../logger';
+import type { LogParams } from '../logger';
 import type { Rule } from '../logger.rules';
-import type { CHECK_STATUS } from './types';
 
-export const noUndefinedProperty = <T>(
-  properties: T,
-  property: keyof T,
-  rule: Rule = 'NO_UNDEFINED',
-): CHECK_STATUS => {
-  if (properties[property] !== undefined) {
-    return 'SUCCEED';
+export type NoUndefinedPropertyParams<T> = {
+  properties: T;
+  property: keyof T;
+  rule?: Rule;
+};
+
+export const noUndefinedProperty = <T>({
+  property,
+  properties,
+  rule = 'NO_UNDEFINED',
+}: NoUndefinedPropertyParams<T>): LogParams | null => {
+  if (properties?.[property] == undefined) {
+    return {
+      rule,
+      message: `The property "${property}" cannot be UNDEFINED`,
+    };
   }
 
-  return log(rule, `The property "${property}" cannot be UNDEFINED`);
+  return null;
 };

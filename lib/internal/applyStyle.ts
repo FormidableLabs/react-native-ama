@@ -1,28 +1,38 @@
 import type { ReactNode } from 'react';
 
-export function applyStyle(
-  style: Record<string, any> | Function,
-  devStyle: Record<any, any>,
-  children?: ReactNode,
-  contrastChecker?: Function,
-) {
+export function applyStyle({
+  style,
+  debugStyle,
+  children,
+  contrastCheckerCallback,
+}: {
+  style: Record<string, any> | Function;
+  debugStyle: Record<any, any>;
+  children?: ReactNode;
+  contrastCheckerCallback?: Function;
+}) {
   if (typeof style === 'function') {
-    return applyStyleFunction(style, devStyle, children, contrastChecker);
+    return applyStyleFunction(
+      style,
+      debugStyle,
+      children,
+      contrastCheckerCallback,
+    );
   }
 
-  const contrastCheckerStyle = contrastChecker
-    ? contrastChecker(style, children)
+  const contrastCheckerStyle = contrastCheckerCallback
+    ? contrastCheckerCallback(style, children)
     : {};
 
   if (Array.isArray(style)) {
-    style.push(devStyle);
+    style.push(debugStyle);
     style.push(contrastCheckerStyle);
 
     return style.filter(item => Object.keys(item).length > 0);
   } else {
     return {
       ...style,
-      ...devStyle,
+      ...debugStyle,
       ...contrastCheckerStyle,
     };
   }
@@ -30,16 +40,18 @@ export function applyStyle(
 
 function applyStyleFunction(
   style: Function,
-  devStyle: Record<any, any>,
+  debugStyle: Record<any, any>,
   children?: ReactNode,
-  contrastChecker?: Function,
+  contrastCheckerCallback?: Function,
 ) {
   return (...params: any) => {
     const s = style(...params);
-    const contrastStyle = contrastChecker ? contrastChecker(s, children) : {};
+    const contrastStyle = contrastCheckerCallback
+      ? contrastCheckerCallback(s, children)
+      : {};
 
     if (Array.isArray(s)) {
-      s.push(devStyle);
+      s.push(debugStyle);
       s.push(contrastStyle);
 
       return s;
@@ -47,7 +59,7 @@ function applyStyleFunction(
 
     return {
       ...s,
-      ...devStyle,
+      ...debugStyle,
       ...contrastStyle,
     };
   };
