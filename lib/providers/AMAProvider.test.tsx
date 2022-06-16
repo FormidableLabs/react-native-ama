@@ -124,6 +124,7 @@ describe('AMAProvider', () => {
       const removeMock = jest.fn();
       jest
         .spyOn(AccessibilityInfo, 'addEventListener')
+        // @ts-ignore
         .mockImplementation((name, _callback) => {
           return { remove: name === eventName ? removeMock : jest.fn() };
         });

@@ -67,7 +67,7 @@
     "@testing-library/react-hooks": "^8.0.0",
     "@testing-library/react-native": "^9.1.0",
     "@types/jest": "^26.0.0",
-    "@types/react": "17.0.46",
+    "@types/react": "17",
     "@types/react-native": "^0.67.8",
     "babel-plugin-transform-strip-block": "^0.0.5",
     "commitlint": "^11.0.0",
@@ -90,9 +90,9 @@
     "wcag-color": "^1.1.1"
   },
   "peerDependencies": {
-    "react": ">=16.13.1",
+    "react": ">=17.0.0",
     "react-native": ">=0.66",
-    "react-native-reanimated": "*"
+    "react-native-reanimated": ">=2.7"
   },
   "jest": {
     "preset": "react-native",

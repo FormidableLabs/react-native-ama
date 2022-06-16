@@ -5,6 +5,7 @@ import {
   AccessibilityInfo,
   AppState,
   AppStateStatus,
+  NativeEventSubscription,
   Platform,
   Pressable,
   Text,
@@ -75,14 +76,14 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
   };
 
   React.useEffect(() => {
-    const subscriptions = Object.entries(eventsMapping).map(
-      ([eventName, contextKey]) => {
-        return AccessibilityInfo.addEventListener(
-          eventName as AccessibilityEvents,
-          handleAccessibilityInfoChanged(contextKey),
-        );
-      },
-    );
+    const subscriptions: NativeEventSubscription[] = Object.entries(
+      eventsMapping,
+    ).map(([eventName, contextKey]) => {
+      return AccessibilityInfo.addEventListener(
+        eventName as AccessibilityEvents,
+        handleAccessibilityInfoChanged(contextKey),
+      );
+    });
 
     if (Platform.OS === 'android') {
       subscriptions.push(
@@ -136,8 +137,10 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
           removeError,
         }}>
         <View style={{ flex: 1 }}>
-          {children}
-          {failedItems.length > 0 ? <AMAError /> : null}
+          <>
+            {children}
+            {failedItems.length > 0 ? <AMAError /> : null}
+          </>
         </View>
       </AMAContext.Provider>
     ) : (

@@ -1,4 +1,3 @@
-import type { CHECK_STATUS } from './checks/types';
 import {
   IGNORE_CONTRAST_FOR_DISABLED_ELEMENTS,
   Rule,
@@ -41,6 +40,8 @@ export const getRuleAction = (rule: Rule): RuleAction => {
 type LogFailure = LogParams & {
   action: RuleAction;
 };
+
+type CHECK_STATUS = 'ERROR' | 'WARNING';
 
 export const logFailure = ({
   action,

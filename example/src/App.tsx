@@ -3,7 +3,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import type { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import React from 'react';
 import { AMAProvider, useAMAContext } from 'react-native-ama';
-import ErrorBoundary from 'react-native-error-boundary';
 
 import { BackButton } from './components/BackButton';
 import { Header } from './components/Header';
@@ -21,11 +20,9 @@ import type { RootStackParamList } from './types';
 
 const App = () => {
   return (
-    <ErrorBoundary>
-      <AMAProvider>
-        <AppNavigator />
-      </AMAProvider>
-    </ErrorBoundary>
+    <AMAProvider>
+      <AppNavigator />
+    </AMAProvider>
   );
 };
 

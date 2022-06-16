@@ -85,7 +85,7 @@ export const useChecks = () => {
 
   const noUndefinedProperty = <T>(params: NoUndefinedPropertyParams<T>) =>
     logResult(
-      `noUndefinedProperty ${params.property}`,
+      `noUndefinedProperty ${params.property as string}`,
       noUndefinedPropertyImplementation(params),
     );
 

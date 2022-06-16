@@ -15,7 +15,7 @@ export const noUndefinedProperty = <T>({
   if (properties?.[property] == null) {
     return {
       rule,
-      message: `The property "${property}" cannot be UNDEFINED`,
+      message: `The property "${property as string}" cannot be UNDEFINED`,
     };
   }
 

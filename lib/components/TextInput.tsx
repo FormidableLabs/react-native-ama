@@ -76,7 +76,13 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       props.onLayout?.(event);
     };
 
-    __DEV__ && noUndefinedProperty(props, 'label', 'NO_FORM_LABEL');
+    /*block:start*/
+    noUndefinedProperty({
+      properties: props,
+      property: 'label',
+      rule: 'NO_FORM_LABEL',
+    });
+    /*block:end*/
 
     return (
       <>

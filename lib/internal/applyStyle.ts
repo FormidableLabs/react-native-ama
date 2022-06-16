@@ -1,6 +1,6 @@
-import type { ContrastChecker } from 'lib/internal/checks/contrastChecker';
-import type { LogParams } from 'lib/internal/logger';
 import type { ReactNode } from 'react';
+
+import type { ContrastChecker } from '../internal/checks/contrastChecker';
 
 export function applyStyle({
   style,
@@ -11,7 +11,9 @@ export function applyStyle({
   style: Record<string, any> | Function;
   debugStyle: Record<any, any>;
   children?: ReactNode;
-  contrastCheckerCallback?: (_: ContrastChecker) => LogParams | null;
+  contrastCheckerCallback?:
+    | ((_: ContrastChecker) => Record<string, any>)
+    | undefined;
 }) {
   if (typeof style === 'function') {
     return applyStyleFunction(
@@ -44,7 +46,9 @@ function applyStyleFunction(
   style: Function,
   debugStyle: Record<any, any>,
   children?: ReactNode,
-  contrastCheckerCallback?: (_: ContrastChecker) => LogParams | null,
+  contrastCheckerCallback?:
+    | ((_: ContrastChecker) => Record<string, any>)
+    | undefined,
 ) {
   return (...params: any) => {
     const s = style(...params);

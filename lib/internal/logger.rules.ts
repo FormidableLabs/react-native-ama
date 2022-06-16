@@ -8,8 +8,7 @@ export type Rule =
   | 'NO_ACCESSIBILITY_ROLE'
   | 'NO_ACCESSIBILITY_LABEL'
   | 'NO_FORM_LABEL'
-  | 'NO_KEYBOARD_TRAP'
-  | 'NO_EXPANDED_CONTROL';
+  | 'NO_KEYBOARD_TRAP';
 
 export type RuleAction = 'SHOULD_NOT' | 'MUST_NOT' | 'MUST' | 'SHOULD';
 
@@ -19,7 +18,6 @@ export const NON_OVERRIDABLE_RULES: Partial<Rule>[] = [
   'NO_KEYBOARD_TRAP',
   'NO_UNDEFINED',
   'NO_FORM_LABEL',
-  'NO_EXPANDED_CONTROL',
 ];
 
 export const LOGGER_RULES: Record<Rule, RuleAction> = {
@@ -33,7 +31,6 @@ export const LOGGER_RULES: Record<Rule, RuleAction> = {
   NO_KEYBOARD_TRAP: 'MUST_NOT',
   NO_UNDEFINED: 'MUST_NOT',
   NO_FORM_LABEL: 'MUST_NOT',
-  NO_EXPANDED_CONTROL: 'MUST',
 };
 
 export const CONTRAST_CHECKER_MAX_DEPTH = 5;

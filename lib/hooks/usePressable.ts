@@ -19,7 +19,7 @@ export type UsePressable<T> = Omit<
     accessibilityLabel: string;
   };
 
-type ReturnUsePressable<T> = {
+type ReturnUsePressable = {
   accessibilityState: AccessibilityState;
   onLayout: (event: LayoutChangeEvent) => void;
   style: Record<string, any>;
@@ -28,7 +28,7 @@ type ReturnUsePressable<T> = {
 export const usePressable = <T>(
   props: Partial<UsePressable<T>>,
   children?: React.ReactNode,
-): ReturnUsePressable<T> => {
+): ReturnUsePressable => {
   const accessibilityState = React.useMemo(
     () => generateAccessibilityStateFromProp(props),
     [props],
@@ -36,6 +36,7 @@ export const usePressable = <T>(
 
   /* block:start */
   const ignoreContrastCheck =
+    // @ts-ignore
     props.disabled && shouldIgnoreContrastCheckForDisabledElement();
 
   const { debugStyle, onLayout } = useButtonChecks(
