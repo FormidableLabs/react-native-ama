@@ -8,6 +8,8 @@ export * from './components/TouchableOpacity';
 export * from './components/TouchableWithoutFeedback';
 export * from './components/Text';
 export * from './components/TextInput';
+export * from './components/FlatList';
+export * from './components/ListWrapper';
 export * from './components/SwitchWrapper';
 export * from './components/SwitchListItem';
 export * from './components/HideChildrenFromAccessibilityTree';

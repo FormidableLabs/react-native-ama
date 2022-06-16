@@ -7,6 +7,7 @@ import ErrorBoundary from 'react-native-error-boundary';
 
 import { BackButton } from './components/BackButton';
 import { Header } from './components/Header';
+import { FlatListScreen } from './screens/FlatList.screen';
 import { ExpandablePressableScreen } from './screens/ExpandablePressableScreen';
 import { FormScreen } from './screens/Form.screen';
 import { HomeScreen } from './screens/Home.screen';
@@ -107,6 +108,14 @@ const AppNavigator = () => {
           options={{
             headerLeft: () => <BackButton />,
             headerTitle: () => <Header title={'Form Demo'} autofocus />,
+          }}
+        />
+        <Stack.Screen
+          name="FlatList"
+          component={FlatListScreen}
+          options={{
+            headerLeft: () => <BackButton />,
+            headerTitle: () => <Header title={'FlatList Demo'} autofocus />,
           }}
         />
         <Stack.Screen
