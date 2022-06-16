@@ -152,22 +152,6 @@ describe('usePressable', () => {
       });
     });
 
-    it('applies the error style if the accessibilityLabel check fails', () => {
-      const { result } = renderHook(() =>
-        usePressable<any>({
-          accessibilityLabel: 'ALL UPPERCASE IS NO GOOD',
-          style: {
-            color: 'yellow',
-          },
-        }),
-      );
-
-      expect(result.current.style).toMatchObject({
-        color: 'yellow',
-        ...ERROR_STYLE,
-      });
-    });
-
     it('applies the error style if the minimum size layout check fails', async () => {
       const { result } = renderHook(() =>
         usePressable<any>({

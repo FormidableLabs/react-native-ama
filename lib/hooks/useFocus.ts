@@ -17,10 +17,12 @@ export const useFocus = (refComponent?: React.RefObject<any>) => {
     if (elementId) {
       AccessibilityInfo.setAccessibilityFocus(elementId);
       AccessibilityInfo.setAccessibilityFocus(elementId);
+      /* block:start */
     } else if (__DEV__) {
       console.warn(
-        `${SHELL_COLORS.BG_BLUE}AMA.${SHELL_COLORS.RESET} ${SHELL_COLORS.BLUE}useFocus${SHELL_COLORS.RESET}: ${SHELL_COLORS.YELLOW}Ref element not found${SHELL_COLORS.RESET}`,
+        `${SHELL_COLORS.BG_RED}AMA.${SHELL_COLORS.RESET} ${SHELL_COLORS.BLUE}useFocus${SHELL_COLORS.RESET}: ${SHELL_COLORS.YELLOW}Ref element not found${SHELL_COLORS.RESET}`,
       );
+      /* block:end */
     }
   };
 

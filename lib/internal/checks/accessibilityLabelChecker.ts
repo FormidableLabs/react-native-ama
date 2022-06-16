@@ -1,12 +1,12 @@
-import { LogParams, isAccessibilityLabelAllowed, log } from '../logger';
+import { LogParams, isAccessibilityLabelAllowed } from '../logger';
 
-export type AccessibilityLabelCheckerParams = {
+export type AccessibilityLabelChecker = {
   accessibilityLabel?: string;
 };
 
 export const accessibilityLabelChecker = ({
   accessibilityLabel,
-}: AccessibilityLabelCheckerParams = {}): LogParams | null => {
+}: AccessibilityLabelChecker = {}): LogParams | null => {
   if (!accessibilityLabel) {
     return null;
   }

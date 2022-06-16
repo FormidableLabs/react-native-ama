@@ -62,9 +62,9 @@ describe('Contrast Checker', () => {
     });
 
     it('handles styles being an array', () => {
-      contrastChecker(
-        [{ backgroundColor: '#000' }],
-        [
+      const result = contrastChecker({
+        style: [{ backgroundColor: '#000' }],
+        children: [
           { props: { style: { color: 'fff' } } },
           {
             props: {
@@ -72,23 +72,26 @@ describe('Contrast Checker', () => {
             },
           },
         ],
-      );
+      });
 
-      expect(log).toHaveBeenCalledWith(
-        'CONTRAST_FAILED',
-        '"background: #000 with foreground: #4a4a4a: " fails all the contrast check',
+      expect(result).toMatchObject([
         {
-          props: {
-            style: [{ textTransform: 'uppercase' }, { color: '#4a4a4a' }],
+          rule: 'CONTRAST_FAILED',
+          message:
+            '"background: #000 with foreground: #4a4a4a: " fails all the contrast check',
+          extra: {
+            props: {
+              style: [{ textTransform: 'uppercase' }, { color: '#4a4a4a' }],
+            },
           },
         },
-      );
+      ]);
     });
 
     it('handles nested children', () => {
-      contrastChecker(
-        [{ backgroundColor: '#000' }],
-        [
+      const result = contrastChecker({
+        style: [{ backgroundColor: '#000' }],
+        children: [
           {
             props: {
               style: { color: 'fff' },
@@ -105,23 +108,84 @@ describe('Contrast Checker', () => {
             },
           },
         ],
-      );
+      });
 
-      expect(log).toHaveBeenCalledWith(
-        'CONTRAST_FAILED',
-        '"background: #000 with foreground: #4a4a4a: " fails all the contrast check',
+      expect(result).toMatchObject([
         {
-          props: {
-            style: [{ textTransform: 'uppercase' }, { color: '#4a4a4a' }],
+          rule: 'CONTRAST_FAILED',
+          message:
+            '"background: #000 with foreground: #4a4a4a: " fails all the contrast check',
+          extra: {
+            props: {
+              style: [{ textTransform: 'uppercase' }, { color: '#4a4a4a' }],
+            },
           },
         },
-      );
+      ]);
+    });
+
+    it('returns all the failing children', () => {
+      const result = contrastChecker({
+        style: [{ backgroundColor: '#000' }],
+        children: [
+          {
+            props: {
+              style: { color: 'fff' },
+              children: [
+                {
+                  props: {
+                    style: [
+                      { textTransform: 'uppercase' },
+                      { color: '#4a4a4a' },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          {
+            props: {
+              style: [{ textTransform: 'uppercase' }, { color: '#4a4a4a' }],
+            },
+          },
+          { props: { style: { color: '#757575' } } },
+        ],
+      });
+
+      expect(result).toMatchObject([
+        {
+          rule: 'CONTRAST_FAILED',
+          message:
+            '"background: #000 with foreground: #4a4a4a: " fails all the contrast check',
+          extra: {
+            props: {
+              style: [{ textTransform: 'uppercase' }, { color: '#4a4a4a' }],
+            },
+          },
+        },
+        {
+          rule: 'CONTRAST_FAILED',
+          message:
+            '"background: #000 with foreground: #4a4a4a: " fails all the contrast check',
+          extra: {
+            props: {
+              style: [{ textTransform: 'uppercase' }, { color: '#4a4a4a' }],
+            },
+          },
+        },
+        {
+          rule: 'CONTRAST_FAILED_AAA',
+          message:
+            '"background: #000 with foreground: #757575: " fails the AAA Level',
+          extra: { props: { style: { color: '#757575' } } },
+        },
+      ]);
     });
 
     it('handles nested children up to the specified level', () => {
-      contrastChecker(
-        [{ backgroundColor: '#000' }],
-        [
+      contrastChecker({
+        style: [{ backgroundColor: '#000' }],
+        children: [
           {
             props: {
               style: { color: 'fff' },
@@ -142,86 +206,96 @@ describe('Contrast Checker', () => {
             },
           },
         ],
-      );
+      });
     });
   });
 
   describe('AA Large', () => {
-    it('logs the "AA Large" fail result when at least one child fails the AA Normal text level', () => {
-      const log = jest.spyOn(Logger, 'log');
-
-      contrastChecker({ backgroundColor: '#000' }, [
-        { props: { style: { color: '#6B6B6B' } } },
-        {
-          props: {
-            style: { color: '#fff' },
+    it('fails when one or more child fails the AA Normal text level', () => {
+      const result = contrastChecker({
+        style: { backgroundColor: '#000' },
+        children: [
+          { props: { style: { color: '#6B6B6B' } } },
+          {
+            props: {
+              style: { color: '#fff' },
+            },
           },
+        ],
+      });
+
+      expect(result).toMatchObject([
+        {
+          rule: 'CONTRAST_FAILED',
+          message:
+            '"background: #000 with foreground: #6B6B6B: " fails AA Normal Text, but ✅ passes AA Large Text',
+          extra: { props: { style: { color: '#6B6B6B' } } },
         },
       ]);
-
-      expect(log).toHaveBeenCalledWith(
-        'CONTRAST_FAILED',
-        '"background: #000 with foreground: #6B6B6B: " fails AA Normal Text, but ✅ passes AA Large Text',
-        { props: { style: { color: '#6B6B6B' } } },
-      );
     });
 
     it('passes the check if font size is at least 14pt and bold', () => {
-      const log = jest.spyOn(Logger, 'log');
-
-      contrastChecker({ backgroundColor: '#000' }, [
-        {
-          props: {
-            style: { color: '#6B6B6B', fontSize: 14, fontWeight: 'bold' },
+      const result = contrastChecker({
+        style: { backgroundColor: '#000' },
+        children: [
+          {
+            props: {
+              style: { color: '#6B6B6B', fontSize: 14, fontWeight: 'bold' },
+            },
           },
-        },
-        {
-          props: {
-            style: { color: '#fff' },
+          {
+            props: {
+              style: { color: '#fff' },
+            },
           },
-        },
-      ]);
+        ],
+      });
 
-      expect(log).not.toHaveBeenCalled();
+      expect(result).toBe(null);
     });
 
     it('passes the check if font size is at least 18pt', () => {
-      const log = jest.spyOn(Logger, 'log');
-
-      contrastChecker({ backgroundColor: '#000' }, [
-        {
-          props: {
-            style: { color: '#6B6B6B', fontSize: 18 },
+      const result = contrastChecker({
+        style: { backgroundColor: '#000' },
+        children: [
+          {
+            props: {
+              style: { color: '#6B6B6B', fontSize: 18 },
+            },
           },
-        },
+          {
+            props: {
+              style: { color: '#fff' },
+            },
+          },
+        ],
+      });
+
+      expect(result).toBe(null);
+    });
+  });
+
+  it('fails when one or more child fails the AAA text level', () => {
+    const result = contrastChecker({
+      style: { backgroundColor: '#000' },
+      children: [
+        { props: { style: { color: '#757575' } } },
         {
           props: {
             style: { color: '#fff' },
           },
         },
-      ]);
-
-      expect(log).not.toHaveBeenCalled();
+      ],
     });
-  });
 
-  it('logs the "AAA" fail result when at least one child fails the AAA text level', () => {
-    const log = jest.spyOn(Logger, 'log');
-
-    contrastChecker({ backgroundColor: '#000' }, [
-      { props: { style: { color: '#757575' } } },
+    expect(result).toMatchObject([
       {
-        props: {
-          style: { color: '#fff' },
-        },
+        rule: 'CONTRAST_FAILED_AAA',
+        message:
+          '"background: #000 with foreground: #757575: " fails the AAA Level',
+        extra: { props: { style: { color: '#757575' } } },
       },
     ]);
-
-    expect(log).toHaveBeenCalledWith(
-      'CONTRAST_FAILED_AAA',
-      '"background: #000 with foreground: #757575: " fails the AAA Level',
-      { props: { style: { color: '#757575' } } },
-    );
   });
 });
 

@@ -22,7 +22,7 @@ export type UsePressable<T> = Omit<
 type ReturnUsePressable<T> = {
   accessibilityState: AccessibilityState;
   onLayout: (event: LayoutChangeEvent) => void;
-  style: Pick<T, keyof T>;
+  style: Record<string, any>;
 };
 
 export const usePressable = <T>(

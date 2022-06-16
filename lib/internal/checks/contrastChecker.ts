@@ -7,7 +7,7 @@ import { LogParams, getContrastCheckerMaxDepth } from '../logger';
 
 const MAX_DEPTH_LEVEL = getContrastCheckerMaxDepth();
 
-export type ContrastCheckerParams = {
+export type ContrastChecker = {
   style: StyleProp<any> | undefined | StyleProp<any>[];
   children: React.ReactNode;
 };
@@ -15,7 +15,7 @@ export type ContrastCheckerParams = {
 export const contrastChecker = ({
   style,
   children,
-}: ContrastCheckerParams): LogParams[] | null => {
+}: ContrastChecker): LogParams[] | null => {
   const backgroundColor = getPropertyFromStyle(style, 'backgroundColor');
 
   if (backgroundColor === undefined) {
@@ -31,9 +31,8 @@ const checkContrastInChildren = (
   backgroundColor: string,
   children: React.ReactNode,
   depthLevel: number,
+  contrastFailed: LogParams[] = [],
 ): LogParams[] => {
-  let contrastFailed: LogParams[] = [];
-
   React.Children.forEach(children as any, (child: JSX.Element | undefined) => {
     const childStyle = child?.props?.style || {};
     const color =
@@ -57,6 +56,7 @@ const checkContrastInChildren = (
         backgroundColor,
         child.props.children,
         depthLevel + 1,
+        contrastFailed,
       );
     }
   });
@@ -94,7 +94,7 @@ const performContrastCheck = (
       };
     case 'AA':
       return {
-        rule: 'CONTRAST_FAILED',
+        rule: 'CONTRAST_FAILED_AAA',
         message: `"${testFailed}" fails the AAA Level`,
         extra: child,
       };

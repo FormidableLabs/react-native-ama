@@ -164,7 +164,9 @@ const ContrastCheckerFailing = () => {
           accessibilityRole="button"
           accessibilityLabel="This fails">
           <>
-            <Text style={failingStyle}>This fails</Text>
+            <Text style={failingStyle}>
+              `This fails {activeButton.toUpperCase()} level`
+            </Text>
           </>
         </Pressable>
       )}
@@ -224,7 +226,7 @@ const styles = StyleSheet.create({
     marginTop: theme.padding.normal,
   },
   failingText_all: {
-    color: '#5a5a5a',
+    color: '#525252',
   },
   failingText_aa: {
     color: '#c70000',

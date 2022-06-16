@@ -70,5 +70,5 @@ export const SHELL_COLORS = {
   YELLOW: '\x1b[33m',
   RESET: '\x1b[0m',
   BLUE: '\x1b[36m',
-  BG_BLUE: '\x1b[41m',
+  BG_RED: '\x1b[41m',
 };

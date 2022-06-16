@@ -12,7 +12,7 @@ export const noUndefinedProperty = <T>({
   properties,
   rule = 'NO_UNDEFINED',
 }: NoUndefinedPropertyParams<T>): LogParams | null => {
-  if (properties?.[property] == undefined) {
+  if (properties?.[property] == null) {
     return {
       rule,
       message: `The property "${property}" cannot be UNDEFINED`,

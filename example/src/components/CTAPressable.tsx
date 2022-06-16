@@ -82,6 +82,7 @@ function getButtonStyle({
 const styles = StyleSheet.create({
   button: {
     paddingVertical: theme.padding.normal,
+    paddingHorizontal: theme.padding.big,
     backgroundColor: theme.color.black,
     flex: 1,
     minHeight: 48,

@@ -1,4 +1,3 @@
-import * as Logger from '../logger';
 import { uppercaseChecker } from './uppercaseChecker';
 
 beforeEach(() => {
@@ -8,41 +7,36 @@ beforeEach(() => {
 describe('uppercaseChecked', () => {
   describe('Given the style has `textTransform = uppercase` property set', () => {
     it.each([null, undefined, '', ' '])(
-      'Then logs NO_UPPERCASE_TEXT error if no accessibilityLabel is provided',
+      'Then fails if no accessibilityLabel is provided',
       accessibilityLabel => {
-        const logSpy = jest.spyOn(Logger, 'log');
-
-        uppercaseChecker(
-          {
+        const result = uppercaseChecker({
+          style: {
             textTransform: 'uppercase',
           },
           // @ts-ignore
-          accessibilityLabel,
-          'COMPONENT',
-        );
+          accessibilityLabel: accessibilityLabel,
+          extra: 'COMPONENT',
+        });
 
-        expect(logSpy).toHaveBeenCalledWith(
-          'UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL',
-          'accessibilityLabel cannot be empty when using `textTransform = uppercase`',
-          'COMPONENT',
-        );
+        expect(result).toMatchObject({
+          rule: 'UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL',
+          message:
+            'accessibilityLabel cannot be empty when using `textTransform = uppercase`',
+          extra: 'COMPONENT',
+        });
       },
     );
 
-    it('Then does nothing if accessibilityLabel is not empty', () => {
-      const logSpy = jest.spyOn(Logger, 'log');
-
-      uppercaseChecker(
-        {
+    it('Succeed if accessibilityLabel is not empty', () => {
+      const result = uppercaseChecker({
+        style: {
           textTransform: 'uppercase',
         },
-        ' whatever',
-        'COMPONENT',
-      );
+        accessibilityLabel: ' whatever',
+        extra: 'COMPONENT',
+      });
 
-      expect(logSpy).not.toHaveBeenCalled();
+      expect(result).toBe(null);
     });
   });
 });
-
-jest.mock('./logger');

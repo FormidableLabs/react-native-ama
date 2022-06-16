@@ -14,18 +14,11 @@ describe('checkMinimumSize', () => {
   `(
     '$platform: logs the MINIMUM_SIZE error if the touchable area size is less than the recommended one',
     ({ platform, minimumSize, layoutSize }) => {
-      const logMock = jest.fn();
-      jest.doMock('./logger', () => {
-        return {
-          log: logMock,
-        };
-      });
-
       Platform.OS = platform;
 
       const { checkMinimumSize } = require('./checkMinimumSize');
 
-      checkMinimumSize({
+      const result = checkMinimumSize({
         nativeEvent: {
           layout: {
             width: layoutSize,
@@ -34,12 +27,10 @@ describe('checkMinimumSize', () => {
         },
       } as LayoutChangeEvent);
 
-      expect(logMock).toHaveBeenCalledWith(
-        'MINIMUM_SIZE',
-        `The touchable area must have a minimum size of ${minimumSize}x${minimumSize} found instead: ${layoutSize}x${layoutSize}`,
-      );
+      expect(result).toMatchObject({
+        rule: 'MINIMUM_SIZE',
+        message: `The touchable area must have a minimum size of ${minimumSize}x${minimumSize} found instead: ${layoutSize}x${layoutSize}`,
+      });
     },
   );
 });
-
-jest.mock('./logger');

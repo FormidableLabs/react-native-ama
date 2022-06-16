@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Animated, Dimensions, StyleSheet, View } from 'react-native';
 import { Pressable, Text, useFocus } from 'react-native-ama';
 import { useAccessibleAnimation } from 'react-native-ama';
@@ -113,23 +113,25 @@ export const ReduceMotionScreen = () => {
   return (
     <>
       <View style={styles.container}>
-        <CTAPressable
-          title="Test Animation 1"
-          onPress={playAnimation1}
-          importantForAccessibility={
-            overlayProgressValue === null ? 'yes' : 'no'
-          }
-          accessibilityElementsHidden={overlayProgressValue !== null}
-        />
-        <Spacer height="big" />
-        <CTAPressable
-          title="Test Animation 2"
-          onPress={playAnimation2}
-          importantForAccessibility={
-            overlayProgressValue === null ? 'yes' : 'no'
-          }
-          accessibilityElementsHidden={overlayProgressValue !== null}
-        />
+        <View style={styles.wrapper}>
+          <CTAPressable
+            title="Test Animation 1"
+            onPress={playAnimation1}
+            importantForAccessibility={
+              overlayProgressValue === null ? 'yes' : 'no'
+            }
+            accessibilityElementsHidden={overlayProgressValue !== null}
+          />
+          <Spacer height="big" />
+          <CTAPressable
+            title="Test Animation 2"
+            onPress={playAnimation2}
+            importantForAccessibility={
+              overlayProgressValue === null ? 'yes' : 'no'
+            }
+            accessibilityElementsHidden={overlayProgressValue !== null}
+          />
+        </View>
       </View>
       {overlayProgressValue ? (
         <Pressable
@@ -157,6 +159,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: theme.padding.big,
+  },
+  wrapper: {
+    height: 120,
   },
   overlay: {
     backgroundColor: 'rgba(0,0,0,0.5)',

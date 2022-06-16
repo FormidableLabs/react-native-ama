@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { checkFocusTrap } from '../internal/checks/checkFocusTrap';
+import { useChecks } from '../internal/useChecks';
 import { useForm } from '../providers/Form';
 import { useFocus } from './useFocus';
 
@@ -14,6 +14,10 @@ export const useFormField = ({
   const { refs, onSubmit } = useForm();
   const { setFocus } = useFocus();
   const fieldRef = React.useRef(ref);
+
+  /*block:start*/
+  const { checkFocusTrap } = useChecks();
+  /*block:end*/
 
   const getMyIndex = () => {
     const allRefs = refs!;
@@ -31,33 +35,39 @@ export const useFormField = ({
       return onSubmit();
     }
 
-    if (nextFormField) {
-      return setFocus(nextFormField.current);
-    }
-
     /**
      * Refs passed as prop have another ".current"
      */
-    const nextRef = allRefs[myIndex + 1];
+    const nextRef = nextFormField
+      ? { ref: nextFormField }
+      : allRefs[myIndex + 1];
     const nextRefElement = nextRef?.ref?.current?.current
       ? nextRef?.ref.current
       : nextRef?.ref;
 
     const callFocus =
-      nextRefElement?.current?.focus && nextRef.hasFocusCallback;
+      // @ts-ignore
+      nextRefElement?.current?.focus && nextRef?.hasFocusCallback;
 
     if (callFocus) {
       nextRefElement.current?.focus();
 
-      __DEV__ && checkFocusTrap(nextRefElement, true);
+      /*block:start*/
+      if (nextRefElement) {
+        checkFocusTrap({ ref: nextRefElement, shouldHaveFocus: true });
+      }
+      /*block:end*/
     } else if (nextRefElement.current) {
       setFocus(nextRefElement.current);
     }
 
     const currentRef = allRefs[myIndex];
-    if (currentRef.hasFocusCallback && __DEV__) {
-      checkFocusTrap(currentRef.ref.current, false);
+
+    /*block:start*/
+    if (currentRef.hasFocusCallback) {
+      checkFocusTrap({ ref: currentRef.ref.current, shouldHaveFocus: false });
     }
+    /*block:end*/
   };
 
   const isLastField = () => {

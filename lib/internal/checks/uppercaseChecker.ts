@@ -4,7 +4,7 @@ import type { StyleProp } from 'react-native';
 import { getPropertyFromStyle } from '../getPropertyFromStyle';
 import type { LogParams } from '../logger';
 
-export type UppercaseCheckerParams = {
+export type UppercaseChecker = {
   style: StyleProp<Text> | undefined;
   accessibilityLabel?: string;
   extra?: ReactNode;
@@ -14,7 +14,7 @@ export const uppercaseChecker = ({
   style,
   extra,
   accessibilityLabel,
-}: UppercaseCheckerParams): LogParams | null => {
+}: UppercaseChecker): LogParams | null => {
   const textTransform = getPropertyFromStyle(style, 'textTransform');
   const isAccessibilityLabelEmpty = !accessibilityLabel?.trim();
 

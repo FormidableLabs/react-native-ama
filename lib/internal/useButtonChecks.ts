@@ -78,7 +78,6 @@ export const useButtonChecks = (
 
     const result = checkMinimumSize(event);
 
-    console.info({ result });
     setMinimumSizeFailed(Object.keys(result).length > 0);
   };
 

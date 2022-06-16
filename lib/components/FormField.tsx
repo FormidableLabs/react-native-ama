@@ -6,9 +6,7 @@ import {
 
 import { useFormField } from '../hooks/useFormField';
 
-type FormFieldProps = TouchableWithoutFeedbackProps & {
-  children: React.ReactNode;
-};
+type FormFieldProps = TouchableWithoutFeedbackProps;
 
 const FormFieldBase: React.FC<FormFieldProps> = ({ children, ...props }) => {
   const viewRef = React.useRef<React.ElementRef<

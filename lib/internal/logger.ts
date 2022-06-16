@@ -48,7 +48,7 @@ export const logFailure = ({
   message,
   extra = '',
 }: LogFailure): CHECK_STATUS => {
-  const formattedMessage = `❌ ${SHELL_COLORS.BG_BLUE}[A.M.A]${SHELL_COLORS.RESET}: ${SHELL_COLORS.BLUE}${rule}${SHELL_COLORS.RESET} - ${SHELL_COLORS.YELLOW}${message}${SHELL_COLORS.RESET}\n\n${RULES_HELP[rule]}\n\n`;
+  const formattedMessage = `❌ ${SHELL_COLORS.BG_RED}[ AMA ]${SHELL_COLORS.RESET}: ${SHELL_COLORS.BLUE}${rule}${SHELL_COLORS.RESET} - ${SHELL_COLORS.YELLOW}${message}${SHELL_COLORS.RESET}\n\n${RULES_HELP[rule]}\n\n`;
 
   switch (action) {
     case 'MUST_NOT':

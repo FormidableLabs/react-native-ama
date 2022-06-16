@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import * as React from 'react';
 import {
   AccessibilityChangeEventName,
@@ -10,7 +11,6 @@ import {
   View,
 } from 'react-native';
 
-import { theme } from '../../example/src/theme';
 import { RED } from '../internal/error.style';
 import { areAnimationsEnabled } from '../modules/AMAAnimationsStatusModule';
 
@@ -181,7 +181,7 @@ const DEFAULT_VALUES: AMAContextValue = {
   /* block:end */
 };
 
-/* test-code */
+/* block:start */
 const AMAError = () => {
   return (
     <Pressable
@@ -189,9 +189,9 @@ const AMAError = () => {
       accessibilityLabel="One or more components didn't pass the accessibility check"
       accessibilityHint="Please check the console for more info..."
       style={{
-        paddingHorizontal: theme.padding.big,
-        paddingTop: theme.padding.big,
-        paddingBottom: theme.padding.big * 2,
+        paddingHorizontal: 24,
+        paddingTop: 24,
+        paddingBottom: 48,
         backgroundColor: RED,
       }}>
       <View accessible={true}>

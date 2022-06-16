@@ -1,16 +1,20 @@
-import type { UppercaseCheckerParams } from 'lib/internal/checks/uppercaseChecker';
 import * as React from 'react';
 import { InteractionManager, LayoutChangeEvent } from 'react-native';
 
+import {
+  CheckFocusTrap,
+  checkFocusTrap as checkFocusTrapImplementation,
+} from '../internal/checks/checkFocusTrap';
+import type { UppercaseChecker } from '../internal/checks/uppercaseChecker';
 import { LogParams, getRuleAction, logFailure } from '../internal/logger';
 import { useAMAContext } from '../providers/AMAProvider';
 import {
-  AccessibilityLabelCheckerParams,
+  AccessibilityLabelChecker,
   accessibilityLabelChecker as accessibilityLabelCheckerImplementation,
 } from './checks/accessibilityLabelChecker';
 import { checkMinimumSize as checkMinimumSizeImplementation } from './checks/checkMinimumSize';
 import {
-  ContrastCheckerParams,
+  ContrastChecker,
   contrastChecker as contrastCheckerImplementation,
 } from './checks/contrastChecker';
 import {
@@ -39,7 +43,6 @@ export const useChecks = () => {
 
     if (result === null) {
       if (index >= 0 && hasErrors.current) {
-        console.info('fixed');
         failedTests.current.splice(index);
 
         hasErrors.current = false;
@@ -60,6 +63,8 @@ export const useChecks = () => {
       const action = getRuleAction(logParam.rule);
       const hasFailed = action === 'MUST_NOT';
 
+      logFailure({ action, ...logParam });
+
       if (!hasFailed) {
         return;
       } else if (hasFailed && index >= 0) {
@@ -73,8 +78,6 @@ export const useChecks = () => {
       });
 
       hasErrors.current = true;
-
-      logFailure({ action, ...logParam });
     });
 
     return hasErrors.current ? ERROR_STYLE : {};
@@ -86,7 +89,7 @@ export const useChecks = () => {
       noUndefinedPropertyImplementation(params),
     );
 
-  const contrastChecker = (params: ContrastCheckerParams) =>
+  const contrastChecker = (params: ContrastChecker) =>
     logResult('contrastChecker', contrastCheckerImplementation(params));
 
   const checkMinimumSize = (params: LayoutChangeEvent) => {
@@ -96,14 +99,20 @@ export const useChecks = () => {
     );
   };
 
-  const accessibilityLabelChecker = (params: AccessibilityLabelCheckerParams) =>
+  const accessibilityLabelChecker = (params: AccessibilityLabelChecker) =>
     logResult(
       'accessibilityLabelChecker',
       accessibilityLabelCheckerImplementation(params),
     );
 
-  const uppercaseChecker = (params: UppercaseCheckerParams) =>
+  const uppercaseChecker = (params: UppercaseChecker) =>
     logResult('uppercaseChecker', uppercaseCheckerImplementation(params));
+
+  const checkFocusTrap = (params: CheckFocusTrap) => {
+    checkFocusTrapImplementation(params).then(result => {
+      logResult('checkFocusTrap', result);
+    });
+  };
 
   return {
     logResult,
@@ -112,5 +121,6 @@ export const useChecks = () => {
     checkMinimumSize,
     accessibilityLabelChecker,
     uppercaseChecker,
+    checkFocusTrap,
   };
 };
