@@ -7,8 +7,8 @@ import ErrorBoundary from 'react-native-error-boundary';
 
 import { BackButton } from './components/BackButton';
 import { Header } from './components/Header';
-import { FlatListScreen } from './screens/FlatList.screen';
 import { ExpandablePressableScreen } from './screens/ExpandablePressableScreen';
+import { FlatListScreen } from './screens/FlatList.screen';
 import { FormScreen } from './screens/Form.screen';
 import { HomeScreen } from './screens/Home.screen';
 import { PressableScreen } from './screens/Pressable.screen';
