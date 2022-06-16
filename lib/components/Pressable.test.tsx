@@ -39,6 +39,7 @@ describe('AMA Pressable', () => {
         accessibilityRole="button"
         accessible={true}
         another="property"
+        collapsable={false}
         focusable={true}
         onBlur={[Function]}
         onClick={[Function]}

@@ -16,7 +16,10 @@ describe('generateAccessibilityLabelFromProps', () => {
       generateAccessibilityLabelFromProps({});
     } catch {}
 
-    expect(noUndefined).toHaveBeenCalledWith({}, 'label');
+    expect(noUndefined).toHaveBeenCalledWith({
+      properties: {},
+      property: 'label',
+    });
   });
 
   it('returns the accessibilityLabel if provided', () => {

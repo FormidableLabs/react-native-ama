@@ -55,12 +55,9 @@ describe('TextInput', () => {
         </Text>,
         <TextInput
           accessibilityLabel="Label"
-          allowFontScaling={true}
           onLayout={[Function]}
           onSubmitEditing={[Function]}
-          rejectResponderTermination={true}
           returnKeyType="done"
-          underlineColorAndroid="transparent"
         />,
       ]
     `);
@@ -79,12 +76,9 @@ describe('TextInput', () => {
       Array [
         <TextInput
           accessibilityLabel=" Label after"
-          allowFontScaling={true}
           onLayout={[Function]}
           onSubmitEditing={[Function]}
-          rejectResponderTermination={true}
           returnKeyType="done"
-          underlineColorAndroid="transparent"
         />,
         <Text
           accessibilityElementsHidden={true}

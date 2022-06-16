@@ -23,11 +23,6 @@ describe('SwitchListItem', () => {
       <View
         accessibilityLabel="Label"
         accessibilityRole="switch"
-        accessibilityState={
-          Object {
-            "checked": false,
-          }
-        }
         accessible={true}
         focusable={false}
         onClick={[Function]}
@@ -40,7 +35,14 @@ describe('SwitchListItem', () => {
         onStartShouldSetResponder={[Function]}
         style={
           Array [
-            Object {},
+            Array [
+              Object {
+                "alignContent": "center",
+                "alignItems": "center",
+                "flexDirection": "row",
+                "width": "100%",
+              },
+            ],
             Object {
               "minHeight": 44,
               "minWidth": 44,
