@@ -17,7 +17,7 @@ const FormFieldBase: React.FC<FormFieldProps> = ({ children, ...props }) => {
 
   return (
     <TouchableWithoutFeedback {...props} ref={viewRef}>
-      {children}
+      <>{children}</>
     </TouchableWithoutFeedback>
   );
 };

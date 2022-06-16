@@ -9,4 +9,8 @@ export type RootStackParamList = {
   Form: undefined;
   FlatList: undefined;
   ExpandablePressable: undefined;
+  FlatListDemo: {
+    type: 'dynamic' | 'static';
+    title: string;
+  };
 };

@@ -1,5 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { waitFor } from '@testing-library/react-native';
+import { checkFocusTrap } from 'lib/internal/checks/checkFocusTrap';
 
 import * as UseChecks from '../internal/useChecks';
 import * as Form from '../providers/Form';
@@ -98,7 +99,7 @@ describe('useFormField', () => {
         let checkFocusTrap: jest.Mock;
 
         beforeEach(function () {
-          checkFocusTrap = jest.fn();
+          checkFocusTrap = jest.fn().mockResolvedValue(null);
 
           jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
             checkFocusTrap,
@@ -107,7 +108,7 @@ describe('useFormField', () => {
 
         it('checks only against the current field if next one does not have the focus callback', async () => {
           const focus = jest.fn();
-          const ref = { current: { focus } };
+          const ref = { current: { focus, isFocused: jest.fn() } };
 
           const { result } = renderHook(() => {
             const first = useFormField({
@@ -135,7 +136,7 @@ describe('useFormField', () => {
 
         it('checks that next field has the focus if it has the focus callback', async () => {
           const focus = jest.fn();
-          const ref = { current: { focus } };
+          const ref = { current: { focus, isFocused: jest.fn() } };
 
           const { result } = renderHook(() => {
             const first = useFormField({
@@ -153,7 +154,12 @@ describe('useFormField', () => {
 
           await waitFor(() =>
             expect(checkFocusTrap).toHaveBeenCalledWith({
-              ref: { current: { focus: expect.any(Function) } },
+              ref: {
+                current: {
+                  focus: expect.any(Function),
+                  isFocused: expect.any(Function),
+                },
+              },
               shouldHaveFocus: true,
             }),
           );
@@ -196,3 +202,8 @@ function mockUseFocus() {
 }
 
 jest.mock('./useFocus', () => mockUseFocus());
+jest.mock('../internal/checks/checkFocusTrap', () => {
+  return {
+    checkFocusTrap: jest.fn().mockResolvedValue(null),
+  };
+});

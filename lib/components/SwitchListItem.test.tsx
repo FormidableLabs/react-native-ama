@@ -6,6 +6,8 @@ import { SwitchListItem } from './SwitchListItem';
 
 beforeEach(() => {
   jest.clearAllMocks();
+
+  jest.spyOn(console, 'error').mockImplementation();
 });
 
 describe('SwitchListItem', () => {
@@ -23,8 +25,13 @@ describe('SwitchListItem', () => {
       <View
         accessibilityLabel="Label"
         accessibilityRole="switch"
+        accessibilityState={
+          Object {
+            "checked": false,
+          }
+        }
         accessible={true}
-        focusable={false}
+        focusable={true}
         onClick={[Function]}
         onLayout={[Function]}
         onResponderGrant={[Function]}
@@ -77,7 +84,7 @@ describe('SwitchListItem', () => {
     `);
   });
 
-  it('hides the children fro mthe accessibilityTree', () => {
+  it('hides the children from the accessibilityTree', () => {
     const { getByTestId } = render(
       <SwitchListItem
         label={<Text>Label</Text>}

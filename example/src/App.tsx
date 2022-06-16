@@ -8,6 +8,7 @@ import { BackButton } from './components/BackButton';
 import { Header } from './components/Header';
 import { ExpandablePressableScreen } from './screens/ExpandablePressableScreen';
 import { FlatListScreen } from './screens/FlatList.screen';
+import { FlatListDemo, FlatListDemoHeader } from './screens/FlatListDemo';
 import { FormScreen } from './screens/Form.screen';
 import { HomeScreen } from './screens/Home.screen';
 import { PressableScreen } from './screens/Pressable.screen';
@@ -123,6 +124,14 @@ const AppNavigator = () => {
             headerTitle: () => (
               <Header title={'ExpandablePressable Demo'} autofocus />
             ),
+          }}
+        />
+        <Stack.Screen
+          name="FlatListDemo"
+          component={FlatListDemo}
+          options={{
+            headerLeft: () => <BackButton />,
+            headerTitle: () => <FlatListDemoHeader />,
           }}
         />
       </Stack.Navigator>

@@ -7,7 +7,7 @@ import {
 
 import { ListWrapper } from './ListWrapper';
 
-type FlatListProps<T> = RNFlatListProps<T> &
+export type FlatListProps<T> = RNFlatListProps<T> &
   (
     | ({
         listType: 'static';
@@ -27,6 +27,7 @@ type DynamicFlatListProps = {
   accessibilitySingularMessage: string;
   accessibilityPluralMessage: string;
   isPlural?: (count: number) => boolean;
+  columnsCount?: number;
 };
 
 const DynamicFlatList = React.forwardRef<
@@ -39,6 +40,7 @@ const DynamicFlatList = React.forwardRef<
       accessibilitySingularMessage,
       accessibilityPluralMessage,
       isPlural = simpleIsPlural,
+      columnsCount = 1,
       ...rest
     },
     ref,
@@ -79,7 +81,13 @@ const DynamicFlatList = React.forwardRef<
       isPlural,
     ]);
 
-    return <RNFlatList data={data} {...rest} ref={ref} />;
+    return (
+      <ListWrapper
+        rowsCount={lastItemsCount.current}
+        columnsCount={columnsCount}>
+        <RNFlatList data={data} {...rest} ref={ref} />
+      </ListWrapper>
+    );
   },
 );
 
