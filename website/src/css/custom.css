@@ -95,3 +95,8 @@
     margin-left: 12px;
     clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
 }
+
+li .menu__list .menu__link--sublist-caret {
+    font-weight: bold;
+    font-size: 18px;
+}

@@ -1,0 +1,26 @@
+import { TalkBackList } from '@site/src/components';
+
+# StaticFlatList
+
+StaticFlatList is an extension of the React Native FlatList component [focused on accessibility].
+
+```jsx
+import { StaticFlatList } from 'react-native-ama';
+
+<StaticFlatList
+  data={items}
+  renderItem={renderItem}
+  keyExtractor={item => item.id}
+/>;
+```
+
+## Accessibility Improvements
+
+- On `Android` allows TalkBack to announce **in list**/**out list** or **in grid**/**out of grid**
+
+### TalkBack
+
+<TalkBackList />
+
+To provide this accessibility feature AMA wraps the list in the custom native
+component: [ListWrapper](/docs/components/collections/ListWrapper).

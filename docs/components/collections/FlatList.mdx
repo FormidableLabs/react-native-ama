@@ -1,3 +1,5 @@
+import { TalkBackList } from '@site/src/components';
+
 # FlatList
 
 FlatList is an extension of the [React Native FlatList](https://reactnative.dev/docs/flatlist) component, [focused on accessibility](#accessibility-improvements).
@@ -5,14 +7,14 @@ FlatList is an extension of the [React Native FlatList](https://reactnative.dev/
 ```jsx
 import { FlatList } from 'react-native-ama';
 
- <FlatList
-    data={items}
-    renderItem={renderItem}
-    keyExtractor={item => item.id}
-    listType="dynamic"
-    accessibilitySingularMessage="%count% item found"
-    accessibilityPluralMessage="%count% items found"
-/>
+<FlatList
+  data={items}
+  renderItem={renderItem}
+  keyExtractor={item => item.id}
+  listType="dynamic"
+  accessibilitySingularMessage="%count% item found"
+  accessibilityPluralMessage="%count% items found"
+/>;
 ```
 
 ## Accessibility Improvements
@@ -22,8 +24,7 @@ import { FlatList } from 'react-native-ama';
 
 ### TalkBack
 
-With a native app, TalkBack, to announce when the user focuses or leaves a list for the first time. This info is additionally provided as **in list** (or **in grid**), and **out of list** (or **out of the grid**).
-This behaviour is missing in ReactNative as the FlatList uses a ScrollView instead of the native [RecyclerView](https://developer.android.com/guide/topics/ui/layout/recyclerview) one.
+<TalkBackList />
 
 To provide this accessibility feature AMA wraps the list in the custom native component: [ListWrapper](/docs/components/collections/ListWrapper).
 
@@ -36,7 +37,6 @@ A dynamic list must announce the number of items displayed if they change due to
 ### `listType`
 
 | Value   | Description                    |
-|---------|--------------------------------|
+| ------- | ------------------------------ |
 | dynamic | Renders a [DynamicFlatList](/) |
 | static  | Renders a [StaticFlatList](/)  |
-

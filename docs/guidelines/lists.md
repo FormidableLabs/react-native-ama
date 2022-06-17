@@ -7,3 +7,10 @@ If a list is filtered as a result of any UI interaction the screen reader **must
 For example, if a search box updates the list a list while the user is typing, the screen reader **must** read how many items we are displaying after applying the filter, if the number is different from the total list of items. Same if a list is filtered because we used a filter via a button.
 
 If we fail to do so we force the user to scroll all the time to the list and back to know what's going on
+
+## Android
+
+With a native app, TalkBack, to announce when the user focuses or leaves a list for the first time. This info is additionally provided as in list (or in grid), and out of list (or out of the grid), according to the fact that the list has one or more columns.
+
+A React Native app must provide the same experience to the screen reader users. The FlatList provided by AMA already provides this out of the box.
+If the List you're using does not provide this kind of experience, you can wrap your list inside the [ListWrapper](/docs/components/collections/ListWrapper) component and specify the number of rows and columns to fix this issue.
