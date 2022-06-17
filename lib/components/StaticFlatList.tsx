@@ -1,21 +1,18 @@
 import React from 'react';
-import {
-  FlatList as RNFlatList,
-  FlatListProps as RNFlatListProps,
-} from 'react-native';
+import { FlatList, FlatListProps } from 'react-native';
 
 import { ListWrapper } from './ListWrapper';
 
 export type StaticFlatListProps = {
   rowsCount?: number;
-  columnsCount?: number;
+  numColumns?: number;
 };
 
 export const StaticFlatList = React.forwardRef<
-  RNFlatList,
-  RNFlatListProps<any> & StaticFlatListProps
->(({ data, columnsCount, rowsCount, ...rest }, ref) => {
-  const columns = columnsCount || 1;
+  FlatList,
+  FlatListProps<any> & StaticFlatListProps
+>(({ data, numColumns, rowsCount, ...rest }, ref) => {
+  const columns = numColumns || 1;
 
   const rows = React.useMemo(() => {
     if (rowsCount) {
@@ -29,7 +26,7 @@ export const StaticFlatList = React.forwardRef<
 
   return (
     <ListWrapper rowsCount={rows} columnsCount={columns}>
-      <RNFlatList data={data} {...rest} ref={ref} />
+      <FlatList data={data} {...rest} ref={ref} />
     </ListWrapper>
   );
 });

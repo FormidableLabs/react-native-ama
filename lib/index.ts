@@ -25,6 +25,8 @@ export * from './hooks/useReanimatedTiming';
 export * from './hooks/useFormField';
 export * from './hooks/useSwitch';
 export * from './hooks/usePressable';
+export * from './hooks/useDynamicList';
+export * from './hooks/useExpandable';
 
 // Types
 export * from './types/types';

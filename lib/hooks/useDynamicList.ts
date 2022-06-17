@@ -3,21 +3,21 @@ import { AccessibilityInfo } from 'react-native';
 
 import { useChecks } from '../internal/useChecks';
 
-export type UseDynamicFlatList = {
-  data: any[];
+export type UseDynamicList = {
+  data: readonly any[];
   accessibilitySingularMessage: string;
   accessibilityPluralMessage: string;
   isPlural?: (count: number) => boolean;
-  columns?: number;
+  numColumns?: number;
 };
 
-export const useDynamicFlatList = ({
+export const useDynamicList = ({
   data,
   accessibilitySingularMessage,
   accessibilityPluralMessage,
   isPlural = simpleIsPlural,
-  columns = 1,
-}: UseDynamicFlatList) => {
+  numColumns = 1,
+}: UseDynamicList) => {
   const isFirstRender = React.useRef(true);
   const initialCount = React.useRef(data?.length);
   const lastItemsCount = React.useRef<null | number>(null);
@@ -78,8 +78,8 @@ export const useDynamicFlatList = ({
   const rowsCount = lastItemsCount.current || initialCount.current || 0;
 
   return {
-    rowsCount,
-    columnsCount: columns,
+    rowsCount: rowsCount / numColumns,
+    columnsCount: numColumns,
   };
 };
 

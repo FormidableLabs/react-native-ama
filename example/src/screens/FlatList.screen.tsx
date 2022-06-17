@@ -3,7 +3,6 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { CTAPressable } from '../components/CTAPressable';
-import { Header } from '../components/Header';
 import { Spacer } from '../components/Spacer';
 import { theme } from '../theme';
 import { useTypedNavigation } from '../utils/useTypedNavigation';

@@ -12,11 +12,7 @@ const ExpandablePressableBase: React.FC<ExpandablePressableProps> = ({
 }) => {
   const expandableProps = useExpandable(rest);
 
-  return (
-    <Pressable accessibilityRole="button" {...expandableProps}>
-      {children}
-    </Pressable>
-  );
+  return <Pressable {...expandableProps}>{children}</Pressable>;
 };
 
 export const ExpandablePressable = React.memo(ExpandablePressableBase);

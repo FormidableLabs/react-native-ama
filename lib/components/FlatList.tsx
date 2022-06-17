@@ -4,7 +4,7 @@ import type {
   FlatListProps as RNFlatListProps,
 } from 'react-native';
 
-import type { UseDynamicFlatList } from '../hooks/useDynamicFlatList';
+import type { UseDynamicList } from '../hooks/useDynamicList';
 import { DynamicFlatList } from './DynamicFlatList';
 import { StaticFlatList, StaticFlatListProps } from './StaticFlatList';
 
@@ -15,7 +15,7 @@ export type FlatListProps<T> = RNFlatListProps<T> &
       } & StaticFlatListProps)
     | ({
         listType: 'dynamic';
-      } & UseDynamicFlatList)
+      } & UseDynamicList)
   );
 
 export const FlatList = React.forwardRef<RNFlatList, FlatListProps<any>>(

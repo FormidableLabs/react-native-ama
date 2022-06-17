@@ -1,3 +1,5 @@
+import type { AccessibilityRole } from 'react-native';
+
 import { applyStyle } from '../internal/applyStyle';
 import { useChecks } from '../internal/useChecks';
 
@@ -32,6 +34,7 @@ export const useExpandable = <T>(props: UseExpandable<T>) => {
   /* block:end */
 
   return {
+    accessibilityRole: 'button' as AccessibilityRole,
     ...props,
     /* block:start */
     style: applyStyle({ style, debugStyle }),

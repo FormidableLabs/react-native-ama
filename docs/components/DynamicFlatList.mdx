@@ -2,7 +2,7 @@ import { TalkBackList } from '@site/src/components';
 
 # DynamicFlatList
 
-DynamicFlatList is an extension of the React Native FlatList component [focused on accessibility].
+DynamicFlatList extends the React Native FlatList component [focused on accessibility].
 
 ```jsx
 import { DynamicFlatList } from 'react-native-ama';
@@ -21,7 +21,7 @@ import { DynamicFlatList } from 'react-native-ama';
 
 - On `Android` allows TalkBack to announce **in list**/**out list** or **in grid**/**out of grid**
 - A [dynamic list](/docs/components/collections/DynamicFlatList) automatically announces the number of items found when
-  it gets filtered
+it gets filtered
 
 ### TalkBack
 
@@ -49,9 +49,10 @@ The string %count%\* will be replaced with the actual number of items rendered a
 
 ### `isPlural`
 
-<TalkBackList />
+By default, the component considers the number **1** as singular and any other as plural. Although this works fine with English, it might not be the case for other languages.
+For this reason, allows specifying a custom function that should return **true** if the _accessibilityPluralMessage_ should be used; otherwise, false.
 
-The custom callback should return **true** if the _accessibilityPluralMessage_ should be used; otherwise, false.
+#### Example:
 
 ```js
 import { DynamicFlatList } from 'react-native-ama';

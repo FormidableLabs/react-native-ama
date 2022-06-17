@@ -1,18 +1,18 @@
 import React from 'react';
-import {
-  FlatList as RNFlatList,
-  FlatListProps as RNFlatListProps,
-} from 'react-native';
+import { FlatList, FlatListProps } from 'react-native';
 
-import {
-  UseDynamicFlatList,
-  useDynamicFlatList,
-} from '../hooks/useDynamicFlatList';
+import { useDynamicList } from '../hooks/useDynamicList';
 import { ListWrapper } from './ListWrapper';
 
+type DynamicFlatListProps<T> = FlatListProps<T> & {
+  accessibilitySingularMessage: string;
+  accessibilityPluralMessage: string;
+  isPlural?: (count: number) => boolean;
+};
+
 export const DynamicFlatList = React.forwardRef<
-  RNFlatList,
-  RNFlatListProps<any> & UseDynamicFlatList
+  FlatList,
+  DynamicFlatListProps<any>
 >(
   (
     {
@@ -20,22 +20,21 @@ export const DynamicFlatList = React.forwardRef<
       accessibilitySingularMessage,
       accessibilityPluralMessage,
       isPlural,
-      columns,
       ...rest
     },
-    ref,
+    forwardedRef,
   ) => {
-    const { rowsCount, columnsCount } = useDynamicFlatList({
-      data,
+    const { rowsCount, columnsCount } = useDynamicList({
+      data: data || [],
       accessibilityPluralMessage,
       accessibilitySingularMessage,
-      columns,
+      numColumns: rest.numColumns,
       isPlural,
     });
 
     return (
       <ListWrapper rowsCount={rowsCount} columnsCount={columnsCount}>
-        <RNFlatList data={data} {...rest} ref={ref} />
+        <FlatList data={data} {...rest} ref={forwardedRef} />
       </ListWrapper>
     );
   },
