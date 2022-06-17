@@ -8,7 +8,7 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-describe('AMA Pressable', () => {
+describe('Pressable', () => {
   it('uses the usePressable hook', () => {
     const test = {
       style: { backgroundColor: 'yellow' },

@@ -33,17 +33,7 @@ describe('FormField', () => {
     );
 
     expect(toJSON()).toMatchInlineSnapshot(`
-      <Text
-        accessible={true}
-        focusable={false}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-      >
+      <Text>
         Test
       </Text>
     `);
