@@ -9,8 +9,6 @@
     "start": "react-native start"
   },
   "dependencies": {
-    "@types/react": "17",
-    "@types/react-native": "^0.67.8",
     "react": "17",
     "react-native": "0.64"
   },
@@ -22,6 +20,8 @@
     "@react-navigation/native": "^6.0.10",
     "@react-navigation/native-stack": "^6.6.2",
     "@types/jest": "^26.0.23",
+    "@types/react": "17",
+    "@types/react-native": "^0.67.8",
     "@types/react-test-renderer": "^17.0.1",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
@@ -34,7 +34,7 @@
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "^3.13.1",
     "react-native-svg": "^12.3.0",
-    "react-test-renderer": "17.0.2",
+    "react-test-renderer": "17",
     "typescript": "^4.4.4"
   }
 }

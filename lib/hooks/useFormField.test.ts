@@ -1,6 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { waitFor } from '@testing-library/react-native';
-import { checkFocusTrap } from 'lib/internal/checks/checkFocusTrap';
 
 import * as UseChecks from '../internal/useChecks';
 import * as Form from '../providers/Form';

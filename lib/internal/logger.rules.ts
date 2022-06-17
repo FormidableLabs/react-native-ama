@@ -8,6 +8,8 @@ export type Rule =
   | 'NO_ACCESSIBILITY_ROLE'
   | 'NO_ACCESSIBILITY_LABEL'
   | 'NO_FORM_LABEL'
+  | 'FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE'
+  | 'FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE'
   | 'NO_KEYBOARD_TRAP';
 
 export type RuleAction = 'SHOULD_NOT' | 'MUST_NOT' | 'MUST' | 'SHOULD';
@@ -18,6 +20,7 @@ export const NON_OVERRIDABLE_RULES: Partial<Rule>[] = [
   'NO_KEYBOARD_TRAP',
   'NO_UNDEFINED',
   'NO_FORM_LABEL',
+  'FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE',
 ];
 
 export const LOGGER_RULES: Record<Rule, RuleAction> = {
@@ -31,6 +34,8 @@ export const LOGGER_RULES: Record<Rule, RuleAction> = {
   NO_KEYBOARD_TRAP: 'MUST_NOT',
   NO_UNDEFINED: 'MUST_NOT',
   NO_FORM_LABEL: 'MUST_NOT',
+  FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE: 'SHOULD',
+  FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE: 'MUST',
 };
 
 export const CONTRAST_CHECKER_MAX_DEPTH = 5;
@@ -56,6 +61,10 @@ export const RULES_HELP: Record<Rule, string> = {
     'https://formidable.com/open-source/react-native-ama/docs/guidelines/keyboard-trap',
   NO_FORM_LABEL:
     'https://formidable.com/open-source/react-native-ama/docs/guidelines/labels',
+  FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE:
+    'https://formidable.com/open-source/react-native-ama/docs/guidelines/lists',
+  FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE:
+    'https://formidable.com/open-source/react-native-ama/docs/guidelines/lists',
 };
 
 export const canRuleBeOverridden = (rule: Rule) => {

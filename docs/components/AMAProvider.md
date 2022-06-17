@@ -1,6 +1,6 @@
 # AMAProvider
 
-The provider contains information about the various accessibility services.
+The provider contains information about the various accessibility services. 
 
 ## Usage
 
@@ -10,4 +10,20 @@ The provider contains information about the various accessibility services.
 </AMAProvider>
 ```
 
-Check [useAMAContext](/docs/hooks/useAMAContext) to see which values are available from the context.
+## Context Values
+
+```ts title=lib/providers/AMAProvider.tsx
+export type AMAContextValue = {
+    isBoldTextEnabled: boolean;
+    isScreenReaderEnabled: boolean;
+    isGrayscaleEnabled: boolean;
+    isInvertColorsEnabled: boolean;
+    isReduceMotionEnabled: boolean;
+    isReduceTransparencyEnabled: boolean;
+    reactNavigationScreenOptions: {
+        animationEnabled: boolean;
+        animation: 'default' | 'fade';
+    };
+};
+```
+Check [useAMAContext](/docs/hooks/useAMAContext) for more info.

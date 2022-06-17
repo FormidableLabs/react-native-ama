@@ -3,5 +3,5 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 
 import type { RootStackParamList } from '../types';
 
-export const useTypedNavigation: StackNavigationProp<RootStackParamList> = () =>
+export const useTypedNavigation = () =>
   useNavigation<StackNavigationProp<RootStackParamList>>();

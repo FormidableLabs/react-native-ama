@@ -1,3 +1,4 @@
+import { useRoute } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -8,28 +9,18 @@ import { theme } from '../theme';
 import { useTypedNavigation } from '../utils/useTypedNavigation';
 
 export const FlatListScreen = () => {
-  const navigation = useTypedNavigation();
+  const { navigate } = useTypedNavigation();
 
   return (
     <View style={styles.container}>
       <CTAPressable
         title="Dynamic list"
-        onPress={() =>
-          navigation.navigate('FlatListDemo', {
-            title: 'Dynamic list demo',
-            type: 'dynamic',
-          })
-        }
+        onPress={() => navigate('FlatListDynamic')}
       />
       <Spacer height={'big'} />
       <CTAPressable
         title="Static list"
-        onPress={() =>
-          navigation.navigate('FlatListDemo', {
-            title: 'Static list demo',
-            type: 'static',
-          })
-        }
+        onPress={() => navigate('FlatListStatic')}
       />
     </View>
   );

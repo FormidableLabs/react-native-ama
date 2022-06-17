@@ -53,6 +53,7 @@ export const logFailure = ({
 
   switch (action) {
     case 'MUST_NOT':
+    case 'MUST':
       console.info(formattedMessage, extra || '', '\n');
 
       return 'ERROR';

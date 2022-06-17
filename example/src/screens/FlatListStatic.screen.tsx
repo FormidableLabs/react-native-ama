@@ -1,59 +1,28 @@
 import { useRoute } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { FlatList, Text, TextInput } from 'react-native-ama';
+import { FlatList, StaticFlatList, Text, TextInput } from 'react-native-ama';
 
-import { Header } from '../components/Header';
 import { Spacer } from '../components/Spacer';
 import { theme } from '../theme';
 
-export const FlatListDemo = () => {
+export const FlatListStaticScreen = () => {
   const { params } = useRoute();
-  const [items, setItems] = React.useState(DATA);
-  const [filterText, setFilterText] = React.useState('');
 
   const renderItem = ({ item }: { item: Record<any, any> }) => (
     <Item title={item.title} />
   );
 
-  const filterList = (text: string) => {
-    setFilterText(text);
-
-    setItems(
-      DATA.filter(item =>
-        item.title.toLowerCase().includes(text.toLowerCase()),
-      ),
-    );
-  };
-
   return (
     <View style={styles.container}>
       <Spacer height="normal" />
-      <TextInput
-        label={<Text>Filter:</Text>}
-        returnKeyType={'done'}
-        style={styles.input}
-        onChangeText={newText => filterList(newText)}
-        defaultValue={filterText}
-      />
-      <Spacer height="normal" />
-      <FlatList
-        data={items}
+      <StaticFlatList
+        data={DATA}
         renderItem={renderItem}
         keyExtractor={item => item.id}
-        // @ts-ignore
-        listType={params.type}
-        accessibilitySingularMessage="%count% item found"
-        accessibilityPluralMessage="%count% items found"
       />
     </View>
   );
-};
-
-export const FlatListDemoHeader = () => {
-  const { params } = useRoute();
-
-  return <Header title={params.title} autofocus />;
 };
 
 const DATA = [
