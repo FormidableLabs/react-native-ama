@@ -3,7 +3,8 @@ import {
   FlatList as RNFlatList,
   FlatListProps as RNFlatListProps,
 } from 'react-native';
-import { ListWrapper } from 'react-native-ama';
+
+import { ListWrapper } from './ListWrapper';
 
 export type StaticFlatListProps = {
   rowsCount?: number;

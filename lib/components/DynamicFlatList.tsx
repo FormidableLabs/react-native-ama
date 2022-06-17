@@ -3,12 +3,12 @@ import {
   FlatList as RNFlatList,
   FlatListProps as RNFlatListProps,
 } from 'react-native';
-import { ListWrapper } from 'react-native-ama';
 
 import {
   UseDynamicFlatList,
   useDynamicFlatList,
 } from '../hooks/useDynamicFlatList';
+import { ListWrapper } from './ListWrapper';
 
 export const DynamicFlatList = React.forwardRef<
   RNFlatList,
