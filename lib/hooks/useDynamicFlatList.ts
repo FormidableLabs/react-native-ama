@@ -1,6 +1,7 @@
-import { useChecks } from 'lib/internal/useChecks';
 import React from 'react';
 import { AccessibilityInfo } from 'react-native';
+
+import { useChecks } from '../internal/useChecks';
 
 export type UseDynamicFlatList = {
   data: any[];
