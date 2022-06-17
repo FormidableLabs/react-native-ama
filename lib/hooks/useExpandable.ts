@@ -1,9 +1,12 @@
 import { applyStyle } from '../internal/applyStyle';
 import { useChecks } from '../internal/useChecks';
 
-export type UseExpandable<T> = Omit<T, 'accessibilityRole'> & {
+export type UseExpandable<T> = Omit<
+  T,
+  'accessibilityRole' | 'accessibilityLabel'
+> & {
   expanded: boolean;
-  expandedWrapperId: string;
+  accessibilityLabel: string;
 };
 
 export const useExpandable = <T>(props: UseExpandable<T>) => {

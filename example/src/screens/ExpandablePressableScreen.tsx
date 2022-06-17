@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
-import { ExpandablePressable, ExpandedWrapper, Text } from 'react-native-ama';
+import { ExpandablePressable, Text } from 'react-native-ama';
 
 import { theme } from '../theme';
 

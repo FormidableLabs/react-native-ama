@@ -84,6 +84,8 @@
 .dev-only-wrap {
     filter: drop-shadow(1px 3px 3px rgba(50, 50, 0, 0.4));
     display: inline-block;
+    position: relative;
+    top: -2px;
 }
 
 .dev-only {
@@ -94,6 +96,7 @@
     padding: 4px 24px 4px 12px;
     margin-left: 12px;
     clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
+    font-size: 16px;
 }
 
 li .menu__list .menu__link--sublist-caret {

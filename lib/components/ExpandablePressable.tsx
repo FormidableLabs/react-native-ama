@@ -13,7 +13,6 @@ const ExpandablePressableBase: React.FC<ExpandablePressableProps> = ({
   const expandableProps = useExpandable(rest);
 
   return (
-    // @ts-ignore
     <Pressable accessibilityRole="button" {...expandableProps}>
       {children}
     </Pressable>

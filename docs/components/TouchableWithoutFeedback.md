@@ -1,22 +1,29 @@
-# Pressable
+import { DevOnly } from '@site/src/components';
 
-Pressable is an extension of the React Native [Pressable](https://reactnative.dev/docs/pressable) component, [focused on accessibility](#accessibility-improvements).
+# TouchableWithoutFeedback
+
+TouchableWithoutFeedback is an extension of the React Native [TouchableWithoutFeedback](https://reactnative.dev/docs/touchablewithoutfeedback) component, [focused on accessibility](#accessibility-improvements).
 
 ```tsx
-import { Pressable } from 'react-native-ama';
+import { TouchableWithoutFeedback } from 'react-native-ama';
+import { View } from 'react-native';
 
-<Pressable accessibilityRole="button" accessibilityLabel="I'm pressable!">
-    <Text>I'm pressable</Text>
-</Pressable>;
+<TouchableWithoutFeedback
+  accessibilityRole="button"
+  accessibilityLabel="I'm pressable!">
+  <View>
+    <Text> I'm pressable</Text>
+  </View>
+</TouchableWithoutFeedback>;
 ```
 
 ## Accessibility improvements
 
 Compared to the default React Native component, this custom component:
 
-- Forces the use of `accessibilityRole` and `accessibilityLabel`
+- Forces the use of `accessibilityRole` and `accessibilityLabel` <DevOnly />
 - `accessibilityState` has been removed as its states `busy`, `checked`, `selected`, `expanded` are exposed as a property
-- Performs a [contrast checker](/docs/guidelines/contrast) between its background color and its children color
+- Performs a [contrast checker](/docs/guidelines/contrast) between its background color and its children color <DevOnly />
 
 ### accessibilityRole
 
@@ -49,8 +56,8 @@ To simply the syntax, the custom component allows passing those states as proper
 
 The component performs a [contrast check](/docs/guidelines/contrast) between its background colour and the children's foreground when in dev mode.
 
-:::info
-AMA does also perform a contrast check on disabled button, as a [poor contrast can make them hard to read](https://axesslab.com/disabled-buttons-suck/#they-are-hard-to-see).
+:::note
+AMA performs the check on both pressed and non-pressed states when passing a function as style.
 :::
 
 ### Minimum size
@@ -71,28 +78,28 @@ Indicates whether an element is currently busy or not.
 
 ```tsx
 import { ActivityIndicator } from 'react-native';
-import { Pressable, Text } from 'react-native-ama';
+import { TouchableWithoutFeedback, Text } from 'react-native-ama';
 
 const Test = () => {
-    const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
 
-    const doSometing = async () => {
-        setIsLoading(true);
+  const doSometing = async () => {
+    setIsLoading(true);
 
-        await slowCall();
+    await slowCall();
 
-        setIsLoading(true);
-    };
+    setIsLoading(true);
+  };
 
-    return (
-        <Pressable
-            accessiblityRole="button"
-            accessibilityLabel="Do it"
-            busy={isLoading}
-            onPress={doSometing}>
-            {isLoading ? <ActivityIndicator /> : <Text>Do it</Text>}
-        </Pressable>
-    );
+  return (
+    <TouchableWithoutFeedback
+      accessiblityRole="button"
+      accessibilityLabel="Do it"
+      busy={isLoading}
+      onPress={doSometing}>
+      {isLoading ? <ActivityIndicator /> : <Text>Do it</Text>}
+    </TouchableWithoutFeedback>
+  );
 };
 ```
 
@@ -124,26 +131,22 @@ Indicates whether an expandable element is currently expanded or collapsed.
 
 ```tsx
 import { ActivityIndicator } from 'react-native';
-import { Pressable, Text } from 'react-native-ama';
+import { TouchableWithoutFeedback, Text } from 'react-native-ama';
 
 const Test = () => {
-    const [isExpanded, setIsExpanded] = React.useState(false);
+  const [isExpanded, setIsExpanded] = React.useState(false);
 
-    return (
-        <>
-            <Pressable
-                accessiblityRole="button"
-                accessibilityLabel={isExpanded ? 'Less' : 'More'}
-                expanded={isExpanded}
-                onPress={() => setIsExpanded(expanded => !expanded)}>
-                {isExpanded ? <MinumIcon /> : <PlusIcon />}
-            </Pressable>
-            {isExpanded ? <>{/* content goes here */}</> : null}
-        </>
-    );
+  return (
+    <>
+      <TouchableWithoutFeedback
+        accessiblityRole="button"
+        accessibilityLabel={isExpanded ? 'Less' : 'More'}
+        expanded={isExpanded}
+        onPress={() => setIsExpanded(expanded => !expanded)}>
+        {isExpanded ? <MinumIcon /> : <PlusIcon />}
+      </TouchableWithoutFeedback>
+      {isExpanded ? <>{/* content goes here */}</> : null}
+    </>
+  );
 };
 ```
-
-## Resources
-
-- [Disabled buttons suck](https://axesslab.com/disabled-buttons-suck/)

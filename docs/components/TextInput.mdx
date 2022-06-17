@@ -1,3 +1,5 @@
+import { DevOnly } from '@site/src/components';
+
 # TextInput
 
 TextInput is an extension of the [React Native TextInput](https://reactnative.dev/docs/textinput) component, [focused on accessibility](#accessibility-improvements).
@@ -25,7 +27,7 @@ Compared to the default React Native component, this custom component:
 - Hides the label from the screen reader (as it would provide redundant information)
 - Handles the value `returnKeyType`
 - Handles focusing the next form field when `returnKeyType` is **next**
-- Checks for keyboard trap
+- Checks for keyboard trap <DevOnly />
 
 ### accessibilityLabel
 
