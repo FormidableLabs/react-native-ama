@@ -1,16 +1,33 @@
 import { render } from '@testing-library/react-native';
 import * as React from 'react';
 
-import * as UseA11yFocus from '../hooks/useA11yFocus';
-import * as AccessibilityLabelChecker from '../internal/accessibilityLabelChecker';
-import * as UppercaseChecker from '../internal/uppercaseChecker';
+import * as UseFocus from '../hooks/useFocus';
+import * as UseChecks from '../internal/useChecks';
 import { Text } from './Text';
 
+beforeEach(() => {
+  jest.clearAllMocks();
+  jest.restoreAllMocks();
+});
+
 describe('Text', () => {
+  let accessibilityLabelChecker: jest.Mock;
+  let uppercaseChecker: jest.Mock;
+
+  beforeEach(function () {
+    accessibilityLabelChecker = jest.fn();
+    uppercaseChecker = jest.fn();
+
+    jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
+      accessibilityLabelChecker,
+      uppercaseChecker,
+    } as any);
+  });
+
   it.each([false, undefined])(
-    'calls useA11yFocus with undefined if the "autofocus" property is %s',
+    'calls useFocus with undefined if the "autofocus" property is %s',
     autofocus => {
-      const spy = jest.spyOn(UseA11yFocus, 'useA11yFocus');
+      const spy = jest.spyOn(UseFocus, 'useFocus');
 
       render(<Text autofocus={autofocus} accessibilityRole="header" />);
 
@@ -18,8 +35,8 @@ describe('Text', () => {
     },
   );
 
-  it('calls useA11yFocus with the component ref if autofocus is true', () => {
-    const spy = jest.spyOn(UseA11yFocus, 'useA11yFocus').mockImplementation();
+  it('calls useFocus with the component ref if autofocus is true', () => {
+    const spy = jest.spyOn(UseFocus, 'useFocus').mockImplementation();
 
     render(<Text autofocus accessibilityRole="header" />);
 
@@ -31,8 +48,6 @@ describe('Text', () => {
   it.each([undefined, 'test'])(
     'calls uppercaseChecker with the given style and accessibilityLabel',
     accessibilityLabel => {
-      const spy = jest.spyOn(UppercaseChecker, 'uppercaseChecker');
-
       render(
         <Text
           style={{ textTransform: 'uppercase' }}
@@ -41,29 +56,24 @@ describe('Text', () => {
         </Text>,
       );
 
-      expect(spy).toHaveBeenCalledWith(
-        { textTransform: 'uppercase' },
+      expect(uppercaseChecker).toHaveBeenCalledWith({
+        style: { textTransform: 'uppercase' },
         accessibilityLabel,
-      );
+        extra: 'This is a test',
+      });
     },
   );
 
   it.each([undefined, 'Test'])(
     'calls accessibilityLabelChecker with the given accessibilityLabel',
     accessibilityLabel => {
-      const spy = jest.spyOn(
-        AccessibilityLabelChecker,
-        'accessibilityLabelChecker',
-      );
-
       render(
         <Text accessibilityLabel={accessibilityLabel}>This is a test</Text>,
       );
 
-      expect(spy).toHaveBeenCalledWith(accessibilityLabel);
+      expect(accessibilityLabelChecker).toHaveBeenCalledWith({
+        accessibilityLabel,
+      });
     },
   );
 });
-
-jest.mock('../internal/uppercaseChecker');
-jest.mock('../internal/accessibilityLabelChecker');

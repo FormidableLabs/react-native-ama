@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { ClickableSpan, Span, useReanimatedTiming } from 'react-native-ama';
+import { Dimensions, StyleSheet, View } from 'react-native';
+import { Text, useReanimatedTiming } from 'react-native-ama';
 import Animated, {
   useAnimatedStyle,
+  useDerivedValue,
   useSharedValue,
 } from 'react-native-reanimated';
 
@@ -16,26 +17,34 @@ export const ReanimatedReduceMotionScreen = () => {
 
   const animatedStyles = useAnimatedStyle(() => {
     return {
-      transform: [{ translateX: value.value * 255 }],
+      transform: [{ translateX: value.value }],
     };
   });
 
+  const getFinalPosition = () => {
+    return value.value === 0
+      ? Dimensions.get('window').width - theme.padding.big * 2 - 100
+      : 0;
+  };
+
   const testWithTiming = () => {
-    value.value = withTiming('translateX', Math.random(), { duration: 300 });
+    value.value = withTiming('translateX', getFinalPosition(), {
+      duration: 300,
+    });
   };
 
   const testWithSpring = () => {
-    value.value = withSpring('translateX', Math.random());
+    value.value = withSpring('translateX', getFinalPosition());
   };
 
   return (
     <View style={styles.view}>
       <Spacer height="big" />
-      <Span style={styles.intro}>
+      <Text style={styles.intro}>
         This example shows how to use the{' '}
-        <ClickableSpan onPress={() => {}}>getAnimationDuration</ClickableSpan>{' '}
-        with Reanimated for a more accessible animations.
-      </Span>
+        <Text onPress={() => {}}>getAnimationDuration</Text> with Reanimated for
+        a more accessible animations.
+      </Text>
       <Spacer height="big" />
       <Animated.View style={[styles.box, animatedStyles]} />
 

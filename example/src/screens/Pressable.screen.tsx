@@ -13,53 +13,38 @@ export const PressableScreen = () => {
     <SafeAreaView>
       <ScrollView style={styles.list}>
         <Spacer height="big" />
+        <Header title={'Accessibility states'} />
+        <Spacer height={'normal'} />
 
         {/*  Disabled */}
-        <PressableExample state="disabled">
-          <CTAPressable title="This button is 'disabled'" disabled />
-        </PressableExample>
+        <CTAPressable title="This button is 'disabled'" disabled />
+        <Spacer height={'normal'} />
 
         {/*  Busy */}
-        <PressableExample state="busy">
-          <CTAPressable title="This button is 'busy'" busy />
-        </PressableExample>
+        <CTAPressable title="This button is 'busy'" busy />
+        <Spacer height={'normal'} />
 
         {/*  Checked */}
-        <PressableExample state="checked">
-          <CheckedButton />
-        </PressableExample>
+        <CheckedButton />
+        <Spacer height={'normal'} />
 
         {/*  Selected*/}
-        <PressableExample state="selected">
-          <SelectedButton />
-        </PressableExample>
+        <SelectedButton />
+        <Spacer height={'normal'} />
 
         {/*  Expanded*/}
-        <PressableExample state="expanded">
-          <ExpandedButton />
-        </PressableExample>
+        <ExpandedButton />
+        <Spacer height={'normal'} />
 
         {/*  Test rule breakage */}
         <ContrastCheckerFailing />
 
         {/*  Test minimum size failing  */}
         <MinimumSizeFailing />
+
+        <Spacer height={'big'} />
       </ScrollView>
     </SafeAreaView>
-  );
-};
-
-const PressableExample: React.FC<{ state: keyof AMAAccessibilityState }> = ({
-  state,
-  children,
-}) => {
-  return (
-    <>
-      <Header title={`Accessibility state: ${state}`} />
-      <Spacer height={'normal'} />
-      {children}
-      <Spacer height={'big'} />
-    </>
   );
 };
 
@@ -179,7 +164,9 @@ const ContrastCheckerFailing = () => {
           accessibilityRole="button"
           accessibilityLabel="This fails">
           <>
-            <Text style={failingStyle}>This fails</Text>
+            <Text style={failingStyle}>
+              `This fails {activeButton.toUpperCase()} level`
+            </Text>
           </>
         </Pressable>
       )}
@@ -200,14 +187,15 @@ const MinimumSizeFailing = () => {
         onPress={() => setIsButtonVisible(true)}
       />
       {isButtonVisible ? (
-        <Pressable
-          style={styles.minSizeFailing}
-          accessibilityRole="button"
-          accessibilityLabel="This fails">
-          <>
+        <>
+          <Spacer height="normal" />
+          <Pressable
+            style={styles.minSizeFailing}
+            accessibilityRole="button"
+            accessibilityLabel="This fails">
             <Text style={{ color: theme.color.white }}>This fails</Text>
-          </>
-        </Pressable>
+          </Pressable>
+        </>
       ) : null}
     </>
   );
@@ -238,7 +226,7 @@ const styles = StyleSheet.create({
     marginTop: theme.padding.normal,
   },
   failingText_all: {
-    color: '#5a5a5a',
+    color: '#525252',
   },
   failingText_aa: {
     color: '#c70000',

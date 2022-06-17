@@ -1,0 +1,76 @@
+import { TalkBackList } from '@site/src/components';
+
+# DynamicFlatList
+
+DynamicFlatList extends the React Native FlatList component [focused on accessibility].
+
+```jsx
+import { DynamicFlatList } from 'react-native-ama';
+
+<DynamicFlatList
+  data={items}
+  renderItem={renderItem}
+  keyExtractor={item => item.id}
+  listType="dynamic"
+  accessibilitySingularMessage="%count% item found"
+  accessibilityPluralMessage="%count% items found"
+/>;
+```
+
+## Accessibility Improvements
+
+- On `Android` allows TalkBack to announce **in list**/**out list** or **in grid**/**out of grid**
+- A [dynamic list](/docs/components/collections/DynamicFlatList) automatically announces the number of items found when
+it gets filtered
+
+### TalkBack
+
+<TalkBackList />
+
+To provide this accessibility feature AMA wraps the list in the custom native
+component: [ListWrapper](/docs/components/collections/ListWrapper).
+
+### Dynamic list
+
+A dynamic list must announce the number of items displayed if they change due to filtering.
+Check [here](/docs/guidelines/Lists#number-of-results) for more info.
+
+## Additional props
+
+### `accessibilitySingularMessage`
+
+Is the message to announce when the list renders one[^1] item [^2].
+The string %count%\* will be replaced with the actual number of items rendered at the moment.
+
+### `accessibilityPluralMessage`
+
+Is the message to announce when the list renders zero or multiple[^1] items [^2]
+The string %count%\* will be replaced with the actual number of items rendered at the moment.
+
+### `isPlural`
+
+By default, the component considers the number **1** as singular and any other as plural. Although this works fine with English, it might not be the case for other languages.
+For this reason, allows specifying a custom function that should return **true** if the _accessibilityPluralMessage_ should be used; otherwise, false.
+
+#### Example:
+
+```js
+import { DynamicFlatList } from 'react-native-ama';
+
+<DynamicFlatList
+  data={items}
+  renderItem={renderItem}
+  keyExtractor={item => item.id}
+  listType="dynamic"
+  accessibilitySingularMessage="%count% item found"
+  accessibilityPluralMessage="%count% items found"
+  isPlural={customIsPLural}
+/>;
+
+const customIsPLural = () => {
+  return Math.random() > 0.5;
+};
+```
+
+[^1]: The announcement is made only when the list is filtered, and the number of items displayed is different from the original one
+[^2]: This is with the default behaviour that can be customised via the [isPlural](#isplural) prop

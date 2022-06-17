@@ -8,8 +8,11 @@ export type Rule =
   | 'NO_ACCESSIBILITY_ROLE'
   | 'NO_ACCESSIBILITY_LABEL'
   | 'NO_FORM_LABEL'
+  | 'FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE'
+  | 'FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE'
   | 'NO_KEYBOARD_TRAP';
-export type RuleValue = 'SHOULD_NOT' | 'MUST_NOT';
+
+export type RuleAction = 'SHOULD_NOT' | 'MUST_NOT' | 'MUST' | 'SHOULD';
 
 export const NON_OVERRIDABLE_RULES: Partial<Rule>[] = [
   'NO_ACCESSIBILITY_ROLE',
@@ -17,9 +20,10 @@ export const NON_OVERRIDABLE_RULES: Partial<Rule>[] = [
   'NO_KEYBOARD_TRAP',
   'NO_UNDEFINED',
   'NO_FORM_LABEL',
+  'FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE',
 ];
 
-export const LOGGER_RULES: Record<Rule, RuleValue> = {
+export const LOGGER_RULES: Record<Rule, RuleAction> = {
   CONTRAST_FAILED: 'MUST_NOT',
   CONTRAST_FAILED_AAA: 'SHOULD_NOT',
   MINIMUM_SIZE: 'MUST_NOT',
@@ -30,9 +34,12 @@ export const LOGGER_RULES: Record<Rule, RuleValue> = {
   NO_KEYBOARD_TRAP: 'MUST_NOT',
   NO_UNDEFINED: 'MUST_NOT',
   NO_FORM_LABEL: 'MUST_NOT',
+  FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE: 'SHOULD',
+  FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE: 'MUST',
 };
 
 export const CONTRAST_CHECKER_MAX_DEPTH = 5;
+export const IGNORE_CONTRAST_FOR_DISABLED_ELEMENTS = false;
 
 export const RULES_HELP: Record<Rule, string> = {
   NO_UNDEFINED: '',
@@ -54,6 +61,10 @@ export const RULES_HELP: Record<Rule, string> = {
     'https://formidable.com/open-source/react-native-ama/docs/guidelines/keyboard-trap',
   NO_FORM_LABEL:
     'https://formidable.com/open-source/react-native-ama/docs/guidelines/labels',
+  FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE:
+    'https://formidable.com/open-source/react-native-ama/docs/guidelines/lists',
+  FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE:
+    'https://formidable.com/open-source/react-native-ama/docs/guidelines/lists',
 };
 
 export const canRuleBeOverridden = (rule: Rule) => {
@@ -64,4 +75,6 @@ export const SHELL_COLORS = {
   RED: '\x1b[31m',
   YELLOW: '\x1b[33m',
   RESET: '\x1b[0m',
+  BLUE: '\x1b[36m',
+  BG_RED: '\x1b[41m',
 };

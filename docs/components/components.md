@@ -5,13 +5,4 @@ React Native components have the accessibility prop as optional, leaving the dev
 
 The components also perform some [rule check](/docs/guidelines) at run time<sup>[^1]</sup> and, in case of failure, provide a link to a help page with an extended explanation. This also means that TypeScript is not a requirement to use this library.
 
-
-- [Pressable](/docs/components/Pressable)
-- [Text](/docs/components/Text)
-- [TextInput](/docs/components/TextInput)
-- [TouchableOpacity](/docs/components/TouchableOpacity)
-- [TouchableWithoutFeedback](/docs/components/TouchableWithoutFeedback)
-
-
-
 [^1]: The checks are **only** made on the dev build

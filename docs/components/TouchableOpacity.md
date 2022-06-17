@@ -1,3 +1,5 @@
+import { DevOnly } from '@site/src/components';
+
 # TouchableOpacity
 
 TouchableOpacity is an extension of the React Native [TouchableOpacity](https://reactnative.dev/docs/touchableopacity) component, [focused on accessibility](#accessibility-improvements).
@@ -14,9 +16,9 @@ import { TouchableOpacity } from 'react-native-ama';
 
 Compared to the default React Native component, this custom component:
 
-- Forces the use of `accessibilityRole` and `accessibilityLabel`
+- Forces the use of `accessibilityRole` and `accessibilityLabel` <DevOnly />
 - `accessibilityState` has been removed as its states `busy`, `checked`, `selected`, `expanded` are exposed as a property
-- [Contrast checker](/docs/guidelines/contrast) before the component background color and its children color
+- Performs a [contrast checker](/docs/guidelines/contrast) between its background color and its children color <DevOnly />
 
 ### accessibilityRole
 

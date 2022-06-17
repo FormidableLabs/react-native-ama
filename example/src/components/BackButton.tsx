@@ -35,8 +35,8 @@ export const BackButton = () => {
 const styles = StyleSheet.create({
   button: {
     backgroundColor: theme.color.white,
-    width: 48,
-    height: 48,
+    minWidth: 48,
+    minHeight: 48,
     justifyContent: 'center',
     alignItems: 'center',
   },

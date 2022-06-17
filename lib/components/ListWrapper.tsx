@@ -3,7 +3,7 @@ import { Platform, requireNativeComponent } from 'react-native';
 
 type FlatListWrapperProps = {
   rowsCount: number;
-  columnsCount: number;
+  columnsCount?: number;
 };
 
 const isAndroid = Platform.OS === 'android';
@@ -11,7 +11,7 @@ const isAndroid = Platform.OS === 'android';
 export const ListWrapper: React.FC<FlatListWrapperProps> = ({
   children,
   rowsCount,
-  columnsCount,
+  columnsCount = 1,
 }) => {
   return (
     <AMAFlatListWrapper rowsCount={rowsCount} columnsCount={columnsCount}>

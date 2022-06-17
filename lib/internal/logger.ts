@@ -1,6 +1,7 @@
 import {
+  IGNORE_CONTRAST_FOR_DISABLED_ELEMENTS,
   Rule,
-  RuleValue,
+  RuleAction,
   SHELL_COLORS,
   canRuleBeOverridden,
 } from './logger.rules';
@@ -14,35 +15,53 @@ const overrideRules: OverrideRule = require('./../../ama.rules.json');
 
 type OverrideRule = {
   rules: Record<
-    Partial<Rule> | 'CONTRAST_CHECKER_MAX_DEPTH',
-    RuleValue | number
+    | Partial<Rule>
+    | 'CONTRAST_CHECKER_MAX_DEPTH'
+    | 'IGNORE_CONTRAST_FOR_DISABLED_ELEMENTS',
+    RuleAction
   > | null;
   accessibilityLabelExceptions: string[];
 };
 
-export const log = (rule: Rule, message: string, extra?: any) => {
+export type LogParams = {
+  rule: Rule;
+  message: string;
+  extra?: any;
+};
+
+export const getRuleAction = (rule: Rule): RuleAction => {
   const customRule = canRuleBeOverridden(rule)
     ? overrideRules?.rules?.[rule]
     : undefined;
-  const action = customRule || LOGGER_RULES[rule];
 
-  const formattedMessage = `${SHELL_COLORS.RED}❌ [AMA ${rule}]${SHELL_COLORS.RESET} - ${SHELL_COLORS.YELLOW}${message}${SHELL_COLORS.RESET}\n\n${RULES_HELP[rule]}`;
+  return customRule || LOGGER_RULES[rule];
+};
+
+type LogFailure = LogParams & {
+  action: RuleAction;
+};
+
+type CHECK_STATUS = 'ERROR' | 'WARNING';
+
+export const logFailure = ({
+  action,
+  rule,
+  message,
+  extra = '',
+}: LogFailure): CHECK_STATUS => {
+  const formattedMessage = `❌ ${SHELL_COLORS.BG_RED}[ AMA ]${SHELL_COLORS.RESET}: ${SHELL_COLORS.BLUE}${rule}${SHELL_COLORS.RESET} - ${SHELL_COLORS.YELLOW}${message}${SHELL_COLORS.RESET}\n\n${RULES_HELP[rule]}\n\n`;
 
   switch (action) {
     case 'MUST_NOT':
-      if (extra) {
-        console.info(extra, '\n');
-      }
-      console.error(formattedMessage, '\n');
+    case 'MUST':
+      console.info(formattedMessage, extra || '', '\n');
 
-      throw new Error(`❌ [AMA ${rule}] - ${message}`);
+      return 'ERROR';
     case 'SHOULD_NOT':
     default:
-      if (extra) {
-        console.info(extra, '\n');
-      }
+      console.warn(formattedMessage, extra || '', '\n');
 
-      console.warn(formattedMessage, '\n');
+      return 'WARNING';
   }
 };
 
@@ -50,6 +69,13 @@ export const getContrastCheckerMaxDepth = () => {
   return (
     overrideRules?.rules?.CONTRAST_CHECKER_MAX_DEPTH ||
     CONTRAST_CHECKER_MAX_DEPTH
+  );
+};
+
+export const shouldIgnoreContrastCheckForDisabledElement = () => {
+  return (
+    overrideRules?.rules?.IGNORE_CONTRAST_FOR_DISABLED_ELEMENTS ||
+    IGNORE_CONTRAST_FOR_DISABLED_ELEMENTS
   );
 };
 

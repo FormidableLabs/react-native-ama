@@ -2,7 +2,7 @@ import { MustNot } from '@site/src/components';
 
 # Uppercase Text
 
-For [<Text />](/docs/components/Text) elements AMA checks if the style has the `textTransform` property set to `uppercase`, and if so throws an error if the `accessibilityLabel` one is not set.
+For [&lt;Text /&gt;](/docs/components/Text) elements AMA checks if the style has the `textTransform` property set to `uppercase`, and if so throws an error if the `accessibilityLabel` one is not set.
 It also checks that the accessibilityLabel provided for the various component is not all caps.
 
 ## Why `textTransform:uppercase` is bad for accessibility?
@@ -43,31 +43,36 @@ Both Talkback and VoiceOver reads the words with the same flat tone, which becom
 
 Some words could be misinterpreted, causing the screen readers to read a word as separate characters.
 
-#### `ADD TO THE CART`
+#### Example: `ADD TO THE CART`
 
-| Word | Voice Over | Talkback |
-| ---- | ---------- | -------- |
-| ADD  | A-D-D      | Add      |
+```jsx
+<Pressable accessibilityLabel="ADD TO THE CART">...</Pressable> 
+```
+
+This is how the different screen readers handle the uppercase label:
+
+| Voice Over         | Talkback        |
+|--------------------|-----------------|
+| A-D-D  to the cart | Add to the cart |
 
 In this case, VoiceOver does the spelling of the word `ADD` while talkback reads it correctly.
 The remaining words are read correctly by both screen readers.
 
-### `CONTACT US`
+#### Example: `CONTACT US`
 
-The word `CONTACT` is read correctly, but both screen readers do the spelling of the word `US` as it is interpreted as `U.S.` for `United States.
+| Voice Over   | Talkback     |
+|--------------|--------------|
+| Contact U.S. | Contact U.S. |
 
-## UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL <MustNot />
+The word `CONTACT` is read correctly, but both screen readers spell the word `US` as it is interpreted as `U.S.` for `United States.
+
+A similar issue happens if a sentence contains the word **IT**, for example.
+
+## AMA Errors
+
+### UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL <MustNot />
 
 This is used when a component uses the `textTransform: uppercase` style without providing an accessible label.
-
-## UPPERCASE_ACCESSIBILITY_LABEL <MustNot />
-
-This is used when a component has the `accessibilityLabel` prop in all caps.
-
-:::tip
-
-Is possible to specify a list of allowed all caps accessibility labels, [more info here](/docs/guidelines/)
-:::
 
 ## Resources
 

@@ -20,7 +20,6 @@ yarn-error.log
 
 # Xcode
 #
-build/
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -36,3 +35,5 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
+/coverage/
+.vscode

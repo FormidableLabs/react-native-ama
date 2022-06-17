@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Animated, Dimensions, StyleSheet, View } from 'react-native';
-import { Pressable, Text, useA11yFocus } from 'react-native-ama';
+import { Pressable, Text, useFocus } from 'react-native-ama';
 import { useAccessibleAnimation } from 'react-native-ama';
 
 import { CTAPressable } from '../components/CTAPressable';
@@ -14,7 +14,7 @@ export const ReduceMotionScreen = () => {
     React.useState<Animated.Value | null>(null);
   const viewRef = React.useRef(null);
 
-  const { setFocus } = useA11yFocus();
+  const { setFocus } = useFocus();
 
   const { play, animatedStyle, progress } = useAccessibleAnimation({
     duration: 300,
@@ -113,23 +113,25 @@ export const ReduceMotionScreen = () => {
   return (
     <>
       <View style={styles.container}>
-        <CTAPressable
-          title="Test Animation 1"
-          onPress={playAnimation1}
-          importantForAccessibility={
-            overlayProgressValue === null ? 'yes' : 'no'
-          }
-          accessibilityElementsHidden={overlayProgressValue !== null}
-        />
-        <Spacer height="big" />
-        <CTAPressable
-          title="Test Animation 2"
-          onPress={playAnimation2}
-          importantForAccessibility={
-            overlayProgressValue === null ? 'yes' : 'no'
-          }
-          accessibilityElementsHidden={overlayProgressValue !== null}
-        />
+        <View style={styles.wrapper}>
+          <CTAPressable
+            title="Test Animation 1"
+            onPress={playAnimation1}
+            importantForAccessibility={
+              overlayProgressValue === null ? 'yes' : 'no'
+            }
+            accessibilityElementsHidden={overlayProgressValue !== null}
+          />
+          <Spacer height="big" />
+          <CTAPressable
+            title="Test Animation 2"
+            onPress={playAnimation2}
+            importantForAccessibility={
+              overlayProgressValue === null ? 'yes' : 'no'
+            }
+            accessibilityElementsHidden={overlayProgressValue !== null}
+          />
+        </View>
       </View>
       {overlayProgressValue ? (
         <Pressable
@@ -157,6 +159,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: theme.padding.big,
+  },
+  wrapper: {
+    height: 120,
   },
   overlay: {
     backgroundColor: 'rgba(0,0,0,0.5)',

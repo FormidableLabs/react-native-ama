@@ -1,8 +1,8 @@
 import React from 'react';
 import { Text } from 'react-native';
 
+import * as AMANoUndefined from './checks/noUndefinedProperty';
 import { generateAccessibilityLabelFromProps } from './generateAccessibilityLabelFromProps';
-import * as AMANoUndefined from './noUndefinedProperty';
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -16,7 +16,10 @@ describe('generateAccessibilityLabelFromProps', () => {
       generateAccessibilityLabelFromProps({});
     } catch {}
 
-    expect(noUndefined).toHaveBeenCalledWith({}, 'label');
+    expect(noUndefined).toHaveBeenCalledWith({
+      properties: {},
+      property: 'label',
+    });
   });
 
   it('returns the accessibilityLabel if provided', () => {
@@ -49,5 +52,3 @@ describe('generateAccessibilityLabelFromProps', () => {
     ).toBe('This label is split in 3 parts');
   });
 });
-
-jest.mock('../internal/noUndefinedProperty');

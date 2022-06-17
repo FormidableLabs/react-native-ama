@@ -3,11 +3,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import type { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import React from 'react';
 import { AMAProvider, useAMAContext } from 'react-native-ama';
-import ErrorBoundary from 'react-native-error-boundary';
 
 import { BackButton } from './components/BackButton';
 import { Header } from './components/Header';
+import { ExpandablePressableScreen } from './screens/ExpandablePressableScreen';
 import { FlatListScreen } from './screens/FlatList.screen';
+import { FlatListDynamicScreen } from './screens/FlatListDynamic.screen';
+import { FlatListStaticScreen } from './screens/FlatListStatic.screen';
 import { FormScreen } from './screens/Form.screen';
 import { HomeScreen } from './screens/Home.screen';
 import { PressableScreen } from './screens/Pressable.screen';
@@ -20,11 +22,9 @@ import type { RootStackParamList } from './types';
 
 const App = () => {
   return (
-    <ErrorBoundary>
-      <AMAProvider>
-        <AppNavigator />
-      </AMAProvider>
-    </ErrorBoundary>
+    <AMAProvider>
+      <AppNavigator />
+    </AMAProvider>
   );
 };
 
@@ -115,6 +115,36 @@ const AppNavigator = () => {
           options={{
             headerLeft: () => <BackButton />,
             headerTitle: () => <Header title={'FlatList Demo'} autofocus />,
+          }}
+        />
+        <Stack.Screen
+          name="ExpandablePressable"
+          component={ExpandablePressableScreen}
+          options={{
+            headerLeft: () => <BackButton />,
+            headerTitle: () => (
+              <Header title={'ExpandablePressable Demo'} autofocus />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="FlatListDynamic"
+          component={FlatListDynamicScreen}
+          options={{
+            headerLeft: () => <BackButton />,
+            headerTitle: () => (
+              <Header title={'Dynamic FlatList Demo'} autofocus />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="FlatListStatic"
+          component={FlatListStaticScreen}
+          options={{
+            headerLeft: () => <BackButton />,
+            headerTitle: () => (
+              <Header title={'Static FlatList Demo'} autofocus />
+            ),
           }}
         />
       </Stack.Navigator>

@@ -8,8 +8,8 @@ import {
 } from 'react-native';
 
 import { useFormField } from '../hooks/useFormField';
+import { noUndefinedProperty } from '../internal/checks/noUndefinedProperty';
 import { generateAccessibilityLabelFromProps } from '../internal/generateAccessibilityLabelFromProps';
-import { noUndefinedProperty } from '../internal/noUndefinedProperty';
 import { HideChildrenFromAccessibilityTree } from './HideChildrenFromAccessibilityTree';
 
 export type TextInputProps = RNTextInputProps & {
@@ -76,7 +76,13 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       props.onLayout?.(event);
     };
 
-    __DEV__ && noUndefinedProperty(props, 'label', 'NO_FORM_LABEL');
+    /*block:start*/
+    noUndefinedProperty({
+      properties: props,
+      property: 'label',
+      rule: 'NO_FORM_LABEL',
+    });
+    /*block:end*/
 
     return (
       <>

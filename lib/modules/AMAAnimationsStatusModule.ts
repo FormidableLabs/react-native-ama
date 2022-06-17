@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { NativeModules, Platform } from 'react-native';
 
 const LINKING_ERROR =
