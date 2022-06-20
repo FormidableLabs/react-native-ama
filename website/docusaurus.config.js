@@ -59,7 +59,7 @@ const config = {
         title: 'React Native AMA',
         logo: {
           alt: 'React Native AMA Logo',
-          src: 'img/logo.svg',
+          src: 'img/formidable-f.svg',
         },
         items: [
           {
