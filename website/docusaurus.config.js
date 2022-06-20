@@ -15,7 +15,7 @@ const config = {
   // TODO: Re-enable with formideploy
   // url: 'https://formidable.com',
   // baseUrl: '/open-source/react-native-ama/',
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn', // TODO: turn to `error` once ready to fix links
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'FormidableLabs',

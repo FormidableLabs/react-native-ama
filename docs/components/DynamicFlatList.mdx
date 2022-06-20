@@ -20,7 +20,7 @@ import { DynamicFlatList } from 'react-native-ama';
 ## Accessibility Improvements
 
 - On `Android` allows TalkBack to announce **in list**/**out list** or **in grid**/**out of grid**
-- A [dynamic list](/docs/components/collections/DynamicFlatList) automatically announces the number of items found when
+- A [dynamic list](./DynamicFlatList.mdx) automatically announces the number of items found when
 it gets filtered
 
 ### TalkBack
@@ -28,12 +28,12 @@ it gets filtered
 <TalkBackList />
 
 To provide this accessibility feature AMA wraps the list in the custom native
-component: [ListWrapper](/docs/components/collections/ListWrapper).
+component: [ListWrapper](./ListWrapper.mdx).
 
 ### Dynamic list
 
 A dynamic list must announce the number of items displayed if they change due to filtering.
-Check [here](/docs/guidelines/Lists#number-of-results) for more info.
+Check [here](../guidelines/lists.md#number-of-results) for more info.
 
 ## Additional props
 
@@ -64,10 +64,10 @@ import { DynamicFlatList } from 'react-native-ama';
   listType="dynamic"
   accessibilitySingularMessage="%count% item found"
   accessibilityPluralMessage="%count% items found"
-  isPlural={customIsPLural}
+  isPlural={customIsPlural}
 />;
 
-const customIsPLural = () => {
+const customIsPlural = () => {
   return Math.random() > 0.5;
 };
 ```

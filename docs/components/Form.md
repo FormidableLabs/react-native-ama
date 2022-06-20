@@ -1,8 +1,8 @@
 # Form
 
-The `<Form />` component provides a "local" context for the [`TextInput`](/docs/components/TextInput), [`FormField`](/docs/components/FormField) and [`SwitchListItem`](/docs/components/SwitchListItem) components.
+The `<Form />` component provides a "local" context for the [`TextInput`](./TextInput.mdx), [`FormField`](./FormField.md) and [`SwitchListItem`](./SwitchListItem.md) components.
 
-The provider hosts the hosts the `ref` values used by the [TextInput](/docs/hooks/TextInput) to know which [`returnKey`](/docs/components/TextInput#returnkeytype) and what would be the next field to focus.
+The provider hosts the hosts the `ref` values used by the [TextInput](./TextInput.mdx) to know which [`returnKey`](/docs/components/TextInput#returnkeytype) and what would be the next field to focus.
 
 ## Usage
 
@@ -16,7 +16,7 @@ The provider hosts the hosts the `ref` values used by the [TextInput](/docs/hook
 
 ### `onSubmit`
 
-The callback to be called when the [`TextInput`](/docs/components/TextInput) `returnKeyboardType` is **done**.
+The callback to be called when the [`TextInput`](./TextInput.mdx) `returnKeyboardType` is **done**.
 
 ## Example
 ```jsx

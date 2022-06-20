@@ -17,7 +17,7 @@ npm install --save-dev react-native-ama
 
 ### Configuration
 
-Create an empty json file called `ama.json`, if does not exists, in the root of your project. This is used to be able to specify [custom rules](/docs/guidelines/).
+Create an empty json file called `ama.json`, if does not exists, in the root of your project. This is used to be able to specify [custom rules](./guidelines/guidelines.md).
 
 ```json title="ama.json"
 {
