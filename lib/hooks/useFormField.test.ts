@@ -29,12 +29,18 @@ describe('useFormField', () => {
       return useFormField({
         ref: { current: 'hello' },
         hasFocusCallback: false,
+        id: 'my-id',
+        nextFieldId: 'next-field-id',
+        nextFormFieldRef: { current: 'nextFormFieldRef' },
       });
     });
 
-    expect(localRef).toMatchObject([
-      { hasFocusCallback: false, ref: { current: { current: 'hello' } } },
-    ]);
+    expect(localRef).toHaveLength(1);
+    expect(localRef[0]).toEqual({
+      hasFocusCallback: false,
+      ref: { current: { current: 'hello' } },
+      id: 'my-id',
+    });
   });
 
   it('unregister itself from the refs when is mounted', () => {
@@ -163,6 +169,70 @@ describe('useFormField', () => {
             }),
           );
         });
+      });
+
+      it('focuses the next nextFieldId when specified', () => {
+        const ref = { current: 'latest-field-ref' };
+
+        const { result } = renderHook(() => {
+          // First field
+          const first = useFormField({
+            ref: { current: 'first-ref' },
+            hasFocusCallback: false,
+            nextFieldId: 'latest-field',
+          });
+
+          // Second field
+          useFormField({
+            ref: { current: 'second-ref' },
+            hasFocusCallback: false,
+          });
+
+          // next field
+          useFormField({
+            ref,
+            hasFocusCallback: false,
+            id: 'latest-field',
+          });
+
+          return first;
+        });
+
+        result.current.focusNextFormField();
+
+        expect(setFocus).toHaveBeenCalledWith(ref.current);
+      });
+
+      it('focuses the next nextFormFieldRef when specified', () => {
+        const ref = { current: 'latest-field-ref' };
+
+        const { result } = renderHook(() => {
+          // First field
+          const first = useFormField({
+            ref: { current: 'first-ref' },
+            hasFocusCallback: false,
+            nextFormFieldRef: ref,
+          });
+
+          // Second field
+          useFormField({
+            ref: { current: 'second-ref' },
+            hasFocusCallback: false,
+          });
+
+          // next field
+          useFormField({
+            ref,
+            hasFocusCallback: false,
+            id: 'latest-field',
+          });
+
+          return first;
+        });
+
+        result.current.focusNextFormField();
+
+        expect(setFocus).toHaveBeenCalledWith(ref.current);
       });
     });
 

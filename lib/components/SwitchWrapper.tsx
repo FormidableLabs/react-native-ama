@@ -30,7 +30,7 @@ const SwitchWrapperBase: React.FC<SwitchWrapperProps> = ({
 
   return (
     <TouchableWithoutFeedback {...otherSwitchProps}>
-      <View style={[switchStyle || {}, style.switch]}>{children}</View>
+      <View style={[switchStyle, style.switch]}>{children}</View>
     </TouchableWithoutFeedback>
   );
 };

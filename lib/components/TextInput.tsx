@@ -8,19 +8,51 @@ import {
 } from 'react-native';
 
 import { useFormField } from '../hooks/useFormField';
-import { noUndefinedProperty } from '../internal/checks/noUndefinedProperty';
-import { generateAccessibilityLabelFromProps } from '../internal/generateAccessibilityLabelFromProps';
+import { applyStyle } from '../internal/applyStyle';
+import { maybeGenerateStringFromElement } from '../internal/maybeGenerateStringFromElement';
+import { useChecks } from '../internal/useChecks';
 import { HideChildrenFromAccessibilityTree } from './HideChildrenFromAccessibilityTree';
 
 export type TextInputProps = RNTextInputProps & {
   label: JSX.Element;
   labelPosition?: 'beforeInput' | 'afterInput';
-} & {
   nextFormField?: React.RefObject<RNTextInput>;
-};
+  id?: string;
+  nextFieldId?: string;
+} & (
+    | {
+        hasValidation: true;
+        error: JSX.Element;
+        hasError: boolean;
+        errorPosition?: 'belowLabel' | 'afterInput';
+        errorText?: string;
+      }
+    | {
+        hasValidation: false;
+        error?: never;
+        hasError?: never;
+        errorPosition?: never;
+        errorText?: never;
+      }
+  );
 
 export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
-  (props, forwardedRef) => {
+  (
+    {
+      label,
+      labelPosition = 'beforeInput',
+      nextFormField,
+      id,
+      nextFieldId,
+      accessibilityHint,
+      hasError,
+      error,
+      errorPosition = 'afterInput',
+      hasValidation,
+      ...rest
+    },
+    forwardedRef,
+  ) => {
     const inputRef = React.useRef<React.ElementRef<typeof TextInput> | null>(
       null,
     );
@@ -29,23 +61,43 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 
     const { focusNextFormField, isLastField } = useFormField({
       ref: inputRef,
+      id,
+      nextFieldId,
+      nextFormFieldRef: nextFormField,
       hasFocusCallback: true,
     });
+
     const [returnKeyType, setReturnKeyType] = React.useState(
-      props.returnKeyType || 'next',
+      rest.returnKeyType || 'next',
     );
-    const {
-      label,
-      labelPosition = 'beforeInput',
-      nextFormField,
-      ...rest
-    } = props;
+
+    /*block:start*/
+    const { noUndefinedProperty } = useChecks();
+
+    const debugStyle = {
+      ...noUndefinedProperty({
+        properties: { label },
+        property: 'label',
+        rule: 'NO_FORM_LABEL',
+      }),
+      ...(hasValidation
+        ? noUndefinedProperty({
+            // @ts-ignore
+            properties: { error },
+            property: 'error',
+            rule: 'NO_FORM_ERROR',
+          })
+        : {}),
+    };
+
+    const style = applyStyle({ style: rest.style || {}, debugStyle });
+    /*block:end*/
 
     const showLabelBeforeInput = labelPosition === 'beforeInput';
 
     const accessibilityLabel = React.useMemo(
-      () => generateAccessibilityLabelFromProps(props),
-      [props],
+      () => maybeGenerateStringFromElement(label, rest.accessibilityLabel),
+      [label, rest.accessibilityLabel],
     );
 
     const accessibilityHiddenLabel = React.useMemo(
@@ -62,42 +114,58 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
     ) => {
       rest?.onSubmitEditing?.(event);
 
-      focusNextFormField(nextFormField);
+      focusNextFormField();
     };
 
     const checkReturnKeyType = (event: LayoutChangeEvent) => {
       const setReturnKeyTypeAsDone =
-        isLastField() && props.returnKeyType == null;
+        isLastField() && rest.returnKeyType == null;
 
       if (setReturnKeyTypeAsDone) {
         setReturnKeyType('done');
       }
 
-      props.onLayout?.(event);
+      rest.onLayout?.(event);
     };
 
-    /*block:start*/
-    noUndefinedProperty({
-      properties: props,
-      property: 'label',
-      rule: 'NO_FORM_LABEL',
-    });
-    /*block:end*/
+    const errorText = React.useMemo(() => {
+      return hasValidation
+        ? maybeGenerateStringFromElement(error, rest.errorText)
+        : '';
+    }, [hasValidation, error, rest.errorText]);
+
+    const renderError = () => {
+      return (
+        <HideChildrenFromAccessibilityTree>
+          {error}
+        </HideChildrenFromAccessibilityTree>
+      );
+    };
+
+    const fullAccessibilityHint = [accessibilityHint || '', errorText || '']
+      .filter(item => item.length > 0)
+      ?.join(',');
 
     return (
       <>
         {showLabelBeforeInput ? accessibilityHiddenLabel : null}
+        {hasError && errorPosition === 'belowLabel' ? renderError() : null}
         <RNTextInput
           // @ts-ignore
           ref={inputRef}
           key={returnKeyType}
-          accessibilityLabel={accessibilityLabel}
           returnKeyType={returnKeyType}
           {...rest}
+          /*block:start*/
+          style={style}
+          /*block:end*/
+          accessibilityLabel={accessibilityLabel}
+          accessibilityHint={fullAccessibilityHint}
           onSubmitEditing={handleOnSubmitEditing}
           onLayout={checkReturnKeyType}
         />
         {showLabelBeforeInput ? null : accessibilityHiddenLabel}
+        {hasError && errorPosition === 'afterInput' ? renderError() : null}
       </>
     );
   },

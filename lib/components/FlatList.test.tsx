@@ -1,6 +1,6 @@
 import { flushMicrotasksQueue, render } from '@testing-library/react-native';
 import * as React from 'react';
-import { AccessibilityInfo } from 'react-native';
+import { AccessibilityInfo, Platform } from 'react-native';
 
 import { FlatList } from './FlatList';
 
@@ -9,6 +9,8 @@ beforeEach(() => {
 
   AccessibilityInfo.announceForAccessibility = jest.fn();
 });
+
+Platform.OS = 'android';
 
 describe('FlatList', () => {
   describe('listType "dynamic"', () => {
@@ -185,29 +187,14 @@ describe('FlatList', () => {
     `(
       'does not announce the number of items displayed when the data changes',
       ({ sliceStart, sliceEnd }) => {
-        const messages: Record<string, string> = {
-          singular: '%count% item found',
-          plural: '%count% items found',
-        };
-
         const renderAPI = render(
-          <FlatList
-            data={DATA}
-            listType="static"
-            // @ts-ignore
-            accessibilitySingularMessage={messages.singular}
-            accessibilityPluralMessage={messages.plural}
-            renderItem={() => null}
-          />,
+          <FlatList data={DATA} listType="static" renderItem={() => null} />,
         );
 
         renderAPI.update(
           <FlatList
             data={DATA.slice(sliceStart, sliceEnd)}
             listType="static"
-            // @ts-ignore
-            accessibilitySingularMessage={messages.singular}
-            accessibilityPluralMessage={messages.plural}
             renderItem={() => null}
           />,
         );
@@ -217,7 +204,160 @@ describe('FlatList', () => {
         ).not.toHaveBeenCalled();
       },
     );
+
+    it('uses the given rowCount when specified', () => {
+      const { toJSON } = render(
+        <FlatList
+          data={[]}
+          listType="static"
+          rowsCount={42}
+          renderItem={() => null}
+        />,
+      );
+
+      expect(toJSON()).toMatchInlineSnapshot(`
+        <View
+          columnsCount={1}
+          rowsCount={42}
+        >
+          <RCTScrollView
+            data={Array []}
+            getItem={[Function]}
+            getItemCount={[Function]}
+            keyExtractor={[Function]}
+            onContentSizeChange={[Function]}
+            onLayout={[Function]}
+            onMomentumScrollBegin={[Function]}
+            onMomentumScrollEnd={[Function]}
+            onScroll={[Function]}
+            onScrollBeginDrag={[Function]}
+            onScrollEndDrag={[Function]}
+            removeClippedSubviews={true}
+            renderItem={[Function]}
+            scrollEventThrottle={50}
+            stickyHeaderIndices={Array []}
+            viewabilityConfigCallbackPairs={Array []}
+          >
+            <View />
+          </RCTScrollView>
+        </View>
+      `);
+    });
+
+    it('divides the number of items by the number of columns', () => {
+      const { toJSON } = render(
+        <FlatList
+          data={DATA}
+          listType="static"
+          numColumns={2}
+          renderItem={() => null}
+        />,
+      );
+
+      expect(toJSON()).toMatchInlineSnapshot(`
+        <View
+          columnsCount={2}
+          rowsCount={2}
+        >
+          <RCTScrollView
+            data={
+              Array [
+                Object {
+                  "id": "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+                  "title": "Formidable",
+                },
+                Object {
+                  "id": "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
+                  "title": "React Native",
+                },
+                Object {
+                  "id": "58694a0f-3da1-471f-bd96-145571e29d72",
+                  "title": "Typescript",
+                },
+              ]
+            }
+            getItem={[Function]}
+            getItemCount={[Function]}
+            keyExtractor={[Function]}
+            onContentSizeChange={[Function]}
+            onLayout={[Function]}
+            onMomentumScrollBegin={[Function]}
+            onMomentumScrollEnd={[Function]}
+            onScroll={[Function]}
+            onScrollBeginDrag={[Function]}
+            onScrollEndDrag={[Function]}
+            removeClippedSubviews={true}
+            renderItem={[Function]}
+            scrollEventThrottle={50}
+            stickyHeaderIndices={Array []}
+            viewabilityConfigCallbackPairs={Array []}
+          >
+            <View>
+              <View
+                onLayout={[Function]}
+                style={null}
+              />
+              <View
+                onLayout={[Function]}
+                style={null}
+              />
+              <View
+                onLayout={[Function]}
+                style={null}
+              />
+            </View>
+          </RCTScrollView>
+        </View>
+      `);
+    });
+
+    it('sets rowsCount to 0 if the data is undefined', () => {
+      const { toJSON } = render(
+        <FlatList
+          data={undefined}
+          listType="static"
+          numColumns={2}
+          renderItem={() => null}
+        />,
+      );
+
+      expect(toJSON()).toMatchInlineSnapshot(`
+        <View
+          columnsCount={2}
+          rowsCount={0}
+        >
+          <RCTScrollView
+            getItem={[Function]}
+            getItemCount={[Function]}
+            keyExtractor={[Function]}
+            onContentSizeChange={[Function]}
+            onLayout={[Function]}
+            onMomentumScrollBegin={[Function]}
+            onMomentumScrollEnd={[Function]}
+            onScroll={[Function]}
+            onScrollBeginDrag={[Function]}
+            onScrollEndDrag={[Function]}
+            removeClippedSubviews={true}
+            renderItem={[Function]}
+            scrollEventThrottle={50}
+            stickyHeaderIndices={Array []}
+            viewabilityConfigCallbackPairs={Array []}
+          >
+            <View />
+          </RCTScrollView>
+        </View>
+      `);
+    });
   });
+});
+
+jest.mock('./ListWrapper', () => {
+  const { View } = jest.requireActual('react-native');
+
+  return {
+    // @ts-ignore
+    ListWrapper: props => <View {...props} />,
+  };
 });
 
 const DATA = [

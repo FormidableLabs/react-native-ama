@@ -19,6 +19,7 @@ const Highlight = ({ children, rule, small }) => {
   );
 };
 
+export const Must = () => <Highlight rule="MUST_NOT">MUST</Highlight>;
 export const MustNot = () => <Highlight rule="MUST_NOT">MUST_NOT</Highlight>;
 export const ShouldNot = () => (
   <Highlight rule="SHOULD_NOT">SHOULD_NOT</Highlight>

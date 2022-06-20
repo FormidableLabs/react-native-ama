@@ -26,11 +26,15 @@ export const useSwitch = (props: UseSwitch): UseSwitchReturn => {
     [props],
   );
 
+  let style = props.style || {};
+
   /*block:start*/
   const { debugStyle, onLayout } = useButtonChecks({
     ...props,
     accessibilityRole: 'switch',
   });
+
+  style = debugStyle;
   /*block:end*/
 
   return {
@@ -39,7 +43,7 @@ export const useSwitch = (props: UseSwitch): UseSwitchReturn => {
     ...props,
     /*block:start*/
     onLayout,
-    style: debugStyle,
+    style,
     /*block:end*/
   };
 };

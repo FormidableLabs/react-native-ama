@@ -1,12 +1,44 @@
+# Usage
+
+```jsx
 import * as React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
-import { Form, SwitchListItem, Text, TextInput } from 'react-native-ama';
+import { AMAProvider, useAMAContext, Form, SwitchListItem, Text, TextInput } from 'react-native-ama'
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react-navigation/native-stack';
 
-import { CTAPressable } from '../components/CTAPressable';
-import { Spacer } from '../components/Spacer';
-import { theme } from '../theme';
+const Stack = createNativeStackNavigator();
 
-export const FormScreen = () => {
+const App = () => {
+  return (
+    <AMAProvider>
+      <AppNavigator />
+    </AMAProvider>
+  );
+};
+
+const AppNavigator = () => {
+  const { reactNavigationScreenOptions } = useAMAContext();
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{
+          ...reactNavigationScreenOptions,
+        }}>
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            headerTitle: () => <Text autofocus title={'The header'} />,
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+export const HomeScreen = () => {
   const [emailAddress, setEmailAddress] = React.useState('');
   const [firstName, setFirstName] = React.useState('');
   const [lastName, setLastName] = React.useState('');
@@ -46,7 +78,6 @@ export const FormScreen = () => {
           hasError={invalidFields.firstName}
         />
 
-        <Spacer height="normal" />
         <SwitchListItem
           label={
             <Text style={styles.switchText}>
@@ -78,12 +109,9 @@ export const FormScreen = () => {
           hasError={invalidFields.lastName}
           ref={lastNameRef}
           onBlur={() => {
-            // @ts-ignore
             testKeyboardTrap && lastNameRef.current?.focus();
           }}
         />
-
-        <Spacer height="normal" />
 
         <TextInput
           style={styles.input}
@@ -93,8 +121,13 @@ export const FormScreen = () => {
           onChangeText={newText => setEmailAddress(newText)}
           hasValidation={false}
         />
-        <Spacer height="big" />
-        <CTAPressable title="Submit" onPress={handleOnSubmit} />
+        <Pressable
+            onPress={handleOnSubmit}
+            accessibilityLabel="Submit"
+            accessibiltiyRole="button"
+        >
+            <Text>Submit</Text>
+        </Pressable>
       </ScrollView>
     </Form>
   );
@@ -121,3 +154,6 @@ const styles = StyleSheet.create({
     marginVertical: theme.padding.normal,
   },
 });
+
+export default App;
+```

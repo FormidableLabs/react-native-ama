@@ -26,6 +26,7 @@ describe('TextInput', () => {
     render(
       <TextInput
         label={<Text testID="text">Test</Text>}
+        hasValidation={false}
         returnKeyType="done"
       />,
     );
@@ -41,6 +42,7 @@ describe('TextInput', () => {
       <TextInput
         label={<Text testID="text">Label</Text>}
         returnKeyType="done"
+        hasValidation={false}
       />,
     );
 
@@ -54,10 +56,12 @@ describe('TextInput', () => {
           Label
         </Text>,
         <TextInput
+          accessibilityHint=""
           accessibilityLabel="Label"
           onLayout={[Function]}
           onSubmitEditing={[Function]}
           returnKeyType="done"
+          style={Object {}}
         />,
       ]
     `);
@@ -69,16 +73,19 @@ describe('TextInput', () => {
         label={<Text testID="text"> Label after</Text>}
         labelPosition="afterInput"
         returnKeyType="done"
+        hasValidation={false}
       />,
     );
 
     expect(renderAPI.toJSON()).toMatchInlineSnapshot(`
       Array [
         <TextInput
+          accessibilityHint=""
           accessibilityLabel=" Label after"
           onLayout={[Function]}
           onSubmitEditing={[Function]}
           returnKeyType="done"
+          style={Object {}}
         />,
         <Text
           accessibilityElementsHidden={true}
@@ -91,12 +98,91 @@ describe('TextInput', () => {
     `);
   });
 
+  it('renders the given error after the label when errorPosition is "belowLabel"', () => {
+    const renderAPI = render(
+      <TextInput
+        label={<Text testID="text">the label</Text>}
+        returnKeyType="done"
+        hasValidation={true}
+        error={<Text>This is the error</Text>}
+        errorPosition="belowLabel"
+        hasError={true}
+      />,
+    );
+
+    expect(renderAPI.toJSON()).toMatchInlineSnapshot(`
+      Array [
+        <Text
+          accessibilityElementsHidden={true}
+          importantForAccessibility="no"
+          testID="text"
+        >
+          the label
+        </Text>,
+        <Text
+          accessibilityElementsHidden={true}
+          importantForAccessibility="no"
+        >
+          This is the error
+        </Text>,
+        <TextInput
+          accessibilityHint="This is the error"
+          accessibilityLabel="the label"
+          onLayout={[Function]}
+          onSubmitEditing={[Function]}
+          returnKeyType="done"
+          style={Object {}}
+        />,
+      ]
+    `);
+  });
+
+  it('renders the given error after the input when errorPosition is "afterInput"', () => {
+    const renderAPI = render(
+      <TextInput
+        label={<Text testID="text">the label</Text>}
+        returnKeyType="done"
+        hasValidation={true}
+        error={<Text>This is the error</Text>}
+        errorPosition="afterInput"
+        hasError={true}
+      />,
+    );
+
+    expect(renderAPI.toJSON()).toMatchInlineSnapshot(`
+      Array [
+        <Text
+          accessibilityElementsHidden={true}
+          importantForAccessibility="no"
+          testID="text"
+        >
+          the label
+        </Text>,
+        <TextInput
+          accessibilityHint="This is the error"
+          accessibilityLabel="the label"
+          onLayout={[Function]}
+          onSubmitEditing={[Function]}
+          returnKeyType="done"
+          style={Object {}}
+        />,
+        <Text
+          accessibilityElementsHidden={true}
+          importantForAccessibility="no"
+        >
+          This is the error
+        </Text>,
+      ]
+    `);
+  });
+
   it('hides the label from the screen readers', () => {
     const renderAPI = render(
       <TextInput
         label={<Text testID="text">Test</Text>}
         labelPosition="afterInput"
         returnKeyType="done"
+        hasValidation={false}
       />,
     );
 
@@ -105,6 +191,27 @@ describe('TextInput', () => {
     );
     expect(
       renderAPI.getByTestId('text').props.accessibilityElementsHidden,
+    ).toBe(true);
+  });
+
+  it('hides the error component from the screen readers', () => {
+    const renderAPI = render(
+      <TextInput
+        label={<Text>Test</Text>}
+        labelPosition="afterInput"
+        returnKeyType="done"
+        hasValidation={true}
+        error={<Text testID="error-test-id">This is the error</Text>}
+        errorPosition="afterInput"
+        hasError={true}
+      />,
+    );
+
+    expect(
+      renderAPI.getByTestId('error-test-id').props.importantForAccessibility,
+    ).toBe('no');
+    expect(
+      renderAPI.getByTestId('error-test-id').props.accessibilityElementsHidden,
     ).toBe(true);
   });
 
@@ -121,6 +228,7 @@ describe('TextInput', () => {
           label={<Text testID="text">Label</Text>}
           labelPosition="afterInput"
           testID="test-id"
+          hasValidation={false}
         />,
       );
 
@@ -143,6 +251,7 @@ describe('TextInput', () => {
           label={<Text testID="text">Label</Text>}
           labelPosition="afterInput"
           testID="test-id"
+          hasValidation={false}
         />,
       );
 
@@ -168,6 +277,7 @@ describe('TextInput', () => {
             labelPosition="afterInput"
             testID="test-id"
             returnKeyType="google"
+            hasValidation={false}
           />,
         );
 
@@ -188,6 +298,7 @@ describe('TextInput', () => {
             label={<Text>First name:</Text>}
             returnKeyType="done"
             testID="text-input"
+            hasValidation={false}
           />,
         );
 
@@ -202,6 +313,7 @@ describe('TextInput', () => {
             label={<Text>First name (required)*</Text>}
             returnKeyType="done"
             testID="text-input"
+            hasValidation={false}
           />,
         );
 
@@ -218,6 +330,7 @@ describe('TextInput', () => {
           returnKeyType="done"
           testID="text-input"
           accessibilityLabel="Please insert your first name"
+          hasValidation={false}
         />,
       );
 
@@ -243,6 +356,7 @@ describe('TextInput', () => {
         testID="text-input"
         accessibilityLabel="Please insert your first name"
         onSubmitEditing={fn}
+        hasValidation={false}
       />,
     );
 

@@ -21,7 +21,7 @@ export const StaticFlatList = React.forwardRef<
 
     const length = data?.length || 0;
 
-    return columns > 1 && length > 0 ? length / columns : length;
+    return Math.ceil(columns > 1 && length > 0 ? length / columns : length);
   }, [columns, data?.length, rowsCount]);
 
   return (
