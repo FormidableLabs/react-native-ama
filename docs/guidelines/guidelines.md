@@ -20,17 +20,17 @@ AMA guidelines are categorised as:
 
 ### Default Rules
 
-| Log key                                                               | Guideline     |
-| --------------------------------------------------------------------- | ------------- |
-| [CONTRAST_FAILED](/docs/advanced/contrast)                            | <MustNot />   |
-| [CONTRAST_FAILED_AAA](/docs/advanced/contrast)                        | <ShouldNot /> |
-| [MINIMUM_SIZE](/docs/advanced/minimum-size)                           | <MustNot />   |
-| [NO_ACCESSIBILITY_LABEL](docs/guidelines/accessibility-label)[^1] | <MustNot />   |
-| [NO_ACCESSIBILITY_ROLE](/docs/guidelines/accessibility-role) [^1] | <MustNot />   |
-| [NO_KEYBOARD_TRAP](/docs/guidelines/keyboard-trap) [^1]           | <MustNot />   |
-| [UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL](/docs/guidelines/uppercase-text)   | <MustNot />   |
-| [UPPERCASE_ACCESSIBILITY_LABEL](/docs/guidelines/uppercase-text)           | <MustNot />   |
-| [NO_UNDEFINED](/docs/guidelines/required-property)                         | <MustNot />   |
+| Log key                                                      | Guideline     |
+|--------------------------------------------------------------|---------------|
+| [CONTRAST_FAILED](./contrast.md)                             | <MustNot />   |
+| [CONTRAST_FAILED_AAA](./contrast.md)                         | <ShouldNot /> |
+| [MINIMUM_SIZE](./minimum-size.md)                            | <MustNot />   |
+| [NO_ACCESSIBILITY_LABEL](./accessibility-label)[^1]          | <MustNot />   |
+| [NO_ACCESSIBILITY_ROLE](./accessibility-role.md) [^1]        | <MustNot />   |
+| [NO_KEYBOARD_TRAP](./keyboard-trap.md) [^1]                  | <MustNot />   |
+| [UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL](./uppercase-text.md) | <MustNot />   |
+| [UPPERCASE_ACCESSIBILITY_LABEL](./uppercase-text.md)         | <MustNot />   |
+| [NO_UNDEFINED](./required-property.md)                       | <MustNot />   |
 
 ### Constants
 

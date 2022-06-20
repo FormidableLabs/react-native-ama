@@ -24,4 +24,4 @@ For some form controls, such as text fields, the label must not be focusable ind
 
 ## NO_FORM_LABEL
 
-This error is used when no label has been provided for the [TextInput](/docs/components/TextInput) component.
+This error is used when no label has been provided for the [TextInput](../components/TextInput.mdx) component.

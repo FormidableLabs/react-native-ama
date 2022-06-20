@@ -2,7 +2,7 @@
 
 The `<Form />` component provides a "local" context for the [`TextInput`](./TextInput.mdx), [`FormField`](./FormField.md) and [`SwitchListItem`](./SwitchListItem.md) components.
 
-The provider hosts the hosts the `ref` values used by the [TextInput](./TextInput.mdx) to know which [`returnKey`](/docs/components/TextInput#returnkeytype) and what would be the next field to focus.
+The provider hosts the hosts the `ref` values used by the [TextInput](./TextInput.mdx) to know which [`returnKey`](./TextInput.mdx#returnkeytype) and what would be the next field to focus.
 
 ## Usage
 

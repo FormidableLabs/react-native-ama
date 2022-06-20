@@ -1,6 +1,6 @@
 # Required property
 
-To avoid being a TypeScript-only library, AMA also performs the required property checks at runtime. For example if the [TextInput](/docs/components/Text) does not have the `label` property specified AMA throws an error.
+To avoid being a TypeScript-only library, AMA also performs the required property checks at runtime. For example if the [TextInput](../components/Text.md) does not have the `label` property specified AMA throws an error.
 
 ## NO_UNDEFINED
 
