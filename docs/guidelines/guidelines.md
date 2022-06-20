@@ -1,4 +1,4 @@
-import { MustNot, ShouldNot } from '@site/src/components';
+import { Must, MustNot, Should, ShouldNot } from '@site/src/components';
 
 # Guidelines
 
@@ -15,27 +15,30 @@ The library does not perform any accessibility check on the production build!
 
 AMA guidelines are categorised as:
 
-- <MustNot />: Those best practices are <b>enforced</b> and AMA to throw an error when fail
-- <ShouldNot />: Those best practices are <b>preferred</b> and AMA prints only prints a warning message when fail
+- <Must /> and <MustNot />: Those best practices are <b>enforced</b> and AMA overlays an error when fail
+- <Should /> and <ShouldNot />: Those best practices are <b>preferred</b> and AMA prints only prints a warning message when fail
 
 ### Default Rules
 
-| Log key                                                      | Guideline     |
-|--------------------------------------------------------------|---------------|
-| [CONTRAST_FAILED](./contrast.md)                             | <MustNot />   |
-| [CONTRAST_FAILED_AAA](./contrast.md)                         | <ShouldNot /> |
-| [MINIMUM_SIZE](./minimum-size.md)                            | <MustNot />   |
-| [NO_ACCESSIBILITY_LABEL](./accessibility-label)[^1]          | <MustNot />   |
-| [NO_ACCESSIBILITY_ROLE](./accessibility-role.md) [^1]        | <MustNot />   |
-| [NO_KEYBOARD_TRAP](./keyboard-trap.md) [^1]                  | <MustNot />   |
-| [UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL](./uppercase-text.md) | <MustNot />   |
-| [UPPERCASE_ACCESSIBILITY_LABEL](./uppercase-text.md)         | <MustNot />   |
-| [NO_UNDEFINED](./required-property.md)                       | <MustNot />   |
+| Log key                                                      | Guideline   |
+|--------------------------------------------------------------|-------------|
+| [CONTRAST_FAILED](./contrast.md)                             | <Must />    |
+| [CONTRAST_FAILED_AAA](./contrast.md)                         | <Should />  |
+| [FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE](./lists-grids)       | <Should />  |
+| [FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE](./lists-grids)         | <Must />    |
+| [MINIMUM_SIZE](./minimum-size.md)                            | <Must />    |
+| [NO_ACCESSIBILITY_LABEL](./accessibility-label)[^1]          | <Must />    |
+| [NO_ACCESSIBILITY_ROLE](./accessibility-rol) [^1]            | <Must />    |
+| [NO_FORM_LABEL](./forms)                                     | <Must />    |
+| [NO_FORM_ERROR](./forms)                                     | <Must />    |
+| [NO_KEYBOARD_TRAP](./keyboard-trap.md) [^1]                  | <MustNot /> |
+| [UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL](./uppercase-text.md) | <MustNot /> |
+| [UPPERCASE_ACCESSIBILITY_LABEL](./uppercase-text.md)         | <MustNot /> |
 
 ### Constants
 
 | Constant key               | Value |
-| -------------------------- | ----- |
+|----------------------------|-------|
 | CONTRAST_CHECKER_MAX_DEPTH | 5     |
 
 ### accessibilityLabelExceptions

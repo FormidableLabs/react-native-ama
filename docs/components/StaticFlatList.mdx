@@ -2,7 +2,7 @@ import { TalkBackList } from '@site/src/components';
 
 # StaticFlatList
 
-StaticFlatList is an extension of the React Native FlatList component [focused on accessibility].
+StaticFlatList extends the React Native FlatList component [focused on accessibility].
 
 ```jsx
 import { StaticFlatList } from 'react-native-ama';
@@ -22,5 +22,22 @@ import { StaticFlatList } from 'react-native-ama';
 
 <TalkBackList />
 
-To provide this accessibility feature AMA wraps the list in the custom native
-component: [ListWrapper](./ListWrapper.mdx).
+To provide this accessibility feature, AMA wraps the list in the custom native
+component: [ListWrapper](./ListWrapper).
+
+
+## Additional props
+
+### `rowsCount`
+
+The number of rows of the list/grid. If empty, the length of the data is used to calculate it and divided by `numColumns`.
+
+:::note
+
+When passing `rowsCount`, it is used as it is and is assumed that the number of columns has been taken into account.
+
+:::
+
+### `numColumns`
+
+The number of columns of the list.

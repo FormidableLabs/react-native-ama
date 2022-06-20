@@ -72,5 +72,19 @@ const customIsPlural = () => {
 };
 ```
 
+### `rowsCount`
+
+The number of rows of the list/grid. If empty, the length of the data is used to calculate it and divided by `numColumns`.
+
+:::note
+
+When passing `rowsCount`, it is used as it is and is assumed that the number of columns has been taken into account.
+
+:::
+
+### `numColumns`
+
+The number of columns of the list.
+
 [^1]: The announcement is made only when the list is filtered, and the number of items displayed is different from the original one
 [^2]: This is with the default behaviour that can be customised via the [isPlural](#isplural) prop

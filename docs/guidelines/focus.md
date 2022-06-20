@@ -10,7 +10,7 @@ When navigating to a new screen, make sure that the focus always starts from the
 
 :::tip
 
-The built-in [<Text />](/docs/components/Text) has the `autofocus` property that automatically sets the focus when it gets rendered for the first time.
+The built-in [<Text />](../components/Text) has the `autofocus` property that automatically sets the focus when it gets rendered for the first time.
 
 :::
 
@@ -26,7 +26,7 @@ When dealing with Drawers/BottomSheets, we need to take care of:
 
 When opening a modal window or drawer, the focus must be placed on or inside it; otherwise, the user remains in the active control and might not be aware or be able to reach the new content.
 
-A possible solution could be using the `autofocus` property on the built-in [<Text />](/docs/components/Text) component to automatically focus the drawer header
+A possible solution could be using the `autofocus` property on the built-in [<Text />](../components/Text) component to automatically focus the drawer header
 
 ### 2. Can be dismissed
 

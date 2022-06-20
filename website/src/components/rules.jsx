@@ -24,4 +24,7 @@ export const MustNot = () => <Highlight rule="MUST_NOT">MUST_NOT</Highlight>;
 export const ShouldNot = () => (
   <Highlight rule="SHOULD_NOT">SHOULD_NOT</Highlight>
 );
+export const Should = () => (
+  <Highlight rule="SHOULD_NOT">SHOULD</Highlight>
+);
 
