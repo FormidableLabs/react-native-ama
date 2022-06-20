@@ -38,7 +38,7 @@ The `accessibilityLabel` property is the first thing announced by the screen rea
 then, it announces its role. If the property is omitted, the user might have little to no clue what could happen if the
 element is triggered.
 
-[Check here for more info](/docs/guidelines/accessibility-label)
+[Check here for more info](../guidelines/accessibility-label.md)
 
 ## Example
 

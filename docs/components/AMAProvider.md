@@ -26,4 +26,4 @@ export type AMAContextValue = {
     };
 };
 ```
-Check [useAMAContext](/docs/hooks/useAMAContext) for more info.
+Check [useAMAContext](../hooks/useAMAContext.md) for more info.

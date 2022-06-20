@@ -5,7 +5,7 @@ import { MustNot } from '@site/src/components';
 
 ## No uppercase
 
-For [&lt;Text /&gt;](/docs/components/Text) elements AMA checks if the style has the `textTransform` property set to `uppercase`, and if so throws an error if the `accessibilityLabel` one is not set.
+For [&lt;Text /&gt;](../components/Text.md) elements AMA checks if the style has the `textTransform` property set to `uppercase`, and if so throws an error if the `accessibilityLabel` one is not set.
 It also checks that the accessibilityLabel provided for the various component is not all caps.
 
 ### Why `textTransform:uppercase` is bad for accessibility?

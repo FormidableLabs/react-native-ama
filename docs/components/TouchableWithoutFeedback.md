@@ -23,19 +23,19 @@ Compared to the default React Native component, this custom component:
 
 - Forces the use of `accessibilityRole` and `accessibilityLabel` <DevOnly />
 - `accessibilityState` has been removed as its states `busy`, `checked`, `selected`, `expanded` are exposed as a property
-- Performs a [contrast checker](/docs/guidelines/contrast) between its background color and its children color <DevOnly />
+- Performs a [contrast checker](../guidelines/contrast.md) between its background color and its children color <DevOnly />
 
 ### accessibilityRole
 
 The `accessibilityRole` property is used by the screen reader to announce the kind of element focused on. If the property is omitted, the user might have little to no clue what could happen if the element is triggered.
 
-[Check here for more info](/docs/guidelines/accessibility-role)
+[Check here for more info](../guidelines/accessibility-role.md)
 
 ### accessibilityLabel
 
 The `accessibilityLabel` property is the first thing announced by the screen reader when the elements gain the focus; then, it announces its role. If the property is omitted, the user might have little to no clue what could happen if the element is triggered.
 
-[Check here for more info](/docs/guidelines/accessibility-label)
+[Check here for more info](../guidelines/accessibility-label.md)
 
 ### Accessibility states
 
@@ -54,7 +54,7 @@ To simply the syntax, the custom component allows passing those states as proper
 
 ### Contrast checker
 
-The component performs a [contrast check](/docs/guidelines/contrast) between its background colour and the children's foreground when in dev mode.
+The component performs a [contrast check](../guidelines/contrast.md) between its background colour and the children's foreground when in dev mode.
 
 :::note
 AMA performs the check on both pressed and non-pressed states when passing a function as style.
@@ -62,7 +62,7 @@ AMA performs the check on both pressed and non-pressed states when passing a fun
 
 ### Minimum size
 
-The component uses the [onLayout](https://reactnative.dev/docs/layoutevent) prop to perform the [minium size check](/docs/guidelines/minimum-size).
+The component uses the [onLayout](https://reactnative.dev/docs/layoutevent) prop to perform the [minium size check](../guidelines/minimum-size.md).
 
 ## Additional Props
 

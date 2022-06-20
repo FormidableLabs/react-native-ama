@@ -115,7 +115,7 @@ This is used when a component has the `accessibilityLabel` prop in all caps.
 
 :::tip
 
-Is it possible to specify a list of allowed all caps accessibility labels, [more info here](/docs/guidelines/)
+Is it possible to specify a list of allowed all caps accessibility labels, [more info here](../guidelines/guidelines.md)
 :::
 
 ## Resources
