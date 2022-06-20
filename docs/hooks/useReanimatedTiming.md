@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
 
 Under the hood calls the reanimated [withTiming](https://docs.swmansion.com/react-native-reanimated/docs/api/animations/withTiming) function.
 
-If the given `propertyKey` is a motion one and [reduce motion](/docs/hooks/useAMAContext#isreducemotionenabled) is enabled, the force the duration to be 0, before calling `withTiming`.
+If the given `propertyKey` is a motion one and [reduce motion](./useAMAContext.md#isreducemotionenabled) is enabled, the force the duration to be 0, before calling `withTiming`.
 
 ### Syntax
 
@@ -115,7 +115,7 @@ value.value = withTiming('translateX', Math.random(), { duration: 300 });
 
 Under the hood calls the reanimated [withSpring](https://docs.swmansion.com/react-native-reanimated/docs/api/animations/withSpring) function.
 
-If the given `propertyKey` is a motion one and [reduce motion](/docs/hooks/useAMAContext#isreducemotionenabled) is enabled, then calls `withTiming` function with duration 0 instead.
+If the given `propertyKey` is a motion one and [reduce motion](./useAMAContext.md#isreducemotionenabled) is enabled, then calls `withTiming` function with duration 0 instead.
 
 ### Syntax
 

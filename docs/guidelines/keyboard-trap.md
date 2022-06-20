@@ -8,7 +8,7 @@ For example, if the user decides to navigate away from an input field, it must b
 
 # NO_KEYBOARD_TRAP <MustNot />
 
-This error is triggered by the [TextInput](/docs/components/TextInput) component if the next input field does not have the focus as expected.
+This error is triggered by the [TextInput](../components/TextInput.mdx) component if the next input field does not have the focus as expected.
 
 :::note
 
