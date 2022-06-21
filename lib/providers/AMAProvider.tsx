@@ -94,7 +94,6 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
     }
 
     return () => {
-      // @ts-ignore
       subscriptions.forEach(subscription => subscription.remove());
       AppState.removeEventListener('change', checkAndroidAnimationStatus);
     };
