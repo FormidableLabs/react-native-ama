@@ -6,6 +6,7 @@ import { AMAProvider, useAMAContext } from 'react-native-ama';
 
 import { BackButton } from './components/BackButton';
 import { Header } from './components/Header';
+import { BottomSheetScreen } from './screens/BottomSheet.screen';
 import { ExpandablePressableScreen } from './screens/ExpandablePressableScreen';
 import { FlatListScreen } from './screens/FlatList.screen';
 import { FlatListDynamicScreen } from './screens/FlatListDynamic.screen';
@@ -145,6 +146,14 @@ const AppNavigator = () => {
             headerTitle: () => (
               <Header title={'Static FlatList Demo'} autofocus />
             ),
+          }}
+        />
+        <Stack.Screen
+          name="BottomSheet"
+          component={BottomSheetScreen}
+          options={{
+            headerLeft: () => <BackButton />,
+            headerTitle: () => <Header title={'BottomSheet Demo'} autofocus />,
           }}
         />
       </Stack.Navigator>

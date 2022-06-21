@@ -27,4 +27,5 @@ export const MOTION_ANIMATIONS: (Partial<keyof ViewStyle> | 'scale')[] = [
   'marginTop',
   'marginHorizontal',
   'marginVertical',
+  'rotation',
 ];

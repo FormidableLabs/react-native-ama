@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { CTAPressable } from '../components/CTAPressable';
 import { Header } from '../components/Header';
@@ -41,6 +41,14 @@ export const HomeScreen = () => {
         <Spacer height={'normal'} />
         <CTAPressable title="FlatList" onPress={() => navigate('FlatList')} />
 
+        {/**/}
+        <Spacer height={'normal'} />
+
+        <CTAPressable
+          title="BottomSheet"
+          onPress={() => navigate('BottomSheet')}
+        />
+
         {/* */}
         <Spacer height={'big'} />
         <Header title="Hooks" />
@@ -54,6 +62,7 @@ export const HomeScreen = () => {
           title="useReanimatedTiming"
           onPress={() => navigate('ReanimatedReduceMotion')}
         />
+        <Spacer height={'normal'} />
       </ScrollView>
     </View>
   );

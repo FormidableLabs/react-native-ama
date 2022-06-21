@@ -11,6 +11,7 @@ export type Rule =
   | 'NO_FORM_ERROR'
   | 'FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE'
   | 'FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE'
+  | 'BOTTOM_SHEET_CLOSE_ACTION'
   | 'NO_KEYBOARD_TRAP';
 
 export type RuleAction = 'SHOULD_NOT' | 'MUST_NOT' | 'MUST' | 'SHOULD';
@@ -22,6 +23,7 @@ export const NON_OVERRIDABLE_RULES: Partial<Rule>[] = [
   'NO_UNDEFINED',
   'NO_FORM_LABEL',
   'FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE',
+  'BOTTOM_SHEET_CLOSE_ACTION',
 ];
 
 export const LOGGER_RULES: Record<Rule, RuleAction> = {
@@ -38,6 +40,7 @@ export const LOGGER_RULES: Record<Rule, RuleAction> = {
   NO_UNDEFINED: 'MUST_NOT',
   UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL: 'MUST_NOT',
   UPPERCASE_ACCESSIBILITY_LABEL: 'MUST_NOT',
+  BOTTOM_SHEET_CLOSE_ACTION: 'MUST',
 };
 
 export const CONTRAST_CHECKER_MAX_DEPTH = 5;
@@ -69,6 +72,8 @@ export const RULES_HELP: Record<Rule, string> = {
     'https://formidable.com/open-source/react-native-ama/docs/guidelines/lists',
   FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE:
     'https://formidable.com/open-source/react-native-ama/docs/guidelines/lists',
+  BOTTOM_SHEET_CLOSE_ACTION:
+    'https://formidable.com/open-source/react-native-ama/docs/guidelines/bottomsheet',
 };
 
 export const canRuleBeOverridden = (rule: Rule) => {

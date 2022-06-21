@@ -3,7 +3,6 @@ import { Dimensions, StyleSheet, View } from 'react-native';
 import { Text, useReanimatedTiming } from 'react-native-ama';
 import Animated, {
   useAnimatedStyle,
-  useDerivedValue,
   useSharedValue,
 } from 'react-native-reanimated';
 

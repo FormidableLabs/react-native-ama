@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import { Animated } from 'react-native';
 
 import * as AMAProvider from '../providers/AMAProvider';
-import { useAccessibleAnimation } from './useAccessibleAnimation';
+import { useAccessibleAnimation } from 'lib/hooks/useAnimation';
 
 beforeEach(() => {
   jest.clearAllMocks();

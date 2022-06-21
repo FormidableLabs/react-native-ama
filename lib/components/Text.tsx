@@ -5,14 +5,9 @@ import { useFocus } from '../hooks/useFocus';
 import { ERROR_STYLE } from '../internal/error.style';
 import { useChecks } from '../internal/useChecks';
 
-export type TextProps = RNTextProps &
-  (
-    | {
-        autofocus?: true;
-        accessibilityRole: 'header';
-      }
-    | { autofocus?: false }
-  );
+export type TextProps = RNTextProps & {
+  autofocus?: boolean;
+};
 
 export const Text: React.FC<TextProps> = ({ autofocus, ...rest }) => {
   const textRef = React.useRef<RNText>(null);

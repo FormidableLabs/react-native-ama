@@ -11,4 +11,5 @@ export type RootStackParamList = {
   ExpandablePressable: undefined;
   FlatListDynamic: undefined;
   FlatListStatic: undefined;
+  BottomSheet: undefined;
 };
