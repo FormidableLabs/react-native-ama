@@ -32,6 +32,9 @@ export const useChecks = () => {
   const fakeRandom = React.useRef('' + Date.now() + Math.random() * 42);
   const hasErrors = React.useRef(false);
   const failedTests = React.useRef<string[]>([]);
+  const shouldCheckLayout = React.useRef(true);
+  const layoutCheckTimeout = React.useRef<NodeJS.Timeout>();
+  const [minimumSizeFailed, setMinimumSizeFailed] = React.useState(false);
 
   const { trackError, removeError } = useAMAContext();
 
@@ -63,17 +66,16 @@ export const useChecks = () => {
       const action = getRuleAction(logParam.rule);
       const hasFailed = action === 'MUST_NOT' || action === 'MUST';
 
-      logFailure({ action, ...logParam });
-
       if (!hasFailed) {
         return;
-      } else if (hasFailed && index >= 0) {
+      } else if (index >= 0) {
         return;
       }
 
+      logFailure({ action, ...logParam });
+
       failedTests.current.push(name);
 
-      console.info(trackError);
       InteractionManager.runAfterInteractions(() => {
         trackError(fakeRandom.current);
       });
@@ -115,13 +117,40 @@ export const useChecks = () => {
     });
   };
 
+  const onLayout = (event: LayoutChangeEvent) => {
+    /**
+     * When the check fails there are situation when adding a border makes the
+     * component meet the minimum size requirement, and this causes a loop as the
+     * state is update continuously between true and false.
+     * To "avoid" that we wait at least 100ms before checking the size again, as
+     * this gives the dev time to hot-reload the changes.
+     */
+    if (!shouldCheckLayout.current) {
+      return;
+    }
+
+    shouldCheckLayout.current = false;
+
+    // @ts-ignore
+    clearTimeout(layoutCheckTimeout.current);
+
+    layoutCheckTimeout.current = setTimeout(() => {
+      shouldCheckLayout.current = true;
+    }, 100);
+
+    const result = checkMinimumSize(event);
+
+    setMinimumSizeFailed(Object.keys(result).length > 0);
+  };
+
   return {
     logResult,
     noUndefinedProperty,
     contrastChecker,
-    checkMinimumSize,
+    onLayout,
     accessibilityLabelChecker,
     uppercaseChecker,
     checkFocusTrap,
+    minimumSizeFailed,
   };
 };

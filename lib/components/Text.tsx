@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Text as RNText, TextProps as RNTextProps } from 'react-native';
 
 import { useFocus } from '../hooks/useFocus';
+import { ERROR_STYLE } from '../internal/error.style';
 import { useChecks } from '../internal/useChecks';
 
 export type TextProps = RNTextProps &
@@ -14,13 +15,21 @@ export type TextProps = RNTextProps &
   );
 
 export const Text: React.FC<TextProps> = ({ autofocus, ...rest }) => {
-  let style = rest.style || {};
   const textRef = React.useRef<RNText>(null);
 
   useFocus(autofocus ? textRef : undefined);
 
   /* block:start */
-  const { uppercaseChecker, accessibilityLabelChecker } = useChecks();
+  let style = rest.style || {};
+
+  const {
+    uppercaseChecker,
+    accessibilityLabelChecker,
+    noUndefinedProperty,
+    onLayout,
+    minimumSizeFailed,
+  } = useChecks();
+
   style = {
     ...(style as Record<string, any>),
     ...uppercaseChecker({
@@ -31,6 +40,14 @@ export const Text: React.FC<TextProps> = ({ autofocus, ...rest }) => {
     ...accessibilityLabelChecker({
       accessibilityLabel: rest.accessibilityLabel,
     }),
+    ...(rest.onPress
+      ? noUndefinedProperty({
+          properties: rest,
+          property: 'accessibilityRole',
+          rule: 'NO_ACCESSIBILITY_ROLE',
+        })
+      : {}),
+    ...(minimumSizeFailed ? ERROR_STYLE : {}),
   };
   /* block:end */
   const role = autofocus ? 'header' : rest.accessibilityRole;
@@ -42,6 +59,7 @@ export const Text: React.FC<TextProps> = ({ autofocus, ...rest }) => {
       accessibilityRole={role}
       /* block:start */
       style={style}
+      onLayout={rest.onPress ? onLayout : undefined}
       /* block:end */
     />
   );

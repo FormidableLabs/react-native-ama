@@ -22,6 +22,12 @@ export const TextScreen = () => {
           This screen header "Text Demo" gets autofocused by the SR because its
           `autofocus` property is set to true
         </Text>
+        <Text
+          onPress={() => {}}
+          accessibilityRole="button"
+          style={styles.textWithOnPress}>
+          Texts with onPress property must meet the minimum size criteria
+        </Text>
         <Spacer height="big" />
         <Header title="Text text with `textTransform: uppercase` property and no accessibilityLabel" />
         <Spacer height="normal" />
@@ -55,5 +61,9 @@ const styles = StyleSheet.create({
   },
   textTransform: {
     textTransform: 'uppercase',
+  },
+  textWithOnPress: {
+    marginTop: 12,
+    lineHeight: 24,
   },
 });
