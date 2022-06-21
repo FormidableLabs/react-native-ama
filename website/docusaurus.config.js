@@ -8,13 +8,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'React Native AMA',
   tagline: 'Accessible Mobile App Library for React Native',
-
-  url: 'https://react-native-ama.vercel.app',
-  baseUrl: '/',
-
-  // TODO: Re-enable with formideploy
-  // url: 'https://formidable.com',
-  // baseUrl: '/open-source/react-native-ama/',
+  url: 'https://formidable.com',
+  baseUrl: '/open-source/react-native-ama/',
   onBrokenLinks: 'error',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
