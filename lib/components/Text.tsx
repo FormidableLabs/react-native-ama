@@ -33,6 +33,16 @@ export const Text: React.FC<TextProps> = ({ autofocus, ...rest }) => {
     }),
   };
   /* block:end */
+  const role = autofocus ? 'header' : rest.accessibilityRole;
 
-  return <RNText ref={textRef} {...rest} style={style} />;
+  return (
+    <RNText
+      ref={textRef}
+      {...rest}
+      accessibilityRole={role}
+      /* block:start */
+      style={style}
+      /* block:end */
+    />
+  );
 };

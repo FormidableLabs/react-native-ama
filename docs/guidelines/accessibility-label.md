@@ -1,4 +1,4 @@
-import { MustNot } from '@site/src/components';
+import { Must } from '@site/src/components';
 
 # Accessibility Label
 
@@ -98,9 +98,9 @@ The word `CONTACT` is read correctly, but both screen readers spell the word `US
 
 A similar issue happens if a sentence contains the word **IT**, for example.
 
-## AMA Errors
+## AMA dev runtime errors
 
-### NO_ACCESSIBILITY_LABEL  <MustNot />
+### NO_ACCESSIBILITY_LABEL <Must />
 
 This error is used when a pressable element has no [accessibilityLabel](https://reactnative.dev/docs/accessibility#accessibilitylabel) defined.
 
@@ -109,7 +109,7 @@ This error is used when a pressable element has no [accessibilityLabel](https://
 This rule is mandatory and cannot be turned off!
 :::
 
-### UPPERCASE_ACCESSIBILITY_LABEL <MustNot />
+### UPPERCASE_ACCESSIBILITY_LABEL <Must />
 
 This is used when a component has the `accessibilityLabel` prop in all caps.
 

@@ -37,7 +37,7 @@ export const useDynamicList = ({
 
     if (!accessibilityPluralMessage?.includes('%count%')) {
       logResult('useDynamicFlatList', {
-        rule: 'FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE',
+        rule: 'FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE',
         message:
           'Special string %count% not found in accessibilityPluralMessage',
         extra: accessibilityPluralMessage,

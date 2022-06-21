@@ -9,5 +9,10 @@ module.exports = {
   },
   extends: ['@react-native-community'],
   plugins: ['jest', 'import'],
-  ignorePatterns: ['metro.config.js', 'dist/**/*', 'website/**/*'],
+  ignorePatterns: [
+    'metro.config.js',
+    'dist/**/*',
+    'website/**/*',
+    'coverage/**/*',
+  ],
 };

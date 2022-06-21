@@ -1,4 +1,4 @@
-import { MustNot } from '@site/src/components';
+import { Must } from '@site/src/components';
 
 # Accessibility Role
 
@@ -23,7 +23,9 @@ Let's consider the following example:
 
 In both cases, the user has no clue about the nature of the component the screen reader landed and/or if any action could be triggered and what could be the outcome of interacting with it.
 
-## NO_ACCESSIBILITY_ROLE <MustNot />
+## AMA dev runtime errors
+
+### NO_ACCESSIBILITY_ROLE <Must />
 
 This error is used when a pressable element has no [accessibilityRole](https://reactnative.dev/docs/accessibility#accessibilityrole) defined.
 

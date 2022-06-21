@@ -1,4 +1,4 @@
-import { MustNot, ShouldNot } from '@site/src/components';
+import { Must, ShouldNot } from '@site/src/components';
 
 # Contrast
 
@@ -12,10 +12,12 @@ The [minimum contrast](#contrast_failed) ratio expected is at least `4.5:1`, and
 Both Log level type and max depth level can be customised, [here for more info](./custom-log-rules.md)
 :::
 
-## CONTRAST_FAILED <MustNot />
+## AMA dev runtime errors
+
+### CONTRAST_FAILED <Must />
 
 This error is used when the contrast check between a component background and its children foreground one fails to reach the [AA accessibility level](https://www.w3.org/TR/WCAG21/#contrast-minimum).
 
-## CONTRAST_FAILED_AAA <ShouldNot />
+### CONTRAST_FAILED_AAA <ShouldNot />
 
 This code is used when the contrast check does not pass the [AAA level](https://www.w3.org/TR/WCAG21/#contrast-enhanced).

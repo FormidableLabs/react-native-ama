@@ -18,7 +18,7 @@ import {
   contrastChecker as contrastCheckerImplementation,
 } from './checks/contrastChecker';
 import {
-  NoUndefinedPropertyParams,
+  NoUndefinedProperty,
   noUndefinedProperty as noUndefinedPropertyImplementation,
 } from './checks/noUndefinedProperty';
 import { uppercaseChecker as uppercaseCheckerImplementation } from './checks/uppercaseChecker';
@@ -61,7 +61,7 @@ export const useChecks = () => {
       }
 
       const action = getRuleAction(logParam.rule);
-      const hasFailed = action === 'MUST_NOT';
+      const hasFailed = action === 'MUST_NOT' || action === 'MUST';
 
       logFailure({ action, ...logParam });
 
@@ -73,6 +73,7 @@ export const useChecks = () => {
 
       failedTests.current.push(name);
 
+      console.info(trackError);
       InteractionManager.runAfterInteractions(() => {
         trackError(fakeRandom.current);
       });
@@ -83,7 +84,7 @@ export const useChecks = () => {
     return hasErrors.current ? ERROR_STYLE : {};
   };
 
-  const noUndefinedProperty = <T>(params: NoUndefinedPropertyParams<T>) =>
+  const noUndefinedProperty = <T>(params: NoUndefinedProperty<T>) =>
     logResult(
       `noUndefinedProperty ${params.property as string}`,
       noUndefinedPropertyImplementation(params),

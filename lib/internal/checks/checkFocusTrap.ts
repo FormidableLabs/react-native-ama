@@ -16,9 +16,13 @@ export const checkFocusTrap = async ({
       const hasFocus = ref?.current?.isFocused() === shouldHaveFocus;
 
       if (!hasFocus) {
+        const message = shouldHaveFocus
+          ? 'The component did not receive the focus'
+          : 'The component did trap the focus';
+
         resolve({
           rule: 'NO_KEYBOARD_TRAP',
-          message: 'The component specified did not receive the focus',
+          message,
           // @ts-ignore
           extra: ref.current?._internalFiberInstanceHandleDEV?.memoizedProps,
         });

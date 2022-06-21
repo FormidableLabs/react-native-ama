@@ -1,4 +1,4 @@
-import { MustNot } from '@site/src/components';
+import { Must } from '@site/src/components';
 
 # Minimum Size
 
@@ -23,6 +23,8 @@ AMA prefers forcing a minimum size check instead of using [hitSlop](https://reac
 
 So, if the parent width or height is less than 44 or 48px, the touch area will not meet the minimum requirement. In contrast, `min-width` and `min-height` forces the component to have the minimum size preferred.
 
-## MINIMUM_SIZE <MustNot />
+## AMA dev runtime errors
+
+### MINIMUM_SIZE <Must />
 
 This error is used when a touchable area is less than [44x44px on iOS](https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/adaptivity-and-layout/) or [48x48dp on Android](https://support.google.com/accessibility/android/answer/7101858?hl=en-GB)

@@ -2,7 +2,7 @@ import React from 'react';
 import type { StyleProp, SwitchProps, ViewStyle } from 'react-native';
 import { StyleSheet, Switch } from 'react-native';
 
-import { generateAccessibilityLabelFromProps } from '../internal/generateAccessibilityLabelFromProps';
+import { maybeGenerateStringFromElement } from '../internal/maybeGenerateStringFromElement';
 import { FormField } from './FormField';
 import { HideChildrenFromAccessibilityTree } from './HideChildrenFromAccessibilityTree';
 import { SwitchWrapper } from './SwitchWrapper';
@@ -22,22 +22,19 @@ type SwitchListItemProps = Omit<
 export const SwitchListItemBase: React.FC<SwitchListItemProps> = ({
   children,
   testID,
-  ...props
+  label,
+  labelPosition = 'left',
+  style = {},
+  switchStyle = {},
+  value,
+  onValueChange,
+  ...rest
 }) => {
-  const {
-    label,
-    labelPosition = 'left',
-    style = {},
-    switchStyle = {},
-    value,
-    onValueChange,
-    ...rest
-  } = props;
   const isLabelPositionLeft = labelPosition === 'left';
 
   const accessibilityLabel = React.useMemo(
-    () => generateAccessibilityLabelFromProps(props),
-    [props],
+    () => maybeGenerateStringFromElement(label, rest.accessibilityLabel),
+    [label, rest.accessibilityLabel],
   );
 
   return (

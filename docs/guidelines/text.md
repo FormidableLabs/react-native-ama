@@ -1,11 +1,14 @@
 import { MustNot } from '@site/src/components';
 
-# Uppercase Text
+# Text
+
+
+## No uppercase
 
 For [&lt;Text /&gt;](../components/Text.md) elements AMA checks if the style has the `textTransform` property set to `uppercase`, and if so throws an error if the `accessibilityLabel` one is not set.
 It also checks that the accessibilityLabel provided for the various component is not all caps.
 
-## Why `textTransform:uppercase` is bad for accessibility?
+### Why `textTransform:uppercase` is bad for accessibility?
 
 Besides [all CAPS](https://www.mity.com.au/blog/writing-readable-content-and-why-all-caps-is-so-hard-to-read) being bad for readability, it can also change the inflexion of the screen reader voice or in some cases can cause some words to be read as separate characters.
 
@@ -35,15 +38,15 @@ If we inspect the layout view on Android using: `adb shell uiautomator dump`, we
 
 So, React Native converts the text to `UPPERCASE` and this version of the text is used by the Screen Reader.
 
-### No inflection
+#### No inflection
 
 Both Talkback and VoiceOver reads the words with the same flat tone, which becomes more noticeable with long sentences.
 
-### Wrong spelling
+#### Wrong spelling
 
 Some words could be misinterpreted, causing the screen readers to read a word as separate characters.
 
-#### Example: `ADD TO THE CART`
+##### Example: `ADD TO THE CART`
 
 ```jsx
 <Pressable accessibilityLabel="ADD TO THE CART">...</Pressable> 
@@ -58,7 +61,7 @@ This is how the different screen readers handle the uppercase label:
 In this case, VoiceOver does the spelling of the word `ADD` while talkback reads it correctly.
 The remaining words are read correctly by both screen readers.
 
-#### Example: `CONTACT US`
+##### Example: `CONTACT US`
 
 | Voice Over   | Talkback     |
 |--------------|--------------|
@@ -73,6 +76,10 @@ A similar issue happens if a sentence contains the word **IT**, for example.
 ### UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL <MustNot />
 
 This is used when a component uses the `textTransform: uppercase` style without providing an accessible label.
+
+## Known issues
+
+- Nested Text components with onPress property are not accessible [https://github.com/facebook/react-native/issues/24515](https://github.com/facebook/react-native/issues/24515)
 
 ## Resources
 

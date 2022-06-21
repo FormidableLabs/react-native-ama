@@ -18,6 +18,7 @@ export type FormContextValue = {
 type FormRef = {
   ref: React.RefObject<any>;
   hasFocusCallback: boolean;
+  id: string | undefined;
 };
 
 const DEFAULT_VALUES: FormContextValue = {

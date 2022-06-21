@@ -1,4 +1,4 @@
-# Lists
+# Lists & Grids
 
 ## Number of results
 

@@ -25,7 +25,7 @@ export const DynamicFlatList = React.forwardRef<
     forwardedRef,
   ) => {
     const { rowsCount, columnsCount } = useDynamicList({
-      data: data || [],
+      data: data!,
       accessibilityPluralMessage,
       accessibilitySingularMessage,
       numColumns: rest.numColumns,

@@ -24,7 +24,7 @@ type AccessibilityEvents = Exclude<AccessibilityChangeEventName, 'change'>;
 type AccessibilityInfoEvents = {
   [key in AccessibilityEvents]: Exclude<
     keyof AMAContextValue,
-    'reactNavigationScreenOptions' | 'trackError' | 'removeError' | '_idRefs'
+    'reactNavigationScreenOptions' | 'trackError' | 'removeError'
   >;
 };
 
@@ -44,7 +44,7 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
   const handleAccessibilityInfoChanged = (
     key: Exclude<
       keyof AMAContextValue,
-      'reactNavigationScreenOptions' | 'trackError' | '_idRefs' | 'removeError'
+      'reactNavigationScreenOptions' | 'trackError' | 'removeError'
     >,
   ) => {
     return (newValue: boolean) => {
