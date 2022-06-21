@@ -2,6 +2,7 @@ import { render } from '@testing-library/react-native';
 import * as React from 'react';
 
 import * as UseFocus from '../hooks/useFocus';
+import { ERROR_STYLE } from '../internal/error.style';
 import * as UseChecks from '../internal/useChecks';
 import { Text } from './Text';
 
@@ -13,14 +14,22 @@ beforeEach(() => {
 describe('Text', () => {
   let accessibilityLabelChecker: jest.Mock;
   let uppercaseChecker: jest.Mock;
+  let onLayout: jest.Mock;
+  let noUndefinedProperty: jest.Mock;
+  let minimumSizeFailed = false;
 
   beforeEach(function () {
     accessibilityLabelChecker = jest.fn();
+    noUndefinedProperty = jest.fn();
     uppercaseChecker = jest.fn();
+    onLayout = jest.fn();
 
     jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
       accessibilityLabelChecker,
+      noUndefinedProperty,
       uppercaseChecker,
+      onLayout,
+      minimumSizeFailed,
     } as any);
   });
 
@@ -76,4 +85,34 @@ describe('Text', () => {
       });
     },
   );
+
+  it('performs minimumSize check if the onPress property is not undefined', () => {
+    const { getByTestId } = render(
+      <Text testID="text" onPress={() => {}}>
+        Test me
+      </Text>,
+    );
+
+    expect(getByTestId('text').props.onLayout).toBe(onLayout);
+  });
+
+  it('applies the ERROR_STYLE when the minimum size check fails', () => {
+    minimumSizeFailed = true;
+
+    jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
+      accessibilityLabelChecker,
+      noUndefinedProperty,
+      uppercaseChecker,
+      onLayout,
+      minimumSizeFailed,
+    } as any);
+
+    const { getByTestId } = render(
+      <Text testID="text" onPress={() => {}}>
+        Test me
+      </Text>,
+    );
+
+    expect(getByTestId('text').props.style).toEqual(ERROR_STYLE);
+  });
 });

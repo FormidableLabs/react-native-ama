@@ -43,7 +43,7 @@ describe('useChecks', () => {
   );
 
   it.each(['SHOULD', 'SHOULD_NOT'])(
-    'does not tracks the error if the rule is %s',
+    'does not track the error if the rule is %s',
     ruleValue => {
       const spy = jest.spyOn(console, 'warn');
 

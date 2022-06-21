@@ -7,7 +7,7 @@ import { Text } from 'react-native-ama';
 
 <Text autofocus>I'm pressable</Text>;
 ```
-
+ 
 ## Accessibility improvements
 
 Compared to the default React Native component, this one performs the following checks at runtime:

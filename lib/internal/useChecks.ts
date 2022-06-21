@@ -66,13 +66,15 @@ export const useChecks = () => {
       const action = getRuleAction(logParam.rule);
       const hasFailed = action === 'MUST_NOT' || action === 'MUST';
 
+      if (index < 0) {
+        logFailure({ action, ...logParam });
+      }
+
       if (!hasFailed) {
         return;
       } else if (index >= 0) {
         return;
       }
-
-      logFailure({ action, ...logParam });
 
       failedTests.current.push(name);
 
