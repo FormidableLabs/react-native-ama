@@ -9,12 +9,12 @@ export const useTimedAction = () => {
   const onTimeout = React.useCallback(
     async (callback: () => void, milliseconds: number) => {
       if (isScreenReaderEnabled && Platform.OS === 'ios') {
-        return;
+        return new Promise<void>(resolve => {
+          resolve();
+        });
       }
 
-      const timeout = await AccessibilityInfo.getRecommendedTimeoutMillis(
-        milliseconds,
-      );
+      const timeout = await getRecommendedTimeoutMillis(milliseconds);
 
       setTimeout(callback, timeout);
     },
@@ -25,3 +25,13 @@ export const useTimedAction = () => {
     onTimeout,
   };
 };
+
+async function getRecommendedTimeoutMillis(
+  milliseconds: number,
+): Promise<number> {
+  return Platform.OS === 'android'
+    ? await AccessibilityInfo.getRecommendedTimeoutMillis(milliseconds)
+    : new Promise(resolve => {
+        resolve(milliseconds);
+      });
+}

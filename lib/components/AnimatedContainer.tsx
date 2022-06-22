@@ -4,41 +4,48 @@ import type { ViewProps, ViewStyle } from 'react-native';
 import Animated, { AnimateProps } from 'react-native-reanimated';
 
 import {
-  AnimatedViewStyle,
+  AnimatedEntryViewStyle,
+  AnimatedExitViewStyle,
   useReanimatedAnimationBuilder,
 } from '../hooks/useReanimatedAnimationBuilder';
+import { AutofocusContainer } from './AutofocusContainer';
 
 type UseReanimated = Omit<AnimateProps<ViewProps>, 'entering' | 'exiting'> & {
-  from: AnimatedViewStyle;
-  to: AnimatedViewStyle;
-  exitFrom?: AnimatedViewStyle;
+  from: AnimatedEntryViewStyle;
+  to: AnimatedEntryViewStyle | AnimatedExitViewStyle;
+  exitFrom?: AnimatedExitViewStyle;
   style?: ViewStyle | ViewStyle[];
-  duration: number;
+  duration?: number;
+  autofocus?: boolean;
 };
 
-export const AnimatedContainer = ({
-  from,
-  to,
-  exitFrom,
-  duration,
-  style,
-  children,
-  ...rest
-}: PropsWithChildren<UseReanimated>) => {
-  const { entering, exiting } = useReanimatedAnimationBuilder({
-    from,
-    to,
-    exitFrom,
-    duration,
-  });
+export const AnimatedContainer = React.forwardRef<
+  Animated.View,
+  PropsWithChildren<UseReanimated>
+>(
+  (
+    { from, to, exitFrom, duration = 300, style, autofocus, children, ...rest },
+    forwardRef,
+  ) => {
+    const { entering, exiting } = useReanimatedAnimationBuilder({
+      from,
+      to,
+      exitFrom,
+      duration,
+    });
 
-  return (
-    <Animated.View
-      style={[style]}
-      entering={entering}
-      exiting={exiting}
-      {...rest}>
-      {children}
-    </Animated.View>
-  );
-};
+    const Wrapper = autofocus ? AutofocusContainer : React.Fragment;
+    return (
+      <Wrapper>
+        <Animated.View
+          style={[style]}
+          entering={entering}
+          exiting={exiting}
+          ref={forwardRef}
+          {...rest}>
+          {children}
+        </Animated.View>
+      </Wrapper>
+    );
+  },
+);

@@ -14,7 +14,6 @@ export * from './components/StaticFlatList';
 export * from './components/ListWrapper';
 export * from './components/SwitchWrapper';
 export * from './components/SwitchListItem';
-export * from './components/HideChildrenFromAccessibilityTree';
 export * from './components/ExpandablePressable';
 export * from './components/BottomSheet';
 export * from './components/AnimatedContainer';

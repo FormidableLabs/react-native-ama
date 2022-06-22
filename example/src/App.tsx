@@ -14,11 +14,12 @@ import { FlatListStaticScreen } from './screens/FlatListStatic.screen';
 import { FormScreen } from './screens/Form.screen';
 import { HomeScreen } from './screens/Home.screen';
 import { PressableScreen } from './screens/Pressable.screen';
-import { ReanimatedReduceMotionScreen } from './screens/ReanimatedReduceMotion.screen';
-import { ReduceMotionScreen } from './screens/ReduceMotion.screen';
 import { TextScreen } from './screens/Text.screen';
 import { TouchableOpacityScreen } from './screens/TouchableOpacity.screen';
 import { TouchableWithoutFeedbackScreen } from './screens/TouchableWithoutFeedback';
+import { UseAnimationScreen } from './screens/UseAnimationScreen';
+import { UseReanimatedTimingScreen } from './screens/UseReanimatedTimingScreen';
+import { UseTimedActionScreen } from './screens/UseTimedAction.screen';
 import type { RootStackParamList } from './types';
 
 const App = () => {
@@ -83,8 +84,8 @@ const AppNavigator = () => {
           }}
         />
         <Stack.Screen
-          name="ReduceMotion"
-          component={ReduceMotionScreen}
+          name="UseAnimation"
+          component={UseAnimationScreen}
           options={{
             headerLeft: () => <BackButton />,
             headerTitle: () => (
@@ -93,8 +94,8 @@ const AppNavigator = () => {
           }}
         />
         <Stack.Screen
-          name="ReanimatedReduceMotion"
-          component={ReanimatedReduceMotionScreen}
+          name="UseReanimatedTiming"
+          component={UseReanimatedTimingScreen}
           options={{
             headerLeft: () => <BackButton />,
             headerTitle: () => (
@@ -154,6 +155,16 @@ const AppNavigator = () => {
           options={{
             headerLeft: () => <BackButton />,
             headerTitle: () => <Header title={'BottomSheet Demo'} autofocus />,
+          }}
+        />
+        <Stack.Screen
+          name="UseTimedAction"
+          component={UseTimedActionScreen}
+          options={{
+            headerLeft: () => <BackButton />,
+            headerTitle: () => (
+              <Header title={'useTimedAction Demo'} autofocus />
+            ),
           }}
         />
       </Stack.Navigator>

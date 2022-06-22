@@ -13,7 +13,7 @@ type UseAnimation = {
   skipIfReduceMotionEnabled?: boolean;
 };
 
-export const useAccessibleAnimation = ({
+export const useAnimation = ({
   duration,
   useNativeDriver,
   from,
@@ -47,22 +47,18 @@ export const useAccessibleAnimation = ({
     });
   };
 
-  const animatedStyle = () => {
-    const { __hasOnlyMotionAnimation, ...style } = interpolateAnimationStates(
-      from,
-      to,
-      isReduceMotionEnabled,
-      progress,
-      reduceMotionProgress,
-    );
+  const { __hasOnlyMotionAnimation, ...style } = interpolateAnimationStates(
+    from,
+    to,
+    isReduceMotionEnabled,
+    progress,
+    reduceMotionProgress,
+  );
 
-    hasOnlyMotionAnimation.current = __hasOnlyMotionAnimation;
-
-    return style;
-  };
+  hasOnlyMotionAnimation.current = __hasOnlyMotionAnimation;
 
   return {
-    animatedStyle,
+    animatedStyle: style,
     progress,
     play,
   };

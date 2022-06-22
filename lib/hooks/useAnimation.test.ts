@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import { Animated } from 'react-native';
 
 import * as AMAProvider from '../providers/AMAProvider';
-import { useAccessibleAnimation } from 'lib/hooks/useAnimation';
+import { useAnimation } from './useAnimation';
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -10,7 +10,7 @@ beforeEach(() => {
 
 let timing = jest.spyOn(Animated, 'timing');
 
-describe('useAccessibleAnimations', () => {
+describe('useAnimation', () => {
   describe('Given isReduceMotionEnabled is false', () => {
     beforeEach(() => {
       jest.spyOn(AMAProvider, 'useAMAContext').mockReturnValue({
@@ -21,7 +21,7 @@ describe('useAccessibleAnimations', () => {
 
     it('Then plays only the main timing', () => {
       const { result } = renderHook(() =>
-        useAccessibleAnimation({
+        useAnimation({
           duration: 300,
           useNativeDriver: false,
           from: {
@@ -56,7 +56,7 @@ describe('useAccessibleAnimations', () => {
 
     it('Then plays the reduceMotion and the main progress', () => {
       const { result } = renderHook(() =>
-        useAccessibleAnimation({
+        useAnimation({
           duration: 300,
           useNativeDriver: false,
           from: {
@@ -87,7 +87,7 @@ describe('useAccessibleAnimations', () => {
 
     it('Then plays the main progress with duration 0 when is a motion-only animation', () => {
       const { result } = renderHook(() =>
-        useAccessibleAnimation({
+        useAnimation({
           duration: 300,
           useNativeDriver: false,
           from: {
@@ -116,7 +116,7 @@ describe('useAccessibleAnimations', () => {
 
     it('Then plays the main progress with duration 0 when skipIfReduceMotionEnabled is set to true', () => {
       const { result } = renderHook(() =>
-        useAccessibleAnimation({
+        useAnimation({
           duration: 300,
           useNativeDriver: false,
           skipIfReduceMotionEnabled: true,

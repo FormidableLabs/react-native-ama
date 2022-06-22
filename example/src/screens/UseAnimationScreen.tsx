@@ -1,7 +1,7 @@
 import React from 'react';
 import { Animated, Dimensions, StyleSheet, View } from 'react-native';
 import { Pressable, Text, useFocus } from 'react-native-ama';
-import { useAccessibleAnimation } from 'react-native-ama';
+import { useAnimation } from 'react-native-ama';
 
 import { CTAPressable } from '../components/CTAPressable';
 import { Spacer } from '../components/Spacer';
@@ -9,14 +9,14 @@ import { theme } from '../theme';
 
 const MAX_LINE_WIDTH = Dimensions.get('window').width - theme.padding.big * 2;
 
-export const ReduceMotionScreen = () => {
+export const UseAnimationScreen = () => {
   const [overlayProgressValue, setOverlayProgressValue] =
     React.useState<Animated.Value | null>(null);
   const viewRef = React.useRef(null);
 
   const { setFocus } = useFocus();
 
-  const { play, animatedStyle, progress } = useAccessibleAnimation({
+  const { play, animatedStyle, progress } = useAnimation({
     duration: 300,
     useNativeDriver: true,
     from: {
@@ -32,7 +32,7 @@ export const ReduceMotionScreen = () => {
     play: play2,
     animatedStyle: animatedStyle2,
     progress: progress2,
-  } = useAccessibleAnimation({
+  } = useAnimation({
     duration: 300,
     useNativeDriver: false,
     from: {
@@ -47,31 +47,28 @@ export const ReduceMotionScreen = () => {
     },
     skipIfReduceMotionEnabled: true,
   });
-  const { play: play3, animatedStyle: animatedStyle3 } = useAccessibleAnimation(
-    {
-      duration: 300,
-      useNativeDriver: false,
-      from: {
-        height: 2,
-        marginTop: -1,
-      },
-      to: {
-        height: 200,
-        marginTop: -100,
-      },
+  const { play: play3, animatedStyle: animatedStyle3 } = useAnimation({
+    duration: 300,
+    useNativeDriver: false,
+    from: {
+      height: 2,
+      marginTop: -1,
     },
-  );
-  const { play: overlayPlay, animatedStyle: overlayStyle } =
-    useAccessibleAnimation({
-      duration: 300,
-      useNativeDriver: true,
-      from: {
-        opacity: 0,
-      },
-      to: {
-        opacity: 1,
-      },
-    });
+    to: {
+      height: 200,
+      marginTop: -100,
+    },
+  });
+  const { play: overlayPlay, animatedStyle: overlayStyle } = useAnimation({
+    duration: 300,
+    useNativeDriver: true,
+    from: {
+      opacity: 0,
+    },
+    to: {
+      opacity: 1,
+    },
+  });
 
   const playAnimation1 = () => {
     setOverlayProgressValue(progress);

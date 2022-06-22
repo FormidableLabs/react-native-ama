@@ -103,6 +103,7 @@
       "<rootDir>/dist/",
       "<rootDir>/src/"
     ],
+    "collectCoverageFrom": ["lib/**/*.{ts,tsx}"],
     "coverageThreshold": {
       "global": {
         "statements": 94,

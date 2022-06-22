@@ -54,15 +54,21 @@ export const HomeScreen = () => {
         <Header title="Hooks" />
         <Spacer height={'normal'} />
         <CTAPressable
-          title="useAccessibleAnimations"
-          onPress={() => navigate('ReduceMotion')}
+          title="useAnimation"
+          onPress={() => navigate('UseAnimation')}
         />
         <Spacer height={'normal'} />
         <CTAPressable
           title="useReanimatedTiming"
-          onPress={() => navigate('ReanimatedReduceMotion')}
+          onPress={() => navigate('UseReanimatedTiming')}
         />
         <Spacer height={'normal'} />
+        <CTAPressable
+          title="useTimedAction"
+          onPress={() => navigate('UseTimedAction')}
+        />
+
+        <Spacer height={'big'} />
       </ScrollView>
     </View>
   );

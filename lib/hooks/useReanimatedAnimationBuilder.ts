@@ -1,13 +1,19 @@
 import type { ViewStyle } from 'react-native';
-import { withTiming } from 'react-native-reanimated';
+import {
+  EntryAnimationsValues,
+  EntryExitAnimationFunction,
+  ExitAnimationsValues,
+  StyleProps,
+  withTiming,
+} from 'react-native-reanimated';
 
 import { MOTION_ANIMATIONS } from '../internal/costants';
 import { useAMAContext } from '../providers/AMAProvider';
 
 type UseReanimatedAnimationBuilder = {
-  from: AnimatedViewStyle;
-  to: AnimatedViewStyle;
-  exitFrom?: AnimatedViewStyle;
+  from: AnimatedEntryViewStyle;
+  to: AnimatedEntryViewStyle | AnimatedExitViewStyle;
+  exitFrom?: AnimatedExitViewStyle;
   duration: number;
 };
 
@@ -19,28 +25,34 @@ export const useReanimatedAnimationBuilder = ({
 }: UseReanimatedAnimationBuilder) => {
   const { isReduceMotionEnabled } = useAMAContext();
 
-  const animationBuilder = (
-    initial: AnimatedViewStyle,
-    final: AnimatedViewStyle,
-  ) => {
-    return (values: Record<string, any>) => {
+  const animationBuilder = <TypeOfAnimation>(
+    initial: TypeOfAnimation,
+    final: TypeOfAnimation,
+  ): EntryExitAnimationFunction => {
+    return (values: EntryAnimationsValues | ExitAnimationsValues) => {
       'worklet';
 
       const animations = (function generateAnimations(startValues, endValues) {
         return Object.keys(startValues).reduce((outputAnimation, key) => {
-          const k: keyof AnimatedViewStyle = key as keyof AnimatedViewStyle;
+          const k: keyof TypeOfAnimation = key as keyof TypeOfAnimation;
           const toValue = endValues[k];
           const value = startValues[k];
           const mappedToValue =
+            // @ts-ignore
             typeof toValue === 'string' ? values[toValue] || 0 : toValue;
 
           const realDuration =
-            isReduceMotionEnabled && MOTION_ANIMATIONS.includes(k)
+            isReduceMotionEnabled &&
+            MOTION_ANIMATIONS.includes(key as keyof ViewStyle)
               ? 0
               : duration;
           const newValue = Array.isArray(value)
             ? value.map((item, index) =>
-                generateAnimations(item as ViewStyle, endValues?.[k]?.[index]),
+                generateAnimations(
+                  item as TypeOfAnimation,
+                  // @ts-ignore
+                  endValues?.[k]?.[index],
+                ),
               )
             : withTiming(mappedToValue, {
                 duration: realDuration,
@@ -49,20 +61,23 @@ export const useReanimatedAnimationBuilder = ({
           outputAnimation[k] = newValue;
 
           return outputAnimation;
-        }, {} as AnimatedViewStyle);
+        }, {} as TypeOfAnimation);
       })(initial, final);
 
-      const initialValues = (function generateInitialValues(startValues) {
+      const initialValues = (function generateInitialValues(
+        startValues,
+      ): StyleProps {
         return Object.entries(startValues).reduce((newList, [key, value]) => {
+          // @ts-ignore
           const mappedValue = typeof value === 'string' ? values[value] : value;
           const newValue = Array.isArray(value)
-            ? value.map(item => generateInitialValues(item))
+            ? value.map(item => generateInitialValues(item as TypeOfAnimation))
             : mappedValue;
 
-          newList[key] = newValue;
+          newList[key as keyof StyleProps] = newValue;
 
           return newList;
-        }, {} as AnimatedViewStyle);
+        }, {} as StyleProps);
       })(initial);
 
       return {
@@ -73,99 +88,87 @@ export const useReanimatedAnimationBuilder = ({
   };
 
   return {
-    entering: animationBuilder(from, to),
-    exiting: animationBuilder(to, exitFrom || from),
+    entering: animationBuilder<AnimatedEntryViewStyle>(from, to),
+    exiting: animationBuilder<AnimatedExitViewStyle>(to, exitFrom || from),
   };
 };
 
-export type AnimatedViewStyle = {
-  [key in keyof Omit<ViewStyle, 'transform'>]:
-    | ViewStyle[key]
-    | ReanimatedValues;
+export type AnimatedEntryViewStyle = ReanimatedStyle<ReanimatedEntryValues>;
+export type AnimatedExitViewStyle = ReanimatedStyle<ReanimatedExitValues>;
+
+type ReanimatedStyle<K> = {
+  [key in keyof Omit<ViewStyle, 'transform'>]: ViewStyle[key] | K;
 } & {
   transform?:
     | (
-        | PerpectiveTransform
-        | RotateTransform
-        | RotateXTransform
-        | RotateYTransform
-        | RotateZTransform
-        | ScaleTransform
-        | ScaleXTransform
-        | ScaleYTransform
-        | TranslateXTransform
-        | TranslateYTransform
-        | SkewXTransform
-        | SkewYTransform
-        | MatrixTransform
+        | PerpectiveTransform<K>
+        | RotateTransform<K>
+        | RotateXTransform<K>
+        | RotateYTransform<K>
+        | RotateZTransform<K>
+        | ScaleTransform<K>
+        | ScaleXTransform<K>
+        | ScaleYTransform<K>
+        | TranslateXTransform<K>
+        | TranslateYTransform<K>
+        | SkewXTransform<K>
+        | SkewYTransform<K>
+        | MatrixTransform<K>
       )[]
     | undefined;
 };
 
-interface PerpectiveTransform {
-  perspective: number | ReanimatedValues;
-}
+type PerpectiveTransform<K> = {
+  c: string | K;
+};
 
-interface RotateTransform {
-  rotate: string | ReanimatedValues;
-}
+type RotateTransform<K> = {
+  rotate: string | K;
+};
 
-interface RotateXTransform {
-  rotateX: string | ReanimatedValues;
-}
+type RotateXTransform<K> = {
+  rotateX: string | K;
+};
 
-interface RotateYTransform {
-  rotateY: string | ReanimatedValues;
-}
+type RotateYTransform<K> = {
+  rotateY: string | K;
+};
 
-interface RotateZTransform {
-  rotateZ: string | ReanimatedValues;
-}
+type RotateZTransform<K> = {
+  rotateZ: string | K;
+};
 
-interface ScaleTransform {
-  scale: number | ReanimatedValues;
-}
+type ScaleTransform<K> = {
+  scale: number | K;
+};
 
-interface ScaleXTransform {
-  scaleX: number | ReanimatedValues;
-}
+type ScaleXTransform<K> = {
+  scaleX: number | K;
+};
 
-interface ScaleYTransform {
-  scaleY: number | ReanimatedValues;
-}
+type ScaleYTransform<K> = {
+  scaleY: number | K;
+};
 
-interface TranslateXTransform {
-  translateX: number | ReanimatedValues;
-}
+type TranslateXTransform<K> = {
+  translateX: number | K;
+};
 
-interface TranslateYTransform {
-  translateY: number | ReanimatedValues;
-}
+type TranslateYTransform<K> = {
+  translateY: number | K;
+};
 
-interface SkewXTransform {
-  skewX: string | ReanimatedValues;
-}
+type SkewXTransform<K> = {
+  skewX: string | K;
+};
 
-interface SkewYTransform {
-  skewY: string | ReanimatedValues;
-}
+type SkewYTransform<K> = {
+  skewY: string | K;
+};
 
-interface MatrixTransform {
-  matrix: number[] | ReanimatedValues;
-}
+type MatrixTransform<K> = {
+  matrix: number[] | K;
+};
 
-type ReanimatedValues =
-  | 'targetOriginX'
-  | 'targetOriginY'
-  | 'targetWidth'
-  | 'targetHeight'
-  | 'targetGlobalOriginX'
-  | 'targetGlobalOriginY'
-  | 'currentOriginX'
-  | 'currentOriginY'
-  | 'currentWidth'
-  | 'currentHeight'
-  | 'currentGlobalOriginX'
-  | 'currentGlobalOriginY'
-  | 'windowHeight'
-  | 'windowWidth';
+type ReanimatedEntryValues = keyof EntryAnimationsValues;
+type ReanimatedExitValues = keyof ExitAnimationsValues;

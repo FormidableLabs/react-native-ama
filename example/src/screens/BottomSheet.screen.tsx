@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { AnimatedContainer, BottomSheet, Pressable } from 'react-native-ama';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { BottomSheet } from 'react-native-ama';
 
 import { CTAPressable } from '../components/CTAPressable';
 import { Header } from '../components/Header';
@@ -12,7 +12,7 @@ export const BottomSheetScreen: React.FC<TimedActionProps> = ({ children }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
-    <View style={styles.centeredView}>
+    <SafeAreaView style={styles.centeredView}>
       <BottomSheet
         visible={modalVisible}
         onRequestClose={() => {
@@ -35,7 +35,7 @@ export const BottomSheetScreen: React.FC<TimedActionProps> = ({ children }) => {
         title="Open bottom sheet"
         onPress={() => setModalVisible(true)}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

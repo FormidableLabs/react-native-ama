@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import * as React from 'react';
 import type { PropsWithChildren } from 'react';
 import {
@@ -11,20 +12,17 @@ import {
 import {
   GestureHandlerRootView,
   PanGestureHandler,
-  PanGestureHandlerGestureEvent,
   ScrollView,
 } from 'react-native-gesture-handler';
 import {
   SharedValue,
-  runOnJS,
-  useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
-  withTiming,
 } from 'react-native-reanimated';
 import Animated from 'react-native-reanimated';
 
 import { AnimatedContainer } from '../components/AnimatedContainer';
+import { useBottomSheetGestureHandler } from '../hooks/useBottomSheetGestureHandler';
 import { useChecks } from '../internal/useChecks';
 import { MINIMUM_TOUCHABLE_SIZE } from '../utils/minimumTouchableSize';
 
@@ -34,27 +32,31 @@ type BottomSheetProps = {
   bottomSheetStyle?: ViewStyle | ViewStyle[];
   lineStyle?: ViewStyle | ViewStyle[];
   closeActionAccessibilityLabel: string;
-  headerComponent: JSX.Element;
+  headerComponent?: JSX.Element;
   scrollViewStyle?: ViewStyle | ViewStyle[];
   animationDuration?: number;
+  overlayStyle?: ViewStyle | ViewStyle[];
   lineComponent?: JSX.Element | 'none';
   closeDistance?: number;
   scrollEnabled?: boolean;
+  testID?: string;
 };
 
 export const BottomSheet = ({
   children,
   visible,
   onRequestClose,
-  bottomSheetStyle = {},
   lineStyle = {},
+  bottomSheetStyle = {},
+  scrollViewStyle = {},
+  overlayStyle,
   closeActionAccessibilityLabel,
   headerComponent,
-  scrollViewStyle = {},
   animationDuration = 300,
   closeDistance = 0.7,
   lineComponent,
   scrollEnabled = false,
+  testID,
 }: React.PropsWithChildren<BottomSheetProps>) => {
   const [showContent, setShowContent] = React.useState(visible);
   const [isModalVisible, setIsModalVisible] = React.useState(true);
@@ -106,52 +108,61 @@ export const BottomSheet = ({
       transparent={true}
       visible={isModalVisible}
       onRequestClose={onRequestClose}
-      style={wrapperStyle}>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        {showContent ? (
-          <>
+      style={wrapperStyle}
+      testID={testID}>
+      {showContent ? (
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <AnimatedContainer
+            style={styles.overlay}
+            from={{ opacity: 0 }}
+            to={{ opacity: 1 }}
+            duration={animationDuration}>
+            <Pressable
+              style={[styles.closeButton, overlayStyle]}
+              accessibilityRole="button"
+              accessibilityLabel={closeActionAccessibilityLabel}
+              onPress={onRequestClose}
+              testID={`${testID}-overlay`}
+            />
+          </AnimatedContainer>
+          <Animated.View
+            style={[styles.contentWrapper, animatedStyle]}
+            testID={`${testID}-wrapper`}>
             <AnimatedContainer
-              style={styles.overlay}
-              from={{ opacity: 0 }}
-              to={{ opacity: 1 }}
-              duration={animationDuration}>
-              <Pressable
-                style={styles.closeButton}
-                accessibilityRole="button"
-                accessibilityLabel={closeActionAccessibilityLabel}
-                onPress={onRequestClose}
-              />
+              from={{ transform: [{ translateY: 'targetHeight' }] }}
+              to={{ transform: [{ translateY: 0 }] }}
+              exitFrom={{
+                transform: [{ translateY: 'currentHeight' }],
+              }}
+              duration={animationDuration}
+              style={[styles.content, bottomSheetStyle]}
+              onLayout={handleOnLayout}
+              testID={`${testID}-panel`}>
+              {lineComponent === 'none' ? null : (
+                <GestureHandler
+                  translateY={translateY}
+                  closeDistance={closeDistance}
+                  contentHeight={contentHeight}
+                  onRequestClose={onRequestClose}>
+                  {lineComponent || (
+                    <View
+                      style={[styles.line, lineStyle]}
+                      testID={`${testID}-line`}
+                    />
+                  )}
+                </GestureHandler>
+              )}
+              {headerComponent}
+              <ScrollView
+                style={scrollViewStyle}
+                scrollEnabled={scrollEnabled}
+                testID={`${testID}-scrollview`}>
+                {children}
+              </ScrollView>
             </AnimatedContainer>
-            <Animated.View style={[styles.contentWrapper, animatedStyle]}>
-              <AnimatedContainer
-                from={{ transform: [{ translateY: 'targetHeight' }] }}
-                to={{ transform: [{ translateY: 0 }] }}
-                exitFrom={{
-                  transform: [{ translateY: 'currentHeight' }],
-                }}
-                duration={animationDuration}
-                style={[styles.content, bottomSheetStyle]}
-                onLayout={handleOnLayout}>
-                {lineComponent === 'none' ? null : (
-                  <GestureHandler
-                    translateY={translateY}
-                    closeDistance={closeDistance}
-                    contentHeight={contentHeight}
-                    onRequestClose={onRequestClose}>
-                    {lineComponent || <View style={[styles.line, lineStyle]} />}
-                  </GestureHandler>
-                )}
-                {headerComponent}
-                <ScrollView
-                  style={scrollViewStyle}
-                  scrollEnabled={scrollEnabled}>
-                  {children}
-                </ScrollView>
-              </AnimatedContainer>
-            </Animated.View>
-          </>
-        ) : null}
-      </GestureHandlerRootView>
+          </Animated.View>
+        </GestureHandlerRootView>
+      ) : null}
     </Modal>
   );
 };
@@ -170,26 +181,11 @@ const GestureHandler = ({
   children,
   onRequestClose,
 }: GestureHandlerProps) => {
-  const gestureHandler = useAnimatedGestureHandler<
-    PanGestureHandlerGestureEvent,
-    { y: number }
-  >({
-    onStart: (_, context) => {
-      context.y = translateY.value;
-    },
-    onActive: (event, context) => {
-      translateY.value = Math.max(0, context.y + event.translationY);
-    },
-    onEnd: _ => {
-      const minimumDistanceToClose = contentHeight.value * (1 - closeDistance);
-      const shouldCloseBottomSheet = translateY.value > minimumDistanceToClose;
-
-      if (shouldCloseBottomSheet) {
-        runOnJS(onRequestClose)();
-      } else {
-        translateY.value = withTiming(0);
-      }
-    },
+  const { gestureHandler } = useBottomSheetGestureHandler({
+    translateY,
+    closeDistance,
+    contentHeight,
+    onRequestClose,
   });
 
   return (
