@@ -3,12 +3,14 @@ import { StyleSheet, Text, View } from 'react-native';
 import { AnimatedContainer, BottomSheet, Pressable } from 'react-native-ama';
 
 import { CTAPressable } from '../components/CTAPressable';
+import { Header } from '../components/Header';
 import { theme } from '../theme';
 
 type TimedActionProps = {};
 
 export const BottomSheetScreen: React.FC<TimedActionProps> = ({ children }) => {
   const [modalVisible, setModalVisible] = useState(false);
+
   return (
     <View style={styles.centeredView}>
       <BottomSheet
@@ -17,9 +19,13 @@ export const BottomSheetScreen: React.FC<TimedActionProps> = ({ children }) => {
           setModalVisible(!modalVisible);
         }}
         closeActionAccessibilityLabel="close bottomsheet"
-        style={styles.modalView}
-        header={'This is the bottom sheet'}
-        contentStyle={styles.modalViewContent}>
+        bottomSheetStyle={styles.modalView}
+        headerComponent={
+          <View style={{ paddingHorizontal: theme.padding.big }}>
+            <Header title="This is the bottom sheet" />
+          </View>
+        }
+        scrollViewStyle={styles.modalViewContent}>
         <CTAPressable
           onPress={() => setModalVisible(!modalVisible)}
           title="Close bottom sheet"
@@ -46,7 +52,6 @@ const styles = StyleSheet.create({
   },
   modalViewContent: {
     padding: theme.padding.big,
-    paddingBottom: 48,
-    paddingTop: 12,
+    paddingVertical: theme.padding.big,
   },
 });

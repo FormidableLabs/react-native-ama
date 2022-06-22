@@ -7,12 +7,14 @@ import { useAMAContext } from '../providers/AMAProvider';
 type UseReanimatedAnimationBuilder = {
   from: AnimatedViewStyle;
   to: AnimatedViewStyle;
+  exitFrom?: AnimatedViewStyle;
   duration: number;
 };
 
 export const useReanimatedAnimationBuilder = ({
   from,
   to,
+  exitFrom,
   duration,
 }: UseReanimatedAnimationBuilder) => {
   const { isReduceMotionEnabled } = useAMAContext();
@@ -63,9 +65,6 @@ export const useReanimatedAnimationBuilder = ({
         }, {} as AnimatedViewStyle);
       })(initial);
 
-      console.info(JSON.stringify(animations));
-      console.info('--', JSON.stringify(initialValues));
-
       return {
         initialValues,
         animations,
@@ -75,7 +74,7 @@ export const useReanimatedAnimationBuilder = ({
 
   return {
     entering: animationBuilder(from, to),
-    exiting: animationBuilder(to, from),
+    exiting: animationBuilder(to, exitFrom || from),
   };
 };
 
@@ -167,4 +166,6 @@ type ReanimatedValues =
   | 'currentWidth'
   | 'currentHeight'
   | 'currentGlobalOriginX'
-  | 'currentGlobalOriginY';
+  | 'currentGlobalOriginY'
+  | 'windowHeight'
+  | 'windowWidth';

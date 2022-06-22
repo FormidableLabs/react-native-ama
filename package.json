@@ -83,6 +83,7 @@
     "react-native": "0.66",
     "react-native-builder-bob": "^0.18.2",
     "react-native-fs": "^2.20.0",
+    "react-native-gesture-handler": "^2.4.2",
     "react-native-reanimated": "2.7",
     "react-test-renderer": "17",
     "release-it": "^14.2.2",
@@ -92,6 +93,7 @@
   "peerDependencies": {
     "react": ">=17.0.0",
     "react-native": ">=0.66",
+    "react-native-gesture-handler": "*",
     "react-native-reanimated": "*"
   },
   "jest": {

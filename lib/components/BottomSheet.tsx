@@ -1,43 +1,66 @@
 import * as React from 'react';
+import type { PropsWithChildren } from 'react';
 import {
+  LayoutChangeEvent,
   Modal,
   Pressable,
   StyleSheet,
-  Text,
   View,
   ViewStyle,
 } from 'react-native';
+import {
+  GestureHandlerRootView,
+  PanGestureHandler,
+  PanGestureHandlerGestureEvent,
+  ScrollView,
+} from 'react-native-gesture-handler';
+import {
+  SharedValue,
+  runOnJS,
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 
 import { AnimatedContainer } from '../components/AnimatedContainer';
 import { useChecks } from '../internal/useChecks';
+import { MINIMUM_TOUCHABLE_SIZE } from '../utils/minimumTouchableSize';
 
 type BottomSheetProps = {
   visible: boolean;
   onRequestClose: () => void;
-  style?: ViewStyle;
-  lineStyle?: ViewStyle;
+  bottomSheetStyle?: ViewStyle | ViewStyle[];
+  lineStyle?: ViewStyle | ViewStyle[];
   closeActionAccessibilityLabel: string;
-  header: string;
-  headerStyle?: ViewStyle;
-  contentStyle?: ViewStyle;
-  animationDuration: number;
+  headerComponent: JSX.Element;
+  scrollViewStyle?: ViewStyle | ViewStyle[];
+  animationDuration?: number;
+  lineComponent?: JSX.Element | 'none';
+  closeDistance?: number;
+  scrollEnabled?: boolean;
 };
 
 export const BottomSheet = ({
   children,
   visible,
   onRequestClose,
-  style = {},
+  bottomSheetStyle = {},
   lineStyle = {},
   closeActionAccessibilityLabel,
-  header,
-  contentStyle = {},
-  headerStyle,
+  headerComponent,
+  scrollViewStyle = {},
   animationDuration = 300,
+  closeDistance = 0.7,
+  lineComponent,
+  scrollEnabled = false,
 }: React.PropsWithChildren<BottomSheetProps>) => {
   const [showContent, setShowContent] = React.useState(visible);
   const [isModalVisible, setIsModalVisible] = React.useState(true);
   let wrapperStyle = {};
+  const translateY = useSharedValue(0);
+  const contentHeight = useSharedValue(0);
 
   /*block:start*/
   const { noUndefinedProperty } = useChecks();
@@ -56,6 +79,8 @@ export const BottomSheet = ({
 
   React.useEffect(() => {
     if (visible) {
+      translateY.value = 0;
+
       setIsModalVisible(true);
       setShowContent(true);
     } else {
@@ -63,7 +88,17 @@ export const BottomSheet = ({
 
       setTimeout(() => setIsModalVisible(false), animationDuration);
     }
-  }, [visible]);
+  }, [animationDuration, translateY, visible]);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: translateY.value }],
+    };
+  });
+
+  const handleOnLayout = (event: LayoutChangeEvent) => {
+    contentHeight.value = event.nativeEvent.layout.height;
+  };
 
   return (
     <Modal
@@ -72,7 +107,7 @@ export const BottomSheet = ({
       visible={isModalVisible}
       onRequestClose={onRequestClose}
       style={wrapperStyle}>
-      <>
+      <GestureHandlerRootView style={{ flex: 1 }}>
         {showContent ? (
           <>
             <AnimatedContainer
@@ -87,23 +122,83 @@ export const BottomSheet = ({
                 onPress={onRequestClose}
               />
             </AnimatedContainer>
-            <View style={styles.contentWrapper}>
+            <Animated.View style={[styles.contentWrapper, animatedStyle]}>
               <AnimatedContainer
                 from={{ transform: [{ translateY: 'targetHeight' }] }}
                 to={{ transform: [{ translateY: 0 }] }}
+                exitFrom={{
+                  transform: [{ translateY: 'currentHeight' }],
+                }}
                 duration={animationDuration}
-                style={[styles.content, contentStyle, style]}>
-                <View style={[styles.line, lineStyle]} />
-                <Text accessibilityRole="header" style={headerStyle}>
-                  {header}
-                </Text>
-                <>{children}</>
+                style={[styles.content, bottomSheetStyle]}
+                onLayout={handleOnLayout}>
+                {lineComponent === 'none' ? null : (
+                  <GestureHandler
+                    translateY={translateY}
+                    closeDistance={closeDistance}
+                    contentHeight={contentHeight}
+                    onRequestClose={onRequestClose}>
+                    {lineComponent || <View style={[styles.line, lineStyle]} />}
+                  </GestureHandler>
+                )}
+                {headerComponent}
+                <ScrollView
+                  style={scrollViewStyle}
+                  scrollEnabled={scrollEnabled}>
+                  {children}
+                </ScrollView>
               </AnimatedContainer>
-            </View>
+            </Animated.View>
           </>
         ) : null}
-      </>
+      </GestureHandlerRootView>
     </Modal>
+  );
+};
+
+type GestureHandlerProps = PropsWithChildren<{
+  translateY: SharedValue<number>;
+  contentHeight: SharedValue<number>;
+  closeDistance: number;
+  onRequestClose: () => void;
+}>;
+
+const GestureHandler = ({
+  translateY,
+  closeDistance,
+  contentHeight,
+  children,
+  onRequestClose,
+}: GestureHandlerProps) => {
+  const gestureHandler = useAnimatedGestureHandler<
+    PanGestureHandlerGestureEvent,
+    { y: number }
+  >({
+    onStart: (_, context) => {
+      context.y = translateY.value;
+    },
+    onActive: (event, context) => {
+      translateY.value = Math.max(0, context.y + event.translationY);
+    },
+    onEnd: _ => {
+      const minimumDistanceToClose = contentHeight.value * (1 - closeDistance);
+      const shouldCloseBottomSheet = translateY.value > minimumDistanceToClose;
+
+      if (shouldCloseBottomSheet) {
+        runOnJS(onRequestClose)();
+      } else {
+        translateY.value = withTiming(0);
+      }
+    },
+  });
+
+  return (
+    <PanGestureHandler onGestureEvent={gestureHandler}>
+      <Animated.View
+        style={{ minHeight: MINIMUM_TOUCHABLE_SIZE, justifyContent: 'center' }}>
+        {children}
+      </Animated.View>
+    </PanGestureHandler>
   );
 };
 
@@ -120,13 +215,13 @@ const styles = StyleSheet.create({
     flex: 1,
     maxHeight: '80%',
     position: 'absolute',
-    bottom: 0,
+    bottom: 24,
     alignSelf: 'flex-end',
     width: '100%',
   },
   content: {
     width: '100%',
-    padding: 12,
+    backgroundColor: '#fff',
   },
   line: {
     width: 48,
@@ -135,5 +230,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 24,
     borderRadius: 2,
+    marginTop: 12,
   },
 });
