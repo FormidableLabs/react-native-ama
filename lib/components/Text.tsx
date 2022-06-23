@@ -34,6 +34,7 @@ export const Text = ({ autofocus, ...rest }: TextProps) => {
     }),
     ...accessibilityLabelChecker({
       accessibilityLabel: rest.accessibilityLabel,
+      canBeEmpty: true,
     }),
     ...(rest.onPress
       ? noUndefinedProperty({

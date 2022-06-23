@@ -82,6 +82,7 @@ describe('Text', () => {
 
       expect(accessibilityLabelChecker).toHaveBeenCalledWith({
         accessibilityLabel,
+        canBeEmpty: true,
       });
     },
   );

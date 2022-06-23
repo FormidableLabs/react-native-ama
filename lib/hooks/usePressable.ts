@@ -1,4 +1,3 @@
-import * as React from 'react';
 import type {
   AccessibilityRole,
   AccessibilityState,
@@ -29,10 +28,7 @@ export const usePressable = <T>(
   props: Partial<UsePressable<T>>,
   children?: React.ReactNode,
 ): ReturnUsePressable => {
-  const accessibilityState = React.useMemo(
-    () => generateAccessibilityStateFromProp(props),
-    [props],
-  );
+  const accessibilityState = generateAccessibilityStateFromProp(props);
 
   /* block:start */
   const ignoreContrastCheck =

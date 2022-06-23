@@ -41,13 +41,7 @@ describe('ExpandablePressable', () => {
         onResponderTerminate={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "backgroundColor": "rgba(163, 20, 32, 0.4)",
-            "borderColor": "#A31420",
-            "borderWidth": 4,
-          }
-        }
+        style={Object {}}
       />
     `);
   });

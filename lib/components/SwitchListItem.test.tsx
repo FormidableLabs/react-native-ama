@@ -50,16 +50,6 @@ describe('SwitchListItem', () => {
                 "flexDirection": "row",
                 "width": "100%",
               },
-              Object {
-                "backgroundColor": "rgba(163, 20, 32, 0.4)",
-                "borderColor": "#A31420",
-                "borderWidth": 4,
-              },
-              Object {
-                "backgroundColor": "rgba(163, 20, 32, 0.4)",
-                "borderColor": "#A31420",
-                "borderWidth": 4,
-              },
             ],
             Object {
               "minHeight": 44,

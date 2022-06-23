@@ -18,7 +18,7 @@ export const ExpandablePressableScreen = () => {
         expanded={isContentVisible}
         onPress={handleOnPress}
         style={styles.button}>
-        <Text>Toggle content</Text>
+        <Text>Toggle content {isContentVisible ? '-' : '+'}</Text>
       </ExpandablePressable>
       {isContentVisible ? (
         <Text>This is the content of the expanded element</Text>

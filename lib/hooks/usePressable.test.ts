@@ -92,10 +92,9 @@ describe('usePressable', () => {
         ),
       );
 
-      expect(accessibilityLabelChecker).toHaveBeenCalledWith(
-        'This is the accessibility label',
-        'This is the hint',
-      );
+      expect(accessibilityLabelChecker).toHaveBeenCalledWith({
+        accessibilityLabel: 'This is the accessibility label',
+      });
     });
   });
 
