@@ -5,16 +5,11 @@ import { useFocus } from '../hooks/useFocus';
 import { ERROR_STYLE } from '../internal/error.style';
 import { useChecks } from '../internal/useChecks';
 
-export type TextProps = RNTextProps &
-  (
-    | {
-        autofocus?: true;
-        accessibilityRole: 'header';
-      }
-    | { autofocus?: false }
-  );
+export type TextProps = RNTextProps & {
+  autofocus?: boolean;
+};
 
-export const Text: React.FC<TextProps> = ({ autofocus, ...rest }) => {
+export const Text = ({ autofocus, ...rest }: TextProps) => {
   const textRef = React.useRef<RNText>(null);
 
   useFocus(autofocus ? textRef : undefined);
@@ -39,6 +34,7 @@ export const Text: React.FC<TextProps> = ({ autofocus, ...rest }) => {
     }),
     ...accessibilityLabelChecker({
       accessibilityLabel: rest.accessibilityLabel,
+      canBeEmpty: true,
     }),
     ...(rest.onPress
       ? noUndefinedProperty({

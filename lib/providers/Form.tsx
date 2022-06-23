@@ -1,6 +1,9 @@
-import React from 'react';
+import * as React from 'react';
 
-export const Form: React.FC<FormContextValue> = ({ children, onSubmit }) => {
+export const Form = ({
+  children,
+  onSubmit,
+}: React.PropsWithChildren<FormContextValue>) => {
   const refs = React.useRef([]);
 
   return (

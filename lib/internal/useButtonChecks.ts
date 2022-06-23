@@ -30,11 +30,9 @@ export const useButtonChecks = (
       property: 'accessibilityLabel',
       rule: 'NO_ACCESSIBILITY_LABEL',
     }),
-    ...accessibilityLabelChecker(
-      props.accessibilityLabel,
-      // @ts-ignore
-      props.accessibilityHint,
-    ),
+    ...accessibilityLabelChecker({
+      accessibilityLabel: props.accessibilityLabel,
+    }),
     ...(minimumSizeFailed ? ERROR_STYLE : {}),
   };
 

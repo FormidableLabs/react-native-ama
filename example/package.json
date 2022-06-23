@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "react": "17",
-    "react-native": "0.64"
+    "react-native": "0.66"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
@@ -30,6 +30,7 @@
     "eslint": "^7.32.0",
     "jest": "^26.6.3",
     "metro-react-native-babel-preset": "^0.64.0",
+    "react-native-gesture-handler": "^2.4.2",
     "react-native-reanimated": "^2.8.0",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "^3.13.1",

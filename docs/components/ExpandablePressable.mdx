@@ -1,8 +1,10 @@
-import { DevOnly } from '@site/src/components';
+import { DevOnly, Required } from '@site/src/components';
 
 # ExpandablePressable
 
 ExpandablePressable is [Pressable](./Pressable.mdx) component that automatically handles the [expanded](https://reactnative.dev/docs/accessibility#accessibilitystate) `accessibilityState`.
+
+## Usage
 
 ```tsx
 import { ExpandablePressable } from 'react-native-ama';
@@ -13,6 +15,28 @@ import { ExpandablePressable } from 'react-native-ama';
   onPress={onPressa}>
   <Text>I'm pressable</Text>
 </ExpandablePressable>;
+```
+
+#### Example
+
+```tsx
+import { ExpandablePressable, Text } from 'react-native-ama';
+
+const Test = () => {
+  const [isExpanded, setIsExpanded] = React.useState(false);
+
+  return (
+    <>
+      <ExpandablePressable
+        accessibilityLabel={isExpanded ? 'Less' : 'More'}
+        expanded={isExpanded}
+        onPress={() => setIsExpanded(expanded => !expanded)}>
+        {isExpanded ? <MinumIcon /> : <PlusIcon />}
+      </ExpandablePressable>
+      {isExpanded ? <>{/* content goes here */}</> : null}
+    </>
+  );
+};
 ```
 
 # Accessibility
@@ -52,38 +76,27 @@ AMA does also perform a contrast check on disabled button, as a [poor contrast c
 
 The component uses the [onLayout](https://reactnative.dev/docs/layoutevent) prop to perform the [minium size check](../guidelines/minimum-size.md).
 
-## Additional Props
+## Props
 
-### `expanded`
+### <Required /> `accessibilityLabel`
+
+The accessibilityLabel
+
+### <Required /> `expanded`
 
 Indicates whether an expandable element is currently expanded or collapsed.
 
-| Type    | Default   | Required |
-| ------- | --------- | -------- |
-| boolean | undefined | No       |
+| Type    | Default   |
+| ------- | --------- |
+| boolean | undefined |
 
-#### Example
+## Related guidelines
 
-```tsx
-import { ExpandablePressable, Text } from 'react-native-ama';
+- [Accessibility Label](../guidelines/accessibility-label)
+- [Accessibility Role](../guidelines/accessibility-role)
+- [Contrast](../guidelines/contrast)
+- [Minimum Size](../guidelines/minimum-size)
 
-const Test = () => {
-  const [isExpanded, setIsExpanded] = React.useState(false);
-
-  return (
-    <>
-      <ExpandablePressable
-        accessibilityLabel={isExpanded ? 'Less' : 'More'}
-        expanded={isExpanded}
-        onPress={() => setIsExpanded(expanded => !expanded)}>
-        {isExpanded ? <MinumIcon /> : <PlusIcon />}
-      </ExpandablePressable>
-      {isExpanded ? <>{/* content goes here */}</> : null}
-    </>
-  );
-};
-```
-
-## Resources
+## External resources
 
 - [Disabled buttons suck](https://axesslab.com/disabled-buttons-suck/)

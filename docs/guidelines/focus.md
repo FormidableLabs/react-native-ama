@@ -26,8 +26,6 @@ When dealing with Drawers/BottomSheets, we need to take care of:
 
 When opening a modal window or drawer, the focus must be placed on or inside it; otherwise, the user remains in the active control and might not be aware or be able to reach the new content.
 
-A possible solution could be using the `autofocus` property on the built-in [<Text />](../components/Text) component to automatically focus the drawer header
-
 ### 2. Can be dismissed
 
 The drawer/bottom sheet should either have a close button or be dismissable by tapping on its overlay layer.
@@ -36,6 +34,11 @@ The drawer/bottom sheet should either have a close button or be dismissable by t
 
 Make sure that the user cannot focus on any element underneath the drawer/bottom sheet; the user should only be able to cycle between the drawer/bottom sheet content.
 
-### Screen / Drawer navigation
+## Related AMA components
+
+- [AutofocusContainer](../components/autofocuscontainer)
+- [BottomSheet](../components/bottomsheet)
+- [Text](../components/text)
+
 
 [^1]: According to this study: [https://www.gatsbyjs.com/blog/2019-07-11-user-testing-accessible-client-routing/](https://www.gatsbyjs.com/blog/2019-07-11-user-testing-accessible-client-routing/) the solution that worked better for the mast majority was: _Shift focus to a heading_

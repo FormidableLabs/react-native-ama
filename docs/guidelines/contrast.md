@@ -21,3 +21,10 @@ This error is used when the contrast check between a component background and it
 ### CONTRAST_FAILED_AAA <ShouldNot />
 
 This code is used when the contrast check does not pass the [AAA level](https://www.w3.org/TR/WCAG21/#contrast-enhanced).
+
+## Related AMA components
+
+- [ExpandablePressable](../components/expandablepressable)
+- [Pressable](../components/pressable)
+- [TouchableOpacity](../components/touchableopacity)
+- [TouchableWithoutFeedback](../components/TouchableWithoutFeedback)

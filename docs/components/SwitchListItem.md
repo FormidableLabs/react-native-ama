@@ -1,3 +1,5 @@
+import { Required } from '@site/src/components';
+
 # SwitchListItem
 
 It is a utility component that provides a list item with a customisable label and switch control [focused on accessibility](#accessibility).
@@ -27,7 +29,7 @@ The component:
 
 ## Props
 
-### `label`
+### <Required /> `labelComponent`
 
 The custom label to use for the component.
 
@@ -45,7 +47,7 @@ The position where to render the `label`, left or right of the switch.
 | ----------------- | ------- |
 | 'left' \| 'right' | 'left'  |
 
-### `value`
+### <Required /> `value`
 
 The switch state
 
@@ -59,7 +61,7 @@ The callback to call when the list item is toggled
 
 ## Customisation
 
-By default, the component uses the [React Native switch](https://reactnative.dev/docs/switch) component if no child is passed.
+By default, the component uses the [React Native switch](https://reactnative.dev/docs/switch), but this behavior can be overridden by passing a child component:
 
 ```jsx
 <SwitchListItem
@@ -75,9 +77,13 @@ In this case, the custom `CustomSwitch` component is used instead of the React N
 
 :::note
 
-The `SwitchListItem` component, to avoid the switch being individually focusable on Android, automatically sets the following properties for all the children:
+The `SwitchListItem` component, to avoid the switch being individually focusable on Android, the component automatically sets the following properties for all the children:
 
 - `accessibilityElementsHidden={true}`
 - `importantForAccessibility="no"`
 
 :::
+
+## Related guidelines
+
+- [Forms](../guidelines/forms)

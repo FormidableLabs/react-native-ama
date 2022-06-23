@@ -2,18 +2,31 @@ import { LogParams, isAccessibilityLabelAllowed } from '../logger';
 
 export type AccessibilityLabelChecker = {
   accessibilityLabel?: string;
+  canBeEmpty?: boolean;
 };
 
 export const accessibilityLabelChecker = ({
   accessibilityLabel,
+  canBeEmpty = false,
 }: AccessibilityLabelChecker = {}): LogParams | null => {
-  if (!accessibilityLabel) {
+  const isEmpty =
+    !accessibilityLabel || accessibilityLabel?.trim()?.length === 0;
+
+  if (isEmpty && canBeEmpty) {
     return null;
   }
 
-  const isAllowed = isAccessibilityLabelAllowed(accessibilityLabel);
+  if (isEmpty && !canBeEmpty) {
+    return {
+      rule: 'NO_ACCESSIBILITY_LABEL',
+      message: 'The accessibilityLabel cannot be empty',
+      extra: accessibilityLabel,
+    };
+  }
 
-  if (!isAllowed && isUpperCase(accessibilityLabel)) {
+  const isAllowed = isAccessibilityLabelAllowed(accessibilityLabel!);
+
+  if (!isAllowed && isUpperCase(accessibilityLabel!)) {
     return {
       rule: 'UPPERCASE_ACCESSIBILITY_LABEL',
       message: 'The accessibilityLabel cannot be all CAPS',

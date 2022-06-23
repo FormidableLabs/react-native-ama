@@ -118,7 +118,14 @@ This is used when a component has the `accessibilityLabel` prop in all caps.
 Is it possible to specify a list of allowed all caps accessibility labels, [more info here](../guidelines/guidelines.md)
 :::
 
-## Resources
+## Related AMA components
+
+- [ExpandablePressable](../components/expandablepressable)
+- [Pressable](../components/pressable)
+- [TouchableOpacity](../components/touchableopacity)
+- [TouchableWithoutFeedback](../components/TouchableWithoutFeedback
+
+## External resources
 
 Some helpful resources about accessibility and all caps.
 

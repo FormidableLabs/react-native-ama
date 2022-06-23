@@ -1,4 +1,4 @@
-import { DevOnly } from '@site/src/components';
+import { DevOnly, Required } from '@site/src/components';
 
 # TextInput
 
@@ -57,12 +57,12 @@ Once the user presses the **next** key, AMA checks that the:
 
 ## Additional Props
 
-### `label`
+### <Required /> `labelComponent`
 
-The custom label to use for the component.
+The custom labelComponent.
 
 | Type        | Default   |
-| ----------- | --------- |
+|-------------|-----------|
 | JSX.Element | undefined |
 
 If no accessibilityLabel is provided, the component children are used to generate the one.
@@ -97,14 +97,20 @@ The `accessibilityLabel` generate is: **"First name:"**
 
 Specify where to render the label.
 
-Possible positions:
-
-- `beforeInput` _(default)_
-- `afterInput`
+| Type            | Default      |
+|-----------------|--------------|
+| 'beforeInput' \| 'afterInput' | 'beforeInput' |
 
 ### `nextFormField` _(optional)_
 
+
 This parameter specifies the next form field to focus on when the next button is pressed.
+
+| Type      | Default   |
+|-----------|-----------|
+| RefObject | undefined |
+
+#### Example
 
 ```jsx
 <TextInput
@@ -118,3 +124,76 @@ This parameter specifies the next form field to focus on when the next button is
   ref={lastNameRef}
 />
 ```
+
+### `id`
+
+The field ID. This info is stored, with the field `ref`, inside the [<Form />](./Form) component.
+
+| Type   | Default   |
+|--------|-----------|
+| string | undefined |
+
+### `nextFieldId`
+
+The ID of the next field to focus when the user taps on the `next` button of the keyboard
+
+| Type   | Default   |
+|--------|-----------|
+| string | undefined |
+
+### <Required /> `hasValidation`
+
+This property is used to know if the input can display an error, in case of failed validation; and if so is used to:
+ pf
+1. Set the error, in case of failure, as part of the accessibilityHint
+2. Hides the [errorComponent](#errorcomponent) from the accessibility tree to prevent redundant information for the user
+
+
+Here can be find more information about [error handling in Forms](../guidelines/forms#errors)
+
+| Type    | Default   |
+|---------|-----------|
+| boolean | undefined |
+
+### `hasError`
+
+If true the component sets the given error as part of the `accessibilityHint`
+
+| Type    | Default   |
+|---------|-----------|
+| boolean | undefined |
+
+:::info
+
+The component will try to extract any text within the [errorComponent](#errorcomponent) if no [errorText](#errorText) is provided
+:::
+
+### `errorComponent`
+
+The error component to render in case of `hasError = true`. The position of the component can be changed using the [errorPosition](#errorposition) property.
+
+| Type        | Default   |
+|-------------|-----------|
+| JSX.Element | undefined |
+
+:::info
+
+The component is automatically modified with the following properties added:
+
+- `importantForAccessibility: no`
+- `accessibilityElementsHidden: true`
+
+to hide it from the accessibility tree.
+:::
+
+### `errorPosition`
+
+The position where to render the [errorComponent](#errorcomponent)
+
+| Type            | Default      |
+|-----------------|--------------|
+| 'beforeInput' \| 'afterInput' | 'afterInput' |
+
+## Related guidelines
+
+- [Forms](../guidelines/forms)

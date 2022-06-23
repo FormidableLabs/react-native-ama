@@ -1,5 +1,4 @@
 import { renderHook } from '@testing-library/react-hooks';
-import * as ReactNativeReanimated from 'react-native-reanimated';
 
 import { MOTION_ANIMATIONS } from '../internal/costants';
 import * as AMAProvider from '../providers/AMAProvider';
@@ -17,19 +16,10 @@ describe('useReanimatedTiming', () => {
         isReduceMotionEnabled: false,
       } as any);
 
-      const reanimatedWithTiming = jest.spyOn(
-        ReactNativeReanimated,
-        'withTiming',
-      );
-
       const { result } = renderHook(() => useReanimatedTiming());
 
       result.current.withTiming('left', 42, { duration: 100 });
-      expect(reanimatedWithTiming).toHaveBeenCalledWith(
-        42,
-        { duration: 100 },
-        undefined,
-      );
+      expect(withTiming).toHaveBeenCalledWith(42, { duration: 100 }, undefined);
     });
 
     it.each(MOTION_ANIMATIONS)(
@@ -40,19 +30,10 @@ describe('useReanimatedTiming', () => {
           isReduceMotionEnabled: true,
         } as any);
 
-        const reanimatedWithTiming = jest.spyOn(
-          ReactNativeReanimated,
-          'withTiming',
-        );
-
         const { result } = renderHook(() => useReanimatedTiming());
 
         result.current.withTiming(key as any, 42, { duration: 100 });
-        expect(reanimatedWithTiming).toHaveBeenCalledWith(
-          42,
-          { duration: 0 },
-          undefined,
-        );
+        expect(withTiming).toHaveBeenCalledWith(42, { duration: 0 }, undefined);
       },
     );
   });
@@ -64,19 +45,10 @@ describe('useReanimatedTiming', () => {
         isReduceMotionEnabled: false,
       } as any);
 
-      const reanimatedWithSpring = jest.spyOn(
-        ReactNativeReanimated,
-        'withSpring',
-      );
-
       const { result } = renderHook(() => useReanimatedTiming());
 
       result.current.withSpring('left', 42, { damping: 42 });
-      expect(reanimatedWithSpring).toHaveBeenCalledWith(
-        42,
-        { damping: 42 },
-        undefined,
-      );
+      expect(withSpring).toHaveBeenCalledWith(42, { damping: 42 }, undefined);
     });
 
     it.each(MOTION_ANIMATIONS)(
@@ -87,26 +59,12 @@ describe('useReanimatedTiming', () => {
           isReduceMotionEnabled: true,
         } as any);
 
-        const reanimatedWithTiming = jest.spyOn(
-          ReactNativeReanimated,
-          'withTiming',
-        );
-
-        const reanimatedWithSpring = jest.spyOn(
-          ReactNativeReanimated,
-          'withSpring',
-        );
-
         const { result } = renderHook(() => useReanimatedTiming());
 
-        result.current.withTiming(key as any, 42, { duration: 100 });
+        result.current.withSpring(key as any, 42);
 
-        expect(reanimatedWithTiming).toHaveBeenCalledWith(
-          42,
-          { duration: 0 },
-          undefined,
-        );
-        expect(reanimatedWithSpring).not.toHaveBeenCalled();
+        expect(withSpring).not.toHaveBeenCalled();
+        expect(withTiming).toHaveBeenCalledWith(42, { duration: 0 });
       },
     );
   });
@@ -121,5 +79,18 @@ const amaContextValues = {
   isScreenReaderEnabled: false,
 };
 
+let withSpring: jest.Mock;
+let withTiming: jest.Mock;
+
+function mockReanimated() {
+  withSpring = jest.fn();
+  withTiming = jest.fn();
+
+  return {
+    withSpring,
+    withTiming,
+  };
+}
+
 jest.mock('../providers/AMAProvider');
-jest.mock('react-native-reanimated');
+jest.mock('react-native-reanimated', () => mockReanimated());

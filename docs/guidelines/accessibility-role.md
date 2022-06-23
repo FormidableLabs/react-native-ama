@@ -33,3 +33,10 @@ This error is used when a pressable element has no [accessibilityRole](https://r
 
 This rule is mandatory and cannot be turned off!
 :::
+
+## Related AMA components
+
+- [ExpandablePressable](../components/expandablepressable)
+- [Pressable](../components/pressable)
+- [TouchableOpacity](../components/touchableopacity)
+- [TouchableWithoutFeedback](../components/TouchableWithoutFeedback)

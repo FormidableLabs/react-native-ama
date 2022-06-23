@@ -14,3 +14,9 @@ With a native app, TalkBack, to announce when the user focuses or leaves a list 
 
 A React Native app must provide the same experience to the screen reader users. The FlatList provided by AMA already provides this out of the box.
 Suppose the list you're using does not provide this kind of experience. In that case, you can wrap your list inside the [ListWrapper](../components/ListWrapper.mdx) component and specify the number of rows and columns to fix this issue.
+
+## Related AMA components
+
+- [DynamicFlatList](../components/dynamicflatList)
+- [StaticFlatList](../components/staticflatlist)
+- [ListWrapper](../components/listwrapper)

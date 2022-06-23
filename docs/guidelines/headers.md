@@ -21,5 +21,9 @@ You can have "invisible" header on your screen, for example:
 ```jsx
 <Text accessibilityLabel="This is the header" />
 ```
-
+ 
 :::
+
+## Related AMA components
+
+- [Text](../components/text)

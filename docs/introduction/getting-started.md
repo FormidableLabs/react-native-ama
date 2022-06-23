@@ -14,3 +14,17 @@ Install _react-native-ama_ using either `yarn` or `npm`:
 ```bash npm2yarn
 npm install --save-dev react-native-ama
 ```
+
+
+### Dependencies
+
+AMA 
+```bash npm2yarn
+npm install --save-dev react-native-reanimated
+npm install --save-dev react-native-gesture-handler
+
+cd ios
+pod install
+```
+
+### Config File

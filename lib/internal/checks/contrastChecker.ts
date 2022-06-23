@@ -104,7 +104,11 @@ const performContrastCheck = (
 };
 
 const getContrastScore = (c1: string, c2: string) => {
-  return score(c1, c2);
+  try {
+    return score(c1, c2);
+  } catch {
+    return null;
+  }
 };
 
 const isFontSizeLarge = (

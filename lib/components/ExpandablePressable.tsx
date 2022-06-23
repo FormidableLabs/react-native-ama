@@ -4,12 +4,14 @@ import { UseExpandable, useExpandable } from '../hooks/useExpandable';
 import type { PressableProps } from './Pressable';
 import { Pressable } from './Pressable';
 
-type ExpandablePressableProps = UseExpandable<PressableProps>;
+type ExpandablePressableProps = React.PropsWithChildren<
+  UseExpandable<PressableProps>
+>;
 
-const ExpandablePressableBase: React.FC<ExpandablePressableProps> = ({
+const ExpandablePressableBase = ({
   children,
   ...rest
-}) => {
+}: ExpandablePressableProps) => {
   const expandableProps = useExpandable(rest);
 
   return <Pressable {...expandableProps}>{children}</Pressable>;

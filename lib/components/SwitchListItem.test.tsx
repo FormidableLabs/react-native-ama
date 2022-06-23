@@ -8,13 +8,14 @@ beforeEach(() => {
   jest.clearAllMocks();
 
   jest.spyOn(console, 'error').mockImplementation();
+  jest.spyOn(console, 'info').mockImplementation();
 });
 
 describe('SwitchListItem', () => {
   it('matches the snapshot', () => {
     const { toJSON } = render(
       <SwitchListItem
-        label={<Text>Label</Text>}
+        labelComponent={<Text>labelComponent</Text>}
         value={false}
         testID="switch"
         onValueChange={() => {}}
@@ -23,7 +24,7 @@ describe('SwitchListItem', () => {
 
     expect(toJSON()).toMatchInlineSnapshot(`
       <View
-        accessibilityLabel="Label"
+        accessibilityLabel="labelComponent"
         accessibilityRole="switch"
         accessibilityState={
           Object {
@@ -59,7 +60,7 @@ describe('SwitchListItem', () => {
         testID="switch"
       >
         <Text>
-          Label
+          labelComponent
         </Text>
         <RCTSwitch
           accessibilityElementsHidden={true}
@@ -87,7 +88,7 @@ describe('SwitchListItem', () => {
   it('hides the children from the accessibilityTree', () => {
     const { getByTestId } = render(
       <SwitchListItem
-        label={<Text>Label</Text>}
+        labelComponent={<Text>labelComponent</Text>}
         value={true}
         onValueChange={() => {}}>
         <View testID="custom-switch" />

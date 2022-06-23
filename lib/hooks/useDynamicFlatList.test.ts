@@ -20,8 +20,8 @@ describe('useDynamicFlatList', () => {
     renderHook(() =>
       useDynamicList({
         data: [],
-        accessibilitySingularMessage: 'hello',
-        accessibilityPluralMessage: '%count% me',
+        singularMessage: 'hello',
+        pluralMessage: '%count% me',
       }),
     );
 

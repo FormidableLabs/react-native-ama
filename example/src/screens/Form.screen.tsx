@@ -36,19 +36,19 @@ export const FormScreen = () => {
           placeholder=""
           onChangeText={newText => setFirstName(newText)}
           defaultValue={firstName}
-          label={
+          labelComponent={
             <>
-              <Text style={styles.label}>First name:</Text>
+              <Text style={styles.labelComponent}>First name:</Text>
             </>
           }
           hasValidation={true}
-          error={<Text>The first name cannot be blank</Text>}
+          errorComponent={<Text>The first name cannot be blank</Text>}
           hasError={invalidFields.firstName}
         />
 
         <Spacer height="normal" />
         <SwitchListItem
-          label={
+          labelComponent={
             <Text style={styles.switchText}>
               Test keyboard trap on next field
             </Text>
@@ -71,10 +71,10 @@ export const FormScreen = () => {
           style={styles.input}
           placeholder=""
           defaultValue={lastName}
-          label={<Text style={styles.label}>Last name:</Text>}
+          labelComponent={<Text style={styles.labelComponent}>Last name:</Text>}
           onChangeText={newText => setLastName(newText)}
           hasValidation={true}
-          error={<Text>The thing cannot be null</Text>}
+          errorComponent={<Text>The thing cannot be null</Text>}
           hasError={invalidFields.lastName}
           ref={lastNameRef}
           onBlur={() => {
@@ -89,7 +89,9 @@ export const FormScreen = () => {
           style={styles.input}
           placeholder=""
           defaultValue={emailAddress}
-          label={<Text style={styles.label}>Email address:</Text>}
+          labelComponent={
+            <Text style={styles.labelComponent}>Email address:</Text>
+          }
           onChangeText={newText => setEmailAddress(newText)}
           hasValidation={false}
         />
@@ -110,7 +112,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
   },
-  label: {
+  labelComponent: {
     paddingBottom: theme.padding.small,
   },
   switchText: {

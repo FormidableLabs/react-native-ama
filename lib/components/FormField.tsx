@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {
   TouchableWithoutFeedback,
   TouchableWithoutFeedbackProps,
@@ -6,14 +6,18 @@ import {
 
 import { useFormField } from '../hooks/useFormField';
 
-type FormFieldProps = TouchableWithoutFeedbackProps;
+type FormFieldProps = React.PropsWithChildren<
+  TouchableWithoutFeedbackProps & {
+    id?: string;
+  }
+>;
 
-const FormFieldBase: React.FC<FormFieldProps> = ({ children, ...props }) => {
+const FormFieldBase = ({ children, id, ...props }: FormFieldProps) => {
   const viewRef = React.useRef<React.ElementRef<
     typeof TouchableWithoutFeedback
   > | null>(null);
 
-  useFormField({ ref: viewRef, hasFocusCallback: false });
+  useFormField({ ref: viewRef, hasFocusCallback: false, id });
 
   return (
     <TouchableWithoutFeedback {...props} ref={viewRef}>

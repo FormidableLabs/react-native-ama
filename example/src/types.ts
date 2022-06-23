@@ -4,11 +4,13 @@ export type RootStackParamList = {
   TouchableOpacity: undefined;
   TouchableWithoutFeedback: undefined;
   Text: undefined;
-  ReduceMotion: undefined;
-  ReanimatedReduceMotion: undefined;
+  UseAnimation: undefined;
+  UseReanimatedTiming: undefined;
   Form: undefined;
   FlatList: undefined;
   ExpandablePressable: undefined;
   FlatListDynamic: undefined;
   FlatListStatic: undefined;
+  BottomSheet: undefined;
+  UseTimedAction: undefined;
 };

@@ -1,8 +1,8 @@
 import ReactPlayer from 'react-player';
 
-# useAccessibleAnimation
+# useAnimation
 
-`useAccessibleAnimation` is a hook that helps create accessible animations by honouring the user [Reduce Motion](https://reactnative.dev/docs/accessibilityinfo) preference.
+`useAnimation` is a hook that helps create accessible animations by honouring the user [Reduce Motion](../hooks/useAMAContext#isreducemotionenabled) preference.
 
 :::note
 
@@ -12,9 +12,9 @@ This hook uses the react-native built-in [Animated API](https://reactnative.dev/
 ## Usage
 
 ```ts
-import { useAccessibleAnimation } from 'react-native-ama';
+import { useAnimation } from 'react-native-ama';
 
-const { animatedStyle, progress, play } = useAccessibleAnimation({
+const { animatedStyle, progress, play } = useAnimation({
   duration,
   useNativeDriver,
   from: {},
@@ -246,3 +246,7 @@ The result is:
   width={300}
   height={700}
 />
+
+## Related guidelines
+
+- [Animations](../guidelines/animations)

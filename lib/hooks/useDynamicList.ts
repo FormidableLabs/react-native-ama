@@ -5,16 +5,16 @@ import { useChecks } from '../internal/useChecks';
 
 export type UseDynamicList = {
   data: readonly any[];
-  accessibilitySingularMessage: string;
-  accessibilityPluralMessage: string;
+  singularMessage: string;
+  pluralMessage: string;
   isPlural?: (count: number) => boolean;
   numColumns?: number;
 };
 
 export const useDynamicList = ({
   data,
-  accessibilitySingularMessage,
-  accessibilityPluralMessage,
+  singularMessage,
+  pluralMessage,
   isPlural = simpleIsPlural,
   numColumns = 1,
 }: UseDynamicList) => {
@@ -26,24 +26,24 @@ export const useDynamicList = ({
   const { logResult } = useChecks();
 
   React.useEffect(() => {
-    if (!accessibilitySingularMessage?.includes('%count%')) {
+    if (!singularMessage?.includes('%count%')) {
       logResult('useDynamicFlatList', {
         rule: 'FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE',
         message:
           'Special string %count% not found in accessibilitySingularMessage',
-        extra: accessibilitySingularMessage,
+        extra: singularMessage,
       });
     }
 
-    if (!accessibilityPluralMessage?.includes('%count%')) {
+    if (!pluralMessage?.includes('%count%')) {
       logResult('useDynamicFlatList', {
         rule: 'FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE',
         message:
           'Special string %count% not found in accessibilityPluralMessage',
-        extra: accessibilityPluralMessage,
+        extra: pluralMessage,
       });
     }
-  }, [accessibilityPluralMessage, accessibilitySingularMessage, logResult]);
+  }, [pluralMessage, singularMessage, logResult]);
   /*block:end*/
 
   React.useEffect(() => {
@@ -60,20 +60,13 @@ export const useDynamicList = ({
       return;
     }
 
-    const message = isPlural(itemsCount)
-      ? accessibilityPluralMessage
-      : accessibilitySingularMessage;
+    const message = isPlural(itemsCount) ? pluralMessage : singularMessage;
     const messageToAnnounce = message.replace('%count%', itemsCount.toString());
 
     AccessibilityInfo.announceForAccessibility(messageToAnnounce);
 
     lastItemsCount.current = itemsCount;
-  }, [
-    accessibilityPluralMessage,
-    accessibilitySingularMessage,
-    data,
-    isPlural,
-  ]);
+  }, [pluralMessage, singularMessage, data, isPlural]);
 
   const rowsCount = lastItemsCount.current || initialCount.current || 0;
 

@@ -5,8 +5,8 @@ import { useDynamicList } from '../hooks/useDynamicList';
 import { ListWrapper } from './ListWrapper';
 
 type DynamicFlatListProps<T> = FlatListProps<T> & {
-  accessibilitySingularMessage: string;
-  accessibilityPluralMessage: string;
+  singularMessage: string;
+  pluralMessage: string;
   isPlural?: (count: number) => boolean;
 };
 
@@ -15,19 +15,13 @@ export const DynamicFlatList = React.forwardRef<
   DynamicFlatListProps<any>
 >(
   (
-    {
-      data,
-      accessibilitySingularMessage,
-      accessibilityPluralMessage,
-      isPlural,
-      ...rest
-    },
+    { data, singularMessage, pluralMessage, isPlural, ...rest },
     forwardedRef,
   ) => {
     const { rowsCount, columnsCount } = useDynamicList({
       data: data!,
-      accessibilityPluralMessage,
-      accessibilitySingularMessage,
+      pluralMessage,
+      singularMessage,
       numColumns: rest.numColumns,
       isPlural,
     });

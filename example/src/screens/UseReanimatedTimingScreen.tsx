@@ -3,7 +3,6 @@ import { Dimensions, StyleSheet, View } from 'react-native';
 import { Text, useReanimatedTiming } from 'react-native-ama';
 import Animated, {
   useAnimatedStyle,
-  useDerivedValue,
   useSharedValue,
 } from 'react-native-reanimated';
 
@@ -11,7 +10,7 @@ import { CTAPressable } from '../components/CTAPressable';
 import { Spacer } from '../components/Spacer';
 import { theme } from '../theme';
 
-export const ReanimatedReduceMotionScreen = () => {
+export const UseReanimatedTimingScreen = () => {
   const value = useSharedValue(0);
   const { withTiming, withSpring } = useReanimatedTiming();
 

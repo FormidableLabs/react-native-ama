@@ -1,6 +1,6 @@
 # useAnimationDuration
 
-When passing a motion property, returns 0 if [Reduce Motion](https://reactnative.dev/docs/accessibilityinfo) is enabled otherwise the given value.
+When passing a motion property, returns 0 if [Reduce Motion](../hooks/useAMAContext#isreducemotionenabled) is enabled otherwise the given value.
 
 
 ## Usage
@@ -49,3 +49,7 @@ const playAnimation = () => {
 ```
 
 Because we specified `translateX` as the property we're going to use for the animation, and considering that that property is a [motion animation](../utils/isMotionAnimation.md); `playAnimation` will use a duration of **300ms** when reduce motion is _off_, and duration of **0s** when is on
+
+## Related guidelines
+
+- [Animations](../guidelines/animations)

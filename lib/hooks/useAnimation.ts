@@ -5,7 +5,7 @@ import { Animated } from 'react-native';
 import { interpolateAnimationStates } from '../internal/interpolateAnimationStates';
 import { useAMAContext } from '../providers/AMAProvider';
 
-type UseAccessibleAnimation = {
+type UseAnimation = {
   from: ViewStyle;
   to: ViewStyle;
   duration: number;
@@ -13,13 +13,13 @@ type UseAccessibleAnimation = {
   skipIfReduceMotionEnabled?: boolean;
 };
 
-export const useAccessibleAnimation = ({
+export const useAnimation = ({
   duration,
   useNativeDriver,
   from,
   to,
   skipIfReduceMotionEnabled = false,
-}: UseAccessibleAnimation) => {
+}: UseAnimation) => {
   const { isReduceMotionEnabled } = useAMAContext();
   const progress = React.useRef(new Animated.Value(0)).current;
   const reduceMotionProgress = React.useRef(new Animated.Value(0)).current;
@@ -47,22 +47,18 @@ export const useAccessibleAnimation = ({
     });
   };
 
-  const animatedStyle = React.useMemo(() => {
-    const { __hasOnlyMotionAnimation, ...style } = interpolateAnimationStates(
-      from,
-      to,
-      isReduceMotionEnabled,
-      progress,
-      reduceMotionProgress,
-    );
+  const { __hasOnlyMotionAnimation, ...style } = interpolateAnimationStates(
+    from,
+    to,
+    isReduceMotionEnabled,
+    progress,
+    reduceMotionProgress,
+  );
 
-    hasOnlyMotionAnimation.current = __hasOnlyMotionAnimation;
-
-    return style;
-  }, [from, to, isReduceMotionEnabled, progress, reduceMotionProgress]);
+  hasOnlyMotionAnimation.current = __hasOnlyMotionAnimation;
 
   return {
-    animatedStyle,
+    animatedStyle: style,
     progress,
     play,
   };

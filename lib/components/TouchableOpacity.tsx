@@ -1,4 +1,5 @@
 import * as React from 'react';
+import type { PropsWithChildren } from 'react';
 import {
   TouchableOpacity as RNTouchableOpacity,
   TouchableOpacityProps as RNTouchableOpacityProps,
@@ -6,12 +7,11 @@ import {
 
 import { UsePressable, usePressable } from '../hooks/usePressable';
 
-export type TouchableOpacityProps = UsePressable<RNTouchableOpacityProps>;
+export type TouchableOpacityProps = PropsWithChildren<
+  UsePressable<RNTouchableOpacityProps>
+>;
 
-const TouchableOpacityBase: React.FC<TouchableOpacityProps> = ({
-  children,
-  ...rest
-}) => {
+const TouchableOpacityBase = ({ children, ...rest }: TouchableOpacityProps) => {
   const pressableProps = usePressable<TouchableOpacityProps>(rest, children);
 
   return (

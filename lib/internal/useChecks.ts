@@ -138,7 +138,7 @@ export const useChecks = () => {
 
     layoutCheckTimeout.current = setTimeout(() => {
       shouldCheckLayout.current = true;
-    }, 100);
+    }, 1000);
 
     const result = checkMinimumSize(event);
 

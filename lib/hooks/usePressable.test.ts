@@ -30,7 +30,7 @@ describe('usePressable', () => {
             accessibilityLabel: 'Label here',
             ...stateProp,
           },
-          {},
+          null,
         ),
       );
 
@@ -62,7 +62,7 @@ describe('usePressable', () => {
     });
 
     it('checks that the "accessibilityRole" property is not UNDEFINED', () => {
-      renderHook(() => usePressable({}, {}));
+      renderHook(() => usePressable({}, null));
 
       expect(noUndefinedProperty).toHaveBeenCalledWith({
         properties: {},
@@ -72,7 +72,7 @@ describe('usePressable', () => {
     });
 
     it('checks that the "accessibilityLabel" property is not UNDEFINED', () => {
-      renderHook(() => usePressable({}, {}));
+      renderHook(() => usePressable({}, null));
 
       expect(noUndefinedProperty).toHaveBeenCalledWith({
         properties: {},
@@ -88,14 +88,13 @@ describe('usePressable', () => {
             accessibilityLabel: 'This is the accessibility label',
             accessibilityHint: 'This is the hint',
           },
-          {},
+          null,
         ),
       );
 
-      expect(accessibilityLabelChecker).toHaveBeenCalledWith(
-        'This is the accessibility label',
-        'This is the hint',
-      );
+      expect(accessibilityLabelChecker).toHaveBeenCalledWith({
+        accessibilityLabel: 'This is the accessibility label',
+      });
     });
   });
 
