@@ -65,3 +65,7 @@ const MyFancyScreen = () => {
   );
 };
 ```
+
+## Related guidelines
+
+- [Focus](../guidelines/focus)

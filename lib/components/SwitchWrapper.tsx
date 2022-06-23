@@ -11,21 +11,17 @@ import { useSwitch } from '../hooks/useSwitch';
 import type { AMAAccessibilityState } from '../types/types';
 import { MINIMUM_TOUCHABLE_SIZE } from '../utils/minimumTouchableSize';
 
-type SwitchWrapperProps = Omit<
-  ViewProps,
-  'accessibilityRole' | 'accessibilityLabel'
-> &
-  AMAAccessibilityState & {
-    accessibilityLabel: string;
-    children: React.ReactNode;
-    onPress?: (event: GestureResponderEvent) => void;
-    checked: Pick<AccessibilityState, 'checked'> | boolean;
-  };
+type SwitchWrapperProps = React.PropsWithChildren<
+  Omit<ViewProps, 'accessibilityRole' | 'accessibilityLabel'> &
+    AMAAccessibilityState & {
+      accessibilityLabel: string;
+      children: React.ReactNode;
+      onPress?: (event: GestureResponderEvent) => void;
+      checked: Pick<AccessibilityState, 'checked'> | boolean;
+    }
+>;
 
-const SwitchWrapperBase: React.FC<SwitchWrapperProps> = ({
-  children,
-  ...rest
-}) => {
+const SwitchWrapperBase = ({ children, ...rest }: SwitchWrapperProps) => {
   const { style: switchStyle, ...otherSwitchProps } = useSwitch(rest);
 
   return (

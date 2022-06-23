@@ -1,18 +1,18 @@
-import React from 'react';
+import * as React from 'react';
 import { Platform, requireNativeComponent } from 'react-native';
 
-type FlatListWrapperProps = {
+type FlatListWrapperProps = React.PropsWithChildren<{
   rowsCount: number;
   columnsCount?: number;
-};
+}>;
 
 const isAndroid = Platform.OS === 'android';
 
-export const ListWrapper: React.FC<FlatListWrapperProps> = ({
+export const ListWrapper = ({
   children,
   rowsCount,
   columnsCount = 1,
-}) => {
+}: FlatListWrapperProps) => {
   return (
     <AMAFlatListWrapper rowsCount={rowsCount} columnsCount={columnsCount}>
       {children}
@@ -24,7 +24,9 @@ export const ListWrapper: React.FC<FlatListWrapperProps> = ({
  * Used instead of React.Fragment to avoid the warning:
  *  ...React.Fragment can only have `key` and `children` props.
  */
-const EmptyComponent: React.FC = ({ children }) => {
+const EmptyComponent: React.FC = ({
+  children,
+}: React.PropsWithChildren<{}>) => {
   return <>{children}</>;
 };
 

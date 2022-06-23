@@ -7,8 +7,12 @@ export type AccessibilityLabelChecker = {
 export const accessibilityLabelChecker = ({
   accessibilityLabel,
 }: AccessibilityLabelChecker = {}): LogParams | null => {
-  if (!accessibilityLabel) {
-    return null;
+  if (!accessibilityLabel || accessibilityLabel?.trim()?.length === 0) {
+    return {
+      rule: 'NO_ACCESSIBILITY_LABEL',
+      message: 'The accessibilityLabel cannot be empty',
+      extra: accessibilityLabel,
+    };
   }
 
   const isAllowed = isAccessibilityLabelAllowed(accessibilityLabel);

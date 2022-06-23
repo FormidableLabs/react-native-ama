@@ -16,7 +16,7 @@ describe('useReanimatedAnimationBuilder', () => {
         useReanimatedAnimationBuilder({
           from: { transform: [{ translateY: 'targetHeight' }], opacity: 0 },
           to: {
-            transform: [{ translateY: 'targetGlobalOriginX' }],
+            transform: [{ translateY: -42 }],
             opacity: 1,
           },
           duration: 300,
@@ -26,7 +26,6 @@ describe('useReanimatedAnimationBuilder', () => {
       expect(
         result.current.entering({
           targetHeight: 42,
-          targetGlobalOriginX: -42,
         } as any),
       ).toEqual({
         animations: {
@@ -46,7 +45,7 @@ describe('useReanimatedAnimationBuilder', () => {
         useReanimatedAnimationBuilder({
           from: { transform: [{ translateY: 'targetHeight' }], opacity: 0 },
           to: {
-            transform: [{ translateY: 'targetGlobalOriginX' }],
+            transform: [{ translateY: -42 }],
             opacity: 1,
           },
           duration: 300,
@@ -55,7 +54,6 @@ describe('useReanimatedAnimationBuilder', () => {
 
       result.current.entering({
         targetHeight: 42,
-        targetGlobalOriginX: -42,
       } as any);
 
       expect(withTiming).toHaveBeenCalledTimes(2);
@@ -74,7 +72,7 @@ describe('useReanimatedAnimationBuilder', () => {
         useReanimatedAnimationBuilder({
           from: { transform: [{ translateY: 'targetHeight' }], opacity: 0 },
           to: {
-            transform: [{ translateY: 'targetGlobalOriginX' }],
+            transform: [{ translateY: -42 }],
             opacity: 1,
           },
           duration: 300,
@@ -84,7 +82,6 @@ describe('useReanimatedAnimationBuilder', () => {
       expect(
         result.current.exiting({
           targetHeight: 42,
-          targetGlobalOriginX: -42,
         } as any),
       ).toEqual({
         animations: {
@@ -99,11 +96,11 @@ describe('useReanimatedAnimationBuilder', () => {
       const { result } = renderHook(() =>
         useReanimatedAnimationBuilder({
           from: { transform: [{ translateY: 'targetHeight' }], opacity: 0 },
-          exitFrom: {
-            transform: [{ translateY: 'targetGlobalOriginX' }],
+          exit: {
+            transform: [{ translateY: 0 }],
             opacity: 0.5,
           },
-          to: { transform: [{ translateY: 'targetWidth' }], opacity: 1 },
+          to: { transform: [{ translateY: -42 }], opacity: 1 },
           duration: 300,
         }),
       );
@@ -111,8 +108,6 @@ describe('useReanimatedAnimationBuilder', () => {
       expect(
         result.current.exiting({
           targetHeight: 42,
-          targetWidth: -42,
-          targetGlobalOriginX: 0,
         } as any),
       ).toEqual({
         animations: {
@@ -131,12 +126,12 @@ describe('useReanimatedAnimationBuilder', () => {
       const { result } = renderHook(() =>
         useReanimatedAnimationBuilder({
           from: { transform: [{ translateY: 'targetHeight' }], opacity: 0 },
-          to: { transform: [{ translateY: 'targetWidth' }], opacity: 1 },
+          to: { transform: [{ translateY: -42 }], opacity: 1 },
           duration: 300,
         }),
       );
 
-      result.current.exiting({ targetHeight: 42, targetWidth: -42 } as any);
+      result.current.exiting({ targetHeight: 42 } as any);
 
       expect(withTiming).toHaveBeenCalledTimes(2);
       expect(withTiming).toHaveBeenNthCalledWith(1, 42, {

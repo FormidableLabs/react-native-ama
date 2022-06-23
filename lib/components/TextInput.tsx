@@ -14,7 +14,7 @@ import { useChecks } from '../internal/useChecks';
 import { HideChildrenFromAccessibilityTree } from './HideChildrenFromAccessibilityTree';
 
 export type TextInputProps = RNTextInputProps & {
-  label: JSX.Element;
+  labelComponent: JSX.Element;
   labelPosition?: 'beforeInput' | 'afterInput';
   nextFormField?: React.RefObject<RNTextInput>;
   id?: string;
@@ -22,14 +22,14 @@ export type TextInputProps = RNTextInputProps & {
 } & (
     | {
         hasValidation: true;
-        error: JSX.Element;
+        errorComponent: JSX.Element;
         hasError: boolean;
         errorPosition?: 'belowLabel' | 'afterInput';
         errorText?: string;
       }
     | {
         hasValidation: false;
-        error?: never;
+        errorComponent?: never;
         hasError?: never;
         errorPosition?: never;
         errorText?: never;
@@ -39,14 +39,14 @@ export type TextInputProps = RNTextInputProps & {
 export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
   (
     {
-      label,
+      labelComponent,
       labelPosition = 'beforeInput',
       nextFormField,
       id,
       nextFieldId,
       accessibilityHint,
       hasError,
-      error,
+      errorComponent,
       errorPosition = 'afterInput',
       hasValidation,
       ...rest
@@ -76,15 +76,15 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 
     const debugStyle = {
       ...noUndefinedProperty({
-        properties: { label },
-        property: 'label',
+        properties: { labelComponent },
+        property: 'labelComponent',
         rule: 'NO_FORM_LABEL',
       }),
       ...(hasValidation
         ? noUndefinedProperty({
             // @ts-ignore
-            properties: { error },
-            property: 'error',
+            properties: { errorComponent },
+            property: 'errorComponent',
             rule: 'NO_FORM_ERROR',
           })
         : {}),
@@ -96,17 +96,18 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
     const showLabelBeforeInput = labelPosition === 'beforeInput';
 
     const accessibilityLabel = React.useMemo(
-      () => maybeGenerateStringFromElement(label, rest.accessibilityLabel),
-      [label, rest.accessibilityLabel],
+      () =>
+        maybeGenerateStringFromElement(labelComponent, rest.accessibilityLabel),
+      [labelComponent, rest.accessibilityLabel],
     );
 
     const accessibilityHiddenLabel = React.useMemo(
       () => (
         <HideChildrenFromAccessibilityTree>
-          {label}
+          {labelComponent}
         </HideChildrenFromAccessibilityTree>
       ),
-      [label],
+      [labelComponent],
     );
 
     const handleOnSubmitEditing = (
@@ -129,22 +130,22 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
     };
 
     const errorText = React.useMemo(() => {
-      return hasValidation
-        ? maybeGenerateStringFromElement(error, rest.errorText)
+      return hasValidation && hasError
+        ? maybeGenerateStringFromElement(errorComponent, rest.errorText)
         : '';
-    }, [hasValidation, error, rest.errorText]);
+    }, [hasValidation, hasError, errorComponent, rest.errorText]);
 
     const renderError = () => {
       return (
         <HideChildrenFromAccessibilityTree>
-          {error}
+          {errorComponent}
         </HideChildrenFromAccessibilityTree>
       );
     };
 
     const fullAccessibilityHint = [accessibilityHint || '', errorText || '']
       .filter(item => item.length > 0)
-      ?.join(',');
+      ?.join(', ');
 
     return (
       <>

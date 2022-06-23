@@ -27,19 +27,19 @@ import { useChecks } from '../internal/useChecks';
 import { MINIMUM_TOUCHABLE_SIZE } from '../utils/minimumTouchableSize';
 
 type BottomSheetProps = {
-  visible: boolean;
-  onRequestClose: () => void;
-  bottomSheetStyle?: ViewStyle | ViewStyle[];
-  lineStyle?: ViewStyle | ViewStyle[];
-  closeActionAccessibilityLabel: string;
-  headerComponent?: JSX.Element;
-  scrollViewStyle?: ViewStyle | ViewStyle[];
   animationDuration?: number;
-  overlayStyle?: ViewStyle | ViewStyle[];
-  lineComponent?: JSX.Element | 'none';
+  bottomSheetStyle?: ViewStyle | ViewStyle[];
+  closeActionAccessibilityLabel: string;
   closeDistance?: number;
+  headerComponent?: JSX.Element;
+  lineComponent?: JSX.Element | 'none';
+  lineStyle?: ViewStyle | ViewStyle[];
+  onRequestClose: () => void;
+  overlayStyle?: ViewStyle | ViewStyle[];
   scrollEnabled?: boolean;
+  scrollViewStyle?: ViewStyle | ViewStyle[];
   testID?: string;
+  visible: boolean;
 };
 
 export const BottomSheet = ({
@@ -53,7 +53,7 @@ export const BottomSheet = ({
   closeActionAccessibilityLabel,
   headerComponent,
   animationDuration = 300,
-  closeDistance = 0.7,
+  closeDistance = 0.3,
   lineComponent,
   scrollEnabled = false,
   testID,
@@ -65,13 +65,16 @@ export const BottomSheet = ({
   const contentHeight = useSharedValue(0);
 
   /*block:start*/
-  const { noUndefinedProperty } = useChecks();
+  const { noUndefinedProperty, accessibilityLabelChecker } = useChecks();
 
   const debugStyle = {
     ...noUndefinedProperty({
       properties: { closeActionAccessibilityLabel },
       property: 'closeActionAccessibilityLabel',
       rule: 'BOTTOM_SHEET_CLOSE_ACTION',
+    }),
+    ...accessibilityLabelChecker({
+      accessibilityLabel: closeActionAccessibilityLabel,
     }),
   };
 
@@ -113,12 +116,12 @@ export const BottomSheet = ({
       {showContent ? (
         <GestureHandlerRootView style={{ flex: 1 }}>
           <AnimatedContainer
-            style={styles.overlay}
+            style={[styles.overlay, overlayStyle]}
             from={{ opacity: 0 }}
             to={{ opacity: 1 }}
             duration={animationDuration}>
             <Pressable
-              style={[styles.closeButton, overlayStyle]}
+              style={styles.closeButton}
               accessibilityRole="button"
               accessibilityLabel={closeActionAccessibilityLabel}
               onPress={onRequestClose}
@@ -131,7 +134,7 @@ export const BottomSheet = ({
             <AnimatedContainer
               from={{ transform: [{ translateY: 'targetHeight' }] }}
               to={{ transform: [{ translateY: 0 }] }}
-              exitFrom={{
+              exit={{
                 transform: [{ translateY: 'currentHeight' }],
               }}
               duration={animationDuration}

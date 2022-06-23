@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
+import { Platform, View } from 'react-native';
 
-export const HideChildrenFromAccessibilityTree: React.FC<{}> = ({
+const HideChildrenFromAccessibilityTreeIOS = ({
   children,
-}) => {
+}: PropsWithChildren<{}>) => {
   return React.useMemo(
     () => hideChildrenFromAccessibilityTree(children),
     [children],
@@ -24,3 +25,16 @@ const hideChildrenFromAccessibilityTree = (component: React.ReactNode): any => {
     }) || null
   );
 };
+
+const HideChildrenFromAccessibilityAndroid = ({
+  children,
+}: PropsWithChildren<{}>) => {
+  return (
+    <View importantForAccessibility="no-hide-descendants">{children}</View>
+  );
+};
+
+export const HideChildrenFromAccessibilityTree =
+  Platform.OS === 'android'
+    ? HideChildrenFromAccessibilityAndroid
+    : HideChildrenFromAccessibilityTreeIOS;

@@ -1,10 +1,15 @@
+import { Required } from '@site/src/components';
+
 # FormField
 
-This is a generic form field element capable of receiving focus from a [TextInput](./TextInput.mdx) components or by using the [useA11yFocus](../hooks/useFocus.md) hook.
-It can be used as a wrapper for custom components, for example:
+This is a generic form field element capable of receiving focus from a [TextInput](./TextInput.mdx) components or by using the [useFocus](../hooks/useFocus.md) hook.
+
+## Example
 
 ```jsx
-<FormField>
+import { FormField } from 'react-native-ama';
+
+<FormField id="field-id">
   <Pressable
     accessibilityRole="switch"
     accessibilityLabel={accessibilityLabel}
@@ -29,3 +34,17 @@ It can be used as a wrapper for custom components, for example:
   </Pressable>
 </FormField>
 ```
+
+## Props
+
+### `id` 
+
+The field ID. This info is stored, with the field `ref`, inside the [<Form />](./Form) component.
+
+| Type   | Default   |
+|--------|-----------|
+| string | undefined |
+
+## Related guidelines
+
+- [Forms](../guidelines/forms)

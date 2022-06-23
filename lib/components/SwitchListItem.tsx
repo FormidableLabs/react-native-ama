@@ -7,34 +7,34 @@ import { FormField } from './FormField';
 import { HideChildrenFromAccessibilityTree } from './HideChildrenFromAccessibilityTree';
 import { SwitchWrapper } from './SwitchWrapper';
 
-type SwitchListItemProps = Omit<
-  SwitchProps,
-  'style' | 'value' | 'onValueChange'
-> & {
-  label: JSX.Element;
-  labelPosition?: 'left' | 'right';
-  style?: StyleProp<ViewStyle>;
-  switchStyle?: StyleProp<ViewStyle>;
-  value: boolean;
-  onValueChange: () => void;
-};
+type SwitchListItemProps = React.PropsWithChildren<
+  Omit<SwitchProps, 'style' | 'value' | 'onValueChange'> & {
+    labelComponent: JSX.Element;
+    labelPosition?: 'left' | 'right';
+    style?: StyleProp<ViewStyle>;
+    switchStyle?: StyleProp<ViewStyle>;
+    value: boolean;
+    onValueChange: () => void;
+  }
+>;
 
-export const SwitchListItemBase: React.FC<SwitchListItemProps> = ({
+export const SwitchListItemBase = ({
   children,
   testID,
-  label,
+  labelComponent,
   labelPosition = 'left',
   style = {},
   switchStyle = {},
   value,
   onValueChange,
   ...rest
-}) => {
+}: SwitchListItemProps) => {
   const isLabelPositionLeft = labelPosition === 'left';
 
   const accessibilityLabel = React.useMemo(
-    () => maybeGenerateStringFromElement(label, rest.accessibilityLabel),
-    [label, rest.accessibilityLabel],
+    () =>
+      maybeGenerateStringFromElement(labelComponent, rest.accessibilityLabel),
+    [labelComponent, rest.accessibilityLabel],
   );
 
   return (
@@ -45,7 +45,7 @@ export const SwitchListItemBase: React.FC<SwitchListItemProps> = ({
         onPress={onValueChange}
         checked={value}
         testID={testID}>
-        {isLabelPositionLeft ? label : null}
+        {isLabelPositionLeft ? labelComponent : null}
         <HideChildrenFromAccessibilityTree>
           {children ? (
             children
@@ -59,7 +59,7 @@ export const SwitchListItemBase: React.FC<SwitchListItemProps> = ({
             />
           )}
         </HideChildrenFromAccessibilityTree>
-        {isLabelPositionLeft ? null : label}
+        {isLabelPositionLeft ? null : labelComponent}
       </SwitchWrapper>
     </FormField>
   );

@@ -24,7 +24,7 @@ describe('AnimatedContainer', () => {
       from,
       to,
       duration: 300,
-      exitFrom: undefined,
+      exit: undefined,
     });
 
     expect(getByTestId('test-id').props).toEqual({

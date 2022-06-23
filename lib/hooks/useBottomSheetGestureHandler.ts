@@ -34,7 +34,7 @@ export const useBottomSheetGestureHandler = ({
       translateY.value = Math.max(0, context.y + event.translationY);
     },
     onEnd: _ => {
-      const minimumDistanceToClose = contentHeight.value * (1 - closeDistance);
+      const minimumDistanceToClose = contentHeight.value * closeDistance;
       const shouldCloseBottomSheet = translateY.value >= minimumDistanceToClose;
 
       if (shouldCloseBottomSheet) {

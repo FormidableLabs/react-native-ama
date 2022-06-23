@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import {
   AnimatedContainer,
   Text,
@@ -12,7 +12,6 @@ import { Spacer } from '../components/Spacer';
 import { theme } from '../theme';
 
 export const UseTimedActionScreen = () => {
-  const r = React.useRef(null);
   const [showContent, setShowContent] = React.useState(false);
   const { onTimeout } = useTimedAction();
 
@@ -31,7 +30,7 @@ export const UseTimedActionScreen = () => {
         <AnimatedContainer
           from={{ transform: [{ translateY: 'targetHeight' }] }}
           to={{ transform: [{ translateY: 0 }] }}
-          exitFrom={{ transform: [{ translateY: 'currentHeight' }] }}
+          exit={{ transform: [{ translateY: 'currentHeight' }] }}
           style={styles.timedContent}
           duration={300}
           autofocus>

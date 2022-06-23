@@ -145,3 +145,10 @@ const Test = () => {
     );
 };
 ```
+
+## Related guidelines
+
+- [Accessibility Label](../guidelines/accessibility-label)
+- [Accessibility Role](../guidelines/accessibility-role)
+- [Contrast](../guidelines/contrast)
+- [Minimum Size](../guidelines/minimum-size)

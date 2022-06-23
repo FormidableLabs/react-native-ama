@@ -15,7 +15,7 @@ describe('Contrast Checker', () => {
             style: [{ textTransform: 'uppercase' }, { color: '#4a4a4a' }],
           },
         },
-      ],
+      ] as any,
     });
 
     expect(result).toBe(null);
@@ -32,7 +32,7 @@ describe('Contrast Checker', () => {
               style: { color: '#4a4a4a' },
             },
           },
-        ],
+        ] as any,
       });
 
       expect(result).toMatchObject([
@@ -55,7 +55,7 @@ describe('Contrast Checker', () => {
               style: [{ textTransform: 'uppercase' }, { color: '#4a4a4a' }],
             },
           },
-        ],
+        ] as any,
       });
 
       expect(result).toMatchObject({});
@@ -71,7 +71,7 @@ describe('Contrast Checker', () => {
               style: [{ textTransform: 'uppercase' }, { color: '#4a4a4a' }],
             },
           },
-        ],
+        ] as any,
       });
 
       expect(result).toMatchObject([
@@ -107,7 +107,7 @@ describe('Contrast Checker', () => {
               ],
             },
           },
-        ],
+        ] as any,
       });
 
       expect(result).toMatchObject([
@@ -149,7 +149,7 @@ describe('Contrast Checker', () => {
             },
           },
           { props: { style: { color: '#757575' } } },
-        ],
+        ] as any,
       });
 
       expect(result).toMatchObject([
@@ -205,7 +205,7 @@ describe('Contrast Checker', () => {
               ],
             },
           },
-        ],
+        ] as any,
       });
     });
   });
@@ -221,7 +221,7 @@ describe('Contrast Checker', () => {
               style: { color: '#fff' },
             },
           },
-        ],
+        ] as any,
       });
 
       expect(result).toMatchObject([
@@ -248,7 +248,7 @@ describe('Contrast Checker', () => {
               style: { color: '#fff' },
             },
           },
-        ],
+        ] as any,
       });
 
       expect(result).toBe(null);
@@ -268,7 +268,7 @@ describe('Contrast Checker', () => {
               style: { color: '#fff' },
             },
           },
-        ],
+        ] as any,
       });
 
       expect(result).toBe(null);
@@ -285,7 +285,7 @@ describe('Contrast Checker', () => {
             style: { color: '#fff' },
           },
         },
-      ],
+      ] as any,
     });
 
     expect(result).toMatchObject([

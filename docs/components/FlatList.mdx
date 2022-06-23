@@ -1,4 +1,4 @@
-import { TalkBackList } from '@site/src/components';
+import { TalkBackList, Required } from '@site/src/components';
 
 # FlatList
 
@@ -12,8 +12,8 @@ import { FlatList } from 'react-native-ama';
   renderItem={renderItem}
   keyExtractor={item => item.id}
   listType="dynamic"
-  accessibilitySingularMessage="%count% item found"
-  accessibilityPluralMessage="%count% items found"
+  singularMessage="%count% item found"
+  pluralMessage="%count% items found"
 />;
 ```
 
@@ -34,9 +34,13 @@ A dynamic list must announce the number of items displayed if they change due to
 
 ## Props
 
-### `listType`
+### <Required /> `listType`
 
 | Value   | Description                    |
 | ------- | ------------------------------ |
 | dynamic | Renders a [DynamicFlatList](/) |
 | static  | Renders a [StaticFlatList](/)  |
+
+## Related guidelines
+
+- [Lists & Grids](../guidelines/lists-grids)

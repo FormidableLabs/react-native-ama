@@ -25,7 +25,7 @@ describe('TextInput', () => {
 
     render(
       <TextInput
-        label={<Text testID="text">Test</Text>}
+        labelComponent={<Text testID="text">Test</Text>}
         hasValidation={false}
         returnKeyType="done"
       />,
@@ -37,10 +37,10 @@ describe('TextInput', () => {
     });
   });
 
-  it('renders the given label before the text input when labelPosition is undefined', () => {
+  it('renders the given labelComponent before the text input when labelPosition is undefined', () => {
     const renderAPI = render(
       <TextInput
-        label={<Text testID="text">Label</Text>}
+        labelComponent={<Text testID="text">labelComponent</Text>}
         returnKeyType="done"
         hasValidation={false}
       />,
@@ -53,11 +53,11 @@ describe('TextInput', () => {
           importantForAccessibility="no"
           testID="text"
         >
-          Label
+          labelComponent
         </Text>,
         <TextInput
           accessibilityHint=""
-          accessibilityLabel="Label"
+          accessibilityLabel="labelComponent"
           onLayout={[Function]}
           onSubmitEditing={[Function]}
           returnKeyType="done"
@@ -67,10 +67,10 @@ describe('TextInput', () => {
     `);
   });
 
-  it('renders the given label after the text input when labelPosition is "afterInput"', () => {
+  it('renders the given labelComponent after the text input when labelPosition is "afterInput"', () => {
     const renderAPI = render(
       <TextInput
-        label={<Text testID="text"> Label after</Text>}
+        labelComponent={<Text testID="text"> labelComponent after</Text>}
         labelPosition="afterInput"
         returnKeyType="done"
         hasValidation={false}
@@ -81,7 +81,7 @@ describe('TextInput', () => {
       Array [
         <TextInput
           accessibilityHint=""
-          accessibilityLabel=" Label after"
+          accessibilityLabel=" labelComponent after"
           onLayout={[Function]}
           onSubmitEditing={[Function]}
           returnKeyType="done"
@@ -92,19 +92,19 @@ describe('TextInput', () => {
           importantForAccessibility="no"
           testID="text"
         >
-           Label after
+           labelComponent after
         </Text>,
       ]
     `);
   });
 
-  it('renders the given error after the label when errorPosition is "belowLabel"', () => {
+  it('renders the given errorComponent after the labelComponent when errorPosition is "belowLabel"', () => {
     const renderAPI = render(
       <TextInput
-        label={<Text testID="text">the label</Text>}
+        labelComponent={<Text testID="text">the labelComponent</Text>}
         returnKeyType="done"
         hasValidation={true}
-        error={<Text>This is the error</Text>}
+        errorComponent={<Text>This is the errorComponent</Text>}
         errorPosition="belowLabel"
         hasError={true}
       />,
@@ -117,17 +117,17 @@ describe('TextInput', () => {
           importantForAccessibility="no"
           testID="text"
         >
-          the label
+          the labelComponent
         </Text>,
         <Text
           accessibilityElementsHidden={true}
           importantForAccessibility="no"
         >
-          This is the error
+          This is the errorComponent
         </Text>,
         <TextInput
-          accessibilityHint="This is the error"
-          accessibilityLabel="the label"
+          accessibilityHint="This is the errorComponent"
+          accessibilityLabel="the labelComponent"
           onLayout={[Function]}
           onSubmitEditing={[Function]}
           returnKeyType="done"
@@ -137,13 +137,13 @@ describe('TextInput', () => {
     `);
   });
 
-  it('renders the given error after the input when errorPosition is "afterInput"', () => {
+  it('renders the given errorComponent after the input when errorPosition is "afterInput"', () => {
     const renderAPI = render(
       <TextInput
-        label={<Text testID="text">the label</Text>}
+        labelComponent={<Text testID="text">the labelComponent</Text>}
         returnKeyType="done"
         hasValidation={true}
-        error={<Text>This is the error</Text>}
+        errorComponent={<Text>This is the errorComponent</Text>}
         errorPosition="afterInput"
         hasError={true}
       />,
@@ -156,11 +156,11 @@ describe('TextInput', () => {
           importantForAccessibility="no"
           testID="text"
         >
-          the label
+          the labelComponent
         </Text>,
         <TextInput
-          accessibilityHint="This is the error"
-          accessibilityLabel="the label"
+          accessibilityHint="This is the errorComponent"
+          accessibilityLabel="the labelComponent"
           onLayout={[Function]}
           onSubmitEditing={[Function]}
           returnKeyType="done"
@@ -170,16 +170,16 @@ describe('TextInput', () => {
           accessibilityElementsHidden={true}
           importantForAccessibility="no"
         >
-          This is the error
+          This is the errorComponent
         </Text>,
       ]
     `);
   });
 
-  it('hides the label from the screen readers', () => {
+  it('hides the labelComponent from the screen readers', () => {
     const renderAPI = render(
       <TextInput
-        label={<Text testID="text">Test</Text>}
+        labelComponent={<Text testID="text">Test</Text>}
         labelPosition="afterInput"
         returnKeyType="done"
         hasValidation={false}
@@ -194,24 +194,30 @@ describe('TextInput', () => {
     ).toBe(true);
   });
 
-  it('hides the error component from the screen readers', () => {
+  it('hides the errorComponent component from the screen readers', () => {
     const renderAPI = render(
       <TextInput
-        label={<Text>Test</Text>}
+        labelComponent={<Text>Test</Text>}
         labelPosition="afterInput"
         returnKeyType="done"
         hasValidation={true}
-        error={<Text testID="error-test-id">This is the error</Text>}
+        errorComponent={
+          <Text testID="errorComponent-test-id">
+            This is the errorComponent
+          </Text>
+        }
         errorPosition="afterInput"
         hasError={true}
       />,
     );
 
     expect(
-      renderAPI.getByTestId('error-test-id').props.importantForAccessibility,
+      renderAPI.getByTestId('errorComponent-test-id').props
+        .importantForAccessibility,
     ).toBe('no');
     expect(
-      renderAPI.getByTestId('error-test-id').props.accessibilityElementsHidden,
+      renderAPI.getByTestId('errorComponent-test-id').props
+        .accessibilityElementsHidden,
     ).toBe(true);
   });
 
@@ -225,7 +231,7 @@ describe('TextInput', () => {
 
       const renderAPI = render(
         <TextInput
-          label={<Text testID="text">Label</Text>}
+          labelComponent={<Text testID="text">labelComponent</Text>}
           labelPosition="afterInput"
           testID="test-id"
           hasValidation={false}
@@ -248,7 +254,7 @@ describe('TextInput', () => {
 
       const renderAPI = render(
         <TextInput
-          label={<Text testID="text">Label</Text>}
+          labelComponent={<Text testID="text">labelComponent</Text>}
           labelPosition="afterInput"
           testID="test-id"
           hasValidation={false}
@@ -273,7 +279,7 @@ describe('TextInput', () => {
 
         const renderAPI = render(
           <TextInput
-            label={<Text testID="text">Label</Text>}
+            labelComponent={<Text testID="text">labelComponent</Text>}
             labelPosition="afterInput"
             testID="test-id"
             returnKeyType="google"
@@ -291,11 +297,11 @@ describe('TextInput', () => {
   });
 
   describe('accessibilityLabel', () => {
-    describe('Given no accessibility label is provided', () => {
-      it('Then applies the given label content as accessibilityLabel', () => {
+    describe('Given no accessibility labelComponent is provided', () => {
+      it('Then applies the given labelComponent content as accessibilityLabel', () => {
         const renderAPI = render(
           <TextInput
-            label={<Text>First name:</Text>}
+            labelComponent={<Text>First name:</Text>}
             returnKeyType="done"
             testID="text-input"
             hasValidation={false}
@@ -307,10 +313,10 @@ describe('TextInput', () => {
         ).toBe('First name:');
       });
 
-      it('strips the ending * from the label content before using as accessibility label', () => {
+      it('strips the ending * from the labelComponent content before using as accessibility labelComponent', () => {
         const renderAPI = render(
           <TextInput
-            label={<Text>First name (required)*</Text>}
+            labelComponent={<Text>First name (required)*</Text>}
             returnKeyType="done"
             testID="text-input"
             hasValidation={false}
@@ -326,7 +332,7 @@ describe('TextInput', () => {
     it('uses the accessibilityLabel only if provided', () => {
       const renderAPI = render(
         <TextInput
-          label={<Text>First name (required)*</Text>}
+          labelComponent={<Text>First name (required)*</Text>}
           returnKeyType="done"
           testID="text-input"
           accessibilityLabel="Please insert your first name"
@@ -351,7 +357,7 @@ describe('TextInput', () => {
 
     const renderAPI = render(
       <TextInput
-        label={<Text>First name (required)*</Text>}
+        labelComponent={<Text>First name (required)*</Text>}
         returnKeyType="next"
         testID="text-input"
         accessibilityLabel="Please insert your first name"
@@ -367,6 +373,64 @@ describe('TextInput', () => {
     );
 
     expect(fn).toHaveBeenCalledWith('whatever');
+  });
+
+  it('ignores the errorComponent message if hasError is not true', () => {
+    const renderAPI = render(
+      <TextInput
+        labelComponent={<Text>First name (required)*</Text>}
+        returnKeyType="next"
+        testID="text-input"
+        accessibilityLabel="Please insert your first name"
+        hasValidation={true}
+        hasError={false}
+        errorText={'This is the errorComponent'}
+        errorComponent={<></>}
+      />,
+    );
+
+    expect(renderAPI.getByTestId('text-input').props.accessibilityHint).toBe(
+      '',
+    );
+  });
+
+  it('when hasError uses the text from the errorComponent as part of the accessibilityHint', () => {
+    const renderAPI = render(
+      <TextInput
+        labelComponent={<Text>First name (required)*</Text>}
+        returnKeyType="next"
+        testID="text-input"
+        accessibilityLabel="Please insert your first name"
+        accessibilityHint="The hint"
+        hasValidation={true}
+        hasError={true}
+        errorComponent={<Text>The first name cannot be blank</Text>}
+      />,
+    );
+
+    expect(renderAPI.getByTestId('text-input').props.accessibilityHint).toBe(
+      'The hint, The first name cannot be blank',
+    );
+  });
+
+  it('when hasError uses the errorText, if specified, as part of the accessibilityHint', () => {
+    const renderAPI = render(
+      <TextInput
+        labelComponent={<Text>First name (required)*</Text>}
+        returnKeyType="next"
+        testID="text-input"
+        accessibilityLabel="Please insert your first name"
+        accessibilityHint="The hint"
+        hasValidation={true}
+        hasError={true}
+        errorText="This text will be used"
+        errorComponent={<Text>The first name cannot be blank</Text>}
+      />,
+    );
+
+    expect(renderAPI.getByTestId('text-input').props.accessibilityHint).toBe(
+      'The hint, This text will be used',
+    );
   });
 });
 

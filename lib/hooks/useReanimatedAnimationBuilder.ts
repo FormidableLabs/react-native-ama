@@ -1,4 +1,4 @@
-import type { ViewStyle } from 'react-native';
+import type { ViewProps, ViewStyle } from 'react-native';
 import {
   EntryAnimationsValues,
   EntryExitAnimationFunction,
@@ -10,32 +10,34 @@ import {
 import { MOTION_ANIMATIONS } from '../internal/costants';
 import { useAMAContext } from '../providers/AMAProvider';
 
+export type ToAnimation = ViewProps['style'];
+
 type UseReanimatedAnimationBuilder = {
   from: AnimatedEntryViewStyle;
-  to: AnimatedEntryViewStyle | AnimatedExitViewStyle;
-  exitFrom?: AnimatedExitViewStyle;
+  to: ToAnimation;
+  exit?: AnimatedExitViewStyle;
   duration: number;
 };
 
 export const useReanimatedAnimationBuilder = ({
   from,
   to,
-  exitFrom,
+  exit,
   duration,
 }: UseReanimatedAnimationBuilder) => {
   const { isReduceMotionEnabled } = useAMAContext();
 
-  const animationBuilder = <TypeOfAnimation>(
-    initial: TypeOfAnimation,
-    final: TypeOfAnimation,
+  const animationBuilder = <InitialValues, FinalValues>(
+    initial: InitialValues,
+    final: FinalValues,
   ): EntryExitAnimationFunction => {
     return (values: EntryAnimationsValues | ExitAnimationsValues) => {
       'worklet';
 
       const animations = (function generateAnimations(startValues, endValues) {
         return Object.keys(startValues).reduce((outputAnimation, key) => {
-          const k: keyof TypeOfAnimation = key as keyof TypeOfAnimation;
-          const toValue = endValues[k];
+          const k: keyof InitialValues = key as keyof InitialValues;
+          const toValue = endValues[key as keyof FinalValues];
           const value = startValues[k];
           const mappedToValue =
             // @ts-ignore
@@ -49,7 +51,7 @@ export const useReanimatedAnimationBuilder = ({
           const newValue = Array.isArray(value)
             ? value.map((item, index) =>
                 generateAnimations(
-                  item as TypeOfAnimation,
+                  item as InitialValues,
                   // @ts-ignore
                   endValues?.[k]?.[index],
                 ),
@@ -61,7 +63,7 @@ export const useReanimatedAnimationBuilder = ({
           outputAnimation[k] = newValue;
 
           return outputAnimation;
-        }, {} as TypeOfAnimation);
+        }, {} as InitialValues);
       })(initial, final);
 
       const initialValues = (function generateInitialValues(
@@ -71,7 +73,7 @@ export const useReanimatedAnimationBuilder = ({
           // @ts-ignore
           const mappedValue = typeof value === 'string' ? values[value] : value;
           const newValue = Array.isArray(value)
-            ? value.map(item => generateInitialValues(item as TypeOfAnimation))
+            ? value.map(item => generateInitialValues(item as InitialValues))
             : mappedValue;
 
           newList[key as keyof StyleProps] = newValue;
@@ -88,8 +90,11 @@ export const useReanimatedAnimationBuilder = ({
   };
 
   return {
-    entering: animationBuilder<AnimatedEntryViewStyle>(from, to),
-    exiting: animationBuilder<AnimatedExitViewStyle>(to, exitFrom || from),
+    entering: animationBuilder<AnimatedEntryViewStyle, ToAnimation>(from, to),
+    exiting: animationBuilder<
+      ToAnimation,
+      AnimatedExitViewStyle | AnimatedEntryViewStyle
+    >(to, exit || from),
   };
 };
 

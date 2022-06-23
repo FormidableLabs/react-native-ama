@@ -1,3 +1,5 @@
+import { Required } from '@site/src/components';
+
 # Form
 
 The `<Form />` component provides a "local" context for the [`TextInput`](./TextInput.mdx), [`FormField`](./FormField.md) and [`SwitchListItem`](./SwitchListItem.md) components.
@@ -12,11 +14,6 @@ The provider hosts the hosts the `ref` values used by the [TextInput](./TextInpu
 </Form>
 ```
 
-## Props
-
-### `onSubmit`
-
-The callback to be called when the [`TextInput`](./TextInput.mdx) `returnKeyboardType` is **done**.
 
 ## Example
 ```jsx
@@ -107,7 +104,45 @@ This all works fine, but the logic will fail when a component is rendered condit
 
 ### Let's fix it
 
-To fix the problem, we must manually tell the `TextInput` the return key to display and what element to focus on next.
+To fix the problem, we can manually tell the `TextInput` the return key to display and the ID or ref of the next element to be focused:
+
+#### 1. Specifying the ID
+
+```jsx
+<Form onSubmit={handleSubmit}>
+    <TextInput
+        onChangeText={newText => setFirstName(newText)}
+        defaultValue={text}
+        label={<Text>First name:</Text>}
+    />
+
+    <SwitchListItem
+        label={<Text>Show last name</Text>}
+        value={isLastNameVisible}
+        onValueChange={toggleLastName}
+    />
+
+  {isLastNameVisible ? (
+    <TextInput
+      onChangeText={newText => setLastName(newText)}
+      defaultValue={text}
+      label={<Text>Last name:</Text>}
+      returnKeyType="next"
+      nextFieldId="email-field" // The next field ID to be focused
+    />
+  ) : null}
+
+  <TextInput
+    onChangeText={newText => setEmailAddress(newText)}
+    defaultValue={text}
+    label={<Text>Email address:</Text>}
+    id="email-field" // The field ID
+  />
+</Form>
+```
+
+
+#### 2. Specifying the ref
 
 ```jsx
 const emailRef = React.useRef(null);
@@ -143,3 +178,17 @@ const emailRef = React.useRef(null);
   />
 </Form>
 ```
+
+## Props
+
+### <Required /> `onSubmit`
+
+The callback to be called when the [`TextInput`](./TextInput.mdx) `returnKeyboardType` is **done**.
+
+| Type     |
+|----------|
+| callback |
+
+## Related guidelines
+
+- [Forms](../guidelines/forms)

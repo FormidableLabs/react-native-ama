@@ -19,8 +19,8 @@ describe('FlatList', () => {
         <FlatList
           data={DATA}
           listType="dynamic"
-          accessibilitySingularMessage={'%count% item found'}
-          accessibilityPluralMessage={'%count% items found'}
+          singularMessage={'%count% item found'}
+          pluralMessage={'%count% items found'}
           renderItem={() => null}
         />,
       );
@@ -46,8 +46,8 @@ describe('FlatList', () => {
           <FlatList
             data={DATA}
             listType="dynamic"
-            accessibilitySingularMessage={messages.singular}
-            accessibilityPluralMessage={messages.plural}
+            singularMessage={messages.singular}
+            pluralMessage={messages.plural}
             renderItem={() => null}
           />,
         );
@@ -56,8 +56,8 @@ describe('FlatList', () => {
           <FlatList
             data={DATA.slice(sliceStart, sliceEnd)}
             listType="dynamic"
-            accessibilitySingularMessage={messages.singular}
-            accessibilityPluralMessage={messages.plural}
+            singularMessage={messages.singular}
+            pluralMessage={messages.plural}
             renderItem={() => null}
           />,
         );
@@ -82,8 +82,8 @@ describe('FlatList', () => {
         <FlatList
           data={DATA}
           listType="dynamic"
-          accessibilitySingularMessage={messages.singular}
-          accessibilityPluralMessage={messages.plural}
+          singularMessage={messages.singular}
+          pluralMessage={messages.plural}
           renderItem={() => null}
         />,
       );
@@ -92,8 +92,8 @@ describe('FlatList', () => {
         <FlatList
           data={DATA.slice(sliceStart, sliceEnd)}
           listType="dynamic"
-          accessibilitySingularMessage={messages.singular}
-          accessibilityPluralMessage={messages.plural}
+          singularMessage={messages.singular}
+          pluralMessage={messages.plural}
           renderItem={() => null}
         />,
       );
@@ -102,8 +102,8 @@ describe('FlatList', () => {
         <FlatList
           data={DATA}
           listType="dynamic"
-          accessibilitySingularMessage={messages.singular}
-          accessibilityPluralMessage={messages.plural}
+          singularMessage={messages.singular}
+          pluralMessage={messages.plural}
           renderItem={() => null}
         />,
       );
@@ -112,8 +112,8 @@ describe('FlatList', () => {
         <FlatList
           data={DATA.slice(sliceStart, sliceEnd)}
           listType="dynamic"
-          accessibilitySingularMessage={messages.singular}
-          accessibilityPluralMessage={messages.plural}
+          singularMessage={messages.singular}
+          pluralMessage={messages.plural}
           renderItem={() => null}
         />,
       );
@@ -128,8 +128,8 @@ describe('FlatList', () => {
         <FlatList
           data={DATA}
           listType="dynamic"
-          accessibilitySingularMessage={'%count% item found'}
-          accessibilityPluralMessage={'%count% items found'}
+          singularMessage={'%count% item found'}
+          pluralMessage={'%count% items found'}
           renderItem={() => null}
         />,
       );
@@ -138,8 +138,8 @@ describe('FlatList', () => {
         <FlatList
           data={DATA}
           listType="dynamic"
-          accessibilitySingularMessage={'%count% item found'}
-          accessibilityPluralMessage={'%count% items found'}
+          singularMessage={'%count% item found'}
+          pluralMessage={'%count% items found'}
           renderItem={() => null}
         />,
       );
@@ -154,8 +154,8 @@ describe('FlatList', () => {
         <FlatList
           data={DATA}
           listType="dynamic"
-          accessibilitySingularMessage={'%count% item found'}
-          accessibilityPluralMessage={'%count% items found'}
+          singularMessage={'%count% item found'}
+          pluralMessage={'%count% items found'}
           isPlural={isPlural}
           renderItem={() => null}
         />,
@@ -165,8 +165,8 @@ describe('FlatList', () => {
         <FlatList
           data={DATA.slice(1)}
           listType="dynamic"
-          accessibilitySingularMessage={'%count% item found'}
-          accessibilityPluralMessage={'%count% items found'}
+          singularMessage={'%count% item found'}
+          pluralMessage={'%count% items found'}
           isPlural={isPlural}
           renderItem={() => null}
         />,

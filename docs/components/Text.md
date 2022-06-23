@@ -34,3 +34,9 @@ Allows the screen reader to autofocus the Text element when it is rendered.
 
 When `autofocus` is set to true, AMA forces the `accessibilityRole` to **header**
 :::
+
+## Related guidelines
+
+- [Headers](../guidelines/headers)
+- [Accessibility Label](../guidelines/accessibility-label)
+- [Minimum Size](../guidelines/minimum-size)

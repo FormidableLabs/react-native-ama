@@ -34,7 +34,7 @@ The built-in [TextInput](../components/TextInput) automatically hides the label 
 
 ## Errors
 
-If the field has an error, then this should be read as part of the field label/hint itself and cannot be focused as an isolated component:
+If the field has an error, then this should be read as part of the field label/hint itself and should not be focused as an isolated component:
 
 This is because if we keep the information in a separate component, the user won't be aware of the error unless it does swipe to select the next element.
 Also, some users might forget the error, forcing them to swipe left and right to figure out that.
@@ -56,10 +56,6 @@ The user **must** be able to navigate to all the interactive elements on the scr
 
 For example, if the user decides to navigate away from an input field, it must be allowed to do so; even if the field contains invalid data, it doesn't matter in no way the focus should be programmatically forced back to that field!
 
-## Focusable Elements
-
-
-
 ## AMA dev runtime errors
 
 ### NO_FORM_LABEL
@@ -70,7 +66,7 @@ This error is used when no label has been provided for the [TextInput](../compon
 
 This error is used when no error has been provided for the [TextInput](../components/TextInput) component.
 
-# NO_KEYBOARD_TRAP <MustNot />
+### NO_KEYBOARD_TRAP <MustNot />
 
 This error is triggered by the [TextInput](../components/TextInput) component if the next input field does not have the focus as expected.
 
@@ -78,3 +74,11 @@ This error is triggered by the [TextInput](../components/TextInput) component if
 
 This rule cannot be turned off!
 :::
+
+## Related AMA components
+
+- [Form](../components/form)
+- [FormField](../components/formfield)
+- [SwitchListItem](../components/switchlistitem)
+- [SwitchWrapper](../components/switchwrapper)
+- [TextInput](../components/textinput)

@@ -67,8 +67,6 @@
     "@testing-library/react-hooks": "^8.0.0",
     "@testing-library/react-native": "^9.1.0",
     "@types/jest": "^26.0.0",
-    "@types/react": "17",
-    "@types/react-native": "^0.67.8",
     "babel-plugin-transform-strip-block": "^0.0.5",
     "commitlint": "^11.0.0",
     "eslint": "^7.2.0",

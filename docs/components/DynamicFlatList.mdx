@@ -1,4 +1,4 @@
-import { TalkBackList } from '@site/src/components';
+import { TalkBackList, Required } from '@site/src/components';
 
 # DynamicFlatList
 
@@ -12,8 +12,8 @@ import { DynamicFlatList } from 'react-native-ama';
   renderItem={renderItem}
   keyExtractor={item => item.id}
   listType="dynamic"
-  accessibilitySingularMessage="%count% item found"
-  accessibilityPluralMessage="%count% items found"
+  singularMessage="%count% item found"
+  pluralMessage="%count% items found"
 />;
 ```
 
@@ -37,20 +37,32 @@ Check [here](../guidelines/lists.md#number-of-results) for more info.
 
 ## Additional props
 
-### `accessibilitySingularMessage`
+### <Required /> `singularMessage`
 
 Is the message to announce when the list renders one[^1] item [^2].
 The string %count%\* will be replaced with the actual number of items rendered at the moment.
 
-### `accessibilityPluralMessage`
+| Type   | Default   |
+|--------|-----------|
+| string | undefined |
+
+### <Required /> `pluralMessage`
 
 Is the message to announce when the list renders zero or multiple[^1] items [^2]
 The string %count%\* will be replaced with the actual number of items rendered at the moment.
+
+| Type   | Default   |
+|--------|-----------|
+| string | undefined |
 
 ### `isPlural`
 
 By default, the component considers the number **1** as singular and any other as plural. Although this works fine with English, it might not be the case for other languages.
 For this reason, allows specifying a custom function that should return **true** if the _accessibilityPluralMessage_ should be used; otherwise, false.
+
+| Type          | Default   |
+|---------------|-----------|
+| () => boolean | undefined |
 
 #### Example:
 
@@ -62,8 +74,8 @@ import { DynamicFlatList } from 'react-native-ama';
   renderItem={renderItem}
   keyExtractor={item => item.id}
   listType="dynamic"
-  accessibilitySingularMessage="%count% item found"
-  accessibilityPluralMessage="%count% items found"
+  singularMessage="%count% item found"
+  pluralMessage="%count% items found"
   isPlural={customIsPlural}
 />;
 
@@ -76,6 +88,10 @@ const customIsPlural = () => {
 
 The number of rows of the list/grid. If empty, the length of the data is used to calculate it and divided by `numColumns`.
 
+| Type    | Default   |
+| ------- | --------- |
+| number | undefined |
+
 :::note
 
 When passing `rowsCount`, it is used as it is and is assumed that the number of columns has been taken into account.
@@ -85,6 +101,14 @@ When passing `rowsCount`, it is used as it is and is assumed that the number of 
 ### `numColumns`
 
 The number of columns of the list.
+
+| Type    | Default   |
+| ------- | --------- |
+| number | undefined |
+
+## Related guidelines
+
+- [Lists & Grids](../guidelines/lists-grids)
 
 [^1]: The announcement is made only when the list is filtered, and the number of items displayed is different from the original one
 [^2]: This is with the default behaviour that can be customised via the [isPlural](#isplural) prop
