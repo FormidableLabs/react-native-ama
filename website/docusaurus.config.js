@@ -63,7 +63,7 @@ const config = {
           },
           {
             label: 'Hooks',
-            to: '/hooks/',
+            to: '/hooks/useAMAContext',
           },
           {
             label: 'Guidelines',
