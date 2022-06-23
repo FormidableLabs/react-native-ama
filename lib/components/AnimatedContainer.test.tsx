@@ -31,7 +31,7 @@ describe('AnimatedContainer', () => {
       children: undefined,
       entering: 'entering',
       exiting: 'exiting',
-      style: [undefined],
+      style: undefined,
       testID: 'test-id',
     });
   });

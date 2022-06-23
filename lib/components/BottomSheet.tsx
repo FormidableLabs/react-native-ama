@@ -119,13 +119,14 @@ export const BottomSheet = ({
             style={[styles.overlay, overlayStyle]}
             from={{ opacity: 0 }}
             to={{ opacity: 1 }}
+            testID={`${testID}-overlay-wrapper`}
             duration={animationDuration}>
             <Pressable
               style={styles.closeButton}
               accessibilityRole="button"
               accessibilityLabel={closeActionAccessibilityLabel}
               onPress={onRequestClose}
-              testID={`${testID}-overlay`}
+              testID={`${testID}-overlay-buttom`}
             />
           </AnimatedContainer>
           <Animated.View

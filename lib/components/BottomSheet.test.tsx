@@ -51,8 +51,10 @@ describe('BottomSheet', () => {
                   "backgroundColor": "rgba(0, 0, 0, 0.5)",
                   "flex": 1,
                 },
+                undefined,
               ]
             }
+            testID="undefined-overlay-wrapper"
           >
             <View
               accessibilityLabel="close me"
@@ -70,14 +72,11 @@ describe('BottomSheet', () => {
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               style={
-                Array [
-                  Object {
-                    "flex": 1,
-                  },
-                  undefined,
-                ]
+                Object {
+                  "flex": 1,
+                }
               }
-              testID="undefined-overlay"
+              testID="undefined-overlay-buttom"
             />
           </View>
           <View
@@ -109,13 +108,11 @@ describe('BottomSheet', () => {
               onLayout={[Function]}
               style={
                 Array [
-                  Array [
-                    Object {
-                      "backgroundColor": "#fff",
-                      "width": "100%",
-                    },
-                    Object {},
-                  ],
+                  Object {
+                    "backgroundColor": "#fff",
+                    "width": "100%",
+                  },
+                  Object {},
                 ]
               }
               testID="undefined-panel"
@@ -206,8 +203,8 @@ describe('BottomSheet', () => {
         />,
       );
 
-      expect(getByTestId('bottom-sheet-overlay').props.style).toEqual([
-        { flex: 1 },
+      expect(getByTestId('bottom-sheet-overlay-wrapper').props.style).toEqual([
+        { backgroundColor: 'rgba(0, 0, 0, 0.5)', flex: 1 },
         { backgroundColor: 'yellow', width: 42 },
       ]);
     });
@@ -225,7 +222,8 @@ describe('BottomSheet', () => {
       );
 
       expect(getByTestId('bottom-sheet-panel').props.style).toEqual([
-        [{ backgroundColor: '#fff', width: '100%' }, { borderRadius: 42 }],
+        { backgroundColor: '#fff', width: '100%' },
+        { borderRadius: 42 },
       ]);
     });
 

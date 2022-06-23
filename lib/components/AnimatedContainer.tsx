@@ -39,7 +39,7 @@ export const AnimatedContainer = React.forwardRef<
     return (
       <Wrapper>
         <Animated.View
-          style={[style]}
+          style={style}
           entering={entering}
           exiting={exiting}
           ref={forwardRef}

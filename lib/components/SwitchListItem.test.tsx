@@ -8,6 +8,7 @@ beforeEach(() => {
   jest.clearAllMocks();
 
   jest.spyOn(console, 'error').mockImplementation();
+  jest.spyOn(console, 'info').mockImplementation();
 });
 
 describe('SwitchListItem', () => {
@@ -48,6 +49,16 @@ describe('SwitchListItem', () => {
                 "alignItems": "center",
                 "flexDirection": "row",
                 "width": "100%",
+              },
+              Object {
+                "backgroundColor": "rgba(163, 20, 32, 0.4)",
+                "borderColor": "#A31420",
+                "borderWidth": 4,
+              },
+              Object {
+                "backgroundColor": "rgba(163, 20, 32, 0.4)",
+                "borderColor": "#A31420",
+                "borderWidth": 4,
               },
             ],
             Object {

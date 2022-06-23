@@ -5,6 +5,8 @@ import { ExpandablePressable } from './ExpandablePressable';
 
 beforeEach(() => {
   jest.clearAllMocks();
+
+  jest.spyOn(console, 'info').mockImplementation();
 });
 
 describe('ExpandablePressable', () => {
@@ -39,7 +41,13 @@ describe('ExpandablePressable', () => {
         onResponderTerminate={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
-        style={Object {}}
+        style={
+          Object {
+            "backgroundColor": "rgba(163, 20, 32, 0.4)",
+            "borderColor": "#A31420",
+            "borderWidth": 4,
+          }
+        }
       />
     `);
   });
