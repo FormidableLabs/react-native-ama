@@ -1,6 +1,10 @@
 import type { LayoutChangeEvent } from 'react-native';
+import { Platform } from 'react-native';
 
-import { MINIMUM_TOUCHABLE_SIZE } from '../../utils/minimumTouchableSize';
+import {
+  ANDROID_MINIMUM_TOUCHABLE_SIZE,
+  MINIMUM_TOUCHABLE_SIZE,
+} from '../../utils/minimumTouchableSize';
 import type { LogParams } from '../logger';
 
 export const checkMinimumSize = (
@@ -8,6 +12,14 @@ export const checkMinimumSize = (
 ): LogParams | null => {
   const width = event.nativeEvent.layout.width;
   const height = event.nativeEvent.layout.height;
+
+  if (
+    Platform.OS === 'ios' &&
+    width < ANDROID_MINIMUM_TOUCHABLE_SIZE &&
+    height < ANDROID_MINIMUM_TOUCHABLE_SIZE
+  ) {
+    console.warn('The minimum size might be too small for Android');
+  }
 
   if (width < MINIMUM_TOUCHABLE_SIZE || height < MINIMUM_TOUCHABLE_SIZE) {
     return {

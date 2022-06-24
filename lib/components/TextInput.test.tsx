@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Text } from 'react-native';
 
 import * as UseFormField from '../hooks/useFormField';
+import { ERROR_STYLE } from '../internal/error.style';
 import { TextInput } from './TextInput';
 
 beforeEach(() => {
@@ -430,6 +431,29 @@ describe('TextInput', () => {
 
     expect(renderAPI.getByTestId('text-input').props.accessibilityHint).toBe(
       'The hint, This text will be used',
+    );
+  });
+
+  it('apply the debug style when hasFailedChecks is true', () => {
+    const focusNextFormField = jest.fn();
+
+    jest.spyOn(UseFormField, 'useFormField').mockReturnValue({
+      focusNextFormField,
+      hasFailedChecks: true,
+    } as any);
+
+    const renderAPI = render(
+      <TextInput
+        labelComponent={<Text>First name (required)*</Text>}
+        returnKeyType="next"
+        testID="text-input"
+        accessibilityLabel="Please insert your first name"
+        hasValidation={false}
+      />,
+    );
+
+    expect(renderAPI.getByTestId('text-input').props.style).toEqual(
+      ERROR_STYLE,
     );
   });
 });
