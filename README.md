@@ -15,10 +15,10 @@ npm install -D react-native-ama
 
 The documentation contains everything you need to know about `react-native-ama` and contains several sections in order of importance when you first get started:
 
-- **[Getting started](https://formidable.com/open-source/react-native-ama/docs/introduction/getting-started)** — contains the "Getting Started" guide.
-- **[Components](https://formidable.com/open-source/react-native-ama/docs/components)** — overview of all the components available `react-native-ama`.
-- **[Hooks](https://formidable.com/open-source/react-native-ama/docs/hooks)** — overview of all the hooks available
-- **[Guidelines](https://formidable.com/open-source/react-native-ama/docs/guidelines)** — guidelines enforced by AMA components
+- **[Getting started](https://formidable.com/open-source/react-native-ama/)** — contains the "Getting Started" guide.
+- **[Components](https://formidable.com/open-source/react-native-ama/components/)** — overview of all the components available `react-native-ama`.
+- **[Hooks](https://formidable.com/open-source/react-native-ama/hooks/)** — overview of all the hooks available
+- **[Guidelines](https://formidable.com/open-source/react-native-ama/guidelines/)** — guidelines enforced by AMA components
 
 _You can find the raw markdown files inside this repository's `docs` folder._
 
