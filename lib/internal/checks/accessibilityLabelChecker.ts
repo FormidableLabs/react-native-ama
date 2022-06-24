@@ -24,7 +24,7 @@ export const accessibilityLabelChecker = ({
     };
   }
 
-  const isAllowed = isAccessibilityLabelAllowed(accessibilityLabel!);
+  const isAllowed = isAccessibilityLabelAllowed?.(accessibilityLabel!);
 
   if (!isAllowed && isUpperCase(accessibilityLabel!)) {
     return {

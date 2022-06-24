@@ -26,10 +26,12 @@ describe('useChecks', () => {
     'tracks the error only if the rule is %s',
     ruleValue => {
       jest
+        // @ts-ignore
         .spyOn(Logger, 'getRuleAction')
+        // @ts-ignore
         .mockReturnValue(ruleValue as RuleAction);
 
-      const { result } = renderHook(() => useChecks());
+      const { result } = renderHook(() => useChecks!());
 
       result.current.logResult('test-me', {
         rule: 'NO_UNDEFINED',
@@ -48,10 +50,12 @@ describe('useChecks', () => {
       const spy = jest.spyOn(console, 'warn');
 
       jest
+        // @ts-ignore
         .spyOn(Logger, 'getRuleAction')
+        // @ts-ignore
         .mockReturnValue(ruleValue as RuleAction);
 
-      const { result } = renderHook(() => useChecks());
+      const { result } = renderHook(() => useChecks!());
 
       result.current.logResult('test-me', {
         rule: 'NO_UNDEFINED',
@@ -69,10 +73,12 @@ describe('useChecks', () => {
     'tracks the same error only once',
     ruleValue => {
       jest
+        // @ts-ignore
         .spyOn(Logger, 'getRuleAction')
+        // @ts-ignore
         .mockReturnValue(ruleValue as RuleAction);
 
-      const { result } = renderHook(() => useChecks());
+      const { result } = renderHook(() => useChecks!());
 
       result.current.logResult('test-me', {
         rule: 'NO_UNDEFINED',
@@ -95,9 +101,10 @@ describe('useChecks', () => {
   );
 
   it('removes the tracked error after has been fixed', () => {
+    // @ts-ignore
     jest.spyOn(Logger, 'getRuleAction').mockReturnValue('MUST');
 
-    const { result } = renderHook(() => useChecks());
+    const { result } = renderHook(() => useChecks!());
 
     result.current.logResult('test-me', {
       rule: 'NO_UNDEFINED',

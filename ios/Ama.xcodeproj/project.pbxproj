@@ -6,10 +6,6 @@
 	objectVersion = 46;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		F4FF95D7245B92E800C19C63 /* Ama.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF95D6245B92E800C19C63 /* Ama.swift */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		58B511D91A9E6C8500147676 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -24,9 +20,7 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libAma.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAma.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		B3E7B5891CC2AC0600A0062D /* Ama.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ama.m; sourceTree = "<group>"; };
 		F4FF95D5245B92E700C19C63 /* Ama-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Ama-Bridging-Header.h"; sourceTree = "<group>"; };
-		F4FF95D6245B92E800C19C63 /* Ama.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ama.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,8 +45,6 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
-				F4FF95D6245B92E800C19C63 /* Ama.swift */,
-				B3E7B5891CC2AC0600A0062D /* Ama.m */,
 				F4FF95D5245B92E700C19C63 /* Ama-Bridging-Header.h */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
@@ -115,7 +107,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4FF95D7245B92E800C19C63 /* Ama.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,3 +1,4 @@
+import type React from 'react';
 import type {
   AccessibilityRole,
   AccessibilityState,
@@ -20,8 +21,8 @@ export type UsePressable<T> = Omit<
 
 type ReturnUsePressable = {
   accessibilityState: AccessibilityState;
-  onLayout: (event: LayoutChangeEvent) => void;
-  style: Record<string, any>;
+  onLayout?: (event: LayoutChangeEvent) => void;
+  style?: Record<string, any>;
 };
 
 export const usePressable = <T>(
@@ -30,25 +31,24 @@ export const usePressable = <T>(
 ): ReturnUsePressable => {
   const accessibilityState = generateAccessibilityStateFromProp(props);
 
-  /* block:start */
-  const ignoreContrastCheck =
-    // @ts-ignore
-    props.disabled && shouldIgnoreContrastCheckForDisabledElement();
+  const ignoreContrastCheck = __DEV__
+    ? // @ts-ignore
+      props.disabled && shouldIgnoreContrastCheckForDisabledElement()
+    : null;
 
-  const { debugStyle, onLayout } = useButtonChecks(
-    props,
-    children,
-    !ignoreContrastCheck,
-  );
+  const checks = __DEV__
+    ? useButtonChecks?.(props, children, !ignoreContrastCheck)
+    : null;
 
-  let style = debugStyle;
-  /* block:end */
-
-  return {
-    accessibilityState,
-    /* block:start */
-    onLayout,
-    style,
-    /* block:end */
-  };
+  return __DEV__
+    ? {
+        accessibilityState,
+        // @ts-ignore
+        onLayout: checks.onLayout,
+        // @ts-ignore
+        style: checks.debugStyle,
+      }
+    : {
+        accessibilityState,
+      };
 };

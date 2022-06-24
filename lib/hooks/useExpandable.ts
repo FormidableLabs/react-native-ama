@@ -12,32 +12,36 @@ export type UseExpandable<T> = Omit<
 };
 
 export const useExpandable = <T>(props: UseExpandable<T>) => {
-  /* block:start */
-  const { noUndefinedProperty } = useChecks();
+  const checks = __DEV__ ? useChecks?.() : undefined;
 
-  // @ts-ignore
-  let style = props.style;
-
-  const debugStyle = {
-    ...noUndefinedProperty<UseExpandable<T>>({
+  __DEV__ &&
+    checks?.noUndefinedProperty<UseExpandable<T>>({
       properties: props,
       property: 'expanded',
       rule: 'NO_UNDEFINED',
-    }),
-    ...noUndefinedProperty<UseExpandable<T>>({
+    });
+  __DEV__ &&
+    checks?.noUndefinedProperty<UseExpandable<T>>({
       properties: props,
       // @ts-ignore
       property: 'accessibilityLabel',
       rule: 'NO_UNDEFINED',
-    }),
-  };
+    });
   /* block:end */
 
-  return {
-    accessibilityRole: 'button' as AccessibilityRole,
-    ...props,
-    /* block:start */
-    style: applyStyle({ style, debugStyle }),
-    /* block:end */
-  };
+  return __DEV__
+    ? {
+        accessibilityRole: 'button' as AccessibilityRole,
+        ...props,
+        style: applyStyle?.({
+          // @ts-ignore
+          style: props.style,
+          // @ts-ignore
+          debugStyle: checks?.debugStyle,
+        }),
+      }
+    : {
+        accessibilityRole: 'button' as AccessibilityRole,
+        ...props,
+      };
 };

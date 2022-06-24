@@ -47,6 +47,7 @@ describe('useFocus', () => {
       renderHook(() => useFocus({ current: 'test-element' }));
 
       expect(spy).toHaveBeenCalledWith(
+        // @ts-ignore
         `${SHELL_COLORS.BG_RED}AMA.${SHELL_COLORS.RESET} ${SHELL_COLORS.BLUE}useFocus${SHELL_COLORS.RESET}: ${SHELL_COLORS.YELLOW}Ref element not found${SHELL_COLORS.RESET}`,
       );
     });

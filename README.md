@@ -1,7 +1,8 @@
 # react-native-ama
 [![github][github-image]][github-url] [![npm][npm-image]][npm-url] [![docs][docs-image]][docs-url] [![Maintenance Status][maintenance-image]](#maintenance-status)
 
-AMA stands for **A**ccessible **M**obile **A**pp and contains a set of accessible components and hooks to simplify the building of accessible apps.
+AMA stands for **A**ccessible **M**obile **A**pp and contains a set of [components](https://formidable.com/open-source/react-native-ama/components/),
+[hooks](https://formidable.com/open-source/react-native-ama/components/) and [guidelines](https://formidable.com/open-source/react-native-ama/guidelines/) created to help you build more accessible apps.
 
 ## Installation
 

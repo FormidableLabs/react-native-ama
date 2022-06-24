@@ -21,9 +21,7 @@ export const useFormField = ({
   const { setFocus } = useFocus();
   const fieldRef = React.useRef(ref);
 
-  /*block:start*/
-  const { checkFocusTrap, hasErrors } = useChecks();
-  /*block:end*/
+  const checks = __DEV__ ? useChecks?.() : undefined;
 
   const getMyIndex = () => {
     const allRefs = refs!;
@@ -57,22 +55,21 @@ export const useFormField = ({
     if (callFocus) {
       nextRefElement.current?.focus();
 
-      /*block:start*/
-      if (nextRefElement) {
-        checkFocusTrap({ ref: nextRefElement, shouldHaveFocus: true });
-      }
-      /*block:end*/
+      __DEV__ &&
+        nextRefElement &&
+        checks?.checkFocusTrap({ ref: nextRefElement, shouldHaveFocus: true });
     } else if (nextRefElement.current) {
       setFocus(nextRefElement.current);
     }
 
     const currentRef = allRefs[myIndex];
 
-    /*block:start*/
-    if (currentRef.hasFocusCallback) {
-      checkFocusTrap({ ref: currentRef.ref.current, shouldHaveFocus: false });
-    }
-    /*block:end*/
+    __DEV__ &&
+      currentRef.hasFocusCallback &&
+      checks?.checkFocusTrap({
+        ref: currentRef.ref.current,
+        shouldHaveFocus: false,
+      });
   };
 
   const getNextFieldRef = () => {
@@ -104,11 +101,14 @@ export const useFormField = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return {
-    focusNextFormField,
-    isLastField,
-    /*block:start*/
-    hasFailedChecks: hasErrors,
-    /*block:end*/
-  };
+  return __DEV__
+    ? {
+        focusNextFormField,
+        isLastField,
+        style: checks?.debugStyle,
+      }
+    : {
+        focusNextFormField,
+        isLastField,
+      };
 };

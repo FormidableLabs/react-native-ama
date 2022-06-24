@@ -2,6 +2,7 @@ import { getRuleAction, logFailure } from '../internal/logger';
 import {
   NON_OVERRIDABLE_RULES,
   RULES_HELP,
+  Rule,
   SHELL_COLORS,
 } from './logger.rules';
 
@@ -18,7 +19,7 @@ describe('getRuleAction', () => {
     'uses the default rules if no custom ones have been defined',
     // @ts-ignore
     (ruleKey: keyof typeof LOGGER_RULES) => {
-      const result = getRuleAction(ruleKey);
+      const result = getRuleAction?.(ruleKey);
 
       expect(result).toBe(LOGGER_RULES[ruleKey]);
     },
@@ -40,7 +41,7 @@ describe('getRuleAction', () => {
     expect(result).toBe('warn');
   });
 
-  it.each(NON_OVERRIDABLE_RULES)(
+  it.each(NON_OVERRIDABLE_RULES!)(
     'prevent the rules %s from being overridden',
     rule => {
       const rules = {};
@@ -54,7 +55,7 @@ describe('getRuleAction', () => {
         };
       });
 
-      const result = getRuleAction(rule);
+      const result = getRuleAction?.(rule as Rule);
 
       // @ts-ignore
       expect(result).toBe(LOGGER_RULES[rule]);
@@ -66,7 +67,7 @@ describe('logFailure', () => {
   it('Uses console.info if the action is MUST_NOT', () => {
     const consoleInfo = jest.spyOn(console, 'info');
 
-    const result = logFailure({
+    const result = logFailure?.({
       action: 'MUST_NOT',
       rule: 'CONTRAST_FAILED',
       message: 'This is the error message',
@@ -75,6 +76,7 @@ describe('logFailure', () => {
 
     expect(result).toBe('ERROR');
     expect(consoleInfo).toHaveBeenCalledWith(
+      // @ts-ignore
       `❌ ${SHELL_COLORS.BG_RED}[ AMA ]${SHELL_COLORS.RESET}: ${SHELL_COLORS.BLUE}CONTRAST_FAILED${SHELL_COLORS.RESET} - ${SHELL_COLORS.YELLOW}This is the error message${SHELL_COLORS.RESET}\n\n${RULES_HELP.CONTRAST_FAILED}\n\n`,
       'This is the extra part',
       '\n',

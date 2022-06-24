@@ -4,6 +4,7 @@ import { Text } from 'react-native';
 
 import * as UseFormField from '../hooks/useFormField';
 import { ERROR_STYLE } from '../internal/error.style';
+import * as UseChecks from '../internal/useChecks';
 import { TextInput } from './TextInput';
 
 beforeEach(() => {
@@ -434,12 +435,12 @@ describe('TextInput', () => {
     );
   });
 
-  it('apply the debug style when hasFailedChecks is true', () => {
+  it('apply the style returned by useFormField', () => {
     const focusNextFormField = jest.fn();
 
     jest.spyOn(UseFormField, 'useFormField').mockReturnValue({
       focusNextFormField,
-      hasFailedChecks: true,
+      style: ERROR_STYLE,
     } as any);
 
     const renderAPI = render(
@@ -455,6 +456,66 @@ describe('TextInput', () => {
     expect(renderAPI.getByTestId('text-input').props.style).toEqual(
       ERROR_STYLE,
     );
+  });
+
+  describe('When __DEV__ is false', () => {
+    let TextInputWithoutDev: typeof TextInput;
+    let accessibilityLabelChecker: jest.Mock;
+    let uppercaseChecker: jest.Mock;
+    let onLayout: jest.Mock;
+    let noUndefinedProperty: jest.Mock;
+
+    beforeEach(function () {
+      // @ts-ignore
+      global.__DEV__ = false;
+
+      accessibilityLabelChecker = jest.fn();
+      noUndefinedProperty = jest.fn();
+      uppercaseChecker = jest.fn();
+      onLayout = jest.fn();
+
+      // @ts-ignore
+      jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
+        accessibilityLabelChecker,
+        noUndefinedProperty,
+        uppercaseChecker,
+        onLayout,
+      } as any);
+
+      TextInputWithoutDev = require('./TextInput').TextInput;
+    });
+
+    it('does not perform any check', () => {
+      render(
+        <TextInputWithoutDev
+          labelComponent={<Text>First name (required)*</Text>}
+          returnKeyType="next"
+          testID="text-input"
+          accessibilityLabel="Please insert your first name"
+          hasValidation={false}
+        />,
+      );
+
+      expect(noUndefinedProperty).not.toHaveBeenCalled();
+    });
+
+    it('does not apply the debug style', () => {
+      jest.spyOn(UseFormField, 'useFormField').mockReturnValue({
+        style: ERROR_STYLE,
+      } as any);
+
+      const { getByTestId } = render(
+        <TextInputWithoutDev
+          labelComponent={<Text>First name (required)*</Text>}
+          returnKeyType="next"
+          testID="text-input"
+          accessibilityLabel="Please insert your first name"
+          hasValidation={false}
+        />,
+      );
+
+      expect(getByTestId('text-input').props.style).toEqual(undefined);
+    });
   });
 });
 

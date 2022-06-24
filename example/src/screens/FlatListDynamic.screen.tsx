@@ -29,19 +29,20 @@ export const FlatListDynamicScreen = () => {
     <View style={styles.container}>
       <Spacer height="normal" />
       <TextInput
-        label={<Text>Filter:</Text>}
+        labelComponent={<Text>Filter:</Text>}
         returnKeyType={'done'}
         style={styles.input}
         onChangeText={newText => filterList(newText)}
         defaultValue={filterText}
+        hasValidation={false}
       />
       <Spacer height="normal" />
       <DynamicFlatList
         data={items}
         renderItem={renderItem}
         keyExtractor={item => item.id}
-        accessibilitySingularMessage="%count% item found"
-        accessibilityPluralMessage="%count% items found"
+        singularMessage="%count% item found"
+        pluralMessage="%count% items found"
       />
     </View>
   );

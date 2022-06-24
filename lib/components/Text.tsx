@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Text as RNText, TextProps as RNTextProps } from 'react-native';
 
 import { useFocus } from '../hooks/useFocus';
-import { ERROR_STYLE } from '../internal/error.style';
+import { applyStyle } from '../internal/applyStyle';
 import { useChecks } from '../internal/useChecks';
 
 export type TextProps = RNTextProps & {
@@ -14,49 +14,43 @@ export const Text = ({ autofocus, ...rest }: TextProps) => {
 
   useFocus(autofocus ? textRef : undefined);
 
-  /* block:start */
-  let style = rest.style || {};
+  const checks = __DEV__ ? useChecks?.() : undefined;
 
-  const {
-    uppercaseChecker,
-    accessibilityLabelChecker,
-    noUndefinedProperty,
-    onLayout,
-    minimumSizeFailed,
-  } = useChecks();
-
-  style = {
-    ...(style as Record<string, any>),
-    ...uppercaseChecker({
-      style,
+  __DEV__ &&
+    checks?.uppercaseChecker({
+      style: rest.style,
       extra: rest.children,
       accessibilityLabel: rest.accessibilityLabel,
-    }),
-    ...accessibilityLabelChecker({
+    });
+  __DEV__ &&
+    checks?.accessibilityLabelChecker({
       accessibilityLabel: rest.accessibilityLabel,
       canBeEmpty: true,
-    }),
-    ...(rest.onPress
-      ? noUndefinedProperty({
-          properties: rest,
-          property: 'accessibilityRole',
-          rule: 'NO_ACCESSIBILITY_ROLE',
-        })
-      : {}),
-    ...(minimumSizeFailed ? ERROR_STYLE : {}),
-  };
-  /* block:end */
+    });
+  __DEV__ &&
+    rest.onPress &&
+    checks?.noUndefinedProperty({
+      properties: rest,
+      property: 'accessibilityRole',
+      rule: 'NO_ACCESSIBILITY_ROLE',
+    });
+
   const role = autofocus ? 'header' : rest.accessibilityRole;
 
-  return (
+  return __DEV__ ? (
     <RNText
       ref={textRef}
       {...rest}
       accessibilityRole={role}
-      /* block:start */
-      style={style}
-      onLayout={rest.onPress ? onLayout : undefined}
-      /* block:end */
+      style={applyStyle?.({
+        // @ts-ignore
+        style: rest.style,
+        // @ts-ignore
+        debugStyle: checks?.debugStyle,
+      })}
+      onLayout={rest.onPress ? checks?.onLayout : undefined}
     />
+  ) : (
+    <RNText ref={textRef} {...rest} accessibilityRole={role} />
   );
 };
