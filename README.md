@@ -4,7 +4,7 @@
 AMA stands for **A**ccessible **M**obile **A**pp and contains a set of [components](https://formidable.com/open-source/react-native-ama/components/),
 [hooks](https://formidable.com/open-source/react-native-ama/components/) and [guidelines](https://formidable.com/open-source/react-native-ama/guidelines/) created to help you build more accessible apps.
 
-![Example of runtime failure detected by AMA](https://github.com/FormidableLabs/react-native-ama/blob/main/ama-demo.jpg?raw=true)
+![Example of runtime failure detected by AMA](https://github.com/FormidableLabs/react-native-ama/blob/main/ama-demo.png?raw=true)
 
 ## Installation
 
@@ -22,7 +22,7 @@ The documentation contains everything you need to know about `react-native-ama` 
 - **[Components](https://formidable.com/open-source/react-native-ama/components)** — overview of all the components available `react-native-ama`.
 - **[Hooks](https://formidable.com/open-source/react-native-ama/hooks/useAMAContext)** — overview of all the hooks available
 - **[Guidelines](https://formidable.com/open-source/react-native-ama/guidelines)** — guidelines enforced by AMA components
-
+ 
 _You can find the raw markdown files inside this repository's `docs` folder._
 
 ## Maintenance Status
