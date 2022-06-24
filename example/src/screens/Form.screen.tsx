@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import { Form, SwitchListItem, Text, TextInput } from 'react-native-ama';
 
 import { CTAPressable } from '../components/CTAPressable';
@@ -29,8 +29,8 @@ export const FormScreen = () => {
   };
 
   return (
-    <Form onSubmit={handleOnSubmit}>
-      <ScrollView style={styles.view}>
+    <ScrollView style={styles.view}>
+      <Form onSubmit={handleOnSubmit}>
         <TextInput
           style={styles.input}
           placeholder=""
@@ -97,8 +97,8 @@ export const FormScreen = () => {
         />
         <Spacer height="big" />
         <CTAPressable title="Submit" onPress={handleOnSubmit} />
-      </ScrollView>
-    </Form>
+      </Form>
+    </ScrollView>
   );
 };
 

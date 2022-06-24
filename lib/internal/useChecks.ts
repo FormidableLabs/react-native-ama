@@ -154,5 +154,6 @@ export const useChecks = () => {
     uppercaseChecker,
     checkFocusTrap,
     minimumSizeFailed,
+    hasErrors: hasErrors.current,
   };
 };

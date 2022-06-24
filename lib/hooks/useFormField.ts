@@ -22,7 +22,7 @@ export const useFormField = ({
   const fieldRef = React.useRef(ref);
 
   /*block:start*/
-  const { checkFocusTrap } = useChecks();
+  const { checkFocusTrap, hasErrors } = useChecks();
   /*block:end*/
 
   const getMyIndex = () => {
@@ -107,5 +107,8 @@ export const useFormField = ({
   return {
     focusNextFormField,
     isLastField,
+    /*block:start*/
+    hasFailedChecks: hasErrors,
+    /*block:end*/
   };
 };

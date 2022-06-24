@@ -9,6 +9,7 @@ import {
 
 import { useFormField } from '../hooks/useFormField';
 import { applyStyle } from '../internal/applyStyle';
+import { ERROR_STYLE } from '../internal/error.style';
 import { maybeGenerateStringFromElement } from '../internal/maybeGenerateStringFromElement';
 import { useChecks } from '../internal/useChecks';
 import { HideChildrenFromAccessibilityTree } from './HideChildrenFromAccessibilityTree';
@@ -59,7 +60,13 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 
     React.useImperativeHandle(forwardedRef, () => inputRef.current!);
 
-    const { focusNextFormField, isLastField } = useFormField({
+    const {
+      focusNextFormField,
+      isLastField,
+      /*block:start*/
+      hasFailedChecks,
+      /*block:end*/
+    } = useFormField({
       ref: inputRef,
       id,
       nextFieldId,
@@ -88,6 +95,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
             rule: 'NO_FORM_ERROR',
           })
         : {}),
+      ...(hasFailedChecks ? ERROR_STYLE : {}),
     };
 
     const style = applyStyle({ style: rest.style || {}, debugStyle });

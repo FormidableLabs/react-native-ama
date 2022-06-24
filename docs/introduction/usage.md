@@ -1,5 +1,25 @@
 # Usage
 
+## The provider
+
+You need to add the [AMAProvider](../components/AMAProvider) to your app as is needed by some components/hooks.
+
+```jsx
+const App = () => {
+  return (
+    <AMAProvider>
+      <AppNavigator />
+    </AMAProvider>
+  );
+};
+```
+
+## Example
+
+In the following Example the navigation animation are disabled when the user enables the [Reduce Motion](../guidelines/animations) setting.
+
+It also shows how to build a more accessible [form](../guidelines/forms) using the built-in components.
+
 ```jsx
 import * as React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
