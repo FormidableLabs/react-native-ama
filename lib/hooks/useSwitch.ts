@@ -2,6 +2,7 @@ import React from 'react';
 import type { ViewProps } from 'react-native';
 import type { AccessibilityState } from 'react-native';
 
+import { applyStyle } from '../internal/applyStyle';
 import { generateAccessibilityStateFromProp } from '../internal/generateAccessibilityStateFromProp';
 import { useButtonChecks } from '../internal/useButtonChecks';
 
@@ -26,24 +27,30 @@ export const useSwitch = (props: UseSwitch): UseSwitchReturn => {
     [props],
   );
 
-  let style = props.style || {};
+  const checks = __DEV__
+    ? useButtonChecks?.({
+        ...props,
+        accessibilityRole: 'switch',
+      })
+    : undefined;
 
-  /*block:start*/
-  const { debugStyle, onLayout } = useButtonChecks({
-    ...props,
-    accessibilityRole: 'switch',
-  });
-
-  style = debugStyle;
-  /*block:end*/
-
-  return {
-    accessibilityRole: 'switch',
-    accessibilityState,
-    ...props,
-    /*block:start*/
-    onLayout,
-    style,
-    /*block:end*/
-  };
+  return __DEV__
+    ? {
+        accessibilityRole: 'switch',
+        accessibilityState,
+        ...props,
+        // @ts-ignore
+        onLayout: checks.onLayout,
+        style: applyStyle?.({
+          // @ts-ignore
+          style: props.style,
+          // @ts-ignore
+          debugStyle: checks.debugStyle,
+        }),
+      }
+    : {
+        accessibilityRole: 'switch',
+        accessibilityState,
+        ...props,
+      };
 };

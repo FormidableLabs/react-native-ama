@@ -18,7 +18,7 @@ export const DynamicFlatList = React.forwardRef<
     { data, singularMessage, pluralMessage, isPlural, ...rest },
     forwardedRef,
   ) => {
-    const { rowsCount, columnsCount } = useDynamicList({
+    const dynamicList = useDynamicList({
       data: data!,
       pluralMessage,
       singularMessage,
@@ -26,8 +26,21 @@ export const DynamicFlatList = React.forwardRef<
       isPlural,
     });
 
-    return (
-      <ListWrapper rowsCount={rowsCount} columnsCount={columnsCount}>
+    return __DEV__ ? (
+      <ListWrapper
+        rowsCount={dynamicList.rowsCount}
+        columnsCount={dynamicList.columnsCount}>
+        <FlatList
+          data={data}
+          {...rest}
+          ref={forwardedRef}
+          style={dynamicList.style}
+        />
+      </ListWrapper>
+    ) : (
+      <ListWrapper
+        rowsCount={dynamicList.rowsCount}
+        columnsCount={dynamicList.columnsCount}>
         <FlatList data={data} {...rest} ref={forwardedRef} />
       </ListWrapper>
     );

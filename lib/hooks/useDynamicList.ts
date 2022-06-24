@@ -22,29 +22,28 @@ export const useDynamicList = ({
   const initialCount = React.useRef(data?.length);
   const lastItemsCount = React.useRef<null | number>(null);
 
-  /*block:start*/
-  const { logResult } = useChecks();
+  const checks = __DEV__ ? useChecks?.() : null;
 
-  React.useEffect(() => {
-    if (!singularMessage?.includes('%count%')) {
-      logResult('useDynamicFlatList', {
-        rule: 'FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE',
-        message:
-          'Special string %count% not found in accessibilitySingularMessage',
-        extra: singularMessage,
-      });
-    }
+  __DEV__ &&
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    React.useEffect(() => {
+      if (!singularMessage?.includes('%count%')) {
+        checks?.logResult('useDynamicFlatList', {
+          rule: 'FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE',
+          message: 'Special string %count% not found in singularMessage',
+          extra: singularMessage,
+        });
+      }
 
-    if (!pluralMessage?.includes('%count%')) {
-      logResult('useDynamicFlatList', {
-        rule: 'FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE',
-        message:
-          'Special string %count% not found in accessibilityPluralMessage',
-        extra: pluralMessage,
-      });
-    }
-  }, [pluralMessage, singularMessage, logResult]);
-  /*block:end*/
+      if (!pluralMessage?.includes('%count%')) {
+        checks?.logResult('useDynamicFlatList', {
+          rule: 'FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE',
+          message: 'Special string %count% not found in pluralMessage',
+          extra: pluralMessage,
+        });
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pluralMessage, singularMessage, checks?.logResult]);
 
   React.useEffect(() => {
     const itemsCount = data?.length || 0;
@@ -70,10 +69,16 @@ export const useDynamicList = ({
 
   const rowsCount = lastItemsCount.current || initialCount.current || 0;
 
-  return {
-    rowsCount: rowsCount / numColumns,
-    columnsCount: numColumns,
-  };
+  return __DEV__
+    ? {
+        rowsCount: rowsCount / numColumns,
+        columnsCount: numColumns,
+        style: checks?.debugStyle,
+      }
+    : {
+        rowsCount: rowsCount / numColumns,
+        columnsCount: numColumns,
+      };
 };
 
 function simpleIsPlural(count: number) {

@@ -100,52 +100,52 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  /* block:start */
   const [failedItems, setFailedItems] = React.useState<string[]>([]);
 
-  const trackError = (id: string) => {
-    if (failedItems.includes(id)) {
-      return;
-    }
+  const trackError = __DEV__
+    ? (id: string) => {
+        if (failedItems.includes(id)) {
+          return;
+        }
 
-    setFailedItems(items => [...items, id]);
+        setFailedItems(items => [...items, id]);
 
-    AccessibilityInfo.announceForAccessibility(
-      "One or more component didn't pass the accessibility check, please check the console for more info",
-    );
-  };
+        AccessibilityInfo.announceForAccessibility(
+          "One or more component didn't pass the accessibility check, please check the console for more info",
+        );
+      }
+    : undefined;
 
-  const removeError = (id: string) => {
-    setFailedItems(items => {
-      const index = items.indexOf(id);
+  const removeError = __DEV__
+    ? (id: string) => {
+        setFailedItems(items => {
+          const index = items.indexOf(id);
 
-      items.splice(index);
+          items.splice(index);
 
-      return [...items];
-    });
-  };
-  /* block:end */
+          return [...items];
+        });
+      }
+    : undefined;
 
-  return (
-    /* block:start */
-    __DEV__ ? (
-      <AMAContext.Provider
-        value={{
-          ...values,
-          trackError,
-          removeError,
-        }}>
-        <View style={{ flex: 1 }}>
-          <>
-            {children}
-            {failedItems.length > 0 ? <AMAError /> : null}
-          </>
-        </View>
-      </AMAContext.Provider>
-    ) : (
-      /* block:end */
-      <AMAContext.Provider value={values}>{children}</AMAContext.Provider>
-    )
+  return __DEV__ ? (
+    <AMAContext.Provider
+      value={{
+        ...values,
+        // @ts-ignore
+        trackError,
+        // @ts-ignore
+        removeError,
+      }}>
+      <View style={{ flex: 1 }}>
+        <>
+          {children}
+          {failedItems.length > 0 ? <AMAError /> : null}
+        </>
+      </View>
+    </AMAContext.Provider>
+  ) : (
+    <AMAContext.Provider value={values}>{children}</AMAContext.Provider>
   );
 };
 

@@ -1,7 +1,10 @@
 # react-native-ama
 [![github][github-image]][github-url] [![npm][npm-image]][npm-url] [![docs][docs-image]][docs-url] [![Maintenance Status][maintenance-image]](#maintenance-status)
 
-AMA stands for **A**ccessible **M**obile **A**pp and contains a set of accessible components and hooks to simplify the building of accessible apps.
+AMA stands for **A**ccessible **M**obile **A**pp and contains a set of [components](https://formidable.com/open-source/react-native-ama/components/),
+[hooks](https://formidable.com/open-source/react-native-ama/components/) and [guidelines](https://formidable.com/open-source/react-native-ama/guidelines/) created to help you build more accessible apps.
+
+![Example of runtime failure detected by AMA](https://github.com/FormidableLabs/react-native-ama/blob/main/ama-demo.jpg?raw=true)
 
 ## Installation
 
@@ -15,10 +18,10 @@ npm install -D react-native-ama
 
 The documentation contains everything you need to know about `react-native-ama` and contains several sections in order of importance when you first get started:
 
-- **[Getting started](https://formidable.com/open-source/react-native-ama/docs/introduction/getting-started)** — contains the "Getting Started" guide.
-- **[Components](https://formidable.com/open-source/react-native-ama/docs/components)** — overview of all the components available `react-native-ama`.
-- **[Hooks](https://formidable.com/open-source/react-native-ama/docs/hooks)** — overview of all the hooks available
-- **[Guidelines](https://formidable.com/open-source/react-native-ama/docs/guidelines)** — guidelines enforced by AMA components
+- **[Getting started](https://formidable.com/open-source/react-native-ama/)** — contains the "Getting Started" guide.
+- **[Components](https://formidable.com/open-source/react-native-ama/components)** — overview of all the components available `react-native-ama`.
+- **[Hooks](https://formidable.com/open-source/react-native-ama/hooks/useAMAContext)** — overview of all the hooks available
+- **[Guidelines](https://formidable.com/open-source/react-native-ama/guidelines)** — guidelines enforced by AMA components
 
 _You can find the raw markdown files inside this repository's `docs` folder._
 

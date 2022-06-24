@@ -29,13 +29,15 @@ export type LogParams = {
   extra?: any;
 };
 
-export const getRuleAction = (rule: Rule): RuleAction => {
-  const customRule = canRuleBeOverridden(rule)
-    ? overrideRules?.rules?.[rule]
-    : undefined;
+export const getRuleAction = __DEV__
+  ? (rule: Rule): RuleAction => {
+      const customRule = canRuleBeOverridden?.(rule)
+        ? overrideRules?.rules?.[rule]
+        : undefined;
 
-  return customRule || LOGGER_RULES[rule];
-};
+      return customRule || LOGGER_RULES![rule];
+    }
+  : null;
 
 type LogFailure = LogParams & {
   action: RuleAction;
@@ -43,44 +45,48 @@ type LogFailure = LogParams & {
 
 type CHECK_STATUS = 'ERROR' | 'WARNING';
 
-export const logFailure = ({
-  action,
-  rule,
-  message,
-  extra = '',
-}: LogFailure): CHECK_STATUS => {
-  const formattedMessage = `❌ ${SHELL_COLORS.BG_RED}[ AMA ]${SHELL_COLORS.RESET}: ${SHELL_COLORS.BLUE}${rule}${SHELL_COLORS.RESET} - ${SHELL_COLORS.YELLOW}${message}${SHELL_COLORS.RESET}\n\n${RULES_HELP[rule]}\n\n`;
+export const logFailure = __DEV__
+  ? ({ action, rule, message, extra = '' }: LogFailure): CHECK_STATUS => {
+      // @ts-ignore
+      const formattedMessage = `❌ ${SHELL_COLORS.BG_RED}[ AMA ]${SHELL_COLORS.RESET}: ${SHELL_COLORS.BLUE}${rule}${SHELL_COLORS.RESET} - ${SHELL_COLORS.YELLOW}${message}${SHELL_COLORS.RESET}\n\n${RULES_HELP[rule]}\n\n`;
 
-  switch (action) {
-    case 'MUST_NOT':
-    case 'MUST':
-      console.info(formattedMessage, extra || '', '\n');
+      switch (action) {
+        case 'MUST_NOT':
+        case 'MUST':
+          console.info(formattedMessage, extra || '', '\n');
 
-      return 'ERROR';
-    case 'SHOULD_NOT':
-    default:
-      console.warn(formattedMessage, extra || '', '\n');
+          return 'ERROR';
+        case 'SHOULD_NOT':
+        default:
+          console.warn(formattedMessage, extra || '', '\n');
 
-      return 'WARNING';
-  }
-};
+          return 'WARNING';
+      }
+    }
+  : null;
 
-export const getContrastCheckerMaxDepth = () => {
-  return (
-    overrideRules?.rules?.CONTRAST_CHECKER_MAX_DEPTH ||
-    CONTRAST_CHECKER_MAX_DEPTH
-  );
-};
+export const getContrastCheckerMaxDepth = __DEV__
+  ? () => {
+      return (
+        overrideRules?.rules?.CONTRAST_CHECKER_MAX_DEPTH ||
+        CONTRAST_CHECKER_MAX_DEPTH
+      );
+    }
+  : null;
 
-export const shouldIgnoreContrastCheckForDisabledElement = () => {
-  return (
-    overrideRules?.rules?.IGNORE_CONTRAST_FOR_DISABLED_ELEMENTS ||
-    IGNORE_CONTRAST_FOR_DISABLED_ELEMENTS
-  );
-};
+export const shouldIgnoreContrastCheckForDisabledElement = __DEV__
+  ? () => {
+      return (
+        overrideRules?.rules?.IGNORE_CONTRAST_FOR_DISABLED_ELEMENTS ||
+        IGNORE_CONTRAST_FOR_DISABLED_ELEMENTS
+      );
+    }
+  : null;
 
-export const isAccessibilityLabelAllowed = (accessibilityLabel: string) => {
-  return overrideRules?.accessibilityLabelExceptions?.includes(
-    accessibilityLabel,
-  );
-};
+export const isAccessibilityLabelAllowed = __DEV__
+  ? (accessibilityLabel: string) => {
+      return overrideRules?.accessibilityLabelExceptions?.includes(
+        accessibilityLabel,
+      );
+    }
+  : null;

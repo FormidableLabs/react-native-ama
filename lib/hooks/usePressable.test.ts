@@ -52,6 +52,7 @@ describe('usePressable', () => {
       accessibilityLabelChecker = jest.fn();
       uppercaseChecker = jest.fn();
 
+      // @ts-ignore
       jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
         noUndefinedProperty,
         contrastChecker,
@@ -167,7 +168,7 @@ describe('usePressable', () => {
       });
 
       act(() => {
-        result.current.onLayout({
+        result.current.onLayout?.({
           nativeEvent: { layout: { width: 20, height: 20 } },
         } as any);
       });

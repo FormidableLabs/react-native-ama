@@ -44,13 +44,15 @@ export const TouchableOpacityScreen = () => {
 
         {/*  Test minimum size failing  */}
         <MinimumSizeFailing />
+
+        <Spacer height="big" />
       </ScrollView>
     </SafeAreaView>
   );
 };
 
 const TouchableOpacityExample: React.FC<{
-  state: keyof AMAAccessibilityState;
+  state: keyof AMAAccessibilityState | 'disabled';
 }> = ({ state, children }) => {
   return (
     <>

@@ -60,27 +60,22 @@ export const BottomSheet = ({
 }: React.PropsWithChildren<BottomSheetProps>) => {
   const [showContent, setShowContent] = React.useState(visible);
   const [isModalVisible, setIsModalVisible] = React.useState(true);
-  let wrapperStyle = {};
   const translateY = useSharedValue(0);
   const contentHeight = useSharedValue(0);
 
-  /*block:start*/
-  const { noUndefinedProperty, accessibilityLabelChecker } = useChecks();
+  const checks = __DEV__ ? useChecks?.() : null;
+  const wrapperStyle = __DEV__ ? checks?.debugStyle : {};
 
-  const debugStyle = {
-    ...noUndefinedProperty({
+  __DEV__ &&
+    checks?.noUndefinedProperty({
       properties: { closeActionAccessibilityLabel },
       property: 'closeActionAccessibilityLabel',
       rule: 'BOTTOM_SHEET_CLOSE_ACTION',
-    }),
-    ...accessibilityLabelChecker({
+    });
+  __DEV__ &&
+    checks?.accessibilityLabelChecker({
       accessibilityLabel: closeActionAccessibilityLabel,
-    }),
-  };
-
-  // @ts-ignore
-  wrapperStyle = [debugStyle];
-  /*block:end*/
+    });
 
   React.useEffect(() => {
     if (visible) {
@@ -111,12 +106,11 @@ export const BottomSheet = ({
       transparent={true}
       visible={isModalVisible}
       onRequestClose={onRequestClose}
-      style={wrapperStyle}
       testID={testID}>
       {showContent ? (
         <GestureHandlerRootView style={{ flex: 1 }}>
           <AnimatedContainer
-            style={[styles.overlay, overlayStyle]}
+            style={[styles.overlay, overlayStyle, wrapperStyle]}
             from={{ opacity: 0 }}
             to={{ opacity: 1 }}
             testID={`${testID}-overlay-wrapper`}
@@ -147,7 +141,8 @@ export const BottomSheet = ({
                   translateY={translateY}
                   closeDistance={closeDistance}
                   contentHeight={contentHeight}
-                  onRequestClose={onRequestClose}>
+                  onRequestClose={onRequestClose}
+                  testID={`${testID}-gesture-handler`}>
                   {lineComponent || (
                     <View
                       style={[styles.line, lineStyle]}
@@ -176,6 +171,7 @@ type GestureHandlerProps = PropsWithChildren<{
   contentHeight: SharedValue<number>;
   closeDistance: number;
   onRequestClose: () => void;
+  testID?: string;
 }>;
 
 const GestureHandler = ({
@@ -184,6 +180,7 @@ const GestureHandler = ({
   contentHeight,
   children,
   onRequestClose,
+  testID,
 }: GestureHandlerProps) => {
   const { gestureHandler } = useBottomSheetGestureHandler({
     translateY,
@@ -193,7 +190,7 @@ const GestureHandler = ({
   });
 
   return (
-    <PanGestureHandler onGestureEvent={gestureHandler}>
+    <PanGestureHandler onGestureEvent={gestureHandler} testID={testID}>
       <Animated.View
         style={{ minHeight: MINIMUM_TOUCHABLE_SIZE, justifyContent: 'center' }}>
         {children}

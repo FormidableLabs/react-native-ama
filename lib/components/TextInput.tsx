@@ -9,7 +9,6 @@ import {
 
 import { useFormField } from '../hooks/useFormField';
 import { applyStyle } from '../internal/applyStyle';
-import { ERROR_STYLE } from '../internal/error.style';
 import { maybeGenerateStringFromElement } from '../internal/maybeGenerateStringFromElement';
 import { useChecks } from '../internal/useChecks';
 import { HideChildrenFromAccessibilityTree } from './HideChildrenFromAccessibilityTree';
@@ -60,13 +59,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 
     React.useImperativeHandle(forwardedRef, () => inputRef.current!);
 
-    const {
-      focusNextFormField,
-      isLastField,
-      /*block:start*/
-      hasFailedChecks,
-      /*block:end*/
-    } = useFormField({
+    const formField = useFormField({
       ref: inputRef,
       id,
       nextFieldId,
@@ -78,28 +71,25 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       rest.returnKeyType || 'next',
     );
 
-    /*block:start*/
-    const { noUndefinedProperty } = useChecks();
-
-    const debugStyle = {
-      ...noUndefinedProperty({
+    const checks = __DEV__ ? useChecks?.() : undefined;
+    __DEV__ &&
+      checks?.noUndefinedProperty({
         properties: { labelComponent },
         property: 'labelComponent',
         rule: 'NO_FORM_LABEL',
-      }),
-      ...(hasValidation
-        ? noUndefinedProperty({
-            // @ts-ignore
-            properties: { errorComponent },
-            property: 'errorComponent',
-            rule: 'NO_FORM_ERROR',
-          })
-        : {}),
-      ...(hasFailedChecks ? ERROR_STYLE : {}),
-    };
+      });
+    __DEV__ &&
+      hasValidation &&
+      checks?.noUndefinedProperty({
+        // @ts-ignore
+        properties: { errorComponent },
+        property: 'errorComponent',
+        rule: 'NO_FORM_ERROR',
+      });
 
-    const style = applyStyle({ style: rest.style || {}, debugStyle });
-    /*block:end*/
+    const style =
+      __DEV__ && // @ts-ignore
+      applyStyle?.({ style: rest.style || {}, debugStyle: formField.style });
 
     const showLabelBeforeInput = labelPosition === 'beforeInput';
 
@@ -123,12 +113,12 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
     ) => {
       rest?.onSubmitEditing?.(event);
 
-      focusNextFormField();
+      formField.focusNextFormField();
     };
 
     const checkReturnKeyType = (event: LayoutChangeEvent) => {
       const setReturnKeyTypeAsDone =
-        isLastField() && rest.returnKeyType == null;
+        formField.isLastField() && rest.returnKeyType == null;
 
       if (setReturnKeyTypeAsDone) {
         setReturnKeyType('done');
@@ -155,7 +145,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       .filter(item => item.length > 0)
       ?.join(', ');
 
-    return (
+    return __DEV__ ? (
       <>
         {showLabelBeforeInput ? accessibilityHiddenLabel : null}
         {hasError && errorPosition === 'belowLabel' ? renderError() : null}
@@ -165,9 +155,25 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
           key={returnKeyType}
           returnKeyType={returnKeyType}
           {...rest}
-          /*block:start*/
           style={style}
-          /*block:end*/
+          accessibilityLabel={accessibilityLabel}
+          accessibilityHint={fullAccessibilityHint}
+          onSubmitEditing={handleOnSubmitEditing}
+          onLayout={checkReturnKeyType}
+        />
+        {showLabelBeforeInput ? null : accessibilityHiddenLabel}
+        {hasError && errorPosition === 'afterInput' ? renderError() : null}
+      </>
+    ) : (
+      <>
+        {showLabelBeforeInput ? accessibilityHiddenLabel : null}
+        {hasError && errorPosition === 'belowLabel' ? renderError() : null}
+        <RNTextInput
+          // @ts-ignore
+          ref={inputRef}
+          key={returnKeyType}
+          returnKeyType={returnKeyType}
+          {...rest}
           accessibilityLabel={accessibilityLabel}
           accessibilityHint={fullAccessibilityHint}
           onSubmitEditing={handleOnSubmitEditing}

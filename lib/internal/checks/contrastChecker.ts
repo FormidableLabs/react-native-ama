@@ -5,7 +5,7 @@ import { score } from 'wcag-color';
 import { getPropertyFromStyle } from '../getPropertyFromStyle';
 import { LogParams, getContrastCheckerMaxDepth } from '../logger';
 
-const MAX_DEPTH_LEVEL = getContrastCheckerMaxDepth();
+const MAX_DEPTH_LEVEL = getContrastCheckerMaxDepth?.();
 
 export type ContrastChecker = {
   style: StyleProp<any> | undefined | StyleProp<any>[];
@@ -51,6 +51,7 @@ const checkContrastInChildren = (
       }
     }
 
+    // @ts-ignore
     if (depthLevel < MAX_DEPTH_LEVEL && child?.props?.children) {
       checkContrastInChildren(
         backgroundColor,

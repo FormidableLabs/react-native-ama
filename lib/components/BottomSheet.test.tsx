@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Text } from 'react-native';
 
 import * as UseBottomSheetGestureHandler from '../hooks/useBottomSheetGestureHandler';
+import * as UseChecks from '../internal/useChecks';
 import { BottomSheet } from './BottomSheet';
 
 beforeEach(() => {
@@ -16,150 +17,124 @@ beforeEach(() => {
 jest.useFakeTimers();
 
 describe('BottomSheet', () => {
-  it('it matches the snapshot', () => {
-    const { toJSON } = render(
-      <BottomSheet
-        visible={true}
-        onRequestClose={() => {}}
-        closeActionAccessibilityLabel={'close me'}
-        headerComponent={<Text>Header</Text>}
-      />,
-    );
+  describe('When __DEV__ is true', () => {
+    it('perform a checks on closeActionAccessibilityLabel', () => {
+      const noUndefinedProperty = jest.fn();
+      const accessibilityLabelChecker = jest.fn();
 
-    expect(toJSON()).toMatchInlineSnapshot(`
-      <Modal
-        animationType="none"
-        hardwareAccelerated={false}
-        onRequestClose={[Function]}
-        style={
-          Array [
-            Object {},
-          ]
-        }
-        transparent={true}
-        visible={true}
-      >
-        <View
-          testID="GestureHandlerRootView"
-        >
-          <View
-            entering={[Function]}
-            exiting={[Function]}
-            style={
-              Array [
-                Object {
-                  "backgroundColor": "rgba(0, 0, 0, 0.5)",
-                  "flex": 1,
-                },
-                undefined,
-              ]
-            }
-            testID="undefined-overlay-wrapper"
-          >
-            <View
-              accessibilityLabel="close me"
-              accessibilityRole="button"
-              accessible={true}
-              collapsable={false}
-              focusable={true}
-              onBlur={[Function]}
-              onClick={[Function]}
-              onFocus={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                Object {
-                  "flex": 1,
-                }
-              }
-              testID="undefined-overlay-buttom"
-            />
-          </View>
-          <View
-            style={
-              Array [
-                Object {
-                  "alignSelf": "flex-end",
-                  "bottom": 24,
-                  "flex": 1,
-                  "flexDirection": "column",
-                  "maxHeight": "80%",
-                  "position": "absolute",
-                  "width": "100%",
-                },
-                Object {
-                  "transform": Array [
-                    Object {
-                      "translateY": 0,
-                    },
-                  ],
-                },
-              ]
-            }
-            testID="undefined-wrapper"
-          >
-            <View
-              entering={[Function]}
-              exiting={[Function]}
-              onLayout={[Function]}
-              style={
-                Array [
-                  Object {
-                    "backgroundColor": "#fff",
-                    "width": "100%",
-                  },
-                  Object {},
-                ]
-              }
-              testID="undefined-panel"
-            >
-              <View
-                testID="PanGestureHandler"
-              >
-                <View
-                  style={
-                    Object {
-                      "justifyContent": "center",
-                      "minHeight": 44,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "alignSelf": "center",
-                          "backgroundColor": "grey",
-                          "borderRadius": 2,
-                          "height": 4,
-                          "marginBottom": 24,
-                          "marginTop": 12,
-                          "width": 48,
-                        },
-                        Object {},
-                      ]
-                    }
-                    testID="undefined-line"
-                  />
-                </View>
-              </View>
-              <Text>
-                Header
-              </Text>
-              <View
-                scrollEnabled={false}
-                style={Object {}}
-                testID="undefined-scrollview"
-              />
-            </View>
-          </View>
-        </View>
-      </Modal>
-    `);
+      // @ts-ignore
+      jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
+        noUndefinedProperty,
+        accessibilityLabelChecker,
+      } as any);
+
+      render(
+        <BottomSheet
+          visible={true}
+          onRequestClose={() => {}}
+          closeActionAccessibilityLabel={'close me'}
+          headerComponent={<Text>Header</Text>}
+        />,
+      );
+
+      expect(noUndefinedProperty).toHaveBeenCalledWith({
+        properties: { closeActionAccessibilityLabel: 'close me' },
+        property: 'closeActionAccessibilityLabel',
+        rule: 'BOTTOM_SHEET_CLOSE_ACTION',
+      });
+      expect(accessibilityLabelChecker).toHaveBeenCalledWith({
+        accessibilityLabel: 'close me',
+      });
+    });
+
+    it('applies the style from useChecks', () => {
+      const noUndefinedProperty = jest.fn();
+      const accessibilityLabelChecker = jest.fn();
+
+      // @ts-ignore
+      jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
+        debugStyle: { backgroundColor: 'cyan' },
+        noUndefinedProperty,
+        accessibilityLabelChecker,
+      } as any);
+
+      const { getByTestId } = render(
+        <BottomSheet
+          visible={true}
+          onRequestClose={() => {}}
+          closeActionAccessibilityLabel={'close me'}
+          headerComponent={<Text>Header</Text>}
+          testID="bottom-sheet"
+        />,
+      );
+
+      expect(getByTestId('bottom-sheet-overlay-wrapper').props.style).toEqual([
+        { backgroundColor: 'rgba(0, 0, 0, 0.5)', flex: 1 },
+        undefined,
+        { backgroundColor: 'cyan' },
+      ]);
+    });
+  });
+
+  describe('When __DEV__ is false', () => {
+    beforeEach(() => {
+      // @ts-ignore
+      global.__DEV__ = false;
+    });
+
+    it('perform a checks on closeActionAccessibilityLabel', () => {
+      const { BottomSheet: OriginalBottomSheet } = require('./BottomSheet');
+      const noUndefinedProperty = jest.fn();
+      const accessibilityLabelChecker = jest.fn();
+
+      // @ts-ignore
+      jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
+        noUndefinedProperty,
+        accessibilityLabelChecker,
+      } as any);
+
+      render(
+        <OriginalBottomSheet
+          visible={true}
+          onRequestClose={() => {}}
+          closeActionAccessibilityLabel={'close me'}
+          headerComponent={<Text>Header</Text>}
+        />,
+      );
+
+      expect(noUndefinedProperty).not.toHaveBeenCalledWith();
+      expect(accessibilityLabelChecker).not.toHaveBeenCalledWith();
+    });
+
+    it('does not apply the style from useChecks', () => {
+      const noUndefinedProperty = jest.fn();
+      const accessibilityLabelChecker = jest.fn();
+
+      // @ts-ignore
+      jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
+        debugStyle: { backgroundColor: 'cyan' },
+        noUndefinedProperty,
+        accessibilityLabelChecker,
+      } as any);
+
+      const { BottomSheet: OriginalBottomSheet } = require('./BottomSheet');
+
+      const { getByTestId } = render(
+        <OriginalBottomSheet
+          visible={true}
+          onRequestClose={() => {}}
+          closeActionAccessibilityLabel={'close me'}
+          headerComponent={<Text>Header</Text>}
+          testID="bottom-sheet"
+        />,
+      );
+
+      expect(getByTestId('bottom-sheet-overlay-wrapper').props.style).toEqual([
+        { backgroundColor: 'rgba(0, 0, 0, 0.5)', flex: 1 },
+        undefined,
+        {},
+      ]);
+    });
   });
 
   it('does not render the content when not visible', () => {
@@ -178,11 +153,6 @@ describe('BottomSheet', () => {
         animationType="none"
         hardwareAccelerated={false}
         onRequestClose={[Function]}
-        style={
-          Array [
-            Object {},
-          ]
-        }
         testID="bottom-sheet"
         transparent={true}
         visible={true}
@@ -206,6 +176,7 @@ describe('BottomSheet', () => {
       expect(getByTestId('bottom-sheet-overlay-wrapper').props.style).toEqual([
         { backgroundColor: 'rgba(0, 0, 0, 0.5)', flex: 1 },
         { backgroundColor: 'yellow', width: 42 },
+        {},
       ]);
     });
 
@@ -251,6 +222,22 @@ describe('BottomSheet', () => {
         },
         { width: '100%' },
       ]);
+    });
+
+    it('allows not rendering the line', () => {
+      const { getByTestId } = render(
+        <BottomSheet
+          visible={true}
+          onRequestClose={() => {}}
+          closeActionAccessibilityLabel={'close me'}
+          headerComponent={<Text>Header</Text>}
+          lineComponent="none"
+          testID="bottom-sheet"
+        />,
+      );
+
+      expect(() => getByTestId('bottom-sheet-line')).toThrow();
+      expect(() => getByTestId('bottom-sheet-gesture-handler')).toThrow();
     });
 
     it('allows customising the ScrollView style', () => {
@@ -411,8 +398,10 @@ jest.mock('react-native-gesture-handler', () => {
       <View testID="GestureHandlerRootView">{children}</View>
     ),
     // @ts-ignore
-    PanGestureHandler: ({ children }) => (
-      <View testID="PanGestureHandler">{children}</View>
+    PanGestureHandler: ({ children }, ...rest) => (
+      <View testID="PanGestureHandler" {...rest}>
+        {children}
+      </View>
     ),
     // @ts-ignore
     PanGestureHandlerGestureEvent: ({ children }) => (
@@ -424,3 +413,4 @@ jest.mock('react-native-gesture-handler', () => {
 });
 
 jest.mock('../hooks/useBottomSheetGestureHandler');
+jest.mock('../internal/useChecks');

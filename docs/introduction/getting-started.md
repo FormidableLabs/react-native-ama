@@ -18,7 +18,9 @@ npm install --save-dev react-native-ama
 
 ### Dependencies
 
-AMA 
+Some component relies on [react-native-reanimated](https://github.com/software-mansion/react-native-reanimated) and/or [react-native-gesture-handler](https://github.com/software-mansion/react-native-gesture-handler),
+so this other dependencies should be also be installed.
+
 ```bash npm2yarn
 npm install --save-dev react-native-reanimated
 npm install --save-dev react-native-gesture-handler
@@ -29,7 +31,7 @@ pod install
 
 ### Config File
 
-Create an empty json file called `ama.json`, if does not exists, in the root of your project. This is used to be able to specify [custom rules](/docs/guidelines/).
+Create an empty json file called `ama.json`, if does not exists, in the root of your project. This is used to be able to override [the default rules](/introduction/config-file).
 
 ```json title="ama.json"
 {

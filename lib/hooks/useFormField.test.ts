@@ -106,6 +106,7 @@ describe('useFormField', () => {
         beforeEach(function () {
           checkFocusTrap = jest.fn().mockResolvedValue(null);
 
+          // @ts-ignore
           jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
             checkFocusTrap,
             hasErrors: true,
@@ -138,7 +139,6 @@ describe('useFormField', () => {
           );
 
           expect(checkFocusTrap).toHaveBeenCalledTimes(1);
-          expect(result.current.hasFailedChecks).toBe(true);
         });
 
         it('checks that next field has the focus if it has the focus callback', async () => {

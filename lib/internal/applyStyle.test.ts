@@ -8,7 +8,7 @@ describe('applyStyle', () => {
   it('handles the style being a function', () => {
     const style = jest.fn().mockReturnValue({ color: 'yellow' });
 
-    const result = applyStyle({
+    const result = applyStyle?.({
       style,
       debugStyle: { backgroundColor: 'red' },
     });
@@ -22,10 +22,10 @@ describe('applyStyle', () => {
     expect(theStyle).toEqual({ backgroundColor: 'red', color: 'yellow' });
   });
 
-  it('handles the style function returning an arrau', () => {
+  it('handles the style function returning an array', () => {
     const style = jest.fn().mockReturnValue([{ color: 'yellow' }]);
 
-    const result = applyStyle({
+    const result = applyStyle?.({
       style,
       debugStyle: { backgroundColor: 'red' },
     });

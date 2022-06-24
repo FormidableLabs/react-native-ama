@@ -11,6 +11,7 @@ const logResult = jest.fn();
 
 describe('useDynamicFlatList', () => {
   beforeEach(function () {
+    // @ts-ignore
     jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
       logResult,
     } as any);
@@ -27,8 +28,7 @@ describe('useDynamicFlatList', () => {
 
     expect(logResult).toHaveBeenCalledWith('useDynamicFlatList', {
       extra: 'hello',
-      message:
-        'Special string %count% not found in accessibilitySingularMessage',
+      message: 'Special string %count% not found in singularMessage',
       rule: 'FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE',
     });
   });
@@ -43,7 +43,7 @@ describe('useDynamicFlatList', () => {
 
     expect(logResult).toHaveBeenCalledWith('useDynamicFlatList', {
       extra: undefined,
-      message: 'Special string %count% not found in accessibilityPluralMessage',
+      message: 'Special string %count% not found in pluralMessage',
       rule: 'FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE',
     });
   });
