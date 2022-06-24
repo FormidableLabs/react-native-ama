@@ -4,6 +4,8 @@ import { Platform } from 'react-native';
 beforeEach(() => {
   jest.resetAllMocks();
   jest.resetModules();
+
+  jest.spyOn(console, 'warn').mockImplementation(() => {});
 });
 
 describe('checkMinimumSize', () => {
@@ -33,4 +35,24 @@ describe('checkMinimumSize', () => {
       });
     },
   );
+
+  it('warns the developer if the touchable area size is less than the recommended Android one if Platform is "ios"', () => {
+    Platform.OS = 'ios';
+
+    const consoleWarn = jest.spyOn(console, 'warn');
+    const { checkMinimumSize } = require('./checkMinimumSize');
+
+    checkMinimumSize({
+      nativeEvent: {
+        layout: {
+          width: 45,
+          height: 45,
+        },
+      },
+    } as LayoutChangeEvent);
+
+    expect(consoleWarn).toHaveBeenCalledWith(
+      'The minimum size might be too small for Android',
+    );
+  });
 });
