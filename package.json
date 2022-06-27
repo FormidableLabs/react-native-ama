@@ -1,6 +1,6 @@
 {
   "name": "react-native-ama",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Accessible Mobile App Library for React Native",
   "main": "dist/commonjs/index",
   "module": "dist/module/index",
@@ -18,7 +18,8 @@
     "!ios/build",
     "!**/__tests__",
     "!**/__fixtures__",
-    "!**/__mocks__"
+    "!**/__mocks__",
+    "scripts"
   ],
   "scripts": {
     "prepare": "husky install",
@@ -32,7 +33,7 @@
     "fabric": "yarn --cwd FabricExample",
     "pods": "cd example && pod-install --quiet",
     "bootstrap": "yarn example && yarn && yarn pods",
-    "postinstall": "scripts/init.sh",
+    "postinstall": "./scripts/init.sh",
     "coverage": "yarn run test -- --coverage --watchAll=false"
   },
   "husky": {
