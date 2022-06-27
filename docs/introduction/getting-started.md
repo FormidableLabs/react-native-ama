@@ -31,9 +31,11 @@ pod install
 
 ### Config File
 
-Create an empty json file called `ama.json`, if does not exists, in the root of your project. This is used to be able to override [the default rules](/introduction/config-file).
+The installation command should have automatically generated the `ama.rules.json` file, if not:
 
-```json title="ama.json"
-{
-}
+```bash
+
+echo "{}" >> ama.rules.json
+cd node_modules/react-native-ama
+ln -s ../../ama.rules.json .
 ```

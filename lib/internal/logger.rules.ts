@@ -54,31 +54,31 @@ export const RULES_HELP: Record<Rule, string> | null = __DEV__
   ? {
       NO_UNDEFINED: '',
       CONTRAST_FAILED:
-        'https://formidable.com/open-source/react-native-ama/docs/guidelines/contrast',
+        'https://formidable.com/open-source/react-native-ama/guidelines/contrast',
       CONTRAST_FAILED_AAA:
-        'https://formidable.com/open-source/react-native-ama/docs/guidelines/contrast',
+        'https://formidable.com/open-source/react-native-ama/guidelines/contrast',
       MINIMUM_SIZE:
-        'https://formidable.com/open-source/react-native-ama/docs/guidelines/minimum-size',
+        'https://formidable.com/open-source/react-native-ama/guidelines/minimum-size',
       UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL:
-        'https://formidable.com/open-source/react-native-ama/docs/guidelines/uppercase-text',
+        'https://formidable.com/open-source/react-native-ama/guidelines/uppercase-text',
       UPPERCASE_ACCESSIBILITY_LABEL:
-        'https://formidable.com/open-source/react-native-ama/docs/guidelines/uppercase-text',
+        'https://formidable.com/open-source/react-native-ama/guidelines/uppercase-text',
       NO_ACCESSIBILITY_LABEL:
-        'https://formidable.com/open-source/react-native-ama/docs/guidelines/accessibility-labels',
+        'https://formidable.com/open-source/react-native-ama/guidelines/accessibility-labels',
       NO_ACCESSIBILITY_ROLE:
-        'https://formidable.com/open-source/react-native-ama/docs/guidelines/accessibility-role',
+        'https://formidable.com/open-source/react-native-ama/guidelines/accessibility-role',
       NO_KEYBOARD_TRAP:
-        'https://formidable.com/open-source/react-native-ama/docs/guidelines/forms',
+        'https://formidable.com/open-source/react-native-ama/guidelines/forms',
       NO_FORM_LABEL:
-        'https://formidable.com/open-source/react-native-ama/docs/guidelines/forms',
+        'https://formidable.com/open-source/react-native-ama/guidelines/forms',
       NO_FORM_ERROR:
-        'https://formidable.com/open-source/react-native-ama/docs/guidelines/forms',
+        'https://formidable.com/open-source/react-native-ama/guidelines/forms',
       FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE:
-        'https://formidable.com/open-source/react-native-ama/docs/guidelines/lists',
+        'https://formidable.com/open-source/react-native-ama/guidelines/lists',
       FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE:
-        'https://formidable.com/open-source/react-native-ama/docs/guidelines/lists',
+        'https://formidable.com/open-source/react-native-ama/guidelines/lists',
       BOTTOM_SHEET_CLOSE_ACTION:
-        'https://formidable.com/open-source/react-native-ama/docs/guidelines/bottomsheet',
+        'https://formidable.com/open-source/react-native-ama/guidelines/bottomsheet',
     }
   : null;
 

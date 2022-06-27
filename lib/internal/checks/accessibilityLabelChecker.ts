@@ -7,7 +7,7 @@ export type AccessibilityLabelChecker = {
 
 export const accessibilityLabelChecker = ({
   accessibilityLabel,
-  canBeEmpty = false,
+  canBeEmpty = true,
 }: AccessibilityLabelChecker = {}): LogParams | null => {
   const isEmpty =
     !accessibilityLabel || accessibilityLabel?.trim()?.length === 0;

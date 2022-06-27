@@ -18,8 +18,10 @@ const applyStyleFunction = __DEV__
           : {};
 
         if (Array.isArray(s)) {
-          s.push(debugStyle);
-          s.push(contrastStyle);
+          try {
+            s.push(debugStyle);
+            s.push(contrastStyle);
+          } catch {}
 
           return s;
         }
