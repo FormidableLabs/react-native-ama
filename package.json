@@ -130,7 +130,7 @@
       "publish": true
     },
     "github": {
-      "release": true
+      "release": false
     },
     "plugins": {
       "@release-it/conventional-changelog": {
@@ -144,7 +144,6 @@
         "yarn test"
       ],
       "after:bump": "yarn build",
-      "after:git:release": "echo Git release successful",
       "after:npm:release": "echo NPM release successful",
       "after:release": "echo Successfully released ${name} v${version} to ${repo.repository}"
     }
