@@ -32,7 +32,7 @@
     "fabric": "yarn --cwd FabricExample",
     "pods": "cd example && pod-install --quiet",
     "bootstrap": "yarn example && yarn && yarn pods",
-    "postinstall": "./scripts/init.sh",
+    "postinstall": "scripts/init.sh",
     "coverage": "yarn run test -- --coverage --watchAll=false"
   },
   "husky": {
