@@ -136,6 +136,17 @@
       "@release-it/conventional-changelog": {
         "preset": "angular"
       }
+    },
+    "hooks": {
+      "before:init": [
+        "yarn ts:check",
+        "yarn lint",
+        "yarn test"
+      ],
+      "after:bump": "yarn build",
+      "after:git:release": "echo Git release successful",
+      "after:npm:release": "echo NPM release successful",
+      "after:release": "echo Successfully released ${name} v${version} to ${repo.repository}"
     }
   },
   "react-native-builder-bob": {

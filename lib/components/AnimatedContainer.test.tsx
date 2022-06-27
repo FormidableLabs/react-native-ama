@@ -40,7 +40,7 @@ describe('AnimatedContainer', () => {
     });
   });
 
-  it('passes the given animation data to the hook', () => {
+  it('passes the given animation data to the hook 2', () => {
     const useReanimatedAnimationBuilder = jest
       .spyOn(UseReanimatedAnimationBuilder, 'useReanimatedAnimationBuilder')
       .mockReturnValue({ exiting: 'exiting', entering: 'entering' } as any);
