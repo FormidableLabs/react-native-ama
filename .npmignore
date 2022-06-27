@@ -6,4 +6,4 @@
 !ios/**/*
 !tsconfig.json
 !CHANGELOG.md
-!scripts
+!scripts/**/*
