@@ -7,20 +7,6 @@
   "types": "dist/typescript/index.d.ts",
   "react-native": "lib/index",
   "source": "lib/index",
-  "files": [
-    "lib",
-    "android",
-    "ios",
-    "cpp",
-    "react-native-ama.podspec",
-    "!lib/typescript/example",
-    "!android/build",
-    "!ios/build",
-    "!**/__tests__",
-    "!**/__fixtures__",
-    "!**/__mocks__",
-    "scripts"
-  ],
   "scripts": {
     "prepare": "husky install",
     "test": "jest",

@@ -1,0 +1,8 @@
+*
+!dist/**/*
+!lib/**/*
+!docs/**/*
+!android/**/*
+!ios/**/*
+!tsconfig.json
+!CHANGELOG.md
