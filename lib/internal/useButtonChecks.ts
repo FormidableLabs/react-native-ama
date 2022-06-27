@@ -22,21 +22,29 @@ export const useButtonChecks = __DEV__
       // @ts-ignore
       let style = props.style || {};
 
+      const isAccessible = props.accessible !== false;
+
       // @ts-ignore
       const debugStyle = {
-        ...noUndefinedProperty({
-          properties: props,
-          property: 'accessibilityRole',
-          rule: 'NO_ACCESSIBILITY_ROLE',
-        }),
-        ...noUndefinedProperty({
-          properties: props,
-          property: 'accessibilityLabel',
-          rule: 'NO_ACCESSIBILITY_LABEL',
-        }),
-        ...accessibilityLabelChecker({
-          accessibilityLabel: props.accessibilityLabel,
-        }),
+        ...(isAccessible
+          ? noUndefinedProperty({
+              properties: props,
+              property: 'accessibilityRole',
+              rule: 'NO_ACCESSIBILITY_ROLE',
+            })
+          : {}),
+        ...(isAccessible
+          ? noUndefinedProperty({
+              properties: props,
+              property: 'accessibilityLabel',
+              rule: 'NO_ACCESSIBILITY_LABEL',
+            })
+          : {}),
+        ...(isAccessible
+          ? accessibilityLabelChecker({
+              accessibilityLabel: props.accessibilityLabel,
+            })
+          : {}),
         ...(minimumSizeFailed ? ERROR_STYLE : {}),
       };
 

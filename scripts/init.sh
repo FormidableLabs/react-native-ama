@@ -1,10 +1,12 @@
 #!/bin/sh
-AMA_RULES_FILE="ama.rules.json"
+AMA_RULES_FILE="./../../ama.rules.json"
 
 if [[ ! -f "$AMA_RULES_FILE" ]]
 then
   echo "Generating {$AMA_RULES_FILE}..."
 
-  touch ama.rules.json
-  echo "{}" >> ama.rules.json
+  touch $AMA_RULES_FILE
+  echo "{}" >> $AMA_RULES_FILE
+
+  ln -s $AMA_RULES_FILE .
 fi
