@@ -7,6 +7,8 @@ then
 
   touch $AMA_RULES_FILE
   echo "{}" >> $AMA_RULES_FILE
+fi
 
+if [[ ! -f "ama.rules.json" ]]
   ln -s $AMA_RULES_FILE .
 fi
