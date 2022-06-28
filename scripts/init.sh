@@ -10,5 +10,6 @@ then
 fi
 
 if [[ ! -f "ama.rules.json" ]]
-  ln -s $AMA_RULES_FILE .
+then
+  ln -s "$AMA_RULES_FILE" .
 fi
