@@ -11,5 +11,5 @@ fi
 
 if [[ ! -f "ama.rules.json" ]]
 then
-  ln -s "$AMA_RULES_FILE" .
+  cp "$AMA_RULES_FILE" .
 fi
