@@ -17,4 +17,16 @@ describe('accessibilityLabelChecker', () => {
       });
     },
   );
+
+  it('ignores number', () => {
+    const result = accessibilityLabelChecker({ accessibilityLabel: '123' });
+
+    expect(result).toBeNull();
+  });
+
+  it('ignores currencies', () => {
+    const result = accessibilityLabelChecker({ accessibilityLabel: '$123' });
+
+    expect(result).toBeNull();
+  });
 });
