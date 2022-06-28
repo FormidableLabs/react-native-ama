@@ -149,7 +149,5 @@
       ]
     ]
   },
-  "dependencies": {
-    "react-native-ama": "^0.2.11"
-  }
+  "dependencies": {}
 }
