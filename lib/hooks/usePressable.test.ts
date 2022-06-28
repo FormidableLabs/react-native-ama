@@ -98,12 +98,12 @@ describe('usePressable', () => {
       });
     });
 
-    it('checks that isImportantForAccessibility is defined when accessible is false', () => {
+    it('checks that importantForAccessibility is defined when accessible is false', () => {
       renderHook(() => usePressable<any>({ accessible: false }, null));
 
       expect(noUndefinedProperty).toHaveBeenCalledWith({
         properties: { accessible: false },
-        property: 'isImportantForAccessibility',
+        property: 'importantForAccessibility',
       });
     });
 

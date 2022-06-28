@@ -32,7 +32,7 @@ export const useButtonChecks = __DEV__
           })
         : noUndefinedProperty({
             properties: props,
-            property: 'isImportantForAccessibility',
+            property: 'importantForAccessibility',
           });
       isAccessible
         ? noUndefinedProperty({
