@@ -17,6 +17,7 @@ export * from './components/SwitchListItem';
 export * from './components/ExpandablePressable';
 export * from './components/BottomSheet';
 export * from './components/AnimatedContainer';
+export * from './components/AutofocusContainer';
 
 // Hooks
 export * from './hooks/useFocus';
