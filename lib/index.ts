@@ -37,3 +37,4 @@ export * from './types/types';
 // Utils
 export * from './utils/isMotionAnimation';
 export * from './utils/minimumTouchableSize';
+export * from './utils/numerify';
