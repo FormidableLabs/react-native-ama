@@ -97,6 +97,24 @@ describe('usePressable', () => {
         accessibilityLabel: 'This is the accessibility label',
       });
     });
+
+    it('checks that importantForAccessibility is defined when accessible is false', () => {
+      renderHook(() => usePressable<any>({ accessible: false }, null));
+
+      expect(noUndefinedProperty).toHaveBeenCalledWith({
+        properties: { accessible: false },
+        property: 'importantForAccessibility',
+      });
+    });
+
+    it('checks that accessibilityElementsHidden is defined when accessible is false', () => {
+      renderHook(() => usePressable<any>({ accessible: false }, null));
+
+      expect(noUndefinedProperty).toHaveBeenCalledWith({
+        properties: { accessible: false },
+        property: 'accessibilityElementsHidden',
+      });
+    });
   });
 
   describe('style', () => {

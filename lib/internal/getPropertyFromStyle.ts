@@ -5,6 +5,6 @@ export const getPropertyFromStyle = (
   key: keyof StyleProp<any>,
 ) => {
   return Array.isArray(style)
-    ? style.filter(theStyle => theStyle[key])?.slice(-1)?.[0]?.[key]
+    ? style.filter(theStyle => theStyle?.[key])?.slice(-1)?.[0]?.[key]
     : style?.[key];
 };

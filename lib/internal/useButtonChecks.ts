@@ -1,7 +1,6 @@
 import type React from 'react';
 
 import { applyStyle } from '../internal/applyStyle';
-import { ERROR_STYLE } from '../internal/error.style';
 import { useChecks } from '../internal/useChecks';
 
 export const useButtonChecks = __DEV__
@@ -15,7 +14,7 @@ export const useButtonChecks = __DEV__
         contrastChecker,
         onLayout,
         accessibilityLabelChecker,
-        minimumSizeFailed,
+        debugStyle,
         // @ts-ignore
       } = useChecks();
 
@@ -25,28 +24,30 @@ export const useButtonChecks = __DEV__
       const isAccessible = props.accessible !== false;
 
       // @ts-ignore
-      const debugStyle = {
-        ...(isAccessible
-          ? noUndefinedProperty({
-              properties: props,
-              property: 'accessibilityRole',
-              rule: 'NO_ACCESSIBILITY_ROLE',
-            })
-          : {}),
-        ...(isAccessible
-          ? noUndefinedProperty({
-              properties: props,
-              property: 'accessibilityLabel',
-              rule: 'NO_ACCESSIBILITY_LABEL',
-            })
-          : {}),
-        ...(isAccessible
-          ? accessibilityLabelChecker({
-              accessibilityLabel: props.accessibilityLabel,
-            })
-          : {}),
-        ...(minimumSizeFailed ? ERROR_STYLE : {}),
-      };
+      isAccessible
+        ? noUndefinedProperty({
+            properties: props,
+            property: 'accessibilityRole',
+            rule: 'NO_ACCESSIBILITY_ROLE',
+          })
+        : noUndefinedProperty({
+            properties: props,
+            property: 'importantForAccessibility',
+          });
+      isAccessible
+        ? noUndefinedProperty({
+            properties: props,
+            property: 'accessibilityLabel',
+            rule: 'NO_ACCESSIBILITY_LABEL',
+          })
+        : noUndefinedProperty({
+            properties: props,
+            property: 'accessibilityElementsHidden',
+          });
+      isAccessible &&
+        accessibilityLabelChecker({
+          accessibilityLabel: props.accessibilityLabel,
+        });
 
       const contrastCheckerCallback = shouldPerformContrastCheck
         ? contrastChecker

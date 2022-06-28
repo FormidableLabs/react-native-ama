@@ -1,6 +1,6 @@
 # AutofocusContainer
 
-Is a utility component that automatically calls the [onFocus](../hooks/onFocus) hook when is mounted.
+It is a utility component that automatically calls the [onFocus](../hooks/onFocus) hook when it is mounted.
 
 ## Usage
 
@@ -27,11 +27,23 @@ This component can be used to move the focus on dynamically shown components, fo
 </View>
 ```
 
-In this example we want to move the focus to the view rendered once the user taps on "Show timed content".
+In this example, we want to move the focus to the view rendered once the user taps on "Show timed content".
+
+:::warning
+
+The autofocus works only if the container contains accessible elements, like Text, Buttons, etc.
+Alternatively, bypassing the [accessibilityLabel](#accessibility-label) property, the child will be wrapped in an accessible View.
+:::
 
 ## Accessibility
 
-- Once the focus is moved makes the screen reader to announce all the text present in that container
+- Once the focus is moved makes, the screen reader announces all the text present in that container
+
+## Props
+
+### accessibilityLabel
+
+The label to assign to the wrapping View container.
 
 ## Related guidelines
 
