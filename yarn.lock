@@ -7973,6 +7973,11 @@ react-is@^17.0.1, react-is@^17.0.2:
   resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
+react-native-ama@^0.2.11:
+  version "0.2.11"
+  resolved "https://registry.yarnpkg.com/react-native-ama/-/react-native-ama-0.2.11.tgz#a27287e6620d4df5317ba998da60764f0eb3dfd2"
+  integrity sha512-MSy/XitjOO9DIp9fDS/1nXNsNv4Rpu6uq9/3D+UgNPWUzUGHI8ZxV4Xb9tfUzD4V81ECtlT1rvStcYnLlo52Cw==
+
 react-native-builder-bob@^0.18.2:
   version "0.18.3"
   resolved "https://registry.npmjs.org/react-native-builder-bob/-/react-native-builder-bob-0.18.3.tgz"

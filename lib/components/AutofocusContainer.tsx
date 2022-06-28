@@ -1,11 +1,16 @@
 import * as React from 'react';
-import { TouchableWithoutFeedback } from 'react-native';
+import { TouchableWithoutFeedback, View } from 'react-native';
 
 import { useFocus } from '../hooks/useFocus';
 
-type AutofocusContainerProps = React.PropsWithChildren<{}>;
+type AutofocusContainerProps = React.PropsWithChildren<{
+  accessibilityLabel?: string;
+}>;
 
-export const AutofocusContainer = ({ children }: AutofocusContainerProps) => {
+export const AutofocusContainer = ({
+  children,
+  accessibilityLabel,
+}: AutofocusContainerProps) => {
   const containerRef = React.useRef(null);
   const { setFocus } = useFocus();
 
@@ -15,7 +20,13 @@ export const AutofocusContainer = ({ children }: AutofocusContainerProps) => {
     }, 0);
   }, [setFocus]);
 
-  return (
+  return accessibilityLabel ? (
+    <TouchableWithoutFeedback ref={containerRef}>
+      <View accessible={true} accessibilityLabel={accessibilityLabel}>
+        {children}
+      </View>
+    </TouchableWithoutFeedback>
+  ) : (
     <TouchableWithoutFeedback ref={containerRef}>
       {children}
     </TouchableWithoutFeedback>

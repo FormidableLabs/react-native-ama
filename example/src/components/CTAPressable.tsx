@@ -62,7 +62,7 @@ function getButtonStyle({
   selected,
 }: {
   pressed: boolean;
-  disabled?: AMAAccessibilityState['disabled'];
+  disabled?: boolean | null;
   checked?: AMAAccessibilityState['checked'];
   selected?: AMAAccessibilityState['selected'];
 }) {

@@ -36,6 +36,7 @@ export const useChecks = __DEV__
       const shouldCheckLayout = React.useRef(true);
       const layoutCheckTimeout = React.useRef<NodeJS.Timeout>();
       const [minimumSizeFailed, setMinimumSizeFailed] = React.useState(false);
+      const [debugStyle, setDebugStyle] = React.useState<any>({});
 
       const { trackError, removeError } = useAMAContext();
 
@@ -53,6 +54,10 @@ export const useChecks = __DEV__
 
             InteractionManager.runAfterInteractions(() => {
               removeError(fakeRandom.current);
+
+              setTimeout(() => {
+                setDebugStyle({});
+              }, 100);
             });
           }
         }
@@ -82,6 +87,8 @@ export const useChecks = __DEV__
 
           InteractionManager.runAfterInteractions(() => {
             trackError(fakeRandom.current);
+
+            setDebugStyle(ERROR_STYLE);
           });
 
           hasErrors.current = true;
@@ -157,7 +164,7 @@ export const useChecks = __DEV__
         uppercaseChecker,
         checkFocusTrap,
         minimumSizeFailed,
-        debugStyle: hasErrors.current ? ERROR_STYLE : {},
+        debugStyle,
       };
     }
   : null;

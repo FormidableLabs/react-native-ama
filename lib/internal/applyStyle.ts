@@ -18,12 +18,7 @@ const applyStyleFunction = __DEV__
           : {};
 
         if (Array.isArray(s)) {
-          try {
-            s.push(debugStyle);
-            s.push(contrastStyle);
-          } catch {}
-
-          return s;
+          return [...s, debugStyle, contrastStyle];
         }
 
         return {
@@ -63,10 +58,9 @@ export const applyStyle = __DEV__
         : {};
 
       if (Array.isArray(style)) {
-        style.push(debugStyle);
-        style.push(contrastCheckerStyle);
-
-        return style.filter(item => Object.keys(item).length > 0);
+        return [...style, debugStyle, contrastCheckerStyle].filter(
+          item => Object.keys(item).length > 0,
+        );
       } else {
         return {
           ...style,

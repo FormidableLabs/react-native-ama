@@ -55,4 +55,20 @@ describe('getPropertyFromStyle', () => {
       ),
     ).toBe('cyan');
   });
+
+  it('handles undefined values', () => {
+    expect(
+      getPropertyFromStyle(
+        [
+          {
+            backgroundColor: 'yellow',
+            color: 'red',
+            undefined,
+          },
+          undefined,
+        ],
+        'backgroundColor',
+      ),
+    ).toBe('yellow');
+  });
 });
