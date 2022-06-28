@@ -63,7 +63,7 @@ describe('Pressable', () => {
 
 function renderPressable(props: Omit<PressableProps, 'children'>) {
   return render(
-    <Pressable accessible={true} {...props}>
+    <Pressable {...props}>
       <></>
     </Pressable>,
   );
