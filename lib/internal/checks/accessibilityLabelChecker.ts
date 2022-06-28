@@ -37,4 +37,5 @@ export const accessibilityLabelChecker = ({
   return null;
 };
 
-const isUpperCase = (string: string) => string.toUpperCase() === string;
+const isUpperCase = (string: string) =>
+  string.replace(/\d/, '').toUpperCase() === string;
