@@ -32,7 +32,7 @@ export * from './hooks/useDynamicList';
 export * from './hooks/useExpandable';
 
 // Types
-export * from './types/types';
+export * from './types';
 
 // Utils
 export * from './utils/isMotionAnimation';

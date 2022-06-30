@@ -14,6 +14,7 @@ export const useButtonChecks = __DEV__
         contrastChecker,
         onLayout,
         accessibilityLabelChecker,
+        checkCompatibleAccessibilityState,
         debugStyle,
         // @ts-ignore
       } = useChecks();
@@ -48,6 +49,7 @@ export const useButtonChecks = __DEV__
         accessibilityLabelChecker({
           accessibilityLabel: props.accessibilityLabel,
         });
+      checkCompatibleAccessibilityState(props);
 
       const contrastCheckerCallback = shouldPerformContrastCheck
         ? contrastChecker

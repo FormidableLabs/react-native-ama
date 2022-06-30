@@ -50,6 +50,7 @@ describe('SwitchListItem', () => {
                 "flexDirection": "row",
                 "width": "100%",
               },
+              Object {},
               Array [
                 Object {
                   "alignContent": "center",
@@ -57,7 +58,11 @@ describe('SwitchListItem', () => {
                   "flexDirection": "row",
                   "width": "100%",
                 },
+                Object {},
+                Object {},
+                Object {},
               ],
+              Object {},
             ],
             Object {
               "minHeight": 44,
@@ -132,6 +137,7 @@ describe('SwitchListItem', () => {
                 "flexDirection": "row",
                 "width": "100%",
               },
+              Object {},
               Array [
                 Object {
                   "alignContent": "center",
@@ -139,7 +145,11 @@ describe('SwitchListItem', () => {
                   "flexDirection": "row",
                   "width": "100%",
                 },
+                Object {},
+                Object {},
+                Object {},
               ],
+              Object {},
             ],
             Object {
               "minHeight": 44,

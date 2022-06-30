@@ -12,6 +12,8 @@ import {
   AccessibilityLabelChecker,
   accessibilityLabelChecker as accessibilityLabelCheckerImplementation,
 } from './checks/accessibilityLabelChecker';
+import type { CheckForAccessibilityState } from './checks/checkForAccessibilityState';
+import { checkForAccessibilityState } from './checks/checkForAccessibilityState';
 import { checkMinimumSize as checkMinimumSizeImplementation } from './checks/checkMinimumSize';
 import {
   ContrastChecker,
@@ -57,7 +59,7 @@ export const useChecks = __DEV__
 
               setTimeout(() => {
                 setDebugStyle({});
-              }, 100);
+              }, 33);
             });
           }
         }
@@ -129,6 +131,29 @@ export const useChecks = __DEV__
         });
       };
 
+      const checkCompatibleAccessibilityState = (
+        props: Record<string, any>,
+      ) => {
+        const amaStates = ['checked', 'selected'];
+
+        const params: CheckForAccessibilityState = {
+          accessibilityRole: props.accessibilityRole,
+          accessibilityState: props?.accessibilityState,
+        };
+
+        amaStates.forEach(amaState => {
+          if (amaState in props) {
+            // @ts-ignore
+            params[amaState] = props[amaState];
+          }
+        });
+
+        logResult(
+          'checkCompatibleAccessibilityState',
+          checkForAccessibilityState(params),
+        );
+      };
+
       const onLayout = (event: LayoutChangeEvent) => {
         /**
          * When the check fails there are situation when adding a border makes the
@@ -164,6 +189,7 @@ export const useChecks = __DEV__
         uppercaseChecker,
         checkFocusTrap,
         minimumSizeFailed,
+        checkCompatibleAccessibilityState,
         debugStyle,
       };
     }

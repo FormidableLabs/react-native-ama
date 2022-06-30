@@ -4,7 +4,8 @@ import {
   PressableProps as RNPressableProps,
 } from 'react-native';
 
-import { UsePressable, usePressable } from '../hooks/usePressable';
+import { usePressable } from '../hooks/usePressable';
+import type { UsePressable } from '../hooks/usePressable';
 
 export type PressableProps = React.PropsWithChildren<
   UsePressable<RNPressableProps>

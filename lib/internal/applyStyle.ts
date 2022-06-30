@@ -58,9 +58,7 @@ export const applyStyle = __DEV__
         : {};
 
       if (Array.isArray(style)) {
-        return [...style, debugStyle, contrastCheckerStyle].filter(
-          item => Object.keys(item)?.length > 0,
-        );
+        return [...style, debugStyle, contrastCheckerStyle].filter(Boolean);
       } else {
         return {
           ...style,
