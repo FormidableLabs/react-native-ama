@@ -1,6 +1,6 @@
 {
   "name": "react-native-ama",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Accessible Mobile App Library for React Native",
   "main": "dist/commonjs/index",
   "module": "dist/module/index",
