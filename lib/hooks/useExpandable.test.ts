@@ -1,5 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 
+import type { PressableProps } from '../components/Pressable';
 import * as UseChecks from '../internal/useChecks';
 import { useExpandable } from './useExpandable';
 
@@ -34,7 +35,10 @@ describe('useExpandable', () => {
 
     it('does not perform any check', () => {
       const { result } = renderHook(() =>
-        useExpandable({ expanded: false, accessibilityLabel: 'hello' }),
+        useExpandable<PressableProps>({
+          expanded: false,
+          accessibilityLabel: 'hello',
+        }),
       );
 
       expect(noUndefinedProperty).not.toHaveBeenCalled();

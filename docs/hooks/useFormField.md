@@ -5,9 +5,9 @@ This hook can be used to create a focusable custom field for the [`<Form />`](..
 ## Usage
 
 ```js
-import { useA11yFocus } from 'react-native-ama';
+import { useFormField } from 'react-native-ama';
 
-const { focusNextFormField, isLastField } = useA11yFocususeA11yFocus(refComponent);
+const { focusNextFormField, isLastField } = useFormField(refComponent);
 ```
 
 - **focusNextFormField**: focuses the next focusable element in the form, if any, otherwise triggers the `onSubmit` 
@@ -16,6 +16,8 @@ const { focusNextFormField, isLastField } = useA11yFocususeA11yFocus(refComponen
 ## Example
 
 ```jsx
+import { useFormField } from 'react-native-ama';
+
 const MyCustomComponent = () => {
   const ref = React.useRef(null);
 
@@ -28,6 +30,13 @@ const MyCustomComponent = () => {
 :::note
 
 The [`FormField`](../components/FormField.md) already uses this hook under the hook.
+
+:::
+
+:::warning
+
+When using the custom hook, make sure that the custom component is focusable by the screen reader when the user taps on the keyboard next
+button.
 
 :::
 

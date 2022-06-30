@@ -61,7 +61,7 @@ describe('Pressable', () => {
   });
 });
 
-function renderPressable(props: Omit<PressableProps, 'children'>) {
+function renderPressable(props: PressableProps) {
   return render(
     <Pressable {...props}>
       <></>

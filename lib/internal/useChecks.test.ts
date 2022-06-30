@@ -3,6 +3,7 @@ import type { RuleAction } from 'lib/internal/logger.rules';
 
 import * as Logger from '../internal/logger';
 import * as AMAProvider from '../providers/AMAProvider';
+import * as CheckForAccessibilityState from './checks/checkForAccessibilityState';
 import { useChecks } from './useChecks';
 
 const trackError = jest.fn();
@@ -117,6 +118,50 @@ describe('useChecks', () => {
     result.current.logResult('test-me', null);
 
     expect(removeError).toHaveBeenCalledWith(trackError.mock.calls[0][0]);
+  });
+
+  it('checks for compatible accessibility state', () => {
+    const check = jest
+      .spyOn(CheckForAccessibilityState, 'checkForAccessibilityState')
+      .mockReturnValue(null);
+    const { result } = renderHook(() => useChecks!());
+
+    result.current.checkCompatibleAccessibilityState({
+      hello: 'world',
+      busy: true,
+      checked: 'wow',
+      accessibilityRole: 'button',
+    });
+
+    expect(check).toHaveBeenCalledWith({
+      accessibilityRole: 'button',
+      accessibilityState: undefined,
+      checked: 'wow',
+    });
+  });
+
+  it('checks for compatible accessibility state when accessibilityState is passed', () => {
+    const check = jest
+      .spyOn(CheckForAccessibilityState, 'checkForAccessibilityState')
+      .mockReturnValue(null);
+    const { result } = renderHook(() => useChecks!());
+
+    result.current.checkCompatibleAccessibilityState({
+      hello: 'world',
+      checked: false,
+      accessibilityState: {
+        selected: 'yeah',
+      },
+      accessibilityRole: 'button',
+    });
+
+    expect(check).toHaveBeenCalledWith({
+      accessibilityRole: 'button',
+      accessibilityState: {
+        selected: 'yeah',
+      },
+      checked: false,
+    });
   });
 });
 

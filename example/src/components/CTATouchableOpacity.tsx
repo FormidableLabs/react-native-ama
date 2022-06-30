@@ -7,7 +7,7 @@ import { theme } from '../theme';
 
 type CTATouchableOpacityProps = Omit<
   TouchableOpacityProps,
-  'accessibilityRole' | 'accessibilityLabel'
+  'accessibilityLabel'
 > & {
   title: string;
   accessibilityLabel?: string;
@@ -35,7 +35,7 @@ export const CTATouchableOpacity = ({
   return (
     <TouchableOpacity
       accessibilityRole="button"
-      accessibilityLabel={accessibilityLabel || title}
+      accessibilityLabel={accessibilityLabel ?? title}
       disabled={disabled}
       style={style}
       onPress={onPress}

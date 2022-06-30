@@ -1,6 +1,11 @@
 import React from 'react';
-import { ActivityIndicator, Omit, StyleSheet, Text } from 'react-native';
-import { AMAAccessibilityState, Pressable } from 'react-native-ama';
+import {
+  AccessibilityState,
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+} from 'react-native';
+import { Pressable } from 'react-native-ama';
 import type { PressableProps } from 'react-native-ama';
 
 import { theme } from '../theme';
@@ -36,14 +41,15 @@ export const CTAPressable = ({
         const buttonStyles = getButtonStyle({
           pressed,
           disabled,
+          // @ts-ignore
           checked: rest?.checked,
+          // @ts-ignore
           selected: rest?.selected,
         });
 
         return [styles.button, buttonStyles, { marginLeft, marginRight }];
       }}
-      onPress={onPress}
-      {...rest}>
+      onPress={onPress}>
       {rest.busy ? <ActivityIndicator color={theme.color.white} /> : null}
       <Text
         style={[styles.text, { textTransform }]}
@@ -63,8 +69,8 @@ function getButtonStyle({
 }: {
   pressed: boolean;
   disabled?: boolean | null;
-  checked?: AMAAccessibilityState['checked'];
-  selected?: AMAAccessibilityState['selected'];
+  checked?: AccessibilityState['checked'];
+  selected?: boolean;
 }) {
   if (disabled) {
     return styles.disabled;

@@ -1,14 +1,8 @@
-import type { AccessibilityRole } from 'react-native';
-
 import { applyStyle } from '../internal/applyStyle';
 import { useChecks } from '../internal/useChecks';
 
-export type UseExpandable<T> = Omit<
-  T,
-  'accessibilityRole' | 'accessibilityLabel'
-> & {
+export type UseExpandable<T> = Omit<T, 'accessibilityRole'> & {
   expanded: boolean;
-  accessibilityLabel: string;
 };
 
 export const useExpandable = <T>(props: UseExpandable<T>) => {
@@ -17,6 +11,7 @@ export const useExpandable = <T>(props: UseExpandable<T>) => {
   __DEV__ &&
     checks?.noUndefinedProperty<UseExpandable<T>>({
       properties: props,
+      // @ts-ignore
       property: 'expanded',
       rule: 'NO_UNDEFINED',
     });
@@ -31,7 +26,7 @@ export const useExpandable = <T>(props: UseExpandable<T>) => {
 
   return __DEV__
     ? {
-        accessibilityRole: 'button' as AccessibilityRole,
+        accessibilityRole: 'button' as any,
         ...props,
         style: applyStyle?.({
           // @ts-ignore
@@ -41,7 +36,7 @@ export const useExpandable = <T>(props: UseExpandable<T>) => {
         }),
       }
     : {
-        accessibilityRole: 'button' as AccessibilityRole,
+        accessibilityRole: 'button' as any,
         ...props,
       };
 };

@@ -1,7 +1,8 @@
 import React from 'react';
+import type { PressableProps } from 'react-native-ama';
 
-import { UseExpandable, useExpandable } from '../hooks/useExpandable';
-import type { PressableProps } from './Pressable';
+import { useExpandable } from '../hooks/useExpandable';
+import type { UseExpandable } from '../hooks/useExpandable';
 import { Pressable } from './Pressable';
 
 type ExpandablePressableProps = React.PropsWithChildren<
@@ -12,7 +13,7 @@ const ExpandablePressableBase = ({
   children,
   ...rest
 }: ExpandablePressableProps) => {
-  const expandableProps = useExpandable(rest);
+  const expandableProps = useExpandable<PressableProps>(rest);
 
   return <Pressable {...expandableProps}>{children}</Pressable>;
 };

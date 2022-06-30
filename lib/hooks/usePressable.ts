@@ -1,21 +1,17 @@
 import type React from 'react';
-import type {
-  AccessibilityRole,
-  AccessibilityState,
-  LayoutChangeEvent,
-} from 'react-native';
+import type { AccessibilityState, LayoutChangeEvent } from 'react-native';
 
 import { generateAccessibilityStateFromProp } from '../internal/generateAccessibilityStateFromProp';
 import { shouldIgnoreContrastCheckForDisabledElement } from '../internal/logger';
 import { useButtonChecks } from '../internal/useButtonChecks';
-import type { AMAAccessibilityState } from '../types/types';
+import type { AMAAccessibilityState, AccessibilityRoles } from '../types';
 
 export type UsePressable<T> = Omit<
   T,
   'accessibilityRole' | 'accessibilityLabel'
 > &
-  AMAAccessibilityState & {
-    accessibilityRole: AccessibilityRole;
+  AMAAccessibilityState &
+  AccessibilityRoles & {
     accessibilityLabel: string;
   };
 

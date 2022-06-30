@@ -13,7 +13,7 @@ export type TouchableWithoutFeedbackProps = React.PropsWithChildren<
 export const TouchableWithoutFeedback = ({
   children,
   ...rest
-}: RNTouchableWithoutFeedbackProps) => {
+}: TouchableWithoutFeedbackProps) => {
   const pressableProps = usePressable<TouchableWithoutFeedbackProps>(
     rest,
     children,
