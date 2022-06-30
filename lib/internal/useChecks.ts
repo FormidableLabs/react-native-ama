@@ -59,7 +59,7 @@ export const useChecks = __DEV__
 
               setTimeout(() => {
                 setDebugStyle({});
-              }, 33);
+              }, 100);
             });
           }
         }
