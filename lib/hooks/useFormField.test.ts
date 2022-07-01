@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react-hooks';
 import { waitFor } from '@testing-library/react-native';
 
 import * as UseChecks from '../internal/useChecks';
@@ -9,14 +9,14 @@ beforeEach(() => {
   jest.clearAllMocks();
 });
 
-let onSubmit: jest.Mock = jest.fn();
+let submitForm: jest.Mock = jest.fn();
 
 describe('useFormField', () => {
   let localRef: any[] = [];
 
   beforeEach(() => {
     jest.spyOn(Form, 'useForm').mockImplementation(() => {
-      return { refs: localRef, onSubmit };
+      return { refs: localRef, submitForm };
     });
   });
 
@@ -32,6 +32,7 @@ describe('useFormField', () => {
         id: 'my-id',
         nextFieldId: 'next-field-id',
         nextFormFieldRef: { current: 'nextFormFieldRef' },
+        hasValidation: false,
       });
     });
 
@@ -40,6 +41,8 @@ describe('useFormField', () => {
       hasFocusCallback: false,
       ref: { current: { current: 'hello' } },
       id: 'my-id',
+      hasError: undefined,
+      hasValidation: false,
     });
   });
 
@@ -48,6 +51,7 @@ describe('useFormField', () => {
       return useFormField({
         ref: { current: 'hello' },
         hasFocusCallback: false,
+        hasValidation: false,
       });
     });
 
@@ -65,10 +69,11 @@ describe('useFormField', () => {
           const first = useFormField({
             ref: { current: 'random ref' },
             hasFocusCallback: false,
+            hasValidation: false,
           });
 
           // next field
-          useFormField({ ref, hasFocusCallback: false });
+          useFormField({ ref, hasFocusCallback: false, hasValidation: false });
 
           return first;
         });
@@ -86,10 +91,11 @@ describe('useFormField', () => {
           const first = useFormField({
             ref: { current: 'random ref' },
             hasFocusCallback: false,
+            hasValidation: false,
           });
 
           // next field
-          useFormField({ ref, hasFocusCallback: true });
+          useFormField({ ref, hasFocusCallback: true, hasValidation: false });
 
           return first;
         });
@@ -121,10 +127,15 @@ describe('useFormField', () => {
             const first = useFormField({
               ref: { current: 'random ref' },
               hasFocusCallback: true,
+              hasValidation: false,
             });
 
             // next field
-            useFormField({ ref, hasFocusCallback: false });
+            useFormField({
+              ref,
+              hasFocusCallback: false,
+              hasValidation: false,
+            });
 
             return first;
           });
@@ -149,10 +160,11 @@ describe('useFormField', () => {
             const first = useFormField({
               ref: { current: 'random ref' },
               hasFocusCallback: false,
+              hasValidation: false,
             });
 
             // next field
-            useFormField({ ref, hasFocusCallback: true });
+            useFormField({ ref, hasFocusCallback: true, hasValidation: false });
 
             return first;
           });
@@ -182,12 +194,14 @@ describe('useFormField', () => {
             ref: { current: 'first-ref' },
             hasFocusCallback: false,
             nextFieldId: 'latest-field',
+            hasValidation: false,
           });
 
           // Second field
           useFormField({
             ref: { current: 'second-ref' },
             hasFocusCallback: false,
+            hasValidation: false,
           });
 
           // next field
@@ -195,6 +209,7 @@ describe('useFormField', () => {
             ref,
             hasFocusCallback: false,
             id: 'latest-field',
+            hasValidation: false,
           });
 
           return first;
@@ -214,12 +229,14 @@ describe('useFormField', () => {
             ref: { current: 'first-ref' },
             hasFocusCallback: false,
             nextFormFieldRef: ref,
+            hasValidation: false,
           });
 
           // Second field
           useFormField({
             ref: { current: 'second-ref' },
             hasFocusCallback: false,
+            hasValidation: false,
           });
 
           // next field
@@ -227,6 +244,7 @@ describe('useFormField', () => {
             ref,
             hasFocusCallback: false,
             id: 'latest-field',
+            hasValidation: false,
           });
 
           return first;
@@ -238,22 +256,61 @@ describe('useFormField', () => {
       });
     });
 
-    it('triggers onSubmit when the element is the last one of the ref', function () {
+    it('triggers submitForm when the element is the last one of the ref', () => {
       const ref = { current: 'whatever' };
 
       const { result } = renderHook(() => {
         useFormField({
           ref: { current: 'random ref' },
           hasFocusCallback: false,
+          hasValidation: false,
         });
 
         // next field
-        return useFormField({ ref, hasFocusCallback: false });
+        return useFormField({
+          ref,
+          hasFocusCallback: false,
+          hasValidation: false,
+        });
       });
 
       result.current.focusNextFormField();
 
-      expect(onSubmit).toHaveBeenCalledWith();
+      expect(submitForm).toHaveBeenCalledWith();
+    });
+
+    it('focuses the first failed component when submitForm fails', () => {
+      const consoleInfo = jest
+        .spyOn(console, 'info')
+        .mockImplementation(() => {});
+
+      const ref = { current: 'whatever' };
+      submitForm.mockReturnValue(true);
+
+      const { result } = renderHook(() => {
+        useFormField({
+          ref: { current: 'random ref' },
+          hasFocusCallback: false,
+          hasValidation: true,
+          hasError: true,
+        });
+
+        // next field
+        return useFormField({
+          ref,
+          hasFocusCallback: false,
+          hasValidation: true,
+          hasError: true,
+        });
+      });
+
+      act(() => {
+        result.current.focusNextFormField();
+      });
+
+      expect(setFocus).toHaveBeenCalledWith('random ref');
+      expect(setFocus).toHaveBeenCalledTimes(1);
+      expect(consoleInfo).not.toHaveBeenCalled();
     });
   });
 });

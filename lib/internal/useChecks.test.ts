@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
-import type { RuleAction } from 'lib/internal/logger.rules';
 
 import * as Logger from '../internal/logger';
+import type { RuleAction } from '../internal/logger.rules';
 import * as AMAProvider from '../providers/AMAProvider';
 import * as CheckForAccessibilityState from './checks/checkForAccessibilityState';
 import { useChecks } from './useChecks';

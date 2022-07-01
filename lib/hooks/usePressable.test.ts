@@ -57,7 +57,7 @@ describe('usePressable', () => {
         noUndefinedProperty,
         contrastChecker,
         checkMinimumSize,
-        accessibilityLabelChecker,
+        noUppercaseStringChecker: accessibilityLabelChecker,
         uppercaseChecker,
       } as any);
     });
@@ -94,7 +94,7 @@ describe('usePressable', () => {
       );
 
       expect(accessibilityLabelChecker).toHaveBeenCalledWith({
-        accessibilityLabel: 'This is the accessibility label',
+        text: 'This is the accessibility label',
       });
     });
 

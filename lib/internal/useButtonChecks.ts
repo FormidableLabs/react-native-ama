@@ -13,7 +13,7 @@ export const useButtonChecks = __DEV__
         noUndefinedProperty,
         contrastChecker,
         onLayout,
-        accessibilityLabelChecker,
+        noUppercaseStringChecker,
         checkCompatibleAccessibilityState,
         debugStyle,
         // @ts-ignore
@@ -46,8 +46,8 @@ export const useButtonChecks = __DEV__
             property: 'accessibilityElementsHidden',
           });
       isAccessible &&
-        accessibilityLabelChecker({
-          accessibilityLabel: props.accessibilityLabel,
+        noUppercaseStringChecker({
+          text: props.accessibilityLabel,
         });
       checkCompatibleAccessibilityState(props);
 

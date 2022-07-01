@@ -1,6 +1,12 @@
 import * as React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
-import { Form, SwitchListItem, Text, TextInput } from 'react-native-ama';
+import {
+  Form,
+  FormSubmitWrapper,
+  SwitchListItem,
+  Text,
+  TextInput,
+} from 'react-native-ama';
 
 import { CTAPressable } from '../components/CTAPressable';
 import { Spacer } from '../components/Spacer';
@@ -22,10 +28,14 @@ export const FormScreen = () => {
   const lastNameRef = React.useRef(null);
 
   const handleOnSubmit = () => {
+    const hasErrors = firstName.length === 0 || lastName.length === 0;
+
     setInvalidFields({
       firstName: firstName.length === 0,
       lastName: lastName.length === 0,
     });
+
+    return !hasErrors;
   };
 
   return (
@@ -42,7 +52,9 @@ export const FormScreen = () => {
             </>
           }
           hasValidation={true}
-          errorComponent={<Text>The first name cannot be blank</Text>}
+          errorComponent={
+            <Text style={styles.error}>The first name cannot be blank</Text>
+          }
           hasError={invalidFields.firstName}
         />
 
@@ -74,7 +86,9 @@ export const FormScreen = () => {
           labelComponent={<Text style={styles.labelComponent}>Last name:</Text>}
           onChangeText={newText => setLastName(newText)}
           hasValidation={true}
-          errorComponent={<Text>The thing cannot be null</Text>}
+          errorComponent={
+            <Text style={styles.error}>The thing cannot be null</Text>
+          }
           hasError={invalidFields.lastName}
           ref={lastNameRef}
           onBlur={() => {
@@ -96,7 +110,9 @@ export const FormScreen = () => {
           hasValidation={false}
         />
         <Spacer height="big" />
-        <CTAPressable title="Submit" onPress={handleOnSubmit} />
+        <FormSubmitWrapper accessibilityLabel="Submit">
+          <CTAPressable title="Submit" />
+        </FormSubmitWrapper>
       </Form>
     </ScrollView>
   );
@@ -121,5 +137,8 @@ const styles = StyleSheet.create({
   },
   switchListItem: {
     marginVertical: theme.padding.normal,
+  },
+  error: {
+    color: '#f00',
   },
 });

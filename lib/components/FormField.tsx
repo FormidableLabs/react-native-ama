@@ -4,23 +4,26 @@ import {
   TouchableWithoutFeedbackProps,
 } from 'react-native';
 
-import { useFormField } from '../hooks/useFormField';
+import { UseFormField, useFormField } from '../hooks/useFormField';
 
 type FormFieldProps = React.PropsWithChildren<
-  TouchableWithoutFeedbackProps & {
-    id?: string;
-  }
+  TouchableWithoutFeedbackProps & Omit<UseFormField, 'hasFocusCallback'>
 >;
 
-const FormFieldBase = ({ children, id, ...props }: FormFieldProps) => {
+const FormFieldBase = ({ children, ...props }: FormFieldProps) => {
   const viewRef = React.useRef<React.ElementRef<
     typeof TouchableWithoutFeedback
   > | null>(null);
 
-  useFormField({ ref: viewRef, hasFocusCallback: false, id });
+  // @ts-ignore
+  const formProps = useFormField({
+    hasFocusCallback: false,
+    ref: viewRef,
+    ...props,
+  });
 
   return (
-    <TouchableWithoutFeedback {...props} ref={viewRef}>
+    <TouchableWithoutFeedback {...props} ref={viewRef} {...formProps}>
       <>{children}</>
     </TouchableWithoutFeedback>
   );

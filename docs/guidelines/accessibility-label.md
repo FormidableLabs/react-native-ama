@@ -109,7 +109,7 @@ This error is used when a pressable element has no [accessibilityLabel](https://
 This rule is mandatory and cannot be turned off!
 :::
 
-### UPPERCASE_ACCESSIBILITY_LABEL <Must />
+### NO_UPPERCASE_TEXT <Must />
 
 This is used when a component has the `accessibilityLabel` prop in all caps.
 

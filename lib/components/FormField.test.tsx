@@ -14,7 +14,7 @@ describe('FormField', () => {
     const useFormField = jest.spyOn(UseFormField, 'useFormField');
 
     render(
-      <FormField>
+      <FormField hasValidation={false}>
         <Text>Test</Text>
       </FormField>,
     );
@@ -27,7 +27,7 @@ describe('FormField', () => {
 
   it('wraps the children in a focusable View', () => {
     const { toJSON } = render(
-      <FormField>
+      <FormField hasValidation={false}>
         <Text>Test</Text>
       </FormField>,
     );

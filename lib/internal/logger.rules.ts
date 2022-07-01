@@ -11,7 +11,7 @@ export type Rule =
   | 'NO_FORM_LABEL'
   | 'NO_KEYBOARD_TRAP'
   | 'NO_UNDEFINED'
-  | 'UPPERCASE_ACCESSIBILITY_LABEL'
+  | 'NO_UPPERCASE_TEXT'
   | 'INCOMPATIBLE_ACCESSIBILITY_STATE'
   | 'UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL';
 
@@ -44,7 +44,7 @@ export const LOGGER_RULES: Record<Rule, RuleAction> | null = __DEV__
       NO_KEYBOARD_TRAP: 'MUST_NOT',
       NO_UNDEFINED: 'MUST_NOT',
       UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL: 'MUST_NOT',
-      UPPERCASE_ACCESSIBILITY_LABEL: 'MUST_NOT',
+      NO_UPPERCASE_TEXT: 'MUST_NOT',
       BOTTOM_SHEET_CLOSE_ACTION: 'MUST',
       INCOMPATIBLE_ACCESSIBILITY_STATE: 'MUST',
     }
@@ -63,9 +63,9 @@ export const RULES_HELP: Record<Rule, string> | null = __DEV__
       MINIMUM_SIZE:
         'https://formidable.com/open-source/react-native-ama/guidelines/minimum-size',
       UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL:
-        'https://formidable.com/open-source/react-native-ama/guidelines/uppercase-text',
-      UPPERCASE_ACCESSIBILITY_LABEL:
-        'https://formidable.com/open-source/react-native-ama/guidelines/uppercase-text',
+        'https://formidable.com/open-source/react-native-ama/guidelines/text',
+      NO_UPPERCASE_TEXT:
+        'https://formidable.com/open-source/react-native-ama/guidelines/text',
       NO_ACCESSIBILITY_LABEL:
         'https://formidable.com/open-source/react-native-ama/guidelines/accessibility-labels',
       NO_ACCESSIBILITY_ROLE:

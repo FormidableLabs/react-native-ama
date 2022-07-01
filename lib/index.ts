@@ -20,6 +20,7 @@ export * from './components/Text';
 export * from './components/TextInput';
 export * from './components/TouchableOpacity';
 export * from './components/TouchableWithoutFeedback';
+export * from './components/FormSubmitWrapper';
 
 // Hooks
 export * from './hooks/useFocus';
@@ -32,6 +33,7 @@ export * from './hooks/useSwitch';
 export * from './hooks/usePressable';
 export * from './hooks/useDynamicList';
 export * from './hooks/useExpandable';
+export * from './hooks/useTextInput';
 
 // Types
 export * from './types';

@@ -1,8 +1,30 @@
 import React from 'react';
 
+import { applyStyle } from '../internal/applyStyle';
 import { useChecks } from '../internal/useChecks';
 import { useForm } from '../providers/Form';
-import { useFocus } from './useFocus';
+
+export type UseFormField = {
+  ref?: React.RefObject<any> | React.ForwardedRef<any> | null;
+  hasFocusCallback: boolean;
+  id?: string;
+  nextFieldId?: string;
+  nextFormFieldRef?: React.RefObject<any>;
+  accessibilityHint?: string;
+  style?: Record<string, any>;
+  editable?: boolean;
+} & (
+  | {
+      hasValidation: true;
+      hasError: boolean;
+      errorMessage?: string;
+    }
+  | {
+      hasValidation: false;
+      hasError?: never;
+      errorMessage?: never;
+    }
+);
 
 export const useFormField = ({
   ref,
@@ -10,15 +32,14 @@ export const useFormField = ({
   id,
   nextFieldId,
   nextFormFieldRef,
-}: {
-  ref: React.RefObject<any> | React.ForwardedRef<any> | null;
-  hasFocusCallback: boolean;
-  id?: string;
-  nextFieldId?: string;
-  nextFormFieldRef?: React.RefObject<any>;
-}) => {
-  const { refs, onSubmit } = useForm();
-  const { setFocus } = useFocus();
+  hasValidation,
+  hasError,
+  accessibilityHint,
+  errorMessage,
+  editable,
+  style = {},
+}: UseFormField) => {
+  const { refs, submitForm, focusField } = useForm();
   const fieldRef = React.useRef(ref);
 
   const checks = __DEV__ ? useChecks?.() : undefined;
@@ -31,52 +52,33 @@ export const useFormField = ({
   };
 
   const focusNextFormField = () => {
-    const allRefs = refs!;
-    const myIndex = getMyIndex();
     const isLastItem = isLastField();
 
     if (isLastItem) {
-      return onSubmit();
+      submitForm();
+
+      return;
     }
 
-    const nextRef = getNextFieldRef();
+    const currentField = refs![getMyIndex()];
 
-    /**
-     * Refs passed as prop have another ".current"
-     */
-    const nextRefElement = nextRef?.ref?.current?.current
-      ? nextRef?.ref.current
-      : nextRef?.ref;
-
-    const callFocus =
-      // @ts-ignore
-      nextRefElement?.current?.focus && nextRef?.hasFocusCallback;
-
-    if (callFocus) {
-      nextRefElement.current?.focus();
-
-      __DEV__ &&
-        nextRefElement &&
-        checks?.checkFocusTrap({ ref: nextRefElement, shouldHaveFocus: true });
-    } else if (nextRefElement.current) {
-      setFocus(nextRefElement.current);
-    }
-
-    const currentRef = allRefs[myIndex];
+    focusField?.(getNextFieldRef());
 
     __DEV__ &&
-      currentRef.hasFocusCallback &&
+      currentField?.hasFocusCallback &&
       checks?.checkFocusTrap({
-        ref: currentRef.ref.current,
+        ref: currentField?.ref?.current,
         shouldHaveFocus: false,
       });
   };
 
   const getNextFieldRef = () => {
-    const allRefs = refs!;
+    const allRefs = refs || [];
 
     if (nextFormFieldRef) {
-      return { ref: nextFormFieldRef };
+      return {
+        ref: nextFormFieldRef,
+      };
     } else if (nextFieldId) {
       return allRefs.find(item => item.id === nextFieldId);
     }
@@ -91,7 +93,14 @@ export const useFormField = ({
   };
 
   React.useEffect(() => {
-    refs?.push({ ref: fieldRef, hasFocusCallback, id });
+    refs?.push({
+      ref: fieldRef,
+      hasFocusCallback,
+      id,
+      hasValidation,
+      hasError,
+      isEditable: editable,
+    });
 
     return () => {
       const myIndex = getMyIndex();
@@ -101,14 +110,29 @@ export const useFormField = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  React.useEffect(() => {
+    const myRefIndex = refs?.findIndex(item => item.ref === fieldRef);
+
+    // @ts-ignore
+    refs[myRefIndex].hasError = hasError;
+    // @ts-ignore
+    refs[myRefIndex].isEditable = editable;
+  }, [editable, hasError, refs]);
+
+  const fullAccessibilityHint = [accessibilityHint, errorMessage]
+    .filter(Boolean)
+    .join(',');
+
   return __DEV__
     ? {
         focusNextFormField,
         isLastField,
-        style: checks?.debugStyle,
+        style: applyStyle?.({ style, debugStyle: checks?.debugStyle }),
+        accessibilityHint: fullAccessibilityHint,
       }
     : {
         focusNextFormField,
+        accessibilityHint: fullAccessibilityHint,
         isLastField,
       };
 };

@@ -25,7 +25,7 @@ describe('Text', () => {
 
     // @ts-ignore
     jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
-      accessibilityLabelChecker,
+      noUppercaseStringChecker: accessibilityLabelChecker,
       noUndefinedProperty,
       uppercaseChecker,
       onLayout,
@@ -81,7 +81,7 @@ describe('Text', () => {
         );
 
         expect(accessibilityLabelChecker).toHaveBeenCalledWith({
-          accessibilityLabel,
+          text: accessibilityLabel,
           canBeEmpty: true,
         });
       },
@@ -100,7 +100,7 @@ describe('Text', () => {
     it('applies the style given by useChecks', () => {
       // @ts-ignore
       jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
-        accessibilityLabelChecker,
+        noUppercaseStringChecker: accessibilityLabelChecker,
         noUndefinedProperty,
         uppercaseChecker,
         onLayout,
@@ -148,7 +148,7 @@ describe('Text', () => {
     it('ignores  the style given by useChecks', () => {
       // @ts-ignore
       jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
-        accessibilityLabelChecker,
+        noUppercaseStringChecker: accessibilityLabelChecker,
         noUndefinedProperty,
         uppercaseChecker,
         onLayout,

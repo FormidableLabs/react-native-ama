@@ -73,8 +73,8 @@ export const BottomSheet = ({
       rule: 'BOTTOM_SHEET_CLOSE_ACTION',
     });
   __DEV__ &&
-    checks?.accessibilityLabelChecker({
-      accessibilityLabel: closeActionAccessibilityLabel,
+    checks?.noUppercaseStringChecker({
+      text: closeActionAccessibilityLabel,
     });
 
   React.useEffect(() => {

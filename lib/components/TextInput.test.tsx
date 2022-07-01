@@ -36,6 +36,13 @@ describe('TextInput', () => {
     expect(useFormField).toHaveBeenCalledWith({
       hasFocusCallback: true,
       ref: expect.objectContaining({ current: expect.any(Object) }),
+      accessibilityLabel: 'Test',
+      errorMessage: undefined,
+      hasError: undefined,
+      hasValidation: false,
+      id: undefined,
+      nextFieldId: undefined,
+      nextFormFieldRef: undefined,
     });
   });
 
@@ -60,6 +67,7 @@ describe('TextInput', () => {
         <TextInput
           accessibilityHint=""
           accessibilityLabel="labelComponent"
+          hasValidation={false}
           onLayout={[Function]}
           onSubmitEditing={[Function]}
           returnKeyType="done"
@@ -84,6 +92,7 @@ describe('TextInput', () => {
         <TextInput
           accessibilityHint=""
           accessibilityLabel=" labelComponent after"
+          hasValidation={false}
           onLayout={[Function]}
           onSubmitEditing={[Function]}
           returnKeyType="done"
@@ -130,6 +139,8 @@ describe('TextInput', () => {
         <TextInput
           accessibilityHint="This is the errorComponent"
           accessibilityLabel="the labelComponent"
+          hasError={true}
+          hasValidation={true}
           onLayout={[Function]}
           onSubmitEditing={[Function]}
           returnKeyType="done"
@@ -163,6 +174,8 @@ describe('TextInput', () => {
         <TextInput
           accessibilityHint="This is the errorComponent"
           accessibilityLabel="the labelComponent"
+          hasError={true}
+          hasValidation={true}
           onLayout={[Function]}
           onSubmitEditing={[Function]}
           returnKeyType="done"
@@ -386,7 +399,7 @@ describe('TextInput', () => {
         accessibilityLabel="Please insert your first name"
         hasValidation={true}
         hasError={false}
-        errorText={'This is the errorComponent'}
+        errorMessage={'This is the errorComponent'}
         errorComponent={<></>}
       />,
     );
@@ -425,7 +438,7 @@ describe('TextInput', () => {
         accessibilityHint="The hint"
         hasValidation={true}
         hasError={true}
-        errorText="This text will be used"
+        errorMessage="This text will be used"
         errorComponent={<Text>The first name cannot be blank</Text>}
       />,
     );
@@ -476,7 +489,7 @@ describe('TextInput', () => {
 
       // @ts-ignore
       jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
-        accessibilityLabelChecker,
+        noUppercaseStringChecker: accessibilityLabelChecker,
         noUndefinedProperty,
         uppercaseChecker,
         onLayout,

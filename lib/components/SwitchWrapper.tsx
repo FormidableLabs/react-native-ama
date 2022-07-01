@@ -1,4 +1,3 @@
-import type { AMAAccessibilityState } from 'lib/types';
 import React from 'react';
 import {
   AccessibilityState,
@@ -9,6 +8,7 @@ import {
 import { StyleSheet, TouchableWithoutFeedback } from 'react-native';
 
 import { useSwitch } from '../hooks/useSwitch';
+import type { AMAAccessibilityState } from '../types';
 import { MINIMUM_TOUCHABLE_SIZE } from '../utils/minimumTouchableSize';
 
 type SwitchWrapperProps = React.PropsWithChildren<
