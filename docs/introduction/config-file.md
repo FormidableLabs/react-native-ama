@@ -72,4 +72,17 @@ Create a JSON file called `ama.json` in the project's root folder to customise t
 The JSON file does not need to contain all the log keys, as AMA defaults to the default rule if not present in the JSON one.
 :::
 
+:::warning
+
+Every time the `ama.rules.json` file is updated, you need to update the copy inside the `node_modules` folder and restart the development server:
+
+
+```bash
+cp ama.rules.json node_modules/react-native-ama/
+
+yarn start
+```
+
+:::
+
 [^1]: The rule cannot be overridden
