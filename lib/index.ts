@@ -1,8 +1,8 @@
-import { FormSubmit, FormSubmitProps } from 'lib/components/FormSubmit';
 import type React from 'react';
 
 import type { FormFieldProps } from './components/FormField';
 import { FormField } from './components/FormField';
+import { FormSubmit, FormSubmitProps } from './components/FormSubmit';
 import { FormProps, Form as FormProvider } from './providers/Form';
 
 // Providers
