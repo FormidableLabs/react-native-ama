@@ -1,10 +1,14 @@
-# react-native-ama
+# Accessibility as a First-Class Citizen with React Native AMA
 [![github][github-image]][github-url] [![npm][npm-image]][npm-url] [![docs][docs-image]][docs-url] [![Maintenance Status][maintenance-image]](#maintenance-status)
 
-AMA stands for **A**ccessible **M**obile **A**pp and contains a set of [components](https://formidable.com/open-source/react-native-ama/components/),
-[hooks](https://formidable.com/open-source/react-native-ama/components/) and [guidelines](https://formidable.com/open-source/react-native-ama/guidelines/) created to help you build more accessible apps.
+A.M.A. stands for **A**ccessible **M**obile **A**pp and is react native library that aim offers the best accessibility tooling experience and guides to guide you through accessibility best practices while you code your app.
+That's why we created A.M.A., a set of [components](https://formidable.com/open-source/react-native-ama/components/),
+[hooks](https://formidable.com/open-source/react-native-ama/components/) designed to enforce minimum accessibility requirements.
+This is combined with extensive [guidelines](https://formidable.com/open-source/react-native-ama/guidelines/) to help you how accessibility should work when manually testing your app.
 
 ![Example of runtime failure detected by AMA](https://github.com/FormidableLabs/react-native-ama/blob/main/ama-demo.png?raw=true)
+
+This is an example of a runtime failure detected by AMA.
 
 ## Installation
 
