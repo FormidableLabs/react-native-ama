@@ -24,7 +24,7 @@ export const checkFocusTrap = async ({
           rule: 'NO_KEYBOARD_TRAP',
           message,
           // @ts-ignore
-          extra: ref.current?._internalFiberInstanceHandleDEV?.memoizedProps,
+          extra: ref?.current?._internalFiberInstanceHandleDEV?.memoizedProps,
         });
       }
 

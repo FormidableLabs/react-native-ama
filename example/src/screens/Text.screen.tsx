@@ -29,7 +29,7 @@ export const TextScreen = () => {
           Texts with onPress property must meet the minimum size criteria
         </Text>
         <Spacer height="big" />
-        <Header title="Text text with `textTransform: uppercase` property and no accessibilityLabel" />
+        <Header title="Text text with `textTransform: uppercase` property and no text" />
         <Spacer height="normal" />
         <CTAPressable
           title="Show text transform example"
@@ -40,7 +40,7 @@ export const TextScreen = () => {
         ) : null}
 
         <Spacer height="normal" />
-        <Header title="Text all CAPS accessibilityLabel" />
+        <Header title="Text all CAPS text" />
         <Spacer height="normal" />
         <CTAPressable
           title="Show all CAPS example"

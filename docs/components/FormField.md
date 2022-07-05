@@ -1,15 +1,15 @@
 import { Required } from '@site/src/components';
 
-# FormField
+# Form.Field
 
 This is a generic form field element capable of receiving focus from a [TextInput](./TextInput.mdx) components or by using the [useFocus](../hooks/useFocus.md) hook.
 
 ## Example
 
 ```jsx
-import { FormField } from 'react-native-ama';
+import { Form } from 'react-native-ama';
 
-<FormField id="field-id">
+<Form.Field id="field-id">
   <Pressable
     accessibilityRole="switch"
     accessibilityLabel={accessibilityLabel}
@@ -32,10 +32,12 @@ import { FormField } from 'react-native-ama';
     )}
     {isLabelPositionLeft ? null : label}
   </Pressable>
-</FormField>
+</Form.Field>
 ```
 
 ## Props
+
+The component extends the React Native [TouchableWithoutFeedbackProps](https://reactnative.dev/docs/touchablewithoutfeedback#props).
 
 ### `id` 
 
@@ -44,6 +46,26 @@ The field ID. This info is stored, with the field `ref`, inside the [<Form />](.
 | Type   | Default   |
 |--------|-----------|
 | string | undefined |
+
+### `ref`
+
+The field reference.
+
+| Type            | Default   |
+|-----------------|-----------|
+| React.RefObject | undefined |
+
+### `hasValidation`
+
+If true the parameter `hasError` will be made mandatory.
+
+### `hasError`
+
+If true the field is marked as possible candidate to be automatically focused when the form submission fails.
+
+### `errorMessage`
+
+The error to be announced as part of the accessibility hint when the validation fails.
 
 ## Related guidelines
 

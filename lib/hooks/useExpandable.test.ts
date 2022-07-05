@@ -26,7 +26,7 @@ describe('useExpandable', () => {
 
       // @ts-ignore
       jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
-        accessibilityLabelChecker,
+        noUppercaseStringChecker: accessibilityLabelChecker,
         noUndefinedProperty,
         uppercaseChecker,
         onLayout,

@@ -25,7 +25,7 @@ describe('BottomSheet', () => {
       // @ts-ignore
       jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
         noUndefinedProperty,
-        accessibilityLabelChecker,
+        noUppercaseStringChecker: accessibilityLabelChecker,
       } as any);
 
       render(
@@ -43,7 +43,7 @@ describe('BottomSheet', () => {
         rule: 'BOTTOM_SHEET_CLOSE_ACTION',
       });
       expect(accessibilityLabelChecker).toHaveBeenCalledWith({
-        accessibilityLabel: 'close me',
+        text: 'close me',
       });
     });
 
@@ -55,7 +55,7 @@ describe('BottomSheet', () => {
       jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
         debugStyle: { backgroundColor: 'cyan' },
         noUndefinedProperty,
-        accessibilityLabelChecker,
+        noUppercaseStringChecker: accessibilityLabelChecker,
       } as any);
 
       const { getByTestId } = render(
@@ -90,7 +90,7 @@ describe('BottomSheet', () => {
       // @ts-ignore
       jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
         noUndefinedProperty,
-        accessibilityLabelChecker,
+        noUppercaseStringChecker: accessibilityLabelChecker,
       } as any);
 
       render(
@@ -114,7 +114,7 @@ describe('BottomSheet', () => {
       jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
         debugStyle: { backgroundColor: 'cyan' },
         noUndefinedProperty,
-        accessibilityLabelChecker,
+        noUppercaseStringChecker: accessibilityLabelChecker,
       } as any);
 
       const { BottomSheet: OriginalBottomSheet } = require('./BottomSheet');

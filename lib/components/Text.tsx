@@ -23,8 +23,8 @@ export const Text = ({ autofocus, ...rest }: TextProps) => {
       accessibilityLabel: rest.accessibilityLabel,
     });
   __DEV__ &&
-    checks?.accessibilityLabelChecker({
-      accessibilityLabel: rest.accessibilityLabel,
+    checks?.noUppercaseStringChecker({
+      text: rest.accessibilityLabel,
       canBeEmpty: true,
     });
   __DEV__ &&

@@ -1,11 +1,11 @@
 import * as React from 'react';
 
 export const maybeGenerateStringFromElement = (
-  element: JSX.Element,
+  element?: JSX.Element,
   alternativeString?: string | null,
 ) => {
-  if (alternativeString) {
-    return alternativeString;
+  if (alternativeString || element == null) {
+    return alternativeString || '';
   }
 
   const pieces = extractPieces(element);

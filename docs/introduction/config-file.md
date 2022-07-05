@@ -22,7 +22,7 @@ AMA guidelines are categorised as:
 ### Default Rules
 
 | Log key                                                               | Guideline   |
-|-----------------------------------------------------------------------|-------------|
+| --------------------------------------------------------------------- | ----------- |
 | [BOTTOM_SHEET_CLOSE_ACTION](../guidelines/bottomsheet)                | <Must />    |
 | [CONTRAST_FAILED](../guidelines/contrast)                             | <Must />    |
 | [CONTRAST_FAILED_AAA](../guidelines/contrast)                         | <Should />  |
@@ -35,14 +35,14 @@ AMA guidelines are categorised as:
 | [NO_FORM_ERROR](../guidelines/forms)                                  | <Must />    |
 | [NO_KEYBOARD_TRAP](../guidelines/keyboard-trap.md) [^1]               | <MustNot /> |
 | [UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL](../guidelines/uppercase-text) | <MustNot /> |
-| [UPPERCASE_ACCESSIBILITY_LABEL](../guidelines/uppercase-text)         | <MustNot /> |
+| [NO_UPPERCASE_TEXT](../guidelines/uppercase-text)                     | <MustNot /> |
 
 ### Constants
 
 Elements that perform a contrast check do it on all the children up to the level specified by `CONTRAST_CHECKER_MAX_DEPTH`.
 
 | Constant key               | Default value |
-|----------------------------|---------------|
+| -------------------------- | ------------- |
 | CONTRAST_CHECKER_MAX_DEPTH | 5             |
 
 This can be turned off by specifying a level of **0**
@@ -70,6 +70,19 @@ Create a JSON file called `ama.json` in the project's root folder to customise t
 :::tip
 
 The JSON file does not need to contain all the log keys, as AMA defaults to the default rule if not present in the JSON one.
+:::
+
+:::warning
+
+Every time the `ama.rules.json` file is updated, you need to update the copy inside the `node_modules` folder and restart the development server:
+
+
+```bash
+cp ama.rules.json node_modules/react-native-ama/
+
+yarn start
+```
+
 :::
 
 [^1]: The rule cannot be overridden

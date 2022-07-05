@@ -32,6 +32,20 @@ The built-in [TextInput](../components/TextInput) automatically hides the label 
 
 :::
 
+:::danger
+
+If the field is required the accessibility label should not end with an asterisk, but a required message should be provided instead.
+
+:::
+
+```jsx
+<Text
+    importantForAccessibility="no"
+    accessibilityElementsHidden="true">Enter your email address*</Text>
+<TextInput accessibilityLabel="Enter your email address, required" />
+```
+:::
+
 ## Errors
 
 If the field has an error, then this should be read as part of the field label/hint itself and should not be focused as an isolated component:

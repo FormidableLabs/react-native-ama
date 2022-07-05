@@ -14,12 +14,12 @@ describe('FormField', () => {
     const useFormField = jest.spyOn(UseFormField, 'useFormField');
 
     render(
-      <FormField>
+      <FormField hasValidation={false}>
         <Text>Test</Text>
       </FormField>,
     );
 
-    expect(useFormField).toHaveBeenCalledWith({
+    expect(useFormField.mock.calls[0][0]).toMatchObject({
       hasFocusCallback: false,
       ref: expect.objectContaining({ current: expect.any(Object) }),
     });
@@ -27,15 +27,28 @@ describe('FormField', () => {
 
   it('wraps the children in a focusable View', () => {
     const { toJSON } = render(
-      <FormField>
+      <FormField hasValidation={false}>
         <Text>Test</Text>
       </FormField>,
     );
 
     expect(toJSON()).toMatchInlineSnapshot(`
-      <Text>
-        Test
-      </Text>
+      <View
+        accessibilityHint=""
+        accessible={true}
+        focusable={false}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+      >
+        <Text>
+          Test
+        </Text>
+      </View>
     `);
   });
 });

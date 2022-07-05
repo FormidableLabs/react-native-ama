@@ -1,13 +1,10 @@
 import * as React from 'react';
 import {
-  LayoutChangeEvent,
-  NativeSyntheticEvent,
   TextInput as RNTextInput,
   TextInputProps as RNTextInputProps,
-  TextInputSubmitEditingEventData,
 } from 'react-native';
 
-import { useFormField } from '../hooks/useFormField';
+import { useTextInput } from '../hooks/useTextInput';
 import { applyStyle } from '../internal/applyStyle';
 import { maybeGenerateStringFromElement } from '../internal/maybeGenerateStringFromElement';
 import { useChecks } from '../internal/useChecks';
@@ -19,22 +16,12 @@ export type TextInputProps = RNTextInputProps & {
   nextFormField?: React.RefObject<RNTextInput>;
   id?: string;
   nextFieldId?: string;
-} & (
-    | {
-        hasValidation: true;
-        errorComponent: JSX.Element;
-        hasError: boolean;
-        errorPosition?: 'belowLabel' | 'afterInput';
-        errorText?: string;
-      }
-    | {
-        hasValidation: false;
-        errorComponent?: never;
-        hasError?: never;
-        errorPosition?: never;
-        errorText?: never;
-      }
-  );
+  hasValidation: boolean;
+  errorComponent?: JSX.Element;
+  hasError?: boolean;
+  errorPosition?: 'belowLabel' | 'afterInput';
+  errorMessage?: string;
+};
 
 export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
   (
@@ -49,6 +36,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       errorComponent,
       errorPosition = 'afterInput',
       hasValidation,
+      errorMessage,
       ...rest
     },
     forwardedRef,
@@ -59,17 +47,27 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 
     React.useImperativeHandle(forwardedRef, () => inputRef.current!);
 
-    const formField = useFormField({
+    const showLabelBeforeInput = labelPosition === 'beforeInput';
+
+    const accessibilityLabel = React.useMemo(
+      () =>
+        maybeGenerateStringFromElement(labelComponent, rest.accessibilityLabel),
+      [labelComponent, rest.accessibilityLabel],
+    );
+
+    // @ts-ignore
+    const textInputProps = useTextInput({
+      required: false,
       ref: inputRef,
       id,
       nextFieldId,
       nextFormFieldRef: nextFormField,
-      hasFocusCallback: true,
+      hasError,
+      hasValidation,
+      errorMessage,
+      accessibilityLabel,
+      ...rest,
     });
-
-    const [returnKeyType, setReturnKeyType] = React.useState(
-      rest.returnKeyType || 'next',
-    );
 
     const checks = __DEV__ ? useChecks?.() : undefined;
     __DEV__ &&
@@ -77,6 +75,18 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
         properties: { labelComponent },
         property: 'labelComponent',
         rule: 'NO_FORM_LABEL',
+      });
+    __DEV__ &&
+      checks?.noUndefinedProperty({
+        properties: { accessibilityLabel },
+        property: 'accessibilityLabel',
+        rule: 'NO_ACCESSIBILITY_LABEL',
+      });
+    __DEV__ &&
+      accessibilityLabel?.trim() === '' &&
+      checks?.logResult('NO_ACCESSIBILITY_LABEL', {
+        rule: 'NO_ACCESSIBILITY_LABEL',
+        message: 'No accessibility label provided',
       });
     __DEV__ &&
       hasValidation &&
@@ -89,15 +99,11 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 
     const style =
       __DEV__ && // @ts-ignore
-      applyStyle?.({ style: rest.style || {}, debugStyle: formField.style });
-
-    const showLabelBeforeInput = labelPosition === 'beforeInput';
-
-    const accessibilityLabel = React.useMemo(
-      () =>
-        maybeGenerateStringFromElement(labelComponent, rest.accessibilityLabel),
-      [labelComponent, rest.accessibilityLabel],
-    );
+      applyStyle?.({
+        // @ts-ignore
+        style: textInputProps?.style || {},
+        debugStyle: checks?.debugStyle,
+      });
 
     const accessibilityHiddenLabel = React.useMemo(
       () => (
@@ -108,30 +114,11 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       [labelComponent],
     );
 
-    const handleOnSubmitEditing = (
-      event: NativeSyntheticEvent<TextInputSubmitEditingEventData>,
-    ) => {
-      rest?.onSubmitEditing?.(event);
-
-      formField.focusNextFormField();
-    };
-
-    const checkReturnKeyType = (event: LayoutChangeEvent) => {
-      const setReturnKeyTypeAsDone =
-        formField.isLastField() && rest.returnKeyType == null;
-
-      if (setReturnKeyTypeAsDone) {
-        setReturnKeyType('done');
-      }
-
-      rest.onLayout?.(event);
-    };
-
     const errorText = React.useMemo(() => {
       return hasValidation && hasError
-        ? maybeGenerateStringFromElement(errorComponent, rest.errorText)
+        ? maybeGenerateStringFromElement(errorComponent, errorMessage)
         : '';
-    }, [hasValidation, hasError, errorComponent, rest.errorText]);
+    }, [hasValidation, hasError, errorComponent, errorMessage]);
 
     const renderError = () => {
       return (
@@ -152,14 +139,11 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
         <RNTextInput
           // @ts-ignore
           ref={inputRef}
-          key={returnKeyType}
-          returnKeyType={returnKeyType}
           {...rest}
+          {...textInputProps}
           style={style}
-          accessibilityLabel={accessibilityLabel}
+          accessibilityLabel={accessibilityLabel!}
           accessibilityHint={fullAccessibilityHint}
-          onSubmitEditing={handleOnSubmitEditing}
-          onLayout={checkReturnKeyType}
         />
         {showLabelBeforeInput ? null : accessibilityHiddenLabel}
         {hasError && errorPosition === 'afterInput' ? renderError() : null}
@@ -171,13 +155,10 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
         <RNTextInput
           // @ts-ignore
           ref={inputRef}
-          key={returnKeyType}
-          returnKeyType={returnKeyType}
           {...rest}
-          accessibilityLabel={accessibilityLabel}
+          {...textInputProps}
+          accessibilityLabel={accessibilityLabel!}
           accessibilityHint={fullAccessibilityHint}
-          onSubmitEditing={handleOnSubmitEditing}
-          onLayout={checkReturnKeyType}
         />
         {showLabelBeforeInput ? null : accessibilityHiddenLabel}
         {hasError && errorPosition === 'afterInput' ? renderError() : null}

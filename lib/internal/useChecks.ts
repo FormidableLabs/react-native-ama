@@ -8,10 +8,6 @@ import {
 import type { UppercaseChecker } from '../internal/checks/uppercaseChecker';
 import { LogParams, getRuleAction, logFailure } from '../internal/logger';
 import { useAMAContext } from '../providers/AMAProvider';
-import {
-  AccessibilityLabelChecker,
-  accessibilityLabelChecker as accessibilityLabelCheckerImplementation,
-} from './checks/accessibilityLabelChecker';
 import type { CheckForAccessibilityState } from './checks/checkForAccessibilityState';
 import { checkForAccessibilityState } from './checks/checkForAccessibilityState';
 import { checkMinimumSize as checkMinimumSizeImplementation } from './checks/checkMinimumSize';
@@ -24,6 +20,10 @@ import {
   noUndefinedProperty as noUndefinedPropertyImplementation,
 } from './checks/noUndefinedProperty';
 import { uppercaseChecker as uppercaseCheckerImplementation } from './checks/uppercaseChecker';
+import {
+  UppercaseStringChecker,
+  uppercaseStringChecker as noUppercaseStringCheckerImplementation,
+} from './checks/uppercaseStringChecker';
 import { ERROR_STYLE } from './error.style';
 
 export const useChecks = __DEV__
@@ -116,10 +116,10 @@ export const useChecks = __DEV__
         );
       };
 
-      const accessibilityLabelChecker = (params: AccessibilityLabelChecker) =>
+      const noUppercaseStringChecker = (params: UppercaseStringChecker) =>
         logResult(
           'accessibilityLabelChecker',
-          accessibilityLabelCheckerImplementation(params),
+          noUppercaseStringCheckerImplementation(params),
         );
 
       const uppercaseChecker = (params: UppercaseChecker) =>
@@ -185,7 +185,7 @@ export const useChecks = __DEV__
         noUndefinedProperty,
         contrastChecker,
         onLayout,
-        accessibilityLabelChecker,
+        noUppercaseStringChecker,
         uppercaseChecker,
         checkFocusTrap,
         minimumSizeFailed,

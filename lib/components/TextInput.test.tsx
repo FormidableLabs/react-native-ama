@@ -12,18 +12,8 @@ beforeEach(() => {
 });
 
 describe('TextInput', () => {
-  beforeEach(() => {
-    jest
-      .spyOn(UseFormField, 'useFormField')
-      // @ts-ignore
-      .mockReturnValue({});
-  });
-
   it('register itself as form field by using the useFormField hook', () => {
-    const useFormField = jest
-      .spyOn(UseFormField, 'useFormField')
-      // @ts-ignore
-      .mockReturnValue({});
+    const useFormField = jest.spyOn(UseFormField, 'useFormField');
 
     render(
       <TextInput
@@ -33,9 +23,14 @@ describe('TextInput', () => {
       />,
     );
 
-    expect(useFormField).toHaveBeenCalledWith({
-      hasFocusCallback: true,
+    expect(useFormField.mock.calls[0][0]).toMatchObject({
       ref: expect.objectContaining({ current: expect.any(Object) }),
+      errorMessage: undefined,
+      hasError: undefined,
+      hasValidation: false,
+      id: undefined,
+      nextFieldId: undefined,
+      nextFormFieldRef: undefined,
     });
   });
 
@@ -60,6 +55,7 @@ describe('TextInput', () => {
         <TextInput
           accessibilityHint=""
           accessibilityLabel="labelComponent"
+          hasValidation={false}
           onLayout={[Function]}
           onSubmitEditing={[Function]}
           returnKeyType="done"
@@ -84,6 +80,7 @@ describe('TextInput', () => {
         <TextInput
           accessibilityHint=""
           accessibilityLabel=" labelComponent after"
+          hasValidation={false}
           onLayout={[Function]}
           onSubmitEditing={[Function]}
           returnKeyType="done"
@@ -130,6 +127,8 @@ describe('TextInput', () => {
         <TextInput
           accessibilityHint="This is the errorComponent"
           accessibilityLabel="the labelComponent"
+          hasError={true}
+          hasValidation={true}
           onLayout={[Function]}
           onSubmitEditing={[Function]}
           returnKeyType="done"
@@ -163,6 +162,8 @@ describe('TextInput', () => {
         <TextInput
           accessibilityHint="This is the errorComponent"
           accessibilityLabel="the labelComponent"
+          hasError={true}
+          hasValidation={true}
           onLayout={[Function]}
           onSubmitEditing={[Function]}
           returnKeyType="done"
@@ -247,7 +248,7 @@ describe('TextInput', () => {
       );
     });
 
-    it('sets the `returnKeyType="done"` if is last field registered', async () => {
+    it('sets the `returnKeyType="done"` if is last field registered', () => {
       const isLastField = jest.fn().mockReturnValue(true);
 
       jest.spyOn(UseFormField, 'useFormField').mockReturnValue({
@@ -263,7 +264,7 @@ describe('TextInput', () => {
         />,
       );
 
-      await fireEvent(renderAPI.getByTestId('test-id'), 'onLayout');
+      fireEvent(renderAPI.getByTestId('test-id'), 'onLayout');
 
       expect(renderAPI.getByTestId('test-id').props.returnKeyType).toEqual(
         'done',
@@ -386,7 +387,7 @@ describe('TextInput', () => {
         accessibilityLabel="Please insert your first name"
         hasValidation={true}
         hasError={false}
-        errorText={'This is the errorComponent'}
+        errorMessage={'This is the errorComponent'}
         errorComponent={<></>}
       />,
     );
@@ -425,7 +426,7 @@ describe('TextInput', () => {
         accessibilityHint="The hint"
         hasValidation={true}
         hasError={true}
-        errorText="This text will be used"
+        errorMessage="This text will be used"
         errorComponent={<Text>The first name cannot be blank</Text>}
       />,
     );
@@ -476,7 +477,7 @@ describe('TextInput', () => {
 
       // @ts-ignore
       jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
-        accessibilityLabelChecker,
+        noUppercaseStringChecker: accessibilityLabelChecker,
         noUndefinedProperty,
         uppercaseChecker,
         onLayout,
@@ -519,4 +520,8 @@ describe('TextInput', () => {
   });
 });
 
-jest.mock('../hooks/useFormField');
+jest.mock('../hooks/useFormField', () => {
+  return {
+    useFormField: jest.fn().mockReturnValue({}),
+  };
+});

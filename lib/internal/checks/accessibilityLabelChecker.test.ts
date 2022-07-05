@@ -1,4 +1,4 @@
-import { accessibilityLabelChecker } from './accessibilityLabelChecker';
+import { uppercaseStringChecker } from './uppercaseStringChecker';
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -6,12 +6,12 @@ beforeEach(() => {
 
 describe('accessibilityLabelChecker', () => {
   it.each(['TEST ME', 'ÁÖÜÄ'])(
-    'logs the UPPERCASE_ACCESSIBILITY_LABEL error if the accessibilityLabel is all uppercase',
+    'logs the NO_UPPERCASE_TEXT error if the accessibilityLabel is all uppercase',
     accessibilityLabel => {
-      const result = accessibilityLabelChecker({ accessibilityLabel });
+      const result = uppercaseStringChecker({ text: accessibilityLabel });
 
       expect(result).toMatchObject({
-        rule: 'UPPERCASE_ACCESSIBILITY_LABEL',
+        rule: 'NO_UPPERCASE_TEXT',
         message: 'The accessibilityLabel cannot be all CAPS',
         extra: accessibilityLabel,
       });
@@ -19,13 +19,13 @@ describe('accessibilityLabelChecker', () => {
   );
 
   it('ignores number', () => {
-    const result = accessibilityLabelChecker({ accessibilityLabel: '123' });
+    const result = uppercaseStringChecker({ text: '123' });
 
     expect(result).toBeNull();
   });
 
   it('ignores currencies', () => {
-    const result = accessibilityLabelChecker({ accessibilityLabel: '$123' });
+    const result = uppercaseStringChecker({ text: '$123' });
 
     expect(result).toBeNull();
   });

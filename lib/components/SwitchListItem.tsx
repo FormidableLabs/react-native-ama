@@ -38,7 +38,7 @@ export const SwitchListItemBase = ({
   );
 
   return (
-    <FormField>
+    <FormField hasValidation={false}>
       <SwitchWrapper
         accessibilityLabel={accessibilityLabel}
         style={[allStyles.container, style]}

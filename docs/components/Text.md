@@ -12,9 +12,9 @@ import { Text } from 'react-native-ama';
 
 Compared to the default React Native component, this one performs the following checks at runtime:
 
-- [Missing accessibilityLabel](../guidelines/uppercase-text.md#uppercase_text_no_accessibility_label) when using `textTransform: uppercase` style
-- [accessibilityLabel in all caps](../guidelines/uppercase-text.md#uppercase_accessibility_label)
-- Performs a [Minimum Size](../guidelines/minimum-size.md) check <DevOnly /> when the component has the property `onPress` set
+- [Missing accessibilityLabel](../guidelines/text) when using `textTransform: uppercase` style
+- [accessibilityLabel in all caps](../guidelines/text)
+- Performs a [Minimum Size](../guidelines/minimum-size) check <DevOnly /> when the component has the property `onPress` set
 
 ### Minimum size
 

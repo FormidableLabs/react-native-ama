@@ -9,14 +9,14 @@ beforeEach(() => {
   jest.clearAllMocks();
 });
 
-let onSubmit: jest.Mock = jest.fn();
+let submitForm: jest.Mock = jest.fn();
 
 describe('useFormField', () => {
   let localRef: any[] = [];
 
   beforeEach(() => {
     jest.spyOn(Form, 'useForm').mockImplementation(() => {
-      return { refs: localRef, onSubmit };
+      return { refs: localRef, submitForm };
     });
   });
 
@@ -32,6 +32,7 @@ describe('useFormField', () => {
         id: 'my-id',
         nextFieldId: 'next-field-id',
         nextFormFieldRef: { current: 'nextFormFieldRef' },
+        hasValidation: false,
       });
     });
 
@@ -40,6 +41,9 @@ describe('useFormField', () => {
       hasFocusCallback: false,
       ref: { current: { current: 'hello' } },
       id: 'my-id',
+      hasError: undefined,
+      hasValidation: false,
+      isEditable: true,
     });
   });
 
@@ -48,6 +52,7 @@ describe('useFormField', () => {
       return useFormField({
         ref: { current: 'hello' },
         hasFocusCallback: false,
+        hasValidation: false,
       });
     });
 
@@ -58,48 +63,6 @@ describe('useFormField', () => {
 
   describe('focusNextFormField', () => {
     describe('Given the form field is not the last of the refs', () => {
-      it('calls setFocus if the next field has no .focus callback', () => {
-        const ref = { current: 'whatever' };
-
-        const { result } = renderHook(() => {
-          const first = useFormField({
-            ref: { current: 'random ref' },
-            hasFocusCallback: false,
-          });
-
-          // next field
-          useFormField({ ref, hasFocusCallback: false });
-
-          return first;
-        });
-
-        result.current.focusNextFormField();
-
-        expect(setFocus).toHaveBeenCalledWith('whatever');
-      });
-
-      it('calls the .focus callback if the next field has it', () => {
-        const focus = jest.fn();
-        const ref = { current: { focus } };
-
-        const { result } = renderHook(() => {
-          const first = useFormField({
-            ref: { current: 'random ref' },
-            hasFocusCallback: false,
-          });
-
-          // next field
-          useFormField({ ref, hasFocusCallback: true });
-
-          return first;
-        });
-
-        result.current.focusNextFormField();
-
-        expect(setFocus).not.toHaveBeenCalled();
-        expect(focus).toHaveBeenCalledWith();
-      });
-
       describe('checks for focus when calling focusNextFormField', function () {
         let checkFocusTrap: jest.Mock;
 
@@ -121,10 +84,15 @@ describe('useFormField', () => {
             const first = useFormField({
               ref: { current: 'random ref' },
               hasFocusCallback: true,
+              hasValidation: false,
             });
 
             // next field
-            useFormField({ ref, hasFocusCallback: false });
+            useFormField({
+              ref,
+              hasFocusCallback: false,
+              hasValidation: false,
+            });
 
             return first;
           });
@@ -140,120 +108,30 @@ describe('useFormField', () => {
 
           expect(checkFocusTrap).toHaveBeenCalledTimes(1);
         });
-
-        it('checks that next field has the focus if it has the focus callback', async () => {
-          const focus = jest.fn();
-          const ref = { current: { focus, isFocused: jest.fn() } };
-
-          const { result } = renderHook(() => {
-            const first = useFormField({
-              ref: { current: 'random ref' },
-              hasFocusCallback: false,
-            });
-
-            // next field
-            useFormField({ ref, hasFocusCallback: true });
-
-            return first;
-          });
-
-          result.current.focusNextFormField();
-
-          await waitFor(() =>
-            expect(checkFocusTrap).toHaveBeenCalledWith({
-              ref: {
-                current: {
-                  focus: expect.any(Function),
-                  isFocused: expect.any(Function),
-                },
-              },
-              shouldHaveFocus: true,
-            }),
-          );
-        });
-      });
-
-      it('focuses the next nextFieldId when specified', () => {
-        const ref = { current: 'latest-field-ref' };
-
-        const { result } = renderHook(() => {
-          // First field
-          const first = useFormField({
-            ref: { current: 'first-ref' },
-            hasFocusCallback: false,
-            nextFieldId: 'latest-field',
-          });
-
-          // Second field
-          useFormField({
-            ref: { current: 'second-ref' },
-            hasFocusCallback: false,
-          });
-
-          // next field
-          useFormField({
-            ref,
-            hasFocusCallback: false,
-            id: 'latest-field',
-          });
-
-          return first;
-        });
-
-        result.current.focusNextFormField();
-
-        expect(setFocus).toHaveBeenCalledWith(ref.current);
-      });
-
-      it('focuses the next nextFormFieldRef when specified', () => {
-        const ref = { current: 'latest-field-ref' };
-
-        const { result } = renderHook(() => {
-          // First field
-          const first = useFormField({
-            ref: { current: 'first-ref' },
-            hasFocusCallback: false,
-            nextFormFieldRef: ref,
-          });
-
-          // Second field
-          useFormField({
-            ref: { current: 'second-ref' },
-            hasFocusCallback: false,
-          });
-
-          // next field
-          useFormField({
-            ref,
-            hasFocusCallback: false,
-            id: 'latest-field',
-          });
-
-          return first;
-        });
-
-        result.current.focusNextFormField();
-
-        expect(setFocus).toHaveBeenCalledWith(ref.current);
       });
     });
 
-    it('triggers onSubmit when the element is the last one of the ref', function () {
+    it('triggers submitForm when the element is the last one of the ref', () => {
       const ref = { current: 'whatever' };
 
       const { result } = renderHook(() => {
         useFormField({
           ref: { current: 'random ref' },
           hasFocusCallback: false,
+          hasValidation: false,
         });
 
         // next field
-        return useFormField({ ref, hasFocusCallback: false });
+        return useFormField({
+          ref,
+          hasFocusCallback: false,
+          hasValidation: false,
+        });
       });
 
       result.current.focusNextFormField();
 
-      expect(onSubmit).toHaveBeenCalledWith();
+      expect(submitForm).toHaveBeenCalledWith();
     });
   });
 });

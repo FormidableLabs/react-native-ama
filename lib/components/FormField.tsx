@@ -2,25 +2,43 @@ import * as React from 'react';
 import {
   TouchableWithoutFeedback,
   TouchableWithoutFeedbackProps,
+  View,
 } from 'react-native';
 
-import { useFormField } from '../hooks/useFormField';
+import { UseFormField, useFormField } from '../hooks/useFormField';
 
-type FormFieldProps = React.PropsWithChildren<
-  TouchableWithoutFeedbackProps & {
-    id?: string;
-  }
+export type FormFieldProps = React.PropsWithChildren<
+  TouchableWithoutFeedbackProps &
+    Omit<
+      UseFormField,
+      'hasFocusCallback' | 'nextFormFieldRef' | 'nextFieldId' | 'editable'
+    > & {
+      wrapInsideAccessibleView?: boolean;
+    }
 >;
 
-const FormFieldBase = ({ children, id, ...props }: FormFieldProps) => {
+const FormFieldBase = ({
+  children,
+  wrapInsideAccessibleView = true,
+  ...props
+}: FormFieldProps) => {
   const viewRef = React.useRef<React.ElementRef<
     typeof TouchableWithoutFeedback
   > | null>(null);
 
-  useFormField({ ref: viewRef, hasFocusCallback: false, id });
+  // @ts-ignore
+  const formProps = useFormField({
+    hasFocusCallback: false,
+    ref: viewRef,
+    ...props,
+  });
 
-  return (
-    <TouchableWithoutFeedback {...props} ref={viewRef}>
+  return wrapInsideAccessibleView ? (
+    <TouchableWithoutFeedback {...props} ref={viewRef} {...formProps}>
+      <View accessible={true}>{children}</View>
+    </TouchableWithoutFeedback>
+  ) : (
+    <TouchableWithoutFeedback {...props} ref={viewRef} {...formProps}>
       <>{children}</>
     </TouchableWithoutFeedback>
   );
