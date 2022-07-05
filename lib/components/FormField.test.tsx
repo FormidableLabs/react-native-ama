@@ -19,7 +19,7 @@ describe('FormField', () => {
       </FormField>,
     );
 
-    expect(useFormField).toHaveBeenCalledWith({
+    expect(useFormField.mock.calls[0][0]).toMatchObject({
       hasFocusCallback: false,
       ref: expect.objectContaining({ current: expect.any(Object) }),
     });
@@ -33,9 +33,22 @@ describe('FormField', () => {
     );
 
     expect(toJSON()).toMatchInlineSnapshot(`
-      <Text>
-        Test
-      </Text>
+      <View
+        accessibilityHint=""
+        accessible={true}
+        focusable={false}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+      >
+        <Text>
+          Test
+        </Text>
+      </View>
     `);
   });
 });

@@ -13,18 +13,10 @@ export type UseFormField = {
   accessibilityHint?: string;
   style?: Record<string, any>;
   editable?: boolean;
-} & (
-  | {
-      hasValidation: true;
-      hasError: boolean;
-      errorMessage?: string;
-    }
-  | {
-      hasValidation: false;
-      hasError?: never;
-      errorMessage?: never;
-    }
-);
+  hasValidation: boolean;
+  hasError?: boolean;
+  errorMessage?: string;
+};
 
 export const useFormField = ({
   ref,
@@ -36,7 +28,7 @@ export const useFormField = ({
   hasError,
   accessibilityHint,
   errorMessage,
-  editable,
+  editable = true,
   style = {},
 }: UseFormField) => {
   const { refs, submitForm, focusField } = useForm();

@@ -1,6 +1,12 @@
+import { FormSubmit, FormSubmitProps } from 'lib/components/FormSubmit';
+import type React from 'react';
+
+import type { FormFieldProps } from './components/FormField';
+import { FormField } from './components/FormField';
+import { FormProps, Form as FormProvider } from './providers/Form';
+
 // Providers
 export { AMAProvider, useAMAContext } from './providers/AMAProvider';
-export { Form } from './providers/Form';
 
 // Components
 export * from './components/AnimatedContainer';
@@ -9,7 +15,6 @@ export * from './components/BottomSheet';
 export * from './components/DynamicFlatList';
 export * from './components/ExpandablePressable';
 export * from './components/FlatList';
-export * from './components/FormField';
 export * from './components/HideChildrenFromAccessibilityTree';
 export * from './components/ListWrapper';
 export * from './components/Pressable';
@@ -20,7 +25,6 @@ export * from './components/Text';
 export * from './components/TextInput';
 export * from './components/TouchableOpacity';
 export * from './components/TouchableWithoutFeedback';
-export * from './components/FormSubmitWrapper';
 
 // Hooks
 export * from './hooks/useFocus';
@@ -42,3 +46,15 @@ export * from './types';
 export * from './utils/isMotionAnimation';
 export * from './utils/minimumTouchableSize';
 export * from './utils/numerify';
+
+// Form
+type FormComponent = React.FunctionComponent<FormProps> & {
+  Submit: (props: FormSubmitProps) => JSX.Element;
+  Field: React.FunctionComponent<FormFieldProps>;
+};
+
+// @ts-ignore
+export const Form: FormComponent = FormProvider;
+
+Form.Submit = FormSubmit;
+Form.Field = FormField;

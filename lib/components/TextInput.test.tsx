@@ -12,18 +12,8 @@ beforeEach(() => {
 });
 
 describe('TextInput', () => {
-  beforeEach(() => {
-    jest
-      .spyOn(UseFormField, 'useFormField')
-      // @ts-ignore
-      .mockReturnValue({});
-  });
-
   it('register itself as form field by using the useFormField hook', () => {
-    const useFormField = jest
-      .spyOn(UseFormField, 'useFormField')
-      // @ts-ignore
-      .mockReturnValue({});
+    const useFormField = jest.spyOn(UseFormField, 'useFormField');
 
     render(
       <TextInput
@@ -33,10 +23,8 @@ describe('TextInput', () => {
       />,
     );
 
-    expect(useFormField).toHaveBeenCalledWith({
-      hasFocusCallback: true,
+    expect(useFormField.mock.calls[0][0]).toMatchObject({
       ref: expect.objectContaining({ current: expect.any(Object) }),
-      accessibilityLabel: 'Test',
       errorMessage: undefined,
       hasError: undefined,
       hasValidation: false,
@@ -260,7 +248,7 @@ describe('TextInput', () => {
       );
     });
 
-    it('sets the `returnKeyType="done"` if is last field registered', async () => {
+    it('sets the `returnKeyType="done"` if is last field registered', () => {
       const isLastField = jest.fn().mockReturnValue(true);
 
       jest.spyOn(UseFormField, 'useFormField').mockReturnValue({
@@ -276,7 +264,7 @@ describe('TextInput', () => {
         />,
       );
 
-      await fireEvent(renderAPI.getByTestId('test-id'), 'onLayout');
+      fireEvent(renderAPI.getByTestId('test-id'), 'onLayout');
 
       expect(renderAPI.getByTestId('test-id').props.returnKeyType).toEqual(
         'done',
@@ -532,4 +520,8 @@ describe('TextInput', () => {
   });
 });
 
-jest.mock('../hooks/useFormField');
+jest.mock('../hooks/useFormField', () => {
+  return {
+    useFormField: jest.fn().mockReturnValue({}),
+  };
+});

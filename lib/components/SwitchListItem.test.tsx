@@ -24,33 +24,37 @@ describe('SwitchListItem', () => {
 
     expect(toJSON()).toMatchInlineSnapshot(`
       <View
-        accessibilityLabel="labelComponent"
-        accessibilityRole="switch"
-        accessibilityState={
-          Object {
-            "checked": false,
-          }
-        }
+        accessibilityHint=""
         accessible={true}
-        focusable={true}
+        focusable={false}
         onClick={[Function]}
-        onLayout={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
         onResponderTerminate={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
-        style={
-          Array [
+      >
+        <View
+          accessibilityLabel="labelComponent"
+          accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "checked": false,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onClick={[Function]}
+          onLayout={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
             Array [
-              Object {
-                "alignContent": "center",
-                "alignItems": "center",
-                "flexDirection": "row",
-                "width": "100%",
-              },
-              Object {},
               Array [
                 Object {
                   "alignContent": "center",
@@ -59,41 +63,50 @@ describe('SwitchListItem', () => {
                   "width": "100%",
                 },
                 Object {},
-                Object {},
+                Array [
+                  Object {
+                    "alignContent": "center",
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "width": "100%",
+                  },
+                  Object {},
+                  Object {},
+                  Object {},
+                ],
                 Object {},
               ],
-              Object {},
-            ],
-            Object {
-              "minHeight": 44,
-              "minWidth": 44,
-            },
-          ]
-        }
-        testID="switch"
-      >
-        <Text>
-          labelComponent
-        </Text>
-        <RCTSwitch
-          accessibilityElementsHidden={true}
-          accessibilityRole="switch"
-          importantForAccessibility="no"
-          onChange={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Array [
               Object {
-                "height": 31,
-                "width": 51,
+                "minHeight": 44,
+                "minWidth": 44,
               },
-              Object {},
             ]
           }
-          testID="switch-switch"
-          value={false}
-        />
+          testID="switch"
+        >
+          <Text>
+            labelComponent
+          </Text>
+          <RCTSwitch
+            accessibilityElementsHidden={true}
+            accessibilityRole="switch"
+            importantForAccessibility="no"
+            onChange={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "height": 31,
+                  "width": 51,
+                },
+                Object {},
+              ]
+            }
+            testID="switch-switch"
+            value={false}
+          />
+        </View>
       </View>
     `);
   });
@@ -111,33 +124,37 @@ describe('SwitchListItem', () => {
 
     expect(toJSON()).toMatchInlineSnapshot(`
       <View
-        accessibilityLabel="labelComponent"
-        accessibilityRole="switch"
-        accessibilityState={
-          Object {
-            "checked": false,
-          }
-        }
+        accessibilityHint=""
         accessible={true}
-        focusable={true}
+        focusable={false}
         onClick={[Function]}
-        onLayout={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
         onResponderTerminate={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
-        style={
-          Array [
+      >
+        <View
+          accessibilityLabel="labelComponent"
+          accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "checked": false,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onClick={[Function]}
+          onLayout={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
             Array [
-              Object {
-                "alignContent": "center",
-                "alignItems": "center",
-                "flexDirection": "row",
-                "width": "100%",
-              },
-              Object {},
               Array [
                 Object {
                   "alignContent": "center",
@@ -146,41 +163,50 @@ describe('SwitchListItem', () => {
                   "width": "100%",
                 },
                 Object {},
-                Object {},
+                Array [
+                  Object {
+                    "alignContent": "center",
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "width": "100%",
+                  },
+                  Object {},
+                  Object {},
+                  Object {},
+                ],
                 Object {},
               ],
-              Object {},
-            ],
-            Object {
-              "minHeight": 44,
-              "minWidth": 44,
-            },
-          ]
-        }
-        testID="switch"
-      >
-        <RCTSwitch
-          accessibilityElementsHidden={true}
-          accessibilityRole="switch"
-          importantForAccessibility="no"
-          onChange={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Array [
               Object {
-                "height": 31,
-                "width": 51,
+                "minHeight": 44,
+                "minWidth": 44,
               },
-              Object {},
             ]
           }
-          testID="switch-switch"
-          value={false}
-        />
-        <Text>
-          labelComponent
-        </Text>
+          testID="switch"
+        >
+          <RCTSwitch
+            accessibilityElementsHidden={true}
+            accessibilityRole="switch"
+            importantForAccessibility="no"
+            onChange={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "height": 31,
+                  "width": 51,
+                },
+                Object {},
+              ]
+            }
+            testID="switch-switch"
+            value={false}
+          />
+          <Text>
+            labelComponent
+          </Text>
+        </View>
       </View>
     `);
   });

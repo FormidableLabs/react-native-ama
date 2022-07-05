@@ -3,8 +3,9 @@ import type {
   LayoutChangeEvent,
   NativeSyntheticEvent,
   ReturnKeyTypeOptions,
+  StyleProp,
   TextInputSubmitEditingEventData,
-  TextProps,
+  TextStyle,
   ViewStyle,
 } from 'react-native';
 
@@ -20,30 +21,27 @@ type UseTextInput = Omit<UseFormField, 'hasFocusCallback'> & {
   ) => void;
   accessibilityLabel: string;
   editable?: boolean;
-  style?: TextProps['style'] | ViewStyle | Record<string, any>;
-} & (
-    | {
-        hasValidation: true;
-        hasError: boolean;
-        errorMessage?: string;
-      }
-    | {
-        hasValidation: false;
-        hasError?: never;
-        errorMessage?: never;
-      }
-  );
+  style?: ViewStyle | StyleProp<TextStyle> | null;
+  required: boolean;
+  requiredMessage?: string;
+  hasValidation: boolean;
+  hasError?: boolean;
+  errorMessage?: string;
+};
 
 export const useTextInput = ({
   onLayout,
   returnKeyType,
   onSubmitEditing,
+  accessibilityLabel,
+  requiredMessage,
+  required,
   ...rest
 }: UseTextInput) => {
   const [theReturnKeyType, setTheReturnKeyType] = React.useState(
     returnKeyType || 'next',
   );
-  const formField = useFormField({
+  const { style: formFieldStyle, ...formField } = useFormField({
     hasFocusCallback: true,
     ...rest,
   });
@@ -71,35 +69,55 @@ export const useTextInput = ({
 
   __DEV__ &&
     checks?.noUndefinedProperty({
-      properties: rest,
+      properties: { accessibilityLabel },
       property: 'accessibilityLabel',
       rule: 'NO_FORM_LABEL',
     });
   __DEV__ &&
     checks?.noUppercaseStringChecker({
-      text: rest.accessibilityLabel,
+      text: accessibilityLabel,
     });
   __DEV__ &&
     checks?.noUppercaseStringChecker({
       text: rest.accessibilityHint,
     });
+  __DEV__ &&
+    accessibilityLabel?.trim().slice(-1) === '*' &&
+    checks?.logResult('NO_FORM_LABEL_ENDING_WITH_ASTERISK', {
+      rule: 'NO_FORM_LABEL_ENDING_WITH_ASTERISK',
+      message:
+        'Form labels should not end with an asterisk. Please remove it and provide a required message instead.',
+    });
+  __DEV__ &&
+    required &&
+    checks?.noUndefinedProperty({
+      properties: { requiredMessage },
+      property: 'requiredMessage',
+      rule: 'NO_FORM_LABEL_ENDING_WITH_ASTERISK',
+    });
+
+  const fullAccessibilityLabel = required
+    ? `${accessibilityLabel}, ${requiredMessage}`
+    : accessibilityLabel;
 
   return __DEV__
     ? {
         ...rest,
         ...formField,
+        accessibilityLabel: fullAccessibilityLabel,
         returnKeyType: theReturnKeyType,
         onSubmitEditing: handleOnSubmitEditing,
         onLayout: checkReturnKeyType,
         style: applyStyle?.({
           // @ts-ignore
-          style: formField.style,
+          style: formFieldStyle,
           debugStyle: checks?.debugStyle,
-        }),
+        }) as any,
       }
     : {
         ...rest,
         ...formField,
+        accessibilityLabel: fullAccessibilityLabel,
         returnKeyType: theReturnKeyType,
         onSubmitEditing: handleOnSubmitEditing,
         onLayout: checkReturnKeyType,

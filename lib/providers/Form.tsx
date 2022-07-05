@@ -4,14 +4,11 @@ import { InteractionManager } from 'react-native';
 import { useFocus } from '../hooks/useFocus';
 import { useChecks } from '../internal/useChecks';
 
-type FormProps = {
+export type FormProps = React.PropsWithChildren<{
   onSubmit: () => boolean | Promise<boolean>;
-};
+}>;
 
-export const Form = ({
-  children,
-  onSubmit,
-}: React.PropsWithChildren<FormProps>) => {
+export const Form = ({ children, onSubmit }: FormProps) => {
   const refs = React.useRef<FormRef[]>([]);
   const { setFocus } = useFocus();
 
@@ -27,7 +24,9 @@ export const Form = ({
 
     const callFocus =
       // @ts-ignore
-      nextRefElement?.current?.focus && nextField?.hasFocusCallback;
+      nextRefElement?.current?.focus &&
+      nextField?.hasFocusCallback &&
+      nextField?.isEditable;
 
     __DEV__ &&
       nextRefElement == null &&
@@ -102,5 +101,6 @@ const DEFAULT_VALUES: FormContextValue = {
   focusField: () => null,
 };
 
-const FormContext = React.createContext<FormContextValue>(DEFAULT_VALUES);
+export const FormContext =
+  React.createContext<FormContextValue>(DEFAULT_VALUES);
 export const useForm = () => React.useContext(FormContext);

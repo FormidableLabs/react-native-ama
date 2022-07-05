@@ -1,12 +1,6 @@
 import * as React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
-import {
-  Form,
-  FormSubmitWrapper,
-  SwitchListItem,
-  Text,
-  TextInput,
-} from 'react-native-ama';
+import { Form, SwitchListItem, Text, TextInput } from 'react-native-ama';
 
 import { CTAPressable } from '../components/CTAPressable';
 import { Spacer } from '../components/Spacer';
@@ -110,9 +104,9 @@ export const FormScreen = () => {
           hasValidation={false}
         />
         <Spacer height="big" />
-        <FormSubmitWrapper accessibilityLabel="Submit">
+        <Form.Submi accessibilityLabel="Submit">
           <CTAPressable title="Submit" />
-        </FormSubmitWrapper>
+        </Form.Submi>
       </Form>
     </ScrollView>
   );

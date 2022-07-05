@@ -16,22 +16,12 @@ export type TextInputProps = RNTextInputProps & {
   nextFormField?: React.RefObject<RNTextInput>;
   id?: string;
   nextFieldId?: string;
-} & (
-    | {
-        hasValidation: true;
-        errorComponent: JSX.Element;
-        hasError: boolean;
-        errorPosition?: 'belowLabel' | 'afterInput';
-        errorMessage?: string;
-      }
-    | {
-        hasValidation: false;
-        errorComponent?: never;
-        hasError?: never;
-        errorPosition?: never;
-        errorMessage?: never;
-      }
-  );
+  hasValidation: boolean;
+  errorComponent?: JSX.Element;
+  hasError?: boolean;
+  errorPosition?: 'belowLabel' | 'afterInput';
+  errorMessage?: string;
+};
 
 export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
   (
@@ -67,6 +57,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 
     // @ts-ignore
     const textInputProps = useTextInput({
+      required: false,
       ref: inputRef,
       id,
       nextFieldId,
@@ -86,6 +77,18 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
         rule: 'NO_FORM_LABEL',
       });
     __DEV__ &&
+      checks?.noUndefinedProperty({
+        properties: { accessibilityLabel },
+        property: 'accessibilityLabel',
+        rule: 'NO_ACCESSIBILITY_LABEL',
+      });
+    __DEV__ &&
+      accessibilityLabel?.trim() === '' &&
+      checks?.logResult('NO_ACCESSIBILITY_LABEL', {
+        rule: 'NO_ACCESSIBILITY_LABEL',
+        message: 'No accessibility label provided',
+      });
+    __DEV__ &&
       hasValidation &&
       checks?.noUndefinedProperty({
         // @ts-ignore
@@ -98,7 +101,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       __DEV__ && // @ts-ignore
       applyStyle?.({
         // @ts-ignore
-        style: textInputProps.style || {},
+        style: textInputProps?.style || {},
         debugStyle: checks?.debugStyle,
       });
 
@@ -139,7 +142,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
           {...rest}
           {...textInputProps}
           style={style}
-          accessibilityLabel={accessibilityLabel}
+          accessibilityLabel={accessibilityLabel!}
           accessibilityHint={fullAccessibilityHint}
         />
         {showLabelBeforeInput ? null : accessibilityHiddenLabel}
@@ -154,7 +157,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
           ref={inputRef}
           {...rest}
           {...textInputProps}
-          accessibilityLabel={accessibilityLabel}
+          accessibilityLabel={accessibilityLabel!}
           accessibilityHint={fullAccessibilityHint}
         />
         {showLabelBeforeInput ? null : accessibilityHiddenLabel}

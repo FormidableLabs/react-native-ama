@@ -5,17 +5,14 @@ import { useForm } from '../providers/Form';
 import { HideChildrenFromAccessibilityTree } from './HideChildrenFromAccessibilityTree';
 import { Pressable } from './Pressable';
 
-type FormSubmitWrapperProps = {
+export type FormSubmitProps = React.PropsWithChildren<{
   accessibilityLabel: string;
   accessibilityHint?: string;
   busy: boolean;
   style?: PressableProps['style'];
-};
+}>;
 
-export const FormSubmitWrapper = ({
-  children,
-  ...rest
-}: React.PropsWithChildren<FormSubmitWrapperProps>) => {
+export const FormSubmit = ({ children, ...rest }: FormSubmitProps) => {
   const { submitForm } = useForm();
 
   return (
