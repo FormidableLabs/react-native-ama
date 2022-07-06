@@ -16,7 +16,12 @@ export type Rule =
   | 'NO_FORM_LABEL_ENDING_WITH_ASTERISK'
   | 'UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL';
 
-export type RuleAction = 'SHOULD_NOT' | 'MUST_NOT' | 'MUST' | 'SHOULD';
+export type RuleAction =
+  | 'SHOULD_NOT'
+  | 'MUST_NOT'
+  | 'MUST'
+  | 'SHOULD'
+  | 'PLEASE_FORGIVE_ME';
 
 export const NON_OVERRIDABLE_RULES: string[] | undefined = __DEV__
   ? [

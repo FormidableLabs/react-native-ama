@@ -31,7 +31,7 @@ describe('BottomSheet', () => {
       render(
         <BottomSheet
           visible={true}
-          onRequestClose={() => {}}
+          onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text>Header</Text>}
         />,
@@ -61,7 +61,7 @@ describe('BottomSheet', () => {
       const { getByTestId } = render(
         <BottomSheet
           visible={true}
-          onRequestClose={() => {}}
+          onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text>Header</Text>}
           testID="bottom-sheet"
@@ -96,7 +96,7 @@ describe('BottomSheet', () => {
       render(
         <OriginalBottomSheet
           visible={true}
-          onRequestClose={() => {}}
+          onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text>Header</Text>}
         />,
@@ -122,7 +122,7 @@ describe('BottomSheet', () => {
       const { getByTestId } = render(
         <OriginalBottomSheet
           visible={true}
-          onRequestClose={() => {}}
+          onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text>Header</Text>}
           testID="bottom-sheet"
@@ -141,7 +141,7 @@ describe('BottomSheet', () => {
     const { toJSON } = render(
       <BottomSheet
         visible={false}
-        onRequestClose={() => {}}
+        onClose={() => {}}
         closeActionAccessibilityLabel={'close me'}
         headerComponent={<Text>Header</Text>}
         testID="bottom-sheet"
@@ -152,7 +152,7 @@ describe('BottomSheet', () => {
       <Modal
         animationType="none"
         hardwareAccelerated={false}
-        onRequestClose={[Function]}
+        onClose={[Function]}
         testID="bottom-sheet"
         transparent={true}
         visible={true}
@@ -165,7 +165,7 @@ describe('BottomSheet', () => {
       const { getByTestId } = render(
         <BottomSheet
           visible={true}
-          onRequestClose={() => {}}
+          onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text>Header</Text>}
           overlayStyle={{ backgroundColor: 'yellow', width: 42 }}
@@ -184,7 +184,7 @@ describe('BottomSheet', () => {
       const { getByTestId } = render(
         <BottomSheet
           visible={true}
-          onRequestClose={() => {}}
+          onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text>Header</Text>}
           bottomSheetStyle={{ borderRadius: 42 }}
@@ -202,10 +202,10 @@ describe('BottomSheet', () => {
       const { getByTestId } = render(
         <BottomSheet
           visible={true}
-          onRequestClose={() => {}}
+          onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text>Header</Text>}
-          lineStyle={{ width: '100%' }}
+          handleStyle={{ width: '100%' }}
           testID="bottom-sheet"
         />,
       );
@@ -228,10 +228,10 @@ describe('BottomSheet', () => {
       const { getByTestId } = render(
         <BottomSheet
           visible={true}
-          onRequestClose={() => {}}
+          onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text>Header</Text>}
-          lineComponent="none"
+          handleComponent="none"
           testID="bottom-sheet"
         />,
       );
@@ -244,10 +244,14 @@ describe('BottomSheet', () => {
       const { getByTestId } = render(
         <BottomSheet
           visible={true}
-          onRequestClose={() => {}}
+          onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text>Header</Text>}
-          scrollViewStyle={{ backgroundColor: 'fucsia' }}
+          scrollViewProps={{
+            style: {
+              backgroundColor: 'fucsia',
+            },
+          }}
           testID="bottom-sheet"
         />,
       );
@@ -261,7 +265,7 @@ describe('BottomSheet', () => {
       const { getByTestId } = render(
         <BottomSheet
           visible={true}
-          onRequestClose={() => {}}
+          onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text testID="Header">Header</Text>}
         />,
@@ -275,7 +279,7 @@ describe('BottomSheet', () => {
     const { rerender, getByTestId } = render(
       <BottomSheet
         visible={true}
-        onRequestClose={() => {}}
+        onClose={() => {}}
         closeActionAccessibilityLabel={'close me'}
         animationDuration={100}
         headerComponent={<Text testID="Header">Header</Text>}
@@ -286,7 +290,7 @@ describe('BottomSheet', () => {
       rerender(
         <BottomSheet
           visible={false}
-          onRequestClose={() => {}}
+          onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text testID="Header">Header</Text>}
           animationDuration={100}
@@ -312,7 +316,7 @@ describe('BottomSheet', () => {
     const { getByTestId } = render(
       <BottomSheet
         visible={true}
-        onRequestClose={() => {}}
+        onClose={() => {}}
         closeActionAccessibilityLabel={'close me'}
         animationDuration={100}
         headerComponent={<Text testID="Header">Header</Text>}
@@ -338,13 +342,13 @@ describe('BottomSheet', () => {
     const useBottomSheetGestureHandler = jest
       .spyOn(UseBottomSheetGestureHandler, 'useBottomSheetGestureHandler')
       .mockReturnValue({ gestureHandler: jest.fn() });
-    const onRequestClose = jest.fn();
+    const onClose = jest.fn();
 
     const { getByTestId } = render(
       <BottomSheet
         visible={true}
         closeDistance={0.1}
-        onRequestClose={onRequestClose}
+        onClose={onClose}
         closeActionAccessibilityLabel={'close me'}
         animationDuration={100}
         headerComponent={<Text testID="Header">Header</Text>}
@@ -361,7 +365,7 @@ describe('BottomSheet', () => {
     expect(useBottomSheetGestureHandler).toHaveBeenCalledWith({
       closeDistance: 0.1,
       contentHeight: { value: 42 },
-      onRequestClose: onRequestClose,
+      onClose: onClose,
       translateY: { value: 0 },
     });
   });

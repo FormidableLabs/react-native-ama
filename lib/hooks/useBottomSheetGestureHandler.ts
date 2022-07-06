@@ -11,15 +11,19 @@ import { useAMAContext } from '../providers/AMAProvider';
 type UseBottomSheetGestureHandler = {
   translateY: SharedValue<number>;
   contentHeight: SharedValue<number>;
+  dragOpacity: SharedValue<number>;
   closeDistance: number;
-  onRequestClose: () => void;
+  overlayOpacity: number;
+  onClose: () => void;
 };
 
 export const useBottomSheetGestureHandler = ({
   translateY,
   closeDistance,
   contentHeight,
-  onRequestClose,
+  onClose,
+  dragOpacity,
+  overlayOpacity,
 }: UseBottomSheetGestureHandler) => {
   const { isReduceMotionEnabled } = useAMAContext();
 
@@ -32,13 +36,18 @@ export const useBottomSheetGestureHandler = ({
     },
     onActive: (event, context) => {
       translateY.value = Math.max(0, context.y + event.translationY);
+
+      const distance = contentHeight.value - translateY.value;
+      const opacity = Math.min(distance / contentHeight.value, overlayOpacity);
+
+      dragOpacity.value = opacity;
     },
     onEnd: _ => {
       const minimumDistanceToClose = contentHeight.value * closeDistance;
       const shouldCloseBottomSheet = translateY.value >= minimumDistanceToClose;
 
       if (shouldCloseBottomSheet) {
-        runOnJS(onRequestClose)();
+        runOnJS(onClose)();
       } else {
         translateY.value = withTiming(0, {
           duration: isReduceMotionEnabled ? 0 : 300,

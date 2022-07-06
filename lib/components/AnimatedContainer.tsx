@@ -15,7 +15,8 @@ type UseReanimated = Omit<AnimateProps<ViewProps>, 'entering' | 'exiting'> & {
   autofocus?: boolean;
   duration?: number;
   from: AnimatedEntryViewStyle;
-  exit?: AnimatedExitViewStyle;
+  exitFrom?: AnimatedExitViewStyle;
+  exitTo?: ToAnimation;
   to: ToAnimation;
   style?: Pick<ViewProps, 'style'>;
 };
@@ -25,13 +26,24 @@ export const AnimatedContainer = React.forwardRef<
   PropsWithChildren<UseReanimated>
 >(
   (
-    { from, to, exit, duration = 300, style, autofocus, children, ...rest },
+    {
+      from,
+      to,
+      exitFrom,
+      exitTo,
+      duration = 300,
+      style,
+      autofocus,
+      children,
+      ...rest
+    },
     forwardRef,
   ) => {
     const { entering, exiting } = useReanimatedAnimationBuilder({
       from,
       to,
-      exit,
+      exitFrom,
+      exitTo,
       duration,
     });
 

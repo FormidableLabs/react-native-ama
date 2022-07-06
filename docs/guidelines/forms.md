@@ -70,6 +70,13 @@ The user **must** be able to navigate to all the interactive elements on the scr
 
 For example, if the user decides to navigate away from an input field, it must be allowed to do so; even if the field contains invalid data, it doesn't matter in no way the focus should be programmatically forced back to that field!
 
+## Form submission
+
+The user should be able to submit a form using the **done** button on the keyboard if a text input has it.
+
+Also, an error message should be displayed and autofocused when it fails to let the screen reader know about the issue.
+Alternatively, the first failed field should be autofocused if no message is available.
+
 ## AMA dev runtime errors
 
 ### NO_FORM_LABEL

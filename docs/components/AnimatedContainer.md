@@ -3,7 +3,7 @@ import { Required } from '@site/src/components'
 # AnimatedContainer
 
 This component is built on top of [Reanimated custom animations](https://docs.swmansion.com/react-native-reanimated/docs/api/LayoutAnimations/customAnimations)
-and let us animate the entry and exit of the container, honouring
+and let us animate the entry and exitFrom of the container, honouring
 the [Reduce Motion] (https://reactnative.dev/docs/accessibilityinfo) preference.
 
 ## Example
@@ -21,11 +21,11 @@ import {AnimatedContainer} from 'react-native-ama';
 ```
 
 When the component is mounted, it will animate it from: `from -> to`, and when it is unmounted, it will animate it from: `exitFrom -> to`.
-If the property `exit from` is not specified, it will then play the animation in reverse: `to -> from`.
+If the property `exitFrom from` is not specified, it will then play the animation in reverse: `to -> from`.
 
 ## Accessibility
 
-For both, enter and exit animation, the component will use a `duration={0}` for each [motion property](../utils/isMotionAnimation) when [Reduce Motion](../hooks/useAMAContext#isreducemotionenabled) option is enabled.
+For both, enter and exitFrom animation, the component will use a `duration={0}` for each [motion property](../utils/isMotionAnimation) when [Reduce Motion](../hooks/useAMAContext#isreducemotionenabled) option is enabled.
 
 ## Props
 
@@ -94,7 +94,7 @@ The final (or initial) value of the animation.
 | ViewStyle   |
 
 This value is used for both entering and exiting animation.
-For the entering animation, this is used as the final state; for the exit one, as the initial state.
+For the entering animation, this is used as the final state; for the exitFrom one, as the initial state.
 
 ```jsx
 import {AnimatedContainer} from 'react-native-ama';
@@ -108,7 +108,7 @@ import {AnimatedContainer} from 'react-native-ama';
 In this case, the view will fade In when mounted and fade out when unmounted.
 
 
-### `exit`
+### `exitFrom`
 
 The initial value for the unmounting animation.
 
@@ -138,7 +138,7 @@ import {AnimatedContainer} from 'react-native-ama';
 ```
 
 Because in the [from](#from) animation, we did specify the special value **targetHeight** we need to provide a "different" value for the exiting animation
-as that special name does not exist for the exit animation.
+as that special name does not exist for the exitFrom animation.
 
 :::note
 

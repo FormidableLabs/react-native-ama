@@ -96,7 +96,7 @@ describe('useReanimatedAnimationBuilder', () => {
       const { result } = renderHook(() =>
         useReanimatedAnimationBuilder({
           from: { transform: [{ translateY: 'targetHeight' }], opacity: 0 },
-          exit: {
+          exitFrom: {
             transform: [{ translateY: 0 }],
             opacity: 0.5,
           },

@@ -56,6 +56,10 @@ export const logFailure = __DEV__
           console.info(formattedMessage, extra || '', '\n');
 
           return 'ERROR';
+        case 'PLEASE_FORGIVE_ME':
+          console.info(formattedMessage, extra || '', '\n');
+
+          return 'WARNING';
         case 'SHOULD_NOT':
         default:
           console.warn(formattedMessage, extra || '', '\n');

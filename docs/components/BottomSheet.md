@@ -74,7 +74,7 @@ The bottom sheet header component.
 |-------------|
 | JSX.Element |
 
-### `lineComponent`
+### `handleComponent`
 
 Can be used to either disable the "line" or replace it with a custom component.
 
@@ -88,7 +88,7 @@ This option does only replace the content of the draggable area, will not remove
 
 :::
 
-### `lineStyle`
+### `handleStyle`
 
 The style for the draggable line
 
