@@ -27,29 +27,28 @@ import { AnimatedContainer } from '../components/AnimatedContainer';
 import { useBottomSheetGestureHandler } from '../hooks/useBottomSheetGestureHandler';
 import { useTimedAction } from '../hooks/useTimedAction';
 import { useChecks } from '../internal/useChecks';
-import { MINIMUM_TOUCHABLE_SIZE } from '../utils/minimumTouchableSize';
 
 export type BottomSheetProps = {
   animationDuration?: number;
+  autoCloseDelay?: number;
   bottomSheetStyle?: ViewStyle | ViewStyle[];
   closeActionAccessibilityLabel: string;
   closeDistance?: number;
-  headerComponent?: JSX.Element;
   footerComponent?: JSX.Element;
   handleComponent?: JSX.Element | 'none';
   handleStyle?: ViewStyle | ViewStyle[];
-  onClose: () => void;
-  overlayStyle?: ViewStyle | ViewStyle[];
-  scrollViewProps?: Omit<ScrollViewProps, 'scrollEnabled'>;
-  scrollEnabled?: boolean;
-  persistent?: boolean;
-  autoCloseDelay?: number;
-  testID?: string;
-  panGestureEnabled?: boolean;
-  overlayOpacity?: number;
-  visible: boolean;
-  draggableAreaHeight?: number;
+  headerComponent?: JSX.Element;
   maxHeight?: number;
+  minVelocityToClose?: number;
+  onClose: () => void;
+  overlayOpacity?: number;
+  overlayStyle?: ViewStyle | ViewStyle[];
+  panGestureEnabled?: boolean;
+  persistent?: boolean;
+  scrollEnabled?: boolean;
+  scrollViewProps?: Omit<ScrollViewProps, 'scrollEnabled'>;
+  testID?: string;
+  visible: boolean;
 };
 
 export const BottomSheet = ({
@@ -70,10 +69,10 @@ export const BottomSheet = ({
   autoCloseDelay,
   panGestureEnabled = true,
   testID,
-  draggableAreaHeight = MINIMUM_TOUCHABLE_SIZE,
   overlayOpacity = 1,
   footerComponent,
   maxHeight = Dimensions.get('window').height * 0.9,
+  minVelocityToClose = 1000,
 }: React.PropsWithChildren<BottomSheetProps>) => {
   const [showContent, setShowContent] = React.useState(visible);
   const [isModalVisible, setIsModalVisible] = React.useState(true);
@@ -84,6 +83,7 @@ export const BottomSheet = ({
   const isMounted = React.useRef(false);
   const [headerHeight, setHeaderHeight] = React.useState(0);
   const [footerHeight, setFooterHeight] = React.useState(0);
+  const [handleHeight, setHandleHeight] = React.useState(0);
 
   const checks = __DEV__ ? useChecks?.() : null;
   const debugStyle = __DEV__ ? checks?.debugStyle : {};
@@ -148,7 +148,7 @@ export const BottomSheet = ({
   };
 
   const maxScrollViewHeight =
-    maxHeight - footerHeight - headerHeight - draggableAreaHeight;
+    maxHeight - footerHeight - headerHeight - handleHeight;
   const scrollViewStyle = [
     { maxHeight: maxScrollViewHeight },
     scrollViewProps?.style,
@@ -195,44 +195,49 @@ export const BottomSheet = ({
               style={[styles.content, bottomSheetStyle, debugStyle]}
               onLayout={handleOnLayout}
               testID={`${testID}-panel`}>
-              {handleComponent === 'none' ? null : (
-                <GestureHandler
-                  translateY={translateY}
-                  closeDistance={closeDistance}
-                  contentHeight={contentHeight}
-                  onClose={onClose}
-                  testID={`${testID}-gesture-handler`}
-                  draggableAreaHeight={draggableAreaHeight}
-                  overlayOpacity={overlayOpacity}
-                  dragOpacity={dragOpacity}
-                  panGestureEnabled={panGestureEnabled}>
-                  {handleComponent || (
-                    <View
-                      style={[styles.line, handleStyle]}
-                      testID={`${testID}-line`}
-                    />
-                  )}
-                </GestureHandler>
-              )}
-              <View
-                onLayout={event => {
-                  setHeaderHeight(event.nativeEvent.layout.height);
-                }}>
-                {headerComponent}
-              </View>
-              <ScrollView
-                {...scrollViewProps}
-                style={scrollViewStyle}
-                scrollEnabled={scrollEnabled}
-                testID={`${testID}-scrollview`}>
-                {children}
-              </ScrollView>
-              <View
-                onLayout={event => {
-                  setFooterHeight(event.nativeEvent.layout.height);
-                }}>
-                {footerComponent}
-              </View>
+              <GestureHandler
+                translateY={translateY}
+                closeDistance={closeDistance}
+                contentHeight={contentHeight}
+                onClose={onClose}
+                testID={`${testID}-gesture-handler`}
+                overlayOpacity={overlayOpacity}
+                dragOpacity={dragOpacity}
+                minVelocityToClose={minVelocityToClose}
+                panGestureEnabled={panGestureEnabled}>
+                <View
+                  onLayout={event => {
+                    setHandleHeight(event.nativeEvent.layout.height);
+                  }}>
+                  {handleComponent === 'none'
+                    ? null
+                    : handleComponent || (
+                        <View
+                          style={[styles.line, handleStyle]}
+                          testID={`${testID}-line`}
+                        />
+                      )}
+                </View>
+                <View
+                  onLayout={event => {
+                    setHeaderHeight(event.nativeEvent.layout.height);
+                  }}>
+                  {headerComponent}
+                </View>
+                <ScrollView
+                  {...scrollViewProps}
+                  style={scrollViewStyle}
+                  scrollEnabled={scrollEnabled}
+                  testID={`${testID}-scrollview`}>
+                  {children}
+                </ScrollView>
+                <View
+                  onLayout={event => {
+                    setFooterHeight(event.nativeEvent.layout.height);
+                  }}>
+                  {footerComponent}
+                </View>
+              </GestureHandler>
             </AnimatedContainer>
           </Animated.View>
         </GestureHandlerRootView>
@@ -250,7 +255,7 @@ type GestureHandlerProps = PropsWithChildren<{
   onClose: () => void;
   panGestureEnabled: boolean;
   testID?: string;
-  draggableAreaHeight: number;
+  minVelocityToClose: number;
 }>;
 
 const GestureHandler = ({
@@ -261,9 +266,9 @@ const GestureHandler = ({
   onClose,
   panGestureEnabled,
   testID,
-  draggableAreaHeight,
   dragOpacity,
   overlayOpacity,
+  minVelocityToClose,
 }: GestureHandlerProps) => {
   const { gestureHandler } = useBottomSheetGestureHandler({
     translateY,
@@ -272,15 +277,14 @@ const GestureHandler = ({
     onClose,
     dragOpacity,
     overlayOpacity,
+    minVelocityToClose,
   });
 
   return (
     <PanGestureHandler
       onGestureEvent={panGestureEnabled ? gestureHandler : undefined}
       testID={testID}>
-      <Animated.View style={{ minHeight: draggableAreaHeight }}>
-        {children}
-      </Animated.View>
+      <Animated.View>{children}</Animated.View>
     </PanGestureHandler>
   );
 };

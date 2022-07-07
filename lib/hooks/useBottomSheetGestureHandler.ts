@@ -15,6 +15,7 @@ type UseBottomSheetGestureHandler = {
   closeDistance: number;
   overlayOpacity: number;
   onClose: () => void;
+  minVelocityToClose: number;
 };
 
 export const useBottomSheetGestureHandler = ({
@@ -24,6 +25,7 @@ export const useBottomSheetGestureHandler = ({
   onClose,
   dragOpacity,
   overlayOpacity,
+  minVelocityToClose,
 }: UseBottomSheetGestureHandler) => {
   const { isReduceMotionEnabled } = useAMAContext();
 
@@ -42,9 +44,11 @@ export const useBottomSheetGestureHandler = ({
 
       dragOpacity.value = opacity;
     },
-    onEnd: _ => {
+    onEnd: event => {
       const minimumDistanceToClose = contentHeight.value * closeDistance;
-      const shouldCloseBottomSheet = translateY.value >= minimumDistanceToClose;
+      const shouldCloseBottomSheet =
+        translateY.value >= minimumDistanceToClose ||
+        event.velocityY >= minVelocityToClose;
 
       if (shouldCloseBottomSheet) {
         runOnJS(onClose)();

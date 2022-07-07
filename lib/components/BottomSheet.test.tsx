@@ -72,6 +72,7 @@ describe('BottomSheet', () => {
         { backgroundColor: 'rgba(0, 0, 0, 0.5)', flex: 1 },
         undefined,
         { backgroundColor: 'cyan' },
+        { opacity: 0 },
       ]);
     });
   });
@@ -133,6 +134,7 @@ describe('BottomSheet', () => {
         { backgroundColor: 'rgba(0, 0, 0, 0.5)', flex: 1 },
         undefined,
         {},
+        { opacity: 0 },
       ]);
     });
   });
@@ -152,7 +154,7 @@ describe('BottomSheet', () => {
       <Modal
         animationType="none"
         hardwareAccelerated={false}
-        onClose={[Function]}
+        onRequestClose={[Function]}
         testID="bottom-sheet"
         transparent={true}
         visible={true}
@@ -177,6 +179,7 @@ describe('BottomSheet', () => {
         { backgroundColor: 'rgba(0, 0, 0, 0.5)', flex: 1 },
         { backgroundColor: 'yellow', width: 42 },
         {},
+        { opacity: 0 },
       ]);
     });
 
@@ -195,6 +198,7 @@ describe('BottomSheet', () => {
       expect(getByTestId('bottom-sheet-panel').props.style).toEqual([
         { backgroundColor: '#fff', width: '100%' },
         { borderRadius: 42 },
+        {},
       ]);
     });
 
@@ -256,9 +260,10 @@ describe('BottomSheet', () => {
         />,
       );
 
-      expect(getByTestId('bottom-sheet-scrollview').props.style).toEqual({
-        backgroundColor: 'fucsia',
-      });
+      expect(getByTestId('bottom-sheet-scrollview').props.style).toEqual([
+        { maxHeight: 1200.6000000000001 },
+        { backgroundColor: 'fucsia' },
+      ]);
     });
 
     it('allows rendering a custom header', () => {
@@ -327,13 +332,13 @@ describe('BottomSheet', () => {
     expect(getByTestId('bottom-sheet-wrapper').props.style).toEqual([
       {
         alignSelf: 'flex-end',
-        bottom: 24,
+        bottom: 0,
         flex: 1,
         flexDirection: 'column',
-        maxHeight: '80%',
         position: 'absolute',
         width: '100%',
       },
+      { maxHeight: 1200.6000000000001 },
       { transform: [{ translateY: 0 }] },
     ]);
   });
@@ -367,6 +372,9 @@ describe('BottomSheet', () => {
       contentHeight: { value: 42 },
       onClose: onClose,
       translateY: { value: 0 },
+      dragOpacity: { value: 0 },
+      minVelocityToClose: 1000,
+      overlayOpacity: 1,
     });
   });
 });

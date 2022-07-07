@@ -31,7 +31,7 @@ and [react-native-gesture-handler](https://github.com/software-mansion/react-nat
 </BottomSheet>
 ```
 
-## Accessibility 
+## Accessibility
 
 - Checks that the `closeActionAccessibilityLabel` is a valid [accessibilityLabel](./guidelines/accessibility-label)
 - Provides a way [to close the bottom sheet](../guidelines/bottomsheet#2-can-be-dismissed) when the user taps on the overlay
@@ -50,9 +50,23 @@ The duration in milliseconds of the slide in/out animation.
 |--------|---------|
 | number | 300     |
 
+### `autoCloseDelay`
+
+The duration in milliseconds before auto-closing the bottom sheet
+
+| Type   | Default   |
+|--------|-----------|
+| number | undefined |
+
+:::tip
+
+The auto-close will respect the user [Timed action](./guidelines/timed-action) preference.
+
+:::
+
 ### `bottomSheetStyle`
 
-The style to use for the bottom sheet panel 
+The style to use for the bottom sheet panel
 
 | Type      | Default                                    |
 |-----------|--------------------------------------------|
@@ -66,27 +80,22 @@ The accessibility label to use for the overlay button.
 |--------|
 | string |
 
-### `headerComponent`
+### `footerComponent`
 
-The bottom sheet header component.
+The bottom sheet footer component.
 
 | Type        |
 |-------------|
 | JSX.Element |
+
 
 ### `handleComponent`
 
-Can be used to either disable the "line" or replace it with a custom component.
+It can be used to either disable the default handle "line" or replace it with a custom component.
 
 | Type        |
 |-------------|
-| JSX.Element |
-
-:::note
-
-This option does only replace the content of the draggable area, will not remove it.
-
-:::
+| JSX.Element \| 'none' |
 
 ### `handleStyle`
 
@@ -96,13 +105,45 @@ The style for the draggable line
 |-----------|--------------------------------------------------------------------------------------------------------------------------|
 | ViewStyle | { width: 48, height: 4, backgroundColor: 'grey', alignSelf: 'center', marginBottom: 24, borderRadius: 2, marginTop: 12 } |
 
-### <Required /> `onRequestClose`
+### `headerComponent`
+
+The bottom sheet header component.
+
+| Type        |
+|-------------|
+| JSX.Element |
+
+### `maxHeight`
+
+The maximum height of the bottom sheet.
+
+| Type   | Default                  |
+|--------|--------------------------|
+| number | 90% of the screen height |
+
+### `minVelocityToClose`
+
+The minimum velocity needed by quickly swiping down to close the bottom sheet.
+
+| Type   | Default                  |
+|--------|--------------------------|
+| number | 90% of the screen height |
+
+### <Required /> `onClose`
 
 The callback to trigger when the BottomSheet is dismissed
 
 | Type       |
 |------------|
 | () => void |
+
+### `overlayOpacity`
+
+The opacity of the overlay.
+
+| Type   | Default |
+|--------|---------|
+| number | 1       |
 
 ### `overlayStyle`
 
@@ -112,6 +153,21 @@ The style to use for the overlay
 |-----------|----------------------------------------------------|
 | ViewStyle | { backgroundColor: 'rgba(0, 0, 0, 0.5)', flex: 1 } |
 
+### `panGestureEnabled`
+
+Enable or disable the dragging gesture.
+
+| Type    | Default |
+|---------|---------|
+| boolean | true    |
+
+### `persistent`
+
+If true, the bottom sheet will not be closed when the user taps on the overlay; the dragging gesture is also disabled.
+
+| Type    | Default |
+|---------|---------|
+| boolean | true    |
 
 ### `scrollEnabled`
 
@@ -121,13 +177,13 @@ Enabled/disables the scrolling of the [<ScrollView />](https://reactnative.dev/d
 |---------|---------|
 | boolean | false   |
 
-### `scrollViewStyle`
+### `scrollViewProps`
 
-The style to use for the [<ScrollView />](https://reactnative.dev/docs/scrollview) that wraps the BottomSheet content
+The props to use for the [<ScrollView />](https://reactnative.dev/docs/scrollview) that wraps the BottomSheet content
 
-| Type      | Default |
-|-----------|---------|
-| ViewStyle | {  }    |
+| Type            | Default   |
+|-----------------|-----------|
+| scrollViewProps | undefined |
 
 ### <Required /> `visible`
 
@@ -142,6 +198,3 @@ The BottomSheet visibility
 
 - [ButtomSheet](../guidelines/bottomsheet)
 - [Focus](../guidelines/focus)
-
-[^1]: The announcement is made only when the list is filtered, and the number of items displayed is different from the original one
-[^2]: This is with the default behaviour that can be customised via the [isPlural](#isplural) prop
