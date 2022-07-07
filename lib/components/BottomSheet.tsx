@@ -266,7 +266,8 @@ const BottomSheetKeyboardAvoidingView = ({
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      pointerEvents="box-none">
+      pointerEvents="box-none"
+      style={{ flex: 1 }}>
       {children}
     </KeyboardAvoidingView>
   );
