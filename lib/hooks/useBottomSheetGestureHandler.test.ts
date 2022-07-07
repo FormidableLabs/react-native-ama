@@ -14,7 +14,10 @@ describe('useBottomSheetGestureHandler', () => {
         translateY,
         closeDistance: 0.5,
         contentHeight: { value: 100 },
-        onRequestClose: () => {},
+        dragOpacity: { value: 0 },
+        minVelocityToClose: 0,
+        overlayOpacity: 0,
+        onClose: () => {},
       }),
     );
 
@@ -29,10 +32,13 @@ describe('useBottomSheetGestureHandler', () => {
     const translateY = { value: 42 };
     const { result } = renderHook(() =>
       useBottomSheetGestureHandler({
+        dragOpacity: { value: 0 },
+        minVelocityToClose: 0,
+        overlayOpacity: 0,
         translateY,
         closeDistance: 0.5,
         contentHeight: { value: 100 },
-        onRequestClose: () => {},
+        onClose: () => {},
       }),
     );
 
@@ -58,8 +64,10 @@ describe('useBottomSheetGestureHandler', () => {
           translateY,
           closeDistance: 0.5,
           contentHeight: { value: 500 },
-          onRequestClose: () => {},
-        }),
+          onClose: () => {},
+          dragOpacity: { value: 0 },
+          minVelocityToClose: 1000,
+        } as any),
       );
 
       const context = { y: 0 };
@@ -67,22 +75,25 @@ describe('useBottomSheetGestureHandler', () => {
       // @ts-ignore
       result.current.gestureHandler.onActive({ translationY: 249 }, context);
       // @ts-ignore
-      result.current.gestureHandler.onEnd(null);
+      result.current.gestureHandler.onEnd({ velocityY: 100 });
 
       expect(translateY.value).toBe(0);
       expect(withTiming).toHaveBeenCalledWith(0, { duration: 300 });
     });
 
-    it('calls the onRequestClose event when the distance is at least the requested one', () => {
+    it('calls the onClose event when the distance is at least the requested one', () => {
       const translateY = { value: 0 };
-      const onRequestClose = jest.fn();
+      const onClose = jest.fn();
 
       const { result } = renderHook(() =>
         useBottomSheetGestureHandler({
           translateY,
           closeDistance: 0.5,
+          dragOpacity: { value: 0 },
+          minVelocityToClose: 0,
+          overlayOpacity: 0,
           contentHeight: { value: 500 },
-          onRequestClose,
+          onClose,
         }),
       );
 
@@ -93,8 +104,35 @@ describe('useBottomSheetGestureHandler', () => {
       // @ts-ignore
       result.current.gestureHandler.onEnd(null);
 
-      expect(runOnJS).toHaveBeenCalledWith(onRequestClose);
-      expect(onRequestClose).toHaveBeenCalledWith();
+      expect(runOnJS).toHaveBeenCalledWith(onClose);
+      expect(onClose).toHaveBeenCalledWith();
+      expect(withTiming).not.toHaveBeenCalled();
+    });
+
+    it('call onClose when the velocity is bigger than minVelocityToClose', () => {
+      const onClose = jest.fn();
+
+      const translateY = { value: 0 };
+      const { result } = renderHook(() =>
+        useBottomSheetGestureHandler({
+          translateY,
+          closeDistance: 0.9,
+          contentHeight: { value: 500 },
+          onClose,
+          dragOpacity: { value: 0 },
+          minVelocityToClose: 1000,
+        } as any),
+      );
+
+      const context = { y: 0 };
+
+      // @ts-ignore
+      result.current.gestureHandler.onActive({ translationY: 42 }, context);
+      // @ts-ignore
+      result.current.gestureHandler.onEnd({ velocityY: 1001 });
+
+      expect(runOnJS).toHaveBeenCalledWith(onClose);
+      expect(onClose).toHaveBeenCalledWith();
       expect(withTiming).not.toHaveBeenCalled();
     });
   });

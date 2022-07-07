@@ -6,19 +6,25 @@ import {
   MINIMUM_TOUCHABLE_SIZE,
 } from '../../utils/minimumTouchableSize';
 import type { LogParams } from '../logger';
+import { getRuleAction } from '../logger';
 
 export const checkMinimumSize = (
   event: LayoutChangeEvent,
 ): LogParams | null => {
   const width = event.nativeEvent.layout.width;
   const height = event.nativeEvent.layout.height;
+  const shouldForgive = getRuleAction?.('MINIMUM_SIZE') === 'PLEASE_FORGIVE_ME';
 
   if (
     Platform.OS === 'ios' &&
     width < ANDROID_MINIMUM_TOUCHABLE_SIZE &&
     height < ANDROID_MINIMUM_TOUCHABLE_SIZE
   ) {
-    console.warn('The minimum size might be too small for Android');
+    if (shouldForgive) {
+      console.info('The minimum size might be too small for Android');
+    } else {
+      console.warn('The minimum size might be too small for Android');
+    }
   }
 
   if (width < MINIMUM_TOUCHABLE_SIZE || height < MINIMUM_TOUCHABLE_SIZE) {

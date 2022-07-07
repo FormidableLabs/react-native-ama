@@ -16,6 +16,7 @@ export const noUndefinedProperty = <T>({
     return {
       rule,
       message: `The property "${property as string}" cannot be UNDEFINED`,
+      extra: properties,
     };
   }
 

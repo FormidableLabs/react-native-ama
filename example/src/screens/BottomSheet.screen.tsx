@@ -15,7 +15,7 @@ export const BottomSheetScreen: React.FC<TimedActionProps> = ({ children }) => {
     <SafeAreaView style={styles.centeredView}>
       <BottomSheet
         visible={modalVisible}
-        onRequestClose={() => {
+        onClose={() => {
           setModalVisible(!modalVisible);
         }}
         closeActionAccessibilityLabel="close bottomsheet"
@@ -25,7 +25,9 @@ export const BottomSheetScreen: React.FC<TimedActionProps> = ({ children }) => {
             <Header title="This is the bottom sheet" />
           </View>
         }
-        scrollViewStyle={styles.modalViewContent}>
+        scrollViewProps={{
+          style: styles.modalViewContent,
+        }}>
         <CTAPressable
           onPress={() => setModalVisible(!modalVisible)}
           title="Close bottom sheet"

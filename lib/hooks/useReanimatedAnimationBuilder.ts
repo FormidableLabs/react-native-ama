@@ -15,14 +15,16 @@ export type ToAnimation = ViewProps['style'];
 type UseReanimatedAnimationBuilder = {
   from: AnimatedEntryViewStyle;
   to: ToAnimation;
-  exit?: AnimatedExitViewStyle;
+  exitFrom?: AnimatedExitViewStyle;
+  exitTo?: ToAnimation;
   duration: number;
 };
 
 export const useReanimatedAnimationBuilder = ({
   from,
   to,
-  exit,
+  exitFrom,
+  exitTo,
   duration,
 }: UseReanimatedAnimationBuilder) => {
   const { isReduceMotionEnabled } = useAMAContext();
@@ -94,7 +96,7 @@ export const useReanimatedAnimationBuilder = ({
     exiting: animationBuilder<
       ToAnimation,
       AnimatedExitViewStyle | AnimatedEntryViewStyle
-    >(to, exit || from),
+    >(exitTo || to, exitFrom || from),
   };
 };
 

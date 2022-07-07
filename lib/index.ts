@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import type React from 'react';
 
 import type { FormFieldProps } from './components/FormField';

@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Text } from 'react-native';
 
 import * as UseBottomSheetGestureHandler from '../hooks/useBottomSheetGestureHandler';
+import * as UseTimedAction from '../hooks/useTimedAction';
 import * as UseChecks from '../internal/useChecks';
 import { BottomSheet } from './BottomSheet';
 
@@ -31,7 +32,7 @@ describe('BottomSheet', () => {
       render(
         <BottomSheet
           visible={true}
-          onRequestClose={() => {}}
+          onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text>Header</Text>}
         />,
@@ -61,7 +62,7 @@ describe('BottomSheet', () => {
       const { getByTestId } = render(
         <BottomSheet
           visible={true}
-          onRequestClose={() => {}}
+          onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text>Header</Text>}
           testID="bottom-sheet"
@@ -72,6 +73,7 @@ describe('BottomSheet', () => {
         { backgroundColor: 'rgba(0, 0, 0, 0.5)', flex: 1 },
         undefined,
         { backgroundColor: 'cyan' },
+        { opacity: 0 },
       ]);
     });
   });
@@ -96,7 +98,7 @@ describe('BottomSheet', () => {
       render(
         <OriginalBottomSheet
           visible={true}
-          onRequestClose={() => {}}
+          onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text>Header</Text>}
         />,
@@ -122,7 +124,7 @@ describe('BottomSheet', () => {
       const { getByTestId } = render(
         <OriginalBottomSheet
           visible={true}
-          onRequestClose={() => {}}
+          onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text>Header</Text>}
           testID="bottom-sheet"
@@ -133,6 +135,7 @@ describe('BottomSheet', () => {
         { backgroundColor: 'rgba(0, 0, 0, 0.5)', flex: 1 },
         undefined,
         {},
+        { opacity: 0 },
       ]);
     });
   });
@@ -141,7 +144,7 @@ describe('BottomSheet', () => {
     const { toJSON } = render(
       <BottomSheet
         visible={false}
-        onRequestClose={() => {}}
+        onClose={() => {}}
         closeActionAccessibilityLabel={'close me'}
         headerComponent={<Text>Header</Text>}
         testID="bottom-sheet"
@@ -165,7 +168,7 @@ describe('BottomSheet', () => {
       const { getByTestId } = render(
         <BottomSheet
           visible={true}
-          onRequestClose={() => {}}
+          onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text>Header</Text>}
           overlayStyle={{ backgroundColor: 'yellow', width: 42 }}
@@ -177,6 +180,7 @@ describe('BottomSheet', () => {
         { backgroundColor: 'rgba(0, 0, 0, 0.5)', flex: 1 },
         { backgroundColor: 'yellow', width: 42 },
         {},
+        { opacity: 0 },
       ]);
     });
 
@@ -184,7 +188,7 @@ describe('BottomSheet', () => {
       const { getByTestId } = render(
         <BottomSheet
           visible={true}
-          onRequestClose={() => {}}
+          onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text>Header</Text>}
           bottomSheetStyle={{ borderRadius: 42 }}
@@ -195,6 +199,7 @@ describe('BottomSheet', () => {
       expect(getByTestId('bottom-sheet-panel').props.style).toEqual([
         { backgroundColor: '#fff', width: '100%' },
         { borderRadius: 42 },
+        {},
       ]);
     });
 
@@ -202,10 +207,10 @@ describe('BottomSheet', () => {
       const { getByTestId } = render(
         <BottomSheet
           visible={true}
-          onRequestClose={() => {}}
+          onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text>Header</Text>}
-          lineStyle={{ width: '100%' }}
+          handleStyle={{ width: '100%' }}
           testID="bottom-sheet"
         />,
       );
@@ -228,10 +233,10 @@ describe('BottomSheet', () => {
       const { getByTestId } = render(
         <BottomSheet
           visible={true}
-          onRequestClose={() => {}}
+          onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text>Header</Text>}
-          lineComponent="none"
+          handleComponent="none"
           testID="bottom-sheet"
         />,
       );
@@ -244,24 +249,29 @@ describe('BottomSheet', () => {
       const { getByTestId } = render(
         <BottomSheet
           visible={true}
-          onRequestClose={() => {}}
+          onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text>Header</Text>}
-          scrollViewStyle={{ backgroundColor: 'fucsia' }}
+          scrollViewProps={{
+            style: {
+              backgroundColor: 'fucsia',
+            },
+          }}
           testID="bottom-sheet"
         />,
       );
 
-      expect(getByTestId('bottom-sheet-scrollview').props.style).toEqual({
-        backgroundColor: 'fucsia',
-      });
+      expect(getByTestId('bottom-sheet-scrollview').props.style).toEqual([
+        { maxHeight: 1200.6000000000001 },
+        { backgroundColor: 'fucsia' },
+      ]);
     });
 
     it('allows rendering a custom header', () => {
       const { getByTestId } = render(
         <BottomSheet
           visible={true}
-          onRequestClose={() => {}}
+          onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text testID="Header">Header</Text>}
         />,
@@ -275,7 +285,7 @@ describe('BottomSheet', () => {
     const { rerender, getByTestId } = render(
       <BottomSheet
         visible={true}
-        onRequestClose={() => {}}
+        onClose={() => {}}
         closeActionAccessibilityLabel={'close me'}
         animationDuration={100}
         headerComponent={<Text testID="Header">Header</Text>}
@@ -286,7 +296,7 @@ describe('BottomSheet', () => {
       rerender(
         <BottomSheet
           visible={false}
-          onRequestClose={() => {}}
+          onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text testID="Header">Header</Text>}
           animationDuration={100}
@@ -312,7 +322,7 @@ describe('BottomSheet', () => {
     const { getByTestId } = render(
       <BottomSheet
         visible={true}
-        onRequestClose={() => {}}
+        onClose={() => {}}
         closeActionAccessibilityLabel={'close me'}
         animationDuration={100}
         headerComponent={<Text testID="Header">Header</Text>}
@@ -323,13 +333,13 @@ describe('BottomSheet', () => {
     expect(getByTestId('bottom-sheet-wrapper').props.style).toEqual([
       {
         alignSelf: 'flex-end',
-        bottom: 24,
+        bottom: 0,
         flex: 1,
         flexDirection: 'column',
-        maxHeight: '80%',
         position: 'absolute',
         width: '100%',
       },
+      { maxHeight: 1200.6000000000001 },
       { transform: [{ translateY: 0 }] },
     ]);
   });
@@ -338,13 +348,13 @@ describe('BottomSheet', () => {
     const useBottomSheetGestureHandler = jest
       .spyOn(UseBottomSheetGestureHandler, 'useBottomSheetGestureHandler')
       .mockReturnValue({ gestureHandler: jest.fn() });
-    const onRequestClose = jest.fn();
+    const onClose = jest.fn();
 
     const { getByTestId } = render(
       <BottomSheet
         visible={true}
         closeDistance={0.1}
-        onRequestClose={onRequestClose}
+        onClose={onClose}
         closeActionAccessibilityLabel={'close me'}
         animationDuration={100}
         headerComponent={<Text testID="Header">Header</Text>}
@@ -361,9 +371,35 @@ describe('BottomSheet', () => {
     expect(useBottomSheetGestureHandler).toHaveBeenCalledWith({
       closeDistance: 0.1,
       contentHeight: { value: 42 },
-      onRequestClose: onRequestClose,
+      onClose: onClose,
       translateY: { value: 0 },
+      dragOpacity: { value: 0 },
+      minVelocityToClose: 1000,
+      overlayOpacity: 1,
     });
+  });
+
+  it('uses the onTimeout function from the useTimedAction hook to auto-close the bottom sheet', () => {
+    const onTimeout = jest.fn();
+
+    jest.spyOn(UseTimedAction, 'useTimedAction').mockReturnValue({
+      onTimeout,
+    });
+
+    render(
+      <BottomSheet
+        visible={true}
+        autoCloseDelay={100}
+        closeDistance={0.1}
+        onClose={() => {}}
+        closeActionAccessibilityLabel={'close me'}
+        animationDuration={100}
+        headerComponent={<Text testID="Header">Header</Text>}
+        testID="bottom-sheet"
+      />,
+    );
+
+    expect(onTimeout).toHaveBeenCalledWith(expect.any(Function), 100);
   });
 });
 
