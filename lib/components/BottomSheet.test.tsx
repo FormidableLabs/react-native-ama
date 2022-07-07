@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Text } from 'react-native';
 
 import * as UseBottomSheetGestureHandler from '../hooks/useBottomSheetGestureHandler';
+import * as UseTimedAction from '../hooks/useTimedAction';
 import * as UseChecks from '../internal/useChecks';
 import { BottomSheet } from './BottomSheet';
 
@@ -376,6 +377,29 @@ describe('BottomSheet', () => {
       minVelocityToClose: 1000,
       overlayOpacity: 1,
     });
+  });
+
+  it('uses the onTimeout function from the useTimedAction hook to auto-close the bottom sheet', () => {
+    const onTimeout = jest.fn();
+
+    jest.spyOn(UseTimedAction, 'useTimedAction').mockReturnValue({
+      onTimeout,
+    });
+
+    render(
+      <BottomSheet
+        visible={true}
+        autoCloseDelay={100}
+        closeDistance={0.1}
+        onClose={() => {}}
+        closeActionAccessibilityLabel={'close me'}
+        animationDuration={100}
+        headerComponent={<Text testID="Header">Header</Text>}
+        testID="bottom-sheet"
+      />,
+    );
+
+    expect(onTimeout).toHaveBeenCalledWith(expect.any(Function), 100);
   });
 });
 

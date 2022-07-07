@@ -10,6 +10,7 @@ export type FormSubmitProps = React.PropsWithChildren<{
   accessibilityHint?: string;
   busy: boolean;
   style?: PressableProps['style'];
+  testID?: string;
 }>;
 
 export const FormSubmit = ({ children, ...rest }: FormSubmitProps) => {
