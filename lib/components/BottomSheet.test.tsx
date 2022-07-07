@@ -1,6 +1,6 @@
 import { act, render } from '@testing-library/react-native';
 import * as React from 'react';
-import { Text } from 'react-native';
+import { KeyboardAvoidingView, Text } from 'react-native';
 
 import * as UseBottomSheetGestureHandler from '../hooks/useBottomSheetGestureHandler';
 import * as UseTimedAction from '../hooks/useTimedAction';
@@ -401,6 +401,45 @@ describe('BottomSheet', () => {
 
     expect(onTimeout).toHaveBeenCalledWith(expect.any(Function), 100);
   });
+
+  it('wraps the Modal content inside KeyboardAvoidingView when the avoidKeyboard prop is true', () => {
+    const { UNSAFE_getByType } = render(
+      <BottomSheet
+        visible={true}
+        autoCloseDelay={100}
+        closeDistance={0.1}
+        onClose={() => {}}
+        closeActionAccessibilityLabel={'close me'}
+        animationDuration={100}
+        headerComponent={<Text testID="Header">Header</Text>}
+        testID="bottom-sheet"
+        avoidKeyboard={true}
+      />,
+    );
+
+    expect(UNSAFE_getByType(KeyboardAvoidingView)).toBeDefined();
+  });
+
+  it.each([undefined, false])(
+    'does not wraps the Modal content inside KeyboardAvoidingView when avoidKeyboard prop is %s',
+    avoidKeyboard => {
+      const { UNSAFE_getByType } = render(
+        <BottomSheet
+          visible={true}
+          autoCloseDelay={100}
+          closeDistance={0.1}
+          onClose={() => {}}
+          closeActionAccessibilityLabel={'close me'}
+          animationDuration={100}
+          headerComponent={<Text testID="Header">Header</Text>}
+          testID="bottom-sheet"
+          avoidKeyboard={avoidKeyboard}
+        />,
+      );
+
+      expect(() => UNSAFE_getByType(KeyboardAvoidingView)).toThrow();
+    },
+  );
 });
 
 let useAnimatedGestureHandler: jest.Mock;

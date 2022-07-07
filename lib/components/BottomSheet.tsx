@@ -3,8 +3,10 @@ import * as React from 'react';
 import type { PropsWithChildren } from 'react';
 import {
   Dimensions,
+  KeyboardAvoidingView,
   LayoutChangeEvent,
   Modal,
+  Platform,
   Pressable,
   ScrollViewProps,
   StyleSheet,
@@ -49,6 +51,7 @@ export type BottomSheetProps = {
   scrollViewProps?: Omit<ScrollViewProps, 'scrollEnabled'>;
   testID?: string;
   visible: boolean;
+  avoidKeyboard?: boolean;
 };
 
 export const BottomSheet = ({
@@ -71,10 +74,12 @@ export const BottomSheet = ({
   testID,
   overlayOpacity = 1,
   footerComponent,
+  avoidKeyboard,
   maxHeight = Dimensions.get('window').height * 0.9,
   minVelocityToClose = 1000,
 }: React.PropsWithChildren<BottomSheetProps>) => {
-  const [showContent, setShowContent] = React.useState(visible);
+  // This is used to let Reanimated animate the view out, before removing it from the tree.
+  const [renderContent, setRenderContent] = React.useState(visible);
   const [isModalVisible, setIsModalVisible] = React.useState(true);
   const translateY = useSharedValue(0);
   const contentHeight = useSharedValue(0);
@@ -104,7 +109,7 @@ export const BottomSheet = ({
       translateY.value = 0;
 
       setIsModalVisible(true);
-      setShowContent(true);
+      setRenderContent(true);
 
       if (autoCloseDelay) {
         onTimeout(() => {
@@ -114,8 +119,12 @@ export const BottomSheet = ({
         }, autoCloseDelay);
       }
     } else {
-      setShowContent(false);
+      setRenderContent(false);
 
+      /**
+       * We need to give Reanimted the time to finish animating the view out.
+       * Otherwise, the content will suddenly disappear.
+       */
       setTimeout(() => setIsModalVisible(false), animationDuration);
     }
   }, [
@@ -154,6 +163,9 @@ export const BottomSheet = ({
     scrollViewProps?.style,
   ];
 
+  const Wrapper = avoidKeyboard
+    ? BottomSheetKeyboardAvoidingView
+    : React.Fragment;
   return (
     <Modal
       animationType="none"
@@ -161,88 +173,102 @@ export const BottomSheet = ({
       visible={isModalVisible}
       onRequestClose={onClose}
       testID={testID}>
-      {showContent ? (
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <AnimatedContainer
-            style={[styles.overlay, overlayStyle, debugStyle, dragStyle]}
-            from={{ opacity: 0 }}
-            to={{ opacity: overlayOpacity }}
-            testID={`${testID}-overlay-wrapper`}
-            duration={animationDuration}>
-            <Pressable
-              style={styles.closeButton}
-              accessibilityRole="button"
-              accessibilityLabel={closeActionAccessibilityLabel}
-              onPress={persistent ? undefined : onClose}
-              testID={`${testID}-overlay-button`}
-              accessible={!persistent}
-              importantForAccessibility={
-                persistent ? 'no-hide-descendants' : 'yes'
-              }
-              accessibilityElementsHidden={persistent}
-            />
-          </AnimatedContainer>
-          <Animated.View
-            style={[styles.contentWrapper, { maxHeight }, animatedStyle]}
-            testID={`${testID}-wrapper`}>
+      <Wrapper>
+        {renderContent ? (
+          <GestureHandlerRootView style={{ flex: 1 }}>
             <AnimatedContainer
-              from={{ transform: [{ translateY: 'targetHeight' }] }}
-              to={{ transform: [{ translateY: 0 }] }}
-              exitFrom={{
-                transform: [{ translateY: 'currentHeight' }],
-              }}
-              duration={animationDuration}
-              style={[styles.content, bottomSheetStyle, debugStyle]}
-              onLayout={handleOnLayout}
-              testID={`${testID}-panel`}>
-              <GestureHandler
-                translateY={translateY}
-                closeDistance={closeDistance}
-                contentHeight={contentHeight}
-                onClose={onClose}
-                testID={`${testID}-gesture-handler`}
-                overlayOpacity={overlayOpacity}
-                dragOpacity={dragOpacity}
-                minVelocityToClose={minVelocityToClose}
-                panGestureEnabled={panGestureEnabled}>
-                <View
-                  onLayout={event => {
-                    setHandleHeight(event.nativeEvent.layout.height);
-                  }}>
-                  {handleComponent === 'none'
-                    ? null
-                    : handleComponent || (
-                        <View
-                          style={[styles.line, handleStyle]}
-                          testID={`${testID}-line`}
-                        />
-                      )}
-                </View>
-                <View
-                  onLayout={event => {
-                    setHeaderHeight(event.nativeEvent.layout.height);
-                  }}>
-                  {headerComponent}
-                </View>
-                <ScrollView
-                  {...scrollViewProps}
-                  style={scrollViewStyle}
-                  scrollEnabled={scrollEnabled}
-                  testID={`${testID}-scrollview`}>
-                  {children}
-                </ScrollView>
-                <View
-                  onLayout={event => {
-                    setFooterHeight(event.nativeEvent.layout.height);
-                  }}>
-                  {footerComponent}
-                </View>
-              </GestureHandler>
+              style={[styles.overlay, overlayStyle, debugStyle, dragStyle]}
+              from={{ opacity: 0 }}
+              to={{ opacity: overlayOpacity }}
+              testID={`${testID}-overlay-wrapper`}
+              duration={animationDuration}>
+              <Pressable
+                style={styles.closeButton}
+                accessibilityRole="button"
+                accessibilityLabel={closeActionAccessibilityLabel}
+                onPress={persistent ? undefined : onClose}
+                testID={`${testID}-overlay-button`}
+                accessible={!persistent}
+                importantForAccessibility={
+                  persistent ? 'no-hide-descendants' : 'yes'
+                }
+                accessibilityElementsHidden={persistent}
+              />
             </AnimatedContainer>
-          </Animated.View>
-        </GestureHandlerRootView>
-      ) : null}
+            <Animated.View
+              style={[styles.contentWrapper, { maxHeight }, animatedStyle]}
+              testID={`${testID}-wrapper`}>
+              <AnimatedContainer
+                from={{ transform: [{ translateY: 'targetHeight' }] }}
+                to={{ transform: [{ translateY: 0 }] }}
+                exitFrom={{
+                  transform: [{ translateY: 'currentHeight' }],
+                }}
+                duration={animationDuration}
+                style={[styles.content, bottomSheetStyle, debugStyle]}
+                onLayout={handleOnLayout}
+                testID={`${testID}-panel`}>
+                <GestureHandler
+                  translateY={translateY}
+                  closeDistance={closeDistance}
+                  contentHeight={contentHeight}
+                  onClose={onClose}
+                  testID={`${testID}-gesture-handler`}
+                  overlayOpacity={overlayOpacity}
+                  dragOpacity={dragOpacity}
+                  minVelocityToClose={minVelocityToClose}
+                  panGestureEnabled={panGestureEnabled}>
+                  <View
+                    onLayout={event => {
+                      setHandleHeight(event.nativeEvent.layout.height);
+                    }}>
+                    {handleComponent === 'none'
+                      ? null
+                      : handleComponent || (
+                          <View
+                            style={[styles.line, handleStyle]}
+                            testID={`${testID}-line`}
+                          />
+                        )}
+                  </View>
+                  <View
+                    onLayout={event => {
+                      setHeaderHeight(event.nativeEvent.layout.height);
+                    }}>
+                    {headerComponent}
+                  </View>
+                  <ScrollView
+                    {...scrollViewProps}
+                    style={scrollViewStyle}
+                    scrollEnabled={scrollEnabled}
+                    testID={`${testID}-scrollview`}>
+                    {children}
+                  </ScrollView>
+                  <View
+                    onLayout={event => {
+                      setFooterHeight(event.nativeEvent.layout.height);
+                    }}>
+                    {footerComponent}
+                  </View>
+                </GestureHandler>
+              </AnimatedContainer>
+            </Animated.View>
+          </GestureHandlerRootView>
+        ) : null}
+      </Wrapper>
     </Modal>
+  );
+};
+
+const BottomSheetKeyboardAvoidingView = ({
+  children,
+}: React.PropsWithChildren<{}>) => {
+  return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      pointerEvents="box-none">
+      {children}
+    </KeyboardAvoidingView>
   );
 };
 
