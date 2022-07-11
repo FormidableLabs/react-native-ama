@@ -1,7 +1,5 @@
-import type { ViewStyle } from 'react-native';
+import { MOTION_ANIMATIONS, MotionAnimationKey } from '../internal/costants';
 
-import { MOTION_ANIMATIONS } from '../internal/costants';
-
-export const isMotionAnimation = (key: keyof ViewStyle) => {
+export const isMotionAnimation = (key: MotionAnimationKey) => {
   return MOTION_ANIMATIONS.includes(key);
 };

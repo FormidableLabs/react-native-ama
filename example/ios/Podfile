@@ -12,6 +12,8 @@ target 'AmaExample' do
 
   arm_value = `/usr/sbin/sysctl -n hw.optional.arm64 2>&1`.to_i
 
+  use_flipper!({ 'Flipper' => '0.150.0' })
+
   post_install do |installer|
     react_native_post_install(installer)
     installer.pods_project.build_configurations.each do |config|

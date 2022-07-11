@@ -15,14 +15,18 @@ export const Text = ({ autofocus, ...rest }: TextProps) => {
   useFocus(autofocus ? textRef : undefined);
 
   const checks = __DEV__ ? useChecks?.() : undefined;
+  const isAccessible = rest.accessible !== false;
 
   __DEV__ &&
+    isAccessible &&
+    rest.children &&
     checks?.uppercaseChecker({
       style: rest.style,
-      extra: rest.children,
+      extra: rest,
       accessibilityLabel: rest.accessibilityLabel,
     });
   __DEV__ &&
+    isAccessible &&
     checks?.noUppercaseStringChecker({
       text: rest.accessibilityLabel,
       canBeEmpty: true,

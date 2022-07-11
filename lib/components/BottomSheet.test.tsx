@@ -158,7 +158,7 @@ describe('BottomSheet', () => {
         onRequestClose={[Function]}
         testID="bottom-sheet"
         transparent={true}
-        visible={true}
+        visible={false}
       />
     `);
   });

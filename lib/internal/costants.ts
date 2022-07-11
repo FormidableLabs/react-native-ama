@@ -1,6 +1,8 @@
 import type { ViewStyle } from 'react-native';
 
-export const MOTION_ANIMATIONS: (Partial<keyof ViewStyle> | 'scale')[] = [
+export type MotionAnimationKey = Partial<keyof ViewStyle> | 'scale';
+
+export const MOTION_ANIMATIONS: MotionAnimationKey[] = [
   'left',
   'bottom',
   'top',

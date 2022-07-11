@@ -1,4 +1,4 @@
-import type { ViewStyle } from 'react-native';
+import React from 'react';
 import {
   AnimationCallback,
   withSpring as ReanimateWithSpring,
@@ -7,37 +7,44 @@ import {
   WithTimingConfig,
 } from 'react-native-reanimated';
 
+import type { MotionAnimationKey } from '../internal/costants';
 import { useAMAContext } from '../providers/AMAProvider';
 import { isMotionAnimation } from '../utils/isMotionAnimation';
 
 export const useReanimatedTiming = () => {
   const { isReduceMotionEnabled } = useAMAContext();
 
-  const withTiming = (
-    propertyKey: keyof ViewStyle,
-    toValue: number,
-    config: WithTimingConfig = {},
-    callback?: AnimationCallback,
-  ) => {
-    if (isReduceMotionEnabled && isMotionAnimation(propertyKey)) {
-      config.duration = 0;
-    }
+  const withTiming = React.useCallback(
+    (
+      propertyKey: MotionAnimationKey,
+      toValue: number,
+      config: WithTimingConfig = {},
+      callback?: AnimationCallback,
+    ) => {
+      if (isReduceMotionEnabled && isMotionAnimation(propertyKey)) {
+        config.duration = 0;
+      }
 
-    return ReanimateWithTiming(toValue, config, callback);
-  };
+      return ReanimateWithTiming(toValue, config, callback);
+    },
+    [isReduceMotionEnabled],
+  );
 
-  const withSpring = (
-    propertyKey: keyof ViewStyle,
-    toValue: number,
-    config?: WithSpringConfig,
-    callback?: AnimationCallback,
-  ) => {
-    if (isReduceMotionEnabled && isMotionAnimation(propertyKey)) {
-      return ReanimateWithTiming(toValue, { duration: 0 });
-    }
+  const withSpring = React.useCallback(
+    (
+      propertyKey: MotionAnimationKey,
+      toValue: number,
+      config?: WithSpringConfig,
+      callback?: AnimationCallback,
+    ) => {
+      if (isReduceMotionEnabled && isMotionAnimation(propertyKey)) {
+        return ReanimateWithTiming(toValue, { duration: 0 });
+      }
 
-    return ReanimateWithSpring(toValue, config, callback);
-  };
+      return ReanimateWithSpring(toValue, config, callback);
+    },
+    [isReduceMotionEnabled],
+  );
 
   return {
     withTiming,
