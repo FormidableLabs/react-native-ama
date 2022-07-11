@@ -68,7 +68,13 @@ describe('Text', () => {
         expect(uppercaseChecker).toHaveBeenCalledWith({
           style: { textTransform: 'uppercase' },
           accessibilityLabel,
-          extra: 'This is a test',
+          extra: {
+            accessibilityLabel,
+            children: 'This is a test',
+            style: {
+              textTransform: 'uppercase',
+            },
+          },
         });
       },
     );

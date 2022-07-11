@@ -79,7 +79,7 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
     const subscriptions: NativeEventSubscription[] = Object.entries(
       eventsMapping,
     ).map(([eventName, contextKey]) => {
-      AccessibilityInfo[contextKey]().then(value =>
+      AccessibilityInfo[contextKey]()?.then(value =>
         handleAccessibilityInfoChanged(contextKey)(value),
       );
 
