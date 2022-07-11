@@ -54,7 +54,7 @@ export type BottomSheetProps = {
   avoidKeyboard?: boolean;
 };
 
-export const BottomSheet = ({
+export const BottomSheetBase = ({
   children,
   visible,
   onClose,
@@ -80,7 +80,7 @@ export const BottomSheet = ({
 }: React.PropsWithChildren<BottomSheetProps>) => {
   // This is used to let Reanimated animate the view out, before removing it from the tree.
   const [renderContent, setRenderContent] = React.useState(visible);
-  const [isModalVisible, setIsModalVisible] = React.useState(true);
+  const [isModalVisible, setIsModalVisible] = React.useState(false);
   const translateY = useSharedValue(0);
   const contentHeight = useSharedValue(0);
   const dragOpacity = useSharedValue(0);
@@ -118,11 +118,11 @@ export const BottomSheet = ({
           }
         }, autoCloseDelay);
       }
-    } else {
+    } else if (isModalVisible) {
       setRenderContent(false);
 
       /**
-       * We need to give Reanimted the time to finish animating the view out.
+       * We need to give Reanimated the time to finish animating the view out.
        * Otherwise, the content will suddenly disappear.
        */
       setTimeout(() => setIsModalVisible(false), animationDuration);
@@ -130,6 +130,7 @@ export const BottomSheet = ({
   }, [
     animationDuration,
     autoCloseDelay,
+    isModalVisible,
     onClose,
     onTimeout,
     translateY,
@@ -138,6 +139,10 @@ export const BottomSheet = ({
 
   React.useEffect(() => {
     isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    };
   }, []);
 
   const dragStyle = useAnimatedStyle(() => {
@@ -166,6 +171,7 @@ export const BottomSheet = ({
   const Wrapper = avoidKeyboard
     ? BottomSheetKeyboardAvoidingView
     : React.Fragment;
+
   return (
     <Modal
       animationType="none"
@@ -259,6 +265,8 @@ export const BottomSheet = ({
     </Modal>
   );
 };
+
+export const BottomSheet = React.memo(BottomSheetBase);
 
 const BottomSheetKeyboardAvoidingView = ({
   children,

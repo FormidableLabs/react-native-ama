@@ -79,6 +79,10 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
     const subscriptions: NativeEventSubscription[] = Object.entries(
       eventsMapping,
     ).map(([eventName, contextKey]) => {
+      AccessibilityInfo[contextKey]()?.then(value =>
+        handleAccessibilityInfoChanged(contextKey)(value),
+      );
+
       return AccessibilityInfo.addEventListener(
         eventName as AccessibilityEvents,
         handleAccessibilityInfoChanged(contextKey),
@@ -140,7 +144,10 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
       <View style={{ flex: 1 }}>
         <>
           {children}
-          {failedItems.length > 0 ? <AMAError /> : null}
+          {
+            // @ts-ignore
+            failedItems.length > 0 ? <AMAError /> : null
+          }
         </>
       </View>
     </AMAContext.Provider>
@@ -160,10 +167,8 @@ export type AMAContextValue = {
     animationEnabled: boolean;
     animation: 'default' | 'fade';
   };
-  /* block:start */
   trackError: (id: string) => void;
   removeError: (id: string) => void;
-  /* block:end */
 };
 
 const DEFAULT_VALUES: AMAContextValue = {
@@ -177,37 +182,35 @@ const DEFAULT_VALUES: AMAContextValue = {
     animationEnabled: true,
     animation: 'default',
   },
-  /* block:start */
   trackError: (_: string) => {},
   removeError: (_: string) => {},
-  /* block:end */
 };
 
-/* block:start */
-const AMAError = () => {
-  return (
-    <Pressable
-      accessibilityRole="button"
-      accessibilityLabel="One or more components didn't pass the accessibility check"
-      accessibilityHint="Please check the console for more info..."
-      style={{
-        paddingHorizontal: 24,
-        paddingTop: 24,
-        paddingBottom: 48,
-        backgroundColor: RED,
-      }}>
-      <View accessible={true}>
-        <Text style={{ color: 'white', fontSize: 16, lineHeight: 26 }}>
-          AMA: One or more component didn't pass the accessibility check.
-        </Text>
-        <Text style={{ color: 'white', fontSize: 16, lineHeight: 24 }}>
-          Please check the console for more info...
-        </Text>
-      </View>
-    </Pressable>
-  );
-};
-/* block:end */
+const AMAError = __DEV__
+  ? () => {
+      return (
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="One or more components didn't pass the accessibility check"
+          accessibilityHint="Please check the console for more info..."
+          style={{
+            paddingHorizontal: 24,
+            paddingTop: 24,
+            paddingBottom: 48,
+            backgroundColor: RED,
+          }}>
+          <View accessible={true}>
+            <Text style={{ color: 'white', fontSize: 16, lineHeight: 26 }}>
+              AMA: One or more component didn't pass the accessibility check.
+            </Text>
+            <Text style={{ color: 'white', fontSize: 16, lineHeight: 24 }}>
+              Please check the console for more info...
+            </Text>
+          </View>
+        </Pressable>
+      );
+    }
+  : null;
 
 const AMAContext = React.createContext<AMAContextValue>(DEFAULT_VALUES);
 

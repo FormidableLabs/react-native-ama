@@ -1,4 +1,3 @@
-import type { ReactNode } from 'react';
 import type { StyleProp } from 'react-native';
 
 import { getPropertyFromStyle } from '../getPropertyFromStyle';
@@ -7,7 +6,7 @@ import type { LogParams } from '../logger';
 export type UppercaseChecker = {
   style: StyleProp<Text> | undefined;
   accessibilityLabel?: string;
-  extra?: ReactNode;
+  extra?: any;
 };
 
 export const uppercaseChecker = ({

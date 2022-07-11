@@ -1,4 +1,4 @@
-import { act, render } from '@testing-library/react-native';
+import { act, render, waitFor } from '@testing-library/react-native';
 import * as React from 'react';
 import { AccessibilityInfo } from 'react-native';
 
@@ -34,6 +34,32 @@ describe('AMAProvider', () => {
     expect(spy).toHaveBeenCalledWith(
       'screenReaderChanged',
       expect.any(Function),
+    );
+  });
+
+  it.each([
+    'isReduceMotionEnabled',
+    'isScreenReaderEnabled',
+    'isReduceTransparencyEnabled',
+    'isGrayscaleEnabled',
+    'isBoldTextEnabled',
+    'isInvertColorsEnabled',
+  ])('setups the initial value for %s', async event => {
+    // @ts-ignore
+    jest.spyOn(AccessibilityInfo, event).mockResolvedValue('yay');
+
+    renderAMAProvider();
+
+    const state: any = {};
+    state[event] = 'yay';
+
+    await waitFor(() =>
+      expect(mockProvider).toHaveBeenCalledWith(
+        expect.objectContaining({
+          value: expect.objectContaining(state),
+        }),
+        {},
+      ),
     );
   });
 

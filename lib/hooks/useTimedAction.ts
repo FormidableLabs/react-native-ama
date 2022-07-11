@@ -9,14 +9,14 @@ export const useTimedAction = () => {
   const onTimeout = React.useCallback(
     async (callback: () => void, milliseconds: number) => {
       if (isScreenReaderEnabled && Platform.OS === 'ios') {
-        return new Promise<void>(resolve => {
-          resolve();
+        return new Promise<null>(resolve => {
+          resolve(null);
         });
       }
 
       const timeout = await getRecommendedTimeoutMillis(milliseconds);
 
-      setTimeout(callback, timeout);
+      return setTimeout(callback, timeout);
     },
     [isScreenReaderEnabled],
   );

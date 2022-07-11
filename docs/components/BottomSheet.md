@@ -194,6 +194,20 @@ The BottomSheet visibility
 |---------|
 | boolean |
 
+## Known issues
+
+If the app crashes with the following error:
+
+> Unsupported top level event type "onGestureHandlerStateChange" dispatched
+> 
+
+Add the following import at the top of your `App.tsx|jsx` file:
+
+```js
+// https://github.com/software-mansion/react-native-gesture-handler/issues/320
+import 'react-native-gesture-handler'
+```
+
 ## Related guidelines
 
 - [ButtomSheet](../guidelines/bottomsheet)
