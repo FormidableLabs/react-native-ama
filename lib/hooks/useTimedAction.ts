@@ -7,7 +7,10 @@ export const useTimedAction = () => {
   const { isScreenReaderEnabled } = useAMAContext();
 
   const onTimeout = React.useCallback(
-    async (callback: () => void, milliseconds: number) => {
+    async (
+      callback: () => void,
+      milliseconds: number,
+    ): Promise<null | ReturnType<typeof setTimeout>> => {
       if (isScreenReaderEnabled && Platform.OS === 'ios') {
         return new Promise<null>(resolve => {
           resolve(null);
