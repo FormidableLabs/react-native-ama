@@ -15,6 +15,7 @@ export const BottomSheetScreen: React.FC<TimedActionProps> = ({ children }) => {
     <SafeAreaView style={styles.centeredView}>
       <BottomSheet
         visible={modalVisible}
+        topInset={0}
         onClose={() => {
           setModalVisible(!modalVisible);
         }}

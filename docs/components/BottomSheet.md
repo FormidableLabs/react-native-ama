@@ -185,6 +185,14 @@ The props to use for the [<ScrollView />](https://reactnative.dev/docs/scrollvie
 |-----------------|-----------|
 | scrollViewProps | undefined |
 
+### <Required /> ` `topInset`
+
+The value is used to calculate the correct max ScrollView height.
+
+| Type   | Default |
+|--------|---------|
+| number | 0       |
+
 ### <Required /> `visible`
 
 The BottomSheet visibility

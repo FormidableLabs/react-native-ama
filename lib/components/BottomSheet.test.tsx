@@ -31,6 +31,7 @@ describe('BottomSheet', () => {
 
       render(
         <BottomSheet
+          topInset={0}
           visible={true}
           onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
@@ -61,6 +62,7 @@ describe('BottomSheet', () => {
 
       const { getByTestId } = render(
         <BottomSheet
+          topInset={0}
           visible={true}
           onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
@@ -97,6 +99,7 @@ describe('BottomSheet', () => {
 
       render(
         <OriginalBottomSheet
+          topInset={0}
           visible={true}
           onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
@@ -123,6 +126,7 @@ describe('BottomSheet', () => {
 
       const { getByTestId } = render(
         <OriginalBottomSheet
+          topInset={0}
           visible={true}
           onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
@@ -143,6 +147,7 @@ describe('BottomSheet', () => {
   it('does not render the content when not visible', () => {
     const { toJSON } = render(
       <BottomSheet
+        topInset={0}
         visible={false}
         onClose={() => {}}
         closeActionAccessibilityLabel={'close me'}
@@ -167,6 +172,7 @@ describe('BottomSheet', () => {
     it('allows customising the overlay style', () => {
       const { getByTestId } = render(
         <BottomSheet
+          topInset={0}
           visible={true}
           onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
@@ -187,6 +193,7 @@ describe('BottomSheet', () => {
     it('allows customising the bottom sheet panel', () => {
       const { getByTestId } = render(
         <BottomSheet
+          topInset={0}
           visible={true}
           onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
@@ -206,6 +213,7 @@ describe('BottomSheet', () => {
     it('allows customising the line style', () => {
       const { getByTestId } = render(
         <BottomSheet
+          topInset={0}
           visible={true}
           onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
@@ -232,6 +240,7 @@ describe('BottomSheet', () => {
     it('allows not rendering the line', () => {
       const { getByTestId } = render(
         <BottomSheet
+          topInset={0}
           visible={true}
           onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
@@ -257,6 +266,7 @@ describe('BottomSheet', () => {
               backgroundColor: 'fucsia',
             },
           }}
+          topInset={3}
           testID="bottom-sheet"
         />,
       );
@@ -270,6 +280,7 @@ describe('BottomSheet', () => {
     it('allows rendering a custom header', () => {
       const { getByTestId } = render(
         <BottomSheet
+          topInset={0}
           visible={true}
           onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
@@ -284,6 +295,7 @@ describe('BottomSheet', () => {
   it('on close it waits for the animation to be completed before hiding the modal', () => {
     const { rerender, getByTestId } = render(
       <BottomSheet
+        topInset={0}
         visible={true}
         onClose={() => {}}
         closeActionAccessibilityLabel={'close me'}
@@ -295,6 +307,7 @@ describe('BottomSheet', () => {
     act(() =>
       rerender(
         <BottomSheet
+          topInset={0}
           visible={false}
           onClose={() => {}}
           closeActionAccessibilityLabel={'close me'}
@@ -321,6 +334,7 @@ describe('BottomSheet', () => {
   it('uses the animatedStyle for the bottom sheet wrapper', () => {
     const { getByTestId } = render(
       <BottomSheet
+        topInset={0}
         visible={true}
         onClose={() => {}}
         closeActionAccessibilityLabel={'close me'}
@@ -352,6 +366,7 @@ describe('BottomSheet', () => {
 
     const { getByTestId } = render(
       <BottomSheet
+        topInset={0}
         visible={true}
         closeDistance={0.1}
         onClose={onClose}
@@ -388,6 +403,7 @@ describe('BottomSheet', () => {
 
     render(
       <BottomSheet
+        topInset={0}
         visible={true}
         autoCloseDelay={100}
         closeDistance={0.1}
@@ -405,6 +421,7 @@ describe('BottomSheet', () => {
   it('wraps the Modal content inside KeyboardAvoidingView when the avoidKeyboard prop is true', () => {
     const { UNSAFE_getByType } = render(
       <BottomSheet
+        topInset={0}
         visible={true}
         autoCloseDelay={100}
         closeDistance={0.1}
@@ -425,6 +442,7 @@ describe('BottomSheet', () => {
     avoidKeyboard => {
       const { UNSAFE_getByType } = render(
         <BottomSheet
+          topInset={0}
           visible={true}
           autoCloseDelay={100}
           closeDistance={0.1}

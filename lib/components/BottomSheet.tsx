@@ -33,6 +33,7 @@ import { useChecks } from '../internal/useChecks';
 export type BottomSheetProps = {
   animationDuration?: number;
   autoCloseDelay?: number;
+  avoidKeyboard?: boolean;
   bottomSheetStyle?: ViewStyle | ViewStyle[];
   closeActionAccessibilityLabel: string;
   closeDistance?: number;
@@ -50,8 +51,8 @@ export type BottomSheetProps = {
   scrollEnabled?: boolean;
   scrollViewProps?: Omit<ScrollViewProps, 'scrollEnabled'>;
   testID?: string;
+  topInset: number;
   visible: boolean;
-  avoidKeyboard?: boolean;
 };
 
 export const BottomSheetBase = ({
@@ -77,6 +78,7 @@ export const BottomSheetBase = ({
   avoidKeyboard,
   maxHeight = Dimensions.get('window').height * 0.9,
   minVelocityToClose = 1000,
+  topInset,
 }: React.PropsWithChildren<BottomSheetProps>) => {
   // This is used to let Reanimated animate the view out, before removing it from the tree.
   const [renderContent, setRenderContent] = React.useState(visible);
@@ -86,9 +88,9 @@ export const BottomSheetBase = ({
   const dragOpacity = useSharedValue(0);
   const { onTimeout } = useTimedAction();
   const isMounted = React.useRef(false);
-  const [headerHeight, setHeaderHeight] = React.useState(0);
-  const [footerHeight, setFooterHeight] = React.useState(0);
-  const [handleHeight, setHandleHeight] = React.useState(0);
+  const [headerHeight, setHeaderHeight] = React.useState(-1);
+  const [footerHeight, setFooterHeight] = React.useState(-1);
+  const [handleHeight, setHandleHeight] = React.useState(-1);
 
   const checks = __DEV__ ? useChecks?.() : null;
   const debugStyle = __DEV__ ? checks?.debugStyle : {};
@@ -162,7 +164,8 @@ export const BottomSheetBase = ({
   };
 
   const maxScrollViewHeight =
-    maxHeight - footerHeight - headerHeight - handleHeight;
+    maxHeight - footerHeight - headerHeight - handleHeight - topInset;
+
   const scrollViewStyle = [
     { maxHeight: maxScrollViewHeight },
     scrollViewProps?.style,
@@ -171,6 +174,10 @@ export const BottomSheetBase = ({
   const Wrapper = avoidKeyboard
     ? BottomSheetKeyboardAvoidingView
     : React.Fragment;
+
+  const opacity = [footerHeight, headerHeight, handleHeight].every(h => h >= 0)
+    ? 1
+    : 0;
 
   return (
     <Modal
@@ -181,7 +188,7 @@ export const BottomSheetBase = ({
       testID={testID}>
       <Wrapper>
         {renderContent ? (
-          <GestureHandlerRootView style={{ flex: 1 }}>
+          <GestureHandlerRootView style={{ flex: 1, opacity }}>
             <AnimatedContainer
               style={[styles.overlay, overlayStyle, debugStyle, dragStyle]}
               from={{ opacity: 0 }}
