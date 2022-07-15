@@ -151,7 +151,6 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
       }
     : undefined;
 
-  console.info('list');
   return __DEV__ ? (
     <AMAContext.Provider
       value={{
