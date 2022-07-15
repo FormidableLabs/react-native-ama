@@ -76,12 +76,12 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
   };
 
   React.useEffect(() => {
+    const allInitPromises: Promise<boolean>[] = [];
+
     const subscriptions: NativeEventSubscription[] = Object.entries(
       eventsMapping,
     ).map(([eventName, contextKey]) => {
-      AccessibilityInfo[contextKey]()?.then(value =>
-        handleAccessibilityInfoChanged(contextKey)(value),
-      );
+      allInitPromises.push(AccessibilityInfo[contextKey]());
 
       return AccessibilityInfo.addEventListener(
         eventName as AccessibilityEvents,
@@ -97,10 +97,29 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
       checkAndroidAnimationStatus('active');
     }
 
+    Promise.all(allInitPromises).then(promisesValues => {
+      const newValues = Object.values(eventsMapping).reduce(
+        (list, key, index) => {
+          list[key] = promisesValues[index];
+
+          return list;
+        },
+        {} as AMAContextValue,
+      );
+
+      setValues(oldValues => {
+        return {
+          ...oldValues,
+          ...newValues,
+        };
+      });
+    });
+
     return () => {
       subscriptions.forEach(subscription => subscription.remove());
       AppState.removeEventListener('change', checkAndroidAnimationStatus);
     };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -132,6 +151,7 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
       }
     : undefined;
 
+  console.info('list');
   return __DEV__ ? (
     <AMAContext.Provider
       value={{

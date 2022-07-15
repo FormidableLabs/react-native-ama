@@ -37,29 +37,30 @@ describe('AMAProvider', () => {
     );
   });
 
-  it.each([
-    'isReduceMotionEnabled',
-    'isScreenReaderEnabled',
-    'isReduceTransparencyEnabled',
-    'isGrayscaleEnabled',
-    'isBoldTextEnabled',
-    'isInvertColorsEnabled',
-  ])('setups the initial value for %s', async event => {
-    // @ts-ignore
-    jest.spyOn(AccessibilityInfo, event).mockResolvedValue('yay');
+  it('setups the initial value for all the states', async () => {
+    const events = [
+      'isReduceMotionEnabled',
+      'isScreenReaderEnabled',
+      'isReduceTransparencyEnabled',
+      'isGrayscaleEnabled',
+      'isBoldTextEnabled',
+      'isInvertColorsEnabled',
+    ];
+
+    const states: any = {};
+
+    events.forEach(event => {
+      // @ts-ignore
+      jest.spyOn(AccessibilityInfo, event).mockResolvedValue('yay');
+      states[event] = 'yay';
+    });
 
     renderAMAProvider();
 
-    const state: any = {};
-    state[event] = 'yay';
-
     await waitFor(() =>
-      expect(mockProvider).toHaveBeenCalledWith(
-        expect.objectContaining({
-          value: expect.objectContaining(state),
-        }),
-        {},
-      ),
+      expect(mockProvider.mock.calls[1][0]).toMatchObject({
+        value: states,
+      }),
     );
   });
 
