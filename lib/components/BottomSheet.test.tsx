@@ -458,6 +458,30 @@ describe('BottomSheet', () => {
       expect(() => UNSAFE_getByType(KeyboardAvoidingView)).toThrow();
     },
   );
+
+  it('calls onClose correctly', () => {
+    const onClose = jest.fn();
+
+    const { getByTestId } = render(
+      <BottomSheet
+        topInset={0}
+        visible={true}
+        closeDistance={0.1}
+        onClose={onClose}
+        closeActionAccessibilityLabel={'close me'}
+        animationDuration={100}
+        headerComponent={<Text testID="Header">Header</Text>}
+        testID="bottom-sheet"
+      />,
+    );
+
+    act(() => {
+      const event = { some: 'props' };
+      getByTestId('bottom-sheet').props.onRequestClose(event);
+    });
+
+    expect(onClose).toHaveBeenCalledWith();
+  });
 });
 
 let useAnimatedGestureHandler: jest.Mock;
