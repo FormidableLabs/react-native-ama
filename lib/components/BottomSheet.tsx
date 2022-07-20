@@ -225,7 +225,7 @@ export const BottomSheetBase = React.forwardRef<
         animationType="none"
         transparent={true}
         visible={isModalVisible}
-        onRequestClose={onClose}
+        onRequestClose={() => onClose()}
         ref={ref as any}
         testID={testID}>
         <Wrapper>
