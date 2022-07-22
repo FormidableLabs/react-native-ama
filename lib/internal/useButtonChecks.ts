@@ -24,27 +24,18 @@ export const useButtonChecks = __DEV__
 
       const isAccessible = props.accessible !== false;
 
-      // @ts-ignore
-      isAccessible
-        ? noUndefinedProperty({
-            properties: props,
-            property: 'accessibilityRole',
-            rule: 'NO_ACCESSIBILITY_ROLE',
-          })
-        : noUndefinedProperty({
-            properties: props,
-            property: 'importantForAccessibility',
-          });
-      isAccessible
-        ? noUndefinedProperty({
-            properties: props,
-            property: 'accessibilityLabel',
-            rule: 'NO_ACCESSIBILITY_LABEL',
-          })
-        : noUndefinedProperty({
-            properties: props,
-            property: 'accessibilityElementsHidden',
-          });
+      isAccessible &&
+        noUndefinedProperty({
+          properties: props,
+          property: 'accessibilityRole',
+          rule: 'NO_ACCESSIBILITY_ROLE',
+        });
+      isAccessible &&
+        noUndefinedProperty({
+          properties: props,
+          property: 'accessibilityLabel',
+          rule: 'NO_ACCESSIBILITY_LABEL',
+        });
       isAccessible &&
         noUppercaseStringChecker({
           text: props.accessibilityLabel,
