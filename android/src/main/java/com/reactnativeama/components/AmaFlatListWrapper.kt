@@ -26,6 +26,12 @@ class AmaFlatListWrapper(context: Context?) : ViewGroup(context) {
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
     }
 
+    override fun setFocusable(focusable: Boolean) {
+    }
+
+    override fun setFocusable(focusable: Int) {
+    }
+
     fun setRowsCount(count: Int) {
         rowsCount = count
     }
