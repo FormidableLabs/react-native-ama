@@ -48,9 +48,10 @@ export const useFormField = ({
   const focusNextFormField = () => {
     const isLastItem = isLastField();
 
-    if (isLastItem && isScreenReaderEnabled) {
-      submitForm();
-
+    if (isLastItem) {
+      if (isScreenReaderEnabled) {
+        submitForm();
+      }
       return;
     }
 
