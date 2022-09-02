@@ -19,7 +19,7 @@ npm install --save-dev react-native-ama
 ### Dependencies
 
 Some component relies on [react-native-reanimated](https://github.com/software-mansion/react-native-reanimated) and/or [react-native-gesture-handler](https://github.com/software-mansion/react-native-gesture-handler),
-so this other dependencies should be also be installed.
+so these other dependencies should also be installed.
 
 ```bash npm2yarn
 npm install --save-dev react-native-reanimated
