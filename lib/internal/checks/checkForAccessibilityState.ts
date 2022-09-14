@@ -20,7 +20,10 @@ export const checkForAccessibilityState = ({
   ];
 
   for (const state of allStates) {
-    if (state !== 'busy' && state !== expectedState.accessibilityState) {
+    if (
+      state !== 'busy' &&
+      !expectedState.accessibilityStates.includes(state as any)
+    ) {
       return {
         message: `The accessibilityState "${state}" and the role "${accessibilityRole}" are not compatible`,
         rule: 'INCOMPATIBLE_ACCESSIBILITY_STATE',
@@ -34,14 +37,14 @@ export const checkForAccessibilityState = ({
 // @ts-ignore
 const MAPPED_ROLE_CHECKS: {
   [key in Partial<AccessibilityRole>]: {
-    accessibilityState: keyof AccessibilityState;
+    accessibilityStates: (keyof AccessibilityState)[];
     required: boolean;
   };
 } = {
-  button: { accessibilityState: 'expanded', required: false },
-  togglebutton: { accessibilityState: 'checked', required: true },
-  switch: { accessibilityState: 'checked', required: true },
-  checkbox: { accessibilityState: 'checked', required: true },
-  tab: { accessibilityState: 'selected', required: true },
-  radio: { accessibilityState: 'selected', required: true },
+  button: { accessibilityStates: ['expanded', 'selected'], required: false },
+  togglebutton: { accessibilityStates: ['checked'], required: true },
+  switch: { accessibilityStates: ['checked'], required: true },
+  checkbox: { accessibilityStates: ['checked'], required: true },
+  tab: { accessibilityStates: ['selected'], required: true },
+  radio: { accessibilityStates: ['selected'], required: true },
 };

@@ -50,36 +50,33 @@ describe('checkForAccessibilityState', () => {
     ).toBe(null);
   });
 
-  it.each(['checked', 'selected'])(
-    'fails if the button has an incompatible state',
-    key => {
-      const state = {};
+  it('fails if the button has an incompatible state', () => {
+    const state = {
+      checked: false,
+    };
 
-      // @ts-ignore
-      state[key] = false;
+    expect(
+      checkForAccessibilityState({
+        ...state,
+        accessibilityRole: 'button',
+      }),
+    ).toEqual({
+      message:
+        'The accessibilityState "checked" and the role "button" are not compatible',
+      rule: 'INCOMPATIBLE_ACCESSIBILITY_STATE',
+    });
 
-      expect(
-        checkForAccessibilityState({
-          ...state,
-          accessibilityRole: 'button',
-        }),
-      ).toEqual({
-        message: `The accessibilityState "${key}" and the role "button" are not compatible`,
-        rule: 'INCOMPATIBLE_ACCESSIBILITY_STATE',
-      });
+    state.checked = true;
 
-      // @ts-ignore
-      state[key] = true;
-
-      expect(
-        checkForAccessibilityState({
-          accessibilityState: state,
-          accessibilityRole: 'button',
-        }),
-      ).toEqual({
-        message: `The accessibilityState "${key}" and the role "button" are not compatible`,
-        rule: 'INCOMPATIBLE_ACCESSIBILITY_STATE',
-      });
-    },
-  );
+    expect(
+      checkForAccessibilityState({
+        accessibilityState: state,
+        accessibilityRole: 'button',
+      }),
+    ).toEqual({
+      message:
+        'The accessibilityState "checked" and the role "button" are not compatible',
+      rule: 'INCOMPATIBLE_ACCESSIBILITY_STATE',
+    });
+  });
 });
