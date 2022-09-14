@@ -2,6 +2,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import { waitFor } from '@testing-library/react-native';
 
 import * as UseChecks from '../internal/useChecks';
+import * as AMAProvider from '../providers/AMAProvider';
 import * as Form from '../providers/Form';
 import { useFormField } from './useFormField';
 
@@ -15,6 +16,9 @@ describe('useFormField', () => {
   let localRef: any[] = [];
 
   beforeEach(() => {
+    jest.spyOn(AMAProvider, 'useAMAContext').mockReturnValue({
+      isScreenReaderEnabled: true,
+    } as any);
     jest.spyOn(Form, 'useForm').mockImplementation(() => {
       return { refs: localRef, submitForm };
     });
@@ -150,6 +154,7 @@ function mockUseFocus() {
   };
 }
 
+jest.mock('../providers/AMAProvider');
 jest.mock('./useFocus', () => mockUseFocus());
 jest.mock('../internal/checks/checkFocusTrap', () => {
   return {

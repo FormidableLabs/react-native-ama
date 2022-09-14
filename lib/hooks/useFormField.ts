@@ -2,6 +2,7 @@ import React from 'react';
 
 import { applyStyle } from '../internal/applyStyle';
 import { useChecks } from '../internal/useChecks';
+import { useAMAContext } from '../providers/AMAProvider';
 import { useForm } from '../providers/Form';
 
 export type UseFormField = {
@@ -32,6 +33,7 @@ export const useFormField = ({
   style = {},
 }: UseFormField) => {
   const { refs, submitForm, focusField } = useForm();
+  const { isScreenReaderEnabled } = useAMAContext();
   const fieldRef = React.useRef(ref);
 
   const checks = __DEV__ ? useChecks?.() : undefined;
@@ -47,8 +49,9 @@ export const useFormField = ({
     const isLastItem = isLastField();
 
     if (isLastItem) {
-      submitForm();
-
+      if (isScreenReaderEnabled) {
+        submitForm();
+      }
       return;
     }
 
