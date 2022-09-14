@@ -19,6 +19,7 @@ describe('useFormField', () => {
     jest.spyOn(AMAProvider, 'useAMAContext').mockReturnValue({
       isScreenReaderEnabled: true,
     } as any);
+
     jest.spyOn(Form, 'useForm').mockImplementation(() => {
       return { refs: localRef, submitForm };
     });
@@ -115,7 +116,11 @@ describe('useFormField', () => {
       });
     });
 
-    it('triggers submitForm when the element is the last one of the ref', () => {
+    it('if the screen reader is on then it triggers submitForm when the element is the last one of the ref', () => {
+      jest.spyOn(AMAProvider, 'useAMAContext').mockReturnValue({
+        isScreenReaderEnabled: true,
+      } as any);
+
       const ref = { current: 'whatever' };
 
       const { result } = renderHook(() => {
@@ -136,6 +141,33 @@ describe('useFormField', () => {
       result.current.focusNextFormField();
 
       expect(submitForm).toHaveBeenCalledWith();
+    });
+
+    it('if the screen reader is off then does not triggers submitForm when the element is the last one of the ref', () => {
+      jest.spyOn(AMAProvider, 'useAMAContext').mockReturnValue({
+        isScreenReaderEnabled: false,
+      } as any);
+
+      const ref = { current: 'whatever' };
+
+      const { result } = renderHook(() => {
+        useFormField({
+          ref: { current: 'random ref' },
+          hasFocusCallback: false,
+          hasValidation: false,
+        });
+
+        // next field
+        return useFormField({
+          ref,
+          hasFocusCallback: false,
+          hasValidation: false,
+        });
+      });
+
+      result.current.focusNextFormField();
+
+      expect(submitForm).not.toHaveBeenCalledWith();
     });
   });
 });
