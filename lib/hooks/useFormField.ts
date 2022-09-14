@@ -1,4 +1,5 @@
 import React from 'react';
+import { Keyboard } from 'react-native';
 
 import { applyStyle } from '../internal/applyStyle';
 import { useChecks } from '../internal/useChecks';
@@ -49,9 +50,12 @@ export const useFormField = ({
     const isLastItem = isLastField();
 
     if (isLastItem) {
+      Keyboard.dismiss();
+
       if (isScreenReaderEnabled) {
         submitForm();
       }
+
       return;
     }
 

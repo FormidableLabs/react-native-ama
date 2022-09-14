@@ -272,7 +272,7 @@ PODS:
   - React-jsinspector (0.66.4)
   - React-logger (0.66.4):
     - glog
-  - react-native-ama (0.5.3):
+  - react-native-ama (0.5.4):
     - React-Core
   - react-native-safe-area-context (3.2.0):
     - React-Core
@@ -564,7 +564,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 94ce921e1d8ce7023366873ec371f3441383b396
   React-jsinspector: d0374f7509d407d2264168b6d0fad0b54e300b85
   React-logger: 933f80c97c633ee8965d609876848148e3fef438
-  react-native-ama: 60af4983d511ec450804fe3d092ce00f1d9fdd58
+  react-native-ama: 6346777f05a90c4981a3a1c569411955cd5515f3
   react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
   React-perflogger: 93075d8931c32cd1fce8a98c15d2d5ccc4d891bd
   React-RCTActionSheet: 7d3041e6761b4f3044a37079ddcb156575fb6d89
