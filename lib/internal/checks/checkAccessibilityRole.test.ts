@@ -1,9 +1,5 @@
 import { Platform } from 'react-native';
 
-beforeEach(() => {
-  jest.clearAllMocks();
-});
-
 describe('checkAccessibilityRole', () => {
   it('fails if the role is not supported by the platform', () => {
     Platform.OS = 'android';
@@ -17,19 +13,27 @@ describe('checkAccessibilityRole', () => {
     });
   });
 
-  it('warns if the role is not supported by the "mirror" platform', () => {
-    const consoleWarn = jest
-      .spyOn(console, 'warn')
-      .mockImplementation(() => {});
+  it('fails if the role is not supported by the mirror platform', () => {
     Platform.OS = 'ios';
 
     const checkAccessibilityRole =
       require('./checkAccessibilityRole').checkAccessibilityRole;
 
-    expect(checkAccessibilityRole('adjustable')).toEqual(null);
+    expect(checkAccessibilityRole('adjustable')).toEqual({
+      message: '"adjustable" is not a native element for "android"',
+      rule: 'INCOMPATIBLE_ACCESSIBILITY_ROLE',
+    });
+  });
 
-    expect(consoleWarn).toHaveBeenCalledWith(
-      'NOTE: "adjustable" is not a native element for "android"',
-    );
+  it('succeed if the accessibility role is valid for both platforms', () => {
+    const checkAccessibilityRole =
+      require('./checkAccessibilityRole').checkAccessibilityRole;
+
+    expect(
+      checkAccessibilityRole({
+        android: 'checkbox',
+        ios: 'button',
+      }),
+    ).toEqual(null);
   });
 });

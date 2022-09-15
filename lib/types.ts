@@ -12,7 +12,6 @@ export type AccessibilityRoles =
         | 'image'
         | 'keyboardkey'
         | 'text'
-        | 'adjustable'
         | 'imagebutton'
         | 'header'
         | 'summary'
@@ -39,4 +38,16 @@ export type AccessibilityRoles =
   | {
       accessibilityRole: 'tab' | 'radio';
       selected: AccessibilityState['selected'];
+    }
+  | {
+      accessibilityRole: {
+        ios: 'adjustable';
+        android: 'button';
+      };
+    }
+  | {
+      accessibilityRole: {
+        ios: 'button';
+        android: 'checkbox';
+      };
     };

@@ -1,5 +1,10 @@
 import type React from 'react';
-import type { AccessibilityState, LayoutChangeEvent } from 'react-native';
+import type {
+  AccessibilityRole,
+  AccessibilityState,
+  LayoutChangeEvent,
+} from 'react-native';
+import { Platform } from 'react-native';
 
 import { generateAccessibilityStateFromProp } from '../internal/generateAccessibilityStateFromProp';
 import { shouldIgnoreContrastCheckForDisabledElement } from '../internal/logger';
@@ -17,6 +22,7 @@ export type UsePressable<T> = Omit<
 
 type ReturnUsePressable = {
   accessibilityState: AccessibilityState;
+  accessibilityRole: AccessibilityRole;
   onLayout?: (event: LayoutChangeEvent) => void;
   style?: Record<string, any>;
 };
@@ -36,6 +42,12 @@ export const usePressable = <T>(
     ? useButtonChecks?.(props, children, !ignoreContrastCheck)
     : null;
 
+  const accessibilityRole =
+    typeof props.accessibilityRole === 'object'
+      ? // @ts-ignore
+        props.accessibilityRole[Platform.OS]
+      : props.accessibilityRole;
+
   return __DEV__
     ? {
         accessibilityState,
@@ -43,8 +55,10 @@ export const usePressable = <T>(
         onLayout: checks.onLayout,
         // @ts-ignore
         style: checks.debugStyle,
+        accessibilityRole,
       }
     : {
         accessibilityState,
+        accessibilityRole,
       };
 };
