@@ -1,5 +1,9 @@
 import * as React from 'react';
-import { InteractionManager, LayoutChangeEvent } from 'react-native';
+import {
+  AccessibilityRole,
+  InteractionManager,
+  LayoutChangeEvent,
+} from 'react-native';
 
 import {
   CheckFocusTrap,
@@ -8,6 +12,7 @@ import {
 import type { UppercaseChecker } from '../internal/checks/uppercaseChecker';
 import { LogParams, getRuleAction, logFailure } from '../internal/logger';
 import { useAMAContext } from '../providers/AMAProvider';
+import { checkAccessibilityRole as checkAccessibilityRoleImplementation } from './checks/checkAccessibilityRole';
 import type { CheckForAccessibilityState } from './checks/checkForAccessibilityState';
 import { checkForAccessibilityState } from './checks/checkForAccessibilityState';
 import { checkMinimumSize as checkMinimumSizeImplementation } from './checks/checkMinimumSize';
@@ -131,6 +136,13 @@ export const useChecks = __DEV__
         });
       };
 
+      const checkAccessibilityRole = (param: AccessibilityRole) => {
+        logResult(
+          'checkAccessibilityRole',
+          checkAccessibilityRoleImplementation(param),
+        );
+      };
+
       const checkCompatibleAccessibilityState = (
         props: Record<string, any>,
       ) => {
@@ -190,6 +202,7 @@ export const useChecks = __DEV__
         checkFocusTrap,
         minimumSizeFailed,
         checkCompatibleAccessibilityState,
+        checkAccessibilityRole,
         debugStyle,
       };
     }

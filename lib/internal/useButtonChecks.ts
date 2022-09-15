@@ -1,4 +1,3 @@
-import { checkAccessibilityRole } from 'lib/internal/checks/checkAccessibilityRole';
 import type React from 'react';
 
 import { applyStyle } from '../internal/applyStyle';
@@ -16,6 +15,7 @@ export const useButtonChecks = __DEV__
         onLayout,
         noUppercaseStringChecker,
         checkCompatibleAccessibilityState,
+        checkAccessibilityRole,
         debugStyle,
         // @ts-ignore
       } = useChecks();
