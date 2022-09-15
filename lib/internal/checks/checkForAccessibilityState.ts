@@ -17,10 +17,12 @@ export const checkForAccessibilityState = ({
   const allStates = [
     ...Object.keys(rest || {}),
     ...Object.keys(accessibilityState || {}),
-  ];
+  ].filter(state => state !== 'busy');
 
   for (const state of allStates) {
-    if (state === 'busy') {
+    // @ts-ignore
+    const stateValue = rest?.[state];
+    if (allStates.length > 1 && stateValue === undefined) {
       continue;
     }
 

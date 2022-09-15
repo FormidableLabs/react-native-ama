@@ -79,4 +79,35 @@ describe('checkForAccessibilityState', () => {
       rule: 'INCOMPATIBLE_ACCESSIBILITY_STATE',
     });
   });
+
+  it('fails is the single state is undefined when not compatible', () => {
+    const state = {
+      checked: undefined,
+    };
+
+    expect(
+      checkForAccessibilityState({
+        ...state,
+        accessibilityRole: 'button',
+      }),
+    ).toEqual({
+      message:
+        'The accessibilityState "checked" and the role "button" are not compatible',
+      rule: 'INCOMPATIBLE_ACCESSIBILITY_STATE',
+    });
+  });
+
+  it('ignores states set as undefined when there are multiple states', () => {
+    const state = {
+      checked: undefined,
+      selected: true,
+    };
+
+    expect(
+      checkForAccessibilityState({
+        ...state,
+        accessibilityRole: 'button',
+      }),
+    ).toEqual(null);
+  });
 });
