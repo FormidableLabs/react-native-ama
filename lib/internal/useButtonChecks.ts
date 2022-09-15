@@ -1,3 +1,4 @@
+import { checkAccessibilityRole } from 'lib/internal/checks/checkAccessibilityRole';
 import type React from 'react';
 
 import { applyStyle } from '../internal/applyStyle';
@@ -41,6 +42,7 @@ export const useButtonChecks = __DEV__
           text: props.accessibilityLabel,
         });
       checkCompatibleAccessibilityState(props);
+      checkAccessibilityRole(props.accessibilityRole);
 
       const contrastCheckerCallback = shouldPerformContrastCheck
         ? contrastChecker

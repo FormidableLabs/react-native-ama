@@ -1,4 +1,5 @@
 import type { AccessibilityRole, AccessibilityState } from 'react-native';
+import { Platform } from 'react-native';
 
 import type { AMAAccessibilityState, AccessibilityRoles } from '../../types';
 import type { LogParams } from '../logger';
@@ -20,20 +21,36 @@ export const checkForAccessibilityState = ({
   ];
 
   for (const state of allStates) {
-    if (
-      state !== 'busy' &&
-      !expectedState.accessibilityStates.includes(state as any)
-    ) {
+    if (state === 'busy') {
+      continue;
+    }
+
+    const mirrorPlatform = Platform.OS === 'android' ? 'ios' : 'android';
+    if (!expectedState.accessibilityStates.includes(state as any)) {
       return {
         message: `The accessibilityState "${state}" and the role "${accessibilityRole}" are not compatible`,
         rule: 'INCOMPATIBLE_ACCESSIBILITY_STATE',
       };
+    } else if (
+      // @ts-ignore
+      !expectedState.platforms.includes(Platform.OS)
+    ) {
+      return {
+        message: `The accessibilityState "${state}" is not a native element for "${Platform.OS}"`,
+        rule: 'INCOMPATIBLE_ACCESSIBILITY_STATE',
+      };
+    } else if (
+      // @ts-ignore
+      !expectedState.platforms.includes(mirrorPlatform)
+    ) {
+      console.warn(
+        'NOTE: The accessibilityState "${state}" is not a native element for "${mirrorPlatform}"',
+      );
     }
   }
 
   return null;
 };
-
 // @ts-ignore
 const MAPPED_ROLE_CHECKS: {
   [key in Partial<AccessibilityRole>]: {
