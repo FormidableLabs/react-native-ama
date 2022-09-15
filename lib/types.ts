@@ -37,10 +37,6 @@ export type AccessibilityRoles =
       selected?: AccessibilityState['selected'];
     }
   | {
-      accessibilityRole: 'togglebutton' | 'switch' | 'checkbox';
-      checked: AccessibilityState['checked'];
-    }
-  | {
       accessibilityRole: 'tab' | 'radio';
       selected: AccessibilityState['selected'];
     };
