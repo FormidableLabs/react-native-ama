@@ -3,6 +3,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import * as Logger from '../internal/logger';
 import type { RuleAction } from '../internal/logger.rules';
 import * as AMAProvider from '../providers/AMAProvider';
+import * as CheckForAccessibilityRole from './checks/checkAccessibilityRole';
 import * as CheckForAccessibilityState from './checks/checkForAccessibilityState';
 import { useChecks } from './useChecks';
 
@@ -162,6 +163,17 @@ describe('useChecks', () => {
       },
       checked: false,
     });
+  });
+
+  it('checks for compatible accessibility role', () => {
+    const check = jest
+      .spyOn(CheckForAccessibilityRole, 'checkAccessibilityRole')
+      .mockReturnValue(null);
+    const { result } = renderHook(() => useChecks!());
+
+    result.current.checkAccessibilityRole('button');
+
+    expect(check).toHaveBeenCalledWith('button');
   });
 });
 

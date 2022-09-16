@@ -13,6 +13,7 @@ export type Rule =
   | 'NO_UNDEFINED'
   | 'NO_UPPERCASE_TEXT'
   | 'INCOMPATIBLE_ACCESSIBILITY_STATE'
+  | 'INCOMPATIBLE_ACCESSIBILITY_ROLE'
   | 'NO_FORM_LABEL_ENDING_WITH_ASTERISK'
   | 'UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL';
 
@@ -33,6 +34,7 @@ export const NON_OVERRIDABLE_RULES: string[] | undefined = __DEV__
       'FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE',
       'BOTTOM_SHEET_CLOSE_ACTION',
       'INCOMPATIBLE_ACCESSIBILITY_STATE',
+      'INCOMPATIBLE_ACCESSIBILITY_ROLE',
     ]
   : undefined;
 
@@ -54,6 +56,7 @@ export const LOGGER_RULES: Record<Rule, RuleAction> | null = __DEV__
       BOTTOM_SHEET_CLOSE_ACTION: 'MUST',
       INCOMPATIBLE_ACCESSIBILITY_STATE: 'MUST',
       NO_FORM_LABEL_ENDING_WITH_ASTERISK: 'MUST_NOT',
+      INCOMPATIBLE_ACCESSIBILITY_ROLE: 'MUST_NOT',
     }
   : null;
 
@@ -90,6 +93,8 @@ export const RULES_HELP: Record<Rule, string> | null = __DEV__
       BOTTOM_SHEET_CLOSE_ACTION:
         'https://formidable.com/open-source/react-native-ama/guidelines/bottomsheet',
       INCOMPATIBLE_ACCESSIBILITY_STATE:
+        'https://formidable.com/open-source/react-native-ama/guidelines/accessibility-role',
+      INCOMPATIBLE_ACCESSIBILITY_ROLE:
         'https://formidable.com/open-source/react-native-ama/guidelines/accessibility-role',
       NO_FORM_LABEL_ENDING_WITH_ASTERISK:
         'https://formidable.com/open-source/react-native-ama/guidelines/forms#labels',

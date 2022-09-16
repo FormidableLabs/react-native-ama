@@ -1,4 +1,5 @@
 import type { AccessibilityRole, AccessibilityState } from 'react-native';
+import { Platform } from 'react-native';
 
 import type { AMAAccessibilityState, AccessibilityRoles } from '../../types';
 import type { LogParams } from '../logger';
@@ -12,20 +13,29 @@ export const checkForAccessibilityState = ({
   accessibilityRole,
   ...rest
 }: CheckForAccessibilityState): LogParams | null => {
-  const expectedState = MAPPED_ROLE_CHECKS[accessibilityRole];
+  const role =
+    typeof accessibilityRole === 'object'
+      ? // @ts-ignore
+        accessibilityRole[Platform.OS]
+      : accessibilityRole;
+  // @ts-ignore
+  const expectedState = MAPPED_ROLE_CHECKS[role];
 
   const allStates = [
     ...Object.keys(rest || {}),
     ...Object.keys(accessibilityState || {}),
-  ];
+  ].filter(state => state !== 'busy');
 
   for (const state of allStates) {
-    if (
-      state !== 'busy' &&
-      !expectedState.accessibilityStates.includes(state as any)
-    ) {
+    // @ts-ignore
+    const stateValue = rest?.[state];
+    if (allStates.length > 1 && stateValue === undefined) {
+      continue;
+    }
+
+    if (!expectedState.accessibilityStates.includes(state as any)) {
       return {
-        message: `The accessibilityState "${state}" and the role "${accessibilityRole}" are not compatible`,
+        message: `The accessibilityState "${state}" and the role "${role}" are not compatible`,
         rule: 'INCOMPATIBLE_ACCESSIBILITY_STATE',
       };
     }
@@ -33,7 +43,6 @@ export const checkForAccessibilityState = ({
 
   return null;
 };
-
 // @ts-ignore
 const MAPPED_ROLE_CHECKS: {
   [key in Partial<AccessibilityRole>]: {
