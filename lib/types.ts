@@ -50,4 +50,6 @@ export type AccessibilityRoles =
         ios: 'button';
         android: 'checkbox';
       };
+      checked?: boolean;
+      selected?: boolean;
     };
