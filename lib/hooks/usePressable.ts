@@ -38,15 +38,19 @@ export const usePressable = <T>(
       props.disabled && shouldIgnoreContrastCheckForDisabledElement()
     : null;
 
-  const checks = __DEV__
-    ? useButtonChecks?.(props, children, !ignoreContrastCheck)
-    : null;
-
   const accessibilityRole =
     Platform.OS === 'ios' &&
     IOS_BUTTON_ACCESSIBILITY_ROLES.includes(props.accessibilityRole!)
       ? 'button'
       : props.accessibilityRole!;
+
+  const checks = __DEV__
+    ? useButtonChecks?.(
+        { ...props, accessibilityRole, accessibilityState },
+        children,
+        !ignoreContrastCheck,
+      )
+    : null;
 
   return __DEV__
     ? {
