@@ -44,16 +44,6 @@ export type AccessibilityRoles =
       selected: AccessibilityState['selected'];
     }
   | {
-      accessibilityRole: {
-        ios: 'adjustable';
-        android: 'button';
-      };
-    }
-  | {
-      accessibilityRole: {
-        ios: 'button';
-        android: 'checkbox';
-      };
-      checked?: boolean;
-      selected?: boolean;
+      accessibilityRole: 'togglebutton' | 'switch' | 'checkbox';
+      checked: AccessibilityState['checked'];
     };

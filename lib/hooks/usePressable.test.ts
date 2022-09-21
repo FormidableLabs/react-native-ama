@@ -14,7 +14,6 @@ describe('usePressable', () => {
   describe('accessibilityState', () => {
     it.each`
       state         | value
-      ${'checked'}  | ${'mixed'}
       ${'disabled'} | ${true}
       ${'busy'}     | ${true}
       ${'expanded'} | ${true}
@@ -66,7 +65,10 @@ describe('usePressable', () => {
       renderHook(() => usePressable({}, null));
 
       expect(noUndefinedProperty).toHaveBeenCalledWith({
-        properties: {},
+        properties: {
+          accessibilityRole: undefined,
+          accessibilityState: {},
+        },
         property: 'accessibilityRole',
         rule: 'NO_ACCESSIBILITY_ROLE',
       });
@@ -76,7 +78,10 @@ describe('usePressable', () => {
       renderHook(() => usePressable({}, null));
 
       expect(noUndefinedProperty).toHaveBeenCalledWith({
-        properties: {},
+        properties: {
+          accessibilityRole: undefined,
+          accessibilityState: {},
+        },
         property: 'accessibilityLabel',
         rule: 'NO_ACCESSIBILITY_LABEL',
       });

@@ -38,15 +38,19 @@ export const usePressable = <T>(
       props.disabled && shouldIgnoreContrastCheckForDisabledElement()
     : null;
 
-  const checks = __DEV__
-    ? useButtonChecks?.(props, children, !ignoreContrastCheck)
-    : null;
-
   const accessibilityRole =
-    typeof props.accessibilityRole === 'object'
-      ? // @ts-ignore
-        props.accessibilityRole[Platform.OS]
-      : props.accessibilityRole;
+    Platform.OS === 'ios' &&
+    IOS_BUTTON_ACCESSIBILITY_ROLES.includes(props.accessibilityRole!)
+      ? 'button'
+      : props.accessibilityRole!;
+
+  const checks = __DEV__
+    ? useButtonChecks?.(
+        { ...props, accessibilityRole, accessibilityState },
+        children,
+        !ignoreContrastCheck,
+      )
+    : null;
 
   return __DEV__
     ? {
@@ -62,3 +66,9 @@ export const usePressable = <T>(
         accessibilityRole,
       };
 };
+
+const IOS_BUTTON_ACCESSIBILITY_ROLES = [
+  'checkbox',
+  'togglebutton',
+  'radiobutton',
+];
