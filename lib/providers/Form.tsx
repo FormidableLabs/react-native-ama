@@ -99,7 +99,10 @@ const DEFAULT_VALUES: FormContextValue = {
   refs: [],
   submitForm: () => Promise.resolve(),
   focusField: () => {
-    console.error('Please wrap your form field inside the <Form /> component');
+    __DEV__ &&
+      console.error(
+        'Please wrap your form field inside the <Form /> component',
+      );
 
     return null;
   },

@@ -43,10 +43,10 @@ export const usePressable = <T>(
     : null;
 
   const accessibilityRole =
-    typeof props.accessibilityRole === 'object'
-      ? // @ts-ignore
-        props.accessibilityRole[Platform.OS]
-      : props.accessibilityRole;
+    Platform.OS === 'ios' &&
+    IOS_BUTTON_ACCESSIBILITY_ROLES.includes(props.accessibilityRole!)
+      ? 'button'
+      : props.accessibilityRole!;
 
   return __DEV__
     ? {
@@ -62,3 +62,9 @@ export const usePressable = <T>(
         accessibilityRole,
       };
 };
+
+const IOS_BUTTON_ACCESSIBILITY_ROLES = [
+  'checkbox',
+  'togglebutton',
+  'radiobutton',
+];
