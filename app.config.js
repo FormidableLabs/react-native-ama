@@ -1,1 +1,1 @@
-const withNothing = config => config;
+module.exports = config => config;
