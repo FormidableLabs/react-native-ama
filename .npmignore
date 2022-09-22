@@ -8,3 +8,4 @@
 !CHANGELOG.md
 !scripts/**/*
 !react-native-ama.podspec
+!app.config.js
