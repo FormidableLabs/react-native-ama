@@ -100,7 +100,7 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
     Promise.all(allInitPromises).then(promisesValues => {
       const newValues = Object.values(eventsMapping).reduce(
         (list, key, index) => {
-          list[key] = Boolean(promisesValues[index]);
+          list[key] = promisesValues[index] as boolean;
 
           return list;
         },
