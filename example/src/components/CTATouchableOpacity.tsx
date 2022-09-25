@@ -1,13 +1,19 @@
 import React from 'react';
-import { ActivityIndicator, Omit, StyleSheet, Text } from 'react-native';
-import { AMAAccessibilityState, TouchableOpacity } from 'react-native-ama';
+import {
+  AccessibilityState,
+  ActivityIndicator,
+  Omit,
+  StyleSheet,
+  Text,
+} from 'react-native';
+import { TouchableOpacity } from 'react-native-ama';
 import type { TouchableOpacityProps } from 'react-native-ama';
 
 import { theme } from '../theme';
 
 type CTATouchableOpacityProps = Omit<
   TouchableOpacityProps,
-  'accessibilityLabel'
+  'accessibilityLabel' | 'accessibilityRole'
 > & {
   title: string;
   accessibilityLabel?: string;
@@ -15,6 +21,10 @@ type CTATouchableOpacityProps = Omit<
 } & {
   marginLeft?: number;
   marginRight?: number;
+} & {
+  checked?: AccessibilityState['checked'];
+  selected?: boolean;
+  expanded?: boolean;
 };
 
 export const CTATouchableOpacity = ({
@@ -47,9 +57,9 @@ export const CTATouchableOpacity = ({
 };
 
 function getButtonStyle(
-  disabled?: AMAAccessibilityState['disabled'],
-  checked?: AMAAccessibilityState['checked'],
-  selected?: AMAAccessibilityState['selected'],
+  disabled?: AccessibilityState['disabled'] | null,
+  checked?: AccessibilityState['checked'],
+  selected?: AccessibilityState['selected'],
 ) {
   if (disabled) {
     return styles.disabled;

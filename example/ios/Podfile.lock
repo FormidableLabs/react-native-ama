@@ -272,7 +272,7 @@ PODS:
   - React-jsinspector (0.66.4)
   - React-logger (0.66.4):
     - glog
-  - react-native-ama (0.5.4):
+  - react-native-ama (0.6.6):
     - React-Core
   - react-native-safe-area-context (3.2.0):
     - React-Core
@@ -341,9 +341,9 @@ PODS:
     - React-jsi (= 0.66.4)
     - React-logger (= 0.66.4)
     - React-perflogger (= 0.66.4)
-  - RNGestureHandler (2.4.2):
+  - RNGestureHandler (2.6.2):
     - React-Core
-  - RNReanimated (2.8.0):
+  - RNReanimated (2.9.1):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -370,10 +370,10 @@ PODS:
     - React-RCTText
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.13.1):
+  - RNScreens (3.17.0):
     - React-Core
     - React-RCTImage
-  - RNSVG (12.3.0):
+  - RNSVG (12.4.4):
     - React-Core
   - SocketRocket (0.6.0)
   - Yoga (1.14.0)
@@ -549,10 +549,10 @@ SPEC CHECKSUMS:
   Flipper-RSocket: d9d9ade67cbecf6ac10730304bf5607266dd2541
   FlipperKit: 8ed57aece4bb5925f0ea1abeb44a816be8a06f6e
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  glog: 5337263514dd6f09803962437687240c5dc39aa4
+  glog: 476ee3e89abb49e07f822b48323c51c57124b572
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
-  RCT-Folly: a21c126816d8025b547704b777a2ba552f3d9fa9
+  RCT-Folly: 4d8508a426467c48885f1151029bc15fa5d7b3b8
   RCTRequired: 4bf86c70714490bca4bf2696148638284622644b
   RCTTypeSafety: c475a7059eb77935fa53d2c17db299893f057d5d
   React: f64af14e3f2c50f6f2c91a5fd250e4ff1b3c3459
@@ -564,7 +564,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 94ce921e1d8ce7023366873ec371f3441383b396
   React-jsinspector: d0374f7509d407d2264168b6d0fad0b54e300b85
   React-logger: 933f80c97c633ee8965d609876848148e3fef438
-  react-native-ama: 6346777f05a90c4981a3a1c569411955cd5515f3
+  react-native-ama: 413005b36e6bdc6d0944d6abd1e7facc65b81150
   react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
   React-perflogger: 93075d8931c32cd1fce8a98c15d2d5ccc4d891bd
   React-RCTActionSheet: 7d3041e6761b4f3044a37079ddcb156575fb6d89
@@ -578,10 +578,10 @@ SPEC CHECKSUMS:
   React-RCTVibration: e3ffca672dd3772536cb844274094b0e2c31b187
   React-runtimeexecutor: dec32ee6f2e2a26e13e58152271535fadff5455a
   ReactCommon: 57b69f6383eafcbd7da625bfa6003810332313c4
-  RNGestureHandler: 61628a2c859172551aa2100d3e73d1e57878392f
-  RNReanimated: 58b57be69a237fb02ec8099d25171057638cf41a
-  RNScreens: 40a2cb40a02a609938137a1e0acfbf8fc9eebf19
-  RNSVG: 302bfc9905bd8122f08966dc2ce2d07b7b52b9f8
+  RNGestureHandler: 4defbd70b2faf3d6761b82fa7880285241762cb0
+  RNReanimated: 11e6e30bbc49079b7f0c321ac5830e6d113d0224
+  RNScreens: 0df01424e9e0ed7827200d6ed1087ddd06c493f9
+  RNSVG: ecd661f380a07ba690c9c5929c475a44f432d674
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   Yoga: e7dc4e71caba6472ff48ad7d234389b91dadc280
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a

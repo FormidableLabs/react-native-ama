@@ -10,7 +10,7 @@
   "scripts": {
     "prepare": "husky install",
     "test": "jest",
-    "ts:check": "tsc --noEmit",
+    "ts:check": "tsc --noEmit && yarn example ts:check",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "yarn lint --fix",
     "build": "bob build",
@@ -54,7 +54,7 @@
     "@testing-library/react-hooks": "^8.0.0",
     "@testing-library/react-native": "^9.1.0",
     "@types/jest": "^26.0.0",
-    "@types/react": "^18.0.14",
+    "@types/react": "^17",
     "@types/react-native": "^0.68.0",
     "babel-plugin-transform-strip-block": "^0.0.5",
     "commitlint": "^11.0.0",
@@ -78,7 +78,7 @@
     "wcag-color": "^1.1.1"
   },
   "peerDependencies": {
-    "react": ">=17.0.0",
+    "react": ">=17",
     "react-native": ">=0.66",
     "react-native-gesture-handler": "*",
     "react-native-reanimated": "*",

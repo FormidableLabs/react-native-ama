@@ -1,9 +1,12 @@
 import * as React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import {
-  AMAAccessibilityState,
-  TouchableWithoutFeedback,
-} from 'react-native-ama';
+  AccessibilityState,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-ama';
 import { Text } from 'react-native-ama';
 
 import { CTATouchableWithoutFeedback } from '../components/CTATouchableWithoutFeedback';
@@ -56,7 +59,7 @@ export const TouchableWithoutFeedbackScreen = () => {
 };
 
 const TouchableWithoutFeedbackExample: React.FC<{
-  state: keyof AMAAccessibilityState;
+  state: 'busy' | 'disabled' | 'checked' | 'selected' | 'expanded';
 }> = ({ state, children }) => {
   return (
     <>
@@ -68,11 +71,7 @@ const TouchableWithoutFeedbackExample: React.FC<{
   );
 };
 
-const checkedStates: AMAAccessibilityState['checked'][] = [
-  true,
-  false,
-  'mixed',
-];
+const checkedStates: AccessibilityState['checked'][] = [true, false, 'mixed'];
 
 const CheckedButton = () => {
   const [state, setState] = React.useState(checkedStates[0]);

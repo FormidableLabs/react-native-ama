@@ -21,6 +21,10 @@ type CTAPressableProps = Omit<
 } & {
   marginLeft?: number;
   marginRight?: number;
+} & {
+  checked?: AccessibilityState['checked'];
+  selected?: boolean;
+  expanded?: boolean;
 };
 
 export const CTAPressable = ({
