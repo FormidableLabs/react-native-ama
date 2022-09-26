@@ -1,9 +1,13 @@
 import React from 'react';
-import { ActivityIndicator, Omit, StyleSheet, Text, View } from 'react-native';
 import {
-  AMAAccessibilityState,
-  TouchableWithoutFeedback,
-} from 'react-native-ama';
+  AccessibilityState,
+  ActivityIndicator,
+  Omit,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-ama';
 import type { TouchableWithoutFeedbackProps } from 'react-native-ama';
 
 import { theme } from '../theme';
@@ -18,6 +22,10 @@ type CTATouchableWithoutFeedbackProps = Omit<
 } & {
   marginLeft?: number;
   marginRight?: number;
+} & {
+  checked?: boolean | 'mixed';
+  selected?: boolean;
+  expanded?: boolean;
 };
 
 export const CTATouchableWithoutFeedback = ({
@@ -53,9 +61,9 @@ export const CTATouchableWithoutFeedback = ({
 function noop() {}
 
 function getButtonStyle(
-  disabled?: AMAAccessibilityState['disabled'],
-  checked?: AMAAccessibilityState['checked'],
-  selected?: AMAAccessibilityState['selected'],
+  disabled?: AccessibilityState['disabled'] | null,
+  checked?: AccessibilityState['checked'],
+  selected?: AccessibilityState['selected'],
 ) {
   if (disabled) {
     return styles.disabled;

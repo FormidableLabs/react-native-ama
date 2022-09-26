@@ -1,6 +1,12 @@
 import * as React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
-import { AMAAccessibilityState, TouchableOpacity } from 'react-native-ama';
+import {
+  AccessibilityState,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
+import { TouchableOpacity } from 'react-native-ama';
 import { Text } from 'react-native-ama';
 
 import { CTATouchableOpacity } from '../components/CTATouchableOpacity';
@@ -52,7 +58,7 @@ export const TouchableOpacityScreen = () => {
 };
 
 const TouchableOpacityExample: React.FC<{
-  state: keyof AMAAccessibilityState | 'disabled';
+  state: 'checked' | 'disabled' | 'busy' | 'selected' | 'expanded';
 }> = ({ state, children }) => {
   return (
     <>
@@ -64,11 +70,7 @@ const TouchableOpacityExample: React.FC<{
   );
 };
 
-const checkedStates: AMAAccessibilityState['checked'][] = [
-  true,
-  false,
-  'mixed',
-];
+const checkedStates: AccessibilityState['checked'][] = [true, false, 'mixed'];
 
 const CheckedButton = () => {
   const [state, setState] = React.useState(checkedStates[0]);

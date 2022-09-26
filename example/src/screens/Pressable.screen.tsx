@@ -1,6 +1,12 @@
 import * as React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
-import { AMAAccessibilityState, Pressable } from 'react-native-ama';
+import {
+  AccessibilityState,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
+import { Pressable } from 'react-native-ama';
 import { Text } from 'react-native-ama';
 
 import { CTAPressable } from '../components/CTAPressable';
@@ -48,11 +54,7 @@ export const PressableScreen = () => {
   );
 };
 
-const checkedStates: AMAAccessibilityState['checked'][] = [
-  true,
-  false,
-  'mixed',
-];
+const checkedStates: AccessibilityState['checked'][] = [true, false, 'mixed'];
 
 const CheckedButton = () => {
   const [state, setState] = React.useState(checkedStates[0]);

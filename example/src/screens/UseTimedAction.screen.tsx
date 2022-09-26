@@ -30,7 +30,7 @@ export const UseTimedActionScreen = () => {
         <AnimatedContainer
           from={{ transform: [{ translateY: 'targetHeight' }] }}
           to={{ transform: [{ translateY: 0 }] }}
-          exit={{ transform: [{ translateY: 'currentHeight' }] }}
+          exitFrom={{ transform: [{ translateY: 'currentHeight' }] }}
           style={styles.timedContent}
           duration={300}
           autofocus>

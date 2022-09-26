@@ -1,4 +1,4 @@
-import { flushMicrotasksQueue, render } from '@testing-library/react-native';
+import { render, waitFor } from '@testing-library/react-native';
 import * as React from 'react';
 import { AccessibilityInfo, Platform } from 'react-native';
 
@@ -25,9 +25,11 @@ describe('FlatList', () => {
         />,
       );
 
-      await flushMicrotasksQueue();
-
-      expect(AccessibilityInfo.announceForAccessibility).not.toHaveBeenCalled();
+      await waitFor(() => {
+        expect(
+          AccessibilityInfo.announceForAccessibility,
+        ).not.toHaveBeenCalled();
+      });
     });
 
     it.each`

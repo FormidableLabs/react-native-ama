@@ -37,51 +37,58 @@ export const useReanimatedAnimationBuilder = ({
       'worklet';
 
       const animations = (function generateAnimations(startValues, endValues) {
-        return Object.keys(startValues).reduce((outputAnimation, key) => {
-          const k: keyof InitialValues = key as keyof InitialValues;
-          const toValue = endValues[key as keyof FinalValues];
-          const value = startValues[k];
-          const mappedToValue =
-            // @ts-ignore
-            typeof toValue === 'string' ? values[toValue] || 0 : toValue;
+        return Object.keys(startValues as object).reduce(
+          (outputAnimation, key) => {
+            const k: keyof InitialValues = key as keyof InitialValues;
+            const toValue = endValues[key as keyof FinalValues];
+            const value = startValues[k];
+            const mappedToValue =
+              // @ts-ignore
+              typeof toValue === 'string' ? values[toValue] || 0 : toValue;
 
-          const realDuration =
-            isReduceMotionEnabled &&
-            MOTION_ANIMATIONS.includes(key as keyof ViewStyle)
-              ? 0
-              : duration;
-          const newValue = Array.isArray(value)
-            ? value.map((item, index) =>
-                generateAnimations(
-                  item as InitialValues,
-                  // @ts-ignore
-                  endValues?.[k]?.[index],
-                ),
-              )
-            : withTiming(mappedToValue, {
-                duration: realDuration,
-              });
+            const realDuration =
+              isReduceMotionEnabled &&
+              MOTION_ANIMATIONS.includes(key as keyof ViewStyle)
+                ? 0
+                : duration;
+            const newValue = Array.isArray(value)
+              ? value.map((item, index) =>
+                  generateAnimations(
+                    item as InitialValues,
+                    // @ts-ignore
+                    endValues?.[k]?.[index],
+                  ),
+                )
+              : withTiming(mappedToValue, {
+                  duration: realDuration,
+                });
 
-          outputAnimation[k] = newValue;
+            outputAnimation[k] = newValue;
 
-          return outputAnimation;
-        }, {} as InitialValues);
+            return outputAnimation;
+          },
+          {} as InitialValues,
+        );
       })(initial, final);
 
       const initialValues = (function generateInitialValues(
         startValues,
       ): StyleProps {
-        return Object.entries(startValues).reduce((newList, [key, value]) => {
-          // @ts-ignore
-          const mappedValue = typeof value === 'string' ? values[value] : value;
-          const newValue = Array.isArray(value)
-            ? value.map(item => generateInitialValues(item as InitialValues))
-            : mappedValue;
+        return Object.entries(startValues as object).reduce(
+          (newList, [key, value]) => {
+            const mappedValue =
+              // @ts-ignore
+              typeof value === 'string' ? values[value] : value;
+            const newValue = Array.isArray(value)
+              ? value.map(item => generateInitialValues(item as InitialValues))
+              : mappedValue;
 
-          newList[key as keyof StyleProps] = newValue;
+            newList[key as keyof StyleProps] = newValue;
 
-          return newList;
-        }, {} as StyleProps);
+            return newList;
+          },
+          {} as StyleProps,
+        );
       })(initial);
 
       return {

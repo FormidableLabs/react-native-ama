@@ -104,7 +104,7 @@ export const FormScreen = () => {
           hasValidation={false}
         />
         <Spacer height="big" />
-        <Form.Submit accessibilityLabel="Submit">
+        <Form.Submit accessibilityLabel="Submit" busy={false}>
           <CTAPressable title="Submit" />
         </Form.Submit>
       </Form>
