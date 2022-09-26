@@ -34,7 +34,7 @@ jobs:
         run: yarn ts:check
 
       - name: TypeScript Example Check
-        run:
+        run: |
           yarn example
           yarn example ts:check
 
