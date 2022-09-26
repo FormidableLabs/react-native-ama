@@ -10,7 +10,7 @@
   "scripts": {
     "prepare": "husky install",
     "test": "jest",
-    "ts:check": "tsc --noEmit && yarn example ts:check",
+    "ts:check": "tsc --noEmit",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "yarn lint --fix",
     "build": "bob build",
