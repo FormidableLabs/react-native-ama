@@ -33,7 +33,6 @@ export type AccessibilityRoles =
   | {
       accessibilityRole: 'button';
       expanded?: AccessibilityState['expanded'];
-      selected?: AccessibilityState['selected'];
     }
   | {
       accessibilityRole: 'switch';

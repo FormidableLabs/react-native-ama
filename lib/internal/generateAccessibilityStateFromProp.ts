@@ -17,18 +17,16 @@ export const generateAccessibilityStateFromProp = ({
   if (accessibilityRole === 'button' && Platform.OS === 'ios') {
     /**
      * Accessibility roles like
-     *   | {
-     *       accessibilityRole: {
-     *         ios: 'button';
-     *         android: 'checkbox';
-     *       };
-     *       checked: boolean;
-     *     }
+     *   - checkbox
+     *   - radio
+     *   - togglebutton
      *
      *  need to set the "selected" state for iOS
      */
-    if (state.checked !== undefined) {
+    if (typeof state.checked !== 'undefined') {
       state.selected = state.checked;
+
+      state.checked = undefined;
     }
   }
 

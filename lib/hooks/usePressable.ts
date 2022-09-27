@@ -31,18 +31,21 @@ export const usePressable = <T>(
   props: Partial<UsePressable<T>>,
   children?: React.ReactNode,
 ): ReturnUsePressable => {
-  const accessibilityState = generateAccessibilityStateFromProp(props);
-
-  const ignoreContrastCheck = __DEV__
-    ? // @ts-ignore
-      props.disabled && shouldIgnoreContrastCheckForDisabledElement()
-    : null;
-
   const accessibilityRole =
     Platform.OS === 'ios' &&
     IOS_BUTTON_ACCESSIBILITY_ROLES.includes(props.accessibilityRole!)
       ? 'button'
       : props.accessibilityRole!;
+
+  const accessibilityState = generateAccessibilityStateFromProp({
+    ...props,
+    accessibilityRole,
+  });
+
+  const ignoreContrastCheck = __DEV__
+    ? // @ts-ignore
+      props.disabled && shouldIgnoreContrastCheckForDisabledElement()
+    : null;
 
   const checks = __DEV__
     ? useButtonChecks?.(
@@ -67,8 +70,8 @@ export const usePressable = <T>(
       };
 };
 
-const IOS_BUTTON_ACCESSIBILITY_ROLES = [
+const IOS_BUTTON_ACCESSIBILITY_ROLES: AccessibilityRole[] = [
   'checkbox',
   'togglebutton',
-  'radiobutton',
+  'radio',
 ];

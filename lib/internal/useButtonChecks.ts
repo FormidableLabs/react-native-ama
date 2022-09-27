@@ -41,7 +41,10 @@ export const useButtonChecks = __DEV__
         noUppercaseStringChecker({
           text: props.accessibilityLabel,
         });
-      checkCompatibleAccessibilityState(props);
+      checkCompatibleAccessibilityState({
+        accessibilityStates: props?.accessibilityState,
+        accessibilityRole: props?.accessiblityRole,
+      });
       checkAccessibilityRole(props.accessibilityRole);
 
       const contrastCheckerCallback = shouldPerformContrastCheck
