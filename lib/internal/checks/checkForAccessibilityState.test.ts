@@ -81,7 +81,7 @@ describe('checkForAccessibilityState', () => {
       }),
     ).toEqual({
       message:
-        'The accessibilityState "checked" and the role "button" are not compatible',
+        'The accessibilityState "checked = false" and the role "button" are not compatible.\nCompatible states are: [expanded, selected]\nReceived: [checked]',
       rule: 'INCOMPATIBLE_ACCESSIBILITY_STATE',
     });
 
@@ -94,7 +94,7 @@ describe('checkForAccessibilityState', () => {
       }),
     ).toEqual({
       message:
-        'The accessibilityState "checked" and the role "button" are not compatible',
+        'The accessibilityState "checked = undefined" and the role "button" are not compatible.\nCompatible states are: [expanded, selected]\nReceived: [checked]',
       rule: 'INCOMPATIBLE_ACCESSIBILITY_STATE',
     });
   });
@@ -111,7 +111,7 @@ describe('checkForAccessibilityState', () => {
       }),
     ).toEqual({
       message:
-        'The accessibilityState "checked" and the role "button" are not compatible',
+        'The accessibilityState "checked = undefined" and the role "button" are not compatible.\nCompatible states are: [expanded, selected]\nReceived: [checked]',
       rule: 'INCOMPATIBLE_ACCESSIBILITY_STATE',
     });
   });
