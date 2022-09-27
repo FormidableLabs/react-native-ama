@@ -1,5 +1,4 @@
 import type { AccessibilityRole, AccessibilityState } from 'react-native';
-import { Platform } from 'react-native';
 
 import type { AMAAccessibilityState, AccessibilityRoles } from '../../types';
 import type { LogParams } from '../logger';
@@ -13,18 +12,14 @@ export const checkForAccessibilityState = ({
   accessibilityRole,
   ...rest
 }: CheckForAccessibilityState): LogParams | null => {
-  const role =
-    typeof accessibilityRole === 'object'
-      ? // @ts-ignore
-        accessibilityRole[Platform.OS]
-      : accessibilityRole;
-  // @ts-ignore
-  const expectedState = MAPPED_ROLE_CHECKS[role];
+  const expectedState = MAPPED_ROLE_CHECKS[accessibilityRole] || {
+    accessibilityStates: [],
+  };
 
   const allStates = [
     ...Object.keys(rest || {}),
     ...Object.keys(accessibilityState || {}),
-  ].filter(state => state !== 'busy');
+  ].filter(state => state !== 'busy' && state !== 'disabled');
 
   for (const state of allStates) {
     // @ts-ignore
@@ -35,7 +30,9 @@ export const checkForAccessibilityState = ({
 
     if (!expectedState.accessibilityStates.includes(state as any)) {
       return {
-        message: `The accessibilityState "${state}" and the role "${role}" are not compatible`,
+        message: `The accessibilityState "${state} = ${stateValue}" and the role "${accessibilityRole}" are not compatible.\nCompatible states are: [${expectedState.accessibilityStates.join(
+          ', ',
+        )}]\nReceived: [${allStates.join(', ')}]`,
         rule: 'INCOMPATIBLE_ACCESSIBILITY_STATE',
       };
     }

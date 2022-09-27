@@ -33,6 +33,25 @@ describe('checkForAccessibilityState', () => {
     ).toBe(null);
   });
 
+  it('passes if the button has disabled state', () => {
+    const accessibilityRole = 'button';
+
+    expect(
+      checkForAccessibilityState({
+        // @ts-ignore
+        disabled: true,
+        accessibilityRole,
+      }),
+    ).toBe(null);
+
+    expect(
+      checkForAccessibilityState({
+        accessibilityState: { disabled: true },
+        accessibilityRole,
+      }),
+    ).toBe(null);
+  });
+
   it('passes if the button has expanded state', () => {
     expect(
       checkForAccessibilityState({
@@ -62,7 +81,7 @@ describe('checkForAccessibilityState', () => {
       }),
     ).toEqual({
       message:
-        'The accessibilityState "checked" and the role "button" are not compatible',
+        'The accessibilityState "checked = false" and the role "button" are not compatible.\nCompatible states are: [expanded, selected]\nReceived: [checked]',
       rule: 'INCOMPATIBLE_ACCESSIBILITY_STATE',
     });
 
@@ -75,7 +94,7 @@ describe('checkForAccessibilityState', () => {
       }),
     ).toEqual({
       message:
-        'The accessibilityState "checked" and the role "button" are not compatible',
+        'The accessibilityState "checked = undefined" and the role "button" are not compatible.\nCompatible states are: [expanded, selected]\nReceived: [checked]',
       rule: 'INCOMPATIBLE_ACCESSIBILITY_STATE',
     });
   });
@@ -92,7 +111,7 @@ describe('checkForAccessibilityState', () => {
       }),
     ).toEqual({
       message:
-        'The accessibilityState "checked" and the role "button" are not compatible',
+        'The accessibilityState "checked = undefined" and the role "button" are not compatible.\nCompatible states are: [expanded, selected]\nReceived: [checked]',
       rule: 'INCOMPATIBLE_ACCESSIBILITY_STATE',
     });
   });
@@ -109,5 +128,24 @@ describe('checkForAccessibilityState', () => {
         accessibilityRole: 'button',
       }),
     ).toEqual(null);
+  });
+
+  it('fails if the role is not recognised', () => {
+    const state = {
+      checked: undefined,
+      selected: true,
+    };
+
+    expect(
+      checkForAccessibilityState({
+        ...state,
+        // @ts-ignore
+        accessibilityRole: 'whatever',
+      }),
+    ).toEqual({
+      message:
+        'The accessibilityState "selected = true" and the role "whatever" are not compatible.\nCompatible states are: []\nReceived: [checked, selected]',
+      rule: 'INCOMPATIBLE_ACCESSIBILITY_STATE',
+    });
   });
 });
