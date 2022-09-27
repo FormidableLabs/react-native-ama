@@ -1,6 +1,6 @@
 # AutofocusContainer
 
-It is a utility component that automatically calls the [onFocus](../hooks/onFocus) hook when it is mounted.
+It is a utility component that automatically calls the [useFocus](../hooks/useFocus) hook when it is mounted.
 
 ## Usage
 

@@ -14,7 +14,7 @@ import { Form } from 'react-native-ama';
 <Form.Submit
     accessibilityLabel="Submit"
     onPress={onSubmit}
-    isBusy={isBusy}
+    busy={isBusy}
 >
     <Text>Submit</Text>
 </Form.Submit>

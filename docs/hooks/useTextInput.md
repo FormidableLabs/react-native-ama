@@ -55,7 +55,7 @@ Once the user presses the **next** key, AMA checks that the:
 
 ### `editable` _(optional)_
 
-If false tells the [Form](./Form) to focus the field using the [setFocus](../hooks/setFocus.md) method, instead of the `.focus` callback.
+If false tells the [Form](./Form) to focus the field using the [useFocus](../hooks/useFocus.md) hook, instead of the `.focus` callback.
 
 | Type      | Default   |
 |-----------|-----------|
