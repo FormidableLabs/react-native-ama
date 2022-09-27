@@ -24,16 +24,4 @@ describe('checkAccessibilityRole', () => {
       rule: 'INCOMPATIBLE_ACCESSIBILITY_ROLE',
     });
   });
-
-  it('succeed if the accessibility role is valid for both platforms', () => {
-    const checkAccessibilityRole =
-      require('./checkAccessibilityRole').checkAccessibilityRole;
-
-    expect(
-      checkAccessibilityRole({
-        android: 'checkbox',
-        ios: 'button',
-      }),
-    ).toEqual(null);
-  });
 });
