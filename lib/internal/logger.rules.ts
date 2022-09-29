@@ -87,9 +87,9 @@ export const RULES_HELP: Record<Rule, string> | null = __DEV__
       NO_FORM_ERROR:
         'https://formidable.com/open-source/react-native-ama/guidelines/forms',
       FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE:
-        'https://formidable.com/open-source/react-native-ama/guidelines/lists',
+        'https://formidable.com/open-source/react-native-ama/guidelines/lists-grids#number-of-results',
       FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE:
-        'https://formidable.com/open-source/react-native-ama/guidelines/lists',
+        'https://formidable.com/open-source/react-native-ama/guidelines/lists-grids#number-of-results',
       BOTTOM_SHEET_CLOSE_ACTION:
         'https://formidable.com/open-source/react-native-ama/guidelines/bottomsheet',
       INCOMPATIBLE_ACCESSIBILITY_STATE:
