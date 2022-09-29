@@ -6,16 +6,9 @@ import type { LogParams } from '../logger';
 export const checkAccessibilityRole = (
   accessibilityRole: AccessibilityRole,
 ): LogParams | null => {
-  const mirrorPlatform = Platform.OS === 'android' ? 'ios' : 'android';
-
   if (!checkPlatformSupportsRole(accessibilityRole, Platform.OS as any)) {
     return {
       message: `"${accessibilityRole}" is not a native element for "${Platform.OS}"`,
-      rule: 'INCOMPATIBLE_ACCESSIBILITY_ROLE',
-    };
-  } else if (!checkPlatformSupportsRole(accessibilityRole, mirrorPlatform)) {
-    return {
-      message: `"${accessibilityRole}" is not a native element for "${mirrorPlatform}"`,
       rule: 'INCOMPATIBLE_ACCESSIBILITY_ROLE',
     };
   }
@@ -41,6 +34,7 @@ const MAPPED_ROLE_CHECKS: {
   switch: ['ios', 'android'],
   checkbox: ['android'],
   tab: ['android', 'ios'],
+  togglebutton: ['android'],
   radio: ['android'],
   adjustable: ['ios'],
   link: ['ios', 'android'],
