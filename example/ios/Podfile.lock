@@ -272,7 +272,7 @@ PODS:
   - React-jsinspector (0.66.4)
   - React-logger (0.66.4):
     - glog
-  - react-native-ama (0.6.6):
+  - react-native-ama (0.6.8):
     - React-Core
   - react-native-safe-area-context (3.2.0):
     - React-Core
@@ -343,7 +343,7 @@ PODS:
     - React-perflogger (= 0.66.4)
   - RNGestureHandler (2.6.2):
     - React-Core
-  - RNReanimated (2.9.1):
+  - RNReanimated (2.10.0):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -564,7 +564,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 94ce921e1d8ce7023366873ec371f3441383b396
   React-jsinspector: d0374f7509d407d2264168b6d0fad0b54e300b85
   React-logger: 933f80c97c633ee8965d609876848148e3fef438
-  react-native-ama: 413005b36e6bdc6d0944d6abd1e7facc65b81150
+  react-native-ama: 292029e237aca575e8b0938c6f25d45effbcb365
   react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
   React-perflogger: 93075d8931c32cd1fce8a98c15d2d5ccc4d891bd
   React-RCTActionSheet: 7d3041e6761b4f3044a37079ddcb156575fb6d89
@@ -579,7 +579,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: dec32ee6f2e2a26e13e58152271535fadff5455a
   ReactCommon: 57b69f6383eafcbd7da625bfa6003810332313c4
   RNGestureHandler: 4defbd70b2faf3d6761b82fa7880285241762cb0
-  RNReanimated: 11e6e30bbc49079b7f0c321ac5830e6d113d0224
+  RNReanimated: f9055ab75a49358b30f99155637f95d77727e7dc
   RNScreens: 0df01424e9e0ed7827200d6ed1087ddd06c493f9
   RNSVG: ecd661f380a07ba690c9c5929c475a44f432d674
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
