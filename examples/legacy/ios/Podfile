@@ -8,7 +8,7 @@ target 'AmaExample' do
 
   use_react_native!(:path => config["reactNativePath"])
 
-  pod 'react-native-ama', :path => '../..'
+  pod 'react-native-ama', :path => '../../..'
 
   arm_value = `/usr/sbin/sysctl -n hw.optional.arm64 2>&1`.to_i
 
