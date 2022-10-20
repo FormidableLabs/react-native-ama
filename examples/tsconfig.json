@@ -15,7 +15,10 @@
     "moduleResolution": "node",
     "baseUrl": "./",
     "paths": {
-      "react-native-ama": ["../../lib/index"]
+      "react-native-ama": ["../lib/index"],
+      "@react-navigation/native": ["legacy/node_modules/@react-navigation/native"],
+      "@react-navigation/native-stack": ["legacy/node_modules/@react-navigation/native-stack"],
+      "react-native-svg": ["legacy/node_modules/react-native-svg"],
     },
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,

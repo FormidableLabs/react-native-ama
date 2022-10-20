@@ -41,7 +41,6 @@ module.exports = {
   extraNodeModules: allModules.reduce((acc, name) => {
       acc[name] = path.join(__dirname, 'node_modules', name);
 
-      console.info(acc);
       return acc;
     }, {}),
   },
