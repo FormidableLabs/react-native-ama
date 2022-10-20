@@ -1,6 +1,6 @@
 # Accessibility Checklist
 
-The checklist is based on the [Guidelines](./guidelines) and is focused on testing side of accessibility.
+The checklist is based on the [Guidelines](./guidelines) and is focused on the testing side of accessibility.
 
 :::note
 Addressing the issues called out in this checklist will help improve the experience for everyone who uses the app,
@@ -17,7 +17,7 @@ but it won't guarantee that the app will be 100% accessible!
 
 ## Components
 
-**What is this thing? Does the screen reader announces:**
+**What is this thing? Does the screen reader announce:**
 
 - [ ]  [Role](./guidelines/accessibility-role) (ex. button)
 - [ ]  [Name](./guidelines/accessibility-label) (ex. "Submit")
@@ -29,7 +29,7 @@ but it won't guarantee that the app will be 100% accessible!
 
 [**Hint**](./guidelines/accessibility-hint)?
 
-- [ ]  Is the label enough
+- [ ]  Is the label enough?
 
 [**Predictable/Consistent**](guidelines/predictable-consistent)
 
@@ -68,7 +68,7 @@ Example:
 - [ ]  Can you navigate through the various fields using the corresponding keyboard "next" key?
 - [ ]  Can you submit the form using the "enter" key?
 - [ ]  Invalid fields: Is the error read with the text once the latter gets the focus?
-- [ ] Is the label announces when a [TextInput](./components/textinput) is selected?
+- [ ]  Is the label announced when a [TextInput](./components/textinput) is selected?
 
 ### [Headings](./guidelines/headers)
 
@@ -84,8 +84,8 @@ Example:
 ### [Text](./guideines/text)
 
 - [ ]  Is the text readable with a font size scaled up to 300%?
-- [ ]  If the text is uppercase, does the screen reader reads it correctly or does the spelling of the words?
-- [ ]  Area you able to focus all the links within a Text?
+- [ ]  If the text is uppercase, does the screen reader read it correctly or does it spell the words?
+- [ ]  Are you able to focus all the links within a Text?
 
 ### [Time limits](./guidelines/timed-actions)
 

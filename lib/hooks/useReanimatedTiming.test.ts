@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 
-import { MOTION_ANIMATIONS } from '../internal/costants';
+import { MOTION_ANIMATIONS } from '../internal/constants';
 import * as AMAProvider from '../providers/AMAProvider';
 import { useReanimatedTiming } from './useReanimatedTiming';
 

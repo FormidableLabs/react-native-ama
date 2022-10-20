@@ -11,8 +11,8 @@ import { getRuleAction } from '../logger';
 export const checkMinimumSize = (
   event: LayoutChangeEvent,
 ): LogParams | null => {
-  const width = event.nativeEvent.layout.width;
-  const height = event.nativeEvent.layout.height;
+  const width = Math.ceil(event.nativeEvent.layout.width);
+  const height = Math.ceil(event.nativeEvent.layout.height);
   const shouldForgive = getRuleAction?.('MINIMUM_SIZE') === 'PLEASE_FORGIVE_ME';
 
   if (

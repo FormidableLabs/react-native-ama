@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import type { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import React from 'react';
+import { Platform } from 'react-native';
 import { AMAProvider, useAMAContext } from 'react-native-ama';
 
 import { BackButton } from './components/BackButton';
@@ -176,9 +177,14 @@ const AppNavigator = () => {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+const isIOS = Platform.OS === 'ios';
+
 const BaseNavigatorOptions: NativeStackNavigationOptions = {
   headerTitleAlign: 'center',
   headerBackVisible: false,
+  contentStyle: {
+    marginTop: isIOS ? 0 : 58,
+  },
 };
 
 export default App;
