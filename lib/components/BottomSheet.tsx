@@ -225,7 +225,9 @@ export const BottomSheetBase = React.forwardRef<
         handleHeight -
         topInset;
 
-      runOnJS(setMaxScrollViewHeight)(maxScrollHeight);
+      if (!Number.isNaN(maxScrollHeight)) {
+        runOnJS(setMaxScrollViewHeight)(maxScrollHeight);
+      }
     }, [
       footerHeight,
       headerHeight,
