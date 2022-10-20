@@ -12,6 +12,7 @@ module.exports = {
   ignorePatterns: [
     'metro.config.js',
     'dist/**/*',
+    '__mocks__/**/*',
     'website/**/*',
     'coverage/**/*',
   ],
