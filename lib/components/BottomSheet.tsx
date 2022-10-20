@@ -43,7 +43,7 @@ export type BottomSheetProps = {
   handleComponent?: JSX.Element | 'none';
   handleStyle?: ViewStyle | ViewStyle[];
   headerComponent?: JSX.Element;
-  maxHeight?: SharedValue<number>;
+  maxHeight?: number;
   minVelocityToClose?: number;
   onBottomSheetHidden?: () => void;
   onClose: () => void;
@@ -94,7 +94,7 @@ export const BottomSheetBase = React.forwardRef<
       overlayOpacity = 1,
       footerComponent,
       avoidKeyboard,
-      maxHeight,
+      maxHeight = DEFAULT_MAX_HEIGHT,
       minVelocityToClose = 1000,
       topInset,
       onBottomSheetHidden,
@@ -204,9 +204,7 @@ export const BottomSheetBase = React.forwardRef<
     });
 
     const maxHeightValue = useDerivedValue(() => {
-      const height = maxHeight ? maxHeight.value : DEFAULT_MAX_HEIGHT;
-
-      return height - keyboardHeight.value;
+      return maxHeight - keyboardHeight.value;
     }, [keyboardHeight, maxHeight]);
 
     const animatedStyle = useAnimatedStyle(() => {
@@ -219,10 +217,8 @@ export const BottomSheetBase = React.forwardRef<
     }, [maxHeightValue, translateY, keyboardHeight]);
 
     useDerivedValue(() => {
-      const height = maxHeight ? maxHeight.value : DEFAULT_MAX_HEIGHT;
-
       const maxScrollHeight =
-        height -
+        maxHeight -
         keyboardFinalHeight.value -
         footerHeight -
         headerHeight -
