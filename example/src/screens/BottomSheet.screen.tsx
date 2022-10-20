@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { Platform, SafeAreaView, StyleSheet, View } from 'react-native';
 import { BottomSheet } from 'react-native-ama';
 
 import { CTAPressable } from '../components/CTAPressable';
 import { Header } from '../components/Header';
+import { FormScreen } from '../screens/Form.screen';
 import { theme } from '../theme';
 
 type TimedActionProps = {};
@@ -19,6 +20,7 @@ export const BottomSheetScreen: React.FC<TimedActionProps> = ({ children }) => {
         onClose={() => {
           setModalVisible(!modalVisible);
         }}
+        avoidKeyboard={Platform.OS === 'ios'}
         closeActionAccessibilityLabel="close bottomsheet"
         bottomSheetStyle={styles.modalView}
         headerComponent={
@@ -28,11 +30,9 @@ export const BottomSheetScreen: React.FC<TimedActionProps> = ({ children }) => {
         }
         scrollViewProps={{
           style: styles.modalViewContent,
-        }}>
-        <CTAPressable
-          onPress={() => setModalVisible(!modalVisible)}
-          title="Close bottom sheet"
-        />
+        }}
+        scrollEnabled={true}>
+        <FormScreen />
       </BottomSheet>
       <CTAPressable
         title="Open bottom sheet"
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 12,
   },
   modalViewContent: {
-    padding: theme.padding.big,
-    paddingVertical: theme.padding.big,
+    flex: 1,
+    marginBottom: theme.padding.big,
   },
 });

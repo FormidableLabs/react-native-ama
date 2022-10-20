@@ -7,7 +7,7 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 
-import { MOTION_ANIMATIONS } from '../internal/costants';
+import { MOTION_ANIMATIONS } from '../internal/constants';
 import { useAMAContext } from '../providers/AMAProvider';
 
 export type ToAnimation = ViewProps['style'];
