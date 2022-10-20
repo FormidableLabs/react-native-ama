@@ -92,7 +92,8 @@
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [
-      "<rootDir>/example/node_modules",
+      "<rootDir>/examples/legacy/node_modules",
+      "<rootDir>/examples/fabric/node_modules",
       "<rootDir>/dist/",
       "<rootDir>/src/"
     ],
