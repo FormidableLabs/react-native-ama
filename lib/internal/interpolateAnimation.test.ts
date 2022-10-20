@@ -1,4 +1,4 @@
-import { MOTION_ANIMATIONS } from './costants';
+import { MOTION_ANIMATIONS } from './constants';
 import { interpolateAnimationStates } from './interpolateAnimationStates';
 
 describe('interpolateAnimationStates', () => {

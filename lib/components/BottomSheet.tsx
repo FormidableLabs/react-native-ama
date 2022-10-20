@@ -18,17 +18,19 @@ import {
   PanGestureHandler,
   ScrollView,
 } from 'react-native-gesture-handler';
-import {
+import Animated, {
   SharedValue,
+  runOnJS,
   useAnimatedStyle,
+  useDerivedValue,
   useSharedValue,
 } from 'react-native-reanimated';
-import Animated from 'react-native-reanimated';
 
 import { AnimatedContainer } from '../components/AnimatedContainer';
 import { useBottomSheetGestureHandler } from '../hooks/useBottomSheetGestureHandler';
 import { useTimedAction } from '../hooks/useTimedAction';
 import { useChecks } from '../internal/useChecks';
+import { useKeyboard } from '../internal/useKeyboard';
 
 export type BottomSheetProps = {
   animationDuration?: number;
@@ -41,7 +43,7 @@ export type BottomSheetProps = {
   handleComponent?: JSX.Element | 'none';
   handleStyle?: ViewStyle | ViewStyle[];
   headerComponent?: JSX.Element;
-  maxHeight?: number;
+  maxHeight?: SharedValue<number>;
   minVelocityToClose?: number;
   onBottomSheetHidden?: () => void;
   onClose: () => void;
@@ -55,12 +57,16 @@ export type BottomSheetProps = {
   topInset: number;
   visible: boolean;
   ref?: React.RefObject<BottomSheetActions>;
+  shouldHandleKeyboardEvents?: boolean;
 };
 
 export type BottomSheetActions = {
   close: () => Promise<void>;
   isVisible: () => boolean;
 };
+
+const DEFAULT_MAX_HEIGHT = Dimensions.get('window').height * 0.9;
+const isIOS = Platform.OS === 'ios';
 
 export const BottomSheetBase = React.forwardRef<
   BottomSheetActions,
@@ -88,10 +94,11 @@ export const BottomSheetBase = React.forwardRef<
       overlayOpacity = 1,
       footerComponent,
       avoidKeyboard,
-      maxHeight = Dimensions.get('window').height * 0.9,
+      maxHeight,
       minVelocityToClose = 1000,
       topInset,
       onBottomSheetHidden,
+      shouldHandleKeyboardEvents = true,
     },
     ref,
   ) => {
@@ -107,6 +114,10 @@ export const BottomSheetBase = React.forwardRef<
     const [footerHeight, setFooterHeight] = React.useState(-1);
     const [handleHeight, setHandleHeight] = React.useState(-1);
     const promiseResolver = React.useRef<(() => void) | null>(null);
+    const [maxScrollViewHeight, setMaxScrollViewHeight] = React.useState(0);
+    const { keyboardHeight, keyboardFinalHeight } = useKeyboard(
+      shouldHandleKeyboardEvents,
+    );
 
     const checks = __DEV__ ? useChecks?.() : null;
     const debugStyle = __DEV__ ? checks?.debugStyle : {};
@@ -192,27 +203,49 @@ export const BottomSheetBase = React.forwardRef<
       };
     });
 
+    const maxHeightValue = useDerivedValue(() => {
+      const height = maxHeight ? maxHeight.value : DEFAULT_MAX_HEIGHT;
+
+      return height - keyboardHeight.value;
+    }, [keyboardHeight, maxHeight]);
+
     const animatedStyle = useAnimatedStyle(() => {
+      const keyboard = isIOS ? keyboardHeight.value : 0;
+
       return {
-        transform: [{ translateY: translateY.value }],
+        transform: [{ translateY: translateY.value - keyboard }],
+        maxHeight: maxHeightValue.value,
       };
-    });
+    }, [maxHeightValue, translateY, keyboardHeight]);
+
+    useDerivedValue(() => {
+      const height = maxHeight ? maxHeight.value : DEFAULT_MAX_HEIGHT;
+
+      const maxScrollHeight =
+        height -
+        keyboardFinalHeight.value -
+        footerHeight -
+        headerHeight -
+        handleHeight -
+        topInset;
+
+      runOnJS(setMaxScrollViewHeight)(maxScrollHeight);
+    }, [
+      footerHeight,
+      headerHeight,
+      handleHeight,
+      keyboardFinalHeight,
+      topInset,
+      maxHeight,
+    ]);
 
     const handleOnLayout = (event: LayoutChangeEvent) => {
       contentHeight.value = event.nativeEvent.layout.height;
     };
-
-    const maxScrollViewHeight =
-      maxHeight - footerHeight - headerHeight - handleHeight - topInset;
-
-    const scrollViewStyle = [
-      { maxHeight: maxScrollViewHeight },
-      scrollViewProps?.style,
-    ];
-
-    const Wrapper = avoidKeyboard
-      ? BottomSheetKeyboardAvoidingView
-      : React.Fragment;
+    const Wrapper =
+      avoidKeyboard && !shouldHandleKeyboardEvents
+        ? BottomSheetKeyboardAvoidingView
+        : React.Fragment;
 
     const opacity = [footerHeight, headerHeight, handleHeight].every(
       h => h >= 0,
@@ -251,7 +284,7 @@ export const BottomSheetBase = React.forwardRef<
                 />
               </AnimatedContainer>
               <Animated.View
-                style={[styles.contentWrapper, { maxHeight }, animatedStyle]}
+                style={[styles.contentWrapper, animatedStyle]}
                 testID={`${testID}-wrapper`}>
                 <AnimatedContainer
                   from={{ transform: [{ translateY: 'targetHeight' }] }}
@@ -294,7 +327,10 @@ export const BottomSheetBase = React.forwardRef<
                     </View>
                     <ScrollView
                       {...scrollViewProps}
-                      style={scrollViewStyle}
+                      style={[
+                        { maxHeight: maxScrollViewHeight },
+                        scrollViewProps?.style,
+                      ]}
                       scrollEnabled={scrollEnabled}
                       testID={`${testID}-scrollview`}>
                       {children}
@@ -393,6 +429,7 @@ const styles = StyleSheet.create({
   content: {
     width: '100%',
     backgroundColor: '#fff',
+    flex: 1,
   },
   line: {
     width: 48,

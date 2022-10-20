@@ -7,7 +7,7 @@ import {
   WithTimingConfig,
 } from 'react-native-reanimated';
 
-import type { MotionAnimationKey } from '../internal/costants';
+import type { MotionAnimationKey } from '../internal/constants';
 import { useAMAContext } from '../providers/AMAProvider';
 import { isMotionAnimation } from '../utils/isMotionAnimation';
 

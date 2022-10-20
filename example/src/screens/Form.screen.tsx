@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
   view: {
     paddingHorizontal: theme.padding.big,
     paddingVertical: theme.padding.big,
+    flex: 1,
   },
   input: {
     height: 40,
