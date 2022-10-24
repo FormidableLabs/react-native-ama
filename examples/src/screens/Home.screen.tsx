@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 
 import { CTAPressable } from '../components/CTAPressable';
 import { Header } from '../components/Header';
@@ -11,7 +11,7 @@ export const HomeScreen = () => {
   const { navigate } = useTypedNavigation();
 
   return (
-    <View style={styles.view}>
+    <SafeAreaView style={styles.view}>
       <ScrollView style={styles.list}>
         <Header title="Example components" />
         <Spacer height={'normal'} />
@@ -70,7 +70,7 @@ export const HomeScreen = () => {
 
         <Spacer height={'big'} />
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingHorizontal: theme.padding.big,
+    flex: 1,
   },
   header: {
     fontSize: theme.fontSize.medium,
