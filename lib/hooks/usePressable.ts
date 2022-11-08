@@ -18,7 +18,7 @@ export type UsePressable<T> = Omit<
   AMAAccessibilityState &
   AccessibilityRoles & {
     accessibilityLabel: string;
-  };
+  } & { onLayout?: (event: LayoutChangeEvent) => void };
 
 type ReturnUsePressable = {
   accessibilityState: AccessibilityState;
@@ -59,7 +59,12 @@ export const usePressable = <T>(
     ? {
         accessibilityState,
         // @ts-ignore
-        onLayout: checks.onLayout,
+        onLayout: evt => {
+          if (props.onLayout) {
+            props.onLayout(evt);
+          }
+          checks?.onLayout(evt);
+        },
         // @ts-ignore
         style: checks.debugStyle,
         accessibilityRole,
