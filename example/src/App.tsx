@@ -177,14 +177,9 @@ const AppNavigator = () => {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const isIOS = Platform.OS === 'ios';
-
 const BaseNavigatorOptions: NativeStackNavigationOptions = {
   headerTitleAlign: 'center',
   headerBackVisible: false,
-  contentStyle: {
-    marginTop: isIOS ? 0 : 58,
-  },
 };
 
 export default App;
