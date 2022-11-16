@@ -240,6 +240,9 @@ export const BottomSheetBase = React.forwardRef<
     const handleOnLayout = (event: LayoutChangeEvent) => {
       contentHeight.value = event.nativeEvent.layout.height;
     };
+
+    const maybeCloseBottomSheet = persistent ? undefined : onClose;
+
     const Wrapper =
       avoidKeyboard && !shouldHandleKeyboardEvents
         ? BottomSheetKeyboardAvoidingView
@@ -272,13 +275,14 @@ export const BottomSheetBase = React.forwardRef<
                   style={styles.closeButton}
                   accessibilityRole="button"
                   accessibilityLabel={closeActionAccessibilityLabel}
-                  onPress={persistent ? undefined : onClose}
+                  onPress={maybeCloseBottomSheet}
                   testID={`${testID}-overlay-button`}
                   accessible={!persistent}
                   importantForAccessibility={
                     persistent ? 'no-hide-descendants' : 'yes'
                   }
                   accessibilityElementsHidden={persistent}
+                  onAccessibilityTap={maybeCloseBottomSheet}
                 />
               </AnimatedContainer>
               <Animated.View
