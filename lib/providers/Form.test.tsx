@@ -111,6 +111,57 @@ describe('Form', () => {
     expect(focus).toHaveBeenCalledWith();
   });
 
+  it('awaits 50ms before triggering again the `focus` event if the component already have the focus', async () => {
+    jest.useFakeTimers();
+
+    const focus = jest.fn();
+    const ref = {
+      current: { focus, isFocused: jest.fn().mockReturnValue(true) },
+    };
+    const secondField = {
+      ref,
+      hasFocusCallback: true,
+      hasValidation: false,
+      isEditable: true,
+      id: 'second',
+    };
+
+    let providerValues = customRender();
+
+    providerValues.refs?.push({
+      ref: { current: 'random ref' },
+      hasFocusCallback: false,
+      hasValidation: false,
+      id: 'first',
+    });
+
+    // next field
+    providerValues.refs?.push(secondField);
+
+    providerValues.focusField?.(secondField);
+
+    expect(focus).not.toHaveBeenCalled();
+    expect(checkFocusTrap).not.toHaveBeenCalled();
+
+    jest.advanceTimersByTime(51);
+
+    expect(focus).toHaveBeenCalledWith();
+
+    await waitFor(() =>
+      expect(checkFocusTrap).toHaveBeenCalledWith({
+        ref: {
+          current: {
+            focus: expect.any(Function),
+            isFocused: expect.any(Function),
+          },
+        },
+        shouldHaveFocus: true,
+      }),
+    );
+
+    jest.useRealTimers();
+  });
+
   it('calls the setFocus callback if the next field is not editable', () => {
     const focus = jest.fn();
     const ref = { current: { focus, isFocused: jest.fn() } };

@@ -1,6 +1,7 @@
 import type React from 'react';
 import type { TextInput } from 'react-native';
 
+import { isFocused } from '../isFocused';
 import type { LogParams } from '../logger';
 
 export type CheckFocusTrap = {
@@ -13,7 +14,7 @@ export const checkFocusTrap = async ({
 }: CheckFocusTrap): Promise<LogParams | null> => {
   return new Promise(resolve => {
     setTimeout(() => {
-      const hasFocus = ref?.current?.isFocused() === shouldHaveFocus;
+      const hasFocus = isFocused(ref?.current) === shouldHaveFocus;
 
       if (!hasFocus) {
         const message = shouldHaveFocus
