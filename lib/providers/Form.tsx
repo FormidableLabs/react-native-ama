@@ -2,6 +2,7 @@ import * as React from 'react';
 import { InteractionManager } from 'react-native';
 
 import { useFocus } from '../hooks/useFocus';
+import { isFocused } from '../internal/isFocused';
 import { useChecks } from '../internal/useChecks';
 
 export type FormProps = React.PropsWithChildren<{
@@ -35,12 +36,24 @@ export const Form = ({ children, onSubmit }: FormProps) => {
           'No next field found. Make sure you wrapped your form inside the <Form /> component',
         rule: 'NO_UNDEFINED',
       });
-    if (callFocus) {
-      nextRefElement?.current?.focus();
 
-      __DEV__ &&
-        nextRefElement &&
-        checks?.checkFocusTrap({ ref: nextRefElement, shouldHaveFocus: true });
+    if (callFocus) {
+      /**
+       * On some apps, if we call focus immediately and the field is already focused we lose the focus.
+       * Same happens if we do not call `focus` if the field is already focused.
+       */
+      const timeoutValue = isFocused(nextRefElement.current) ? 50 : 0;
+
+      setTimeout(() => {
+        nextRefElement?.current?.focus();
+
+        __DEV__ &&
+          nextRefElement &&
+          checks?.checkFocusTrap({
+            ref: nextRefElement,
+            shouldHaveFocus: true,
+          });
+      }, timeoutValue);
     } else if (nextRefElement?.current) {
       setFocus(nextRefElement?.current);
     }
