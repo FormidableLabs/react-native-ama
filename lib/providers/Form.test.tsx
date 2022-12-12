@@ -83,7 +83,7 @@ describe('Form', () => {
     expect(setFocus).toHaveBeenCalledWith('whatever');
   });
 
-  it('calls the .focus callback if the next field has it and is editable', () => {
+  it('calls the .focus callback if the next field has it and is editable', async () => {
     const focus = jest.fn();
     const ref = { current: { focus, isFocused: jest.fn() } };
     const secondField = {
@@ -108,7 +108,7 @@ describe('Form', () => {
 
     providerValues.focusField?.(secondField);
 
-    expect(focus).toHaveBeenCalledWith();
+    await waitFor(() => expect(focus).toHaveBeenCalledWith());
   });
 
   it('awaits 50ms before triggering again the `focus` event if the component already have the focus', async () => {
