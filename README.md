@@ -1,3 +1,4 @@
+[![React Native AMA — Formidable, We build the modern web](./react-native-ama-Hero.png)](https://formidable.com/open-source/)
 # Accessibility as a First-Class Citizen with React Native AMA
 [![github][github-image]][github-url] [![npm][npm-image]][npm-url] [![docs][docs-image]][docs-url] [![Maintenance Status][maintenance-image]](#maintenance-status)
 
