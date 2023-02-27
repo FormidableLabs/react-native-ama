@@ -26,7 +26,7 @@ In both cases, the user has no clue about the nature of the component the screen
 ## The roles 
 
 React Native provides an extensive list of [accessibility roles](https://reactnative.dev/docs/accessibility#accessibilityrole), but not all of them are native to both iOS and Android platform.
-For example `checbox` is a native component on Android but not on iOS.
+For example `checkbox` is a native component on Android but not on iOS.
 
 For those cases AMA automatically uses the correct role for the running platform.
 
