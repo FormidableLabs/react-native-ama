@@ -1,17 +1,17 @@
 import React, { PropsWithChildren } from 'react';
 import { Platform, View } from 'react-native';
 
+import { useAMAContext } from '../providers/AMAProvider';
+
 const HideChildrenFromAccessibilityTreeIOS = ({
   children,
 }: PropsWithChildren<{}>) => {
-  return React.useMemo(
-    () => hideChildrenFromAccessibilityTree(children),
-    [children],
-  );
+  return hideChildrenFromAccessibilityTree(children);
 };
 
-// TODO: Fix return type
-const hideChildrenFromAccessibilityTree = (component: React.ReactNode): any => {
+const hideChildrenFromAccessibilityTree = (
+  component: React.ReactNode,
+): React.ReactNode => {
   return (
     React.Children.map(component, child => {
       return React.isValidElement(child)
@@ -34,7 +34,16 @@ const HideChildrenFromAccessibilityAndroid = ({
   );
 };
 
-export const HideChildrenFromAccessibilityTree =
-  Platform.OS === 'android'
-    ? HideChildrenFromAccessibilityAndroid
-    : HideChildrenFromAccessibilityTreeIOS;
+export const HideChildrenFromAccessibilityTree = ({
+  children,
+}: PropsWithChildren<{}>): JSX.Element => {
+  const { isScreenReaderEnabled } = useAMAContext();
+
+  // @ts-ignore TODO: Fix me
+  return isScreenReaderEnabled
+    ? Platform.select({
+        default: HideChildrenFromAccessibilityAndroid,
+        ios: HideChildrenFromAccessibilityTreeIOS,
+      })
+    : children;
+};
