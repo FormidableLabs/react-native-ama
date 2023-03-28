@@ -1,6 +1,7 @@
 import React from 'react';
 import { PressableProps, View } from 'react-native';
 
+import { useAMAContext } from '../providers/AMAProvider';
 import { useForm } from '../providers/Form';
 import { HideChildrenFromAccessibilityTree } from './HideChildrenFromAccessibilityTree';
 import { Pressable } from './Pressable';
@@ -13,7 +14,17 @@ export type FormSubmitProps = React.PropsWithChildren<{
   testID?: string;
 }>;
 
-export const FormSubmit = ({ children, ...rest }: FormSubmitProps) => {
+export const FormSubmit = (props: FormSubmitProps) => {
+  const { isScreenReaderEnabled } = useAMAContext();
+
+  return isScreenReaderEnabled ? (
+    <FormSubmitForScreenReader {...props} />
+  ) : (
+    <>{props.children}</>
+  );
+};
+
+const FormSubmitForScreenReader = ({ children, ...rest }: FormSubmitProps) => {
   const { submitForm } = useForm();
 
   return (

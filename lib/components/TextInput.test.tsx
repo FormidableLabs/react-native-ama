@@ -525,3 +525,16 @@ jest.mock('../hooks/useFormField', () => {
     useFormField: jest.fn().mockReturnValue({}),
   };
 });
+
+jest.mock('../providers/AMAProvider', () => {
+  const originalModule = jest.requireActual('../providers/AMAProvider');
+
+  return {
+    ...originalModule,
+    useAMAContext: () => {
+      return {
+        isScreenReaderEnabled: true,
+      };
+    },
+  };
+});

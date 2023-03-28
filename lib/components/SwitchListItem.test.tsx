@@ -241,3 +241,16 @@ describe('SwitchListItem', () => {
     );
   });
 });
+
+jest.mock('../providers/AMAProvider', () => {
+  const originalModule = jest.requireActual('../providers/AMAProvider');
+
+  return {
+    ...originalModule,
+    useAMAContext: () => {
+      return {
+        isScreenReaderEnabled: true,
+      };
+    },
+  };
+});
