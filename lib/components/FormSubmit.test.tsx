@@ -51,3 +51,7 @@ describe('FormSubmit', () => {
     });
   });
 });
+
+jest.mock('./../../ama.rules.json', () => {
+  return {};
+});
