@@ -1,7 +1,7 @@
 import React from 'react';
 import { PressableProps, View } from 'react-native';
-import { useAMAContext } from 'react-native-ama';
 
+import { useAMAContext } from '../providers/AMAProvider';
 import { useForm } from '../providers/Form';
 import { HideChildrenFromAccessibilityTree } from './HideChildrenFromAccessibilityTree';
 import { Pressable } from './Pressable';
