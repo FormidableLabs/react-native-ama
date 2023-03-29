@@ -4,7 +4,12 @@ import { TouchableWithoutFeedback, View, ViewProps } from 'react-native';
 import { useFocus } from '../hooks/useFocus';
 
 type AutofocusContainerProps = React.PropsWithChildren<
-  { wrapChildrenInAccessibleView?: boolean } & ViewProps
+  | ({
+      wrapChildrenInAccessibleView?: true;
+    } & ViewProps)
+  | {
+      wrapChildrenInAccessibleView: false;
+    }
 >;
 
 export const AutofocusContainer = ({
