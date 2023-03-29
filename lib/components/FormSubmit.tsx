@@ -16,7 +16,6 @@ export type FormSubmitProps = React.PropsWithChildren<{
 
 export const FormSubmit = (props: FormSubmitProps) => {
   const { submitForm } = useForm();
-
   const { isScreenReaderEnabled } = useAMAContext();
 
   return (
