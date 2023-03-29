@@ -15,25 +15,29 @@ export type FormSubmitProps = React.PropsWithChildren<{
 }>;
 
 export const FormSubmit = (props: FormSubmitProps) => {
+  const { submitForm } = useForm();
+
   const { isScreenReaderEnabled } = useAMAContext();
 
-  return isScreenReaderEnabled ? (
-    <FormSubmitForScreenReader {...props} />
-  ) : (
-    <>{props.children}</>
+  return (
+    <Pressable accessibilityRole="button" {...props} onPress={submitForm}>
+      {isScreenReaderEnabled ? (
+        <FormSubmitForScreenReader {...props} />
+      ) : (
+        props.children
+      )}
+    </Pressable>
   );
 };
 
-const FormSubmitForScreenReader = ({ children, ...rest }: FormSubmitProps) => {
-  const { submitForm } = useForm();
-
+const FormSubmitForScreenReader = ({
+  children,
+}: React.PropsWithChildren<{}>) => {
   return (
-    <Pressable accessibilityRole="button" {...rest} onPress={submitForm}>
-      <View pointerEvents="none">
-        <HideChildrenFromAccessibilityTree>
-          {children}
-        </HideChildrenFromAccessibilityTree>
-      </View>
-    </Pressable>
+    <View pointerEvents="none">
+      <HideChildrenFromAccessibilityTree>
+        {children}
+      </HideChildrenFromAccessibilityTree>
+    </View>
   );
 };
