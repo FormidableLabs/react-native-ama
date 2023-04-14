@@ -5887,10 +5887,10 @@ react-native-svg@^12.3.0:
     css-select "^5.1.0"
     css-tree "^1.1.3"
 
-react-native@0.66:
-  version "0.66.4"
-  resolved "https://registry.npmjs.org/react-native/-/react-native-0.66.4.tgz"
-  integrity sha512-9vx5dlSfQlKbbDtr8+xMon6qsmSu7jvjdXWZpEKh3XVKpUidbbODv7048gwVKX8YAel1egeR7hN8vzSeI6ssTw==
+react-native@0.66.5:
+  version "0.66.5"
+  resolved "https://registry.npmjs.org/react-native/-/react-native-0.66.5.tgz"
+  integrity sha512-dC5xmE1anT+m8eGU0N/gv2XUWZygii6TTqbwZPsN+uMhVvjxt4FsTqpZOFFvA5sxLPR/NDEz8uybTvItNBMClw==
   dependencies:
     "@jest/create-cache-key-function" "^27.0.1"
     "@react-native-community/cli" "^6.0.0"
