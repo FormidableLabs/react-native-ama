@@ -48,17 +48,22 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
     >,
   ) => {
     return (newValue: boolean) => {
-      const newValues = { ...values };
-      newValues[key] = newValue;
+      setValues(oldValues => {
+        const newValues = { ...oldValues };
+        newValues[key] = newValue;
 
-      if (key === 'isReduceMotionEnabled') {
-        newValues.reactNavigationScreenOptions.animationEnabled = !newValue;
-        newValues.reactNavigationScreenOptions.animation = newValue
-          ? 'fade'
-          : 'default';
-      }
+        if (key === 'isReduceMotionEnabled') {
+          newValues.reactNavigationScreenOptions.animationEnabled = !newValue;
+          newValues.reactNavigationScreenOptions.animation = newValue
+            ? 'fade'
+            : 'default';
+        }
 
-      setValues(newValues);
+        return {
+          ...oldValues,
+          ...newValues,
+        };
+      });
     };
   };
 

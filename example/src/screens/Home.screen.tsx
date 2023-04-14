@@ -67,6 +67,11 @@ export const HomeScreen = () => {
           title="useTimedAction"
           onPress={() => navigate('UseTimedAction')}
         />
+        <Spacer height={'normal'} />
+        <CTAPressable
+          title="useAMAContext"
+          onPress={() => navigate('UseAMAContext')}
+        />
 
         <Spacer height={'big'} />
       </ScrollView>

@@ -5,13 +5,13 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "ios": "react-native run-ios",
+    "ios": "react-native run-ios --simulator \"iPhone 14\"",
     "start": "react-native start",
     "ts:check": "tsc --noEmit"
   },
   "dependencies": {
     "react": "17",
-    "react-native": "0.66"
+    "react-native": "0.66.5"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
