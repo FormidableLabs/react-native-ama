@@ -13,4 +13,5 @@ export type RootStackParamList = {
   FlatListStatic: undefined;
   BottomSheet: undefined;
   UseTimedAction: undefined;
+  UseAMAContext: undefined;
 };

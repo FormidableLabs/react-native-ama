@@ -20,6 +20,7 @@ import { PressableScreen } from './screens/Pressable.screen';
 import { TextScreen } from './screens/Text.screen';
 import { TouchableOpacityScreen } from './screens/TouchableOpacity.screen';
 import { TouchableWithoutFeedbackScreen } from './screens/TouchableWithoutFeedback.screen';
+import { UseAMAContextScreen } from './screens/UseAMAContext.screen';
 import { UseAnimationScreen } from './screens/UseAnimationScreen';
 import { UseReanimatedTimingScreen } from './screens/UseReanimatedTimingScreen';
 import { UseTimedActionScreen } from './screens/UseTimedAction.screen';
@@ -167,6 +168,16 @@ const AppNavigator = () => {
             headerLeft: () => <BackButton />,
             headerTitle: () => (
               <Header title={'useTimedAction Demo'} autofocus />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="UseAMAContext"
+          component={UseAMAContextScreen}
+          options={{
+            headerLeft: () => <BackButton />,
+            headerTitle: () => (
+              <Header title={'useAMAContext Demo'} autofocus />
             ),
           }}
         />
