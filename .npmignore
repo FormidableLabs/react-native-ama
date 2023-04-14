@@ -1,7 +1,5 @@
 *
-!dist/**/*
 !lib/**/*
-!docs/**/*
 !android/**/*
 !ios/**/*
 !tsconfig.json

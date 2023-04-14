@@ -7,9 +7,7 @@ import {
 import { usePressable } from '../hooks/usePressable';
 import type { UsePressable } from '../hooks/usePressable';
 
-export type PressableProps = React.PropsWithChildren<
-  UsePressable<RNPressableProps>
->;
+export type PressableProps = UsePressable<RNPressableProps>;
 
 const PressableBase = React.forwardRef<typeof RNPressable, PressableProps>(
   ({ children, ...rest }, ref) => {

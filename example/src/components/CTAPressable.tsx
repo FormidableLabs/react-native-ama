@@ -2,11 +2,10 @@ import React from 'react';
 import {
   AccessibilityState,
   ActivityIndicator,
-  Pressable,
   StyleSheet,
   Text,
 } from 'react-native';
-import { Pressable as AAA } from 'react-native-ama';
+import { Pressable as AMAPressable } from 'react-native-ama';
 import type { PressableProps } from 'react-native-ama';
 
 import { theme } from '../theme';
@@ -38,7 +37,7 @@ export const CTAPressable = ({
   ...rest
 }: CTAPressableProps) => {
   return (
-    <AAA
+    <AMAPressable
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel || title}
       disabled={disabled}
@@ -62,7 +61,7 @@ export const CTAPressable = ({
         importantForAccessibility={rest.importantForAccessibility}>
         {title}
       </Text>
-    </AAA>
+    </AMAPressable>
   );
 };
 
