@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native';
 import { Text, useAMAContext } from 'react-native-ama';
 
 import { Spacer } from '../components/Spacer';
-import { theme } from '../theme';
 
 export const UseAMAContextScreen = () => {
   const {
@@ -39,13 +38,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  timedContent: {
-    position: 'absolute',
-    bottom: 0,
-    backgroundColor: '#fff',
-    padding: theme.padding.big,
-    paddingBottom: 48,
-    width: '100%',
   },
 });
