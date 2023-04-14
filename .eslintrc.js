@@ -14,5 +14,6 @@ module.exports = {
     'dist/**/*',
     'website/**/*',
     'coverage/**/*',
+    '__mocks__/**/*',
   ],
 };
