@@ -217,15 +217,19 @@ export const BottomSheetBase = React.forwardRef<
     }, [maxHeightValue, translateY, keyboardHeight]);
 
     useDerivedValue(() => {
-      const maxScrollHeight =
+      const maxScrollHeight = Math.ceil(
         maxHeight -
-        keyboardFinalHeight.value -
-        footerHeight -
-        headerHeight -
-        handleHeight -
-        topInset;
+          keyboardFinalHeight.value -
+          footerHeight -
+          headerHeight -
+          handleHeight -
+          topInset,
+      );
 
-      if (!Number.isNaN(maxScrollHeight)) {
+      if (
+        !Number.isNaN(maxScrollHeight) &&
+        maxScrollHeight !== maxScrollViewHeight
+      ) {
         runOnJS(setMaxScrollViewHeight)(maxScrollHeight);
       }
     }, [

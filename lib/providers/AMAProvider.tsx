@@ -121,8 +121,8 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
     });
 
     return () => {
-      subscriptions.forEach(subscription => subscription.remove());
-      AppState.removeEventListener('change', checkAndroidAnimationStatus);
+      subscriptions.forEach(subscription => subscription?.remove());
+      AppState.removeEventListener?.('change', checkAndroidAnimationStatus);
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
