@@ -24,6 +24,7 @@ so these other dependencies should also be installed.
 ```bash npm2yarn
 npm install --save-dev react-native-reanimated
 npm install --save-dev react-native-gesture-handler
+npm install --save-dev wcga-color
 
 cd ios
 pod install

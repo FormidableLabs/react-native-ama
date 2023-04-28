@@ -3,6 +3,7 @@ import type {
   AccessibilityRole,
   AccessibilityState,
   LayoutChangeEvent,
+  PressableStateCallbackType,
 } from 'react-native';
 import { Platform } from 'react-native';
 
@@ -29,7 +30,10 @@ type ReturnUsePressable = {
 
 export const usePressable = <T>(
   props: Partial<UsePressable<T>>,
-  children?: React.ReactNode,
+  children?:
+    | React.ReactNode
+    | ((state: PressableStateCallbackType) => React.ReactNode)
+    | undefined,
 ): ReturnUsePressable => {
   const accessibilityRole =
     Platform.OS === 'ios' &&

@@ -1,4 +1,5 @@
 import type React from 'react';
+import type { PressableStateCallbackType } from 'react-native';
 
 import { applyStyle } from '../internal/applyStyle';
 import { useChecks } from '../internal/useChecks';
@@ -6,7 +7,10 @@ import { useChecks } from '../internal/useChecks';
 export const useButtonChecks = __DEV__
   ? (
       props: Record<string, any>,
-      children?: React.ReactNode,
+      children?:
+        | React.ReactNode
+        | ((state: PressableStateCallbackType) => React.ReactNode)
+        | undefined,
       shouldPerformContrastCheck: boolean = true,
     ) => {
       const {
