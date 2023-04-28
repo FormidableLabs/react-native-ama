@@ -270,7 +270,7 @@ describe('BottomSheet', () => {
       );
 
       expect(getByTestId('bottom-sheet-scrollview').props.style).toEqual([
-        { maxHeight: 1200.6000000000001 },
+        { maxHeight: 1201 },
         { backgroundColor: 'fucsia' },
       ]);
     });
