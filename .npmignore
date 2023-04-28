@@ -8,3 +8,4 @@
 !react-native-ama.podspec
 !app.plugin.js
 !dist/typescript
+!dist/**/*
