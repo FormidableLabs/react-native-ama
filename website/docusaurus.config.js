@@ -9,7 +9,7 @@ const config = {
   title: 'React Native AMA',
   tagline: 'Accessible Mobile App Library for React Native',
   url: 'https://formidable.com',
-  baseUrl: '/open-source/react-native-ama/',
+  baseUrl: process.env.VERCEL_ENV === "preview" ? '/' : '/open-source/react-native-ama/',
   onBrokenLinks: 'error',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
