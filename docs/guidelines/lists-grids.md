@@ -17,6 +17,6 @@ Suppose the list you're using does not provide this kind of experience. In that 
 
 ## Related AMA components
 
-- [DynamicFlatList](../components/dynamicflatList)
-- [StaticFlatList](../components/staticflatlist)
-- [ListWrapper](../components/listwrapper)
+- [DynamicFlatList](../components/DynamicFlatList)
+- [StaticFlatList](../components/StaticFlatList)
+- [ListWrapper](../components/ListWrapper)
