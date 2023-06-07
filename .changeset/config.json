@@ -7,5 +7,6 @@
 		}
 	],
 	"access": "public",
-	"baseBranch": "main"
+	"baseBranch": "main",
+  "title": "chore: version packages"
 }
