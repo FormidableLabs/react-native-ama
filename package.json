@@ -14,7 +14,6 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "yarn lint --fix",
     "build": "bob build",
-    "release": "release-it",
     "example": "yarn --cwd example",
     "fabric": "yarn --cwd FabricExample",
     "pods": "cd example && pod-install --quiet",
@@ -42,15 +41,17 @@
   },
   "homepage": "https://github.com/FormidableLabs/react-native-ama#readme",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+    "provenance": true
   },
   "devDependencies": {
+    "@changesets/cli": "^2.26.1",
     "@commitlint/cli": "^17.0.0",
     "@commitlint/config-conventional": "^17.0.0",
     "@ianvs/prettier-plugin-sort-imports": "^3.4.2",
     "@react-native-community/eslint-config": "^2.0.0",
     "@react-navigation/stack": "^6.2.1",
-    "@release-it/conventional-changelog": "^2.0.0",
+    "@svitejs/changesets-changelog-github-compact": "^0.1.1",
     "@testing-library/react-hooks": "^8.0.0",
     "@testing-library/react-native": "^9.1.0",
     "@types/jest": "^26.0.0",
@@ -74,7 +75,6 @@
     "react-native-gesture-handler": "^2.4.2",
     "react-native-reanimated": "2.7",
     "react-test-renderer": "17",
-    "release-it": "^14.2.2",
     "typescript": "^4.1.3",
     "wcag-color": "^1.1.1"
   },
@@ -115,33 +115,6 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  },
-  "release-it": {
-    "git": {
-      "commitMessage": "chore: release ${version}",
-      "tagName": "v${version}"
-    },
-    "npm": {
-      "publish": true
-    },
-    "github": {
-      "release": false
-    },
-    "plugins": {
-      "@release-it/conventional-changelog": {
-        "preset": "angular"
-      }
-    },
-    "hooks": {
-      "before:init": [
-        "yarn ts:check",
-        "yarn lint",
-        "yarn test"
-      ],
-      "after:bump": "yarn build",
-      "after:npm:release": "echo NPM release successful",
-      "after:release": "echo Successfully released ${name} v${version} to ${repo.repository}"
-    }
   },
   "react-native-builder-bob": {
     "source": "lib",
