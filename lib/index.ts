@@ -49,6 +49,8 @@ export * from './utils/minimumTouchableSize';
 export * from './utils/numerify';
 
 // Form
+export type { FormProps, FormActions } from './providers/Form';
+
 type FormComponent = React.FunctionComponent<FormProps> & {
   Submit: (props: FormSubmitProps) => JSX.Element;
   Field: React.FunctionComponent<FormFieldProps>;
