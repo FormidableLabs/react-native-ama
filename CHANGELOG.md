@@ -1,5 +1,11 @@
 # react-native-ama
 
+## 0.7.1
+
+### Patch Changes
+
+- Ensure dist/ directory is generated for release ([`ff0a870`](https://github.com/FormidableLabs/react-native-ama/commit/ff0a87059a916ace7a4da11db55aa23a8fd85fd6))
+
 ## 0.7.0
 
 ### Minor Changes
