@@ -9,13 +9,17 @@ The provider hosts the hosts the `ref` values used by the [TextInput](./TextInpu
 ## Usage
 
 ```jsx
-<Form onSubmit={handleSubmit}>
+
+// To manually focus the first invalid field
+ref.current?.focusFirstInvalidField()
+
+<Form onSubmit={handleSubmit} ref={ref}>
     {...}
 </Form>
 ```
 
-
 ## Example
+
 ```jsx
 <Form onSubmit={handleSubmit}>
   <TextInput
@@ -110,17 +114,17 @@ To fix the problem, we can manually tell the `TextInput` the return key to displ
 
 ```jsx
 <Form onSubmit={handleSubmit}>
-    <TextInput
-        onChangeText={newText => setFirstName(newText)}
-        defaultValue={text}
-        label={<Text>First name:</Text>}
-    />
+  <TextInput
+    onChangeText={newText => setFirstName(newText)}
+    defaultValue={text}
+    label={<Text>First name:</Text>}
+  />
 
-    <SwitchListItem
-        label={<Text>Show last name</Text>}
-        value={isLastNameVisible}
-        onValueChange={toggleLastName}
-    />
+  <SwitchListItem
+    label={<Text>Show last name</Text>}
+    value={isLastNameVisible}
+    onValueChange={toggleLastName}
+  />
 
   {isLastNameVisible ? (
     <TextInput
@@ -140,7 +144,6 @@ To fix the problem, we can manually tell the `TextInput` the return key to displ
   />
 </Form>
 ```
-
 
 #### 2. Specifying the ref
 
@@ -176,7 +179,7 @@ const emailRef = React.useRef(null);
     label={<Text>Email address:</Text>}
     ref={emailRef}
   />
-</Form>
+</Form>;
 ```
 
 ## Props
@@ -186,8 +189,25 @@ const emailRef = React.useRef(null);
 The callback to be called when the [`TextInput`](./TextInput.mdx) `returnKeyboardType` is **done**.
 
 | Type     |
-|----------|
+| -------- |
 | callback |
+
+## Methods
+
+### `focusFirstInvalidField`
+
+Focuses the first field of the Form that has been marked as `invalid`
+
+```
+// To manually focus the first invalid field
+const focusInvalidField = () => {
+    ref.current?.focusFirstInvalidField()
+}
+
+<Form onSubmit={handleSubmit} ref={ref}>
+    <Pressable onPress={focusInvalidField} />
+</Form>
+```
 
 ## Related guidelines
 

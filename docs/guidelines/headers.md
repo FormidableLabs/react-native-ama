@@ -1,6 +1,6 @@
 # Headers
 
-Headers are defined by setting the property: `accessibilityRole = "header"` and are equivalent to the HTML _H*_ tags.
+Headers are defined by setting the property: `accessibilityRole = "header"` and are equivalent to the HTML _H\*_ tags.
 
 :::note
 
@@ -19,9 +19,9 @@ On iOS, the user will use the [VoiceOver rotor](https://support.apple.com/en-gb/
 You can have "invisible" header on your screen, for example:
 
 ```jsx
-<Text accessibilityLabel="This is the header" />
+<Text accessibilityLabel="This is the header" accessibilityRole="header" />
 ```
- 
+
 :::
 
 ## Related AMA components
