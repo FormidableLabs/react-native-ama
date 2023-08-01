@@ -46,7 +46,7 @@
     "provenance": true
   },
   "devDependencies": {
-    "@changesets/cli": "^2.26.1",
+    "@changesets/cli": "^2.26.2",
     "@commitlint/cli": "^17.0.0",
     "@commitlint/config-conventional": "^17.0.0",
     "@ianvs/prettier-plugin-sort-imports": "^3.4.2",
