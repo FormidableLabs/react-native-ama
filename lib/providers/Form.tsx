@@ -7,6 +7,7 @@ import { useChecks } from '../internal/useChecks';
 
 export type FormProps = React.PropsWithChildren<{
   onSubmit: () => boolean | Promise<boolean>;
+  ref?: React.RefObject<FormActions>;
 }>;
 
 export type FormActions = {
