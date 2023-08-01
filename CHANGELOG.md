@@ -1,5 +1,11 @@
 # react-native-ama
 
+## 0.7.2
+
+### Patch Changes
+
+- Fix Form type ([#110](https://github.com/FormidableLabs/react-native-ama/pull/110))
+
 ## 0.7.1
 
 ### Patch Changes
