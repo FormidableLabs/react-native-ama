@@ -1,5 +1,11 @@
 # react-native-ama
 
+## 0.7.4
+
+### Patch Changes
+
+- Remove jCenter dependency ([`f70fe94`](https://github.com/FormidableLabs/react-native-ama/commit/f70fe94a9bd8e8b3ecab0f659bfeb3d52bedf713))
+
 ## 0.7.3
 
 ### Patch Changes
