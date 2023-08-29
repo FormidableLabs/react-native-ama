@@ -53,7 +53,7 @@ This field is empty by default and can be overridden by specifying a list of acc
 
 ## Customising the log levels
 
-Create a JSON file called `ama.json` in the project's root folder to customise the log rules, then specify the custom log level for the wanted key.
+Create a JSON file called `ama.rules.json` in the project's root folder to customise the log rules, then specify the custom log level for the wanted key.
 
 ### Example
 
