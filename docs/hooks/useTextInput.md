@@ -8,7 +8,7 @@ This hook can be used to create a custom TextInput keeping all the accessibility
 import { useTextInput } from 'react-native-ama';
 
 const MyTextInput = () => {
-    const { ref, ...rest } = useTextInput();
+    const { ref, ...rest } = useTextInput({...requiredProps});
     
     return <TextInput ref={ref} {...rest} />;
 }
