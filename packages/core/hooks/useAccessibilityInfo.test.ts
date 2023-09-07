@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { act, waitFor } from '@testing-library/react-native';
+import { act } from '@testing-library/react-native';
 import { flushMicroTasks } from '@testing-library/react-native/build/flushMicroTasks';
 import { AccessibilityInfo } from 'react-native';
 
