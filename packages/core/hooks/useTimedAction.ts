@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { AccessibilityInfo, Platform } from 'react-native';
 
-import { useAMAContext } from '../providers/AMAProvider';
+import { useAccessibilityInfo } from './useAccessibilityInfo';
 
 export const useTimedAction = () => {
-  const { isScreenReaderEnabled } = useAMAContext();
+  const { isScreenReaderEnabled } = useAccessibilityInfo();
 
   const onTimeout = React.useCallback(
     async (

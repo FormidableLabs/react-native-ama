@@ -2,7 +2,6 @@ import { render } from '@testing-library/react-native';
 import * as React from 'react';
 import { Pressable, Text } from 'react-native';
 
-import { AMAProvider } from '../providers/AMAProvider';
 import { HideChildrenFromAccessibilityTree } from './HideChildrenFromAccessibilityTree';
 
 describe('HideChildrenFromAccessibilityTree', () => {
@@ -10,16 +9,14 @@ describe('HideChildrenFromAccessibilityTree', () => {
     // jest.spyOn(useAMAContext, 'isScreenReaderEnabled').mockReturnValue(true);
 
     const { getByTestId } = render(
-      <AMAProvider>
-        <HideChildrenFromAccessibilityTree>
-          <Text testID="test-text">Test here</Text>
-          <>
-            <Pressable testID="test-button">
-              <Text testID="nested-text">Press me</Text>
-            </Pressable>
-          </>
-        </HideChildrenFromAccessibilityTree>
-      </AMAProvider>,
+      <HideChildrenFromAccessibilityTree>
+        <Text testID="test-text">Test here</Text>
+        <>
+          <Pressable testID="test-button">
+            <Text testID="nested-text">Press me</Text>
+          </Pressable>
+        </>
+      </HideChildrenFromAccessibilityTree>,
     );
 
     ['test-text', 'test-button', 'nested-text'].forEach(testID => {
@@ -31,17 +28,4 @@ describe('HideChildrenFromAccessibilityTree', () => {
       );
     });
   });
-});
-
-jest.mock('../providers/AMAProvider', () => {
-  const originalModule = jest.requireActual('../providers/AMAProvider');
-
-  return {
-    ...originalModule,
-    useAMAContext: () => {
-      return {
-        isScreenReaderEnabled: true,
-      };
-    },
-  };
 });

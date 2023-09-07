@@ -1,7 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { AccessibilityInfo, Platform } from 'react-native';
 
-import * as AMAProvider from '../providers/AMAProvider';
 import { useTimedAction } from './useTimedAction';
 
 beforeEach(() => {
@@ -16,9 +15,9 @@ describe('useTimedAction', () => {
     async isScreenReaderEnabled => {
       const callback = jest.fn();
 
-      jest.spyOn(AMAProvider, 'useAMAContext').mockReturnValue({
+      useAccessibilityInfo.mockReturnValue({
         isScreenReaderEnabled,
-      } as any);
+      });
 
       const setTimeoutSpy = jest.spyOn(global, 'setTimeout');
 
@@ -36,4 +35,14 @@ describe('useTimedAction', () => {
   );
 });
 
-jest.mock('../providers/AMAProvider');
+let useAccessibilityInfo: jest.Mock;
+
+function mockUseAccessibilityInfo() {
+  useAccessibilityInfo = jest.fn();
+
+  return {
+    useAccessibilityInfo,
+  };
+}
+
+jest.mock('./useAccessibilityInfo', () => mockUseAccessibilityInfo());
