@@ -21,21 +21,21 @@ AMA guidelines are categorised as:
 
 ### Default Rules
 
-| Log key                                                               | Guideline   |
-| --------------------------------------------------------------------- | ----------- |
-| [BOTTOM_SHEET_CLOSE_ACTION](../guidelines/bottomsheet)                | <Must />    |
-| [CONTRAST_FAILED](../guidelines/contrast)                             | <Must />    |
-| [CONTRAST_FAILED_AAA](../guidelines/contrast)                         | <Should />  |
-| [FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE](../guidelines/lists-grids)    | <Should />  |
-| [FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE](../guidelines/lists-grids)      | <Must />    |
-| [MINIMUM_SIZE](../guidelines/minimum-size.md)                         | <Must />    |
-| [NO_ACCESSIBILITY_LABEL](../guidelines/accessibility-label)[^1]       | <Must />    |
-| [NO_ACCESSIBILITY_ROLE](../guidelines/accessibility-rol) [^1]         | <Must />    |
-| [NO_FORM_LABEL](../guidelines/forms)                                  | <Must />    |
-| [NO_FORM_ERROR](../guidelines/forms)                                  | <Must />    |
-| [NO_KEYBOARD_TRAP](../guidelines/keyboard-trap.md) [^1]               | <MustNot /> |
-| [UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL](../guidelines/uppercase-text) | <MustNot /> |
-| [NO_UPPERCASE_TEXT](../guidelines/uppercase-text)                     | <MustNot /> |
+| Log key                                                                                             | Guideline   |
+| --------------------------------------------------------------------------------------------------- | ----------- |
+| [BOTTOM_SHEET_CLOSE_ACTION](../guidelines/bottomsheet)                                              | <Must />    |
+| [CONTRAST_FAILED](../guidelines/contrast)                                                           | <Must />    |
+| [CONTRAST_FAILED_AAA](../guidelines/contrast)                                                       | <Should />  |
+| [FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE](../guidelines/lists-grids)                                  | <Should />  |
+| [FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE](../guidelines/lists-grids)                                    | <Must />    |
+| [MINIMUM_SIZE](../guidelines/minimum-size)                                                          | <Must />    |
+| [NO_ACCESSIBILITY_LABEL](../guidelines/accessibility-label)[^1]                                     | <Must />    |
+| [NO_ACCESSIBILITY_ROLE](../guidelines/accessibility-role) [^1]                                      | <Must />    |
+| [NO_FORM_LABEL](../guidelines/forms/#no_form_label)                                                 | <Must />    |
+| [NO_FORM_ERROR](../guidelines/forms/#no_form_error)                                                 | <Must />    |
+| [NO_KEYBOARD_TRAP](../guidelines/forms/#keyboard-trap) [^1]                                         | <MustNot /> |
+| [UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL](../guidelines/text/#uppercase_text_no_accessibility_label-) | <MustNot /> |
+| [NO_UPPERCASE_TEXT](../guidelines/text/#no-uppercase)                                               | <MustNot /> |
 
 ### Constants
 
