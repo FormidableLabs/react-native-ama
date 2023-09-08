@@ -12,7 +12,7 @@ AMA stands for **A**ccessible **M**obile **A**pp and contains a set of accessibl
 Install _react-native-ama_ using either `yarn` or `npm`:
 
 ```bash npm2yarn
-npm install --save-dev react-native-ama
+npm install react-native-ama
 ```
 
 
@@ -22,8 +22,8 @@ Some component relies on [react-native-reanimated](https://github.com/software-m
 so these other dependencies should also be installed.
 
 ```bash npm2yarn
-npm install --save-dev react-native-reanimated
-npm install --save-dev react-native-gesture-handler
+npm install react-native-reanimated
+npm install react-native-gesture-handler
 npm install --save-dev wcag-color
 
 cd ios
