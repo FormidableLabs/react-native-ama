@@ -120,9 +120,13 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
         setFailedItems(items => {
           const index = items.indexOf(id);
 
-          items.splice(index);
+          if (index >= 0) {
+            items.splice(index);
 
-          return [...items];
+            return [...items];
+          }
+
+          return items;
         });
       }
     : undefined;
@@ -163,8 +167,6 @@ export type AMAContextValue = {
     animationEnabled: boolean;
     animation: 'default' | 'fade';
   };
-  trackError: (id: string) => void;
-  removeError: (id: string) => void;
 };
 
 const DEFAULT_VALUES: AMAContextValue = {
@@ -178,8 +180,6 @@ const DEFAULT_VALUES: AMAContextValue = {
     animationEnabled: true,
     animation: 'default',
   },
-  trackError: (_: string) => {},
-  removeError: (_: string) => {},
 };
 
 const AMAError = __DEV__
@@ -195,6 +195,7 @@ const AMAError = __DEV__
             paddingBottom: 48,
             backgroundColor: RED,
           }}
+          testID="amaError"
         >
           <View accessible={true}>
             <Text style={{ color: 'white', fontSize: 16, lineHeight: 26 }}>

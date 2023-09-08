@@ -1,4 +1,4 @@
-import { act, render, waitFor } from '@testing-library/react-native';
+import { act, render } from '@testing-library/react-native';
 import { flushMicroTasks } from '@testing-library/react-native/build/flushMicroTasks';
 import * as React from 'react';
 import { AccessibilityInfo } from 'react-native';
@@ -155,15 +155,15 @@ describe('AMAProvider', () => {
           return { remove: name === eventName ? removeMock : jest.fn() };
         });
 
-      const a = await renderAMAProvider();
-      a.unmount();
+      const renderAPI = await renderAMAProvider();
+      renderAPI.unmount();
 
       expect(removeMock).toHaveBeenCalledWith();
     },
   );
 });
 
-async function renderAMAProvider() {
+const renderAMAProvider = async () => {
   const result = render(
     <AMAProvider>
       <></>
@@ -175,7 +175,7 @@ async function renderAMAProvider() {
   });
 
   return result;
-}
+};
 
 function mockCreateContext() {
   const original = jest.requireActual('react');
