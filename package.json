@@ -5,7 +5,7 @@
     "ts:check": "tsc --noEmit",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "yarn lint --fix",
-    "build": "./scripts/build-all.sh",
+    "build": "bob build",
     "example": "yarn --cwd example",
     "expo": "yarn --cwd ExpoExample",
     "pods": "cd example && pod-install --quiet",

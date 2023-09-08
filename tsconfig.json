@@ -2,28 +2,31 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "react-native-ama": ["./packages/core/index"]
+      "react-native-ama": ["packages/core/src"],
+      "@react-native-ama/core": ["packages/core/src/*"]
     },
-    "allowUnreachableCode": false,
-    "allowUnusedLabels": false,
-    "esModuleInterop": true,
-    "importsNotUsedAsValues": "error",
-    "forceConsistentCasingInFileNames": true,
     "jsx": "react",
     "lib": ["esnext"],
     "module": "esnext",
     "moduleResolution": "node",
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitReturns": true,
-    "noImplicitUseStrict": false,
-    "noStrictGenericChecks": false,
+    "target": "esnext",
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
     "strict": true,
-    "target": "esnext"
+    "noImplicitAny": false,
+    "noUnusedParameters": true,
+    "skipLibCheck": true
   },
   "include": ["packages"],
-  "exclude": ["example", "dist", "src", "node_modules", "__mocks__"]
+  "exclude": [
+    "example",
+    "dist",
+    "src",
+    "node_modules",
+    "__mocks__",
+    "**/**.test.ts",
+    "**/**.test.tsx"
+  ]
 }

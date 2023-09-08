@@ -5,8 +5,8 @@
   "main": "dist/commonjs/index",
   "module": "dist/module/index",
   "types": "dist/typescript/index.d.ts",
-  "react-native": "lib/index",
-  "source": "lib/index",
+  "react-native": "src/index",
+  "source": "src/index",
   "scripts": {
     "test": "jest",
     "ts:check": "tsc --noEmit",
@@ -96,20 +96,6 @@
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
-    ]
-  },
-  "react-native-builder-bob": {
-    "source": "lib",
-    "output": "dist",
-    "targets": [
-      "commonjs",
-      "module",
-      [
-        "typescript",
-        {
-          "project": "tsconfig.json"
-        }
-      ]
     ]
   }
 }
