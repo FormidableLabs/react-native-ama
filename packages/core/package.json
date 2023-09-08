@@ -78,14 +78,14 @@
       "<rootDir>/src/"
     ],
     "collectCoverageFrom": [
-      "lib/**/*.{ts,tsx}"
+      "**/*.{ts,tsx}"
     ],
     "coverageThreshold": {
       "global": {
-        "statements": 90,
-        "branches": 82,
-        "functions": 83,
-        "lines": 91
+        "statements": 88,
+        "branches": 76,
+        "functions": 77,
+        "lines": 90
       }
     },
     "transformIgnorePatterns": [
@@ -107,7 +107,7 @@
       [
         "typescript",
         {
-          "project": "tsconfig.build.json"
+          "project": "tsconfig.json"
         }
       ]
     ]

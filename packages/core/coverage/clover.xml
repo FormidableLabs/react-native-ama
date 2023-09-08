@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1694171093439" clover="3.2.0">
+  <project timestamp="1694171093439" name="All files">
+    <metrics statements="90" coveredstatements="81" conditionals="39" coveredconditionals="30" methods="36" coveredmethods="28" elements="165" coveredelements="139" complexity="0" loc="90" ncloc="90" packages="3" files="7" classes="7"/>
+    <package name="components">
+      <metrics statements="61" coveredstatements="52" conditionals="25" coveredconditionals="16" methods="27" coveredmethods="19"/>
+      <file name="AMAProvider.tsx" path="/Users/Shared/Projects/react-native-ama/packages/core/components/AMAProvider.tsx">
+        <metrics statements="42" coveredstatements="33" conditionals="16" coveredconditionals="9" methods="19" coveredmethods="11"/>
+        <line num="27" count="4" type="stmt"/>
+        <line num="36" count="4" type="stmt"/>
+        <line num="37" count="50" type="stmt"/>
+        <line num="39" count="50" type="stmt"/>
+        <line num="45" count="114" type="stmt"/>
+        <line num="46" count="12" type="stmt"/>
+        <line num="47" count="12" type="stmt"/>
+        <line num="48" count="12" type="stmt"/>
+        <line num="50" count="12" type="cond" truecount="2" falsecount="0"/>
+        <line num="51" count="2" type="stmt"/>
+        <line num="52" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="57" count="12" type="stmt"/>
+        <line num="65" count="50" type="stmt"/>
+        <line num="66" count="19" type="stmt"/>
+        <line num="68" count="19" type="stmt"/>
+        <line num="71" count="114" type="stmt"/>
+        <line num="73" count="114" type="stmt"/>
+        <line num="79" count="19" type="stmt"/>
+        <line num="80" count="19" type="stmt"/>
+        <line num="82" count="114" type="stmt"/>
+        <line num="84" count="114" type="stmt"/>
+        <line num="89" count="19" type="stmt"/>
+        <line num="90" count="19" type="stmt"/>
+        <line num="97" count="19" type="stmt"/>
+        <line num="98" count="114" type="stmt"/>
+        <line num="102" count="50" type="stmt"/>
+        <line num="104" count="50" type="cond" truecount="1" falsecount="1"/>
+        <line num="106" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="107" count="0" type="stmt"/>
+        <line num="110" count="0" type="stmt"/>
+        <line num="112" count="0" type="stmt"/>
+        <line num="118" count="50" type="cond" truecount="1" falsecount="1"/>
+        <line num="120" count="0" type="stmt"/>
+        <line num="121" count="0" type="stmt"/>
+        <line num="123" count="0" type="stmt"/>
+        <line num="125" count="0" type="stmt"/>
+        <line num="130" count="50" type="cond" truecount="1" falsecount="1"/>
+        <line num="170" count="4" type="stmt"/>
+        <line num="185" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="187" count="0" type="stmt"/>
+        <line num="212" count="4" type="stmt"/>
+        <line num="214" count="4" type="stmt"/>
+      </file>
+      <file name="AutofocusContainer.tsx" path="/Users/Shared/Projects/react-native-ama/packages/core/components/AutofocusContainer.tsx">
+        <metrics statements="7" coveredstatements="7" conditionals="3" coveredconditionals="2" methods="3" coveredmethods="3"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="29" count="1" type="cond" truecount="1" falsecount="1"/>
+      </file>
+      <file name="HideChildrenFromAccessibilityTree.tsx" path="/Users/Shared/Projects/react-native-ama/packages/core/components/HideChildrenFromAccessibilityTree.tsx">
+        <metrics statements="12" coveredstatements="12" conditionals="6" coveredconditionals="5" methods="5" coveredmethods="5"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
+        <line num="15" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="42" count="1" type="stmt"/>
+        <line num="43" count="5" type="stmt"/>
+        <line num="45" count="6" type="cond" truecount="2" falsecount="0"/>
+      </file>
+    </package>
+    <package name="hooks">
+      <metrics statements="24" coveredstatements="24" conditionals="12" coveredconditionals="12" methods="8" coveredmethods="8"/>
+      <file name="useFocus.ts" path="/Users/Shared/Projects/react-native-ama/packages/core/hooks/useFocus.ts">
+        <metrics statements="13" coveredstatements="13" conditionals="6" coveredconditionals="6" methods="3" coveredmethods="3"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="7" type="stmt"/>
+        <line num="16" count="5" type="stmt"/>
+        <line num="18" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="20" count="2" type="stmt"/>
+        <line num="21" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="31" count="7" type="stmt"/>
+        <line num="32" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="33" count="3" type="stmt"/>
+        <line num="36" count="4" type="stmt"/>
+        <line num="40" count="7" type="stmt"/>
+      </file>
+      <file name="useTimedAction.ts" path="/Users/Shared/Projects/react-native-ama/packages/core/hooks/useTimedAction.ts">
+        <metrics statements="11" coveredstatements="11" conditionals="6" coveredconditionals="6" methods="5" coveredmethods="5"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="14" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="20" count="3" type="stmt"/>
+        <line num="22" count="3" type="stmt"/>
+        <line num="27" count="4" type="stmt"/>
+        <line num="35" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="38" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="utils">
+      <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+      <file name="minimumTouchableSize.tsx" path="/Users/Shared/Projects/react-native-ama/packages/core/utils/minimumTouchableSize.tsx">
+        <metrics statements="3" coveredstatements="3" conditionals="2" coveredconditionals="2" methods="0" coveredmethods="0"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="7" count="2" type="cond" truecount="2" falsecount="0"/>
+      </file>
+      <file name="numerify.ts" path="/Users/Shared/Projects/react-native-ama/packages/core/utils/numerify.ts">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
