@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "react-native-ama": ["./lib/index"]
+      "react-native-ama": ["./packages/core/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
@@ -24,5 +24,6 @@
     "strict": true,
     "target": "esnext"
   },
+  "include": ["packages"],
   "exclude": ["example", "dist", "src", "node_modules", "__mocks__"]
 }

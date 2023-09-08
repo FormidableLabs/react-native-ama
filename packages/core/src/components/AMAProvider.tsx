@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 
-import { RED } from '../../../lib/internal/error.style';
+import { RED } from '../../../../lib/internal/error.style';
 
 type AMAProviderProps = {
   children: React.ReactNode;
@@ -139,7 +139,8 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
         trackError,
         // @ts-ignore
         removeError,
-      }}>
+      }}
+    >
       <View style={{ flex: 1 }}>
         <>
           {children}
@@ -194,7 +195,8 @@ const AMAError = __DEV__
             paddingBottom: 48,
             backgroundColor: RED,
           }}
-          testID="amaError">
+          testID="amaError"
+        >
           <View accessible={true}>
             <Text style={{ color: 'white', fontSize: 16, lineHeight: 26 }}>
               AMA: One or more component didn't pass the accessibility check.
