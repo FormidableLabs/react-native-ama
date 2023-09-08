@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { AccessibilityInfo, Platform } from 'react-native';
+import { Platform } from 'react-native';
 
-import * as AMAProvider from '../providers/AMAProvider';
+import * as AMAProvider from '../components/AMAProvider';
 import { useTimedAction } from './useTimedAction';
 
 beforeEach(() => {
@@ -9,14 +9,6 @@ beforeEach(() => {
 
   Platform.OS = 'ios';
 });
-
-jest
-  .spyOn(AccessibilityInfo, 'getRecommendedTimeoutMillis')
-  .mockImplementation((value: any) => {
-    return new Promise(resolve => {
-      resolve(value);
-    });
-  });
 
 describe('useTimedAction', () => {
   it('onTimeout executes the callback with the given timeout if the screen reader is off', async () => {

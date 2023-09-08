@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 
-import { SHELL_COLORS } from '../internal/logger.rules';
+import { SHELL_COLORS } from '../../../../lib/internal/logger.rules';
 import { useFocus } from './useFocus';
 
 beforeEach(() => {

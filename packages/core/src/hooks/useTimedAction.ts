@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AccessibilityInfo, Platform } from 'react-native';
 
-import { useAMAContext } from '../providers/AMAProvider';
+import { useAMAContext } from '../components/AMAProvider';
 
 export const useTimedAction = () => {
   const { isScreenReaderEnabled } = useAMAContext();

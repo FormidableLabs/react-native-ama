@@ -1,4 +1,5 @@
-import { act, render, waitFor } from '@testing-library/react-native';
+import { act, render } from '@testing-library/react-native';
+import { flushMicroTasks } from '@testing-library/react-native/build/flushMicroTasks';
 import * as React from 'react';
 import { AccessibilityInfo } from 'react-native';
 
@@ -11,12 +12,12 @@ beforeEach(() => {
 });
 
 describe('AMAProvider', () => {
-  it('adds event listener for "reduceMotionChanged"', () => {
+  it('adds event listener for "reduceMotionChanged"', async () => {
     const spy = jest
       .spyOn(AccessibilityInfo, 'addEventListener')
       .mockReturnValue({ remove: jest.fn() } as any);
 
-    renderAMAProvider();
+    await renderAMAProvider();
 
     expect(spy).toHaveBeenCalledWith(
       'reduceMotionChanged',
@@ -24,12 +25,12 @@ describe('AMAProvider', () => {
     );
   });
 
-  it('adds event listener for "screenReaderChanged"', () => {
+  it('adds event listener for "screenReaderChanged"', async () => {
     const spy = jest
       .spyOn(AccessibilityInfo, 'addEventListener')
       .mockReturnValue({ remove: jest.fn() } as any);
 
-    renderAMAProvider();
+    await renderAMAProvider();
 
     expect(spy).toHaveBeenCalledWith(
       'screenReaderChanged',
@@ -55,13 +56,11 @@ describe('AMAProvider', () => {
       states[event] = 'yay';
     });
 
-    renderAMAProvider();
+    await renderAMAProvider();
 
-    await waitFor(() =>
-      expect(mockProvider.mock.calls[1][0]).toMatchObject({
-        value: states,
-      }),
-    );
+    expect(mockProvider.mock.calls[1][0]).toMatchObject({
+      value: states,
+    });
   });
 
   it.each`
@@ -74,7 +73,7 @@ describe('AMAProvider', () => {
     ${'invertColorsChanged'}       | ${'isInvertColorsEnabled'}
   `(
     'reacts to the events change $eventName',
-    ({
+    async ({
       eventName,
       valueName,
     }: {
@@ -95,7 +94,7 @@ describe('AMAProvider', () => {
           };
         });
 
-      renderAMAProvider();
+      await renderAMAProvider();
 
       const state: any = {};
       state[valueName] = false;
@@ -147,7 +146,7 @@ describe('AMAProvider', () => {
     ${'invertColorsChanged'}
   `(
     'remove the "$eventName" subscription when the provider is unmounted',
-    ({ eventName }) => {
+    async ({ eventName }) => {
       const removeMock = jest.fn();
       jest
         .spyOn(AccessibilityInfo, 'addEventListener')
@@ -156,21 +155,27 @@ describe('AMAProvider', () => {
           return { remove: name === eventName ? removeMock : jest.fn() };
         });
 
-      const a = renderAMAProvider();
-      a.unmount();
+      const renderAPI = await renderAMAProvider();
+      renderAPI.unmount();
 
       expect(removeMock).toHaveBeenCalledWith();
     },
   );
 });
 
-function renderAMAProvider() {
-  return render(
+const renderAMAProvider = async () => {
+  const result = render(
     <AMAProvider>
       <></>
     </AMAProvider>,
   );
-}
+
+  await act(async () => {
+    await flushMicroTasks();
+  });
+
+  return result;
+};
 
 function mockCreateContext() {
   const original = jest.requireActual('react');

@@ -28,7 +28,10 @@ export const AutofocusContainer = ({
 
   return wrapChildrenInAccessibleView ? (
     <TouchableWithoutFeedback ref={containerRef}>
-      <View accessible={true} {...viewProps}>
+      <View
+        accessible={true}
+        testID="autofocusContainer.accessibleView"
+        {...viewProps}>
         {children}
       </View>
     </TouchableWithoutFeedback>

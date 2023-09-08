@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { AccessibilityInfo, Platform } from 'react-native';
 
-import * as AMAProvider from '../providers/AMAProvider';
+import * as AMAProvider from '../components/AMAProvider';
 import { useTimedAction } from './useTimedAction';
 
 beforeEach(() => {
@@ -36,4 +36,4 @@ describe('useTimedAction', () => {
   );
 });
 
-jest.mock('../providers/AMAProvider');
+jest.mock('../components/AMAProvider');

@@ -3,17 +3,13 @@ import * as React from 'react';
 import {
   AccessibilityChangeEventName,
   AccessibilityInfo,
-  AppState,
-  AppStateStatus,
   NativeEventSubscription,
-  Platform,
   Pressable,
   Text,
   View,
 } from 'react-native';
 
-import { RED } from '../internal/error.style';
-import { areAnimationsEnabled } from '../modules/AMAAnimationsStatusModule';
+import { RED } from '../../../../lib/internal/error.style';
 
 type AMAProviderProps = {
   children: React.ReactNode;
@@ -39,7 +35,6 @@ const eventsMapping: AccessibilityInfoEvents = {
 
 export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
   const [values, setValues] = React.useState(DEFAULT_VALUES);
-  const appState = React.useRef('inactive');
 
   const handleAccessibilityInfoChanged = (
     key: Exclude<
@@ -67,19 +62,6 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
     };
   };
 
-  const checkAndroidAnimationStatus = (nextAppState: AppStateStatus) => {
-    if (
-      appState.current.match(/inactive|background/) &&
-      nextAppState === 'active'
-    ) {
-      areAnimationsEnabled().then(enabled => {
-        handleAccessibilityInfoChanged('isReduceMotionEnabled')(!enabled);
-      });
-    }
-
-    appState.current = nextAppState;
-  };
-
   React.useEffect(() => {
     const allInitPromises: Promise<boolean>[] = [];
 
@@ -93,14 +75,6 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
         handleAccessibilityInfoChanged(contextKey),
       );
     });
-
-    if (Platform.OS === 'android') {
-      subscriptions.push(
-        AppState.addEventListener('change', checkAndroidAnimationStatus),
-      );
-
-      checkAndroidAnimationStatus('active');
-    }
 
     Promise.all(allInitPromises).then(promisesValues => {
       const newValues = Object.values(eventsMapping).reduce(
@@ -122,10 +96,7 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
 
     return () => {
       subscriptions.forEach(subscription => subscription?.remove());
-      AppState.removeEventListener?.('change', checkAndroidAnimationStatus);
     };
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [failedItems, setFailedItems] = React.useState<string[]>([]);
@@ -149,9 +120,13 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
         setFailedItems(items => {
           const index = items.indexOf(id);
 
-          items.splice(index);
+          if (index >= 0) {
+            items.splice(index);
 
-          return [...items];
+            return [...items];
+          }
+
+          return items;
         });
       }
     : undefined;
@@ -164,7 +139,8 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
         trackError,
         // @ts-ignore
         removeError,
-      }}>
+      }}
+    >
       <View style={{ flex: 1 }}>
         <>
           {children}
@@ -191,8 +167,6 @@ export type AMAContextValue = {
     animationEnabled: boolean;
     animation: 'default' | 'fade';
   };
-  trackError: (id: string) => void;
-  removeError: (id: string) => void;
 };
 
 const DEFAULT_VALUES: AMAContextValue = {
@@ -206,8 +180,6 @@ const DEFAULT_VALUES: AMAContextValue = {
     animationEnabled: true,
     animation: 'default',
   },
-  trackError: (_: string) => {},
-  removeError: (_: string) => {},
 };
 
 const AMAError = __DEV__
@@ -222,7 +194,9 @@ const AMAError = __DEV__
             paddingTop: 24,
             paddingBottom: 48,
             backgroundColor: RED,
-          }}>
+          }}
+          testID="amaError"
+        >
           <View accessible={true}>
             <Text style={{ color: 'white', fontSize: 16, lineHeight: 26 }}>
               AMA: One or more component didn't pass the accessibility check.

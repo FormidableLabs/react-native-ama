@@ -5,8 +5,8 @@
   "main": "dist/commonjs/index",
   "module": "dist/module/index",
   "types": "dist/typescript/index.d.ts",
-  "react-native": "lib/index",
-  "source": "lib/index",
+  "react-native": "src/index",
+  "source": "src/index",
   "scripts": {
     "test": "jest",
     "ts:check": "tsc --noEmit",
@@ -78,19 +78,16 @@
       "<rootDir>/src/"
     ],
     "collectCoverageFrom": [
-      "lib/**/*.{ts,tsx}"
+      "**/*.{ts,tsx}"
     ],
     "coverageThreshold": {
       "global": {
-        "statements": 90,
-        "branches": 82,
-        "functions": 83,
-        "lines": 91
+        "statements": 100,
+        "branches": 95,
+        "functions": 100,
+        "lines": 100
       }
     },
-    "setupFilesAfterEnv": [
-      "./jest.setup.js"
-    ],
     "transformIgnorePatterns": [
       "node_modules/(?!(@react-native|react-native|react-native-reanimated/))"
     ],
@@ -99,20 +96,6 @@
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
-    ]
-  },
-  "react-native-builder-bob": {
-    "source": "lib",
-    "output": "dist",
-    "targets": [
-      "commonjs",
-      "module",
-      [
-        "typescript",
-        {
-          "project": "tsconfig.build.json"
-        }
-      ]
     ]
   }
 }
