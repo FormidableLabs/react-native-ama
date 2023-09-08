@@ -23,6 +23,47 @@ describe('AutofocusContainer', () => {
 
     await waitFor(() => expect(setFocus).toBeCalled());
   });
+
+  it.each([undefined, true])(
+    'wraps the children with an accessible View when wrapChildrenInAccessibleView is %s',
+    async () => {
+      const setFocus = jest.fn();
+      jest.spyOn(UseFocus, 'useFocus').mockReturnValue({
+        setFocus,
+      });
+
+      const renderAPI = render(
+        <AutofocusContainer wrapChildrenInAccessibleView={true}>
+          <></>
+        </AutofocusContainer>,
+      );
+
+      await waitFor(() => expect(setFocus).toBeCalled());
+
+      expect(
+        renderAPI.getByTestId('autofocusContainer.accessibleView'),
+      ).toBeDefined();
+    },
+  );
+
+  it('does not wrap the children with an accessible View when wrapChildrenInAccessibleView is false', async () => {
+    const setFocus = jest.fn();
+    jest.spyOn(UseFocus, 'useFocus').mockReturnValue({
+      setFocus,
+    });
+
+    const renderAPI = render(
+      <AutofocusContainer wrapChildrenInAccessibleView={false}>
+        <></>
+      </AutofocusContainer>,
+    );
+
+    await waitFor(() => expect(setFocus).toBeCalled());
+
+    expect(
+      renderAPI.queryByTestId('autofocusContainer.accessibleView'),
+    ).toBeNull();
+  });
 });
 
 jest.mock('../hooks/useFocus');
