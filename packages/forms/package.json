@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "description": "Set of components and hooks to create accessible forms",
   "main": "dist/commonjs/index",
-  "main": "dist/commonjs/index",
   "module": "dist/module/index",
   "types": "dist/typescript/index.d.ts",
   "react-native": "lib/index",
@@ -13,14 +12,7 @@
     "ts:check": "tsc --noEmit",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "yarn lint --fix",
-    "build": "bob build",
-    "example": "yarn --cwd example",
-    "fabric": "yarn --cwd FabricExample",
-    "pods": "cd example && pod-install --quiet",
-    "bootstrap": "yarn example && yarn && yarn pods",
-    "postinstall": "./scripts/init.sh",
-    "coverage": "yarn run test -- --coverage --watchAll=false",
-    "doc": "cd website && yarn start"
+    "build": "bob build"
   },
   "husky": {
     "hooks": {
