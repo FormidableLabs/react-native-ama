@@ -21,7 +21,7 @@
   },
   "include": ["packages"],
   "exclude": [
-    "example",
+    "examples",
     "dist",
     "src",
     "node_modules",

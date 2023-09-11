@@ -8,8 +8,8 @@
     "build": "bob build",
     "example:bare": "yarn --cwd examples/bare",
     "example:expo": "yarn --cwd examples/expo",
-    "pods": "cd example && pod-install --quiet",
-    "bootstrap": "yarn example && yarn && yarn pods",
+    "pods": "cd examples/bare && pod-install --quiet",
+    "bootstrap": "yarn examples/bare && && yarn examples/expo yarn && yarn pods",
     "postinstall": "./scripts/init.sh",
     "coverage": "yarn run test -- --coverage --watchAll=false",
     "doc": "cd website && yarn start"

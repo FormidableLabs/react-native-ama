@@ -31,7 +31,7 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install Dependencies
-        run: yarn install && yarn run example
+        run: yarn install && yarn run example:bare
 
       - name: Build library
         run: yarn run build
