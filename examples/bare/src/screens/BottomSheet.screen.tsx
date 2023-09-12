@@ -4,8 +4,8 @@ import { BottomSheet } from 'react-native-ama';
 
 import { CTAPressable } from '../components/CTAPressable';
 import { Header } from '../components/Header';
-import { FormScreen } from '../screens/Form.screen';
 import { theme } from '../theme';
+import { FormScreen } from './Form.screen';
 
 type TimedActionProps = {};
 

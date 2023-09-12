@@ -35,8 +35,8 @@ jobs:
 
       - name: TypeScript Example Check
         run: |
-          yarn example
-          yarn example ts:check
+          yarn example:bare
+          yarn example:bare ts:check
 
       - name: Tests
         run: yarn test

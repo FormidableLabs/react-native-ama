@@ -73,7 +73,8 @@
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [
-      "<rootDir>/example/node_modules",
+      "<rootDir>/examples/bare/node_modules",
+      "<rootDir>/examples/expo/node_modules",
       "<rootDir>/dist/",
       "<rootDir>/src/"
     ],
