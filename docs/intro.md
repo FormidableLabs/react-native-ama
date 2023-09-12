@@ -1,6 +1,7 @@
 ---
 slug: /
 title: React Native AMA
+sidebar_position: 0
 ---
 
 # Accessibility as a First-Class Citizen with React Native AMA
@@ -10,6 +11,12 @@ A.M.A. stands for **A**ccessible **M**obile **A**pp and is a React native librar
 That's why we created A.M.A., a set of [components](https://formidable.com/open-source/react-native-ama/components/) and
 [hooks](https://formidable.com/open-source/react-native-ama/components/) designed to enforce minimum accessibility requirements.
 This is combined with extensive [guidelines](https://formidable.com/open-source/react-native-ama/guidelines/) to help you understand how accessibility should work when manually testing your app.
+
+:::info
+
+The library does not perform any accessibility checks on the production build!
+
+:::
 
 ## Run time dev tooling
 
@@ -28,9 +35,11 @@ If AMA detects an accessibility issue:
 ![Example of a failed accessibility check by AMA](https://github.com/FormidableLabs/react-native-ama/blob/main/docs/ama-demo.png?raw=true)
 _Example of a failed accessibility check by AMA_
 
+<br />
+
 ![Additional information and guideline link provided by AMA](https://github.com/FormidableLabs/react-native-ama/blob/main/docs/ama-console-error.png?raw=true)
 _Additional information and guideline link provided by AMA_
 
-[^1]: The accessibility support in React Native is [not fully complete](https://github.com/facebook/react-native/projects/15)
-[^2]: AMA can help catch common accessibility issues, but a full manual test is still necessary
+[^1]: The accessibility support in React Native is [not fully complete](https://github.com/facebook/react-native/projects/15).
+[^2]: AMA can help catch common accessibility issues, but a full manual test is still necessary.
 [^3]: Runtime checks are performed **ONLY** in the dev build when **DEV** is true. In production mode, the checking code is stripped away.

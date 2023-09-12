@@ -1,30 +1,47 @@
+import { Icon } from '@iconify/react';
 import * as React from 'react';
 
-const Highlight = ({ children, rule, small }) => {
-  const color = rule === 'MUST_NOT' ? '#b60000' : '#807700';
-
+const Rule = ({ children, color, icon }) => {
   return (
-    <span
-      style={{
-        backgroundColor: color,
-        borderRadius: '2px',
-        color: '#fff',
-        padding: '0.4rem 0.6rem',
-        fontSize: 16,
-        display: 'inline-block',
-        verticalAlign: 'middle'
-      }}>
-      {children}
+    <span style={{ verticalAlign: 'middle' }}>
+      <span
+        style={{
+          verticalAlign: 'middle',
+          paddingRight: 8,
+          color: color,
+        }}
+      >
+        <Icon icon={icon} height={24} />
+      </span>
+      <strong
+        style={{ color, textDecoration: 'underline', textUnderlineOffset: 4 }}
+      >
+        {children}
+      </strong>
     </span>
   );
 };
 
-export const Must = () => <Highlight rule="MUST_NOT">MUST</Highlight>;
-export const MustNot = () => <Highlight rule="MUST_NOT">MUST_NOT</Highlight>;
-export const ShouldNot = () => (
-  <Highlight rule="SHOULD_NOT">SHOULD_NOT</Highlight>
-);
-export const Should = () => (
-  <Highlight rule="SHOULD_NOT">SHOULD</Highlight>
+export const Must = () => (
+  <Rule rule="MUST_NOT" color="#b60000" icon="zondicons:exclamation-outline">
+    MUST
+  </Rule>
 );
 
+export const MustNot = () => (
+  <Rule color="#b60000" icon="pepicons-pop:exclamation-circle-off">
+    MUST NOT
+  </Rule>
+);
+
+export const ShouldNot = () => (
+  <Rule icon="material-symbols:warning-off-outline" color="#807700">
+    SHOULD_NOT
+  </Rule>
+);
+
+export const Should = () => (
+  <Rule icon="ion:warning-outline" color="#807700">
+    SHOULD
+  </Rule>
+);
