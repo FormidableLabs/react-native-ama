@@ -9,8 +9,11 @@ const config = {
   title: 'React Native AMA',
   tagline: 'Accessible Mobile App Library for React Native',
   url: 'https://formidable.com',
-  baseUrl: process.env.VERCEL_ENV === "preview" ? '/' : '/open-source/react-native-ama/',
-  onBrokenLinks: 'error',
+  baseUrl:
+    process.env.VERCEL_ENV === 'preview'
+      ? '/'
+      : '/open-source/react-native-ama/',
+  onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'FormidableLabs',
@@ -19,7 +22,6 @@ const config = {
     defaultLocale: 'en',
     locales: ['en'],
   },
-
   presets: [
     [
       'classic',
@@ -46,7 +48,24 @@ const config = {
       }),
     ],
   ],
-
+  plugins: [
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'animations',
+        path: '../packages/animations/docs',
+        routeBasePath: '/animations/',
+        sidebarPath: require.resolve('./sidebars.js'),
+        // Please change this to your repo.
+        // Remove this to remove the "edit this page" links.
+        editUrl:
+          'https://github.com/FormidableLabs/react-native-ama/tree/main/website',
+        remarkPlugins: [
+          [require('@docusaurus/remark-plugin-npm2yarn'), { sync: true }],
+        ],
+      },
+    ],
+  ],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
@@ -58,16 +77,20 @@ const config = {
         },
         items: [
           {
-            label: 'Components',
-            to: '/components/',
+            label: 'Core',
+            to: '/core/',
           },
           {
-            label: 'Hooks',
-            to: '/hooks/useAMAContext',
+            label: 'Animations',
+            to: '/animations/',
           },
           {
-            label: 'Guidelines',
-            to: '/guidelines/',
+            label: 'Forms',
+            to: 'forms',
+          },
+          {
+            label: 'Extras',
+            to: '/extras/',
           },
           // Formidable/GitHub icons on right
           {
@@ -86,18 +109,7 @@ const config = {
       },
       footer: {
         style: 'dark',
-        links: [
-          // Add footer links here in the future if desired
-          // {
-          //   title: 'Docs',
-          //   items: [
-          //     {
-          //       label: 'Tutorial',
-          //       to: '/docs/intro',
-          //     },
-          //   ],
-          // },
-        ],
+        links: [],
         copyright: `Copyright © ${new Date().getFullYear()} Formidable`,
       },
       prism: {
