@@ -1,7 +1,14 @@
 import MDXComponents from '@theme-original/MDXComponents';
-import React from 'react';
 
-import { DevOnly, Must, MustNot, Should, ShouldNot } from '../components';
+import {
+  DevOnly,
+  Must,
+  MustNot,
+  No,
+  Should,
+  ShouldNot,
+  Yes,
+} from '../components';
 
 export default {
   ...MDXComponents,
@@ -10,4 +17,6 @@ export default {
   MustNot,
   Should,
   ShouldNot,
+  Yes,
+  No,
 };

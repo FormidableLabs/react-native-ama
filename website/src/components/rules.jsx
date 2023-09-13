@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react';
 import * as React from 'react';
 
-const Rule = ({ children, color, icon }) => {
+const IconAndLabel = ({ children, color, icon }) => {
   return (
-    <span style={{ verticalAlign: 'middle' }}>
+    <>
       <span
         style={{
           verticalAlign: 'middle',
@@ -14,34 +14,50 @@ const Rule = ({ children, color, icon }) => {
         <Icon icon={icon} height={24} />
       </span>
       <strong
-        style={{ color, textDecoration: 'underline', textUnderlineOffset: 4 }}
+        style={{
+          color,
+          textDecoration: 'underline',
+          textUnderlineOffset: 4,
+          display: 'inline-block',
+          verticalAlign: 'top',
+        }}
       >
         {children}
       </strong>
-    </span>
+    </>
   );
 };
 
 export const Must = () => (
-  <Rule rule="MUST_NOT" color="#b60000" icon="zondicons:exclamation-outline">
+  <IconAndLabel
+    rule="MUST_NOT"
+    color="#b60000"
+    icon="zondicons:exclamation-outline"
+  >
     MUST
-  </Rule>
+  </IconAndLabel>
 );
 
 export const MustNot = () => (
-  <Rule color="#b60000" icon="pepicons-pop:exclamation-circle-off">
+  <IconAndLabel color="#b60000" icon="pepicons-pop:exclamation-circle-off">
     MUST NOT
-  </Rule>
+  </IconAndLabel>
 );
 
 export const ShouldNot = () => (
-  <Rule icon="material-symbols:warning-off-outline" color="#807700">
+  <IconAndLabel icon="material-symbols:warning-off-outline" color="#807700">
     SHOULD_NOT
-  </Rule>
+  </IconAndLabel>
 );
 
 export const Should = () => (
-  <Rule icon="ion:warning-outline" color="#807700">
+  <IconAndLabel icon="ion:warning-outline" color="#807700">
     SHOULD
-  </Rule>
+  </IconAndLabel>
+);
+
+export const Yes = () => <IconAndLabel icon="typcn:tick"></IconAndLabel>;
+
+export const No = () => (
+  <IconAndLabel icon="maki:cross" color="#b60000"></IconAndLabel>
 );

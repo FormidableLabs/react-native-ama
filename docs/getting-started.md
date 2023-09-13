@@ -10,7 +10,7 @@ AMA is made of the following packages:
 - `react-native-ama/animations` to create accessible animations
 - `react-native-ama/forms` to create accessible forms
 - `react-native-ama/lists` to create accessible lists
-- `react-native-ama/react-native for accessibility-first React Native replacement components
+- `react-native-ama/react-native` for accessibility-first React Native replacement components
 
 ### Config File
 

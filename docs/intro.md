@@ -22,7 +22,7 @@ The library does not perform any accessibility checks on the production build!
 
 Adopting an "accessibility-first" approach is the best way to ensure that digital experiences are inclusive for everyone. By prioritizing accessibility in the early stages of code development, you avoid needing time-consuming and expensive retroactive fixes.
 
-React Native provides the necessary tools to create accessible apps[^1]. However, it leaves the developer on their own to determine what and when to use them. AMA solves this issue[^2] by conducting accessibility checks during your app's runtime [^3].
+React Native provides the necessary tools to create accessible apps[^1]. However, it leaves the developer on their own to determine what and when to use them. AMA solves this issue[^1] by conducting accessibility checks during your app's runtime [^1].
 
 ### Example of a failed accessibility check
 
@@ -41,5 +41,5 @@ _Example of a failed accessibility check by AMA_
 _Additional information and guideline link provided by AMA_
 
 [^1]: The accessibility support in React Native is [not fully complete](https://github.com/facebook/react-native/projects/15).
-[^2]: AMA can help catch common accessibility issues, but a full manual test is still necessary.
-[^3]: Runtime checks are performed **ONLY** in the dev build when **DEV** is true. In production mode, the checking code is stripped away.
+[^1]: AMA can help catch common accessibility issues, but a full manual test is still necessary.
+[^1]: Runtime checks are performed **ONLY** in the dev build when **DEV** is true. In production mode, the checking code is stripped away.
