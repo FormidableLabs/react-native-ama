@@ -29,8 +29,8 @@
   "repository": {
       "type": "git",
       "url": "https://github.com/FormidableLabs/react-native-ama",
-      "directory": "packages/forms",
-  }
+      "directory": "packages/forms"
+  },
   "author": "Alessandro Senese <alessandro.senese@formidable.com> (https://github.com/FormidableLabs)",
   "license": "MIT",
   "bugs": {
@@ -40,5 +40,5 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "provenance": true
-  },
+  }
 }
