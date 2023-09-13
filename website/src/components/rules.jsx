@@ -61,3 +61,18 @@ export const Yes = () => <IconAndLabel icon="typcn:tick"></IconAndLabel>;
 export const No = () => (
   <IconAndLabel icon="maki:cross" color="#b60000"></IconAndLabel>
 );
+
+export const Severity = props => {
+  const Rule = (() => {
+    switch (props.level) {
+      case 'must':
+      default:
+        return Must;
+    }
+  })();
+  return (
+    <p>
+      <strong>Severity</strong>: <Rule />
+    </p>
+  );
+};

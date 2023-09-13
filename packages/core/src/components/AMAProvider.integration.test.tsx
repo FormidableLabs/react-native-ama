@@ -2,7 +2,8 @@ import { act, render } from '@testing-library/react-native';
 import { flushMicroTasks } from '@testing-library/react-native/build/flushMicroTasks';
 import * as React from 'react';
 
-import { AMAContextValue, AMAProvider, useAMAContext } from './AMAProvider';
+import { useAMAContext } from '../hooks/useAMAContext';
+import { AMAContextValue, AMAProvider } from './AMAProvider';
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -32,16 +33,27 @@ describe('AMAProvider', () => {
         });
 
         expect(renderAPI.getByTestId('amaError')).toBeDefined();
+        expect(
+          renderAPI.getByTestId('amaError').props.accessibilityLabel,
+        ).toEqual("1 component(s) didn't pass the accessibility check(s)");
 
         act(() => {
           amaContextValuesRef.trackError('123');
         });
+
+        expect(
+          renderAPI.getByTestId('amaError').props.accessibilityLabel,
+        ).toEqual("1 component(s) didn't pass the accessibility check(s)");
 
         expect(renderAPI.getByTestId('amaError')).toBeDefined();
 
         act(() => {
           amaContextValuesRef.trackError('another');
         });
+
+        expect(
+          renderAPI.getByTestId('amaError').props.accessibilityLabel,
+        ).toEqual("2 component(s) didn't pass the accessibility check(s)");
 
         expect(renderAPI.getByTestId('amaError')).toBeDefined();
       });
@@ -63,11 +75,18 @@ describe('AMAProvider', () => {
           amaContextValuesRef.trackError('123');
         });
 
+        expect(
+          renderAPI.getByTestId('amaError').props.accessibilityLabel,
+        ).toEqual("1 component(s) didn't pass the accessibility check(s)");
         expect(renderAPI.getByTestId('amaError')).toBeDefined();
 
         act(() => {
           amaContextValuesRef.removeError('invalidID');
         });
+
+        expect(
+          renderAPI.getByTestId('amaError').props.accessibilityLabel,
+        ).toEqual("1 component(s) didn't pass the accessibility check(s)");
 
         expect(renderAPI.getByTestId('amaError')).toBeDefined();
 

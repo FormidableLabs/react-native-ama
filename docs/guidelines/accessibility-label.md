@@ -1,8 +1,27 @@
-import { Must } from '@site/src/components';
-
 # Accessibility Label
 
+<Severity level="must" />
+
 The [accessibilityLabel](https://reactnative.dev/docs/accessibility#accessibilitylabel) is the text that assistive technology reads when the component is focused and AMA requires it by tappable elements.
+
+## Expectation
+
+When a component has an accessible label and gains focus, that label is the first piece of information the screen reader reads.
+For instance, with a button, as soon as it receives focus, the screen reader will initially announce the accessibility label. It will then follow up by describing the button's role and state to give the user a comprehensive understanding of the element's function.
+
+This is especially crucial for icon-only buttons, where the control lacks textual labels. In such cases, the accessibility label serves as the primary means of conveying the button's purpose to the user via the screen reader. Without it, the button's function would be unclear, making the app less accessible.
+
+### Example
+
+```jsx
+<Pressable
+  onPress={contactUs}
+  accessibilityRole="button"
+  accessibilityLabel="Contact us"
+>
+  Contact us
+</Pressable>
+```
 
 ## No Accessibility Label
 
@@ -12,7 +31,7 @@ Let's consider the following example:
 
 ```jsx
 <Pressable onPress={contactUs} accessibilityRole="button">
-    Contact us
+  Contact us
 </Pressable>
 ```
 
@@ -28,7 +47,7 @@ Because the component has no `accessibilityLabel`, only the `accessibilityRole` 
 
 ```jsx
 <Pressable onPress={goBack} accessibilityRole="button">
-    <SVGIcon />
+  <SVGIcon />
 </Pressable>
 ```
 
@@ -57,7 +76,7 @@ When testing with the assistive technology, this happens:
 > Contact us button, double-tap to activate
 > Go back button, double-tap to activate
 
-The `accessibilityLabel` is announced first, then the __role__ and the action that can be performed at the end.
+The `accessibilityLabel` is announced first, then the **role** and the action that can be performed at the end.
 
 For this reason, AMA requires that tappable elements have the `accessibilityLabel` defined.
 
@@ -76,14 +95,14 @@ Some words could be misinterpreted, causing the screen readers to read a word as
 #### Example: `ADD TO THE CART`
 
 ```jsx
-<Pressable accessibilityLabel="ADD TO THE CART">...</Pressable> 
+<Pressable accessibilityLabel="ADD TO THE CART">...</Pressable>
 ```
 
 This is how the different screen readers handle the uppercase label:
 
-| Voice Over         | Talkback        |
-|--------------------|-----------------|
-| A-D-D  to the cart | Add to the cart |
+| Voice Over        | Talkback        |
+| ----------------- | --------------- |
+| A-D-D to the cart | Add to the cart |
 
 In this case, VoiceOver does the spelling of the word `ADD` while talkback reads it correctly.
 The remaining words are read correctly by both screen readers.
@@ -91,7 +110,7 @@ The remaining words are read correctly by both screen readers.
 #### Example: `CONTACT US`
 
 | Voice Over   | Talkback     |
-|--------------|--------------|
+| ------------ | ------------ |
 | Contact U.S. | Contact U.S. |
 
 The word `CONTACT` is read correctly, but both screen readers spell the word `US` as it is interpreted as `U.S.` for `United States.

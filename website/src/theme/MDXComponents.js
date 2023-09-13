@@ -2,9 +2,11 @@ import MDXComponents from '@theme-original/MDXComponents';
 
 import {
   DevOnly,
+  DevOnlyChecks,
   Must,
   MustNot,
   No,
+  Severity,
   Should,
   ShouldNot,
   Yes,
@@ -19,4 +21,7 @@ export default {
   ShouldNot,
   Yes,
   No,
+  DevOnly,
+  DevOnlyChecks,
+  Severity,
 };

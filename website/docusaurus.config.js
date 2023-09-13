@@ -4,6 +4,18 @@
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
+const defaultPresets = {
+  sidebarPath: require.resolve('./sidebars.js'),
+  editUrl:
+    'https://github.com/FormidableLabs/react-native-ama/tree/main/website',
+  remarkPlugins: [
+    [require('@docusaurus/remark-plugin-npm2yarn'), { sync: true }],
+  ],
+  admonitions: {
+    keywords: ['dev', 'note', 'tip', 'caution', 'danger', 'info', 'warn'],
+  },
+};
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'React Native AMA',
@@ -28,16 +40,9 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          path: '../docs',
+          path: '../docs/ama',
           routeBasePath: '/',
-          sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/FormidableLabs/react-native-ama/tree/main/website',
-          remarkPlugins: [
-            [require('@docusaurus/remark-plugin-npm2yarn'), { sync: true }],
-          ],
+          ...defaultPresets,
         },
         pages: {
           remarkPlugins: [require('@docusaurus/remark-plugin-npm2yarn')],
@@ -52,17 +57,28 @@ const config = {
     [
       '@docusaurus/plugin-content-docs',
       {
-        id: 'animations',
-        path: '../packages/animations/docs',
-        routeBasePath: '/animations/',
-        sidebarPath: require.resolve('./sidebars.js'),
-        // Please change this to your repo.
-        // Remove this to remove the "edit this page" links.
-        editUrl:
-          'https://github.com/FormidableLabs/react-native-ama/tree/main/website',
-        remarkPlugins: [
-          [require('@docusaurus/remark-plugin-npm2yarn'), { sync: true }],
-        ],
+        id: 'core',
+        path: '../packages/core/docs',
+        routeBasePath: '/core/',
+        ...defaultPresets,
+      },
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'guidelines',
+        path: '../docs/guidelines',
+        routeBasePath: '/guidelines/',
+        ...defaultPresets,
+      },
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'checklist',
+        path: '../docs/checklist',
+        routeBasePath: '/checklist/',
+        ...defaultPresets,
       },
     ],
   ],
@@ -92,7 +108,14 @@ const config = {
             label: 'Extras',
             to: '/extras/',
           },
-          // Formidable/GitHub icons on right
+          {
+            label: 'Guidelines',
+            to: '/guidelines/',
+          },
+          {
+            label: 'Checklist',
+            to: '/checklist/',
+          },
           {
             href: 'https://github.com/FormidableLabs/react-native-ama',
             className: 'header-github-link',

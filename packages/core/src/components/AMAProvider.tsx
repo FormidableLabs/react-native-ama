@@ -146,7 +146,9 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
           {children}
           {
             // @ts-ignore
-            failedItems.length > 0 ? <AMAError /> : null
+            failedItems.length > 0 ? (
+              <AMAError count={failedItems.length} />
+            ) : null
           }
         </>
       </View>
@@ -183,11 +185,13 @@ const DEFAULT_VALUES: AMAContextValue = {
 };
 
 const AMAError = __DEV__
-  ? () => {
+  ? ({ count }: { count: number }) => {
+      const error = `${count} component(s) didn't pass the accessibility check(s)`;
+
       return (
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel="One or more components didn't pass the accessibility check"
+          accessibilityLabel={error}
           accessibilityHint="Please check the console for more info..."
           style={{
             paddingHorizontal: 24,
@@ -198,8 +202,11 @@ const AMAError = __DEV__
           testID="amaError"
         >
           <View accessible={true}>
-            <Text style={{ color: 'white', fontSize: 16, lineHeight: 26 }}>
-              AMA: One or more component didn't pass the accessibility check.
+            <Text
+              style={{ color: 'white', fontSize: 16, lineHeight: 26 }}
+              testID="amaError.message"
+            >
+              {error}
             </Text>
             <Text style={{ color: 'white', fontSize: 16, lineHeight: 24 }}>
               Please check the console for more info...
@@ -210,6 +217,4 @@ const AMAError = __DEV__
     }
   : null;
 
-const AMAContext = React.createContext<AMAContextValue>(DEFAULT_VALUES);
-
-export const useAMAContext = () => React.useContext(AMAContext);
+export const AMAContext = React.createContext<AMAContextValue>(DEFAULT_VALUES);

@@ -73,10 +73,7 @@
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [
-      "<rootDir>/examples/bare/node_modules",
-      "<rootDir>/examples/expo/node_modules",
-      "<rootDir>/dist/",
-      "<rootDir>/src/"
+      "<rootDir>/dist/"
     ],
     "collectCoverageFrom": [
       "**/*.{ts,tsx}"

@@ -1,14 +1,10 @@
----
-title: Accessibility Role
----
-
 # Accessibility Role
 
-**Severity**: <Must />
+<Severity level="must" />
 
 The [accessibilityRole](https://reactnative.dev/docs/accessibility#accessibilityrole) is required for all interactive components to communicate their purpose to assistive technology users.
 
-## The roles
+## Expectation
 
 When using an accessibility role of **button**, the screen reader automatically announces "double tap to activate" after reading the accessibility label.
 Each accessibility role informs the user of the component type and available actions.
