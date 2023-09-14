@@ -3,7 +3,7 @@ import * as React from 'react';
 import { View } from 'react-native';
 
 import { FormSubmit } from './FormSubmit';
-import { Pressable } from './Pressable';
+import { Pressable } from '@react-native-ama/core/src/components/Pressable';
 
 beforeEach(() => {
   jest.clearAllMocks();

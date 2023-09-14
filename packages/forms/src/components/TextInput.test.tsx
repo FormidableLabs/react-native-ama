@@ -4,7 +4,7 @@ import { Text } from 'react-native';
 
 import * as UseFormField from '../hooks/useFormField';
 import { ERROR_STYLE } from '../internal/error.style';
-import * as UseChecks from '../internal/useChecks';
+import * as UseChecks from '@react-native-ama/core/src/hooks/useChecks';
 import { TextInput } from './TextInput';
 
 beforeEach(() => {

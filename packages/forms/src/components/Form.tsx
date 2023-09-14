@@ -1,9 +1,8 @@
+import { useChecks } from '@react-native-ama/core/src/hooks/useChecks';
+import { useFocus } from '@react-native-ama/core/src/hooks/useFocus';
+import { isFocused } from '@react-native-ama/internal/src/utils/isFocused';
 import * as React from 'react';
 import { InteractionManager } from 'react-native';
-
-import { useFocus } from '../core/useFocus';
-import { isFocused } from '../../lib/internal/isFocused';
-import { useChecks } from '../../lib/internal/useChecks';
 
 export type FormProps = React.PropsWithChildren<{
   onSubmit: () => boolean | Promise<boolean>;
@@ -138,4 +137,5 @@ const DEFAULT_VALUES: FormContextValue = {
 
 export const FormContext =
   React.createContext<FormContextValue>(DEFAULT_VALUES);
+
 export const useForm = () => React.useContext(FormContext);

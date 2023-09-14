@@ -1,14 +1,13 @@
+import { HideChildrenFromAccessibilityTree } from '@react-native-ama/core';
+import { useChecks } from '@react-native-ama/core/src/hooks/useChecks';
+import { useTextInput } from '@react-native-ama/hooks/useTextInput';
+import { applyStyle } from '@react-native-ama/internal';
+import { maybeGenerateStringFromElement } from '@react-native-ama/internal';
 import * as React from 'react';
 import {
   TextInput as RNTextInput,
   TextInputProps as RNTextInputProps,
 } from 'react-native';
-
-import { useTextInput } from '../hooks/useTextInput';
-import { applyStyle } from '../internal/applyStyle';
-import { maybeGenerateStringFromElement } from '../internal/maybeGenerateStringFromElement';
-import { useChecks } from '../internal/useChecks';
-import { HideChildrenFromAccessibilityTree } from './HideChildrenFromAccessibilityTree';
 
 export type TextInputProps = RNTextInputProps & {
   labelComponent: JSX.Element;
