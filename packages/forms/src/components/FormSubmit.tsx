@@ -1,9 +1,9 @@
+import { useAMAContext } from '@react-native-ama/core';
+import { HideChildrenFromAccessibilityTree } from '@react-native-ama/core';
 import React from 'react';
 import { PressableProps, View } from 'react-native';
 
-import { useAMAContext } from '../providers/AMAProvider';
-import { useForm } from '../providers/Form';
-import { HideChildrenFromAccessibilityTree } from './HideChildrenFromAccessibilityTree';
+import { useForm } from '../components/Form';
 import { Pressable } from './Pressable';
 
 export type FormSubmitProps = React.PropsWithChildren<{

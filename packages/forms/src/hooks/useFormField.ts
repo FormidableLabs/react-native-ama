@@ -1,10 +1,10 @@
+import { useAMAContext } from '@react-native-ama/core';
+import { useChecks } from '@react-native-ama/core/src/hooks/useChecks';
+import { applyStyle } from '@react-native-ama/internal';
 import React from 'react';
 import { Keyboard } from 'react-native';
 
-import { applyStyle } from '../internal/applyStyle';
-import { useChecks } from '@react-native-ama/core/src/hooks/useChecks';
-import { useAMAContext } from '../providers/AMAProvider';
-import { useForm } from '../providers/Form';
+import { useForm } from '../components/Form';
 
 export type UseFormField = {
   ref?: React.RefObject<any> | React.ForwardedRef<any> | null;
