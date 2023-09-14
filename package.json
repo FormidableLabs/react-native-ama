@@ -12,7 +12,6 @@
     "doc": "cd website && yarn start"
   },
   "workspaces": [
-    "packages/test-package",
     "packages/internal",
     "packages/core",
     "packages/lists",
