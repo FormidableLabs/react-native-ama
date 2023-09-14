@@ -11,13 +11,13 @@ ama_success_criterion: 4.1.2@https://www.w3.org/WAI/WCAG21/Understanding/name-ro
 
 The [accessibilityLabel](https://reactnative.dev/docs/accessibility#accessibilitylabel) is the text that assistive technology reads when the component is focused and AMA requires it by tappable elements.
 
+## Expectation
+
 <ScreenReader>
     <When title="The user focuses the component">
         <Then>The Screen Reader reads out the label</Then>
     </When>
 </ScreenReader>
-
-## Expectation
 
 When a component has an accessible label and gains focus, that label is the first piece of information the screen reader reads.
 For instance, with a button, as soon as it receives focus, the screen reader will initially announce the accessibility label. It will then follow up by describing the button's role and state to give the user a comprehensive understanding of the element's function.
