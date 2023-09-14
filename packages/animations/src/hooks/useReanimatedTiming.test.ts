@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-native';
 
 import { MOTION_ANIMATIONS } from '../internal/constants';
 import * as AMAProvider from '../providers/AMAProvider';
