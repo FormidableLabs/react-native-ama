@@ -5,34 +5,38 @@ The provider manages the failure message that appears when AMA accessibility fai
 
 ## Usage
 
-```jsx {1,5-7}
+```jsx
 import { AMAProvider } from 'react-native-ama';
 
+// dimmed
 const App = () => {
+  // dimmed
   return (
     <AMAProvider>
       <YourApp />
     </AMAProvider>
+    // dimmed
   );
+  // dimmed
 };
 ```
 
 ## Context Values
 
-```ts title=packages/core/src/components/AMAProvider.tsx
+```js title=packages/core/src/components/AMAProvider.tsx
 export type AMAContextValue = {
-  isBoldTextEnabled: boolean;
-  isScreenReaderEnabled: boolean;
-  isGrayscaleEnabled: boolean;
-  isInvertColorsEnabled: boolean;
-  isReduceMotionEnabled: boolean;
-  isReduceTransparencyEnabled: boolean;
+  isBoldTextEnabled: boolean,
+  isScreenReaderEnabled: boolean,
+  isGrayscaleEnabled: boolean,
+  isInvertColorsEnabled: boolean,
+  isReduceMotionEnabled: boolean,
+  isReduceTransparencyEnabled: boolean,
   reactNavigationScreenOptions: {
-    animationEnabled: boolean;
-    animation: 'default' | 'fade';
-  };
-  trackError: (id: string) => void; // dev mode only
-  removeError: (id: string) => void; // dev mode only
+    animationEnabled: boolean,
+    animation: 'default' | 'fade',
+  },
+  trackError: (id: string) => void, // dev mode only
+  removeError: (id: string) => void, // dev mode only
 };
 ```
 

@@ -1,8 +1,21 @@
+---
+ama_severity: Critical
+ama_category: Undestandable
+ama_affected_users: Visual
+ama_success_criterion: 4.1.2@https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html)
+---
+
 # Accessibility Label
 
-<Severity level="must" />
+<Critical />
 
 The [accessibilityLabel](https://reactnative.dev/docs/accessibility#accessibilitylabel) is the text that assistive technology reads when the component is focused and AMA requires it by tappable elements.
+
+<ScreenReader>
+    <When title="The user focuses the component">
+        <Then>The Screen Reader reads out the label</Then>
+    </When>
+</ScreenReader>
 
 ## Expectation
 
@@ -17,8 +30,7 @@ This is especially crucial for icon-only buttons, where the control lacks textua
 <Pressable
   onPress={contactUs}
   accessibilityRole="button"
-  accessibilityLabel="Contact us"
->
+  accessibilityLabel="Contact us">
   Contact us
 </Pressable>
 ```

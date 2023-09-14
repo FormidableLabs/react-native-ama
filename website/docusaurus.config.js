@@ -138,6 +138,12 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
+        magicComments: [
+          {
+            className: 'dimmed',
+            line: 'dimmed',
+          },
+        ],
       },
     }),
 };

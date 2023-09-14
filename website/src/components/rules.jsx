@@ -1,6 +1,9 @@
 import { Icon } from '@iconify/react';
 import * as React from 'react';
 
+const MUST_COLOR = 'var(--must-color)';
+const SHOULD_COLOR = '#807700';
+
 const IconAndLabel = ({ children, color, icon }) => {
   return (
     <>
@@ -9,8 +12,7 @@ const IconAndLabel = ({ children, color, icon }) => {
           verticalAlign: 'middle',
           paddingRight: 8,
           color: color,
-        }}
-      >
+        }}>
         <Icon icon={icon} height={24} />
       </span>
       <strong
@@ -20,8 +22,7 @@ const IconAndLabel = ({ children, color, icon }) => {
           textUnderlineOffset: 4,
           display: 'inline-block',
           verticalAlign: 'top',
-        }}
-      >
+        }}>
         {children}
       </strong>
     </>
@@ -29,50 +30,45 @@ const IconAndLabel = ({ children, color, icon }) => {
 };
 
 export const Must = () => (
-  <IconAndLabel
-    rule="MUST_NOT"
-    color="#b60000"
-    icon="zondicons:exclamation-outline"
-  >
+  <IconAndLabel color={MUST_COLOR} icon="zondicons:exclamation-outline">
     MUST
   </IconAndLabel>
 );
 
 export const MustNot = () => (
-  <IconAndLabel color="#b60000" icon="pepicons-pop:exclamation-circle-off">
+  <IconAndLabel color={MUST_COLOR} icon="pepicons-pop:exclamation-circle-off">
     MUST NOT
   </IconAndLabel>
 );
 
 export const ShouldNot = () => (
-  <IconAndLabel icon="material-symbols:warning-off-outline" color="#807700">
+  <IconAndLabel
+    icon="material-symbols:warning-off-outline"
+    color={SHOULD_COLOR}>
     SHOULD_NOT
   </IconAndLabel>
 );
 
 export const Should = () => (
-  <IconAndLabel icon="ion:warning-outline" color="#807700">
-    SHOULD
+  <IconAndLabel icon="ion:warning-outline" color={SHOULD_COLOR}>
+    }> SHOULD
   </IconAndLabel>
 );
 
 export const Yes = () => <IconAndLabel icon="typcn:tick"></IconAndLabel>;
 
 export const No = () => (
-  <IconAndLabel icon="maki:cross" color="#b60000"></IconAndLabel>
+  <IconAndLabel icon="maki:cross" color={MUST_COLOR}></IconAndLabel>
 );
 
 export const Severity = props => {
-  const Rule = (() => {
-    switch (props.level) {
-      case 'must':
-      default:
-        return Must;
-    }
-  })();
-  return (
-    <p>
-      <strong>Severity</strong>: <Rule />
-    </p>
-  );
+  switch (props.level) {
+    case 'critical':
+    default:
+      return (
+        <IconAndLabel color={MUST_COLOR} icon="zondicons:exclamation-outline">
+          Critical
+        </IconAndLabel>
+      );
+  }
 };

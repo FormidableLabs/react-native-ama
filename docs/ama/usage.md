@@ -13,12 +13,16 @@ You need to add the [AMAProvider](../components/AMAProvider) to your app as is n
 ```jsx
 import { AMAProvider } from 'react-native-ama';
 
+// dimmed
 const App = () => {
+  // dimmed
   return (
     <AMAProvider>
-      <AppNavigator />
+      <YourApp />
     </AMAProvider>
+    // dimmed
   );
+  // dimmed
 };
 ```
 

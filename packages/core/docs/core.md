@@ -33,14 +33,18 @@ For more detailed information about the config file, please refer to [this docum
 
 You must include the [AMAProvider](../components/AMAProvider) in your app, as some components and hooks require it.
 
-```jsx {1,5-7}
+```jsx
 import { AMAProvider } from 'react-native-ama';
 
+// dimmed
 const App = () => {
+  // dimmed
   return (
     <AMAProvider>
       <YourApp />
     </AMAProvider>
+    // dimmed
   );
+  // dimmed
 };
 ```

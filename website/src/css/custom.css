@@ -15,6 +15,11 @@
   --ifm-color-primary-lightest: #f58b6e;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: transparent;
+  --platform-color: #222;
+  --platform-color-android: #4f611a;
+  --scenario-color: #2e6b7f;
+  --must-color: #b60000;
+  --should-color: #807700;
 
   /* Spacing */
   --ifm-spacing-horizontal: 2rem;
@@ -22,13 +27,18 @@
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #f2623b;
-  --ifm-color-primary-dark: #f04b1f;
-  --ifm-color-primary-darker: #ef4011;
-  --ifm-color-primary-darkest: #c6340d;
-  --ifm-color-primary-light: #f47957;
-  --ifm-color-primary-lighter: #f58465;
+  --ifm-color-primary: #edaea6;
+  --ifm-color-primary-dark: #f6a892;
+  --ifm-color-primary-darker: #f8af9b;
+  --ifm-color-primary-darkest: #fba58e;
+  --ifm-color-primary-light: #f9ab95;
+  --ifm-color-primary-lighter: #f8af9b;
   --ifm-color-primary-lightest: #f8a690;
+
+  --scenario-color: #bddce5;
+  --must-color: #ffb3b3;
+  --should-color: #e0d100;
+
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
@@ -77,11 +87,113 @@ li .menu__list .menu__link--sublist-caret {
     no-repeat;
 }
 
-/* .language-jsx .token-line { */
-/*   opacity: 0.5; */
-/* } */
-/*  */
-/* .language-jsx .theme-code-block-highlighted-line { */
-/*   background-color: transparent; */
-/*   opacity: 1; */
-/* } */
+.token-line.dimmed {
+  opacity: 0.5;
+}
+
+.platform {
+  position: relative;
+  display: inline-block;
+  padding-left: 24px;
+  font-size: 14px;
+  font-weight: 300;
+  background-color: var(--platform-color);
+  height: 26px;
+  top: -6px;
+  color: #fff;
+  padding-right: 10px;
+  line-height: 24px;
+  margin-left: 12px;
+}
+
+.platform::before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 13px 10px 13px 0;
+  border-color: #fff var(--platform-color) #fff #fff;
+  top: 0;
+  left: 0;
+}
+
+.platform::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background-color: #fff;
+  border-radius: 50%;
+  left: 10px;
+  top: 10px;
+}
+
+.platform.android {
+  background-color: var(--platform-color-android);
+}
+
+.platform.android::before {
+  border-right-color: var(--platform-color-android);
+}
+
+.with-ama-sidebar {
+  position: sticky;
+  overflow-y: auto;
+  top: calc(var(--ifm-navbar-height) + 1rem);
+}
+
+.with-ama-sidebar .theme-doc-toc-desktop {
+  position: static;
+}
+
+.ama-sidebar * {
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+
+.ama-sidebar {
+  margin: var(--ifm-toc-padding-vertical) var(--ifm-toc-padding-horizontal);
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+.ama-sidebar th {
+  text-align: left;
+  width: 33%;
+  padding-bottom: 10px;
+  padding-right: 12px;
+}
+
+.ama-sidebar tr,
+.ama-sidebar tr:nth-child(2n) {
+  background-color: transparent;
+}
+
+.ama-feature {
+  font-size: 1.2em;
+}
+
+.ama-feature > strong {
+  color: var(--ifm-color-primary);
+}
+
+.ama-feature li {
+  list-style: none;
+}
+
+.ama-feature li svg {
+  margin-right: 12px;
+}
+
+.ama-scenario > strong {
+  color: var(--scenario-color);
+}
+
+.ama-then > strong {
+  color: var(--ifm-color-success);
+}

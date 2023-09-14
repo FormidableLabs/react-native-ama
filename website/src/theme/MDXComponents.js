@@ -6,10 +6,15 @@ import {
   Must,
   MustNot,
   No,
-  Severity,
+  Critical,
   Should,
   ShouldNot,
   Yes,
+  iOS,
+  Android,
+  ScreenReader,
+  When,
+  Then,
 } from '../components';
 
 export default {
@@ -23,5 +28,10 @@ export default {
   No,
   DevOnly,
   DevOnlyChecks,
-  Severity,
+  Critical,
+  iOS,
+  Android,
+  ScreenReader,
+  When,
+  Then,
 };

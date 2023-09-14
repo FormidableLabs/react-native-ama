@@ -1,6 +1,6 @@
 # useAMAContext
 
-This hooks returns the values stored in the AMAProvider contex.
+The hook provides information on various accessibility services and can be used to trigger the AMA error banner.
 
 ## Usage
 
@@ -31,30 +31,25 @@ The <i>trackError</i> and <i>removeError</i> functions are available only when t
 
 ## Properties
 
-### isReduceTransparencyEnabled <div class="platform ios">iOS</div>
+### isReduceTransparencyEnabled <iOS />
 
 Is `true` if the user switched on the accessibility setting: **Reduce Transparency**.
 
-### isBoldTextEnabled <div class="platform ios">iOS</div>
+### isBoldTextEnabled <iOS />
 
 Is `true` if the user switched on the accessibility setting: **Bold Text**.
 
-### isGrayscaleEnabled <div class="platform ios">iOS</div>
+### isGrayscaleEnabled <iOS />
 
 Is `true` if the user switched on the accessibility setting: **Grayscale**.
 
-### isInvertColorsEnabled <div class="platform ios">iOS</div>
+### isInvertColorsEnabled <iOS />
 
 Is `true` if the user switched on the accessibility setting: **Invert colors**.
 
 ### isReduceMotionEnabled
 
 Is `true` if the user switched on the accessibility setting: **Reduce motion** on iOS or switches off the Animations on Android.
-
-:::note
-
-On Android, this option relies on a custom code as the react-native one only detects if the "Transition Animation Scale" in "Developer options" is "Animation off".
-:::
 
 ### isScreenReaderEnabled
 
@@ -72,7 +67,31 @@ animation: 'default' | 'fade';
 - **animationEnabled** is _true_ is [isReduceMotionEnabled](#isreducemotionenabled) is false
 - **animation** is _default_ [isReduceMotionEnabled](#isreducemotionenabled) is false
 
+#### Example
+
+```jsx
+const { reactNavigationScreenOptions } = useAMAContext();
+
+  // dimmed
+return (
+  // dimmed
+  <NavigationContainer>
+    <Stack.Navigator
+      screenOptions={reactNavigationScreenOptions}>
+      {/* ... */}
+      </Stack.Navigator>
+  // dimmed
+  </NavigationContainer>
+  // dimmed
+)
+```
+
 ## Methods <DevOnly />
+
+:::dev
+The following methods are only available when <code>**DEV**</code> is set to
+**true**
+:::
 
 ### trackError
 
@@ -105,18 +124,3 @@ The AMA error banner is automatically hidden when the list of failed items becom
 | name     | type   | description             |
 | -------- | ------ | ----------------------- |
 | uniqueID | string | The component unique ID |
-
-## Example
-
-```jsx
-const { reactNavigationScreenOptions } = useAMAContext();
-
-return (
-  <NavigationContainer>
-    <Stack.Navigator
-      screenOptions={reactNavigationScreenOptions}>
-      {/* ... */}
-      </Stack.Navigator>
-  </NavigationContainer>
-)
-```

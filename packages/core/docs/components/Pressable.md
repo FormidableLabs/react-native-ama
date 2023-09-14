@@ -33,129 +33,68 @@ The `accessibilityLabel` property is the first thing announced by the screen rea
 
 [Check the accessibility label guidelines for more info.](/guidelines/accessibility-label)
 
-### Accessibility states
+### aria-busy
 
-The default `accessibilityState` property does accept an object like:
+Indicates an element is being modified and that assistive technologies may want to wait until the changes are complete before informing the user about the update.[^1]
 
-```js
-accessibilityState={{
-    busy: boolean;
-    checked: boolean | 'mixed';
-    selected: boolean;
-    expanded: boolean;
-}}
-```
+| Type    | Default |
+| ------- | ------- |
+| boolean | false   |
 
-To simply the syntax, the custom component allows passing those states as property for the component, handling the generation of the object under the hood.
+### aria-checked
 
-### Contrast checker
+Indicates the state of a checkable element. This field can either take a boolean or the "mixed" string to represent mixed checkboxes.
 
-The component performs a [contrast check](../guidelines/contrast.md) between its background colour and the children's foreground when in dev mode.
+| Type             | Default |
+| ---------------- | ------- |
+| boolean, 'mixed' | false   |
+
+### aria-disabled
+
+Indicates that the element is perceivable but disabled, so it is not editable or otherwise operable.
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | false   |
+
+### aria-expanded
+
+Indicates whether an expandable element is currently expanded or collapsed.
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | false   |
+
+### aria-selected
+
+Indicates whether a selectable element is currently selected or not.
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | false   |
+
+### Contrast checker <DevOnly />
+
+The component performs a [contrast check](/guidelines/contrast.md) between its background colour and the children's foreground when in dev mode.
 
 :::info
 AMA does also perform a contrast check on disabled button, as a [poor contrast can make them hard to read](https://axesslab.com/disabled-buttons-suck/#they-are-hard-to-see).
 :::
 
-### Minimum size
+### Minimum size <DevOnly />
 
-The component uses the [onLayout](https://reactnative.dev/docs/layoutevent) prop to perform the [minium size check](../guidelines/minimum-size.md).
-
-## Additional Props
-
-### `busy`
-
-Indicates whether an element is currently busy or not.
-
-| Type    | Default   |
-| ------- | --------- |
-| boolean | undefined |
-
-#### Example
-
-```tsx
-import { ActivityIndicator } from 'react-native';
-import { Pressable, Text } from 'react-native-ama';
-
-const Test = () => {
-  const [isLoading, setIsLoading] = React.useState(false);
-
-  const doSometing = async () => {
-    setIsLoading(true);
-
-    await slowCall();
-
-    setIsLoading(true);
-  };
-
-  return (
-    <Pressable
-      accessiblityRole="button"
-      accessibilityLabel="Do it"
-      busy={isLoading}
-      onPress={doSometing}
-    >
-      {isLoading ? <ActivityIndicator /> : <Text>Do it</Text>}
-    </Pressable>
-  );
-};
-```
-
-### `checked`
-
-Indicates the state of a checkable element. This field can either take a boolean or the "mixed" string to represent mixed checkboxes.
-
-| Type               | Default   | Required |
-| ------------------ | --------- | -------- |
-| boolean or 'mixed' | undefined | No       |
-
-### `selected`
-
-Indicates whether a selectable element is currently selected or not.
-
-| Type    | Default   | Required |
-| ------- | --------- | -------- |
-| boolean | undefined | No       |
-
-### `expanded`
-
-Indicates whether an expandable element is currently expanded or collapsed.
-
-| Type    | Default   | Required |
-| ------- | --------- | -------- |
-| boolean | undefined | No       |
-
-#### Example
-
-```tsx
-import { ActivityIndicator } from 'react-native';
-import { Pressable, Text } from 'react-native-ama';
-
-const Test = () => {
-  const [isExpanded, setIsExpanded] = React.useState(false);
-
-  return (
-    <>
-      <Pressable
-        accessiblityRole="button"
-        accessibilityLabel={isExpanded ? 'Less' : 'More'}
-        expanded={isExpanded}
-        onPress={() => setIsExpanded(expanded => !expanded)}
-      >
-        {isExpanded ? <MinumIcon /> : <PlusIcon />}
-      </Pressable>
-      {isExpanded ? <>{/* content goes here */}</> : null}
-    </>
-  );
-};
-```
+The component uses the [onLayout](https://reactnative.dev/docs/layoutevent) prop to perform the [minium size check](/guidelines/minimum-size).
 
 ## Related guidelines
 
-- [Accessibility Label](../guidelines/accessibility-label)
-- [Accessibility Role](../guidelines/accessibility-role)
-- [Contrast](../guidelines/contrast)
-- [Minimum Size](../guidelines/minimum-size)
+- [Accessibility Label](/guidelines/accessibility-label)
+- [Accessibility Role](/guidelines/accessibility-role)
+- [Accessibility States](/guidelines/accessibility-states)
+- [Contrast](/guidelines/contrast)
+- [Minimum Size](/guidelines/minimum-size)
 
 ## External resources
 
 - [Disabled buttons suck](https://axesslab.com/disabled-buttons-suck/)
+
+[^1]: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-busy
