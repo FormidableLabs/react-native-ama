@@ -14,6 +14,7 @@
   "workspaces": [
     "packages/test-package",
     "packages/internal",
+    "packages/core",
     "examples/expo"
   ]
 }
