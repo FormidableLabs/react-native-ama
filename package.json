@@ -16,6 +16,8 @@
     "packages/internal",
     "packages/core",
     "packages/lists",
+    "packages/extras",
+    "packages/animations",
     "examples/expo"
   ]
 }
