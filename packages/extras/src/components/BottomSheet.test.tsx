@@ -4,7 +4,7 @@ import { KeyboardAvoidingView, Text } from 'react-native';
 
 import * as UseBottomSheetGestureHandler from '../hooks/useBottomSheetGestureHandler';
 import * as UseTimedAction from '../hooks/useTimedAction';
-import * as UseChecks from '../internal/useChecks';
+import * as UseChecks from '@react-native-ama/core/src/hooks/useChecks';
 import { BottomSheet } from './BottomSheet';
 
 beforeEach(() => {

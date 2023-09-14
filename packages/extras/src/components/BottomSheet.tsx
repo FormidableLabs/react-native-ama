@@ -29,8 +29,8 @@ import Animated, {
 import { AnimatedContainer } from '../components/AnimatedContainer';
 import { useBottomSheetGestureHandler } from '../hooks/useBottomSheetGestureHandler';
 import { useTimedAction } from '../hooks/useTimedAction';
-import { useChecks } from '../internal/useChecks';
-import { useKeyboard } from '../internal/useKeyboard';
+import { useChecks } from '@react-native-ama/core/src/hooks/useChecks';
+import { useKeyboard } from '../hooks/useKeyboard';
 
 export type BottomSheetProps = {
   animationDuration?: number;
