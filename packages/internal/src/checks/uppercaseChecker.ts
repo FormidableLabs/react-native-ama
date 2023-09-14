@@ -1,7 +1,7 @@
 import type { StyleProp } from 'react-native';
 
-import { getPropertyFromStyle } from '../getPropertyFromStyle';
-import type { LogParams } from '../logger';
+import { getPropertyFromStyle } from '../utils/getPropertyFromStyle';
+import type { LogParams } from '../utils/logger';
 
 export type UppercaseChecker = {
   style: StyleProp<Text> | undefined;

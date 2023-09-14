@@ -2,8 +2,8 @@ import React from 'react';
 import type { StyleProp } from 'react-native';
 import { score } from 'wcag-color';
 
-import { getPropertyFromStyle } from '../getPropertyFromStyle';
-import { LogParams, getContrastCheckerMaxDepth } from '../logger';
+import { getPropertyFromStyle } from '../utils/getPropertyFromStyle';
+import { LogParams, getContrastCheckerMaxDepth } from '../utils/logger';
 
 const MAX_DEPTH_LEVEL = getContrastCheckerMaxDepth?.();
 

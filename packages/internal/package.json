@@ -22,10 +22,12 @@
     "build": "rm -rf dist && tsc -p ./tsconfig.build.json",
     "typecheck": "tsc --noEmit"
   },
+  "dependencies": {
+    "wcag-color":"^1.1.1"
+  },
   "peerDependencies": {
     "react": "*",
-    "react-native": ">=0.62.0",
-    "react-native-reanimated": ">=2.0.0"
+    "react-native": "*"
   },
   "keywords": [
     "react-native",
