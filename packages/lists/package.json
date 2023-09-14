@@ -40,7 +40,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/FormidableLabs/react-native-ama",
-    "directory": "packages/core"
+    "directory": "packages/lists"
   },
   "bugs": {
     "url": "https://github.com/FormidableLabs/react-native-ama/issues"
