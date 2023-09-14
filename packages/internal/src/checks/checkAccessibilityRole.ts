@@ -1,7 +1,7 @@
 import type { AccessibilityRole } from 'react-native';
 import { Platform } from 'react-native';
 
-import type { LogParams } from '../logger';
+import type { LogParams } from '../utils/logger';
 
 export const checkAccessibilityRole = (
   accessibilityRole: AccessibilityRole,

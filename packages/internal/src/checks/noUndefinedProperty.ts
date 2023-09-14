@@ -1,5 +1,5 @@
-import type { LogParams } from '../logger';
-import type { Rule } from '../logger.rules';
+import type { LogParams } from '../utils/logger';
+import type { Rule } from '../utils/logger.rules';
 
 export type NoUndefinedProperty<T> = {
   properties: T;

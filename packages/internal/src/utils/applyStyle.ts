@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import type { ContrastChecker } from '../internal/checks/contrastChecker';
+import type { ContrastChecker } from '../checks/contrastChecker';
 
 const applyStyleFunction = __DEV__
   ? (

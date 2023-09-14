@@ -13,6 +13,7 @@
   },
   "workspaces": [
     "packages/test-package",
+    "packages/internal",
     "examples/expo"
   ]
 }

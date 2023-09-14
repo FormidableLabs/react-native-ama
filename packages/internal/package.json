@@ -1,0 +1,38 @@
+{
+  "name": "@react-native-ama/internal",
+  "version": "0.0.1",
+  "private": true,
+  "react-native": "src/index",
+  "types": "dist/index.d.ts",
+  "main": "dist/index.js",
+  "exports": {
+    ".": [
+      {
+        "imports": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+      },
+      "./dist/index.js"
+    ]
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && tsc -p ./tsconfig.build.json",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "wcag-color":"^1.1.1"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "keywords": [
+    "react-native",
+    "accessibility"
+  ],
+  "author": "",
+  "license": "MIT"
+}
