@@ -1,7 +1,7 @@
 import React from 'react';
 import { AccessibilityInfo } from 'react-native';
 
-import { useChecks } from '../internal/useChecks';
+import { useChecks } from '@react-native-ama/core/src/hooks/useChecks';
 
 export type UseDynamicList = {
   data: readonly any[];
