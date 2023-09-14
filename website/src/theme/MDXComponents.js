@@ -6,7 +6,6 @@ import {
   Must,
   MustNot,
   No,
-  Critical,
   Should,
   ShouldNot,
   Yes,
@@ -15,6 +14,9 @@ import {
   ScreenReader,
   When,
   Then,
+  Critical,
+  Serious,
+  Warning,
 } from '../components';
 
 export default {
@@ -34,4 +36,7 @@ export default {
   ScreenReader,
   When,
   Then,
+  Critical,
+  Serious,
+  Warning,
 };

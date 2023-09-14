@@ -12,8 +12,9 @@ by anyone building an accessible app with React Native and are not limited to be
 
 The AMA guidelines are labelled with different levels of severity to indicate their importance:
 
-- <Must /> and <MustNot />: These best practices are mandatory and must be enforced. Failing to implement them will result in an inaccessible mobile app.
-- <Should /> and <ShouldNot />: These best practices are considered "nice to have." Adhering to them enhances the accessibility of your app.
+- <Critical />: These best practices are mandatory and must be enforced. Failing to implement them will result in an inaccessible mobile app.
+- <Serious />: While these issues don't entirely prevent users with assistive technology from accessing the content, they pose significant challenges.
+- <Warning />: These best practices are considered "nice to have." Adhering to them enhances the accessibility of your app.
 
 ## External references
 

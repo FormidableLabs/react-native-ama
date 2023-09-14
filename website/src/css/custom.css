@@ -190,10 +190,27 @@ li .menu__list .menu__link--sublist-caret {
   margin-right: 12px;
 }
 
-.ama-scenario > strong {
+.ama-when > strong {
   color: var(--scenario-color);
 }
 
 .ama-then > strong {
   color: var(--ifm-color-success);
+}
+
+.ama-severity {
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.ama-critical {
+  color: var(--must-color);
+}
+
+.ama-warning {
+  color: var(--should-color);
+}
+
+.ama-serious {
+  color: var(--scenario-color);
 }

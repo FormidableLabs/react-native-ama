@@ -51,7 +51,7 @@ export const ShouldNot = () => (
 
 export const Should = () => (
   <IconAndLabel icon="ion:warning-outline" color={SHOULD_COLOR}>
-    }> SHOULD
+    SHOULD
   </IconAndLabel>
 );
 
@@ -63,6 +63,18 @@ export const No = () => (
 
 export const Severity = props => {
   switch (props.level) {
+    case 'warning':
+      return (
+        <IconAndLabel color={MUST_COLOR} icon="pixelarticons:warning-box">
+          Critical
+        </IconAndLabel>
+      );
+    case 'serious':
+      return (
+        <IconAndLabel color={MUST_COLOR} icon="grommet-icons:status-critical">
+          Critical
+        </IconAndLabel>
+      );
     case 'critical':
     default:
       return (
@@ -71,4 +83,19 @@ export const Severity = props => {
         </IconAndLabel>
       );
   }
+};
+
+export const Critical = () => {
+  return <span className="ama-severity ama-critical">Critical</span>;
+  return <Severity level="critical" />;
+};
+
+export const Serious = () => {
+  return <span className="ama-severity ama-serious">Serious</span>;
+  return <Severity level="serious" />;
+};
+
+export const Warning = () => {
+  return <span className="ama-severity ama-warning">Warning</span>;
+  return <Severity level="warning" />;
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDoc } from '@docusaurus/theme-common/internal';
-import { Severity } from '../../../../components';
+import { Critical } from '../../../../components';
 
 const AMA_WHAT = {
   ama_severity: 'Severity',
@@ -19,7 +19,7 @@ export const AMASidebar = () => {
           let value = frontMatter[key];
 
           if (key === 'ama_severity') {
-            value = <Severity level="critical" />;
+            value = <Critical />;
           } else if (key === 'ama_success_criterion') {
             const [sc, link] = value.split('@');
 
