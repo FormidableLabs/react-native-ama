@@ -15,6 +15,7 @@
     "packages/test-package",
     "packages/internal",
     "packages/core",
+    "packages/lists",
     "examples/expo"
   ]
 }
