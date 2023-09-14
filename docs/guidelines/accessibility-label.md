@@ -17,8 +17,8 @@ The [accessibilityLabel](https://reactnative.dev/docs/accessibility#accessibilit
     </When>
 </ScreenReader>
 
-When a component has an accessible label and gains focus, that label is the first piece of information the screen reader reads.
-For instance, with a button, as soon as it receives focus, the screen reader will initially announce the accessibility label. It will then follow up by describing the button's role and state to give the user a comprehensive understanding of the element's function.
+When a component has the accessibility label, it is the first information the screen reader reads when it gains the focus.
+For instance, with a button, as soon as it receives focus, the screen reader will initially announce its accessibility label. It will then follow up by describing the button's role and state to give the user a comprehensive understanding of the element's function.
 
 This is especially crucial for icon-only buttons, where the control lacks textual labels. In such cases, the accessibility label serves as the primary means of conveying the button's purpose to the user via the screen reader. Without it, the button's function would be unclear, making the app less accessible.
 
