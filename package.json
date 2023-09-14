@@ -18,6 +18,7 @@
     "packages/forms",
     "packages/internal",
     "packages/lists",
+    "packages/react-native",
     "examples/expo"
   ],
   "devDependencies": {

@@ -8,8 +8,8 @@ import {
 import { StyleSheet, TouchableWithoutFeedback } from 'react-native';
 
 import { useSwitch } from '../hooks/useSwitch';
-import type { AMAAccessibilityState } from '../types';
-import { MINIMUM_TOUCHABLE_SIZE } from '../utils/minimumTouchableSize';
+import type { AMAAccessibilityState } from '@react-native-ama/internal/src/types';
+import { MINIMUM_TOUCHABLE_SIZE } from '@react-native-ama/internal/src/utils/minimumTouchableSize';
 
 type SwitchWrapperProps = React.PropsWithChildren<
   Omit<ViewProps, 'accessibilityRole' | 'accessibilityLabel'> &

@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import * as UseFocus from '../hooks/useFocus';
 import { ERROR_STYLE } from '../internal/error.style';
-import * as UseChecks from '../internal/useChecks';
+import * as UseChecks from '@react-native-ama/core/src/hooks/useChecks';
 import { Text } from './Text';
 
 beforeEach(() => {
