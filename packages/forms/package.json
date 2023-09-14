@@ -14,11 +14,6 @@
     "lint:fix": "yarn lint --fix",
     "build": "bob build"
   },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
   "keywords": [
     "react-native",
     "ios",
@@ -27,9 +22,9 @@
     "accessibility"
   ],
   "repository": {
-      "type": "git",
-      "url": "https://github.com/FormidableLabs/react-native-ama",
-      "directory": "packages/forms"
+    "type": "git",
+    "url": "https://github.com/FormidableLabs/react-native-ama",
+    "directory": "packages/forms"
   },
   "author": "Alessandro Senese <alessandro.senese@formidable.com> (https://github.com/FormidableLabs)",
   "license": "MIT",

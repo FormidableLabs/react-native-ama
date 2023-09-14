@@ -5,8 +5,16 @@ The provider manages the failure message that appears when AMA accessibility fai
 
 ## Usage
 
-```tsx
-<AMAProvider>...</AMAProvider>
+```jsx {1,5-7}
+import { AMAProvider } from 'react-native-ama';
+
+const App = () => {
+  return (
+    <AMAProvider>
+      <YourApp />
+    </AMAProvider>
+  );
+};
 ```
 
 ## Context Values
