@@ -1,23 +1,33 @@
 {
   "name": "@react-native-ama/forms",
-  "version": "0.1.0",
-  "description": "Set of components and hooks to create accessible forms",
-  "main": "dist/commonjs/index",
-  "module": "dist/module/index",
-  "types": "dist/typescript/index.d.ts",
-  "react-native": "lib/index",
+  "version": "0.0.1",
+  "private": false,
+  "react-native": "src/index",
+  "types": "dist/index.d.ts",
+  "main": "dist/index.js",
+  "exports": {
+    ".": [
+      {
+        "imports": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+      },
+      "./dist/index.js"
+    ]
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
   "scripts": {
-    "prepare": "husky install",
-    "test": "jest",
-    "ts:check": "tsc --noEmit",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "lint:fix": "yarn lint --fix",
-    "build": "bob build"
+    "build": "rm -rf dist && tsc -p ./tsconfig.build.json",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
   },
   "keywords": [
     "react-native",
-    "ios",
-    "android",
     "a11y",
     "accessibility"
   ],
@@ -26,14 +36,13 @@
     "url": "https://github.com/FormidableLabs/react-native-ama",
     "directory": "packages/forms"
   },
-  "author": "Alessandro Senese <alessandro.senese@formidable.com> (https://github.com/FormidableLabs)",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/FormidableLabs/react-native-ama/issues"
   },
   "homepage": "https://github.com/FormidableLabs/react-native-ama#readme",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
     "provenance": true
-  }
+  },
+  "author": "",
+  "license": "MIT"
 }

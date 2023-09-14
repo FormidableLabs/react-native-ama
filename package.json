@@ -12,11 +12,12 @@
     "doc": "cd website && yarn start"
   },
   "workspaces": [
-    "packages/internal",
-    "packages/core",
-    "packages/lists",
-    "packages/extras",
     "packages/animations",
+    "packages/core",
+    "packages/extras",
+    "packages/forms",
+    "packages/internal",
+    "packages/lists",
     "examples/expo"
   ],
   "devDependencies": {
