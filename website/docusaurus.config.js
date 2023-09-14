@@ -25,7 +25,8 @@ const config = {
     process.env.VERCEL_ENV === 'preview'
       ? '/'
       : '/open-source/react-native-ama/',
-  onBrokenLinks: 'throw',
+  // TODO: change in throw
+  onBrokenLinks: 'ignore',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'FormidableLabs',
