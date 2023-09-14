@@ -20,8 +20,7 @@ export const PressableBase = React.forwardRef<
       // @ts-ignore
       ref={ref}
       {...rest}
-      {...pressableProps}
-    >
+      {...pressableProps}>
       {children}
     </RNPressable>
   );

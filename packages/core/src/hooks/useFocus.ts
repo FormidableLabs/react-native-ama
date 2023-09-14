@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AccessibilityInfo, findNodeHandle } from 'react-native';
 
-import { SHELL_COLORS } from '../../../../lib/internal/logger.rules';
+import { SHELL_COLORS } from '@react-native-ama/internal/src/utils/logger.rules';
 
 export const useFocus = (refComponent?: React.RefObject<any>) => {
   const setFocus = React.useCallback(

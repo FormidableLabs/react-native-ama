@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-native';
 import { Platform } from 'react-native';
 
 import * as AMAProvider from '../components/AMAProvider';
@@ -13,7 +13,7 @@ beforeEach(() => {
 describe('useTimedAction', () => {
   it('onTimeout executes the callback with the given timeout if the screen reader is off', async () => {
     const callback = jest.fn();
-
+    //TODO: AMAProvider does not export useAMAContext
     const setTimeoutSpy = jest.spyOn(global, 'setTimeout');
     jest.spyOn(AMAProvider, 'useAMAContext').mockReturnValue({
       isScreenReaderEnabled: false,
