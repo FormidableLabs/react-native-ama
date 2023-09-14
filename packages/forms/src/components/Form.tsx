@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { InteractionManager } from 'react-native';
 
-import { useFocus } from '../core/useFocus';
-import { isFocused } from '../../lib/internal/isFocused';
-import { useChecks } from '../../lib/internal/useChecks';
+import { useFocus } from '@react-native-ama/core/src/hooks/useFocus';
+import { isFocused } from '@react-native-ama/internal/src/utils/isFocused';
+import { useChecks } from '@react-native-ama/core/src/hooks/useChecks';
 
 export type FormProps = React.PropsWithChildren<{
   onSubmit: () => boolean | Promise<boolean>;

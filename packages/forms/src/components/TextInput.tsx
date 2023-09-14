@@ -7,7 +7,7 @@ import {
 import { useTextInput } from '../hooks/useTextInput';
 import { applyStyle } from '../internal/applyStyle';
 import { maybeGenerateStringFromElement } from '../internal/maybeGenerateStringFromElement';
-import { useChecks } from '../internal/useChecks';
+import { useChecks } from '@react-native-ama/core/src/hooks/useChecks';
 import { HideChildrenFromAccessibilityTree } from './HideChildrenFromAccessibilityTree';
 
 export type TextInputProps = RNTextInputProps & {

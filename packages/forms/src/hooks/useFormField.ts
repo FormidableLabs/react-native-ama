@@ -2,7 +2,7 @@ import React from 'react';
 import { Keyboard } from 'react-native';
 
 import { applyStyle } from '../internal/applyStyle';
-import { useChecks } from '../internal/useChecks';
+import { useChecks } from '@react-native-ama/core/src/hooks/useChecks';
 import { useAMAContext } from '../providers/AMAProvider';
 import { useForm } from '../providers/Form';
 
