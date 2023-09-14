@@ -27,3 +27,4 @@ export {
 } from './logger';
 
 export { maybeGenerateStringFromElement } from './maybeGenerateStringFromElement';
+export * from './minimumTouchableSize';

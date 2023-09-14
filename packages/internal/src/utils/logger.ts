@@ -11,7 +11,7 @@ import {
   RULES_HELP,
 } from './logger.rules';
 
-const overrideRules: OverrideRule = require('./../../ama.rules.json');
+const overrideRules: OverrideRule = require('./../ama.rules.json');
 
 type OverrideRule = {
   rules: Record<

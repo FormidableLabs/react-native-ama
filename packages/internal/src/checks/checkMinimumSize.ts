@@ -4,7 +4,7 @@ import { Platform } from 'react-native';
 import {
   ANDROID_MINIMUM_TOUCHABLE_SIZE,
   MINIMUM_TOUCHABLE_SIZE,
-} from '../minimumTouchableSize';
+} from '../utils/minimumTouchableSize';
 import type { LogParams } from '../utils/logger';
 import { getRuleAction } from '../utils/logger';
 
