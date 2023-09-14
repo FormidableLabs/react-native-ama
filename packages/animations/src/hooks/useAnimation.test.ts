@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-native';
 import { Animated } from 'react-native';
 
 import * as AMAProvider from '../providers/AMAProvider';

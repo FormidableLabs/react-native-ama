@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-native';
 
 import * as AMAProvider from '../providers/AMAProvider';
 import { useReanimatedAnimationBuilder } from './useReanimatedAnimationBuilder';
