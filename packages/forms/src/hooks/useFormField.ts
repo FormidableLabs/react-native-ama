@@ -1,5 +1,4 @@
-import { useAMAContext } from '@react-native-ama/core';
-import { useChecks } from '@react-native-ama/core/src/hooks/useChecks';
+import { useAMAContext, useChecks } from '@react-native-ama/core';
 import { applyStyle } from '@react-native-ama/internal';
 import React from 'react';
 import { Keyboard } from 'react-native';

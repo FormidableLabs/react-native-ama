@@ -1,7 +1,7 @@
+import { applyStyle } from '@react-native-ama/internal';
 import type React from 'react';
 import type { PressableStateCallbackType } from 'react-native';
 
-import { applyStyle } from '@react-native-ama/internal/src/utils/applyStyle';
 import { useChecks } from './useChecks';
 
 export const useButtonChecks = __DEV__

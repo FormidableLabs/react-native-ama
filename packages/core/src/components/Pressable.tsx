@@ -9,19 +9,18 @@ import type { UsePressable } from '../hooks/usePressable';
 
 export type PressableProps = UsePressable<RNPressableProps>;
 
-export const PressableBase = React.forwardRef<
-  typeof RNPressable,
-  PressableProps
->(({ children, ...rest }, ref) => {
-  const pressableProps = usePressable<PressableProps>(rest, children);
+export const Pressable = React.forwardRef<typeof RNPressable, PressableProps>(
+  ({ children, ...rest }, ref) => {
+    const pressableProps = usePressable<PressableProps>(rest, children);
 
-  return (
-    <RNPressable
-      // @ts-ignore
-      ref={ref}
-      {...rest}
-      {...pressableProps}>
-      {children}
-    </RNPressable>
-  );
-});
+    return (
+      <RNPressable
+        // @ts-ignore
+        ref={ref}
+        {...rest}
+        {...pressableProps}>
+        {children}
+      </RNPressable>
+    );
+  },
+);

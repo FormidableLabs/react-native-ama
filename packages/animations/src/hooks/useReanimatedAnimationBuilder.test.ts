@@ -1,6 +1,6 @@
+import * as AMAProvider from '@react-native-ama/core';
 import { renderHook } from '@testing-library/react-native';
 
-import * as AMAProvider from '../providers/AMAProvider';
 import { useReanimatedAnimationBuilder } from './useReanimatedAnimationBuilder';
 
 beforeEach(() => {

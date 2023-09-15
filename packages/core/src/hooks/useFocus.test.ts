@@ -1,6 +1,6 @@
+import { SHELL_COLORS } from '@react-native-ama/internal';
 import { renderHook } from '@testing-library/react-native';
 
-import { SHELL_COLORS } from '@react-native-ama/internal/src/utils/logger.rules';
 import { useFocus } from './useFocus';
 
 beforeEach(() => {

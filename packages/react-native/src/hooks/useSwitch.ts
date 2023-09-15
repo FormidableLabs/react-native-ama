@@ -1,10 +1,11 @@
+import { useButtonChecks } from '@react-native-ama/core';
+import {
+  applyStyle,
+  generateAccessibilityStateFromProp,
+} from '@react-native-ama/internal';
 import React from 'react';
 import type { ViewProps } from 'react-native';
 import type { AccessibilityState } from 'react-native';
-
-import { applyStyle } from '../internal/applyStyle';
-import { generateAccessibilityStateFromProp } from '../internal/generateAccessibilityStateFromProp';
-import { useButtonChecks } from '../internal/useButtonChecks';
 
 type UseSwitch = Omit<
   ViewProps,

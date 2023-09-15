@@ -1,7 +1,7 @@
+import * as UsePressable from '@react-native-ama/core/src/hooks/usePressable';
 import { render } from '@testing-library/react-native';
 import * as React from 'react';
 
-import * as UsePressable from '../hooks/usePressable';
 import { TouchableOpacity, TouchableOpacityProps } from './TouchableOpacity';
 
 afterEach(() => {

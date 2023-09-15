@@ -242,8 +242,8 @@ describe('SwitchListItem', () => {
   });
 });
 
-jest.mock('../providers/AMAProvider', () => {
-  const originalModule = jest.requireActual('../providers/AMAProvider');
+jest.mock('@react-native-ama/core', () => {
+  const originalModule = jest.requireActual('@react-native-ama/core');
 
   return {
     ...originalModule,

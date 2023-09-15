@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { Platform, View } from 'react-native';
 
-import { useAMAContext } from '../hooks/useAMAContext';
+import { useAMAContext } from './AMAProvider';
 
 type HideChildrenFromAccessibilityTreeProps = {
   testID?: string;

@@ -1,11 +1,10 @@
+import { usePressable, type UsePressable } from '@react-native-ama/core';
 import * as React from 'react';
 import type { PropsWithChildren } from 'react';
 import {
   TouchableOpacity as RNTouchableOpacity,
   TouchableOpacityProps as RNTouchableOpacityProps,
 } from 'react-native';
-
-import { UsePressable, usePressable } from '../hooks/usePressable';
 
 export type TouchableOpacityProps = PropsWithChildren<
   UsePressable<RNTouchableOpacityProps>

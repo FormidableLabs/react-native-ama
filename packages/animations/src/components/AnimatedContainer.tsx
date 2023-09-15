@@ -1,3 +1,4 @@
+import { AutofocusContainer } from '@react-native-ama/core';
 import * as React from 'react';
 import type { PropsWithChildren } from 'react';
 import type { ViewProps } from 'react-native';
@@ -9,7 +10,6 @@ import {
   ToAnimation,
   useReanimatedAnimationBuilder,
 } from '../hooks/useReanimatedAnimationBuilder';
-import { AutofocusContainer } from './AutofocusContainer';
 
 type UseReanimated = Omit<AnimateProps<ViewProps>, 'entering' | 'exiting'> & {
   autofocus?: boolean;

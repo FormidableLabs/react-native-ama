@@ -1,3 +1,4 @@
+import { useAMAContext } from '@react-native-ama/core';
 import type { PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
 import {
   SharedValue,
@@ -5,8 +6,6 @@ import {
   useAnimatedGestureHandler,
   withTiming,
 } from 'react-native-reanimated';
-
-import { useAMAContext } from '../providers/AMAProvider';
 
 type UseBottomSheetGestureHandler = {
   translateY: SharedValue<number>;

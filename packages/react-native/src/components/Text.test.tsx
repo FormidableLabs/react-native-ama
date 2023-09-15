@@ -1,9 +1,9 @@
+import * as UseChecks from '@react-native-ama/core/src/hooks/useChecks';
+import * as UseFocus from '@react-native-ama/core/src/hooks/useFocus';
+import { ERROR_STYLE } from '@react-native-ama/internal';
 import { render } from '@testing-library/react-native';
 import * as React from 'react';
 
-import * as UseFocus from '../hooks/useFocus';
-import { ERROR_STYLE } from '../internal/error.style';
-import * as UseChecks from '@react-native-ama/core/src/hooks/useChecks';
 import { Text } from './Text';
 
 beforeEach(() => {

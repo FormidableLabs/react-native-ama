@@ -1,7 +1,6 @@
-import { act, renderHook } from '@testing-library/react-native';
-import { waitFor } from '@testing-library/react-native';
+import { ERROR_STYLE } from '@react-native-ama/internal';
+import { act, renderHook, waitFor } from '@testing-library/react-native';
 
-import { ERROR_STYLE } from '@react-native-ama/internal/src/utils/error.style';
 import * as UseChecks from '../hooks/useChecks';
 import { usePressable } from './usePressable';
 
