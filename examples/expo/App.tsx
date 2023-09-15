@@ -1,3 +1,5 @@
+import 'react-native-gesture-handler';
+
 // import { AMAProvider } from '@react-native-ama/core';
 import { NavigationContainer } from '@react-navigation/native';
 import {
