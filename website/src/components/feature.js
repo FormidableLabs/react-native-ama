@@ -39,10 +39,21 @@ export const When = props => {
 };
 
 export const Then = props => {
+  const icon = props.children ? 'ic:round-plus' : 'typcn:tick';
   return (
     <li className="ama-then">
+      <Icon icon={icon} height={12} />
+      <strong>Then</strong>: {props.title}
+      {props.children ? <ul>{props.children}</ul> : null}
+    </li>
+  );
+};
+
+export const And = props => {
+  return (
+    <li className="ama-and">
       <Icon icon="typcn:tick" height={12} />
-      <strong>Then</strong>: {props.children}
+      <strong>And</strong>: {props.children}
     </li>
   );
 };

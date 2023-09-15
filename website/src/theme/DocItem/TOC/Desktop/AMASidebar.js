@@ -1,5 +1,6 @@
-import React from 'react';
 import { useDoc } from '@docusaurus/theme-common/internal';
+import React from 'react';
+
 import { Critical, Severity } from '../../../../components';
 
 const AMA_WHAT = {
@@ -9,7 +10,7 @@ const AMA_WHAT = {
   ama_success_criterion: 'Success criterion',
 };
 
-const SEVERITY_VALUES = ['', 'warning', 'serious', 'critical'];
+const SEVERITY_VALUES = ['', 'critical', 'serious', 'warning'];
 export const AMASidebar = () => {
   const { frontMatter } = useDoc();
 

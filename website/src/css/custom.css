@@ -139,7 +139,6 @@ li .menu__list .menu__link--sublist-caret {
 
 .with-ama-sidebar {
   position: sticky;
-  overflow-y: auto;
   top: calc(var(--ifm-navbar-height) + 1rem);
 }
 
@@ -160,6 +159,7 @@ li .menu__list .menu__link--sublist-caret {
   margin: var(--ifm-toc-padding-vertical) var(--ifm-toc-padding-horizontal);
   margin-bottom: 24px;
   font-size: 14px;
+  overflow: visible;
 }
 
 .ama-sidebar th {

@@ -2,7 +2,7 @@
 ama_severity: 2
 ama_category: Undestandable
 ama_affected_users: Visual
-ama_success_criterion: 4.1.2@https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html)
+ama_success_criterion: 4.1.2@https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html
 ---
 
 # Accessibility Label
@@ -13,7 +13,7 @@ The [accessibilityLabel](https://reactnative.dev/docs/accessibility#accessibilit
 
 <ScreenReader>
     <When title="The user focuses the component">
-        <Then>The Screen Reader reads out the label</Then>
+        <Then title="The Screen Reader reads out the label" />
     </When>
 </ScreenReader>
 
