@@ -1,8 +1,8 @@
 import { act, render } from '@testing-library/react-native';
-import { flushMicroTasks } from '@testing-library/react-native/build/flushMicroTasks';
+import { flushMicroTasks } from '@testing-library/react-native/build/flush-micro-tasks';
 import * as React from 'react';
 
-import { useAMAContext } from '../hooks/useAMAContext';
+import { useAMAContext } from '../components/AMAProvider';
 import { AMAContextValue, AMAProvider } from './AMAProvider';
 
 beforeEach(() => {

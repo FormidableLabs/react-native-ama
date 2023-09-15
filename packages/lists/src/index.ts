@@ -1,10 +1,8 @@
 // Components
-export * from './components/DynamicFlatList';
-export * from './components/FlatList';
-export * from './components/ListWrapper';
-export * from './components/StaticFlatList';
+export { DynamicFlatList } from './components/DynamicFlatList';
+export { FlatList } from './components/FlatList';
+export { ListWrapper } from './components/ListWrapper';
+export { StaticFlatList } from './components/StaticFlatList';
 
 // Hooks
-export * from './hooks/useDynamicList';
-
-// TODO: move to destructured exports
+export { useDynamicList } from './hooks/useDynamicList';

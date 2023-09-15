@@ -1,8 +1,8 @@
+import * as UsePressable from '@react-native-ama/core/src/hooks/usePressable';
 import { render } from '@testing-library/react-native';
 import * as React from 'react';
 import { Text, View } from 'react-native';
 
-import * as UsePressable from '../hooks/usePressable';
 import {
   TouchableWithoutFeedback,
   TouchableWithoutFeedbackProps,

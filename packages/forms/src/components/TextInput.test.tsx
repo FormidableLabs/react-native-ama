@@ -1,10 +1,10 @@
+import * as UseChecks from '@react-native-ama/core/src/hooks/useChecks';
+import { ERROR_STYLE } from '@react-native-ama/internal';
 import { fireEvent, render } from '@testing-library/react-native';
 import * as React from 'react';
 import { Text } from 'react-native';
 
 import * as UseFormField from '../hooks/useFormField';
-import { ERROR_STYLE } from '../internal/error.style';
-import * as UseChecks from '@react-native-ama/core/src/hooks/useChecks';
 import { TextInput } from './TextInput';
 
 beforeEach(() => {
@@ -526,8 +526,8 @@ jest.mock('../hooks/useFormField', () => {
   };
 });
 
-jest.mock('../providers/AMAProvider', () => {
-  const originalModule = jest.requireActual('../providers/AMAProvider');
+jest.mock('@react-native-ama/core', () => {
+  const originalModule = jest.requireActual('@react-native-ama/core');
 
   return {
     ...originalModule,

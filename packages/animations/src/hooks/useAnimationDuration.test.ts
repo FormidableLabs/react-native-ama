@@ -1,6 +1,6 @@
+import * as AMAProvider from '@react-native-ama/core';
 import { renderHook } from '@testing-library/react-native';
 
-import * as AMAProvider from '../providers/AMAProvider';
 import { useAnimationDuration } from './useAnimationDuration';
 
 describe('useAnimationDuration', () => {
@@ -36,4 +36,4 @@ const amaContextValues = {
   isScreenReaderEnabled: false,
 };
 
-jest.mock('../providers/AMAProvider');
+jest.mock('@react-native-ama/core');

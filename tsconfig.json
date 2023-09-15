@@ -2,8 +2,13 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "react-native-ama": ["packages/core/src"],
-      "@react-native-ama/core": ["packages/core/src/*"]
+      "@react-native-ama/animations": ["packages/animations/src/index"],
+      "@react-native-ama/core": ["packages/core/src/index"],
+      "@react-native-ama/extras": ["packages/extras/src/index"],
+      "@react-native-ama/forms": ["packages/forms/src/index"],
+      "@react-native-ama/internal": ["packages/internal/src/index"],
+      "@react-native-ama/lists": ["packages/lists/src/index"],
+      "@react-native-ama/react-native": ["packages/react-native/src/index"]
     },
     "jsx": "react",
     "lib": ["esnext"],
@@ -19,14 +24,8 @@
     "noUnusedParameters": true,
     "skipLibCheck": true
   },
-  "include": ["packages"],
   "exclude": [
-    "examples",
     "dist",
-    "src",
     "node_modules",
-    "__mocks__",
-    "**/**.test.ts",
-    "**/**.test.tsx"
   ]
 }

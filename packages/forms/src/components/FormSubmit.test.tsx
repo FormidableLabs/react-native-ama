@@ -1,9 +1,9 @@
+import { Pressable } from '@react-native-ama/core';
 import { render } from '@testing-library/react-native';
 import * as React from 'react';
 import { View } from 'react-native';
 
 import { FormSubmit } from './FormSubmit';
-import { Pressable } from '@react-native-ama/core/src/components/Pressable';
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -58,8 +58,8 @@ jest.mock('../hooks/useFormField', () => {
   };
 });
 
-jest.mock('../providers/AMAProvider', () => {
-  const originalModule = jest.requireActual('../providers/AMAProvider');
+jest.mock('@react-native-ama/core', () => {
+  const originalModule = jest.requireActual('@react-native-ama/core');
 
   return {
     ...originalModule,

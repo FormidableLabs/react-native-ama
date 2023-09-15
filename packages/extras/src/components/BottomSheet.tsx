@@ -1,4 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
+
+import { AnimatedContainer } from '@react-native-ama/animations';
+import { useChecks, useTimedAction } from '@react-native-ama/core';
 import * as React from 'react';
 import type { PropsWithChildren } from 'react';
 import {
@@ -26,10 +29,7 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated';
 
-import { AnimatedContainer } from '../components/AnimatedContainer';
 import { useBottomSheetGestureHandler } from '../hooks/useBottomSheetGestureHandler';
-import { useTimedAction } from '../hooks/useTimedAction';
-import { useChecks } from '@react-native-ama/core/src/hooks/useChecks';
 import { useKeyboard } from '../hooks/useKeyboard';
 
 export type BottomSheetProps = {
@@ -68,7 +68,7 @@ export type BottomSheetActions = {
 const DEFAULT_MAX_HEIGHT = Dimensions.get('window').height * 0.9;
 const isIOS = Platform.OS === 'ios';
 
-export const BottomSheetBase = React.forwardRef<
+export const BottomSheet = React.forwardRef<
   BottomSheetActions,
   React.PropsWithChildren<BottomSheetProps>
 >(
@@ -357,8 +357,6 @@ export const BottomSheetBase = React.forwardRef<
     );
   },
 );
-
-export const BottomSheet = React.memo(BottomSheetBase);
 
 const BottomSheetKeyboardAvoidingView = ({
   children,

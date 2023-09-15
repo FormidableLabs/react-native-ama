@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text } from 'react-native';
 
-import { maybeGenerateStringFromElement } from '../internal/maybeGenerateStringFromElement';
+import { maybeGenerateStringFromElement } from './maybeGenerateStringFromElement';
 
 beforeEach(() => {
   jest.clearAllMocks();

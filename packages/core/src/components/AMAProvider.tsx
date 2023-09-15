@@ -1,4 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
+
+import { RED } from '@react-native-ama/internal';
 import * as React from 'react';
 import {
   AccessibilityChangeEventName,
@@ -8,8 +10,6 @@ import {
   Text,
   View,
 } from 'react-native';
-
-import { RED } from '@react-native-ama/internal/src/utils/error.style';
 
 type AMAProviderProps = {
   children: React.ReactNode;
@@ -214,4 +214,6 @@ const AMAError = __DEV__
     }
   : null;
 
-export const AMAContext = React.createContext<AMAContextValue>(DEFAULT_VALUES);
+const AMAContext = React.createContext<AMAContextValue>(DEFAULT_VALUES);
+
+export const useAMAContext = () => React.useContext(AMAContext);

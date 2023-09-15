@@ -1,7 +1,7 @@
+import * as AMAProvider from '@react-native-ama/core';
+import { MOTION_ANIMATIONS } from '@react-native-ama/internal';
 import { renderHook } from '@testing-library/react-native';
 
-import { MOTION_ANIMATIONS } from '../internal/constants';
-import * as AMAProvider from '../providers/AMAProvider';
 import { useReanimatedTiming } from './useReanimatedTiming';
 
 beforeEach(() => {
@@ -92,5 +92,5 @@ function mockReanimated() {
   };
 }
 
-jest.mock('../providers/AMAProvider');
+jest.mock('@react-native-ama/core');
 jest.mock('react-native-reanimated', () => mockReanimated());

@@ -1,3 +1,5 @@
+import { useAMAContext } from '@react-native-ama/core';
+import type { MotionAnimationKey } from '@react-native-ama/internal';
 import React from 'react';
 import {
   AnimationCallback,
@@ -7,8 +9,6 @@ import {
   WithTimingConfig,
 } from 'react-native-reanimated';
 
-import type { MotionAnimationKey } from '../internal/constants';
-import { useAMAContext } from '../providers/AMAProvider';
 import { isMotionAnimation } from '../utils/isMotionAnimation';
 
 export const useReanimatedTiming = () => {

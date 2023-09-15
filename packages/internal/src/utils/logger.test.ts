@@ -1,4 +1,4 @@
-import { getRuleAction, logFailure } from '../internal/logger';
+import { getRuleAction, logFailure } from './logger';
 import {
   NON_OVERRIDABLE_RULES,
   RULES_HELP,

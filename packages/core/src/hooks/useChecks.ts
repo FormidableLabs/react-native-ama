@@ -1,3 +1,21 @@
+import {
+  ERROR_STYLE,
+  LogParams,
+  checkAccessibilityRole as checkAccessibilityRoleImplementation,
+  checkFocusTrap as checkFocusTrapImplementation,
+  checkForAccessibilityState,
+  checkMinimumSize as checkMinimumSizeImplementation,
+  getRuleAction,
+  logFailure,
+  noUndefinedProperty as noUndefinedPropertyImplementation,
+  uppercaseStringChecker as noUppercaseStringCheckerImplementation,
+  uppercaseChecker as uppercaseCheckerImplementation,
+  type CheckFocusTrap,
+  type CheckForAccessibilityState,
+  type NoUndefinedProperty,
+  type UppercaseChecker,
+  type UppercaseStringChecker,
+} from '@react-native-ama/internal';
 import * as React from 'react';
 import {
   AccessibilityRole,
@@ -5,35 +23,7 @@ import {
   LayoutChangeEvent,
 } from 'react-native';
 
-import {
-  CheckFocusTrap,
-  checkFocusTrap as checkFocusTrapImplementation,
-} from '@react-native-ama/internal/src/checks/checkFocusTrap';
-import type { UppercaseChecker } from '@react-native-ama/internal/src/checks/uppercaseChecker';
-import {
-  LogParams,
-  getRuleAction,
-  logFailure,
-} from '@react-native-ama/internal/src/utils/logger';
-import { useAMAContext } from '../hooks/useAMAContext';
-import { checkAccessibilityRole as checkAccessibilityRoleImplementation } from '@react-native-ama/internal/src/checks/checkAccessibilityRole';
-import type { CheckForAccessibilityState } from '@react-native-ama/internal/src/checks/checkForAccessibilityState';
-import { checkForAccessibilityState } from '@react-native-ama/internal/src/checks/checkForAccessibilityState';
-import { checkMinimumSize as checkMinimumSizeImplementation } from '@react-native-ama/internal/src/checks/checkMinimumSize';
-import {
-  ContrastChecker,
-  contrastChecker as contrastCheckerImplementation,
-} from '@react-native-ama/internal/src/checks/contrastChecker';
-import {
-  NoUndefinedProperty,
-  noUndefinedProperty as noUndefinedPropertyImplementation,
-} from '@react-native-ama/internal/src/checks/noUndefinedProperty';
-import { uppercaseChecker as uppercaseCheckerImplementation } from '@react-native-ama/internal/src/checks/uppercaseChecker';
-import {
-  UppercaseStringChecker,
-  uppercaseStringChecker as noUppercaseStringCheckerImplementation,
-} from '@react-native-ama/internal/src/checks/uppercaseStringChecker';
-import { ERROR_STYLE } from '@react-native-ama/internal/src/utils/error.style';
+import { useAMAContext } from '../components/AMAProvider';
 
 export const useChecks = __DEV__
   ? () => {

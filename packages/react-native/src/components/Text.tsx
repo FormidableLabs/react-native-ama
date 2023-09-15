@@ -1,9 +1,7 @@
+import { useChecks, useFocus } from '@react-native-ama/core';
+import { applyStyle } from '@react-native-ama/internal';
 import * as React from 'react';
 import { Text as RNText, TextProps as RNTextProps } from 'react-native';
-
-import { useFocus } from '../hooks/useFocus';
-import { applyStyle } from '../internal/applyStyle';
-import { useChecks } from '@react-native-ama/core/src/hooks/useChecks';
 
 export type TextProps = RNTextProps & {
   autofocus?: boolean;

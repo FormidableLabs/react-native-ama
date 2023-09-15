@@ -1,3 +1,5 @@
+import { useChecks } from '@react-native-ama/core';
+import { applyStyle } from '@react-native-ama/internal';
 import * as React from 'react';
 import type {
   LayoutChangeEvent,
@@ -9,8 +11,6 @@ import type {
   ViewStyle,
 } from 'react-native';
 
-import { applyStyle } from '../internal/applyStyle';
-import { useChecks } from '../internal/useChecks';
 import { UseFormField, useFormField } from './useFormField';
 
 type UseTextInput = Omit<UseFormField, 'hasFocusCallback'> & {

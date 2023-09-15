@@ -1,6 +1,8 @@
-export * from './components/AnimatedContainer';
+// Components
+export { AnimatedContainer } from './components/AnimatedContainer';
 
-export * from './hooks/useAnimation';
-export * from './hooks/useReanimatedTiming';
-export * from './hooks/useAnimationDuration';
-export * from './hooks/useReanimatedAnimationBuilder';
+// Hooks
+export { useAnimation } from './hooks/useAnimation';
+export { useAnimationDuration } from './hooks/useAnimationDuration';
+export { useReanimatedAnimationBuilder } from './hooks/useReanimatedAnimationBuilder';
+export { useReanimatedTiming } from './hooks/useReanimatedTiming';

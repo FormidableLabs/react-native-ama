@@ -1,6 +1,5 @@
-import { useChecks } from '@react-native-ama/core/src/hooks/useChecks';
-import { useFocus } from '@react-native-ama/core/src/hooks/useFocus';
-import { isFocused } from '@react-native-ama/internal/src/utils/isFocused';
+import { useChecks, useFocus } from '@react-native-ama/core';
+import { isFocused } from '@react-native-ama/internal';
 import * as React from 'react';
 import { InteractionManager } from 'react-native';
 

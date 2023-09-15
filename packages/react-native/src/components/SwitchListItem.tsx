@@ -1,10 +1,10 @@
+import { HideChildrenFromAccessibilityTree } from '@react-native-ama/core';
+import { FormField } from '@react-native-ama/forms';
+import { maybeGenerateStringFromElement } from '@react-native-ama/internal';
 import React from 'react';
 import type { StyleProp, SwitchProps, ViewStyle } from 'react-native';
 import { StyleSheet, Switch } from 'react-native';
 
-import { maybeGenerateStringFromElement } from '../internal/maybeGenerateStringFromElement';
-import { FormField } from './FormField';
-import { HideChildrenFromAccessibilityTree } from './HideChildrenFromAccessibilityTree';
 import { SwitchWrapper } from './SwitchWrapper';
 
 type SwitchListItemProps = React.PropsWithChildren<

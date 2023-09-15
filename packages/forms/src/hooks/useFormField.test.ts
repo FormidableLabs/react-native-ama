@@ -1,9 +1,9 @@
+import * as AMAProvider from '@react-native-ama/core';
+import * as UseChecks from '@react-native-ama/core/src/hooks/useChecks';
 import { renderHook } from '@testing-library/react-native';
 import { waitFor } from '@testing-library/react-native';
 
-import * as UseChecks from '@react-native-ama/core/src/hooks/useChecks';
-import * as AMAProvider from '../providers/AMAProvider';
-import * as Form from '../providers/Form';
+import * as Form from '../components/Form';
 import { useFormField } from './useFormField';
 
 beforeEach(() => {
@@ -186,7 +186,7 @@ function mockUseFocus() {
   };
 }
 
-jest.mock('../providers/AMAProvider');
+jest.mock('@react-native-ama/core');
 jest.mock('./useFocus', () => mockUseFocus());
 jest.mock('../internal/checks/checkFocusTrap', () => {
   return {

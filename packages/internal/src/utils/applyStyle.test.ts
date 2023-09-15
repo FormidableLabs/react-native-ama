@@ -1,4 +1,4 @@
-import { applyStyle } from '../internal/applyStyle';
+import { applyStyle } from './applyStyle';
 
 beforeEach(() => {
   jest.clearAllMocks();

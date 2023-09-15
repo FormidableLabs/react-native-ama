@@ -1,10 +1,10 @@
-import { renderHook } from '@testing-library/react-native';
-
-import * as Logger from '@react-native-ama/internal/src/utils/logger';
-import type { RuleAction } from '@react-native-ama/internal/src/utils/logger.rules';
-import * as AMAProvider from '../components/AMAProvider';
+import * as Logger from '@react-native-ama/internal';
+import { type RuleAction } from '@react-native-ama/internal';
 import * as CheckForAccessibilityRole from '@react-native-ama/internal/src/checks/checkAccessibilityRole';
 import * as CheckForAccessibilityState from '@react-native-ama/internal/src/checks/checkForAccessibilityState';
+import { renderHook } from '@testing-library/react-native';
+
+import * as AMAProvider from '../components/AMAProvider';
 import { useChecks } from './useChecks';
 
 const trackError = jest.fn();
