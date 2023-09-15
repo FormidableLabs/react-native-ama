@@ -214,3 +214,21 @@ li .menu__list .menu__link--sublist-caret {
 .ama-serious {
   color: var(--scenario-color);
 }
+
+.ama-icon-label-strong {
+  textdecoration: underline;
+  textunderlineoffset: 4;
+  display: inline-block;
+  verticalalign: top;
+}
+
+.anchor .ama-icon-label {
+  font-size: 16px;
+}
+.anchor .ama-icon-label svg {
+  width: 12px;
+}
+
+.anchor .ama-icon-label strong {
+  vertical-align: baseline;
+}

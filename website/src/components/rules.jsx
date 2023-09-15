@@ -6,26 +6,25 @@ const SHOULD_COLOR = '#807700';
 
 const IconAndLabel = ({ children, color, icon }) => {
   return (
-    <>
+    <span className="ama-icon-label">
       <span
         style={{
           verticalAlign: 'middle',
           paddingRight: 8,
           color: color,
-        }}>
+        }}
+      >
         <Icon icon={icon} height={24} />
       </span>
       <strong
+        className="ama-icon-label-strong"
         style={{
           color,
-          textDecoration: 'underline',
-          textUnderlineOffset: 4,
-          display: 'inline-block',
-          verticalAlign: 'top',
-        }}>
+        }}
+      >
         {children}
       </strong>
-    </>
+    </span>
   );
 };
 
@@ -44,7 +43,8 @@ export const MustNot = () => (
 export const ShouldNot = () => (
   <IconAndLabel
     icon="material-symbols:warning-off-outline"
-    color={SHOULD_COLOR}>
+    color={SHOULD_COLOR}
+  >
     SHOULD_NOT
   </IconAndLabel>
 );
@@ -62,40 +62,33 @@ export const No = () => (
 );
 
 export const Severity = props => {
-  switch (props.level) {
-    case 'warning':
-      return (
-        <IconAndLabel color={MUST_COLOR} icon="pixelarticons:warning-box">
-          Critical
-        </IconAndLabel>
-      );
-    case 'serious':
-      return (
-        <IconAndLabel color={MUST_COLOR} icon="grommet-icons:status-critical">
-          Critical
-        </IconAndLabel>
-      );
-    case 'critical':
-    default:
-      return (
-        <IconAndLabel color={MUST_COLOR} icon="zondicons:exclamation-outline">
-          Critical
-        </IconAndLabel>
-      );
-  }
+  const Label = () => (
+    <>
+      <strong>Severity:</strong>{' '}
+    </>
+  );
+
+  return (
+    <>
+      {props.withLabel ? <Label /> : null}
+      <span className={`ama-severity ama-${props.level}`}>
+        {capitalizeFirstLetter(props.level)}
+      </span>
+    </>
+  );
 };
 
-export const Critical = () => {
-  return <span className="ama-severity ama-critical">Critical</span>;
-  return <Severity level="critical" />;
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+export const Critical = props => {
+  return <Severity {...props} level="critical" />;
 };
 
-export const Serious = () => {
-  return <span className="ama-severity ama-serious">Serious</span>;
-  return <Severity level="serious" />;
+export const Serious = props => {
+  return <Severity {...props} level="serious" />;
 };
 
-export const Warning = () => {
-  return <span className="ama-severity ama-warning">Warning</span>;
-  return <Severity level="warning" />;
+export const Warning = props => {
+  return <Severity {...props} level="warning" />;
 };

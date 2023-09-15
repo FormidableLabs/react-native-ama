@@ -1,5 +1,5 @@
 ---
-ama_severity: Critical
+ama_severity: 2
 ama_category: Undestandable
 ama_affected_users: Visual
 ama_success_criterion: 4.1.2@https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html)
@@ -28,7 +28,8 @@ This is especially crucial for icon-only buttons, where the control lacks textua
 <Pressable
   onPress={contactUs}
   accessibilityRole="button"
-  accessibilityLabel="Contact us">
+  accessibilityLabel="Contact us"
+>
   Contact us
 </Pressable>
 ```
@@ -92,15 +93,11 @@ For this reason, AMA requires that tappable elements have the `accessibilityLabe
 
 ## All CAPS Accessibility Label
 
-All CAPS accessibility labels affect how and what a screen reader reads, so a non-CAPS one should always be provided.
+<Warning withLabel />
 
-### No inflection
+<br /> <br />
 
-Both Talkback and VoiceOver reads the words with the same flat tone, which becomes more noticeable with long sentences.
-
-### Wrong spelling
-
-Some words could be misinterpreted, causing the screen readers to read a word as separate characters.
+Screen readers may interpret capital letters as acronyms, misinterpreting content.
 
 #### Example: `ADD TO THE CART`
 
@@ -127,7 +124,7 @@ The word `CONTACT` is read correctly, but both screen readers spell the word `US
 
 A similar issue happens if a sentence contains the word **IT**, for example.
 
-## AMA dev runtime errors
+## AMA dev runtime errors <DevOnly />
 
 ### NO_ACCESSIBILITY_LABEL <Must />
 
@@ -138,7 +135,7 @@ This error is used when a pressable element has no [accessibilityLabel](https://
 This rule is mandatory and cannot be turned off!
 :::
 
-### NO_UPPERCASE_TEXT <Must />
+### NO_UPPERCASE_TEXT <Should />
 
 This is used when a component has the `accessibilityLabel` prop in all caps.
 
@@ -149,10 +146,10 @@ Is it possible to specify a list of allowed all caps accessibility labels, [more
 
 ## Related AMA components
 
-- [ExpandablePressable](../components/expandablepressable)
-- [Pressable](../components/pressable)
-- [TouchableOpacity](../components/touchableopacity)
-- [TouchableWithoutFeedback](../components/TouchableWithoutFeedback
+- [ExpandablePressable](/core/components/expandablepressable)
+- [Pressable](/core/components/pressable)
+- [TouchableOpacity](/core/components/touchableopacity)
+- [TouchableWithoutFeedback](/core/components/TouchableWithoutFeedback)
 
 ## External resources
 
