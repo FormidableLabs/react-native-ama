@@ -42,7 +42,6 @@
   },
   "homepage": "https://github.com/FormidableLabs/react-native-ama#readme",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
     "provenance": true
   },
   "author": "",
