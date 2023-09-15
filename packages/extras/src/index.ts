@@ -1,6 +1,6 @@
 // Components
-export * from './components/BottomSheet';
+export { BottomSheet } from './components/BottomSheet';
 
 // Hooks
-export * from './hooks/useBottomSheetGestureHandler';
-export * from './hooks/useKeyboard';
+export { useBottomSheetGestureHandler } from './hooks/useBottomSheetGestureHandler';
+export { useKeyboard } from './hooks/useKeyboard';

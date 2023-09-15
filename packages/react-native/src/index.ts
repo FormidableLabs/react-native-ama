@@ -1,12 +1,11 @@
 // Components
-export * from './components/ExpandablePressable';
-export * from './components/SwitchListItem';
-export * from './components/SwitchWrapper';
-export * from './components/Text';
-export * from './components/TouchableOpacity';
-export * from './components/TouchableWithoutFeedback';
+export { ExpandablePressable } from './components/ExpandablePressable';
+export { SwitchListItem } from './components/SwitchListItem';
+export { SwitchWrapper } from './components/SwitchWrapper';
+export { Text } from './components/Text';
+export { TouchableOpacity } from './components/TouchableOpacity';
+export { TouchableWithoutFeedback } from './components/TouchableWithoutFeedback';
 
 // Hooks
-export * from './hooks/useExpandable';
-export * from './hooks/useSwitch';
-export * from './hooks/useTextInput';
+export { useExpandable } from './hooks/useExpandable';
+export { useSwitch } from './hooks/useSwitch';
