@@ -19,7 +19,8 @@
     "packages/internal",
     "packages/lists",
     "packages/react-native",
-    "examples/expo"
+    "examples/expo",
+    "examples/shared"
   ],
   "devDependencies": {
     "@changesets/cli": "^2.26.2",
