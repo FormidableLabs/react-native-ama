@@ -6,7 +6,10 @@ export {
   type CheckForAccessibilityState,
 } from './checks/checkForAccessibilityState';
 export { checkMinimumSize } from './checks/checkMinimumSize';
-export { contrastChecker } from './checks/contrastChecker';
+export {
+  contrastChecker,
+  type ContrastChecker,
+} from './checks/contrastChecker';
 export {
   noUndefinedProperty,
   type NoUndefinedProperty,
