@@ -2,7 +2,6 @@ import { useAMAContext } from '@react-native-ama/core';
 import { HideChildrenFromAccessibilityTree } from '@react-native-ama/core';
 import { Pressable, PressableProps } from '@react-native-ama/core';
 import React from 'react';
-import { View } from 'react-native';
 
 import { useForm } from '../components/Form';
 
@@ -19,9 +18,13 @@ export const FormSubmit = (props: FormSubmitProps) => {
   const { isScreenReaderEnabled } = useAMAContext();
 
   return (
-    <Pressable accessibilityRole="button" {...props} onPress={submitForm}>
+    <Pressable
+      accessibilityRole="button"
+      pointerEvents="box-only" // prevent event propagation to children eg Pressable
+      {...props}
+      onPress={submitForm}>
       {isScreenReaderEnabled ? (
-        <FormSubmitForScreenReader {...props} />
+        <FormSubmitForScreenReader children={props.children} />
       ) : (
         props.children
       )}
@@ -33,10 +36,8 @@ const FormSubmitForScreenReader = ({
   children,
 }: React.PropsWithChildren<{}>) => {
   return (
-    <View pointerEvents="none">
-      <HideChildrenFromAccessibilityTree>
-        {children}
-      </HideChildrenFromAccessibilityTree>
-    </View>
+    <HideChildrenFromAccessibilityTree>
+      {children}
+    </HideChildrenFromAccessibilityTree>
   );
 };
