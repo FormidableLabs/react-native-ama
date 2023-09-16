@@ -1,4 +1,4 @@
-package com.amabareexample;
+package com.example.rnama;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

@@ -1,4 +1,4 @@
-package com.amabareexample;
+package com.example.rnama;
 
 // react-native-screens import
 import android.os.Bundle;
@@ -22,7 +22,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "AmaBareExample";
+    return "AMA Example";
   }
 
   /**
