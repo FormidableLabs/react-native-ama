@@ -71,8 +71,10 @@ export const Severity = props => {
   return (
     <>
       {props.withLabel ? <Label /> : null}
-      <span className={`ama-severity ama-${props.level}`}>
-        {capitalizeFirstLetter(props.level)}
+      <span className={`ama-${props.level}`}>
+        <a href={`../guidelines/#${props.level}`}>
+          {capitalizeFirstLetter(props.level)}
+        </a>
       </span>
     </>
   );
@@ -91,4 +93,22 @@ export const Serious = props => {
 
 export const Warning = props => {
   return <Severity {...props} level="warning" />;
+};
+
+export const Good = () => {
+  return (
+    <span className="ama-good-wrong ama-good">
+      <Icon icon="typcn:tick" />
+      <span>Good</span>
+    </span>
+  );
+};
+
+export const Wrong = () => {
+  return (
+    <span className="ama-good-wrong ama-wrong">
+      <Icon icon="bx:x" />
+      <span>Wrong</span>
+    </span>
+  );
 };

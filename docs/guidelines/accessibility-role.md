@@ -1,6 +1,6 @@
 ---
 ama_severity: 1
-ama_category: Undestandable
+ama_category: O
 ama_affected_users: Visual
 ama_success_criterion: 4.1.2@https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html
 ---

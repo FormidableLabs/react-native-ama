@@ -1,11 +1,18 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { greeting } from 'test-package-greeting';
+import * as React from 'react';
+import { Pressable, StyleSheet, Text } from 'react-native';
 
 export const HomeScreen = () => {
+  const [isDoingSomething, setIsDoingSomething] = React.useState(false);
+
   return (
-    <View style={styles.view}>
-      <Text>{greeting}</Text>
-    </View>
+    <Pressable
+      onPress={() => setIsDoingSomething(true)}
+      accessibilityState={{ busy: isDoingSomething }}
+      accessibilityRole="button"
+      accessibilityLabel="Press me"
+    >
+      <Text>Press me!!</Text>
+    </Pressable>
   );
 };
 

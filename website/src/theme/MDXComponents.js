@@ -1,3 +1,4 @@
+import { Icon } from '@iconify/react';
 import MDXComponents from '@theme-original/MDXComponents';
 
 import {
@@ -6,6 +7,7 @@ import {
   Critical,
   DevOnly,
   DevOnlyChecks,
+  Good,
   Must,
   MustNot,
   No,
@@ -16,6 +18,7 @@ import {
   Then,
   Warning,
   When,
+  Wrong,
   Yes,
   iOS,
 } from '../components';
@@ -41,4 +44,7 @@ export default {
   Serious,
   Warning,
   And,
+  Icon,
+  Good,
+  Wrong,
 };
