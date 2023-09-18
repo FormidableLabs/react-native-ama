@@ -13,7 +13,7 @@ The [accessibilityLabel](https://reactnative.dev/docs/accessibility#accessibilit
 
 <ScreenReader>
     <When title="The user focuses the component">
-        <Then title="The Screen Reader reads out the label" />
+        <Then noChildren>The Screen Reader reads out the label</Then>
     </When>
 </ScreenReader>
 
