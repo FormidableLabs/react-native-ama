@@ -1,22 +1,26 @@
+import { Icon } from '@iconify/react';
 import MDXComponents from '@theme-original/MDXComponents';
 
 import {
+  And,
+  Android,
+  Critical,
   DevOnly,
   DevOnlyChecks,
+  Good,
   Must,
   MustNot,
   No,
+  ScreenReader,
+  Serious,
   Should,
   ShouldNot,
+  Then,
+  Warning,
+  When,
+  Wrong,
   Yes,
   iOS,
-  Android,
-  ScreenReader,
-  When,
-  Then,
-  Critical,
-  Serious,
-  Warning,
 } from '../components';
 
 export default {
@@ -39,4 +43,8 @@ export default {
   Critical,
   Serious,
   Warning,
+  And,
+  Icon,
+  Good,
+  Wrong,
 };

@@ -1,10 +1,23 @@
-# Accessibility Role
+---
+ama_severity: 1
+ama_category: O
+ama_affected_users: Visual
+ama_success_criterion: 4.1.2@https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html
+---
 
-<Severity level="must" />
+# Accessibility Role
 
 The [accessibilityRole](https://reactnative.dev/docs/accessibility#accessibilityrole) is required for all interactive components to communicate their purpose to assistive technology users.
 
 ## Expectation
+
+<ScreenReader>
+    <When title="The user focuses the component">
+        <Then title="The Screen Reader reads out the label">
+            <And>The Screen Reader reads out the role</And>
+        </Then>
+    </When>
+</ScreenReader>
 
 When using an accessibility role of **button**, the screen reader automatically announces "double tap to activate" after reading the accessibility label.
 Each accessibility role informs the user of the component type and available actions.
@@ -26,16 +39,15 @@ For those cases AMA automatically uses the correct role for the running platform
 </Pressable>
 ```
 
+| VoiceOver                                  | Talkback                                   |
+| ------------------------------------------ | ------------------------------------------ |
+| Contact us, button, double tap to activate | Contact us, button, double tap to activate |
+
 ## Lack of accessibility role
 
-What's happen if we skip it? The lack of a value causes affects the Screen Reader behaviour:
-
-- VoiceOver only reads the component `accessibilityLabel` and `accessibilityHint`, if specified, or any text inside the component
-- TalkBack, besides reading the component `accessibilityLabel` and `accessibilityHint`, if specified, or any text inside the component, also adds "double-tap" to activate.
+What happens if we skip it? The user will have no or little clue about what happens if they trigger the component:
 
 ### Example
-
-Let's consider the following example:
 
 ```jsx
 <Pressable onPress={doSomething}>Contact us</Pressable>
@@ -52,7 +64,7 @@ VoiceOver users will have no clue that an action can be triggered, while Android
 
 ---
 
-### NO_ACCESSIBILITY_ROLE
+### NO_ACCESSIBILITY_ROLE <Must />
 
 This error is used when a pressable element has no [accessibilityRole](https://reactnative.dev/docs/accessibility#accessibilityrole) defined.
 
@@ -63,7 +75,7 @@ This rule is mandatory and cannot be turned off!
 
 ## Related AMA components
 
-- [ExpandablePressable](../components/expandablepressable)
-- [Pressable](../components/pressable)
-- [TouchableOpacity](../components/touchableopacity)
-- [TouchableWithoutFeedback](../components/TouchableWithoutFeedback)
+- [ExpandablePressable](/core/components/expandablepressable)
+- [Pressable](/core/components/pressable)
+- [TouchableOpacity](/core/components/touchableopacity)
+- [TouchableWithoutFeedback](/core/components/TouchableWithoutFeedback)

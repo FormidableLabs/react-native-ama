@@ -1,8 +1,8 @@
 ---
 ama_severity: 2
-ama_category: Undestandable
+ama_category: U
 ama_affected_users: Visual
-ama_success_criterion: 4.1.2@https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html)
+ama_success_criterion: 4.1.2@https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html
 ---
 
 # Accessibility Label
@@ -13,7 +13,7 @@ The [accessibilityLabel](https://reactnative.dev/docs/accessibility#accessibilit
 
 <ScreenReader>
     <When title="The user focuses the component">
-        <Then>The Screen Reader reads out the label</Then>
+        <Then title="The Screen Reader reads out the label" />
     </When>
 </ScreenReader>
 
@@ -34,6 +34,10 @@ This is especially crucial for icon-only buttons, where the control lacks textua
 </Pressable>
 ```
 
+| Voice Over                                 | Talkback                                   |          |
+| ------------------------------------------ | ------------------------------------------ | -------- |
+| Contact us, button, double tap to activate | Contact us, button, double tap to activate | <Good /> |
+
 ## No Accessibility Label
 
 ### The problem
@@ -48,13 +52,21 @@ Let's consider the following example:
 
 When testing the button with both VoiceOver and TalkBack, they both read:
 
-> button, Contact us, double-tap to activate
+| Voice Over                                 | Talkback                                   |           |
+| ------------------------------------------ | ------------------------------------------ | --------- |
+| button, Contact us, double tap to activate | button, Contact us, double tap to activate | <Wrong /> |
 
-Because the component has no `accessibilityLabel`, only the `accessibilityRole` is announced; they read the inner text, if any, and in this case: **Contact us**. Finally, the last part tells the user that the component can be interacted with by performing a double-tap.
+The `accessibilityRole` is announced, and then the inner text is read, if any.
+
+:::caution
+
+While the screen reader's ability to read out text might seem sufficient, it's crucial for the app's accessibility to align with the expectations of the underlying operating system, whether it's iOS or Android. On both platforms, the standard behaviour for screen readers is to announce the label first. Failing to meet this expectation can create an inconsistent and confusing user experience.
+
+:::
 
 <br />
 
-**What's happen if no text is available?**
+### Icon only buttons
 
 ```jsx
 <Pressable onPress={goBack} accessibilityRole="button">
@@ -64,7 +76,9 @@ Because the component has no `accessibilityLabel`, only the `accessibilityRole` 
 
 When testing the button with both VoiceOver and TalkBack, they both read:
 
-> button, double-tap to activate
+| Voice Over                                 | Talkback                                   |           |
+| ------------------------------------------ | ------------------------------------------ | --------- |
+| button, Contact us, double tap to activate | button, Contact us, double tap to activate | <Wrong /> |
 
 Here the assistive technology only reads the role and the action that can be performed with the component. So there is a complete lack of helpful information about what we're going to trigger.
 
@@ -107,22 +121,20 @@ Screen readers may interpret capital letters as acronyms, misinterpreting conten
 
 This is how the different screen readers handle the uppercase label:
 
-| Voice Over        | Talkback        |
-| ----------------- | --------------- |
-| A-D-D to the cart | Add to the cart |
+| Voice Over        | Talkback        |           |
+| ----------------- | --------------- | --------- |
+| A-D-D to the cart | Add to the cart | <Wrong /> |
 
 In this case, VoiceOver does the spelling of the word `ADD` while talkback reads it correctly.
 The remaining words are read correctly by both screen readers.
 
 #### Example: `CONTACT US`
 
-| Voice Over   | Talkback     |
-| ------------ | ------------ |
-| Contact U.S. | Contact U.S. |
+| Voice Over   | Talkback     |           |
+| ------------ | ------------ | --------- |
+| Contact U.S. | Contact U.S. | <Wrong /> |
 
 The word `CONTACT` is read correctly, but both screen readers spell the word `US` as it is interpreted as `U.S.` for `United States.
-
-A similar issue happens if a sentence contains the word **IT**, for example.
 
 ## AMA dev runtime errors <DevOnly />
 

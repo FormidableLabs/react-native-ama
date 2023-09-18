@@ -20,6 +20,9 @@
   --scenario-color: #2e6b7f;
   --must-color: #b60000;
   --should-color: #807700;
+  --good-color: #0c6600;
+  --wrong-color: #b60000;
+  --good-wrong-color: #fff;
 
   /* Spacing */
   --ifm-spacing-horizontal: 2rem;
@@ -139,7 +142,6 @@ li .menu__list .menu__link--sublist-caret {
 
 .with-ama-sidebar {
   position: sticky;
-  overflow-y: auto;
   top: calc(var(--ifm-navbar-height) + 1rem);
 }
 
@@ -160,6 +162,7 @@ li .menu__list .menu__link--sublist-caret {
   margin: var(--ifm-toc-padding-vertical) var(--ifm-toc-padding-horizontal);
   margin-bottom: 24px;
   font-size: 14px;
+  overflow: visible;
 }
 
 .ama-sidebar th {
@@ -198,11 +201,6 @@ li .menu__list .menu__link--sublist-caret {
   color: var(--ifm-color-success);
 }
 
-.ama-severity {
-  font-weight: 700;
-  text-decoration: underline;
-}
-
 .ama-critical {
   color: var(--must-color);
 }
@@ -231,4 +229,26 @@ li .menu__list .menu__link--sublist-caret {
 
 .anchor .ama-icon-label strong {
   vertical-align: baseline;
+}
+
+.ama-good-wrong {
+  padding: 8px 4px;
+  color: var(--good-wrong-color);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.ama-good-wrong svg {
+  margin-right: 4px;
+}
+
+.ama-good {
+  font-size: 14px;
+  background-color: var(--good-color);
+}
+
+.ama-wrong {
+  font-size: 14px;
+  background-color: var(--wrong-color);
 }
