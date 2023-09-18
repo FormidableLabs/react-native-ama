@@ -45,9 +45,8 @@ export const Then = props => {
   return (
     <li className="ama-then">
       <Icon icon={icon} height={12} />
-      <strong>Then</strong>: {props.title}
+      <strong>Then</strong>: {hasChildren ? props.title : props.children}
       {hasChildren ? <ul>{props.children}</ul> : null}
-      {props.children}
     </li>
   );
 };

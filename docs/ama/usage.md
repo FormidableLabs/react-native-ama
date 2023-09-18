@@ -10,19 +10,15 @@ npm install -D react-native-ama
 
 You need to add the [AMAProvider](../components/AMAProvider) to your app as is needed by some components/hooks.
 
-```jsx
+```jsx {1-4,8-9}
 import { AMAProvider } from 'react-native-ama';
 
-// dimmed
 const App = () => {
-  // dimmed
   return (
     <AMAProvider>
       <YourApp />
     </AMAProvider>
-    // dimmed
   );
-  // dimmed
 };
 ```
 

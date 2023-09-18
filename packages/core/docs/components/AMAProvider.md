@@ -5,19 +5,15 @@ The provider manages the failure message that appears when AMA accessibility fai
 
 ## Usage
 
-```jsx
+```jsx {1-4,8-9}
 import { AMAProvider } from 'react-native-ama';
 
-// dimmed
 const App = () => {
-  // dimmed
   return (
     <AMAProvider>
       <YourApp />
     </AMAProvider>
-    // dimmed
   );
-  // dimmed
 };
 ```
 

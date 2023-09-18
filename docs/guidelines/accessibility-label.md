@@ -1,6 +1,6 @@
 ---
-ama_severity: 2
-ama_category: U
+ama_severity: Serious
+ama_category: Understandable
 ama_affected_users: Visual
 ama_success_criterion: 4.1.2@https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html
 ---
@@ -40,6 +40,8 @@ This is especially crucial for icon-only buttons, where the control lacks textua
 
 ## No Accessibility Label
 
+<Serious label dot />
+
 ### The problem
 
 Let's consider the following example:
@@ -64,9 +66,11 @@ While the screen reader's ability to read out text might seem sufficient, it's c
 
 :::
 
-<br />
-
 ### Icon only buttons
+
+<Critical label dot />
+
+<br /><br />
 
 ```jsx
 <Pressable onPress={goBack} accessibilityRole="button">
@@ -76,9 +80,9 @@ While the screen reader's ability to read out text might seem sufficient, it's c
 
 When testing the button with both VoiceOver and TalkBack, they both read:
 
-| Voice Over                                 | Talkback                                   |           |
-| ------------------------------------------ | ------------------------------------------ | --------- |
-| button, Contact us, double tap to activate | button, Contact us, double tap to activate | <Wrong /> |
+| Voice Over                     | Talkback                       |           |
+| ------------------------------ | ------------------------------ | --------- |
+| button, double tap to activate | button, double tap to activate | <Wrong /> |
 
 Here the assistive technology only reads the role and the action that can be performed with the component. So there is a complete lack of helpful information about what we're going to trigger.
 
@@ -98,8 +102,10 @@ Here the assistive technology only reads the role and the action that can be per
 
 When testing with the assistive technology, this happens:
 
-> Contact us button, double-tap to activate
-> Go back button, double-tap to activate
+| Voice Over                                 | Talkback                                  |          |
+| ------------------------------------------ | ----------------------------------------- | -------- |
+| Contact us, button, double tap to activate | Contact us,button, double tap to activate | <Good /> |
+| Go back, button, double tap to activate    | Go back,button, double tap to activate    | <Good /> |
 
 The `accessibilityLabel` is announced first, then the **role** and the action that can be performed at the end.
 
@@ -107,7 +113,7 @@ For this reason, AMA requires that tappable elements have the `accessibilityLabe
 
 ## All CAPS Accessibility Label
 
-<Warning withLabel />
+<Warning label dot />
 
 <br /> <br />
 

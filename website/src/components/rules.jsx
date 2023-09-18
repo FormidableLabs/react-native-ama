@@ -69,14 +69,15 @@ export const Severity = props => {
   );
 
   return (
-    <>
-      {props.withLabel ? <Label /> : null}
-      <span className={`ama-${props.level}`}>
-        <a href={`../guidelines/#${props.level}`}>
+    <span className={props.padding ? 'ama-severity-padding' : undefined}>
+      {props.dot ? <>&bull;&nbsp;</> : null}
+      {props.label ? <Label /> : null}
+      <span className={`ama-${props.level.toLowerCase()}`}>
+        <a href={`../guidelines/#${props.level.toLowerCase()}`}>
           {capitalizeFirstLetter(props.level)}
         </a>
       </span>
-    </>
+    </span>
   );
 };
 

@@ -1,7 +1,7 @@
 ---
-ama_severity: 1
-ama_category: O
-ama_affected_users: Visual
+ama_severity: Critical
+ama_category: Operable
+ama_affected_users: Visual, Motor
 ama_success_criterion: 4.1.2@https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html
 ---
 
@@ -14,7 +14,7 @@ The [accessibilityRole](https://reactnative.dev/docs/accessibility#accessibility
 <ScreenReader>
     <When title="The user focuses the component">
         <Then title="The Screen Reader reads out the label">
-            <And>The Screen Reader reads out the role</And>
+            <And title="The Screen Reader reads out the role" />
         </Then>
     </When>
 </ScreenReader>
@@ -39,11 +39,15 @@ For those cases AMA automatically uses the correct role for the running platform
 </Pressable>
 ```
 
-| VoiceOver                                  | Talkback                                   |
-| ------------------------------------------ | ------------------------------------------ |
-| Contact us, button, double tap to activate | Contact us, button, double tap to activate |
+| VoiceOver                                  | Talkback                                   |          |
+| ------------------------------------------ | ------------------------------------------ | -------- |
+| Contact us, button, double tap to activate | Contact us, button, double tap to activate | <Good /> |
 
 ## Lack of accessibility role
+
+<Critical label dot />
+
+<br /><br />
 
 What happens if we skip it? The user will have no or little clue about what happens if they trigger the component:
 
@@ -53,9 +57,9 @@ What happens if we skip it? The user will have no or little clue about what happ
 <Pressable onPress={doSomething}>Contact us</Pressable>
 ```
 
-| VoiceOver  | TalkBack                           |
-| ---------- | ---------------------------------- |
-| Contact us | Contact us, double-tap to activate |
+| VoiceOver  | TalkBack                           |           |
+| ---------- | ---------------------------------- | --------- |
+| Contact us | Contact us, double-tap to activate | <Wrong /> |
 
 In both cases, the user has no clue about the nature of the component the screen reader landed on.
 VoiceOver users will have no clue that an action can be triggered, while Android ones won't know what could be the outcome of interacting with it.

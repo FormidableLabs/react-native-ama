@@ -69,20 +69,16 @@ animation: 'default' | 'fade';
 
 #### Example
 
-```jsx
+```jsx {1-5,7-10}
 const { reactNavigationScreenOptions } = useAMAContext();
 
-  // dimmed
 return (
-  // dimmed
   <NavigationContainer>
     <Stack.Navigator
       screenOptions={reactNavigationScreenOptions}>
       {/* ... */}
       </Stack.Navigator>
-  // dimmed
   </NavigationContainer>
-  // dimmed
 )
 ```
 

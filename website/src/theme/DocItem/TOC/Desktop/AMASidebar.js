@@ -1,7 +1,7 @@
 import { useDoc } from '@docusaurus/theme-common/internal';
 import React from 'react';
 
-import { Critical, Severity } from '../../../../components';
+import { Severity } from '../../../../components';
 
 const AMA_WHAT = {
   ama_severity: 'Severity',
@@ -10,13 +10,17 @@ const AMA_WHAT = {
   ama_success_criterion: 'Success criterion',
 };
 
-const SEVERITY_VALUES = ['critical', 'critical', 'serious', 'warning'];
-
 const PRINCIPLES = {
-  P: ['Perceivable', '../guidelines/pour#perceivable'],
-  O: ['Operable', '../guidelines/pour#operable'],
-  U: ['Understandable', '../guidelines/pour#understandable'],
-  R: ['Robust', '../guidelines/pour#robust'],
+  Perceivable: '../guidelines/pour#perceivable',
+  Operable: '../guidelines/pour#operable',
+  Understandable: '../guidelines/pour#understandable',
+  Robust: '../guidelines/pour#robust',
+};
+
+const AFFECTED_USERS = {
+  Visual: '../guidelines/type-of-accessibility-issues#visual',
+  Motor: '../guidelines/type-of-accessibility-issues#motormobility',
+  Mobility: '../guidelines/type-of-accessibility-issues#motormobility',
 };
 
 export const AMASidebar = () => {
@@ -30,7 +34,7 @@ export const AMASidebar = () => {
             let value = frontMatter[key];
 
             if (key === 'ama_severity') {
-              value = <Severity level={SEVERITY_VALUES[value] || ''} />;
+              value = <Severity level={value || ''} />;
             } else if (key === 'ama_success_criterion') {
               const [sc, link] = value.split('@');
 
@@ -40,9 +44,11 @@ export const AMASidebar = () => {
                 </a>
               );
             } else if (key === 'ama_category') {
-              const [label, link] = PRINCIPLES[value] || [];
+              const link = PRINCIPLES[value];
 
-              value = <a href={link}>{label}</a>;
+              value = link ? <a href={link}>{value}</a> : null;
+            } else if (key === 'ama_affected_users') {
+              value = <AffectedUsers users={value.split(',')} />;
             }
 
             return (
@@ -55,6 +61,29 @@ export const AMASidebar = () => {
         </tbody>
       </table>
       <div className="ama-separator" />
+    </>
+  );
+};
+
+const AffectedUsers = ({ users }) => {
+  const total = users.length - 1;
+
+  return (
+    <>
+      {users.map((user, index) => {
+        const link = AFFECTED_USERS[user.trim()];
+
+        return link ? (
+          <>
+            <a href={link} key={user}>
+              {user}
+            </a>
+            {index < total ? ', ' : null}
+          </>
+        ) : (
+          user
+        );
+      })}
     </>
   );
 };

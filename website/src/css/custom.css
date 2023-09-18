@@ -252,3 +252,8 @@ li .menu__list .menu__link--sublist-caret {
   font-size: 14px;
   background-color: var(--wrong-color);
 }
+
+.ama-severity-padding {
+  margin-bottom: 12px;
+  display: block;
+}
