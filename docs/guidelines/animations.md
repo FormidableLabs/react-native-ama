@@ -1,18 +1,27 @@
-# Animations
+---
+ama_severity: Critical
+ama_category: Operable
+ama_affected_users: Seizures
+ama_success_criterion: 2.3.3@https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html
+---
 
-> Success Criterion 2.3.3 Animation from Interactions (Level AAA): Motion animation triggered by interaction can be disabled, unless the animation is essential[^1] to the functionality or the information being conveyed. 
->
-> https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html
+# Animations
 
 Some people might turn off animation on the device because moving content can distract them, or they might be adversely affected by animations or other reasons.
 
-Our app animations, unless essential[^1], should respect the [Reduce Motion] (https://reactnative.dev/docs/accessibilityinfo) preference and therefore disable any [motion animation](https://www.w3.org/TR/WCAG21/#dfn-motion-animation)
-when the option is turned on.
-So,
+## Expectations
 
-- gifs and videos should not autoplay
-- navigation motion should be disabled
-- any motion triggered by an interaction with the app
+<AssistiveTechnology title="Reduce Motion">
+    <When title="The user enables the Reduce Motion option">
+        <Then noChildren>Non essential<sup id="fnref-1"><a href="#fn-1" class="footnote-ref">1</a></sup> animations should be disabled</Then>
+    </When>
+</AssistiveTechnology>
+
+## Example
+
+- GIFs and Videos: Autoplay should be disabled to prevent unexpected distractions and potential issues for users with certain disabilities
+- Navigation Motion: Any motion involved in navigation should be disabled
+- Interaction-Triggered Motion: Should be disabled, unless essential[^1]
 
 ## Related AMA components & hooks
 
@@ -23,5 +32,4 @@ So,
 - [useAnimationDuration](../hooks/useanimationduration)
 - [useReanimatedTiming](../hooks/useReanimatedTiming)
 
-
-[^1]: Basic content scrolling is considered an essential function and is excluded from this requirement.
+[^1]: If removed, it would fundamentally change the information or functionality of the content, and information and functionality cannot be achieved in another way that would conform. Basic content scrolling is considered an essential function and is excluded from this requirement.

@@ -9,7 +9,7 @@ ama_success_criterion: 4.1.2@https://www.w3.org/WAI/WCAG21/Understanding/name-ro
 
 The [accessibilityLabel](https://reactnative.dev/docs/accessibility#accessibilitylabel) is the text that assistive technology reads when the component is focused and AMA requires it by tappable elements.
 
-## Expectation
+## Expectations
 
 <ScreenReader>
     <When title="The user focuses the component">

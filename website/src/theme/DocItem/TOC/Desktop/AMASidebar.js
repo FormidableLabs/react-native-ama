@@ -18,7 +18,6 @@ const PRINCIPLES = {
 };
 
 const AFFECTED_USERS = {
-  Visual: '../guidelines/type-of-accessibility-issues#visual',
   Motor: '../guidelines/type-of-accessibility-issues#motormobility',
   Mobility: '../guidelines/type-of-accessibility-issues#motormobility',
 };
@@ -71,7 +70,9 @@ const AffectedUsers = ({ users }) => {
   return (
     <>
       {users.map((user, index) => {
-        const link = AFFECTED_USERS[user.trim()];
+        const link =
+          AFFECTED_USERS[user.trim()] ||
+          `../guidelines/type-of-accessibility-issues#${user.toLowerCase()}`;
 
         return link ? (
           <>

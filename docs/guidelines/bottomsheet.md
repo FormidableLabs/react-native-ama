@@ -1,3 +1,10 @@
+---
+ama_severity: Critical
+ama_category: Operable
+ama_affected_users: Seizures, Visual, Motor
+ama_success_criterion: 2.3.3@https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html
+---
+
 # BottomSheet & Drawer
 
 When dealing with Drawers/BottomSheets, we need to take care of:

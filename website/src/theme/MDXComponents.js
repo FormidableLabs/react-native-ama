@@ -4,6 +4,7 @@ import MDXComponents from '@theme-original/MDXComponents';
 import {
   And,
   Android,
+  AssistiveTechnology,
   Critical,
   DevOnly,
   DevOnlyChecks,
@@ -47,4 +48,5 @@ export default {
   Icon,
   Good,
   Wrong,
+  AssistiveTechnology,
 };
