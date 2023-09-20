@@ -24,7 +24,7 @@ This is especially crucial for icon-only buttons, where the control lacks textua
 
 ### Example
 
-```jsx
+```jsx {1-3,5-7}
 <Pressable
   onPress={contactUs}
   accessibilityRole="button"
@@ -68,9 +68,7 @@ While the screen reader's ability to read out text might seem sufficient, it's c
 
 ### Icon only buttons
 
-<Critical label dot />
-
-<br /><br />
+<Critical label dot padding />
 
 ```jsx
 <Pressable onPress={goBack} accessibilityRole="button">
@@ -113,9 +111,7 @@ For this reason, AMA requires that tappable elements have the `accessibilityLabe
 
 ## All CAPS Accessibility Label
 
-<Warning label dot />
-
-<br /> <br />
+<Warning label dot padding />
 
 Screen readers may interpret capital letters as acronyms, misinterpreting content.
 
