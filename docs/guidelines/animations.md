@@ -1,7 +1,7 @@
 ---
 ama_severity: Critical
 ama_category: Operable
-ama_affected_users: Seizures
+ama_affected_users: Cognitive
 ama_success_criterion: 2.3.3@https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html
 ---
 
@@ -19,7 +19,7 @@ Some people might turn off animation on the device because moving content can di
 
 ## Example
 
-- GIFs and Videos: Autoplay should be disabled to prevent unexpected distractions and potential issues for users with certain disabilities
+- GIFs and Videos: Autoplay should be disabled to prevent unexpected distractions and [potential issues](/guidelines/type-of-accessibility-issues#seizures) for users with certain disabilities
 - Navigation Motion: Any motion involved in navigation should be disabled
 - Interaction-Triggered Motion: Should be disabled, unless essential[^1]
 
