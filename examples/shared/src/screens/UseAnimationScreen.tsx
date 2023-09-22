@@ -1,6 +1,6 @@
 import { useAnimation } from '@react-native-ama/animations';
-import { Pressable, useFocus } from '@react-native-ama/core';
-import { Text } from '@react-native-ama/react-native';
+import { useFocus } from '@react-native-ama/core';
+import { Pressable, Text } from '@react-native-ama/react-native';
 import React from 'react';
 import { Animated, Dimensions, StyleSheet, View } from 'react-native';
 
