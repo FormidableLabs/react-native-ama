@@ -6,7 +6,6 @@ import {
   AccessibilityChangeEventName,
   AccessibilityInfo,
   NativeEventSubscription,
-  Pressable,
   Text,
   View,
 } from 'react-native';
@@ -188,8 +187,7 @@ const AMAError = __DEV__
       const error = `${count} component(s) didn't pass the accessibility check(s)`;
 
       return (
-        <Pressable
-          accessibilityRole="button"
+        <View
           accessibilityLabel={error}
           accessibilityHint="Please check the console for more info..."
           style={{
@@ -209,7 +207,7 @@ const AMAError = __DEV__
               Please check the console for more info...
             </Text>
           </View>
-        </Pressable>
+        </View>
       );
     }
   : null;

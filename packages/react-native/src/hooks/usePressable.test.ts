@@ -1,7 +1,7 @@
+import * as UseChecks from '@react-native-ama/core/src/hooks/useChecks';
 import { ERROR_STYLE } from '@react-native-ama/internal';
 import { act, renderHook, waitFor } from '@testing-library/react-native';
 
-import * as UseChecks from '../hooks/useChecks';
 import { usePressable } from './usePressable';
 
 beforeEach(() => {

@@ -1,5 +1,4 @@
-import { Pressable } from '@react-native-ama/core';
-import { Text } from '@react-native-ama/react-native';
+import { Pressable, Text } from '@react-native-ama/react-native';
 import * as React from 'react';
 import {
   AccessibilityState,

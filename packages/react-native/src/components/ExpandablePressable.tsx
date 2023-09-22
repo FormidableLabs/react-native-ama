@@ -1,8 +1,8 @@
-import { Pressable, type PressableProps } from '@react-native-ama/core';
 import React from 'react';
 
 import { useExpandable } from '../hooks/useExpandable';
 import type { UseExpandable } from '../hooks/useExpandable';
+import { Pressable, type PressableProps } from './Pressable';
 
 type ExpandablePressableProps = React.PropsWithChildren<
   UseExpandable<PressableProps>

@@ -1,9 +1,10 @@
-import { UsePressable, usePressable } from '@react-native-ama/core';
 import * as React from 'react';
 import {
   TouchableWithoutFeedback as RNTouchableWithoutFeedback,
   TouchableWithoutFeedbackProps as RNTouchableWithoutFeedbackProps,
 } from 'react-native';
+
+import { UsePressable, usePressable } from '../hooks/usePressable';
 
 export type TouchableWithoutFeedbackProps = React.PropsWithChildren<
   UsePressable<RNTouchableWithoutFeedbackProps>

@@ -1,4 +1,4 @@
-import { Pressable } from '@react-native-ama/core';
+import { Pressable } from '@react-native-ama/react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
