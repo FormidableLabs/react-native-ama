@@ -11,7 +11,9 @@ export {
   TouchableWithoutFeedback,
   type TouchableWithoutFeedbackProps,
 } from './components/TouchableWithoutFeedback';
+export { Pressable, type PressableProps } from './components/Pressable';
 
 // Hooks
 export { useExpandable } from './hooks/useExpandable';
+export { usePressable, type UsePressable } from './hooks/usePressable';
 export { useSwitch } from './hooks/useSwitch';

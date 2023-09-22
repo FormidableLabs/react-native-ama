@@ -1,3 +1,4 @@
+import { useButtonChecks } from '@react-native-ama/core/src/hooks/useButtonChecks';
 import {
   generateAccessibilityStateFromProp,
   shouldIgnoreContrastCheckForDisabledElement,
@@ -14,8 +15,6 @@ import type {
   PressableStateCallbackType,
 } from 'react-native';
 import { Platform } from 'react-native';
-
-import { useButtonChecks } from '../hooks/useButtonChecks';
 
 export type UsePressable<T> = Omit<
   T,
