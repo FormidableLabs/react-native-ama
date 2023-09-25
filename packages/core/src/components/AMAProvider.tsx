@@ -35,8 +35,6 @@ export type AMAProdContextValue = SharedContextValue & {};
 
 export type AMAContextValue = AMADevContextValue | AMAProdContextValue;
 
-const AMAContext = React.createContext<AMAContextValue | null>(null);
-
 type AccessibilityEvents = Exclude<AccessibilityChangeEventName, 'change'>;
 
 type AccessibilityInfoKey = Exclude<
@@ -44,7 +42,9 @@ type AccessibilityInfoKey = Exclude<
   'reactNavigationScreenOptions' | 'trackError' | 'removeError'
 >;
 
-type Extractor<S extends string> = S extends `${infer R}Changed` ? R : never;
+type Extractor<S extends AccessibilityEvents> = S extends `${infer R}Changed`
+  ? R
+  : never;
 
 type AccessibilityInfoEvents = {
   [key in AccessibilityEvents]: `is${Capitalize<Extractor<key>>}Enabled`;
@@ -78,6 +78,8 @@ const DEFAULT_VALUES = {
     animation: 'default',
   },
 } satisfies AMAContextValue;
+
+const AMAContext = React.createContext<AMAContextValue | null>(null);
 
 export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
   const [values, setValues] = React.useState<AMAContextValue>(DEFAULT_VALUES);
