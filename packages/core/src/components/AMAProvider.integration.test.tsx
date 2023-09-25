@@ -2,8 +2,7 @@ import { act, render } from '@testing-library/react-native';
 import { flushMicroTasks } from '@testing-library/react-native/build/flush-micro-tasks';
 import * as React from 'react';
 
-import { useAMAContext } from '../components/AMAProvider';
-import { AMAContextValue, AMAProvider } from './AMAProvider';
+import { AMAContextValue, AMAProvider, useAMAContext } from './AMAProvider';
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -133,12 +132,10 @@ const renderAMAProvider = async () => {
   return result;
 };
 
-type AMAContextValueForDEV = AMAContextValue & {
-  trackError: (_: string) => void;
-  removeError: (_: string) => void;
-};
-
-var amaContextValuesRef: AMAContextValueForDEV;
+let amaContextValuesRef: Extract<
+  AMAContextValue,
+  { trackError: Function; removeError: Function }
+>;
 
 const DummyComponent = () => {
   // @ts-ignore
