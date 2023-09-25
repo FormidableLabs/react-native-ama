@@ -121,20 +121,18 @@ export type FormRef = {
   isEditable?: boolean;
 };
 
-const DEFAULT_VALUES: FormContextValue = {
-  refs: [],
-  submitForm: () => Promise.resolve(),
-  focusField: () => {
+export const FormContext = React.createContext<FormContextValue | null>(null);
+
+export const useForm = () => {
+  const context = React.useContext(FormContext);
+  if (!context) {
     __DEV__ &&
       console.error(
         'Please wrap your form field inside the <Form /> component',
       );
-
-    return null;
-  },
+    throw new Error(
+      'useForm must be used within a FormContextProvider, please wrap your form field inside the <Form /> component',
+    );
+  }
+  return context;
 };
-
-export const FormContext =
-  React.createContext<FormContextValue>(DEFAULT_VALUES);
-
-export const useForm = () => React.useContext(FormContext);
