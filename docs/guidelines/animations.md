@@ -11,11 +11,11 @@ Some people might turn off animation on the device because moving content can di
 
 ## Expectations
 
-<AssistiveTechnology title="Reduce Motion">
+<ReduceMotion>
     <When title="The user enables the Reduce Motion option">
         <Then noChildren>Non essential<sup id="fnref-1"><a href="#fn-1" class="footnote-ref">1</a></sup> animations should be disabled</Then>
     </When>
-</AssistiveTechnology>
+</ReduceMotion>
 
 ## Example
 

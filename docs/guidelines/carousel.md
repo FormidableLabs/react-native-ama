@@ -1,45 +1,68 @@
+---
+ama_severity: Serious
+ama_category: Operable
+ama_affected_users: Visual, Motor
+ama_success_criterion: 2.3.3@https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html
+---
+
 # Carousel
 
-When dealing with Carousel, we need to make sure that the user is able to navigate through its items.
-The navigation is generally done by swiping one finger up or done:
+When implementing a Carousel, it's essential to ensure that users can easily navigate through its items.
 
-- 1 finger swipe up: go to the next item
-- 1 finger swipe down: go to the previous item
+## Expectations
 
-To do this in React Native we need to:
+<ScreenReader>
+    <When title="The user focuses a Carousel component">
+        <Then title="The Screen Reader announces: [Component label] Adjustable/Slider, swipe up or down to adjust">
+            <When title="User swipes up">
+                <Then noChildren>The previous item is focused</Then>
+            </When>
+            <When title="User swipes down">
+                <Then noChildren>The next item is focused</Then>
+            </When>
+        </Then>
+    </When>
+</ScreenReader>
+
+| Voice Over                                                                          | Talkback                                                    |
+| ----------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| [Component label], Adjustable, swipe up or down with one finger to adjust the value | [Component label], Slider, swipe up or swipe down to adjust |
+
+When the Screen Reader is activated, navigation typically relies on specific gestures to interact with content:
+
+- 1-finger swipe up: This gesture usually focuses on the next item
+- 1-finger swipe down: This gesture focuses on the previous item
+
+## Example
+
+To implement this navigation behavior in React Native when the Screen Reader is on, we need to:
 
 - use the [accessibility role](./accessibility-role) **adjustable**
 - set `accessibilityActions={[{ name: 'increment' }, { name: 'decrement' }]}`
 - handle **onAccessibilityAction** to change the index
 
-## Example
-
 ```jsx
-
 <FlatList
-    ref={flatList}
-    data={data}
-    renderItem={renderItem}
-    accessible={true}
-    accessibilityRole="adjustable"
-    accessibilityLabel="Carousel"
-    accessibilityActions={[
-        { name: 'increment' },
-        { name: 'decrement' }
-    ]}
-    onAccessibilityAction={(event: AccessibilityActionEvent) => {
-        const value = event.nativeEvent.actionName === 'increment' ? 1 : -1;
-        const newIndex = carouselIndexForScreenReader.current + value;
+  ref={flatList}
+  data={data}
+  renderItem={renderItem}
+  accessible={true}
+  accessibilityLabel="Carousel"
+  accessibilityRole="adjustable"
+  accessibilityActions={[{ name: 'increment' }, { name: 'decrement' }]}
+  onAccessibilityAction={(event: AccessibilityActionEvent) => {
+    const value = event.nativeEvent.actionName === 'increment' ? 1 : -1;
+    const newIndex = carouselIndexForScreenReader.current + value;
 
-        carouselIndexForScreenReader.current = clamp(
-            newIndex,
-            0,
-            data.length - 1,
-        );
-        flatList.current?.scrollToIndex({
-            index: carouselIndexForScreenReader.current,
-        });
-    }}
+    carouselIndexForScreenReader.current = clamp(newIndex, 0, data.length - 1);
+    flatList.current?.scrollToIndex({
+      index: carouselIndexForScreenReader.current,
+    });
+  }}
 />
-
 ```
+
+### Related AMA utility
+
+- [CarouseWrapper](/extras/docs/components/carouse-wrapper)
+- [useCarousel](/extras/docs/hooks/use-carousel)
