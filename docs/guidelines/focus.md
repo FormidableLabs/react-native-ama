@@ -1,6 +1,13 @@
+---
+ama_severity: Severe
+ama_category: Operable
+ama_affected_users: Visual, Mobility, Cognitive
+ama_success_criterion: 2.4.3@https://www.w3.org/WAI/WCAG21/Understanding/focus-order
+---
+
 # Focus
 
-## Order Matters
+<ScreenReader />
 
 It's crucial to ensure screen readers and other assistive technologies can navigate your app in a logical order, making sure that content is separate with meaningful titles.
 
@@ -10,35 +17,26 @@ When navigating to a new screen, make sure that the focus always starts from the
 
 :::tip
 
-The built-in [<Text />](../components/Text) has the `autofocus` property that automatically sets the focus when it gets rendered for the first time.
+The built-in [&lt;Text /&gt;](../components/Text) offers the `autofocus` property that automatically sets the focus when it gets rendered for the first time.
 
 :::
 
-## Drawer / BottomSheet navigation
+## New Content
 
-When dealing with Drawers/BottomSheets, we need to take care of:
+If performing an action results in the appearance of new content, the focus should be automatically moved to it.
 
-1. Handling the focus
-1. Can be dismissed
-1. Focus stays inside it
+## Modals, Bottom Sheet and Drawers
 
-### 1. Handling the focus
+When displaying content in Modals, [BottomSheet or Drawer](/guidelines/bottomsheet), it's essential to ensure that the user's focus is directed to and remains within these components.
 
-When opening a modal window or drawer, the focus must be placed on or inside it; otherwise, the user remains in the active control and might not be aware or be able to reach the new content.
+## Forms
 
-### 2. Can be dismissed
-
-The drawer/bottom sheet should either have a close button or be dismissable by tapping on its overlay layer.
-
-### 3. The focus stays inside it
-
-Make sure that the user cannot focus on any element underneath the drawer/bottom sheet; the user should only be able to cycle between the drawer/bottom sheet content.
+When on TextInput, the user should be able to access the next field or submit the form using the specific keyboard button; please don't force them to swipe to do that.
 
 ## Related AMA components
 
 - [AutofocusContainer](../components/autofocuscontainer)
 - [BottomSheet](../components/bottomsheet)
 - [Text](../components/text)
-
 
 [^1]: According to this study: [https://www.gatsbyjs.com/blog/2019-07-11-user-testing-accessible-client-routing/](https://www.gatsbyjs.com/blog/2019-07-11-user-testing-accessible-client-routing/) the solution that worked better for the mast majority was: _Shift focus to a heading_

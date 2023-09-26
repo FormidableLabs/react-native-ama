@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react';
 import React from 'react';
 
-const AssistiveTechnology = props => {
+export const AssistiveTechnology = props => {
   return (
     <div className="ama-feature">
       <strong>{props.name || 'Assistive Technology'}</strong>: {props.title}

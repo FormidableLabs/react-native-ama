@@ -5,7 +5,7 @@ import { Severity } from '../../../../components';
 
 const AMA_WHAT = {
   ama_severity: 'Severity',
-  ama_category: 'Category',
+  ama_category: 'Accessibility Principle',
   ama_affected_users: 'Affected users',
   ama_success_criterion: 'Success criterion',
 };

@@ -1,21 +1,34 @@
-import { MustNot } from '@site/src/components';
+---
+ama_severity: Severe
+ama_category: Operable
+ama_affected_users: Visual, Mobility, Cognitive
+ama_success_criterion: 3.3@https://www.w3.org/WAI/WCAG21/Understanding/input-assistance
+---
 
 # Forms
 
+<AssistiveTechnology name="Assistive Technologies" title="Screen Reader, Keyboard and Switch" />
+
 ## Labels
 
-:::danger MUST
+<Critical label  />
 
-All form controls must be labelled.
-
-:::
+**Success criterion**: [3.3.2](https://www.w3.org/WAI/WCAG21/Understanding/labels-or-instructions)
 
 Labels describe the purpose and function of form elements; and are critical for users who cannot determine this by looking at the form.
 
 - All form controls, such as text fields, checkboxes, radio buttons, etc., must each have a unique label
 - Placeholders must not be used as a substitute for a label; as they are only visible if the field is empty
 
-### Hide it
+### Expectations
+
+<ScreenReader>
+    <When title="A form field receives the focus">
+        <Then noChildren>The label should be read</Then>
+    </When>
+</ScreenReader>
+
+### Grouping
 
 For some form controls, such as text fields, the label should not be focusable individually, as it would provide redundant information, but the Text field must provide an `accessibilityLabel` instead.
 
@@ -25,12 +38,6 @@ For some form controls, such as text fields, the label should not be focusable i
     accessibilityElementsHidden="true">Enter your email address</Text>
 <TextInput accessibilityLabel="Enter your email address" />
 ```
-
-:::tip
-
-The built-in [TextInput](../components/TextInput) automatically hides the label from the screen readers.
-
-:::
 
 :::danger
 
@@ -44,6 +51,7 @@ If the field is required the accessibility label should not end with an asterisk
     accessibilityElementsHidden="true">Enter your email address*</Text>
 <TextInput accessibilityLabel="Enter your email address, required" />
 ```
+
 :::
 
 ## Errors
@@ -56,7 +64,6 @@ Also, some users might forget the error, forcing them to swipe left and right to
 ## Focus on the next field
 
 When on TextInput, the user should be able to access the next field or submit the form using the specific keyboard button; please don't force them to swipe to do that.
-
 
 :::tip
 

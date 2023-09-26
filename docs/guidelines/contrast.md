@@ -1,7 +1,7 @@
 ---
 ama_severity: Critical
-ama_category: Operable
-ama_affected_users: Perceivable
+ama_category: Perceivable
+ama_affected_users: Vision
 ama_success_criterion: 1.4.3@https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum
 ---
 
