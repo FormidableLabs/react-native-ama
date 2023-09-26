@@ -13,6 +13,7 @@ import {
   Must,
   MustNot,
   No,
+  Padding,
   ReduceMotion,
   ScreenReader,
   Serious,
@@ -53,4 +54,5 @@ export default {
   ReduceMotion,
   LowVisionGroup,
   AssistiveTechnology,
+  Padding,
 };
