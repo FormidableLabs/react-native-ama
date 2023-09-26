@@ -13,6 +13,8 @@ It's crucial to ensure screen readers and other assistive technologies can navig
 
 ## Screen navigation
 
+<ScreenReader />
+
 When navigating to a new screen, make sure that the focus always starts from the "same" position; it could be the first element of the screen or the first header[^1]; whatever you choose, make sure that it is consistent across all the screens/modals of your app.
 
 :::tip
@@ -20,10 +22,6 @@ When navigating to a new screen, make sure that the focus always starts from the
 The built-in [&lt;Text /&gt;](../components/Text) offers the `autofocus` property that automatically sets the focus when it gets rendered for the first time.
 
 :::
-
-## New Content
-
-If performing an action results in the appearance of new content, the focus should be automatically moved to it.
 
 ## Modals, Bottom Sheet and Drawers
 
