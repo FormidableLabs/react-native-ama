@@ -24,9 +24,18 @@ Labels describe the purpose and function of form elements; and are critical for 
 
 <ScreenReader>
     <When title="A form field receives the focus">
-        <Then noChildren>The label should be read</Then>
+        <Then noChildren>Reads the label</Then>
+        <And title="Reads the input type" />
     </When>
 </ScreenReader>
+
+```jsx
+<TextInput accessibilityLabel="Enter your email address" />
+```
+
+| VoiceOver | Talkback                                                    |
+| --------- | ----------------------------------------------------------- |
+|           | Enter your email address, edit box, double tap to edit text |
 
 ### Grouping
 
@@ -52,8 +61,6 @@ If the field is required the accessibility label should not end with an asterisk
 <TextInput accessibilityLabel="Enter your email address, required" />
 ```
 
-:::
-
 ## Errors
 
 If the field has an error, then this should be read as part of the field label/hint itself and should not be focused as an isolated component:
@@ -61,9 +68,27 @@ If the field has an error, then this should be read as part of the field label/h
 This is because if we keep the information in a separate component, the user won't be aware of the error unless it does swipe to select the next element.
 Also, some users might forget the error, forcing them to swipe left and right to figure out that.
 
+### Expectations
+
+<ScreenReader>
+    <When title="The user focuses a form field with a failed validation">
+        <Then noChildren>Reads the field valud</Then>
+        <And title="Reads the input type" />
+        <And title="Reads the validation error" />
+    </When>
+</ScreenReader>
+
+![Email field with failed validation](/img/email-field-with-error.png)
+
+| VoiceOver | Talkback                                         |
+| --------- | ------------------------------------------------ |
+|           | hello, edit box, please enter a valid email, ... |
+
 ## Focus on the next field
 
 When on TextInput, the user should be able to access the next field or submit the form using the specific keyboard button; please don't force them to swipe to do that.
+
+![next-key](/img/next-key.jpg)
 
 :::tip
 

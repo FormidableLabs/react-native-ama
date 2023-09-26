@@ -7,13 +7,11 @@ ama_success_criterion: 2.4.3@https://www.w3.org/WAI/WCAG21/Understanding/focus-o
 
 # Focus
 
-<ScreenReader />
+<AssistiveTechnology name="Assistive Technologies" title="Screen Reader, Keyboard and Switch" />
 
 It's crucial to ensure screen readers and other assistive technologies can navigate your app in a logical order, making sure that content is separate with meaningful titles.
 
 ## Screen navigation
-
-<ScreenReader />
 
 When navigating to a new screen, make sure that the focus always starts from the "same" position; it could be the first element of the screen or the first header[^1]; whatever you choose, make sure that it is consistent across all the screens/modals of your app.
 

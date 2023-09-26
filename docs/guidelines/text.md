@@ -2,7 +2,6 @@ import { MustNot } from '@site/src/components';
 
 # Text
 
-
 ## No uppercase
 
 For [&lt;Text /&gt;](../components/Text.md) elements AMA checks if the style has the `textTransform` property set to `uppercase`, and if so throws an error if the `accessibilityLabel` one is not set.
@@ -49,22 +48,22 @@ Some words could be misinterpreted, causing the screen readers to read a word as
 ##### Example: `ADD TO THE CART`
 
 ```jsx
-<Pressable accessibilityLabel="ADD TO THE CART">...</Pressable> 
+<Pressable accessibilityLabel="ADD TO THE CART">...</Pressable>
 ```
 
 This is how the different screen readers handle the uppercase label:
 
-| Voice Over         | Talkback        |
-|--------------------|-----------------|
-| A-D-D  to the cart | Add to the cart |
+| VoiceOver         | Talkback        |
+| ----------------- | --------------- |
+| A-D-D to the cart | Add to the cart |
 
 In this case, VoiceOver does the spelling of the word `ADD` while talkback reads it correctly.
 The remaining words are read correctly by both screen readers.
 
 ##### Example: `CONTACT US`
 
-| Voice Over   | Talkback     |
-|--------------|--------------|
+| VoiceOver    | Talkback     |
+| ------------ | ------------ |
 | Contact U.S. | Contact U.S. |
 
 The word `CONTACT` is read correctly, but both screen readers spell the word `US` as it is interpreted as `U.S.` for `United States.

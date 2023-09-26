@@ -24,7 +24,7 @@ When implementing a Carousel, it's essential to ensure that users can easily nav
     </When>
 </ScreenReader>
 
-| Voice Over                                                                          | Talkback                                                    |
+| VoiceOver                                                                           | Talkback                                                    |
 | ----------------------------------------------------------------------------------- | ----------------------------------------------------------- |
 | [Component label], Adjustable, swipe up or down with one finger to adjust the value | [Component label], Slider, swipe up or swipe down to adjust |
 
