@@ -55,7 +55,7 @@ export const FormScreen = () => {
         />
 
         <Spacer height="normal" />
-        <SwitchListItem
+        <Form.Switch
           labelComponent={
             <Text style={styles.switchText}>
               Test keyboard trap on next field
