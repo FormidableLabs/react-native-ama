@@ -5,7 +5,7 @@ import { Severity } from '../../../../components';
 
 const AMA_WHAT = {
   ama_severity: 'Severity',
-  ama_category: 'Category',
+  ama_category: 'Accessibility Principle',
   ama_affected_users: 'Affected users',
   ama_success_criterion: 'Success criterion',
 };
@@ -18,7 +18,6 @@ const PRINCIPLES = {
 };
 
 const AFFECTED_USERS = {
-  Visual: '../guidelines/type-of-accessibility-issues#visual',
   Motor: '../guidelines/type-of-accessibility-issues#motormobility',
   Mobility: '../guidelines/type-of-accessibility-issues#motormobility',
 };
@@ -35,7 +34,7 @@ export const AMASidebar = () => {
 
             if (key === 'ama_severity') {
               value = <Severity level={value || ''} />;
-            } else if (key === 'ama_success_criterion') {
+            } else if (key === 'ama_success_criterion' && value) {
               const [sc, link] = value.split('@');
 
               value = (
@@ -51,12 +50,12 @@ export const AMASidebar = () => {
               value = <AffectedUsers users={value.split(',')} />;
             }
 
-            return (
+            return value ? (
               <tr style={{ padding: 0 }} key={key}>
                 <th>{label}</th>
                 <td>{value}</td>
               </tr>
-            );
+            ) : null;
           })}
         </tbody>
       </table>
@@ -71,7 +70,9 @@ const AffectedUsers = ({ users }) => {
   return (
     <>
       {users.map((user, index) => {
-        const link = AFFECTED_USERS[user.trim()];
+        const link =
+          AFFECTED_USERS[user.trim()] ||
+          `../guidelines/type-of-accessibility-issues#${user.toLowerCase()}`;
 
         return link ? (
           <>

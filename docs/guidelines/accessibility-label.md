@@ -9,7 +9,7 @@ ama_success_criterion: 4.1.2@https://www.w3.org/WAI/WCAG21/Understanding/name-ro
 
 The [accessibilityLabel](https://reactnative.dev/docs/accessibility#accessibilitylabel) is the text that assistive technology reads when the component is focused and AMA requires it by tappable elements.
 
-## Expectation
+## Expectations
 
 <ScreenReader>
     <When title="The user focuses the component">
@@ -24,7 +24,7 @@ This is especially crucial for icon-only buttons, where the control lacks textua
 
 ### Example
 
-```jsx
+```jsx {1-3,5-7}
 <Pressable
   onPress={contactUs}
   accessibilityRole="button"
@@ -34,7 +34,7 @@ This is especially crucial for icon-only buttons, where the control lacks textua
 </Pressable>
 ```
 
-| Voice Over                                 | Talkback                                   |          |
+| VoiceOver                                  | Talkback                                   |          |
 | ------------------------------------------ | ------------------------------------------ | -------- |
 | Contact us, button, double tap to activate | Contact us, button, double tap to activate | <Good /> |
 
@@ -54,7 +54,7 @@ Let's consider the following example:
 
 When testing the button with both VoiceOver and TalkBack, they both read:
 
-| Voice Over                                 | Talkback                                   |           |
+| VoiceOver                                  | Talkback                                   |           |
 | ------------------------------------------ | ------------------------------------------ | --------- |
 | button, Contact us, double tap to activate | button, Contact us, double tap to activate | <Wrong /> |
 
@@ -68,9 +68,7 @@ While the screen reader's ability to read out text might seem sufficient, it's c
 
 ### Icon only buttons
 
-<Critical label dot />
-
-<br /><br />
+<Critical label dot padding />
 
 ```jsx
 <Pressable onPress={goBack} accessibilityRole="button">
@@ -80,7 +78,7 @@ While the screen reader's ability to read out text might seem sufficient, it's c
 
 When testing the button with both VoiceOver and TalkBack, they both read:
 
-| Voice Over                     | Talkback                       |           |
+| VoiceOver                      | Talkback                       |           |
 | ------------------------------ | ------------------------------ | --------- |
 | button, double tap to activate | button, double tap to activate | <Wrong /> |
 
@@ -102,7 +100,7 @@ Here the assistive technology only reads the role and the action that can be per
 
 When testing with the assistive technology, this happens:
 
-| Voice Over                                 | Talkback                                  |          |
+| VoiceOver                                  | Talkback                                  |          |
 | ------------------------------------------ | ----------------------------------------- | -------- |
 | Contact us, button, double tap to activate | Contact us,button, double tap to activate | <Good /> |
 | Go back, button, double tap to activate    | Go back,button, double tap to activate    | <Good /> |
@@ -113,9 +111,7 @@ For this reason, AMA requires that tappable elements have the `accessibilityLabe
 
 ## All CAPS Accessibility Label
 
-<Warning label dot />
-
-<br /> <br />
+<Warning label dot padding />
 
 Screen readers may interpret capital letters as acronyms, misinterpreting content.
 
@@ -127,7 +123,7 @@ Screen readers may interpret capital letters as acronyms, misinterpreting conten
 
 This is how the different screen readers handle the uppercase label:
 
-| Voice Over        | Talkback        |           |
+| VoiceOver         | Talkback        |           |
 | ----------------- | --------------- | --------- |
 | A-D-D to the cart | Add to the cart | <Wrong /> |
 
@@ -136,7 +132,7 @@ The remaining words are read correctly by both screen readers.
 
 #### Example: `CONTACT US`
 
-| Voice Over   | Talkback     |           |
+| VoiceOver    | Talkback     |           |
 | ------------ | ------------ | --------- |
 | Contact U.S. | Contact U.S. | <Wrong /> |
 
