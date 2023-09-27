@@ -1,0 +1,78 @@
+import { DevOnly } from '@site/src/components';
+
+# usePressable
+
+This hook allows creating custom Pressable elements with the [Accessibility checks](#accessibility-checks) needed.
+
+## Usage
+
+```tsx
+import { PressableProps, UsePressable, usePressable } from 'react-native-ama';
+
+const pressableProps = usePressable<PressableProps>(props, children);
+```
+
+- **props**: The component props
+- **children**: The component children
+
+## Accessibility checks
+
+At runtime the hook:
+
+- Forces the use of `accessibilityRole` and `accessibilityLabel` <DevOnly />
+- Handles the `accessibilityState` [passed as property](../components/Pressable.mdx#accessibility-states)
+- Performs a [Minimum Size](/guidelines/minimum-size.md) check <DevOnly />
+- Performs a [contrast checker](/guidelines/contrast.md) between background color and its children color <DevOnly />
+
+### accessibilityRole
+
+The `accessibilityRole` property is used by the screen reader to announce the kind of element focused on. If the property is omitted, the user might have little to no clue what could happen if the element is triggered.
+
+[Check here for more info](/guidelines/accessibility-role.md)
+
+### accessibilityLabel
+
+The `accessibilityLabel` property is the first thing announced by the screen reader when the elements gain the focus; then, it announces its role. If the property is omitted, the user might have little to no clue what could happen if the element is triggered.
+
+[Check here for more info](/guidelines/accessibility-label.md)
+
+### Contrast checker
+
+The component performs a [contrast check](/guidelines/contrast.md) between its background colour and the children's foreground when in dev mode.
+
+:::info
+AMA does also perform a contrast check on disabled button, as a [poor contrast can make them hard to read](https://axesslab.com/disabled-buttons-suck/#they-are-hard-to-see).
+:::
+
+### Minimum size
+
+The component uses the [onLayout](https://reactnative.dev/docs/layoutevent) prop to perform the [minium size check](/guidelines/minimum-size.md).
+
+## Example
+
+```tsx
+import { Pressable, PressableProps } from 'react-native';
+import { UsePressable, usePressable } from 'react-native-ama';
+
+export type MyCustomPressableProps = UsePressable<PressableProps>;
+
+const MyCustomPressable: React.FC<MyCustomPressableProps> = ({
+  children,
+  ...rest
+}) => {
+  const pressableProps = usePressable(rest, children);
+
+  return (
+    <Pressable {...props} {...pressableProps}>
+      <Text>This is my custom pressable</Text>
+    </Pressable>
+  );
+};
+```
+
+## Related guidelines
+
+- [Accessibility Label](/guidelines/accessibility-label)
+- [Accessibility Role](/guidelines/accessibility-role)
+- [Contrast](/guidelines/contrast)
+- [Minimum Size](/guidelines/minimum-size)
