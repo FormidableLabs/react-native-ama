@@ -33,9 +33,9 @@ describe('useChecks', () => {
         // @ts-ignore
         .mockReturnValue(ruleValue as RuleAction);
 
-      const { result } = renderHook(() => useChecks!());
+      const { result } = renderHook(() => useChecks());
 
-      result.current.logResult('test-me', {
+      result.current?.logResult('test-me', {
         rule: 'NO_UNDEFINED',
         extra: 'extra',
         message: 'message',
@@ -57,9 +57,9 @@ describe('useChecks', () => {
         // @ts-ignore
         .mockReturnValue(ruleValue as RuleAction);
 
-      const { result } = renderHook(() => useChecks!());
+      const { result } = renderHook(() => useChecks());
 
-      result.current.logResult('test-me', {
+      result.current?.logResult('test-me', {
         rule: 'NO_UNDEFINED',
         extra: 'extra',
         message: 'message',
@@ -80,9 +80,9 @@ describe('useChecks', () => {
         // @ts-ignore
         .mockReturnValue(ruleValue as RuleAction);
 
-      const { result } = renderHook(() => useChecks!());
+      const { result } = renderHook(() => useChecks());
 
-      result.current.logResult('test-me', {
+      result.current?.logResult('test-me', {
         rule: 'NO_UNDEFINED',
         extra: 'extra',
         message: 'message',
@@ -92,7 +92,7 @@ describe('useChecks', () => {
 
       trackError.mockClear();
 
-      result.current.logResult('test-me', {
+      result.current?.logResult('test-me', {
         rule: 'NO_UNDEFINED',
         extra: 'extra',
         message: 'message',
@@ -106,9 +106,9 @@ describe('useChecks', () => {
     // @ts-ignore
     jest.spyOn(Logger, 'getRuleAction').mockReturnValue('MUST');
 
-    const { result } = renderHook(() => useChecks!());
+    const { result } = renderHook(() => useChecks());
 
-    result.current.logResult('test-me', {
+    result.current?.logResult('test-me', {
       rule: 'NO_UNDEFINED',
       extra: 'extra',
       message: 'message',
@@ -116,7 +116,7 @@ describe('useChecks', () => {
 
     expect(trackError).toHaveBeenCalledWith(expect.any(String));
 
-    result.current.logResult('test-me', null);
+    result.current?.logResult('test-me', null);
 
     expect(removeError).toHaveBeenCalledWith(trackError.mock.calls[0][0]);
   });
@@ -125,9 +125,9 @@ describe('useChecks', () => {
     const check = jest
       .spyOn(CheckForAccessibilityState, 'checkForAccessibilityState')
       .mockReturnValue(null);
-    const { result } = renderHook(() => useChecks!());
+    const { result } = renderHook(() => useChecks());
 
-    result.current.checkCompatibleAccessibilityState({
+    result.current?.checkCompatibleAccessibilityState({
       hello: 'world',
       busy: true,
       checked: 'wow',
@@ -145,9 +145,9 @@ describe('useChecks', () => {
     const check = jest
       .spyOn(CheckForAccessibilityState, 'checkForAccessibilityState')
       .mockReturnValue(null);
-    const { result } = renderHook(() => useChecks!());
+    const { result } = renderHook(() => useChecks());
 
-    result.current.checkCompatibleAccessibilityState({
+    result.current?.checkCompatibleAccessibilityState({
       hello: 'world',
       checked: false,
       accessibilityState: {
@@ -169,9 +169,9 @@ describe('useChecks', () => {
     const check = jest
       .spyOn(CheckForAccessibilityRole, 'checkAccessibilityRole')
       .mockReturnValue(null);
-    const { result } = renderHook(() => useChecks!());
+    const { result } = renderHook(() => useChecks());
 
-    result.current.checkAccessibilityRole('button');
+    result.current?.checkAccessibilityRole('button');
 
     expect(check).toHaveBeenCalledWith('button');
   });
