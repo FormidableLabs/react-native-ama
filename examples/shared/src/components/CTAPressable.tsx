@@ -1,5 +1,7 @@
-import { Pressable as AMAPressable } from '@react-native-ama/core';
-import type { PressableProps } from '@react-native-ama/core';
+import {
+  Pressable as AMAPressable,
+  type PressableProps,
+} from '@react-native-ama/react-native';
 import React from 'react';
 import {
   AccessibilityState,

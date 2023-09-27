@@ -33,7 +33,6 @@ export const FormScreen = () => {
 
     return !hasErrors;
   };
-  console.log('called');
 
   return (
     <ScrollView style={styles.view}>

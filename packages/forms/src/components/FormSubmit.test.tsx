@@ -1,4 +1,4 @@
-import { Pressable } from '@react-native-ama/core';
+import { Pressable } from '@react-native-ama/react-native';
 import { render } from '@testing-library/react-native';
 import * as React from 'react';
 import { View } from 'react-native';
