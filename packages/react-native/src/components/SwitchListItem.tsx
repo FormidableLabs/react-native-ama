@@ -1,5 +1,4 @@
 import { HideChildrenFromAccessibilityTree } from '@react-native-ama/core';
-import { FormField } from '@react-native-ama/forms';
 import { maybeGenerateStringFromElement } from '@react-native-ama/internal';
 import React from 'react';
 import type { StyleProp, SwitchProps, ViewStyle } from 'react-native';
@@ -7,7 +6,7 @@ import { StyleSheet, Switch } from 'react-native';
 
 import { SwitchWrapper } from './SwitchWrapper';
 
-type SwitchListItemProps = React.PropsWithChildren<
+export type SwitchListItemProps = React.PropsWithChildren<
   Omit<SwitchProps, 'style' | 'value' | 'onValueChange'> & {
     labelComponent: JSX.Element;
     labelPosition?: 'left' | 'right';
@@ -38,30 +37,28 @@ export const SwitchListItemBase = ({
   );
 
   return (
-    <FormField hasValidation={false}>
-      <SwitchWrapper
-        accessibilityLabel={accessibilityLabel}
-        style={[allStyles.container, style]}
-        onPress={onValueChange}
-        checked={value}
-        testID={testID}>
-        {isLabelPositionLeft ? labelComponent : null}
-        <HideChildrenFromAccessibilityTree>
-          {children ? (
-            children
-          ) : (
-            <Switch
-              {...rest}
-              style={switchStyle}
-              value={value}
-              onValueChange={onValueChange}
-              testID={`${testID}-switch`}
-            />
-          )}
-        </HideChildrenFromAccessibilityTree>
-        {isLabelPositionLeft ? null : labelComponent}
-      </SwitchWrapper>
-    </FormField>
+    <SwitchWrapper
+      accessibilityLabel={accessibilityLabel}
+      style={[allStyles.container, style]}
+      onPress={onValueChange}
+      checked={value}
+      testID={testID}>
+      {isLabelPositionLeft ? labelComponent : null}
+      <HideChildrenFromAccessibilityTree>
+        {children ? (
+          children
+        ) : (
+          <Switch
+            {...rest}
+            style={switchStyle}
+            value={value}
+            onValueChange={onValueChange}
+            testID={`${testID}-switch`}
+          />
+        )}
+      </HideChildrenFromAccessibilityTree>
+      {isLabelPositionLeft ? null : labelComponent}
+    </SwitchWrapper>
   );
 };
 
