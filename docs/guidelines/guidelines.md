@@ -12,7 +12,7 @@ by anyone building an accessible app with React Native and are not limited to be
 
 ## Severities
 
-The AMA guidelines are labelled with different levels of severity to indicate their importance.
+While the AMA guidelines categorize issues based on varying levels of severity, it's crucial to address each one to ensure complete accessibility of the app. Overlooking even the less severe guidelines can lead to an app that's challenging to navigate and use, potentially alienating a portion of the user base. Every user deserves an inclusive and seamless experience; adhering to all accessibility guidelines is the key to achieving that.
 
 ### <span class="ama-critical">Critical</span>
 

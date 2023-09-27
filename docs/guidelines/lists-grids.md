@@ -1,8 +1,24 @@
+---
+ama_severity: Serious
+ama_category: Perceivable
+ama_affected_users: Visual, Mobility
+---
+
 # Lists & Grids
 
-## Number of results
+## Filtering
 
-If a list is filtered due to any UI interaction, the screen reader **must** announce the number of elements the list is showing.
+<Serious label padding />
+
+When a list changes because of something the user does, like typing in a search box or clicking a filter button, the screen reader should tell the user how many items are now showing.
+
+### Expectations
+
+<ScreenReader>
+  <When title="The user filters a list">
+    <Then noChildren>The Screen Reader should announce the number of items shown</Then>
+  </When>
+</ScreenReader>
 
 For example, if a search box updates the list a list while the user is typing, the screen reader **must** read how many items we are displaying after applying the filter if the number is different from the total. Same if a list is filtered because we used a filter via a button.
 

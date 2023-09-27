@@ -4,7 +4,7 @@ import React from 'react';
 export const AssistiveTechnology = props => {
   return (
     <div className="ama-feature">
-      <strong>Assistive Technology</strong>: {props.title}
+      <strong>{props.name || 'Assistive Technology'}</strong>: {props.title}
       <ul>{props.children}</ul>
     </div>
   );
@@ -13,6 +13,22 @@ export const AssistiveTechnology = props => {
 export const ScreenReader = props => {
   return (
     <AssistiveTechnology title="Screen Reader">
+      {props.children}
+    </AssistiveTechnology>
+  );
+};
+
+export const ReduceMotion = props => {
+  return (
+    <AssistiveTechnology title="Reduce Motion">
+      {props.children}
+    </AssistiveTechnology>
+  );
+};
+
+export const LowVisionGroup = props => {
+  return (
+    <AssistiveTechnology title={props.title} name="Affected group">
       {props.children}
     </AssistiveTechnology>
   );

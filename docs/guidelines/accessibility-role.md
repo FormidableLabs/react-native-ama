@@ -9,7 +9,7 @@ ama_success_criterion: 4.1.2@https://www.w3.org/WAI/WCAG21/Understanding/name-ro
 
 The [accessibilityRole](https://reactnative.dev/docs/accessibility#accessibilityrole) is required for all interactive components to communicate their purpose to assistive technology users.
 
-## Expectation
+## Expectations
 
 <ScreenReader>
     <When title="The user focuses the component">

@@ -63,15 +63,15 @@ While this works fine for sighted users, we must add the `ariaBusy={isAddingToCa
 
 #### The user double taps on the example component:
 
-| Voice Over | Talkback                      |          |
-| ---------- | ----------------------------- | -------- |
-|            | plays a sound as confirmation | <Good /> |
+| VoiceOver | Talkback                      |          |
+| --------- | ----------------------------- | -------- |
+|           | plays a sound as confirmation | <Good /> |
 
 #### The user focuses again on the component while the API is still in flight:
 
-| Voice Over | Talkback                                          |          |
-| ---------- | ------------------------------------------------- | -------- |
-|            | Add to cart, busy, button, double tap to activate | <Good /> |
+| VoiceOver | Talkback                                          |          |
+| --------- | ------------------------------------------------- | -------- |
+|           | Add to cart, busy, button, double tap to activate | <Good /> |
 
 ## aria-checked
 
@@ -128,17 +128,17 @@ Assuming the button `label` is: **Add me to the list**
 
 #### The user selects the component
 
-| State           | Voice Over | Talkback                                                      |          |
-| --------------- | ---------- | ------------------------------------------------------------- | -------- |
-| checked         |            | ticked, Add me to the list, tickbox, double tap to toggle     | <Good /> |
-| **not** checked |            | not ticked, Add me to the list, tickbox, double tap to toggle | <Good /> |
+| State           | VoiceOver | Talkback                                                      |          |
+| --------------- | --------- | ------------------------------------------------------------- | -------- |
+| checked         |           | ticked, Add me to the list, tickbox, double tap to toggle     | <Good /> |
+| **not** checked |           | not ticked, Add me to the list, tickbox, double tap to toggle | <Good /> |
 
 #### The user double taps on the example component:
 
-| New state   | Voice Over | Talkback   |          |
-| ----------- | ---------- | ---------- | -------- |
-| checked     |            | ticked     | <Good /> |
-| not checked |            | not ticked | <Good /> |
+| New state   | VoiceOver | Talkback   |          |
+| ----------- | --------- | ---------- | -------- |
+| checked     |           | ticked     | <Good /> |
+| not checked |           | not ticked | <Good /> |
 
 ## aria-disabled
 
@@ -180,7 +180,7 @@ const AddToCart = ({ disabled }) => {
 
 #### When the component receives the focus
 
-| Is Disabled? | Voice Over                                         | Talkback                                           |          |
+| Is Disabled? | VoiceOver                                          | Talkback                                           |          |
 | ------------ | -------------------------------------------------- | -------------------------------------------------- | -------- |
 | false        | Add me to the cart, button, double tap to activate | Add me to the cart, button, double tap to activate | <Good /> |
 | true         | dimmed, Add me to the cart, button                 | disabled, Add me to the cart, button               | <Good /> |
@@ -229,17 +229,17 @@ export const Content = ({ content }) => {
 
 #### When the component receives the focus
 
-| Is the content expanded? | Voice Over | Talkback                                            |          |
-| ------------------------ | ---------- | --------------------------------------------------- | -------- |
-| false                    |            | Show more, collapsed button, double tap to activate | <Good /> |
-| true                     |            | Show less, expanded, button, double tap to activate | <Good /> |
+| Is the content expanded? | VoiceOver | Talkback                                            |          |
+| ------------------------ | --------- | --------------------------------------------------- | -------- |
+| false                    |           | Show more, collapsed button, double tap to activate | <Good /> |
+| true                     |           | Show less, expanded, button, double tap to activate | <Good /> |
 
 #### When the component is activated (double-tap)
 
-| Is the new state expanded? | Voice Over | Talkback                                            |          |
-| -------------------------- | ---------- | --------------------------------------------------- | -------- |
-| false                      |            | Show more, collapsed button, double tap to activate | <Good /> |
-| true                       |            | Show less, expanded, button, double tap to activate | <Good /> |
+| Is the new state expanded? | VoiceOver | Talkback                                            |          |
+| -------------------------- | --------- | --------------------------------------------------- | -------- |
+| false                      |           | Show more, collapsed button, double tap to activate | <Good /> |
+| true                       |           | Show less, expanded, button, double tap to activate | <Good /> |
 
 ## aria-selected
 
@@ -289,17 +289,17 @@ const TestScreen = () => {
 
 #### When the component receives the focus
 
-| Is Selected? | Voice Over | Talkback                                                       |          |
-| ------------ | ---------- | -------------------------------------------------------------- | -------- |
-| false        |            | _accessibility label_, button, double tap to activate          | <Good /> |
-| true         |            | Selected, _accessibility label_ button, double tap to activate | <Good /> |
+| Is Selected? | VoiceOver | Talkback                                                       |          |
+| ------------ | --------- | -------------------------------------------------------------- | -------- |
+| false        |           | _accessibility label_, button, double tap to activate          | <Good /> |
+| true         |           | Selected, _accessibility label_ button, double tap to activate | <Good /> |
 
 #### When the component is activated (double-tap)
 
-| Is the new state selected? | Voice Over | Talkback                        |          |
-| -------------------------- | ---------- | ------------------------------- | -------- |
-| true                       |            | _accessibility label_, selected | <Good /> |
-| false                      |            |                                 | <Good /> |
+| Is the new state selected? | VoiceOver | Talkback                        |          |
+| -------------------------- | --------- | ------------------------------- | -------- |
+| true                       |           | _accessibility label_, selected | <Good /> |
+| false                      |           |                                 | <Good /> |
 
 ## Related AMA components
 
