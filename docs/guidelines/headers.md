@@ -46,7 +46,7 @@ After selecting a particular feature to interact with, users can Swipe up or Swi
 
 <ScreenReader>
   <When title="A user navigates to a screen">
-      <And title="Selects \"Headers\" from the Rotor/List feature" />
+      <And title="Selects Headers from the Rotor/List feature" />
       <Then noChildren>Should be able to navigate through all the sections defined as Headers</Then>
   </When>
 </ScreenReader>
@@ -55,9 +55,13 @@ Because people who depend on assistive technology often navigate by heading firs
 
 On iOS, the user will use the [VoiceOver rotor](https://support.apple.com/en-gb/HT204783) to move through the different elements on the screen, i.e. headers. On Android is possible but varies by device.
 
-## No header
+### No Headers
 
 <Serious label padding />
+
+Neglecting to define headers can be detrimental to screen reader users as we're forcing them to navigate through the entire screen content to understand its context.
+
+#### Invisible header
 
 If your screen design lacks a visible header, it might be acceptable for sighted users, but it can pose challenges for those using screen readers. In such scenarios, it's essential to include a header that's exclusively accessible to screen readers.
 We can do this by using an empty &gt;Text&lt; component with an accessible label and role.

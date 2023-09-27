@@ -34,7 +34,7 @@ export const AMASidebar = () => {
 
             if (key === 'ama_severity') {
               value = <Severity level={value || ''} />;
-            } else if (key === 'ama_success_criterion') {
+            } else if (key === 'ama_success_criterion' && value) {
               const [sc, link] = value.split('@');
 
               value = (
@@ -50,12 +50,12 @@ export const AMASidebar = () => {
               value = <AffectedUsers users={value.split(',')} />;
             }
 
-            return (
+            return value ? (
               <tr style={{ padding: 0 }} key={key}>
                 <th>{label}</th>
                 <td>{value}</td>
               </tr>
-            );
+            ) : null;
           })}
         </tbody>
       </table>

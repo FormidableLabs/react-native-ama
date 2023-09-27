@@ -1,15 +1,32 @@
-import { MustNot } from '@site/src/components';
+---
+ama_severity: Serious
+ama_category: Perceivable
+ama_affected_users: Visual, Mobility
+ama_success_criterion: 2.1@https://www.w3.org/WAI/WCAG21/Understanding/distinguishable
+---
 
 # Text
 
-## No uppercase
+The text in our app must be clear and easy for everyone to read.
+While this may seem obvious, sometimes, design choices can unintentionally make it harder for some people, especially those with disabilities, to understand the content. We must be mindful of this when making design decisions.
+
+## Avoid uppercase
+
+<Serious label padding />
+
+Using ALL CAPS in text can hurt accessibility, as it's often more [difficult for people to read](https://www.mity.com.au/blog/writing-readable-content-and-why-all-caps-is-so-hard-to-read).
+Additionally, it can cause issues with screen readers, potentially disrupting the user experience for those relying on such tools.
+
+:::note
 
 For [&lt;Text /&gt;](../components/Text.md) elements AMA checks if the style has the `textTransform` property set to `uppercase`, and if so throws an error if the `accessibilityLabel` one is not set.
 It also checks that the accessibilityLabel provided for the various component is not all caps.
 
-### Why `textTransform:uppercase` is bad for accessibility?
+:::
 
-Besides [all CAPS](https://www.mity.com.au/blog/writing-readable-content-and-why-all-caps-is-so-hard-to-read) being bad for readability, it can also change the inflexion of the screen reader voice or in some cases can cause some words to be read as separate characters.
+## `textTransform:uppercase`
+
+<Serious label padding />
 
 Let's consider the following example:
 
@@ -37,38 +54,22 @@ If we inspect the layout view on Android using: `adb shell uiautomator dump`, we
 
 So, React Native converts the text to `UPPERCASE` and this version of the text is used by the Screen Reader.
 
-#### No inflection
+### No inflection
 
 Both Talkback and VoiceOver reads the words with the same flat tone, which becomes more noticeable with long sentences.
 
-#### Wrong spelling
+### Wrong spelling
 
 Some words could be misinterpreted, causing the screen readers to read a word as separate characters.
-
-##### Example: `ADD TO THE CART`
-
-```jsx
-<Pressable accessibilityLabel="ADD TO THE CART">...</Pressable>
-```
-
-This is how the different screen readers handle the uppercase label:
+For the given example we have:
 
 | VoiceOver         | Talkback        |
 | ----------------- | --------------- |
 | A-D-D to the cart | Add to the cart |
+| Contact U.S.      | Contact U.S.    |
 
 In this case, VoiceOver does the spelling of the word `ADD` while talkback reads it correctly.
-The remaining words are read correctly by both screen readers.
-
-##### Example: `CONTACT US`
-
-| VoiceOver    | Talkback     |
-| ------------ | ------------ |
-| Contact U.S. | Contact U.S. |
-
 The word `CONTACT` is read correctly, but both screen readers spell the word `US` as it is interpreted as `U.S.` for `United States.
-
-A similar issue happens if a sentence contains the word **IT**, for example.
 
 ## AMA Errors
 
