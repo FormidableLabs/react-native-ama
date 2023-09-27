@@ -1,6 +1,9 @@
 // Components
 export { ExpandablePressable } from './components/ExpandablePressable';
-export { SwitchListItem } from './components/SwitchListItem';
+export {
+  SwitchListItem,
+  type SwitchListItemProps,
+} from './components/SwitchListItem';
 export { SwitchWrapper } from './components/SwitchWrapper';
 export { Text } from './components/Text';
 export {

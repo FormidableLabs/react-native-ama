@@ -6,16 +6,19 @@ import {
 } from './components/Form';
 import { FormField, FormFieldProps } from './components/FormField';
 import { FormSubmit, FormSubmitProps } from './components/FormSubmit';
+import { FormSwitch, FormSwitchProps } from './components/FormSwitch';
 
 type FormComponent = React.FunctionComponent<FormProps> & {
   Submit: (props: FormSubmitProps) => JSX.Element;
   Field: React.FunctionComponent<FormFieldProps>;
+  Switch: (props: FormSwitchProps) => JSX.Element;
 };
 
 // @ts-ignore
 const Form: FormComponent = FormProvider;
 Form.Submit = FormSubmit;
 Form.Field = FormField;
+Form.Switch = FormSwitch;
 
 export { Form, FormField, FormSubmit };
 
@@ -32,4 +35,5 @@ export {
   type FormActions,
   type FormFieldProps,
   type FormSubmitProps,
+  type FormSwitchProps,
 };
