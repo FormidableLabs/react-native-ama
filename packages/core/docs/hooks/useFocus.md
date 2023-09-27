@@ -68,4 +68,4 @@ const MyFancyScreen = () => {
 
 ## Related guidelines
 
-- [Focus](../guidelines/focus)
+- [Focus](/guidelines/focus)
