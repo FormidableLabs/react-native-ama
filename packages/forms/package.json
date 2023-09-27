@@ -21,6 +21,11 @@
   "scripts": {
     "build": "rm -rf dist && tsc -p ./tsconfig.build.json",
     "typecheck": "tsc --noEmit"
+  },  
+  "dependencies": {
+    "@react-native-ama/internal": "*",
+    "@react-native-ama/core": "*",
+    "@react-native-ama/react-native": "*"
   },
   "peerDependencies": {
     "react": "*",
