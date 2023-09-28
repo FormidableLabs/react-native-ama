@@ -67,6 +67,15 @@ const config = {
     [
       '@docusaurus/plugin-content-docs',
       {
+        id: 'forms',
+        path: '../packages/forms/docs',
+        routeBasePath: '/forms/',
+        ...defaultPresets,
+      },
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
         id: 'guidelines',
         path: '../docs/guidelines',
         routeBasePath: '/guidelines/',
@@ -103,7 +112,7 @@ const config = {
           },
           {
             label: 'Forms',
-            to: 'forms',
+            to: '/forms/',
           },
           {
             label: 'Extras',
