@@ -1,15 +1,21 @@
+import Button from './buttons.png';
+
 # Button
 
-## When to use a button
+For any component that leads to an internal screen, the _button_ [accessibility role](/guidelines/accessibility-role) should be used.
 
-## How to test
+## Focus: When I focus the component
 
-### Screen Reader users
+<img src={Button} className="zoom-me" />
 
-When I focus the component
+| Reads                                    | I see / hear                               |
+| ---------------------------------------- | ------------------------------------------ |
+| [Label](/guidelines/accessibility-label) | Purpose is clear and matches visible label |
+| [Role](/guidelines/accessibility-role)   | Identifies the type of button              |
+| [State](/guidelines/accessibility-state) | Express its state, i.e. ticked, disabled   |
 
-| Reads     | I see / hear                               |
-| --------- | ------------------------------------------ |
-| Label     | Purpose is clear and matches visible label |
-| Role      | Identifies the                             |
-| State[^*] | Express its state, i.e. ticked, disabled   |
+### Example
+
+| VoiceOver                                  | Talkback                                   |          |
+| ------------------------------------------ | ------------------------------------------ | -------- |
+| Contact us, button, double tap to activate | Contact us, button, double tap to activate | <Good /> |

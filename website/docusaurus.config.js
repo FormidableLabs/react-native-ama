@@ -55,6 +55,7 @@ const config = {
     ],
   ],
   plugins: [
+    require.resolve('docusaurus-plugin-image-zoom'),
     [
       '@docusaurus/plugin-content-docs',
       {
@@ -92,70 +93,71 @@ const config = {
       },
     ],
   ],
-  themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-    ({
-      navbar: {
-        title: 'React Native AMA',
-        logo: {
-          alt: 'React Native AMA Logo',
-          src: 'img/formidable-f.svg',
+  themeConfig: {
+    navbar: {
+      title: 'React Native AMA',
+      logo: {
+        alt: 'React Native AMA Logo',
+        src: 'img/formidable-f.svg',
+      },
+      items: [
+        {
+          label: 'Core',
+          to: '/core/',
         },
-        items: [
-          {
-            label: 'Core',
-            to: '/core/',
-          },
-          {
-            label: 'Animations',
-            to: '/animations/',
-          },
-          {
-            label: 'Forms',
-            to: '/forms/',
-          },
-          {
-            label: 'Extras',
-            to: '/extras/',
-          },
-          {
-            label: 'Guidelines',
-            to: '/guidelines/',
-          },
-          {
-            label: 'Checklist',
-            to: '/checklist/',
-          },
-          {
-            href: 'https://github.com/FormidableLabs/react-native-ama',
-            className: 'header-github-link',
-            'aria-label': 'GitHub Repository',
-            position: 'right',
-          },
-          {
-            href: 'https://formidable.com',
-            className: 'header-formidable-link',
-            'aria-label': 'Formidable Website',
-            position: 'right',
-          },
-        ],
-      },
-      footer: {
-        style: 'dark',
-        links: [],
-        copyright: `Copyright © ${new Date().getFullYear()} Formidable`,
-      },
-      prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
-        magicComments: [
-          {
-            className: 'dimmed',
-            line: 'dimmed',
-          },
-        ],
-      },
-    }),
+        {
+          label: 'Animations',
+          to: '/animations/',
+        },
+        {
+          label: 'Forms',
+          to: '/forms/',
+        },
+        {
+          label: 'Extras',
+          to: '/extras/',
+        },
+        {
+          label: 'Guidelines',
+          to: '/guidelines/',
+        },
+        {
+          label: 'Checklist',
+          to: '/checklist/',
+        },
+        {
+          href: 'https://github.com/FormidableLabs/react-native-ama',
+          className: 'header-github-link',
+          'aria-label': 'GitHub Repository',
+          position: 'right',
+        },
+        {
+          href: 'https://formidable.com',
+          className: 'header-formidable-link',
+          'aria-label': 'Formidable Website',
+          position: 'right',
+        },
+      ],
+    },
+    footer: {
+      style: 'dark',
+      links: [],
+      copyright: `Copyright © ${new Date().getFullYear()} Formidable`,
+    },
+    prism: {
+      theme: lightCodeTheme,
+      darkTheme: darkCodeTheme,
+      magicComments: [
+        {
+          className: 'dimmed',
+          line: 'dimmed',
+        },
+      ],
+    },
+    zoom: {
+      selector: '.zoom-me',
+    },
+  },
 };
 
 module.exports = config;

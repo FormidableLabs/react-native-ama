@@ -5,47 +5,21 @@ sidebar_position: 0
 
 # Accessibility Checklist
 
-The checklist is based on the [Guidelines](./guidelines) and is focused on the testing side of accessibility.
+This checklist condenses the [guidelines](/guidelines), explaining the intended functionality of specific features or components.
 
-:::caution
-Addressing the issues called out in this checklist will help improve the experience for everyone who uses the app,
-but it won't guarantee that the app will be 100% accessible!
-:::
+## Does this checklist guarantee my app is accessible?
 
-## Feature
-
-- [ ] Are you able to use it by using Screen Curtains (iOS) or setting to 0 the screen luminosity?
+**No**. However, addressing the issues in this checklist will help improve the experience for everyone who uses your app.
 
 ## Order
 
-- [ ] [Are you able to logically scroll through the entire screen/modal/drawer/bottom sheet](./guidelines/focus)?
+**Guideline**: [Focus](/guidelines/focus)
 
-## Components
-
-**What is this thing? Does the screen reader announce:**
-
-- [ ] [Role](./guidelines/accessibility-role) (ex. button)
-- [ ] [Name](./guidelines/accessibility-label) (ex. "Submit")
-- [ ] State (ex. disabled, checked, expanded, etc...)
-
-**What happens when I click the thing?**
-
-- [ ] Is it clear what will happen if you click the thing?
-
-[**Hint**](./guidelines/accessibility-hint)?
-
-- [ ] Is the label enough?
-
-[**Predictable/Consistent**](guidelines/predictable-consistent)
-
-- [ ] Is the appearance consistent across the app?
-- [ ] Is the behaviour consistent across the app?
-
-[\*_Size_](guidelines/minimum-size)\*
-
-- [ ] Has a minimum size of 44/48px?
-
-**NOTE**: [hitSlop does not guarantee a minimum size](guidelines/minimum-size#hitslop-vs-min-size)
+<ScreenReader>
+    <When title="I'm using a Screen Reader">
+        <Then noChildren>I can scroll through the entire screen/modal/bottom sheet in logical order.</Then>
+    </When>
+</ScreenReader>
 
 ### [Animations](./guidelines/animations)
 
