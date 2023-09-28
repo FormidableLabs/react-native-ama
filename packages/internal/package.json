@@ -1,7 +1,7 @@
 {
   "name": "@react-native-ama/internal",
   "version": "0.0.1",
-  "private": true,
+  "private": false,
   "react-native": "src/index",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
