@@ -1,6 +1,6 @@
 {
   "name": "@react-native-ama/core",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Accessible Mobile App Library for React Native",
   "private": false,
   "react-native": "src/index",
@@ -23,7 +23,7 @@
     "build": "rm -rf dist && tsc -p ./tsconfig.build.json",
     "typecheck": "tsc --noEmit"
   },
-  "devDependencies": {
+  "dependencies": {
     "@react-native-ama/internal": "*"
   },
   "peerDependencies": {
