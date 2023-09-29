@@ -2,13 +2,11 @@
 title: Button
 ---
 
-import Button from './button.png';
-
 # Button
 
 For any component that leads to an internal screen, the _button_ [accessibility role](/guidelines/accessibility-role) should be used.
 
-<img src={Button} className="zoom-me" width="400" />
+<img src="checklist/button.png" className="zoom-me" width="400" />
 
 | Screen Reader                                | I hear                                   |
 | -------------------------------------------- | ---------------------------------------- |
