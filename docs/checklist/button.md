@@ -1,12 +1,10 @@
----
-title: Button
----
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
 # Button
 
 For any component that leads to an internal screen, the _button_ [accessibility role](/guidelines/accessibility-role) should be used.
 
-<img src="checklist/button.png" className="zoom-me" width="400" />
+<img src={useBaseUrl('/img/checklist/button.png')} className="zoom-me" />
 
 | Screen Reader                                | I hear                                   |
 | -------------------------------------------- | ---------------------------------------- |
