@@ -6,11 +6,11 @@ For any component that leads to an internal screen, the _button_ [accessibility 
 
 <img src={Button} className="zoom-me" />
 
-| Reads                                        | I see                                      | I hear                                   |
-| -------------------------------------------- | ------------------------------------------ | ---------------------------------------- |
-| [Label](/guidelines/accessibility-label)     | Purpose is clear and matches visible label | The label                                |
-| [Role](/guidelines/accessibility-role)       |                                            | button                                   |
-| [State[^1]](/guidelines/accessibility-state) |                                            | Express its state, i.e. ticked, disabled |
+| Screen Reader                                | I hear                                   |
+| -------------------------------------------- | ---------------------------------------- |
+| [Label](/guidelines/accessibility-label)     | Purpose is clear matches visible label   |
+| [Role](/guidelines/accessibility-role)       | button                                   |
+| [State[^1]](/guidelines/accessibility-state) | Express its state, i.e. ticked, disabled |
 
 ### Example
 

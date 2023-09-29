@@ -4,10 +4,10 @@ import TabBar from './tabbar.png';
 
 <img src={TabBar} className="zoom-me" />
 
-| Reads                                                      | I see                                             | I hear                                                |
+| Tab item                                                   | I see                                             | I hear                                                |
 | ---------------------------------------------------------- | ------------------------------------------------- | ----------------------------------------------------- |
 | [Selected](/guidelines/accessibility-states#aria-selected) | **Yes**: Is visually clear that the tab is active | **Yes**: The Screen Reader reads the "selected" state |
-| [Label](/guidelines/accessibility-label)                   | Purpose is clear and matches visible label        | The label                                             |
+| [Label](/guidelines/accessibility-label)                   |                                                   | Purpose is clear and matches visible label            |
 | [Role](/guidelines/accessibility-role)                     |                                                   | The role: **button**                                  |
 | Talkback only                                              |                                                   | _[tab index]_ of _[total]_                            |
 
