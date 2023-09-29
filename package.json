@@ -5,9 +5,16 @@
   "description": "Accessibility as a First-Class Citizen with React Native AMA",
   "repository": "https://github.com/FormidableLabs/react-native-ama.git",
   "homepage": "https://formidable.com/open-source/react-native-ama/",
-  "scripts": {
+  "scripts": { 
     "example:bare": "yarn --cwd examples/bare",
     "example:expo": "yarn --cwd examples/expo",
+    "build:animations": "yarn workspace @react-native-ama/animations build",
+    "build:core": "yarn workspace @react-native-ama/core build",
+    "build:extras": "yarn workspace @react-native-ama/extras build",
+    "build:forms": "yarn workspace @react-native-ama/forms build",
+    "build:internal": "yarn workspace @react-native-ama/internal build",
+    "build:lists": "yarn workspace @react-native-ama/lists build",
+    "build:react-native": "yarn workspace @react-native-ama/react-native build",
     "pods": "cd examples/bare && pod-install --quiet",
     "doc": "cd website && yarn start",
     "type:check": "tsc --noEmit"
