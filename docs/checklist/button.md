@@ -14,8 +14,8 @@ For any component that leads to an internal screen, the _button_ [accessibility 
 
 ### Example
 
-| VoiceOver                                  | Talkback                                   |          |
-| ------------------------------------------ | ------------------------------------------ | -------- |
-| Contact us, button, double tap to activate | Contact us, button, double tap to activate | <Good /> |
+| VoiceOver                                      | Talkback                                       |          |
+| ---------------------------------------------- | ---------------------------------------------- | -------- |
+| Contact us, **button**, double tap to activate | Contact us, **button**, double tap to activate | <Good /> |
 
 [^1]: In some cases, Talkback announces the accessibility state before the label.
