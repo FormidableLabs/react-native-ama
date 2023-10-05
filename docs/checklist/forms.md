@@ -58,7 +58,7 @@ https://github.com/facebook/react-native/issues/30848
 1. Focus the form field.
 1. Evaluate whether the label adequately and uniquely describes the component.
 
-#### Error messages[^1]
+#### Error messages
 
 1. Turn on a Screen Reader.
 1. Focus the form field.
@@ -83,4 +83,3 @@ Ensure all the following checks are true:
 - Error messages offer clear insights and guidance on how to rectify it.
 
 [^1]: The "selected state" indicates that a Screen Reader user has focused on the field but has not initiated any action yet.
-[^1]:
