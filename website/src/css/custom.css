@@ -23,6 +23,7 @@
   --good-color: #0c6600;
   --wrong-color: #b60000;
   --good-wrong-color: #fff;
+  --tick: #0c6600;
 
   /* Spacing */
   --ifm-spacing-horizontal: 2rem;
@@ -256,4 +257,12 @@ li .menu__list .menu__link--sublist-caret {
 .ama-severity-padding {
   margin-bottom: 12px;
   display: block;
+}
+
+.ama-tick {
+  color: var(--tick);
+}
+
+.zoom-me {
+  max-width: 600px;
 }
