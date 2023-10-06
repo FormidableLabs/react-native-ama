@@ -20,3 +20,8 @@ import Headers from './headers.png';
 1. Confirm that the Screen Reader announces section titles as headers.
 
 ### Outcome
+
+Ensure all the following checks are true:
+
+- The screen has at least one header.
+- All visual heading/header elements are announced as headers.
