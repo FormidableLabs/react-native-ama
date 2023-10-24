@@ -8,15 +8,18 @@ For any component that leads to an internal screen, the _button_ [accessibility 
 
 <img src={Button} className="zoom-me" />
 
-| Screen Reader                                 | I hear                                 |
-| --------------------------------------------- | -------------------------------------- |
-| [Label](/guidelines/accessibility-label)      | Purpose is clear matches visible label |
-| [Role](/guidelines/accessibility-role)        | button                                 |
-| [State[^1]](/guidelines/accessibility-states) |                                        |
-| busy                                          | busy                                   |
-| expanded                                      | expanded                               |
-| disabled                                      | disabled                               |
-| toggled                                       | checked/ticked                         |
+| Screen Reader                            | I hear                                 |
+| ---------------------------------------- | -------------------------------------- |
+| [Label](/guidelines/accessibility-label) | Purpose is clear matches visible label |
+| [Role](/guidelines/accessibility-role)   | button                                 |
+| State                                    | _**See table below**_                  |
+
+| [State[^1]](/guidelines/accessibility-states) | When state is true, I hear      | When state is false, I hear             |
+| --------------------------------------------- | ------------------------------- | --------------------------------------- |
+| busy                                          | busy                            |                                         |
+| expanded                                      | expanded                        | collapsed                               |
+| disabled                                      | disabled                        |                                         |
+| toggled                                       | checked (iOS), ticked (Android) | not checked (iOS), not ticked (Android) |
 
 ## Testing
 
