@@ -8,11 +8,15 @@ For any component that leads to an internal screen, the _button_ [accessibility 
 
 <img src={Button} className="zoom-me" />
 
-| Screen Reader                                 | I hear                                   |
-| --------------------------------------------- | ---------------------------------------- |
-| [Label](/guidelines/accessibility-label)      | Purpose is clear matches visible label   |
-| [Role](/guidelines/accessibility-role)        | button                                   |
-| [State[^1]](/guidelines/accessibility-states) | Express its state, i.e. ticked, disabled |
+| Screen Reader                                 | I hear                                 |
+| --------------------------------------------- | -------------------------------------- |
+| [Label](/guidelines/accessibility-label)      | Purpose is clear matches visible label |
+| [Role](/guidelines/accessibility-role)        | button                                 |
+| [State[^1]](/guidelines/accessibility-states) |                                        |
+| busy                                          | busy                                   |
+| expanded                                      | expanded                               |
+| disabled                                      | disabled                               |
+| toggled                                       | checked/ticked                         |
 
 ## Testing
 
