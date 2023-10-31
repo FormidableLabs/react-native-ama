@@ -78,3 +78,7 @@ export const And = props => {
     </li>
   );
 };
+
+export const Tick = props => {
+  return <strong className="ama-tick">✓</strong>;
+};

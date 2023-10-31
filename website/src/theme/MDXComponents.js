@@ -20,6 +20,7 @@ import {
   Should,
   ShouldNot,
   Then,
+  Tick,
   Warning,
   When,
   Wrong,
@@ -55,4 +56,5 @@ export default {
   LowVisionGroup,
   AssistiveTechnology,
   Padding,
+  Tick,
 };

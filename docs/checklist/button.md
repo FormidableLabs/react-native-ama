@@ -1,15 +1,47 @@
+import Button from './button.png';
+
 # Button
 
-## When to use a button
+**Guidelines**: [Accessibility Label](/guidelines/accessibility-label), [Accessibility Role](/guidelines/accessibility-role), [Accessibility State](/guidelines/accessibility-state)
 
-## How to test
+For any component that leads to an internal screen, the _button_ [accessibility role](/guidelines/accessibility-role) should be used.
 
-### Screen Reader users
+<img src={Button} className="zoom-me" />
 
-When I focus the component
+| Screen Reader                            | I hear                                 |
+| ---------------------------------------- | -------------------------------------- |
+| [Label](/guidelines/accessibility-label) | Purpose is clear matches visible label |
+| [Role](/guidelines/accessibility-role)   | button                                 |
+| State                                    | _**See table below**_                  |
 
-| Reads     | I see / hear                               |
-| --------- | ------------------------------------------ |
-| Label     | Purpose is clear and matches visible label |
-| Role      | Identifies the                             |
-| State[^*] | Express its state, i.e. ticked, disabled   |
+| [State[^1]](/guidelines/accessibility-states) | When state is true, I hear      | When state is false, I hear             |
+| --------------------------------------------- | ------------------------------- | --------------------------------------- |
+| busy                                          | busy                            |                                         |
+| expanded                                      | expanded                        | collapsed                               |
+| disabled                                      | disabled                        |                                         |
+| toggled                                       | checked (iOS), ticked (Android) | not checked (iOS), not ticked (Android) |
+
+## Testing
+
+### Procedures
+
+1. Turn on a Screen Reader.
+1. Move focus to the button.
+1. Evaluate whether the label adequately and uniquely describes the component and clearly communicates its function.
+1. Verify whether the active state is announced appropriately.
+
+### Outcome
+
+Ensure all the following checks are true:
+
+- The label is clear and understandable.
+- The component is announced as a "button" by the screen reader.
+- Any state of the component, such as ticked, disabled, etc., is announced by the screen reader.
+
+### Example
+
+| VoiceOver                                      | Talkback                                       |          |
+| ---------------------------------------------- | ---------------------------------------------- | -------- |
+| Contact us, **button**, double tap to activate | Contact us, **button**, double tap to activate | <Good /> |
+
+[^1]: In some cases, Talkback announces the accessibility state before the label.
