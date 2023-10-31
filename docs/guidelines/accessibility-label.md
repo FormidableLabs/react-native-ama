@@ -123,7 +123,7 @@ Is it possible to specify a list of allowed all caps accessibility labels, [more
 - [ExpandablePressable](../components/expandablepressable)
 - [Pressable](../components/pressable)
 - [TouchableOpacity](../components/touchableopacity)
-- [TouchableWithoutFeedback](../components/TouchableWithoutFeedback
+- [TouchableWithoutFeedback](../components/TouchableWithoutFeedback)
 
 ## External resources
 
