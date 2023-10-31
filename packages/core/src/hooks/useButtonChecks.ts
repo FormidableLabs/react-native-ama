@@ -13,6 +13,10 @@ export const useButtonChecks = __DEV__
         | undefined,
       shouldPerformContrastCheck: boolean = true,
     ) => {
+      const checks = useChecks();
+      if (checks === null) {
+        return null;
+      }
       const {
         noUndefinedProperty,
         contrastChecker,
@@ -21,10 +25,8 @@ export const useButtonChecks = __DEV__
         checkCompatibleAccessibilityState,
         checkAccessibilityRole,
         debugStyle,
-        // @ts-ignore
-      } = useChecks();
+      } = checks;
 
-      // @ts-ignore
       let style = props.style || {};
 
       const isAccessible = props.accessible !== false;
@@ -58,6 +60,7 @@ export const useButtonChecks = __DEV__
       const theStyle = applyStyle?.({
         style,
         debugStyle,
+        // @ts-ignore
         children,
         contrastCheckerCallback,
       });

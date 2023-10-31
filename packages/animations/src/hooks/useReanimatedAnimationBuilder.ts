@@ -68,7 +68,7 @@ export const useReanimatedAnimationBuilder = ({
           },
           {} as InitialValues,
         );
-      })(initial, final);
+      })(initial, final) as StyleProps;
 
       const initialValues = (function generateInitialValues(
         startValues,
