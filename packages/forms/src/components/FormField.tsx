@@ -17,7 +17,7 @@ export type FormFieldProps = React.PropsWithChildren<
     }
 >;
 
-const FormFieldBase = ({
+export const FormField = ({
   children,
   wrapInsideAccessibleView = true,
   ...props
@@ -35,7 +35,7 @@ const FormFieldBase = ({
 
   return wrapInsideAccessibleView ? (
     <TouchableWithoutFeedback {...props} ref={viewRef} {...formProps}>
-      <View accessible={true}>{children}</View>
+      <View accessible>{children}</View>
     </TouchableWithoutFeedback>
   ) : (
     <TouchableWithoutFeedback {...props} ref={viewRef} {...formProps}>
@@ -43,5 +43,3 @@ const FormFieldBase = ({
     </TouchableWithoutFeedback>
   );
 };
-
-export const FormField = React.memo(FormFieldBase);

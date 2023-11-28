@@ -7,7 +7,7 @@ import {
 
 type UseCarousel = {
   data: ArrayLike<any> | null | undefined;
-  flatListRef: React.MutableRefObject<FlatList<any> | null>;
+  flatListRef: React.ForwardedRef<FlatList<any> | null>;
 };
 
 export const useCarousel = ({ data, flatListRef }: UseCarousel) => {
