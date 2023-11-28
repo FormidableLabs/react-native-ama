@@ -11,6 +11,7 @@ import type {
   ViewStyle,
 } from 'react-native';
 
+import { TextInputProps } from '../components/TextInput';
 import { UseFormField, useFormField } from './useFormField';
 
 type UseTextInput = Omit<UseFormField, 'hasFocusCallback'> & {
@@ -100,14 +101,19 @@ export const useTextInput = ({
     ? `${accessibilityLabel}, ${requiredMessage}`
     : accessibilityLabel;
 
+  const advancedProps: Partial<TextInputProps> = {
+    accessibilityLabel: fullAccessibilityLabel,
+    returnKeyType: theReturnKeyType,
+    onSubmitEditing: handleOnSubmitEditing,
+    onLayout: checkReturnKeyType,
+    blurOnSubmit: theReturnKeyType === 'done',
+  };
+
   return __DEV__
     ? {
         ...rest,
         ...formField,
-        accessibilityLabel: fullAccessibilityLabel,
-        returnKeyType: theReturnKeyType,
-        onSubmitEditing: handleOnSubmitEditing,
-        onLayout: checkReturnKeyType,
+        ...advancedProps,
         style: applyStyle?.({
           // @ts-ignore
           style: formFieldStyle,
@@ -117,9 +123,6 @@ export const useTextInput = ({
     : {
         ...rest,
         ...formField,
-        accessibilityLabel: fullAccessibilityLabel,
-        returnKeyType: theReturnKeyType,
-        onSubmitEditing: handleOnSubmitEditing,
-        onLayout: checkReturnKeyType,
+        ...advancedProps,
       };
 };
