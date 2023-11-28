@@ -24,7 +24,6 @@ export const useDynamicList = ({
   const checks = __DEV__ ? useChecks?.() : null;
 
   __DEV__ &&
-    // eslint-disable-next-line
     React.useEffect(() => {
       if (!singularMessage?.includes('%count%')) {
         checks?.logResult('useDynamicFlatList', {
