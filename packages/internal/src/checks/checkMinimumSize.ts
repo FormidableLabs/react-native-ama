@@ -1,12 +1,12 @@
 import type { LayoutChangeEvent } from 'react-native';
 import { Platform } from 'react-native';
 
+import type { LogParams } from '../utils/logger';
+import { getRuleAction } from '../utils/logger';
 import {
   ANDROID_MINIMUM_TOUCHABLE_SIZE,
   MINIMUM_TOUCHABLE_SIZE,
 } from '../utils/minimumTouchableSize';
-import type { LogParams } from '../utils/logger';
-import { getRuleAction } from '../utils/logger';
 
 export const checkMinimumSize = (
   event: LayoutChangeEvent,
