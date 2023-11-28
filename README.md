@@ -9,7 +9,7 @@ That's why we created A.M.A., a set of [components](https://formidable.com/open-
 [hooks](https://formidable.com/open-source/react-native-ama/components/) designed to enforce minimum accessibility requirements.
 This is combined with extensive [guidelines](https://formidable.com/open-source/react-native-ama/guidelines/) to help you how accessibility should work when manually testing your app.
 
-![Example of runtime failure detected by AMA](https://github.com/FormidableLabs/react-native-ama/blob/main/ama-demo.png?raw=true)
+![Example of runtime failure detected by AMA](https://github.com/FormidableLabs/react-native-ama/blob/main/docs/ama-demo.png?raw=true)
 
 This is an example of a runtime failure detected by AMA.
 

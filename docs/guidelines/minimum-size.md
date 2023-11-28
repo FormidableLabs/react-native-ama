@@ -13,7 +13,7 @@ AMA performs a minimum size check for tappable elements like Pressable, Button, 
 
 :::tip
 
-The Log level type can be customised, [here for more info](./custom-log-rules.md)
+The Log level type can be customised, [here for more info](../introduction/config-file#customising-the-log-levels)
 :::
 
 ## hitSlop vs min size
