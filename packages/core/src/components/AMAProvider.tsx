@@ -59,8 +59,6 @@ const eventsMapping: AccessibilityInfoEvents = {
   screenReaderChanged: 'isScreenReaderEnabled',
 };
 
-const isDev = __DEV__;
-
 export const isDevContextValue = (
   value: AMAContextValue,
 ): value is AMADevContextValue =>
@@ -144,7 +142,7 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
 
   const [failedItems, setFailedItems] = React.useState<string[]>([]);
 
-  if (isDev) {
+  if (__DEV__) {
     const trackError = (id: string) => {
       if (failedItems.includes(id)) {
         return;
@@ -177,7 +175,8 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
           ...values,
           trackError,
           removeError,
-        }}>
+        }}
+      >
         <View style={{ flex: 1 }}>
           <>
             {children}
@@ -206,11 +205,13 @@ const AMAError = ({ count }: { count: number }) => {
         paddingBottom: 48,
         backgroundColor: RED,
       }}
-      testID="amaError">
+      testID="amaError"
+    >
       <View accessible={true}>
         <Text
           style={{ color: 'white', fontSize: 16, lineHeight: 26 }}
-          testID="amaError.message">
+          testID="amaError.message"
+        >
           {error}
         </Text>
         <Text style={{ color: 'white', fontSize: 16, lineHeight: 24 }}>

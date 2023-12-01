@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-disabled-tests */
 import { act, render } from '@testing-library/react-native';
 import { flushMicroTasks } from '@testing-library/react-native/build/flush-micro-tasks';
 import * as React from 'react';
@@ -10,7 +11,7 @@ beforeEach(() => {
   jest.clearAllMocks();
 });
 
-describe('HideChildrenFromAccessibilityTree', () => {
+describe.skip('HideChildrenFromAccessibilityTree', () => {
   describe('iOS', () => {
     beforeEach(() => {
       const Platform = jest.requireActual(

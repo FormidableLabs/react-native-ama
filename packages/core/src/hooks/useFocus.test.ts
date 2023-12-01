@@ -92,6 +92,7 @@ function mockReactNative() {
     AccessibilityInfo: {
       setAccessibilityFocus: setAccessibilityFocusMock,
     },
+    Platform: {},
   };
 }
 
