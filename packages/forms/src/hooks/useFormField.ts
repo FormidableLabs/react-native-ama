@@ -1,7 +1,7 @@
 import { useAMAContext, useChecks } from '@react-native-ama/core';
 import { applyStyle } from '@react-native-ama/internal';
 import React from 'react';
-import { Keyboard } from 'react-native';
+import { Keyboard, ViewStyle } from 'react-native';
 
 import { useForm } from '../components/Form';
 
@@ -12,7 +12,7 @@ export type UseFormField = {
   nextFieldId?: string;
   nextFormFieldRef?: React.RefObject<any>;
   accessibilityHint?: string;
-  style?: Record<string, any>;
+  style?: ViewStyle;
   editable?: boolean;
   hasValidation: boolean;
   hasError?: boolean;

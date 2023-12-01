@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { ViewStyle } from 'react-native';
 
 import type { ContrastChecker } from '../checks/contrastChecker';
 
@@ -37,7 +38,7 @@ export const applyStyle = __DEV__
       children,
       contrastCheckerCallback,
     }: {
-      style: Record<string, any> | Function;
+      style: ViewStyle | Function | any;
       debugStyle: Record<any, any>;
       children?: ReactNode;
       contrastCheckerCallback?:

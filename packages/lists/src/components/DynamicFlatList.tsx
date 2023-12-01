@@ -19,7 +19,7 @@ export const DynamicFlatList = React.forwardRef<
     forwardedRef,
   ) => {
     const dynamicList = useDynamicList({
-      data: data!,
+      data: data ?? [],
       pluralMessage,
       singularMessage,
       numColumns: rest.numColumns,
@@ -29,7 +29,8 @@ export const DynamicFlatList = React.forwardRef<
     return __DEV__ ? (
       <ListWrapper
         rowsCount={dynamicList.rowsCount}
-        columnsCount={dynamicList.columnsCount}>
+        columnsCount={dynamicList.columnsCount}
+      >
         <FlatList
           data={data}
           {...rest}
@@ -40,7 +41,8 @@ export const DynamicFlatList = React.forwardRef<
     ) : (
       <ListWrapper
         rowsCount={dynamicList.rowsCount}
-        columnsCount={dynamicList.columnsCount}>
+        columnsCount={dynamicList.columnsCount}
+      >
         <FlatList data={data} {...rest} ref={forwardedRef} />
       </ListWrapper>
     );

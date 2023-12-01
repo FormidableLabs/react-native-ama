@@ -3,7 +3,7 @@ import React from 'react';
 import { AccessibilityInfo } from 'react-native';
 
 export type UseDynamicList = {
-  data: readonly any[];
+  data: ArrayLike<any>;
   singularMessage: string;
   pluralMessage: string;
   isPlural?: (count: number) => boolean;
