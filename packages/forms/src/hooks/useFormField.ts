@@ -51,9 +51,7 @@ export const useFormField = ({
     if (isLastItem) {
       Keyboard.dismiss();
 
-      if (isScreenReaderEnabled) {
-        submitForm();
-      }
+      submitForm();
 
       return;
     }

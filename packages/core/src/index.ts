@@ -1,6 +1,5 @@
 // Components
 export { AutofocusContainer } from './components/AutofocusContainer';
-export { HideChildrenFromAccessibilityTree } from './components/HideChildrenFromAccessibilityTree';
 export {
   AMAProvider,
   useAMAContext,

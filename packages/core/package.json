@@ -21,7 +21,8 @@
   ],
   "scripts": {
     "build": "rm -rf dist && tsc -p ./tsconfig.build.json",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "jest"
   },
   "dependencies": {
     "@react-native-ama/internal": "*"
@@ -29,7 +30,7 @@
   "peerDependencies": {
     "react": "*",
     "react-native": "*"
-  },  
+  },
   "keywords": [
     "react-native",
     "a11y",
@@ -48,6 +49,33 @@
     "provenance": true
   },
   "author": "",
-  "license": "MIT"
-
+  "license": "MIT",
+  "devDependencies": {
+    "babel-jest": "^29.7.0"
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/node_modules",
+      "<rootDir>/dist/"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 90,
+        "branches": 82,
+        "functions": 83,
+        "lines": 91
+      }
+    },
+    "setupFilesAfterEnv": [
+      "../../jest.setup.js"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(@react-native|react-native|react-native-reanimated/))"
+    ],
+    "verbose": true
+  }
 }

@@ -99,7 +99,8 @@ export const Form = React.forwardRef<FormActions, FormProps>(
 
     return (
       <FormContext.Provider
-        value={{ refs: refs.current, submitForm, focusField }}>
+        value={{ refs: refs.current, submitForm, focusField }}
+      >
         {children}
       </FormContext.Provider>
     );
