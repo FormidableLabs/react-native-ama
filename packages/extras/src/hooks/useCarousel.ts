@@ -22,7 +22,8 @@ export const useCarousel = ({ data, flatListRef }: UseCarousel) => {
 
     carouselIndexForScreenReader.current = clamp(newIndex, 0, totalItems);
 
-    flatListRef.current?.scrollToIndex({
+    // @ts-ignore
+    flatListRef?.current?.scrollToIndex?.({
       index: carouselIndexForScreenReader.current,
     });
   };

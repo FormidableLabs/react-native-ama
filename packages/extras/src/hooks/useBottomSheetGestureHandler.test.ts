@@ -1,4 +1,5 @@
 import { renderHook } from '@testing-library/react-native';
+import { SharedValue } from 'react-native-reanimated';
 
 import { useBottomSheetGestureHandler } from './useBottomSheetGestureHandler';
 
@@ -8,13 +9,13 @@ beforeEach(() => {
 
 describe('useBottomSheetGestureHandler', () => {
   it('onStarts stores the current translateY position', () => {
-    const translateY = { value: 42 };
+    const translateY = { value: 42 } as SharedValue<number>;
     const { result } = renderHook(() =>
       useBottomSheetGestureHandler({
         translateY,
         closeDistance: 0.5,
-        contentHeight: { value: 100 },
-        dragOpacity: { value: 0 },
+        contentHeight: { value: 100 } as SharedValue<number>,
+        dragOpacity: { value: 0 } as SharedValue<number>,
         minVelocityToClose: 0,
         overlayOpacity: 0,
         onClose: () => {},
@@ -29,15 +30,15 @@ describe('useBottomSheetGestureHandler', () => {
   });
 
   it('onActive updates the translateY limiting it to be >= 0', () => {
-    const translateY = { value: 42 };
+    const translateY = { value: 42 } as SharedValue<number>;
     const { result } = renderHook(() =>
       useBottomSheetGestureHandler({
-        dragOpacity: { value: 0 },
+        dragOpacity: { value: 0 } as SharedValue<number>,
         minVelocityToClose: 0,
         overlayOpacity: 0,
         translateY,
         closeDistance: 0.5,
-        contentHeight: { value: 100 },
+        contentHeight: { value: 100 } as SharedValue<number>,
         onClose: () => {},
       }),
     );
@@ -82,17 +83,17 @@ describe('useBottomSheetGestureHandler', () => {
     });
 
     it('calls the onClose event when the distance is at least the requested one', () => {
-      const translateY = { value: 0 };
+      const translateY = { value: 0 } as SharedValue<number>;
       const onClose = jest.fn();
 
       const { result } = renderHook(() =>
         useBottomSheetGestureHandler({
           translateY,
           closeDistance: 0.5,
-          dragOpacity: { value: 0 },
+          dragOpacity: { value: 0 } as SharedValue<number>,
           minVelocityToClose: 0,
           overlayOpacity: 0,
-          contentHeight: { value: 500 },
+          contentHeight: { value: 500 } as SharedValue<number>,
           onClose,
         }),
       );
