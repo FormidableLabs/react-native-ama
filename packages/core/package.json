@@ -4,15 +4,15 @@
   "description": "Accessible Mobile App Library for React Native",
   "private": false,
   "react-native": "src/index",
-  "types": "dist/index.d.ts",
-  "main": "dist/index.js",
+  "types": "dist/core/src/index.d.ts",
+  "main": "dist/core/src/index.js",
   "exports": {
     ".": [
       {
-        "imports": "./dist/index.js",
-        "types": "./dist/index.d.ts"
+        "imports": "./dist/core/src/index.js",
+        "types": "./dist/core/src/index.d.ts"
       },
-      "./dist/index.js"
+      "./dist/core/src/index.js"
     ]
   },
   "files": [
