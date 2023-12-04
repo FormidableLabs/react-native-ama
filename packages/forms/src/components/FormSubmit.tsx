@@ -22,8 +22,7 @@ export const FormSubmit = (props: FormSubmitProps) => {
       accessibilityRole="button"
       pointerEvents="box-only" // prevent event propagation to children eg Pressable
       {...props}
-      onPress={submitForm}
-    >
+      onPress={submitForm}>
       {isScreenReaderEnabled ? (
         <FormSubmitForScreenReader children={props.children} />
       ) : (
