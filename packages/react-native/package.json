@@ -1,6 +1,6 @@
 {
   "name": "@react-native-ama/react-native",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": false,
   "react-native": "src/index",
   "types": "dist/index.d.ts",

@@ -1,6 +1,6 @@
 {
   "name": "@react-native-ama/core",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "Accessible Mobile App Library for React Native",
   "private": false,
   "react-native": "src/index",
