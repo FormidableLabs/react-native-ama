@@ -1,4 +1,8 @@
-import { Must } from '@site/src/components';
+---
+ama_severity: Serious
+ama_category: Operable
+ama_affected_users: Visual, Mobility
+---
 
 # Minimum Size
 
@@ -7,7 +11,6 @@ AMA performs a minimum size check for tappable elements like Pressable, Button, 
 - [44x44px on iOS](https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/adaptivity-and-layout/)
 - [48x48dp on Android](https://support.google.com/accessibility/android/answer/7101858?hl=en-GB)
 
-
 :::tip
 
 The Log level type can be customised, [here for more info](../introduction/config-file#customising-the-log-levels)
@@ -15,7 +18,7 @@ The Log level type can be customised, [here for more info](../introduction/confi
 
 ## hitSlop vs min size
 
-AMA prefers forcing a minimum size check instead of using [hitSlop](https://reactnative.dev/docs/pressable#hitslop); as with the latter, the hit area is **never** extended beyond the parent boundaries: 
+AMA prefers forcing a minimum size check instead of using [hitSlop](https://reactnative.dev/docs/pressable#hitslop); as with the latter, the hit area is **never** extended beyond the parent boundaries:
 
 > The touch area never extends past the parent view bounds, and the Z-index of sibling views always takes precedence if a touch hits two overlapping views.
 >

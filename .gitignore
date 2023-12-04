@@ -37,3 +37,5 @@ DerivedData
 *.xcuserstate
 /coverage/
 .vscode
+coverage
+.expo

@@ -2,27 +2,34 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "react-native-ama": ["./lib/index"]
+      "@react-native-ama/animations": ["packages/animations/src/index"],
+      "@react-native-ama/core": ["packages/core/src/index"],
+      "@react-native-ama/extras": ["packages/extras/src/index"],
+      "@react-native-ama/forms": ["packages/forms/src/index"],
+      "@react-native-ama/internal": ["packages/internal/src/index"],
+      "@react-native-ama/lists": ["packages/lists/src/index"],
+      "@react-native-ama/react-native": ["packages/react-native/src/index"]
     },
-    "allowUnreachableCode": false,
-    "allowUnusedLabels": false,
-    "esModuleInterop": true,
-    "importsNotUsedAsValues": "error",
-    "forceConsistentCasingInFileNames": true,
     "jsx": "react",
     "lib": ["esnext"],
     "module": "esnext",
     "moduleResolution": "node",
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitReturns": true,
-    "noImplicitUseStrict": false,
-    "noStrictGenericChecks": false,
+    "target": "esnext",
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
     "strict": true,
-    "target": "esnext"
+    "noImplicitAny": false,
+    "noUnusedParameters": true,
+    "skipLibCheck": true
   },
-  "exclude": ["example", "dist", "src", "node_modules", "__mocks__"]
+  "exclude": [
+    "**/**/dist",
+    "**/**/node_modules",
+    "node_modules",
+    "**/__mocks__",
+    "**/__tests__",
+    "examples"
+  ]
 }

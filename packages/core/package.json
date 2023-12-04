@@ -1,0 +1,78 @@
+{
+  "name": "@react-native-ama/core",
+  "version": "0.0.2",
+  "description": "Accessible Mobile App Library for React Native",
+  "private": false,
+  "react-native": "src/index",
+  "types": "dist/index.d.ts",
+  "main": "dist/index.js",
+  "exports": {
+    ".": [
+      {
+        "imports": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+      },
+      "./dist/index.js"
+    ]
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && tsc -p ./tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@react-native-ama/internal": "*"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "keywords": [
+    "react-native",
+    "a11y",
+    "accessibility"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FormidableLabs/react-native-ama",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/FormidableLabs/react-native-ama/issues"
+  },
+  "homepage": "https://github.com/FormidableLabs/react-native-ama#readme",
+  "publishConfig": {
+    "provenance": true
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-jest": "^29.7.0"
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/node_modules",
+      "<rootDir>/dist/"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 90,
+        "branches": 82,
+        "functions": 83,
+        "lines": 91
+      }
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!(@react-native|react-native|react-native-reanimated/))"
+    ],
+    "verbose": true
+  }
+}

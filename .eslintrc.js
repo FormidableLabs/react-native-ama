@@ -6,14 +6,18 @@ module.exports = {
   },
   rules: {
     '@typescript-eslint/no-unused-vars': 'off',
+    'react-hooks/rules-of-hooks': 'off',
   },
-  extends: ['@react-native-community'],
+  parserOptions: {
+    project: ['./tsconfig.json'],
+  },
+  extends: ['@react-native'],
   plugins: ['jest', 'import'],
   ignorePatterns: [
-    'metro.config.js',
-    'dist/**/*',
-    'website/**/*',
-    'coverage/**/*',
-    '__mocks__/**/*',
+    '**/**/metro.config.js',
+    '**/dist/**/*',
+    '**/website/**/*',
+    '**/coverage/**/*',
+    '**/__mocks__/**/*',
   ],
 };

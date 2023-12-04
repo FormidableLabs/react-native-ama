@@ -1,0 +1,10 @@
+{
+  "extends": ["../../tsconfig.json", "expo/tsconfig.base"],
+  "baseUrl": "./",
+  "paths": {
+    "@examples/shared-ui": ["examples/shared/index"],
+  },
+  "compilerOptions": {
+    "strict": true
+  }
+}

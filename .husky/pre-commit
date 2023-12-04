@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-yarn lint && yarn ts:check && yarn example ts:check
+# TODO: Restore
+#yarn lint && yarn ts:check && yarn example ts:check

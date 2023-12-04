@@ -1,0 +1,52 @@
+{
+  "name": "@react-native-ama/animations",
+  "version": "0.0.1",
+  "private": false,
+  "react-native": "src/index",
+  "types": "dist/index.d.ts",
+  "main": "dist/index.js",
+  "exports": {
+    ".": [
+      {
+        "imports": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+      },
+      "./dist/index.js"
+    ]
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && tsc -p ./tsconfig.build.json",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@react-native-ama/internal": "*",
+    "@react-native-ama/core": "*"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "keywords": [
+    "react-native",
+    "a11y",
+    "accessibility"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FormidableLabs/react-native-ama",
+    "directory": "packages/animations"
+  },
+  "bugs": {
+    "url": "https://github.com/FormidableLabs/react-native-ama/issues"
+  },
+  "homepage": "https://github.com/FormidableLabs/react-native-ama#readme",
+  "publishConfig": {
+    "provenance": true
+  },
+  "author": "",
+  "license": "MIT"
+}

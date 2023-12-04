@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["src/**/*.ts", "src/ama.rules.json"],
+  "exclude": ["src/**/*.test.ts"],
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "outDir": "dist",
+    "declaration": true
+  }
+}

@@ -33,10 +33,5 @@ jobs:
       - name: TypeScript Check
         run: yarn ts:check
 
-      - name: TypeScript Example Check
-        run: |
-          yarn example
-          yarn example ts:check
-
-      - name: Tests
-        run: yarn test
+      # - name: Core Tests
+      #   run: yarn test

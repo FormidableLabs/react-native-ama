@@ -1,10 +1,46 @@
-import { Must } from '@site/src/components';
+---
+ama_severity: Serious
+ama_category: Understandable
+ama_affected_users: Visual
+ama_success_criterion: 4.1.2@https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html
+---
 
 # Accessibility Label
 
 The [accessibilityLabel](https://reactnative.dev/docs/accessibility#accessibilitylabel) is the text that assistive technology reads when the component is focused and AMA requires it by tappable elements.
 
+## Expectations
+
+<ScreenReader>
+    <When title="The user focuses the component">
+        <Then noChildren>The Screen Reader reads out the label</Then>
+    </When>
+</ScreenReader>
+
+When a component has the accessibility label, it is the first information the screen reader reads when it gains the focus.
+For instance, with a button, as soon as it receives focus, the screen reader will initially announce its accessibility label. It will then follow up by describing the button's role and state to give the user a comprehensive understanding of the element's function.
+
+This is especially crucial for icon-only buttons, where the control lacks textual labels. In such cases, the accessibility label serves as the primary means of conveying the button's purpose to the user via the screen reader. Without it, the button's function would be unclear, making the app less accessible.
+
+### Example
+
+```jsx {1-3,5-7}
+<Pressable
+  onPress={contactUs}
+  accessibilityRole="button"
+  accessibilityLabel="Contact us"
+>
+  Contact us
+</Pressable>
+```
+
+| VoiceOver                                  | Talkback                                   |          |
+| ------------------------------------------ | ------------------------------------------ | -------- |
+| Contact us, button, double tap to activate | Contact us, button, double tap to activate | <Good /> |
+
 ## No Accessibility Label
+
+<Serious label dot />
 
 ### The problem
 
@@ -12,29 +48,39 @@ Let's consider the following example:
 
 ```jsx
 <Pressable onPress={contactUs} accessibilityRole="button">
-    Contact us
+  Contact us
 </Pressable>
 ```
 
 When testing the button with both VoiceOver and TalkBack, they both read:
 
-> button, Contact us, double-tap to activate
+| VoiceOver                                  | Talkback                                   |           |
+| ------------------------------------------ | ------------------------------------------ | --------- |
+| button, Contact us, double tap to activate | button, Contact us, double tap to activate | <Wrong /> |
 
-Because the component has no `accessibilityLabel`, only the `accessibilityRole` is announced; they read the inner text, if any, and in this case: **Contact us**. Finally, the last part tells the user that the component can be interacted with by performing a double-tap.
+The `accessibilityRole` is announced, and then the inner text is read, if any.
 
-<br />
+:::caution
 
-**What's happen if no text is available?**
+While the screen reader's ability to read out text might seem sufficient, it's crucial for the app's accessibility to align with the expectations of the underlying operating system, whether it's iOS or Android. On both platforms, the standard behaviour for screen readers is to announce the label first. Failing to meet this expectation can create an inconsistent and confusing user experience.
+
+:::
+
+### Icon only buttons
+
+<Critical label dot padding />
 
 ```jsx
 <Pressable onPress={goBack} accessibilityRole="button">
-    <SVGIcon />
+  <SVGIcon />
 </Pressable>
 ```
 
 When testing the button with both VoiceOver and TalkBack, they both read:
 
-> button, double-tap to activate
+| VoiceOver                      | Talkback                       |           |
+| ------------------------------ | ------------------------------ | --------- |
+| button, double tap to activate | button, double tap to activate | <Wrong /> |
 
 Here the assistive technology only reads the role and the action that can be performed with the component. So there is a complete lack of helpful information about what we're going to trigger.
 
@@ -54,51 +100,45 @@ Here the assistive technology only reads the role and the action that can be per
 
 When testing with the assistive technology, this happens:
 
-> Contact us button, double-tap to activate
-> Go back button, double-tap to activate
+| VoiceOver                                  | Talkback                                  |          |
+| ------------------------------------------ | ----------------------------------------- | -------- |
+| Contact us, button, double tap to activate | Contact us,button, double tap to activate | <Good /> |
+| Go back, button, double tap to activate    | Go back,button, double tap to activate    | <Good /> |
 
-The `accessibilityLabel` is announced first, then the __role__ and the action that can be performed at the end.
+The `accessibilityLabel` is announced first, then the **role** and the action that can be performed at the end.
 
 For this reason, AMA requires that tappable elements have the `accessibilityLabel` defined.
 
 ## All CAPS Accessibility Label
 
-All CAPS accessibility labels affect how and what a screen reader reads, so a non-CAPS one should always be provided.
+<Warning label dot padding />
 
-### No inflection
-
-Both Talkback and VoiceOver reads the words with the same flat tone, which becomes more noticeable with long sentences.
-
-### Wrong spelling
-
-Some words could be misinterpreted, causing the screen readers to read a word as separate characters.
+Screen readers may interpret capital letters as acronyms, misinterpreting content.
 
 #### Example: `ADD TO THE CART`
 
 ```jsx
-<Pressable accessibilityLabel="ADD TO THE CART">...</Pressable> 
+<Pressable accessibilityLabel="ADD TO THE CART">...</Pressable>
 ```
 
 This is how the different screen readers handle the uppercase label:
 
-| Voice Over         | Talkback        |
-|--------------------|-----------------|
-| A-D-D  to the cart | Add to the cart |
+| VoiceOver         | Talkback        |           |
+| ----------------- | --------------- | --------- |
+| A-D-D to the cart | Add to the cart | <Wrong /> |
 
 In this case, VoiceOver does the spelling of the word `ADD` while talkback reads it correctly.
 The remaining words are read correctly by both screen readers.
 
 #### Example: `CONTACT US`
 
-| Voice Over   | Talkback     |
-|--------------|--------------|
-| Contact U.S. | Contact U.S. |
+| VoiceOver    | Talkback     |           |
+| ------------ | ------------ | --------- |
+| Contact U.S. | Contact U.S. | <Wrong /> |
 
 The word `CONTACT` is read correctly, but both screen readers spell the word `US` as it is interpreted as `U.S.` for `United States.
 
-A similar issue happens if a sentence contains the word **IT**, for example.
-
-## AMA dev runtime errors
+## AMA dev runtime errors <DevOnly />
 
 ### NO_ACCESSIBILITY_LABEL <Must />
 
@@ -109,7 +149,7 @@ This error is used when a pressable element has no [accessibilityLabel](https://
 This rule is mandatory and cannot be turned off!
 :::
 
-### NO_UPPERCASE_TEXT <Must />
+### NO_UPPERCASE_TEXT <Should />
 
 This is used when a component has the `accessibilityLabel` prop in all caps.
 
@@ -120,10 +160,10 @@ Is it possible to specify a list of allowed all caps accessibility labels, [more
 
 ## Related AMA components
 
-- [ExpandablePressable](../components/expandablepressable)
-- [Pressable](../components/pressable)
-- [TouchableOpacity](../components/touchableopacity)
-- [TouchableWithoutFeedback](../components/TouchableWithoutFeedback)
+- [ExpandablePressable](/core/components/expandablepressable)
+- [Pressable](/core/components/pressable)
+- [TouchableOpacity](/core/components/touchableopacity)
+- [TouchableWithoutFeedback](/core/components/TouchableWithoutFeedback)
 
 ## External resources
 
