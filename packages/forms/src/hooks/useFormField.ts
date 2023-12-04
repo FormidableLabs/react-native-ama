@@ -1,4 +1,4 @@
-import { useAMAContext, useChecks } from '@react-native-ama/core';
+import { useChecks } from '@react-native-ama/core';
 import { applyStyle } from '@react-native-ama/internal';
 import React from 'react';
 import { Keyboard, ViewStyle } from 'react-native';
@@ -33,7 +33,6 @@ export const useFormField = ({
   style = {},
 }: UseFormField) => {
   const { refs, submitForm, focusField } = useForm();
-  const { isScreenReaderEnabled } = useAMAContext();
   const fieldRef = React.useRef(ref);
 
   const checks = __DEV__ ? useChecks?.() : undefined;

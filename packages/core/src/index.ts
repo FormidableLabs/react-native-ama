@@ -7,6 +7,7 @@ export {
   type AMADevContextValue,
   type AMAProdContextValue,
 } from './components/AMAProvider';
+export { HideChildrenFromAccessibilityTree } from './components/HideChildrenFromAccessibilityTree';
 
 // Hooks
 export { useButtonChecks } from './hooks/useButtonChecks';

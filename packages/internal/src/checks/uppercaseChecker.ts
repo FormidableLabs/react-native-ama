@@ -1,10 +1,10 @@
-import type { StyleProp } from 'react-native';
+import type { StyleProp, TextStyle } from 'react-native';
 
 import { getPropertyFromStyle } from '../utils/getPropertyFromStyle';
 import type { LogParams } from '../utils/logger';
 
 export type UppercaseChecker = {
-  style: StyleProp<Text> | undefined;
+  style: StyleProp<Text> | StyleProp<TextStyle> | undefined;
   accessibilityLabel?: string;
   extra?: any;
 };
