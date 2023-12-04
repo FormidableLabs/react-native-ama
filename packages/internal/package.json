@@ -1,6 +1,6 @@
 {
   "name": "@react-native-ama/internal",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": false,
   "react-native": "src/index",
   "types": "dist/index.d.ts",
@@ -23,7 +23,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "wcag-color":"^1.1.1"
+    "wcag-color": "^1.1.1"
   },
   "peerDependencies": {
     "react": "*",
