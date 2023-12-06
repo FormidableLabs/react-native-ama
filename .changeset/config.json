@@ -1,11 +1,12 @@
 {
-	"$schema": "https://unpkg.com/@changesets/config@2.3.0/schema.json",
-	"changelog": [
-		"@svitejs/changesets-changelog-github-compact",
-		{
-			"repo": "FormidableLabs/react-native-ama"
-		}
-	],
-	"access": "public",
-	"baseBranch": "main"
+  "$schema": "https://unpkg.com/@changesets/config@2.3.0/schema.json",
+  "changelog": [
+    "@svitejs/changesets-changelog-github-compact",
+    {
+      "repo": "FormidableLabs/react-native-ama"
+    }
+  ],
+  "access": "public",
+  "baseBranch": "main",
+  "ignore": ["@react-native-ama/internal"]
 }
