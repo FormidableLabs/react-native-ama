@@ -1,12 +1,4 @@
 import { useButtonChecks } from '@react-native-ama/core/src/hooks/useButtonChecks';
-import {
-  generateAccessibilityStateFromProp,
-  shouldIgnoreContrastCheckForDisabledElement,
-} from '@react-native-ama/internal';
-import type {
-  AMAAccessibilityState,
-  AccessibilityRoles,
-} from '@react-native-ama/internal';
 import type React from 'react';
 import type {
   AccessibilityRole,
@@ -15,6 +7,11 @@ import type {
   PressableStateCallbackType,
 } from 'react-native';
 import { Platform } from 'react-native';
+import type { AMAAccessibilityState, AccessibilityRoles } from '~internal';
+import {
+  generateAccessibilityStateFromProp,
+  shouldIgnoreContrastCheckForDisabledElement,
+} from '~internal';
 
 export type UsePressable<T> = Omit<
   T,

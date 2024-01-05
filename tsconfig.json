@@ -6,7 +6,7 @@
       "@react-native-ama/core": ["packages/core/src/index"],
       "@react-native-ama/extras": ["packages/extras/src/index"],
       "@react-native-ama/forms": ["packages/forms/src/index"],
-      "@react-native-ama/internal": ["packages/internal/src/index"],
+      "~internal": ["packages/internal/src/index"],
       "@react-native-ama/lists": ["packages/lists/src/index"],
       "@react-native-ama/react-native": ["packages/react-native/src/index"]
     },
