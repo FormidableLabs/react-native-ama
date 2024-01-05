@@ -2,7 +2,7 @@ import { useButtonChecks } from '@react-native-ama/core';
 import {
   applyStyle,
   generateAccessibilityStateFromProp,
-} from '@react-native-ama/internal';
+} from '~internal';
 import React from 'react';
 import type { ViewProps } from 'react-native';
 import type { AccessibilityState } from 'react-native';

@@ -1,5 +1,5 @@
 import { useAMAContext } from '@react-native-ama/core';
-import { MOTION_ANIMATIONS } from '@react-native-ama/internal';
+import { MOTION_ANIMATIONS } from '~internal';
 import type { ViewProps, ViewStyle } from 'react-native';
 import {
   EntryAnimationsValues,

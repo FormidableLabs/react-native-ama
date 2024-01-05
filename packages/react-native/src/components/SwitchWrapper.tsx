@@ -1,7 +1,7 @@
 import {
   MINIMUM_TOUCHABLE_SIZE,
   type AMAAccessibilityState,
-} from '@react-native-ama/internal';
+} from '~internal';
 import React from 'react';
 import {
   AccessibilityState,

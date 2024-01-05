@@ -1,5 +1,5 @@
 import * as UseChecks from '@react-native-ama/core/src/hooks/useChecks';
-import { ERROR_STYLE } from '@react-native-ama/internal';
+import { ERROR_STYLE } from '~internal';
 import { fireEvent, render } from '@testing-library/react-native';
 import * as React from 'react';
 import { Text } from 'react-native';

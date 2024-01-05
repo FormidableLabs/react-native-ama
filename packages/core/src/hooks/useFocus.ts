@@ -1,4 +1,4 @@
-import { SHELL_COLORS } from '@react-native-ama/internal';
+import { SHELL_COLORS } from '~internal';
 import * as React from 'react';
 import { AccessibilityInfo, findNodeHandle } from 'react-native';
 

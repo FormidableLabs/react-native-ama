@@ -1,5 +1,5 @@
 import { useChecks } from '@react-native-ama/core';
-import { applyStyle } from '@react-native-ama/internal';
+import { applyStyle } from '~internal';
 import React from 'react';
 import { Keyboard, ViewStyle } from 'react-native';
 

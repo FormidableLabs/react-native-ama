@@ -1,5 +1,5 @@
 import { useAMAContext } from '@react-native-ama/core';
-import type { MotionAnimationKey } from '@react-native-ama/internal';
+import type { MotionAnimationKey } from '~internal';
 import React from 'react';
 import {
   AnimationCallback,

@@ -1,5 +1,5 @@
 import { useAMAContext } from '@react-native-ama/core';
-import { interpolateAnimationStates } from '@react-native-ama/internal';
+import { interpolateAnimationStates } from '~internal';
 import * as React from 'react';
 import type { ViewStyle } from 'react-native';
 import { Animated } from 'react-native';

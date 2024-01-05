@@ -17,7 +17,7 @@ import {
   type NoUndefinedProperty,
   type UppercaseChecker,
   type UppercaseStringChecker,
-} from '@react-native-ama/internal';
+} from '~internal';
 import * as React from 'react';
 import {
   AccessibilityRole,

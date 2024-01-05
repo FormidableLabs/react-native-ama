@@ -1,4 +1,4 @@
-import { SHELL_COLORS } from '@react-native-ama/internal';
+import { SHELL_COLORS } from '~internal';
 import { renderHook } from '@testing-library/react-native';
 
 import { useFocus } from './useFocus';

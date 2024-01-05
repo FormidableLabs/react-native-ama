@@ -1,7 +1,7 @@
 import {
   MOTION_ANIMATIONS,
   type MotionAnimationKey,
-} from '@react-native-ama/internal';
+} from '~internal';
 
 export const isMotionAnimation = (key: MotionAnimationKey) => {
   return MOTION_ANIMATIONS.includes(key);

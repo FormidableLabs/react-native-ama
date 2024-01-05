@@ -19,7 +19,8 @@
     "doc": "cd website && yarn start",
     "ts:check": "tsc --noEmit",
     "lint": "eslint --ext .ts,.tsx ./packages",
-    "build": "yarn build:animations && yarn build:core && yarn build:extras && yarn build:forms && yarn build:internal && yarn build:lists && yarn build:react-native"
+    "build": "yarn build:animations && yarn build:core && yarn build:extras && yarn build:forms && yarn build:internal && yarn build:lists && yarn build:react-native",
+    "test": "yarn --cwd packages/core test"
   },
   "workspaces": [
     "packages/animations",

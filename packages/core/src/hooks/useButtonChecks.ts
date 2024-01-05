@@ -1,4 +1,4 @@
-import { applyStyle } from '@react-native-ama/internal';
+import { applyStyle } from '~internal';
 import type React from 'react';
 import type { PressableStateCallbackType } from 'react-native';
 

@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 
-import { RED } from '@react-native-ama/internal';
+import { RED } from '~internal';
 import * as React from 'react';
 import {
   AccessibilityChangeEventName,

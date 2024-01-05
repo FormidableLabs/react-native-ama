@@ -1,5 +1,5 @@
 import { useChecks, useFocus } from '@react-native-ama/core';
-import { applyStyle } from '@react-native-ama/internal';
+import { applyStyle } from '~internal';
 import * as React from 'react';
 import { Text as RNText, TextProps as RNTextProps } from 'react-native';
 

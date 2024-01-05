@@ -1,5 +1,5 @@
 import { HideChildrenFromAccessibilityTree } from '@react-native-ama/core';
-import { maybeGenerateStringFromElement } from '@react-native-ama/internal';
+import { maybeGenerateStringFromElement } from '~internal';
 import React from 'react';
 import type { StyleProp, SwitchProps, ViewStyle } from 'react-native';
 import { StyleSheet, Switch } from 'react-native';
