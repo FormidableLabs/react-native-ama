@@ -1,7 +1,3 @@
-import {
-  MINIMUM_TOUCHABLE_SIZE,
-  type AMAAccessibilityState,
-} from '~internal';
 import React from 'react';
 import {
   AccessibilityState,
@@ -10,6 +6,7 @@ import {
   ViewProps,
 } from 'react-native';
 import { StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { MINIMUM_TOUCHABLE_SIZE, type AMAAccessibilityState } from '~internal';
 
 import { useSwitch } from '../hooks/useSwitch';
 

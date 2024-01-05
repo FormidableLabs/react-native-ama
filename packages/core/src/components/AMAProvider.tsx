@@ -1,6 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
 
-import { RED } from '~internal';
 import * as React from 'react';
 import {
   AccessibilityChangeEventName,
@@ -9,6 +8,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import { RED } from '~internal';
 
 type AMAProviderProps = {
   children: React.ReactNode;

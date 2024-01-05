@@ -1,5 +1,5 @@
-import { SHELL_COLORS } from '~internal';
 import { renderHook } from '@testing-library/react-native';
+import { SHELL_COLORS } from '~internal';
 
 import { useFocus } from './useFocus';
 

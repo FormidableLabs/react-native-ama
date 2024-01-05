@@ -1,5 +1,4 @@
 import { useAMAContext } from '@react-native-ama/core';
-import type { MotionAnimationKey } from '~internal';
 import React from 'react';
 import {
   AnimationCallback,
@@ -8,6 +7,7 @@ import {
   WithSpringConfig,
   WithTimingConfig,
 } from 'react-native-reanimated';
+import type { MotionAnimationKey } from '~internal';
 
 import { isMotionAnimation } from '../utils/isMotionAnimation';
 

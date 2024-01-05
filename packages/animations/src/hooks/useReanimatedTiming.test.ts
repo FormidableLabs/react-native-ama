@@ -1,6 +1,6 @@
 import * as AMAProvider from '@react-native-ama/core';
-import { MOTION_ANIMATIONS } from '~internal';
 import { renderHook } from '@testing-library/react-native';
+import { MOTION_ANIMATIONS } from '~internal';
 
 import { useReanimatedTiming } from './useReanimatedTiming';
 

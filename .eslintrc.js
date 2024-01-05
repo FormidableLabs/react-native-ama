@@ -19,5 +19,7 @@ module.exports = {
     '**/website/**/*',
     '**/coverage/**/*',
     '**/__mocks__/**/*',
+    'packages/**/**/*.js',
+    'packages/**/**/*.d.ts',
   ],
 };

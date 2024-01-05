@@ -1,5 +1,4 @@
 import { useChecks } from '@react-native-ama/core';
-import { applyStyle } from '~internal';
 import * as React from 'react';
 import type {
   LayoutChangeEvent,
@@ -10,6 +9,7 @@ import type {
   TextStyle,
   ViewStyle,
 } from 'react-native';
+import { applyStyle } from '~internal';
 
 import { TextInputProps } from '../components/TextInput';
 import { UseFormField, useFormField } from './useFormField';

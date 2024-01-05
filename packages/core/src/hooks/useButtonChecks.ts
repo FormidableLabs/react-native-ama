@@ -1,6 +1,6 @@
-import { applyStyle } from '~internal';
 import type React from 'react';
 import type { PressableStateCallbackType } from 'react-native';
+import { applyStyle } from '~internal';
 
 import { useChecks } from './useChecks';
 

@@ -1,3 +1,9 @@
+import * as React from 'react';
+import {
+  AccessibilityRole,
+  InteractionManager,
+  LayoutChangeEvent,
+} from 'react-native';
 import {
   ERROR_STYLE,
   LogParams,
@@ -18,12 +24,6 @@ import {
   type UppercaseChecker,
   type UppercaseStringChecker,
 } from '~internal';
-import * as React from 'react';
-import {
-  AccessibilityRole,
-  InteractionManager,
-  LayoutChangeEvent,
-} from 'react-native';
 
 import { isDevContextValue, useAMAContext } from '../components/AMAProvider';
 

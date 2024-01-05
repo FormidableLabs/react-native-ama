@@ -1,5 +1,4 @@
 import { useAMAContext } from '@react-native-ama/core';
-import { MOTION_ANIMATIONS } from '~internal';
 import type { ViewProps, ViewStyle } from 'react-native';
 import {
   EntryAnimationsValues,
@@ -8,6 +7,7 @@ import {
   StyleProps,
   withTiming,
 } from 'react-native-reanimated';
+import { MOTION_ANIMATIONS } from '~internal';
 
 export type ToAnimation = ViewProps['style'];
 

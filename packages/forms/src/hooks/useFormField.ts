@@ -1,7 +1,7 @@
 import { useChecks } from '@react-native-ama/core';
-import { applyStyle } from '~internal';
 import React from 'react';
 import { Keyboard, ViewStyle } from 'react-native';
+import { applyStyle } from '~internal';
 
 import { useForm } from '../components/Form';
 

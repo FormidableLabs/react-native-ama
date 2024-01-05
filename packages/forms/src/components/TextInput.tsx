@@ -1,12 +1,12 @@
 import { HideChildrenFromAccessibilityTree } from '@react-native-ama/core';
 import { useChecks } from '@react-native-ama/core';
-import { applyStyle } from '~internal';
-import { maybeGenerateStringFromElement } from '~internal';
 import * as React from 'react';
 import {
   TextInput as RNTextInput,
   TextInputProps as RNTextInputProps,
 } from 'react-native';
+import { applyStyle } from '~internal';
+import { maybeGenerateStringFromElement } from '~internal';
 
 import { useTextInput } from '../hooks/useTextInput';
 
