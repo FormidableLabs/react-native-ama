@@ -39,3 +39,7 @@ DerivedData
 .vscode
 coverage
 .expo
+
+# Build files
+packages/**/**/*.js
+packages/**/**/*.d.ts
