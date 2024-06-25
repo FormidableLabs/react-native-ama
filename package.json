@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@react-native-ama/monorepo",
-  "version": "1.0.0",
+  "version": "1.0.1-alpha.2",
   "description": "Accessibility as a First-Class Citizen with React Native AMA",
   "repository": "https://github.com/FormidableLabs/react-native-ama.git",
   "homepage": "https://formidable.com/open-source/react-native-ama/",
