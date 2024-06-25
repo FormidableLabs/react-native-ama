@@ -27,7 +27,12 @@ export const useKeyboard = (shouldHandleKeyboardEvents: boolean) => {
   const isKeyboardVisible = useSharedValue(false);
 
   const handleKeyboardEvent = useCallback(
-    (isVisible, height, duration, easing) => {
+    (
+      isVisible: boolean,
+      height: number,
+      duration: number,
+      easing: KeyboardEventEasing,
+    ) => {
       const finalHeight = isVisible ? height : 0;
 
       const animationConfig = getKeyboardAnimationConfigs(easing, duration);
