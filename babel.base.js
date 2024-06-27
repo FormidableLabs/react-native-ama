@@ -21,8 +21,7 @@ module.exports = {
         alias: {
           '@react-native-ama/core/src': `${__dirname}/packages/core/src`,
           '@react-native-ama/core': `${__dirname}/packages/core/src`,
-          '@react-native-ama/internal/src': `${__dirname}/packages/internal/src`,
-          '@react-native-ama/internal': `${__dirname}/packages/internal/src`,
+          '~internal': `${__dirname}/packages/internal`,
           '@react-native-ama/animations/src': `${__dirname}/packages/animations/src`,
           '@react-native-ama/animations': `${__dirname}/packages/animations/src`,
           '@react-native-ama/extras/src': `${__dirname}/packages/extras/src`,

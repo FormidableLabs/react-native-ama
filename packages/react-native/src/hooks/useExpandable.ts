@@ -1,5 +1,5 @@
 import { useChecks } from '@react-native-ama/core';
-import { applyStyle } from '@react-native-ama/internal';
+import { applyStyle } from '~internal';
 
 export type UseExpandable<T> = Omit<T, 'accessibilityRole'> & {
   expanded: boolean;
