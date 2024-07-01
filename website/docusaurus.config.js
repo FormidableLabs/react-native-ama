@@ -20,7 +20,8 @@ const defaultPresets = {
 const config = {
   title: 'React Native AMA',
   tagline: 'Accessible Mobile App Library for React Native',
-  url: 'https://formidable.com',
+  url: 'https://commerce.nearform.com/',
+  favicon: 'img/nearform-icon.svg',
   baseUrl:
     process.env.VERCEL_ENV === 'preview'
       ? '/'
@@ -28,7 +29,6 @@ const config = {
   // TODO: change in throw
   onBrokenLinks: 'ignore',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.ico',
   organizationName: 'FormidableLabs',
   projectName: 'react-native-ama',
   i18n: {
@@ -39,7 +39,7 @@ const config = {
     [
       'classic',
       /** @type {import('@docusaurus/preset-classic').Options} */
-      ({
+      {
         docs: {
           path: '../docs/ama',
           routeBasePath: '/',
@@ -51,7 +51,7 @@ const config = {
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
-      }),
+      },
     ],
   ],
   plugins: [
