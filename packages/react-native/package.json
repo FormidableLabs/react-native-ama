@@ -1,6 +1,6 @@
 {
   "name": "@react-native-ama/react-native",
-  "version": "1.0.0",
+  "version": "1.0.1-alpha.2",
   "private": false,
   "react-native": "src/index",
   "types": "dist/index.d.ts",
@@ -23,8 +23,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@react-native-ama/internal": "*",
-    "@react-native-ama/core": "*"
+    "@react-native-ama/internal": "~1.0.1-alpha.1",
+    "@react-native-ama/core": "~1.0.1-alpha.1"
   },
   "peerDependencies": {
     "react": "*",

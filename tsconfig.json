@@ -29,7 +29,6 @@
     "**/**/node_modules",
     "node_modules",
     "**/__mocks__",
-    "**/__tests__",
-    "examples"
+    "**/__tests__"
   ]
 }
