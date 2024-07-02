@@ -1855,7 +1855,7 @@
     fs-extra "^11.1.1"
     tslib "^2.6.0"
 
-"@docusaurus/types@3.4.0":
+"@docusaurus/types@3.4.0", "@docusaurus/types@^3.4.0":
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/@docusaurus/types/-/types-3.4.0.tgz#237c3f737e9db3f7c1a5935a3ef48d6eadde8292"
   integrity sha512-4jcDO8kXi5Cf9TcyikB/yKmz14f2RZ2qTRerbHAsS+5InE9ZgSLBNLsewtFTcTOXSVcbU3FoGOzcNWAmU1TR0A==
