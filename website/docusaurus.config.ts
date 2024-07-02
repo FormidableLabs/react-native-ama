@@ -1,6 +1,8 @@
-// @ts-check
-// Note: type annotations allow type checking and IDEs autocompletion
-
+import type {
+  Options as PresetOptions,
+  ThemeConfig,
+} from '@docusaurus/preset-classic';
+import type { Config } from '@docusaurus/types';
 import { themes } from 'prism-react-renderer';
 
 const defaultPresets = {
@@ -15,8 +17,7 @@ const defaultPresets = {
   },
 };
 
-/** @type {import('@docusaurus/types').Config} */
-const config = {
+const config: Config = {
   title: 'React Native AMA',
   tagline: 'Accessible Mobile App Library for React Native',
   url: 'https://commerce.nearform.com/',
@@ -30,6 +31,7 @@ const config = {
   onBrokenMarkdownLinks: 'warn',
   organizationName: 'FormidableLabs',
   projectName: 'react-native-ama',
+
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
@@ -37,7 +39,6 @@ const config = {
   presets: [
     [
       'classic',
-      /** @type {import('@docusaurus/preset-classic').Options} */
       {
         docs: {
           path: '../docs/ama',
@@ -50,7 +51,7 @@ const config = {
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
-      },
+      } satisfies PresetOptions,
     ],
   ],
   plugins: [
@@ -156,7 +157,7 @@ const config = {
     zoom: {
       selector: '.zoom-me',
     },
-  },
+  } satisfies ThemeConfig,
 };
 
-module.exports = config;
+export default config;
