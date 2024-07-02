@@ -28,7 +28,7 @@
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^2.4.3",
     "@docusaurus/remark-plugin-npm2yarn": "^2.4.3",
-    "docusaurus-plugin-image-zoom": "^1.0.1"
+    "docusaurus-plugin-image-zoom": "^2.0.0"
   },
   "browserslist": {
     "production": [
