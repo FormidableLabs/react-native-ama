@@ -103,7 +103,15 @@ The ID of the next field to focus when the user taps on the `next` button of the
 | ------ | --------- |
 | string | undefined |
 
-### <Required /> `hasValidation`
+### `required`
+
+This property is used to set the input as required and will display and error if a value has not been set
+
+| Type    | Default   |
+| ------- | --------- |
+| boolean | undefined |
+
+### `hasValidation`
 
 This property is used to know if the input can display an error, in case of failed validation; and if so is used to:
 
