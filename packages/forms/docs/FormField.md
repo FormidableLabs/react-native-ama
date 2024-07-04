@@ -69,4 +69,4 @@ The error to be announced as part of the accessibility hint when the validation 
 
 ## Related guidelines
 
-- [Forms](../../../docs/guidelines/forms)
+- [Forms](../guidelines/forms)
