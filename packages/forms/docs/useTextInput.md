@@ -2,6 +2,11 @@
 
 This hook can be used to create a custom TextInput with all the [accessibility improvements](#accessibility-improvements) needed.
 
+:::note
+
+To use `useTextInput` it must be wrapped by the `<Form>` provider component from this package.
+:::
+
 ## Usage
 
 ```jsx
