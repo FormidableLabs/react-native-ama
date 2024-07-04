@@ -41,7 +41,7 @@ The component extends the React Native [TouchableWithoutFeedbackProps](https://r
 
 ### `id`
 
-The field ID. This info is stored, with the field `ref`, inside the [<Form />](./Form) component.
+The field ID. This info is stored, with the field `ref`, inside the [`<Form />`](./Form) component.
 
 | Type   | Default   |
 | ------ | --------- |
