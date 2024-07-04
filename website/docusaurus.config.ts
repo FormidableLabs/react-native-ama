@@ -94,6 +94,11 @@ const config: Config = {
     ],
   ],
   themeConfig: {
+    docs: {
+      sidebar: {
+        hideable: true,
+      },
+    },
     navbar: {
       title: 'React Native AMA',
       logo: {
