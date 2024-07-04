@@ -89,7 +89,7 @@ This parameter specifies the next form field to focus on when the next button is
 
 ### `id`
 
-The field ID. This info is stored, with the field `ref`, inside the [<Form />](./Form) component.
+The field ID. This info is stored, with the field `ref`, inside the [<Form />](./Form.md) component.
 
 | Type   | Default   |
 | ------ | --------- |
