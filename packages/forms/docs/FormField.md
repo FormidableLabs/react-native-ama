@@ -39,12 +39,12 @@ import { Form } from 'react-native-ama';
 
 The component extends the React Native [TouchableWithoutFeedbackProps](https://reactnative.dev/docs/touchablewithoutfeedback#props).
 
-### `id` 
+### `id`
 
 The field ID. This info is stored, with the field `ref`, inside the [<Form />](./Form) component.
 
 | Type   | Default   |
-|--------|-----------|
+| ------ | --------- |
 | string | undefined |
 
 ### `ref`
@@ -52,7 +52,7 @@ The field ID. This info is stored, with the field `ref`, inside the [<Form />](.
 The field reference.
 
 | Type            | Default   |
-|-----------------|-----------|
+| --------------- | --------- |
 | React.RefObject | undefined |
 
 ### `hasValidation`
@@ -69,4 +69,4 @@ The error to be announced as part of the accessibility hint when the validation 
 
 ## Related guidelines
 
-- [Forms](../guidelines/forms)
+- [Forms](../../../docs/guidelines/forms)

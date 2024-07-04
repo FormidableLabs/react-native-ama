@@ -103,7 +103,7 @@ This property is used to know if the input can display an error, in case of fail
 
 - Set the error, in case of failure, as part of the accessibilityHint
 
-Here can be find more information about [error handling in Forms](../guidelines/forms#errors)
+Here can be find more information about [error handling in Forms](../../../docs/guidelines/forms#errors)
 
 | Type    | Default   |
 | ------- | --------- |
@@ -140,4 +140,4 @@ The required message to be announced by the screen reader as part of the accessi
 
 ## Related guidelines
 
-- [Forms](../guidelines/forms)
+- [Forms](../../../docs/guidelines/forms)
