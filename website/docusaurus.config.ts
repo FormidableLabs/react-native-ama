@@ -29,7 +29,7 @@ const config: Config = {
   // TODO: change in throw
   onBrokenLinks: 'ignore',
   onBrokenMarkdownLinks: 'warn',
-  organizationName: 'FormidableLabs',
+  organizationName: 'NearForm',
   projectName: 'react-native-ama',
 
   i18n: {
@@ -115,8 +115,8 @@ const config: Config = {
     navbar: {
       title: 'React Native AMA',
       logo: {
-        alt: 'React Native AMA Logo',
-        src: 'img/formidable-f.svg',
+        alt: 'Nearform logo',
+        src: 'img/nearform-logo-white.svg',
       },
       items: [
         {
@@ -150,17 +150,22 @@ const config: Config = {
           position: 'right',
         },
         {
-          href: 'https://formidable.com',
-          className: 'header-formidable-link',
-          'aria-label': 'Formidable Website',
+          href: 'https://commerce.nearform.com/',
+          className: 'header-nearform-link',
+          'aria-label': 'Nearform Commerce Website',
           position: 'right',
         },
       ],
     },
     footer: {
-      style: 'dark',
-      links: [],
-      copyright: `Copyright © ${new Date().getFullYear()} Formidable`,
+      logo: {
+        alt: 'Nearform logo',
+        src: 'img/nearform-logo-white.svg',
+        href: 'https://commerce.nearform.com',
+        width: 100,
+        height: 100,
+      },
+      copyright: `Copyright © ${new Date().getFullYear()} Nearform`,
     },
     prism: {
       theme: themes.github,
