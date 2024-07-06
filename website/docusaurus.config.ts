@@ -54,6 +54,15 @@ const config: Config = {
       } satisfies PresetOptions,
     ],
   ],
+  themes: [
+    [
+      require.resolve('@easyops-cn/docusaurus-search-local'),
+      /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */
+      {
+        hashed: true,
+      },
+    ],
+  ],
   plugins: [
     require.resolve('docusaurus-plugin-image-zoom'),
     async function tailwindPlugin() {
