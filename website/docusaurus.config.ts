@@ -5,6 +5,9 @@ import type {
 import type { Config } from '@docusaurus/types';
 import { themes } from 'prism-react-renderer';
 
+const lightTheme = themes.github;
+const darkTheme = themes.dracula;
+
 const defaultPresets = {
   sidebarPath: require.resolve('./sidebars.js'),
   editUrl:
@@ -177,8 +180,8 @@ const config: Config = {
       copyright: `Copyright © ${new Date().getFullYear()} Nearform`,
     },
     prism: {
-      theme: themes.github,
-      darkTheme: themes.dracula,
+      theme: lightTheme,
+      darkTheme: darkTheme,
       magicComments: [
         {
           className: 'dimmed',
