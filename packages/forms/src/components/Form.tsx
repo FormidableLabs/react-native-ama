@@ -129,8 +129,15 @@ const DEFAULT_CONTEXT_VALUE: FormContextValue = {
   focusField: () => {},
 };
 
-export const useForm = () => {
+export const useForm = (
+  { suppressError }: { suppressError?: boolean } = { suppressError: false },
+) => {
   const context = React.useContext(FormContext);
+
+  if (!context && suppressError) {
+    return DEFAULT_CONTEXT_VALUE; // return default values so internal useForm hooks don't throw undefined errors when user choose to suppress errors
+  }
+
   if (!context) {
     __DEV__ &&
       console.error(
@@ -140,5 +147,6 @@ export const useForm = () => {
       'useForm must be used within a FormContextProvider, please wrap your form field inside the <Form /> component',
     );
   }
+
   return context;
 };
