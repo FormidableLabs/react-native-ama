@@ -123,6 +123,12 @@ export type FormRef = {
 
 export const FormContext = React.createContext<FormContextValue | null>(null);
 
+const DEFAULT_CONTEXT_VALUE: FormContextValue = {
+  refs: [],
+  submitForm: () => Promise.resolve(),
+  focusField: () => {},
+};
+
 export const useForm = () => {
   const context = React.useContext(FormContext);
   if (!context) {
