@@ -17,6 +17,7 @@ export type UseFormField = {
   hasValidation: boolean;
   hasError?: boolean;
   errorMessage?: string;
+  suppressError?: boolean;
 };
 
 export const useFormField = ({
@@ -30,9 +31,10 @@ export const useFormField = ({
   accessibilityHint,
   errorMessage,
   editable = true,
+  suppressError,
   style = {},
 }: UseFormField) => {
-  const { refs, submitForm, focusField } = useForm();
+  const { refs, submitForm, focusField } = useForm({ suppressError });
   const fieldRef = React.useRef(ref);
 
   const checks = __DEV__ ? useChecks?.() : undefined;
