@@ -116,6 +116,12 @@ li .menu__list .menu__link--sublist-caret {
   color: white;
 }
 
+
+/* Custom Landing Page */
+.hero-pattern {
+  background-image: url("/img/background-banner.png");
+}
+
 .token-line.dimmed {
   opacity: 0.5;
 }
