@@ -123,8 +123,21 @@ export type FormRef = {
 
 export const FormContext = React.createContext<FormContextValue | null>(null);
 
-export const useForm = () => {
+const DEFAULT_CONTEXT_VALUE: FormContextValue = {
+  refs: [],
+  submitForm: () => Promise.resolve(),
+  focusField: () => {},
+};
+
+export const useForm = (
+  { suppressError }: { suppressError?: boolean } = { suppressError: false },
+) => {
   const context = React.useContext(FormContext);
+
+  if (!context && suppressError) {
+    return DEFAULT_CONTEXT_VALUE; // return default values so internal useForm hooks don't throw undefined errors when user choose to suppress errors
+  }
+
   if (!context) {
     __DEV__ &&
       console.error(
@@ -134,5 +147,6 @@ export const useForm = () => {
       'useForm must be used within a FormContextProvider, please wrap your form field inside the <Form /> component',
     );
   }
+
   return context;
 };
