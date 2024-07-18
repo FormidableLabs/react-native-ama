@@ -1,4 +1,3 @@
-[![React Native AMA — Formidable, We build the modern web](https://raw.githubusercontent.com/FormidableLabs/react-native-ama/main/react-native-ama-Hero.png)](https://formidable.com/open-source/)
 
 # Accessibility as a First-Class Citizen with React Native AMA
 
