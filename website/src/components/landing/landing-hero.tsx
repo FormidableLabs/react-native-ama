@@ -1,5 +1,4 @@
-import badge from '@site/static/img/rn-ama-badge.png';
-// import { FeaturedBadge } from 'formidable-oss-badges';
+import { ProjectBadge } from 'formidable-oss-badges';
 import React, { useState } from 'react';
 
 export const LandingHero = ({
@@ -24,10 +23,10 @@ export const LandingHero = ({
       <div className="py-12 lg:py-24 mx-16 lg:mx-32 xl:mx-64 relative">
         <div className="flex-col md:flex-row flex justify-between gap-16 lg:gap-24 mx-auto">
           <div className="self-center md:self-left">
-            {/* <FeaturedBadge name="ama" className="h-[320px] w-[320px]" /> */}
-            <img
-              src={badge}
-              alt={'react native ama'}
+            <ProjectBadge
+              color="#FFC951"
+              description={'react native ama'}
+              abbreviation={'Ra'}
               className="h-[320px] w-[320px]"
             />
           </div>
