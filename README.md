@@ -1,8 +1,16 @@
-[![React Native AMA — Formidable, We build the modern web](https://raw.githubusercontent.com/FormidableLabs/react-native-ama/main/react-native-ama-Hero.png)](https://formidable.com/open-source/)
+<a href="https://commerce.nearform.com/open-source/" target="_blank">
+  <img alt="React Native AMA" src="https://oss.nearform.com/api/banner?text=react+native+ama" />
+</a>
+<p align="center">
+  <strong>Accessibility as a First-Class Citizen with React Native AMA</strong>
+  <br><br>
 
-# Accessibility as a First-Class Citizen with React Native AMA
+  [![github][github-image]][github-url]
+  [![npm][npm-image]][npm-url]
+  [![docs][docs-image]][docs-url]
+  [![Maintenance Status][maintenance-image]](#maintenance-status)
 
-[![github][github-image]][github-url] [![npm][npm-image]][npm-url] [![docs][docs-image]][docs-url] [![Maintenance Status][maintenance-image]](#maintenance-status)
+</p>
 
 A.M.A. stands for **A**ccessible **M**obile **A**pp and is react native library that aim offers the best accessibility tooling experience and guides to guide you through accessibility best practices while you code your app.
 That's why we created A.M.A., a set of [components](https://formidable.com/open-source/react-native-ama/components/),
