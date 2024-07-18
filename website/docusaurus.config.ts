@@ -22,7 +22,7 @@ const defaultPresets = {
 
 const config: Config = {
   title: 'React Native AMA',
-  tagline: 'Accessible Mobile App Library for React Native',
+  tagline: 'A comprehensive drop-in accessibility library for React Native.',
   url: 'https://commerce.nearform.com/',
   favicon: 'img/nearform-icon.svg',
   baseUrl:
