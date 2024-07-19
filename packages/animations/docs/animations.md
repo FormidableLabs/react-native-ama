@@ -1,6 +1,6 @@
 ---
 slug: /
-title: The core package
+title: The animations package
 sidebar_position: 1
 ---
 

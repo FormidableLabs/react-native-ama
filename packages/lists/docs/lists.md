@@ -1,6 +1,6 @@
 ---
 slug: /
-title: The Lists package
+title: The lists package
 sidebar_position: 1
 ---
 

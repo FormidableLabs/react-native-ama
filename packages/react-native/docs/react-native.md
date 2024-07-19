@@ -1,6 +1,6 @@
 ---
 slug: /
-title: The React Native package
+title: The react-native package
 sidebar_position: 1
 ---
 
