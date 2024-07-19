@@ -13,7 +13,7 @@ The `@react-native-ama/forms` package offers essential hooks and components need
 Install the `@react-native-ama/forms` package with your favourite package manager:
 
 ```bash npm2yarn
-npm install -D @react-native-ama/forms
+npm install @react-native-ama/forms
 ```
 
 ## Usage

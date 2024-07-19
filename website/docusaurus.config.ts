@@ -93,9 +93,45 @@ const config: Config = {
     [
       '@docusaurus/plugin-content-docs',
       {
+        id: 'animations',
+        path: '../packages/animations/docs',
+        routeBasePath: '/animations/',
+        ...defaultPresets,
+      },
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
         id: 'forms',
         path: '../packages/forms/docs',
         routeBasePath: '/forms/',
+        ...defaultPresets,
+      },
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'react-native',
+        path: '../packages/react-native/docs',
+        routeBasePath: '/react-native/',
+        ...defaultPresets,
+      },
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'lists',
+        path: '../packages/lists/docs',
+        routeBasePath: '/lists/',
+        ...defaultPresets,
+      },
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'extras',
+        path: '../packages/extras/docs',
+        routeBasePath: '/extras/',
         ...defaultPresets,
       },
     ],
@@ -132,28 +168,41 @@ const config: Config = {
       },
       items: [
         {
-          label: 'Core',
-          to: '/core/',
-        },
-        {
-          label: 'Animations',
-          to: '/animations/',
-        },
-        {
-          label: 'Forms',
-          to: '/forms/',
-        },
-        {
-          label: 'Extras',
-          to: '/extras/',
-        },
-        {
           label: 'Guidelines',
           to: '/guidelines/',
         },
         {
           label: 'Checklist',
           to: '/checklist/',
+        },
+        {
+          label: 'Packages',
+          items: [
+            {
+              label: 'Core',
+              to: '/core/',
+            },
+            {
+              label: 'Animations',
+              to: '/animations/',
+            },
+            {
+              label: 'Forms',
+              to: '/forms/',
+            },
+            {
+              label: 'React Native',
+              to: '/react-native/',
+            },
+            {
+              label: 'Lists',
+              to: '/lists/',
+            },
+            {
+              label: 'Extras',
+              to: '/extras/',
+            },
+          ],
         },
         {
           href: 'https://github.com/FormidableLabs/react-native-ama',
