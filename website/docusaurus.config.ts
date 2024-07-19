@@ -9,7 +9,7 @@ const lightTheme = themes.github;
 const darkTheme = themes.dracula;
 
 const defaultPresets = {
-  sidebarPath: require.resolve('./sidebars.js'),
+  sidebarPath: './sidebars.ts',
   editUrl:
     'https://github.com/FormidableLabs/react-native-ama/tree/main/website',
   remarkPlugins: [
