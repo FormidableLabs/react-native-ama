@@ -205,6 +205,12 @@ const config: Config = {
           ],
         },
         {
+          type: 'docsVersionDropdown',
+          dropdownItemsAfter: [{ to: '/versions', label: 'All versions' }], // Add additional dropdown items at the end of the dropdown.
+          // dropdownActiveClassDisabled: true, //Do not add the link active class when browsing docs.
+          position: 'right',
+        },
+        {
           href: 'https://github.com/FormidableLabs/react-native-ama',
           className: 'header-github-link',
           'aria-label': 'GitHub Repository',
