@@ -9,42 +9,46 @@ This is a generic form field element capable of receiving focus from a [TextInpu
 ```jsx
 import { Form } from 'react-native-ama';
 
-<Form.Field id="field-id">
-  <Pressable
-    accessibilityRole="switch"
-    accessibilityLabel={accessibilityLabel}
-    style={[styles.container, style]}
-    onPress={onValueChange}
-    checked={value}>
-    {isLabelPositionLeft ? label : null}
-    {children ? (
-      children
-    ) : (
-      <Switch
-        {...rest}
+export const CustomForm = () => {
+  return (
+    <Form.Field id="field-id">
+      <Pressable
+        accessibilityRole="switch"
         accessibilityLabel={accessibilityLabel}
-        style={switchStyle}
-        value={value}
-        onValueChange={onValueChange}
-        accessibilityElementsHidden={true}
-        importantForAccessibility="no"
-      />
-    )}
-    {isLabelPositionLeft ? null : label}
-  </Pressable>
-</Form.Field>
+        style={[styles.container, style]}
+        onPress={onValueChange}
+        checked={value}>
+        {isLabelPositionLeft ? label : null}
+        {children ? (
+          children
+        ) : (
+          <Switch
+            {...rest}
+            accessibilityLabel={accessibilityLabel}
+            style={switchStyle}
+            value={value}
+            onValueChange={onValueChange}
+            accessibilityElementsHidden={true}
+            importantForAccessibility="no"
+          />
+        )}
+        {isLabelPositionLeft ? null : label}
+      </Pressable>
+    </Form.Field>
+  );
+};
 ```
 
 ## Props
 
 The component extends the React Native [TouchableWithoutFeedbackProps](https://reactnative.dev/docs/touchablewithoutfeedback#props).
 
-### `id` 
+### `id`
 
-The field ID. This info is stored, with the field `ref`, inside the [<Form />](./Form) component.
+The field ID. This info is stored, with the field `ref`, inside the [`<Form />`](./Form) component.
 
 | Type   | Default   |
-|--------|-----------|
+| ------ | --------- |
 | string | undefined |
 
 ### `ref`
@@ -52,7 +56,7 @@ The field ID. This info is stored, with the field `ref`, inside the [<Form />](.
 The field reference.
 
 | Type            | Default   |
-|-----------------|-----------|
+| --------------- | --------- |
 | React.RefObject | undefined |
 
 ### `hasValidation`

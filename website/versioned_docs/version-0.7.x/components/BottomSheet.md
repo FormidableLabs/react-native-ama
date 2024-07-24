@@ -1,4 +1,4 @@
-import { Required } from '@site/src/components'
+import { Required } from '@site/src/components';
 
 # BottomSheet
 
@@ -67,9 +67,9 @@ The auto-close will respect the user [Timed action](./guidelines/timed-actions) 
 
 The style to use for the bottom sheet panel
 
-<!-- | Type      | Default                                    |
-| --------- | ------------------------------------------ |
-| ViewStyle | { width: '100%', backgroundColor: '#fff' } | -->
+| Type      | Default                                      |
+| --------- | -------------------------------------------- |
+| ViewStyle | `{ width: '100%', backgroundColor: '#fff' }` |
 
 ### <Required /> `closeActionAccessibilityLabel`
 
@@ -91,17 +91,17 @@ The bottom sheet footer component.
 
 It can be used to either disable the default handle "line" or replace it with a custom component.
 
-| Type                  |
-| --------------------- |
-| JSX.Element \| 'none' |
+| Type                    |
+| ----------------------- |
+| JSX.Element \| `'none'` |
 
 ### `handleStyle`
 
 The style for the draggable line
 
-<!-- | Type      | Default                                                                                                                  |
-|-----------|--------------------------------------------------------------------------------------------------------------------------|
-| ViewStyle | { width: 48, height: 4, backgroundColor: 'grey', alignSelf: 'center', marginBottom: 24, borderRadius: 2, marginTop: 12 } | -->
+| Type      | Default                                                                                                                    |
+| --------- | -------------------------------------------------------------------------------------------------------------------------- |
+| ViewStyle | `{ width: 48, height: 4, backgroundColor: 'grey', alignSelf: 'center', marginBottom: 24, borderRadius: 2, marginTop: 12 }` |
 
 ### `headerComponent`
 
@@ -147,9 +147,9 @@ The opacity of the overlay.
 
 The style to use for the overlay
 
-<!-- | Type      | Default                                            |
-|-----------|----------------------------------------------------|
-| ViewStyle | { backgroundColor: 'rgba(0, 0, 0, 0.5)', flex: 1 } | -->
+| Type      | Default                                              |
+| --------- | ---------------------------------------------------- |
+| ViewStyle | `{ backgroundColor: 'rgba(0, 0, 0, 0.5)', flex: 1 }` |
 
 ### `panGestureEnabled`
 
@@ -169,7 +169,7 @@ If true, the bottom sheet will not be closed when the user taps on the overlay; 
 
 ### `scrollEnabled`
 
-Enabled/disables the scrolling of the [<ScrollView />](https://reactnative.dev/docs/scrollview) that wraps the BottomSheet content
+Enabled/disables the scrolling of the [`<ScrollView />`](https://reactnative.dev/docs/scrollview) that wraps the BottomSheet content
 
 | Type    | Default |
 | ------- | ------- |
@@ -177,7 +177,7 @@ Enabled/disables the scrolling of the [<ScrollView />](https://reactnative.dev/d
 
 ### `scrollViewProps`
 
-The props to use for the [<ScrollView />](https://reactnative.dev/docs/scrollview) that wraps the BottomSheet content
+The props to use for the [`<ScrollView />`](https://reactnative.dev/docs/scrollview) that wraps the BottomSheet content
 
 | Type            | Default   |
 | --------------- | --------- |
