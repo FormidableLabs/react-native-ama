@@ -7,7 +7,6 @@ import {
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Heading from '@theme/Heading';
 import Layout from '@theme/Layout';
-import React from 'react';
 
 const docsPluginId = undefined; // Default docs plugin instance
 

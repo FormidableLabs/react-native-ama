@@ -1,6 +1,5 @@
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
-import React from 'react';
 
 import { Divider } from '../components/landing/divider';
 import { LandingBanner } from '../components/landing/landing-banner';
