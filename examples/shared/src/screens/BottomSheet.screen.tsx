@@ -9,7 +9,7 @@ import { FormScreen } from './Form.screen';
 
 type TimedActionProps = {};
 
-export const BottomSheetScreen: React.FC<TimedActionProps> = ({ children }) => {
+export const BottomSheetScreen: React.FC<TimedActionProps> = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
