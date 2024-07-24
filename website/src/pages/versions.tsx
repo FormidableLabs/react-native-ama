@@ -7,6 +7,7 @@ import {
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Heading from '@theme/Heading';
 import Layout from '@theme/Layout';
+import React from 'react';
 
 const docsPluginId = undefined; // Default docs plugin instance
 
@@ -38,12 +39,12 @@ export default function Version(): JSX.Element {
   function matchVersion(wildCardVersion: string) {
     const regex = new RegExp('^' + wildCardVersion.replace('.x', '\\.'));
 
-    return (customFields.latestMinorVersions as string[]).filter(version =>
+    return (customFields?.latestMinorVersions as string[]).filter(version =>
       regex.test(version),
     );
   }
 
-  const repoUrl = `https://github.com/${customFields.pastOrganizationName}/${projectName}`;
+  const repoUrl = `https://github.com/${customFields?.pastOrganizationName}/${projectName}`;
 
   return (
     <Layout
