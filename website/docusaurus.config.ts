@@ -33,6 +33,10 @@ const config: Config = {
   onBrokenLinks: 'ignore',
   onBrokenMarkdownLinks: 'warn',
   organizationName: 'NearForm',
+  customFields: {
+    pastOrganizationName: 'FormidableLabs',
+    latestMinorVersions: ['0.7.5', '1.0.1'], // this is the latest patch version for each minor version
+  },
   projectName: 'react-native-ama',
 
   i18n: {
