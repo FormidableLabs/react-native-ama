@@ -168,6 +168,10 @@ const config: Config = {
       },
       items: [
         {
+          label: 'Documentation',
+          to: '/docs/',
+        },
+        {
           label: 'Guidelines',
           to: '/guidelines/',
         },
@@ -177,6 +181,7 @@ const config: Config = {
         },
         {
           label: 'Packages',
+          type: 'dropdown',
           items: [
             {
               label: 'Core',
