@@ -176,12 +176,17 @@ const config: Config = {
           to: '/docs/',
         },
         {
+          type: 'docsVersion',
+          to: 'docs/guidelines',
+          position: 'left',
           label: 'Guidelines',
           to: '/guidelines/',
         },
         {
+          type: 'docsVersion',
           label: 'Checklist',
-          to: '/checklist/',
+          position: 'left',
+          to: 'docs/checklist',
         },
         {
           label: 'Packages',
