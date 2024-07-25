@@ -45,11 +45,11 @@ const config: Config = {
   },
   presets: [
     [
-      'classic',
+      '@docusaurus/preset-classic',
       {
         docs: {
           path: 'docs',
-          routeBasePath: '/',
+          // routeBasePath: 'docs',
           ...defaultPresets,
         },
         pages: {
@@ -216,7 +216,7 @@ const config: Config = {
         {
           type: 'docsVersionDropdown',
           dropdownItemsAfter: [{ to: '/versions', label: 'All versions' }], // Add additional dropdown items at the end of the dropdown.
-          // dropdownActiveClassDisabled: true, //Do not add the link active class when browsing docs.
+          dropdownActiveClassDisabled: true, //Do not add the link active class when browsing docs.
           position: 'right',
         },
         {
