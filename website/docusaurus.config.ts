@@ -139,24 +139,24 @@ const config: Config = {
         ...defaultPresets,
       },
     ],
-    [
-      '@docusaurus/plugin-content-docs',
-      {
-        id: 'guidelines',
-        path: '../docs/guidelines',
-        routeBasePath: '/guidelines/',
-        ...defaultPresets,
-      },
-    ],
-    [
-      '@docusaurus/plugin-content-docs',
-      {
-        id: 'checklist',
-        path: '../docs/checklist',
-        routeBasePath: '/checklist/',
-        ...defaultPresets,
-      },
-    ],
+    // [
+    //   '@docusaurus/plugin-content-docs',
+    //   {
+    //     id: 'guidelines',
+    //     path: '../docs/guidelines',
+    //     routeBasePath: 'guidelines',
+    //     ...defaultPresets,
+    //   },
+    // ],
+    // [
+    //   '@docusaurus/plugin-content-docs',
+    //   {
+    //     id: 'checklist',
+    //     path: '../docs/checklist',
+    //     routeBasePath: '/checklist/',
+    //     ...defaultPresets,
+    //   },
+    // ],
   ],
   themeConfig: {
     docs: {
