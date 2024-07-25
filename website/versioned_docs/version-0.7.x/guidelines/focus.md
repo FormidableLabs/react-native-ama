@@ -10,7 +10,7 @@ When navigating to a new screen, make sure that the focus always starts from the
 
 :::tip
 
-The built-in [<Text />](../components/Text) has the `autofocus` property that automatically sets the focus when it gets rendered for the first time.
+The built-in [`<Text />`](../components/Text) has the `autofocus` property that automatically sets the focus when it gets rendered for the first time.
 
 :::
 
@@ -39,6 +39,5 @@ Make sure that the user cannot focus on any element underneath the drawer/bottom
 - [AutofocusContainer](../components/autofocuscontainer)
 - [BottomSheet](../components/bottomsheet)
 - [Text](../components/text)
-
 
 [^1]: According to this study: [https://www.gatsbyjs.com/blog/2019-07-11-user-testing-accessible-client-routing/](https://www.gatsbyjs.com/blog/2019-07-11-user-testing-accessible-client-routing/) the solution that worked better for the mast majority was: _Shift focus to a heading_
