@@ -32,12 +32,12 @@ If AMA detects an accessibility issue:
 - Show a banner to inform that something went wrong
 - Provide a guideline link to the issue
 
-![Example of a failed accessibility check by AMA](https://github.com/FormidableLabs/react-native-ama/blob/main/docs/ama-demo.png?raw=true)
+![Example of a failed accessibility check by AMA](https://github.com/FormidableLabs/react-native-ama/blob/main/website/docs/ama/ama-demo.png?raw=true)
 _Example of a failed accessibility check by AMA_
 
 <br />
 
-![Additional information and guideline link provided by AMA](https://github.com/FormidableLabs/react-native-ama/blob/main/docs/ama-console-error.png?raw=true)
+![Additional information and guideline link provided by AMA](https://github.com/FormidableLabs/react-native-ama/blob/main/website/docs/ama-console-error.png?raw=true)
 _Additional information and guideline link provided by AMA_
 
 [^1]: The accessibility support in React Native is [not fully complete](https://github.com/facebook/react-native/projects/15).
