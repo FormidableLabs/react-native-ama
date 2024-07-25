@@ -2,6 +2,7 @@
 ama_severity: Serious
 ama_category: Perceivable
 ama_affected_users: Visual, Mobility
+displayed_sidebar: guidelines
 ---
 
 # Lists & Grids

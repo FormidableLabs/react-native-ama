@@ -3,6 +3,7 @@ ama_severity: Serious
 ama_category: Operable
 ama_affected_users: Visual, Mobility, Cognitive
 ama_success_criterion: 3.3@https://www.w3.org/WAI/WCAG21/Understanding/input-assistance
+displayed_sidebar: guidelines
 ---
 
 import EmailFieldWithError from './email-field-with-error.png';

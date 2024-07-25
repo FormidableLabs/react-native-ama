@@ -3,6 +3,7 @@ ama_severity: Critical
 ama_category: Operable
 ama_affected_users: Visual, Motor, Cognitive
 ama_success_criterion: 2.3.3@https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html
+displayed_sidebar: guidelines
 ---
 
 # BottomSheet & Drawer

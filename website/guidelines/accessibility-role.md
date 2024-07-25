@@ -3,6 +3,7 @@ ama_severity: Critical
 ama_category: Operable
 ama_affected_users: Visual, Motor
 ama_success_criterion: 4.1.2@https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html
+displayed_sidebar: guidelines
 ---
 
 # Accessibility Role

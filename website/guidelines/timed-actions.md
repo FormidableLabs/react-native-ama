@@ -3,6 +3,7 @@ ama_severity: Serious
 ama_category: Perceivable
 ama_affected_users: Visual, Mobility
 ama_success_criterion: 2.2.1@https://www.w3.org/WAI/WCAG21/Understanding/timing-adjustable
+displayed_sidebar: guidelines
 ---
 
 # Timed actions

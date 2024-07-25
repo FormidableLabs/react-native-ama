@@ -3,6 +3,7 @@ ama_severity: Serious
 ama_category: Operable
 ama_affected_users: Visual, Mobility
 ama_success_criterion: 2.4.6@https://www.w3.org/WAI/WCAG21/Understanding/headings-and-labels
+displayed_sidebar: guidelines
 ---
 
 import AndroidListFeature from './android-list-feature.gif';

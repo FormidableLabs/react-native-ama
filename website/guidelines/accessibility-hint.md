@@ -1,3 +1,7 @@
+---
+displayed_sidebar: guidelines
+---
+
 # Accessibility Hint
 
 Accessibility hint helps users understand the element's purpose when the accessibility label alone is not enough.

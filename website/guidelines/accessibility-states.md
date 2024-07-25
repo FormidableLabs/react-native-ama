@@ -3,6 +3,7 @@ ama_severity: Serious
 ama_category: Understandable
 ama_affected_users: Visual
 ama_success_criterion: 4.1.2@https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html
+displayed_sidebar: guidelines
 ---
 
 # Accessibility States

@@ -145,6 +145,21 @@ const config: Config = {
         id: 'guidelines',
         path: 'guidelines',
         routeBasePath: 'guidelines',
+        async sidebarItemsGenerator({
+          defaultSidebarItemsGenerator,
+          numberPrefixParser,
+          item,
+          version,
+          docs,
+          categoriesMetadata,
+          isCategoryIndex,
+        }) {
+          // Example: return an hardcoded list of static sidebar items
+          return [
+            { type: 'doc', id: 'bottomsheet' },
+            { type: 'doc', id: 'bottomsheet' },
+          ];
+        },
         ...defaultPresets,
       },
     ],

@@ -3,6 +3,7 @@ ama_severity: Serious
 ama_category: Operable
 ama_affected_users: Visual, Motor
 ama_success_criterion: 2.3.3@https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html
+displayed_sidebar: guidelines
 ---
 
 # Carousel

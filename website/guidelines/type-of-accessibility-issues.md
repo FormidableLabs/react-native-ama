@@ -1,5 +1,6 @@
 ---
 sidebar_position: 2
+displayed_sidebar: guidelines
 ---
 
 # Type of Accessibility Issues

@@ -3,6 +3,7 @@ ama_severity: Serious
 ama_category: Perceivable
 ama_affected_users: Visual, Mobility
 ama_success_criterion: 2.1@https://www.w3.org/WAI/WCAG21/Understanding/distinguishable
+displayed_sidebar: guidelines
 ---
 
 # Text
