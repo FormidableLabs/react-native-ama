@@ -1,7 +1,3 @@
----
-sidebar_position: 1
----
-
 # Mobile Accessibility Guidelines
 
 This section contains accessibility best practices for native mobile apps.
