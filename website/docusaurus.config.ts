@@ -48,7 +48,7 @@ const config: Config = {
       'classic',
       {
         docs: {
-          path: '../docs/ama',
+          path: 'docs',
           routeBasePath: '/',
           ...defaultPresets,
         },
