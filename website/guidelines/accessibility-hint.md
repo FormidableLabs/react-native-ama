@@ -8,12 +8,15 @@ For example:
   accessible={true}
   accessibilityLabel="Like"
   accessibilityHint="Likes the song"
-  onPress={onPress}>
-  <View style={styles.button}>lib
+  onPress={onPress}
+>
+  <View style={styles.button}>
+    lib
     <Text style={styles.buttonText}>Like</Text>
   </View>
 </TouchableOpacity>
 ```
+
 In the example announcing only "Like" might be not enough for a screen reader user, so we've added the extra information: "Likes the song."
 
 :::danger
