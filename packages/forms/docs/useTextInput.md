@@ -2,10 +2,16 @@
 
 This hook can be used to create a custom TextInput with all the [accessibility improvements](#accessibility-improvements) needed.
 
+:::note
+
+To use `useTextInput` it must be wrapped by the `<Form>` provider component from this package.
+:::
+
 ## Usage
 
 ```jsx
-import { useTextInput } from 'react-native-ama';
+// MyTextInput
+import { useTextInput } from '@react-native-ama/forms';
 
 const MyTextInput = () => {
   const { ref, ...rest } = useTextInput({ ...requiredProps });
@@ -83,7 +89,7 @@ This parameter specifies the next form field to focus on when the next button is
 
 ### `id`
 
-The field ID. This info is stored, with the field `ref`, inside the [<Form />](./Form) component.
+The field ID. This info is stored, with the field `ref`, inside the [`<Form />`](./Form.md) component.
 
 | Type   | Default   |
 | ------ | --------- |
@@ -97,7 +103,15 @@ The ID of the next field to focus when the user taps on the `next` button of the
 | ------ | --------- |
 | string | undefined |
 
-### <Required /> `hasValidation`
+### `required`
+
+This property is used to set the input as required and will display and error if a value has not been set
+
+| Type    | Default   |
+| ------- | --------- |
+| boolean | undefined |
+
+### `hasValidation`
 
 This property is used to know if the input can display an error, in case of failed validation; and if so is used to:
 

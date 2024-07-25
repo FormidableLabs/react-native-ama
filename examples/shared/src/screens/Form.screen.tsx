@@ -1,5 +1,5 @@
 import { Form, TextInput } from '@react-native-ama/forms';
-import { SwitchListItem, Text } from '@react-native-ama/react-native';
+import { Text } from '@react-native-ama/react-native';
 import * as React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 

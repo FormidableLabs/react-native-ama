@@ -6,14 +6,14 @@ sidebar_position: 1
 
 # Intro
 
-The core package `react-native-ama` offers essential hooks and components needed to create an app with accessibility in mind.
+The core package `@react-native-ama/core` offers essential hooks and components needed to create an app with accessibility in mind.
 
 ## Installation
 
-Install the `react-native-ama` package with your favourite package manager:
+Install the `@react-native-ama/core` package with your favourite package manager:
 
 ```bash npm2yarn
-npm install -D react-native-ama
+npm install  @react-native-ama/core
 ```
 
 ### Config File

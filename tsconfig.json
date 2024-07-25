@@ -25,6 +25,7 @@
     "skipLibCheck": true
   },
   "exclude": [
+    "website",
     "**/**/dist",
     "**/**/node_modules",
     "node_modules",
