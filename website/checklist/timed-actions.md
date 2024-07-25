@@ -1,3 +1,7 @@
+---
+displayed_sidebar: checklist
+---
+
 # Timed Actions
 
 | User    | I Can                                                                        |

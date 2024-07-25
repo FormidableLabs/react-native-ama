@@ -1,3 +1,7 @@
+---
+displayed_sidebar: checklist
+---
+
 import Button from './button.png';
 
 # Button

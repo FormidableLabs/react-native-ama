@@ -1,3 +1,7 @@
+---
+displayed_sidebar: checklist
+---
+
 import Grid from './grid.png';
 
 # List & Grids

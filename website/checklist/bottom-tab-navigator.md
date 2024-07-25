@@ -1,3 +1,7 @@
+---
+displayed_sidebar: checklist
+---
+
 import TabBar from './tabbar.png';
 
 # Bottom Tab Navigator

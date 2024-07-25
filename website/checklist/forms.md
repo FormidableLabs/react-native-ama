@@ -1,3 +1,7 @@
+---
+displayed_sidebar: checklist
+---
+
 import FormDisabled from './form-disabled.png';
 import FormError from './form-error.png';
 import FormFocused from './form-focused.png';

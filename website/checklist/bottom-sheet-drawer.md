@@ -1,3 +1,7 @@
+---
+displayed_sidebar: checklist
+---
+
 import BottomSheet from './bottomsheet.png';
 
 # BottomSheet & Drawers

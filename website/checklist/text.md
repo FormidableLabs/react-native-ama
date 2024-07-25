@@ -1,3 +1,7 @@
+---
+displayed_sidebar: checklist
+---
+
 import Text from './text.gif';
 
 # Text
