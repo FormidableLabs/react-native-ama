@@ -139,24 +139,39 @@ const config: Config = {
         ...defaultPresets,
       },
     ],
-    // [
-    //   '@docusaurus/plugin-content-docs',
-    //   {
-    //     id: 'guidelines',
-    //     path: '../docs/guidelines',
-    //     routeBasePath: 'guidelines',
-    //     ...defaultPresets,
-    //   },
-    // ],
-    // [
-    //   '@docusaurus/plugin-content-docs',
-    //   {
-    //     id: 'checklist',
-    //     path: '../docs/checklist',
-    //     routeBasePath: '/checklist/',
-    //     ...defaultPresets,
-    //   },
-    // ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'guidelines',
+        path: 'guidelines',
+        routeBasePath: 'guidelines',
+        async sidebarItemsGenerator({
+          defaultSidebarItemsGenerator,
+          numberPrefixParser,
+          item,
+          version,
+          docs,
+          categoriesMetadata,
+          isCategoryIndex,
+        }) {
+          // Example: return an hardcoded list of static sidebar items
+          return [
+            { type: 'doc', id: 'bottomsheet' },
+            { type: 'doc', id: 'bottomsheet' },
+          ];
+        },
+        ...defaultPresets,
+      },
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'checklist',
+        path: 'checklist',
+        routeBasePath: '/checklist/',
+        ...defaultPresets,
+      },
+    ],
   ],
   themeConfig: {
     docs: {
@@ -176,17 +191,14 @@ const config: Config = {
           to: '/docs/',
         },
         {
-          type: 'docsVersion',
-          to: 'docs/guidelines',
           position: 'left',
           label: 'Guidelines',
           to: '/guidelines/',
         },
         {
-          type: 'docsVersion',
           label: 'Checklist',
           position: 'left',
-          to: 'docs/checklist',
+          to: '/checklist/',
         },
         {
           label: 'Packages',
