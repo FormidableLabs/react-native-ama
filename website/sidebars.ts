@@ -1,20 +1,22 @@
 import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
 
-const SIDEBAR_POSITION_REGEX = /sidebar_position:\s?(\d+)/;
+const SIDEBAR_POSITION_REGEX = /sidebar_position:\s?(\d+)/m;
+const TITLE_EXTRACTOR = /^#\s?(.*)$/m;
+
 /**
  * Looks like Docusaurus has an issue autogenerating docs for multi doc instance
  * https://stackoverflow.com/questions/77528478/sidebar-wont-autogenerate-with-docs-multi-instances-on-docusaurus
  */
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
+function capitalizeFirstLetter(s: string) {
+  return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-function autoGenerate(path) {
+function autoGenerate(path: string) {
   const fs = require('fs');
   const files = fs.readdirSync(path);
 
   return files
-    .map(file => {
+    .map((file: string) => {
       if (!file.endsWith('.md')) {
         return null;
       }
@@ -25,10 +27,11 @@ function autoGenerate(path) {
         flag: 'r',
       });
       const position = content.match(SIDEBAR_POSITION_REGEX)?.[1];
+      const title = content.match(TITLE_EXTRACTOR)?.[1];
 
       return {
         type: 'link',
-        label: capitalizeFirstLetter(name.replace('-', ' ')),
+        label: title ?? capitalizeFirstLetter(name.replace('-', ' ')),
         href: name,
         autoAddBaseUrl: true,
         position: parseInt(position ?? 0),
