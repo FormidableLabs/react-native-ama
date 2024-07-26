@@ -275,12 +275,6 @@ const config: Config = {
       selector: '.zoom-me',
     },
   } satisfies ThemeConfig,
-      scripts: [
-        {
-            src: '/custom.js'
-        }
-    ]
-
 };
 
 export default config;
