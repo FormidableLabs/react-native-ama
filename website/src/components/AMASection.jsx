@@ -75,12 +75,12 @@ const AffectedUsers = ({ users }) => {
           `../guidelines/type-of-accessibility-issues#${user.toLowerCase()}`;
 
         return link ? (
-          <>
+          <React.Fragment key={link}>
             <a href={link} key={user}>
               {user}
             </a>
             {index < total ? ', ' : null}
-          </>
+          </React.Fragment>
         ) : (
           user
         );
