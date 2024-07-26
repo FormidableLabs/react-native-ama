@@ -8,6 +8,8 @@ displayed_sidebar: guidelines
 
 # Timed actions
 
+<AMASection />
+
 Timed actions refer to tasks or functions within an app that are set to occur after a specific duration or at particular intervals.
 When implementing timed actions, it's essential to take into account the following considerations to ensure accessibility and a positive user experience:
 

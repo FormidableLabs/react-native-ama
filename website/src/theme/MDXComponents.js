@@ -26,6 +26,7 @@ import {
   Wrong,
   Yes,
   iOS,
+  AMASection,
 } from '../components';
 
 export default {
@@ -57,4 +58,5 @@ export default {
   AssistiveTechnology,
   Padding,
   Tick,
+  AMASection,
 };

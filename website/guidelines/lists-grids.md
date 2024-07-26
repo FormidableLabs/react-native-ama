@@ -9,6 +9,7 @@ displayed_sidebar: guidelines
 
 ## Filtering
 
+<AMASection />
 <Serious label padding />
 
 When a list changes because of something the user does, like typing in a search box or clicking a filter button, the screen reader should tell the user how many items are now showing.

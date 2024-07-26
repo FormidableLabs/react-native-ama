@@ -8,6 +8,8 @@ displayed_sidebar: guidelines
 
 # Animations
 
+<AMASection />
+
 Some people might turn off animation on the device because moving content can distract them, or they might be adversely affected by animations or other reasons.
 
 ## Expectations

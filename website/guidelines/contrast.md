@@ -8,6 +8,8 @@ displayed_sidebar: guidelines
 
 # Contrast
 
+<AMASection />
+
 Contrast refers to the difference in luminance or colour that makes an object (or its representation in an image or display) distinguishable from its surroundings.
 
 ## Expectations

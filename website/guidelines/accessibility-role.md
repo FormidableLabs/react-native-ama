@@ -8,6 +8,8 @@ displayed_sidebar: guidelines
 
 # Accessibility Role
 
+<AMASection />
+
 The [accessibilityRole](https://reactnative.dev/docs/accessibility#accessibilityrole) is required for all interactive components to communicate their purpose to assistive technology users.
 
 ## Expectations

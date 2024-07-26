@@ -5,3 +5,4 @@ export * from './required';
 export * from './platforms';
 export * from './feature';
 export * from './padding';
+export * from './AMASection';

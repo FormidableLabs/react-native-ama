@@ -8,6 +8,8 @@ displayed_sidebar: guidelines
 
 # Carousel
 
+<AMASection />
+
 When implementing a Carousel, it's essential to ensure that users can easily navigate through its items.
 
 ## Expectations

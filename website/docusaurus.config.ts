@@ -18,6 +18,7 @@ const defaultPresets = {
   admonitions: {
     keywords: ['dev', 'note', 'tip', 'caution', 'danger', 'info', 'warn'],
   },
+  breadcrumbs: true
 };
 
 const config: Config = {
@@ -274,6 +275,12 @@ const config: Config = {
       selector: '.zoom-me',
     },
   } satisfies ThemeConfig,
+      scripts: [
+        {
+            src: '/custom.js'
+        }
+    ]
+
 };
 
 export default config;

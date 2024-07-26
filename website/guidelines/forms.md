@@ -11,6 +11,7 @@ import NextKeyKeyboard from './next-key.jpg';
 
 # Forms
 
+<AMASection />
 <AssistiveTechnology name="Assistive Technologies" title="Screen Reader, Keyboard and Switch" />
 
 ## Labels
