@@ -249,10 +249,10 @@
  }
 
  .ama-icon-label-strong {
-     textdecoration: underline;
-     textunderlineoffset: 4;
+     text-decoration: underline;
+     text-underline-offset: 4;
      display: inline-block;
-     verticalalign: top;
+     vertical-align: top;
  }
 
  .anchor .ama-icon-label {

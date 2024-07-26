@@ -13,7 +13,7 @@ export const DevOnly = props => {
   );
 };
 
-export const DevOnlyChecks = props => {
+export const DevOnlyChecks = () => {
   return (
     <Admonition type="dev">
       Runtime checks are only performed when <code>__DEV__</code> is set to{' '}
