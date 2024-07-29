@@ -183,7 +183,7 @@ The props to use for the [`<ScrollView />`](https://reactnative.dev/docs/scrollv
 | --------------- | --------- |
 | scrollViewProps | undefined |
 
-### <Required /> ` `topInset`
+### <Required /> `topInset`
 
 The value is used to calculate the correct max ScrollView height.
 
