@@ -219,7 +219,7 @@ A testID to be used by the BottomSheet. The `Modal` component within the `Bottom
 | ------ |
 | string |
 
-### <Required /> ` `topInset`
+### <Required /> `topInset`
 
 The value is used to calculate the correct max ScrollView height.
 
@@ -239,9 +239,9 @@ The BottomSheet visibility
 
 A `ref` object used to call `close` and `isVisible` functions on the bottomSheet
 
-| Type                                                      |
-| --------------------------------------------------------- | --- |
-| { close: () => Promise<void>; isVisible: () => boolean; } |     |
+| Type                                                        |
+| ----------------------------------------------------------- |
+| `{ close: () => Promise<void>; isVisible: () => boolean; }` |
 
 ## Known issues
 
