@@ -52,12 +52,16 @@ export type BottomSheetProps = {
   panGestureEnabled?: boolean;
   persistent?: boolean;
   useScrollView?: boolean;
+  scrollViewProps?: Omit<
+    ScrollViewWrapperProps,
+    'testID' | 'maxScrollViewHeight'
+  >;
   testID?: string;
   topInset: number;
   visible: boolean;
   ref?: React.RefObject<BottomSheetActions>;
   shouldHandleKeyboardEvents?: boolean;
-} & Omit<ScrollViewWrapperProps, 'testID' | 'maxScrollViewHeight'>;
+};
 
 export type BottomSheetActions = {
   close: () => Promise<void>;
@@ -84,7 +88,6 @@ export const BottomSheet = React.forwardRef<
       animationDuration = 300,
       closeDistance = 0.3,
       handleComponent,
-      scrollEnabled = false,
       scrollViewProps,
       useScrollView,
       persistent = false,
@@ -335,7 +338,6 @@ export const BottomSheet = React.forwardRef<
                     </View>
                     <ContentWrapper
                       {...scrollViewProps}
-                      scrollEnabled={scrollEnabled}
                       testID={`${testID}-scrollview`}
                       maxScrollViewHeight={maxScrollViewHeight}>
                       {children}
@@ -414,25 +416,22 @@ const GestureHandler = ({
 };
 
 type ScrollViewWrapperProps = {
-  scrollViewProps?: Omit<ScrollViewProps, 'scrollEnabled'>;
-  scrollEnabled?: boolean;
   testID?: string;
   maxScrollViewHeight: number;
-};
+} & ScrollViewProps;
 
-const ScrollViewWrapper: React.FC<
-  React.PropsWithChildren<ScrollViewWrapperProps>
-> = ({
-  scrollViewProps,
-  scrollEnabled,
+const ScrollViewWrapper: React.FC<ScrollViewWrapperProps> = ({
+  scrollEnabled = false,
   testID,
   maxScrollViewHeight,
   children,
+  style,
+  ...rest
 }) => {
   return (
     <ScrollView
-      {...scrollViewProps}
-      style={[{ maxHeight: maxScrollViewHeight }, scrollViewProps?.style]}
+      {...rest}
+      style={[{ maxHeight: maxScrollViewHeight }, style]}
       scrollEnabled={scrollEnabled}
       testID={`${testID}-scrollview`}>
       {children}
