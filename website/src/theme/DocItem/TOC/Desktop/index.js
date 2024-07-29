@@ -11,7 +11,7 @@ export default function DesktopWrapper(props) {
 
   return shouldRenderAMASidebar ? (
     <div className="with-ama-sidebar">
-      <AMASidebar className="ama-sidebar" />
+      <AMASidebar />
       <Desktop {...props} />
     </div>
   ) : (
