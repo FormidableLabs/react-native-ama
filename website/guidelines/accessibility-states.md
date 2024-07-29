@@ -8,6 +8,8 @@ displayed_sidebar: guidelines
 
 # Accessibility States
 
+<AMASection />
+
 Accessibility states are specific attributes that can be added to a component to communicate its current status to assistive technology.
 
 ## aria-busy

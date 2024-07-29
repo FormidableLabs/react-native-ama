@@ -8,6 +8,7 @@ displayed_sidebar: guidelines
 
 # Focus
 
+<AMASection />
 <AssistiveTechnology name="Assistive Technologies" title="Screen Reader, Keyboard and Switch" />
 
 It's crucial to ensure screen readers and other assistive technologies can navigate your app in a logical order, making sure that content is separate with meaningful titles.

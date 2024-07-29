@@ -10,6 +10,8 @@ import AndroidListFeature from './android-list-feature.gif';
 
 # Headers
 
+<AMASection />
+
 Headers are crucial in organizing and structuring content in a mobile app. They provide a clear hierarchy, guiding users through the content and making it more accessible and understandable.
 In React Native, any text element can be designated as a header by assigning the [accessibilityRole](/guidelines/accessibility-role) property to "header".
 

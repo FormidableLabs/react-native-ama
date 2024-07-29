@@ -17,7 +17,7 @@ function autoGenerate(path: string) {
 
   return files
     .map((file: string) => {
-      if (!file.endsWith('.md')) {
+      if (!file.endsWith('.md') || file === 'index.md') {
         return null;
       }
 

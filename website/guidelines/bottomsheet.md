@@ -8,6 +8,8 @@ displayed_sidebar: guidelines
 
 # BottomSheet & Drawer
 
+<AMASection />
+
 When dealing with Drawers/BottomSheets, we need to take care of:
 
 1. Check if animations are enabled

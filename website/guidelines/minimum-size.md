@@ -7,6 +7,7 @@ displayed_sidebar: guidelines
 
 # Minimum Size
 
+<AMASection />
 AMA performs a minimum size check for tappable elements like Pressable, Button, etc. The expected minimum size is:
 
 - [44x44px on iOS](https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/adaptivity-and-layout/)

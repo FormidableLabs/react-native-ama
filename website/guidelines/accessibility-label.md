@@ -8,6 +8,8 @@ displayed_sidebar: guidelines
 
 # Accessibility Label
 
+<AMASection />
+
 The [accessibilityLabel](https://reactnative.dev/docs/accessibility#accessibilitylabel) is the text that assistive technology reads when the component is focused and AMA requires it by tappable elements.
 
 ## Expectations

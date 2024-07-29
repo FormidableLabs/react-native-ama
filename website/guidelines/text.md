@@ -8,6 +8,8 @@ displayed_sidebar: guidelines
 
 # Text
 
+<AMASection />
+
 The text in our app must be clear and easy for everyone to read.
 While this may seem obvious, sometimes, design choices can unintentionally make it harder for some people, especially those with disabilities, to understand the content. We must be mindful of this when making design decisions.
 
