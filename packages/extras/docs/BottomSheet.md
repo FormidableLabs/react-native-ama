@@ -187,13 +187,13 @@ If true, the bottom sheet will not be closed when the user taps on the overlay; 
 | ------- | ------- |
 | boolean | true    |
 
-### `useScrollView`
+### `hasScrollableContent`
 
 If true, `children` of `BottomSheet` are wrapped in a [`<ScrollView />`](https://reactnative.dev/docs/scrollview)
 
 | Type    | Default |
 | ------- | ------- |
-| boolean | false   |
+| boolean | true   |
 
 ### `scrollViewProps`
 

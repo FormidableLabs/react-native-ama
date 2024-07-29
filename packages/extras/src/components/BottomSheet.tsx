@@ -51,7 +51,7 @@ export type BottomSheetProps = {
   overlayStyle?: ViewStyle | ViewStyle[];
   panGestureEnabled?: boolean;
   persistent?: boolean;
-  useScrollView?: boolean;
+  hasScrollableContent?: boolean;
   scrollViewProps?: Omit<
     ScrollViewWrapperProps,
     'testID' | 'maxScrollViewHeight'
@@ -89,7 +89,7 @@ export const BottomSheet = React.forwardRef<
       closeDistance = 0.3,
       handleComponent,
       scrollViewProps,
-      useScrollView,
+      hasScrollableContent = true,
       persistent = false,
       autoCloseDelay,
       panGestureEnabled = true,
@@ -261,7 +261,9 @@ export const BottomSheet = React.forwardRef<
       ? 1
       : 0;
 
-    const ContentWrapper = useScrollView ? ScrollViewWrapper : FragmentWrapper;
+    const ContentWrapper = hasScrollableContent
+      ? ScrollViewWrapper
+      : FragmentWrapper;
 
     return (
       <Modal
