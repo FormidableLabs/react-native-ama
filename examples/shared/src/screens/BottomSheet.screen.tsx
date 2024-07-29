@@ -30,8 +30,8 @@ export const BottomSheetScreen: React.FC<TimedActionProps> = () => {
         }
         scrollViewProps={{
           style: styles.modalViewContent,
-        }}
-        scrollEnabled={true}>
+          scrollEnabled: true,
+        }}>
         <FormScreen />
       </BottomSheet>
       <CTAPressable

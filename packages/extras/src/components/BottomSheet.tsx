@@ -51,8 +51,11 @@ export type BottomSheetProps = {
   overlayStyle?: ViewStyle | ViewStyle[];
   panGestureEnabled?: boolean;
   persistent?: boolean;
-  scrollEnabled?: boolean;
-  scrollViewProps?: Omit<ScrollViewProps, 'scrollEnabled'>;
+  hasScrollableContent?: boolean;
+  scrollViewProps?: Omit<
+    ScrollViewWrapperProps,
+    'testID' | 'maxScrollViewHeight'
+  >;
   testID?: string;
   topInset: number;
   visible: boolean;
@@ -85,8 +88,8 @@ export const BottomSheet = React.forwardRef<
       animationDuration = 300,
       closeDistance = 0.3,
       handleComponent,
-      scrollEnabled = false,
       scrollViewProps,
+      hasScrollableContent = true,
       persistent = false,
       autoCloseDelay,
       panGestureEnabled = true,
@@ -258,6 +261,10 @@ export const BottomSheet = React.forwardRef<
       ? 1
       : 0;
 
+    const ContentWrapper = hasScrollableContent
+      ? ScrollViewWrapper
+      : FragmentWrapper;
+
     return (
       <Modal
         animationType="none"
@@ -331,16 +338,12 @@ export const BottomSheet = React.forwardRef<
                       }}>
                       {headerComponent}
                     </View>
-                    <ScrollView
+                    <ContentWrapper
                       {...scrollViewProps}
-                      style={[
-                        { maxHeight: maxScrollViewHeight },
-                        scrollViewProps?.style,
-                      ]}
-                      scrollEnabled={scrollEnabled}
-                      testID={`${testID}-scrollview`}>
+                      testID={`${testID}-scrollview`}
+                      maxScrollViewHeight={maxScrollViewHeight}>
                       {children}
-                    </ScrollView>
+                    </ContentWrapper>
                     <View
                       onLayout={event => {
                         setFooterHeight(event.nativeEvent.layout.height);
@@ -412,6 +415,36 @@ const GestureHandler = ({
       <Animated.View>{children}</Animated.View>
     </PanGestureHandler>
   );
+};
+
+type ScrollViewWrapperProps = {
+  testID?: string;
+  maxScrollViewHeight: number;
+} & ScrollViewProps;
+
+const ScrollViewWrapper: React.FC<ScrollViewWrapperProps> = ({
+  scrollEnabled = false,
+  testID,
+  maxScrollViewHeight,
+  children,
+  style,
+  ...rest
+}) => {
+  return (
+    <ScrollView
+      {...rest}
+      style={[{ maxHeight: maxScrollViewHeight }, style]}
+      scrollEnabled={scrollEnabled}
+      testID={`${testID}-scrollview`}>
+      {children}
+    </ScrollView>
+  );
+};
+
+const FragmentWrapper: React.FC<React.PropsWithChildren<any>> = ({
+  children,
+}) => {
+  return <>{children}</>;
 };
 
 const styles = StyleSheet.create({

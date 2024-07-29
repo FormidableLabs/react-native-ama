@@ -9,25 +9,29 @@ and [react-native-gesture-handler](https://github.com/software-mansion/react-nat
 ## Example
 
 ```jsx
-<BottomSheet
-  visible={modalVisible}
-  onRequestClose={() => {
-    setModalVisible(!modalVisible);
-  }}
-  closeActionAccessibilityLabel="close bottomsheet"
-  bottomSheetStyle={styles.modalView}
-  headerComponent={
-    <View style={{ paddingHorizontal: theme.padding.big }}>
-      <Header title="This is the bottom sheet" />
-    </View>
-  }
-  scrollViewStyle={styles.modalViewContent}>
-  <Pressable
-    onPress={() => setModalVisible(!modalVisible)}
-    accessibilityRole="button">
-    <Text>Close bottom sheet</Text>
-  </Pressable>
-</BottomSheet>
+import { BottomSheet } from '@react-native-ama/extras
+
+const Component = () => (
+  <BottomSheet
+    visible={modalVisible}
+    onRequestClose={() => {
+      setModalVisible(!modalVisible);
+    }}
+    closeActionAccessibilityLabel="close bottomsheet"
+    bottomSheetStyle={styles.modalView}
+    headerComponent={
+      <View style={{ paddingHorizontal: theme.padding.big }}>
+        <Header title="This is the bottom sheet" />
+      </View>
+    }
+    scrollViewStyle={styles.modalViewContent}>
+    <Pressable
+      onPress={() => setModalVisible(!modalVisible)}
+      accessibilityRole="button">
+      <Text>Close bottom sheet</Text>
+    </Pressable>
+  </BottomSheet>
+);
 ```
 
 ## Accessibility
@@ -79,6 +83,14 @@ The accessibility label to use for the overlay button.
 | ------ |
 | string |
 
+### `closeDistance`
+
+A decimal fraction percentage of the content height which represents the minimum distance to swipe before the `onClose` function is run. For example, 0.3 represents 30% of the content height needing to be gesture swiped away before the `BottomSheet` will close and the `onClose` function will run.
+
+| Type   | Default |
+| ------ | ------- |
+| number | 0.3     |
+
 ### `footerComponent`
 
 The bottom sheet footer component.
@@ -127,6 +139,14 @@ The minimum velocity needed by quickly swiping down to close the bottom sheet.
 | ------ | ------------------------ |
 | number | 90% of the screen height |
 
+### `onBottomSheetHidden`
+
+The callback to triggered after animations when the BottomSheet is hidden
+
+| Type       |
+| ---------- |
+| () => void |
+
 ### <Required /> `onClose`
 
 The callback to trigger when the BottomSheet is dismissed
@@ -167,13 +187,13 @@ If true, the bottom sheet will not be closed when the user taps on the overlay; 
 | ------- | ------- |
 | boolean | true    |
 
-### `scrollEnabled`
+### `hasScrollableContent`
 
-Enabled/disables the scrolling of the [`<ScrollView />`](https://reactnative.dev/docs/scrollview) that wraps the BottomSheet content
+If true, `children` of `BottomSheet` are wrapped in a [`<ScrollView />`](https://reactnative.dev/docs/scrollview)
 
 | Type    | Default |
 | ------- | ------- |
-| boolean | false   |
+| boolean | true   |
 
 ### `scrollViewProps`
 
@@ -182,6 +202,22 @@ The props to use for the [`<ScrollView />`](https://reactnative.dev/docs/scrollv
 | Type            | Default   |
 | --------------- | --------- |
 | scrollViewProps | undefined |
+
+### `shouldHandleKeyboardEvents`
+
+If true, keyboard events are handled internally by the `BottomSheet` allowing for scrolling and animations to run smoothly
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | true    |
+
+### `testID`
+
+A testID to be used by the BottomSheet. The `Modal` component within the `BottomSheet` will receive this base `testID` and other internal components will receive abstractions of the base `testID`. It is best to view the source code to understand the hierarchy of these components and what testID's they will receive.
+
+| Type   |
+| ------ |
+| string |
 
 ### <Required /> `topInset`
 
@@ -198,6 +234,14 @@ The BottomSheet visibility
 | Type    |
 | ------- |
 | boolean |
+
+### `ref`
+
+A `ref` object used to call `close` and `isVisible` functions on the bottomSheet
+
+| Type                                                        |
+| ----------------------------------------------------------- |
+| `{ close: () => Promise<void>; isVisible: () => boolean; }` |
 
 ## Known issues
 
