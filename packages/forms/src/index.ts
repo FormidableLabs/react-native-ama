@@ -1,4 +1,7 @@
 // Components
+
+import { isFocused } from '@react-native-ama/internal';
+
 import {
   FormActions,
   FormProps,
@@ -28,6 +31,9 @@ export { TextInput } from './components/TextInput';
 // Hooks
 export { useFormField } from './hooks/useFormField';
 export { useTextInput } from './hooks/useTextInput';
+
+// utils
+export { isFocused };
 
 // Types
 export {
