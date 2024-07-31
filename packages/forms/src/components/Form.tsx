@@ -5,11 +5,11 @@ import { InteractionManager } from 'react-native';
 
 export type FormProps = React.PropsWithChildren<{
   onSubmit: () => boolean | Promise<boolean>;
-  ref?: React.RefObject<FormActions>;
 }>;
 
 export type FormActions = {
   focusFirstInvalidField: () => void;
+  focusFieldAt: (fieldNumber: number) => void;
 };
 
 export const Form = React.forwardRef<FormActions, FormProps>(
@@ -19,51 +19,83 @@ export const Form = React.forwardRef<FormActions, FormProps>(
 
     const checks = __DEV__ ? useChecks?.() : undefined;
 
-    const focusField = (nextField?: Partial<FormRef> | undefined) => {
-      /**
-       * Refs passed as prop have another ".current"
-       */
-      const nextRefElement = nextField?.ref?.current?.current
-        ? nextField?.ref.current
-        : nextField?.ref;
+    const focusField = React.useCallback(
+      (nextField?: Partial<FormRef> | undefined) => {
+        /**
+         * Refs passed as prop have another ".current"
+         */
+        const nextRefElement = nextField?.ref?.current?.current
+          ? nextField?.ref.current
+          : nextField?.ref;
 
-      const callFocus =
-        // @ts-ignore
-        nextRefElement?.current?.focus &&
-        nextField?.hasFocusCallback &&
-        nextField?.isEditable;
+        const callFocus =
+          // @ts-ignore
+          nextRefElement?.current?.focus &&
+          nextField?.hasFocusCallback &&
+          nextField?.isEditable;
+
+        __DEV__ &&
+          nextRefElement == null &&
+          checks?.logResult('nextRefElement', {
+            message:
+              'No next field found. Make sure you wrapped your form inside the <Form /> component',
+            rule: 'NO_UNDEFINED',
+          });
+
+        if (callFocus) {
+          /**
+           * On some apps, if we call focus immediately and the field is already focused we lose the focus.
+           * Same happens if we do not call `focus` if the field is already focused.
+           */
+          const timeoutValue = isFocused(nextRefElement.current) ? 50 : 0;
+
+          setTimeout(() => {
+            nextRefElement?.current?.focus();
+
+            __DEV__ &&
+              nextRefElement &&
+              checks?.checkFocusTrap({
+                ref: nextRefElement,
+                shouldHaveFocus: true,
+              });
+          }, timeoutValue);
+        } else if (nextRefElement?.current) {
+          setFocus(nextRefElement?.current);
+        }
+      },
+      [checks, setFocus],
+    );
+
+    const focusFieldAt = React.useCallback(
+      (position: number) => {
+        InteractionManager.runAfterInteractions(() => {
+          setTimeout(() => {
+            const fieldWithError = refs.current[position];
+
+            focusField(fieldWithError);
+          }, 0);
+        });
+      },
+      [focusField],
+    );
+
+    const focusFirstInvalidField = React.useCallback(() => {
+      const fieldWithError = (refs.current || []).findIndex(
+        fieldRef => fieldRef.hasValidation && fieldRef.hasError,
+      );
 
       __DEV__ &&
-        nextRefElement == null &&
-        checks?.logResult('nextRefElement', {
+        fieldWithError == null &&
+        checks?.logResult('Form', {
           message:
-            'No next field found. Make sure you wrapped your form inside the <Form /> component',
+            'The form validation has failed, but no component with error was found',
           rule: 'NO_UNDEFINED',
         });
 
-      if (callFocus) {
-        /**
-         * On some apps, if we call focus immediately and the field is already focused we lose the focus.
-         * Same happens if we do not call `focus` if the field is already focused.
-         */
-        const timeoutValue = isFocused(nextRefElement.current) ? 50 : 0;
+      focusFieldAt(fieldWithError);
+    }, [focusFieldAt, checks]);
 
-        setTimeout(() => {
-          nextRefElement?.current?.focus();
-
-          __DEV__ &&
-            nextRefElement &&
-            checks?.checkFocusTrap({
-              ref: nextRefElement,
-              shouldHaveFocus: true,
-            });
-        }, timeoutValue);
-      } else if (nextRefElement?.current) {
-        setFocus(nextRefElement?.current);
-      }
-    };
-
-    const submitForm = async () => {
+    const submitForm = React.useCallback(async () => {
       const isValid = await onSubmit();
 
       if (isValid) {
@@ -71,30 +103,11 @@ export const Form = React.forwardRef<FormActions, FormProps>(
       }
 
       focusFirstInvalidField();
-    };
-
-    const focusFirstInvalidField = () => {
-      InteractionManager.runAfterInteractions(() => {
-        setTimeout(() => {
-          const fieldWithError = (refs.current || []).find(
-            fieldRef => fieldRef.hasValidation && fieldRef.hasError,
-          );
-
-          __DEV__ &&
-            fieldWithError == null &&
-            checks?.logResult('Form', {
-              message:
-                'The form validation has failed, but no component with error was found',
-              rule: 'NO_UNDEFINED',
-            });
-
-          focusField(fieldWithError);
-        }, 0);
-      });
-    };
+    }, [focusFirstInvalidField, onSubmit]);
 
     React.useImperativeHandle(ref, () => ({
       focusFirstInvalidField,
+      focusFieldAt,
     }));
 
     return (
