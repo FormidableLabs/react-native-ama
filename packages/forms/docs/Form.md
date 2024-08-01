@@ -198,11 +198,21 @@ The callback to be called when the [`TextInput`](./TextInput.mdx) `returnKeyboar
 | -------- |
 | callback |
 
-## Methods
+### `ref`
+
+The form provider reference provides access to `focusFirstInvalidField` and `focusFieldAt` methods.
+
+| Type                         | Default   |
+| ---------------------------- | --------- |
+| React.RefObject<FormActions> | undefined |
+
+## Methods (`FormActions`)
 
 ### `focusFirstInvalidField`
 
 This method lets you manually shift the focus to the first field that has an error.
+
+`focusFirstInvalidField: () => void;`
 
 ```
 // To manually focus the first invalid field
@@ -214,6 +224,12 @@ const focusInvalidField = () => {
     <Pressable onPress={focusInvalidField} />
 </Form>
 ```
+
+### `focusFieldAt`
+
+This method lets you manually shift the focus to any field controlled by the form. Simply call the method with the fieldNumber reference which is the zero-based index of the field in the list.
+
+`focusFieldAt: (fieldNumber: number) => void;`
 
 ## Related guidelines
 
