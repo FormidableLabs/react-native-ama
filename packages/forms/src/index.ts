@@ -23,7 +23,7 @@ Form.Submit = FormSubmit;
 Form.Field = FormField;
 Form.Switch = FormSwitch;
 
-export { Form, FormField, FormSubmit };
+export { Form, FormField, FormSubmit, FormSwitch };
 
 // Components
 export { TextInput } from './components/TextInput';
