@@ -5,8 +5,8 @@ import { DevOnly } from '@site/src/components';
 TouchableWithoutFeedback is an extension of the React Native [TouchableWithoutFeedback](https://reactnative.dev/docs/touchablewithoutfeedback) component, [focused on accessibility](#accessibility-improvements).
 
 ```tsx
-import { TouchableWithoutFeedback } from 'react-native-ama';
 import { View } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-ama';
 
 <TouchableWithoutFeedback
   accessibilityRole="button"
@@ -78,12 +78,12 @@ Indicates whether an element is currently busy or not.
 
 ```tsx
 import { ActivityIndicator } from 'react-native';
-import { TouchableWithoutFeedback, Text } from 'react-native-ama';
+import { Text, TouchableWithoutFeedback } from 'react-native-ama';
 
 const Test = () => {
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const doSometing = async () => {
+  const doSomething = async () => {
     setIsLoading(true);
 
     await slowCall();
@@ -93,10 +93,10 @@ const Test = () => {
 
   return (
     <TouchableWithoutFeedback
-      accessiblityRole="button"
+      accessibilityRole="button"
       accessibilityLabel="Do it"
       busy={isLoading}
-      onPress={doSometing}>
+      onPress={doSomething}>
       {isLoading ? <ActivityIndicator /> : <Text>Do it</Text>}
     </TouchableWithoutFeedback>
   );
@@ -131,7 +131,7 @@ Indicates whether an expandable element is currently expanded or collapsed.
 
 ```tsx
 import { ActivityIndicator } from 'react-native';
-import { TouchableWithoutFeedback, Text } from 'react-native-ama';
+import { Text, TouchableWithoutFeedback } from 'react-native-ama';
 
 const Test = () => {
   const [isExpanded, setIsExpanded] = React.useState(false);
@@ -139,7 +139,7 @@ const Test = () => {
   return (
     <>
       <TouchableWithoutFeedback
-        accessiblityRole="button"
+        accessibilityRole="button"
         accessibilityLabel={isExpanded ? 'Less' : 'More'}
         expanded={isExpanded}
         onPress={() => setIsExpanded(expanded => !expanded)}>

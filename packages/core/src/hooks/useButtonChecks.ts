@@ -49,7 +49,7 @@ export const useButtonChecks = __DEV__
         });
       checkCompatibleAccessibilityState({
         accessibilityStates: props?.accessibilityState,
-        accessibilityRole: props?.accessiblityRole,
+        accessibilityRole: props?.accessibilityRole,
       });
       checkAccessibilityRole(props.accessibilityRole);
 

@@ -7,8 +7,10 @@ TouchableOpacity is an extension of the React Native [TouchableOpacity](https://
 ```tsx
 import { TouchableOpacity } from 'react-native-ama';
 
-<TouchableOpacity accessibilityRole="button" accessibilityLabel="I'm pressable!">
-    <Text>I'm pressable</Text>
+<TouchableOpacity
+  accessibilityRole="button"
+  accessibilityLabel="I'm pressable!">
+  <Text>I'm pressable</Text>
 </TouchableOpacity>;
 ```
 
@@ -73,28 +75,28 @@ Indicates whether an element is currently busy or not.
 
 ```tsx
 import { ActivityIndicator } from 'react-native';
-import { TouchableOpacity, Text } from 'react-native-ama';
+import { Text, TouchableOpacity } from 'react-native-ama';
 
 const Test = () => {
-    const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
 
-    const doSometing = async () => {
-        setIsLoading(true);
+  const doSomething = async () => {
+    setIsLoading(true);
 
-        await slowCall();
+    await slowCall();
 
-        setIsLoading(true);
-    };
+    setIsLoading(true);
+  };
 
-    return (
-        <TouchableOpacity
-            accessiblityRole="button"
-            accessibilityLabel="Do it"
-            busy={isLoading}
-            onPress={doSometing}>
-            {isLoading ? <ActivityIndicator /> : <Text>Do it</Text>}
-        </TouchableOpacity>
-    );
+  return (
+    <TouchableOpacity
+      accessibilityRole="button"
+      accessibilityLabel="Do it"
+      busy={isLoading}
+      onPress={doSomething}>
+      {isLoading ? <ActivityIndicator /> : <Text>Do it</Text>}
+    </TouchableOpacity>
+  );
 };
 ```
 
@@ -126,23 +128,23 @@ Indicates whether an expandable element is currently expanded or collapsed.
 
 ```tsx
 import { ActivityIndicator } from 'react-native';
-import { TouchableOpacity, Text } from 'react-native-ama';
+import { Text, TouchableOpacity } from 'react-native-ama';
 
 const Test = () => {
-    const [isExpanded, setIsExpanded] = React.useState(false);
+  const [isExpanded, setIsExpanded] = React.useState(false);
 
-    return (
-        <>
-            <TouchableOpacity
-                accessiblityRole="button"
-                accessibilityLabel={isExpanded ? 'Less' : 'More'}
-                expanded={isExpanded}
-                onPress={() => setIsExpanded(expanded => !expanded)}>
-                {isExpanded ? <MinumIcon /> : <PlusIcon />}
-            </TouchableOpacity>
-            {isExpanded ? <>{/* content goes here */}</> : null}
-        </>
-    );
+  return (
+    <>
+      <TouchableOpacity
+        accessibilityRole="button"
+        accessibilityLabel={isExpanded ? 'Less' : 'More'}
+        expanded={isExpanded}
+        onPress={() => setIsExpanded(expanded => !expanded)}>
+        {isExpanded ? <MiniumIcon /> : <PlusIcon />}
+      </TouchableOpacity>
+      {isExpanded ? <>{/* content goes here */}</> : null}
+    </>
+  );
 };
 ```
 

@@ -8,7 +8,7 @@ Pressable is an extension of the React Native [Pressable](https://reactnative.de
 import { Pressable } from 'react-native-ama';
 
 <Pressable accessibilityRole="button" accessibilityLabel="I'm pressable!">
-    <Text>I'm pressable</Text>
+  <Text>I'm pressable</Text>
 </Pressable>;
 ```
 
@@ -16,10 +16,10 @@ import { Pressable } from 'react-native-ama';
 
 Compared to the default React Native component, this custom component:
 
-- Forces the use of `accessibilityRole` and `accessibilityLabel`  <DevOnly />
+- Forces the use of `accessibilityRole` and `accessibilityLabel` <DevOnly />
 - `accessibilityState` has been removed as its states `busy`, `checked`, `selected`, `expanded` are exposed as a property
 - Performs a [Minimum Size](../guidelines/minimum-size.md) check <DevOnly />
-- Performs a [contrast checker](../guidelines/contrast.md) between its background color and its children color  <DevOnly />
+- Performs a [contrast checker](../guidelines/contrast.md) between its background color and its children color <DevOnly />
 
 ### accessibilityRole
 
@@ -77,25 +77,25 @@ import { ActivityIndicator } from 'react-native';
 import { Pressable, Text } from 'react-native-ama';
 
 const Test = () => {
-    const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
 
-    const doSometing = async () => {
-        setIsLoading(true);
+  const doSomething = async () => {
+    setIsLoading(true);
 
-        await slowCall();
+    await slowCall();
 
-        setIsLoading(true);
-    };
+    setIsLoading(true);
+  };
 
-    return (
-        <Pressable
-            accessiblityRole="button"
-            accessibilityLabel="Do it"
-            busy={isLoading}
-            onPress={doSometing}>
-            {isLoading ? <ActivityIndicator /> : <Text>Do it</Text>}
-        </Pressable>
-    );
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel="Do it"
+      busy={isLoading}
+      onPress={doSomething}>
+      {isLoading ? <ActivityIndicator /> : <Text>Do it</Text>}
+    </Pressable>
+  );
 };
 ```
 
@@ -130,20 +130,20 @@ import { ActivityIndicator } from 'react-native';
 import { Pressable, Text } from 'react-native-ama';
 
 const Test = () => {
-    const [isExpanded, setIsExpanded] = React.useState(false);
+  const [isExpanded, setIsExpanded] = React.useState(false);
 
-    return (
-        <>
-            <Pressable
-                accessiblityRole="button"
-                accessibilityLabel={isExpanded ? 'Less' : 'More'}
-                expanded={isExpanded}
-                onPress={() => setIsExpanded(expanded => !expanded)}>
-                {isExpanded ? <MinumIcon /> : <PlusIcon />}
-            </Pressable>
-            {isExpanded ? <>{/* content goes here */}</> : null}
-        </>
-    );
+  return (
+    <>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={isExpanded ? 'Less' : 'More'}
+        expanded={isExpanded}
+        onPress={() => setIsExpanded(expanded => !expanded)}>
+        {isExpanded ? <MinumIcon /> : <PlusIcon />}
+      </Pressable>
+      {isExpanded ? <>{/* content goes here */}</> : null}
+    </>
+  );
 };
 ```
 
