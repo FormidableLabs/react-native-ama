@@ -198,13 +198,13 @@ The callback to be called when the [`TextInput`](./TextInput.mdx) `returnKeyboar
 | -------- |
 | callback |
 
-### `ref`
+### `ref` _(optional)_
 
 The form provider reference provides access to `focusFirstInvalidField` and `focusFieldAt` methods.
 
-| Type                         | Default   |
-| ---------------------------- | --------- |
-| React.RefObject<FormActions> | undefined |
+| Type                           | Default   |
+| ------------------------------ | --------- |
+| React.RefObject\<FormActions\> | undefined |
 
 ## Methods (`FormActions`)
 
