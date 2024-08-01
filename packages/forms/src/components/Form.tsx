@@ -5,6 +5,7 @@ import { InteractionManager } from 'react-native';
 
 export type FormProps = React.PropsWithChildren<{
   onSubmit: () => boolean | Promise<boolean>;
+  ref?: React.RefObject<FormActions>; // need to explicitly type for inference in <Form /> component
 }>;
 
 export type FormActions = {
