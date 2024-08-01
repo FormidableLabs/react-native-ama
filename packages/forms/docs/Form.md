@@ -4,44 +4,54 @@ import { Required } from '@site/src/components';
 
 The `<Form />` component provides a "local" context for the [`TextInput`](./TextInput.mdx), [`FormField`](./FormField.md) and [`SwitchListItem`](./SwitchListItem.md) components.
 
-The provider hosts the hosts the `ref` values used by the [TextInput](./TextInput.mdx) to know which [`returnKey`](./TextInput.mdx#returnkeytype) and what would be the next field to focus.
+The provider hosts the `ref` values used by the [TextInput](./TextInput.mdx) to know which [`returnKey`](./TextInput.mdx#returnkeytype) and what would be the next field to focus.
 
 ## Usage
 
 ```jsx
 <Form onSubmit={handleSubmit} ref={ref}>
-    {...}
+  {...}
 </Form>
 ```
 
 ## Example
 
 ```jsx
-<Form onSubmit={handleSubmit}>
-  <TextInput
-    onChangeText={newText => setFirstName(newText)}
-    defaultValue={text}
-    label={<Text>First name:</Text>}
-  />
+import { Form, TextInput } from '@react-native-ama/forms';
+import { SwitchListItem } from '@react-native-ama/react-native';
 
-  <TextInput
-    onChangeText={newText => setLastName(newText)}
-    defaultValue={text}
-    label={<Text>Last name:</Text>}
-  />
+const ExampleForm = () => {
+  return (
+    <Form onSubmit={handleSubmit}>
+      <TextInput
+        onChangeText={newText => setFirstName(newText)}
+        defaultValue={text}
+        label={<Text>First name:</Text>}
+      />
 
-  <SwitchListItem
-    label={<Text>Subscribe me to the newsletter</Text>}
-    value={isSubscribed}
-    onValueChange={toggleSwitch}
-  />
+      <TextInput
+        onChangeText={newText => setLastName(newText)}
+        defaultValue={text}
+        label={<Text>Last name:</Text>}
+      />
 
-  <TextInput
-    onChangeText={newText => setEmailAddress(newText)}
-    defaultValue={text}
-    label={<Text>Email address:</Text>}
-  />
-</Form>
+      <SwitchListItem
+        label={<Text>Subscribe me to the newsletter</Text>}
+        value={isSubscribed}
+        onValueChange={toggleSwitch}
+      />
+
+      <TextInput
+        onChangeText={newText => setEmailAddress(newText)}
+        defaultValue={text}
+        label={<Text>Email address:</Text>}
+      />
+      <FormSubmit accessibilityLabel="Submit">
+        <CustomSubmitButton />
+      </FormSubmit>
+    </Form>
+  );
+};
 ```
 
 When the user interacts with this form:
