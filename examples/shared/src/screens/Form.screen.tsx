@@ -1,4 +1,4 @@
-import { Form, TextInput } from '@react-native-ama/forms';
+import { Form, FormActions, TextInput } from '@react-native-ama/forms';
 import { Text } from '@react-native-ama/react-native';
 import * as React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
@@ -12,6 +12,7 @@ export const FormScreen = () => {
   const [firstName, setFirstName] = React.useState('');
   const [lastName, setLastName] = React.useState('');
   const [testKeyboardTrap, setTestKeyboardTrap] = React.useState(false);
+  const formRef = React.useRef<FormActions>(null);
   const [invalidFields, setInvalidFields] = React.useState<{
     lastName: boolean;
     firstName: boolean;
@@ -36,7 +37,7 @@ export const FormScreen = () => {
 
   return (
     <ScrollView style={styles.view}>
-      <Form onSubmit={handleOnSubmit}>
+      <Form onSubmit={handleOnSubmit} ref={formRef}>
         <TextInput
           style={styles.input}
           placeholder=""
