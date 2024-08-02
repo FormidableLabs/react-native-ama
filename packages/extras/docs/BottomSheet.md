@@ -243,6 +243,14 @@ A `ref` object used to call `close` and `isVisible` functions on the bottomSheet
 | ----------------------------------------------------------- |
 | `{ close: () => Promise<void>; isVisible: () => boolean; }` |
 
+### `supportedOrientations`
+
+iOS only. An array of strings that specify the orientations supported by the bottom sheet. Type is defined by [React Native Modal](https://reactnative.dev/docs/modal#supportedorientations-ios)
+
+| Type                                                                                     |
+| ---------------------------------------------------------------------------------------- |
+| `['portrait', 'portrait-upside-down', 'landscape', 'landscape-left', 'landscape-right']` |
+
 ## Known issues
 
 If the app crashes with the following error:
