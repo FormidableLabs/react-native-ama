@@ -1,0 +1,42 @@
+import { TalkBackList } from '@site/src/components';
+
+# ListWrapper
+
+ListWrapper is a custom native component for Android that allows TalkBack to recognise that its children are part of a list/grid and behave accordingly.
+
+<TalkBackList />
+
+This component can be used to wrap custom a FlatList whenever they do not provide the same accessibility experienced with native Android apps. [^1]
+
+## Usage
+
+```jsx
+import  { ListWrapper } from "@react-native-ama/lists";
+
+
+<ListWrapper rowsCount={10} columnsCount={1}>
+    <MyCustomFlatList />
+</ListWrapper>
+```
+
+:::note
+
+On iOS, the component is rendered as Fragment as this behaviour is native to Android only.
+:::
+
+## Props
+
+### `rowsCount`
+
+The number of rows to be announced by TalkBack.
+
+### `columnsCount`
+
+This optional parameter is used by TalkBack to know if the user landed on a List or a Grid.
+The default value of **1** makes TalkBack read: **in list** / **out of list**, while a bigger number: in grid / out of grid
+
+## Related guidelines
+
+- [Lists & Grids](../../../website/guidelines/lists-grids.md)
+
+[^1]: The component is internally used by [FlatList](./FlatList.mdx), [DynamicFlatList](./DynamicFlatList.mdx) and [StaticFlatList](./StaticFlatList.mdx)
