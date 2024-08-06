@@ -10,8 +10,7 @@ import { TouchableWithoutFeedback } from 'react-native-ama';
 
 <TouchableWithoutFeedback
   accessibilityRole="button"
-  accessibilityLabel="I'm pressable!"
->
+  accessibilityLabel="I'm pressable!">
   <View>
     <Text> I'm pressable</Text>
   </View>
@@ -84,7 +83,7 @@ import { Text, TouchableWithoutFeedback } from 'react-native-ama';
 const Test = () => {
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const doSometing = async () => {
+  const doSomething = async () => {
     setIsLoading(true);
 
     await slowCall();
@@ -94,11 +93,10 @@ const Test = () => {
 
   return (
     <TouchableWithoutFeedback
-      accessiblityRole="button"
+      accessibilityRole="button"
       accessibilityLabel="Do it"
       busy={isLoading}
-      onPress={doSometing}
-    >
+      onPress={doSomething}>
       {isLoading ? <ActivityIndicator /> : <Text>Do it</Text>}
     </TouchableWithoutFeedback>
   );
@@ -141,11 +139,10 @@ const Test = () => {
   return (
     <>
       <TouchableWithoutFeedback
-        accessiblityRole="button"
+        accessibilityRole="button"
         accessibilityLabel={isExpanded ? 'Less' : 'More'}
         expanded={isExpanded}
-        onPress={() => setIsExpanded(expanded => !expanded)}
-      >
+        onPress={() => setIsExpanded(expanded => !expanded)}>
         {isExpanded ? <MinumIcon /> : <PlusIcon />}
       </TouchableWithoutFeedback>
       {isExpanded ? <>{/* content goes here */}</> : null}

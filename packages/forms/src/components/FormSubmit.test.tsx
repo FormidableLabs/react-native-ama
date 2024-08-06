@@ -32,7 +32,7 @@ describe('FormSubmit', () => {
     );
   });
 
-  it('hides the children from the accessiblity tree', () => {
+  it('hides the children from the accessibility tree', () => {
     const { getByTestId } = render(
       <FormSubmit
         accessibilityLabel="This is the label"
