@@ -29,11 +29,11 @@ The hook automatically:
 
 The `accessibilityLabel` property is the first thing announced by the screen reader when the elements gain the focus; then, it announces its role. If the property is omitted, the user might have little to no clue what could happen if the element is triggered.
 
-[Check here for more info](/guidelines/accessibility-label.md)
+[Check here for more info](../../../../website/guidelines/accessibility-label.md)
 
 ### Minimum size
 
-The component uses the [onLayout](https://reactnative.dev/docs/layoutevent) prop to perform the [minium size check](/guidelines/minimum-size).
+The component uses the [onLayout](https://reactnative.dev/docs/layoutevent) prop to perform the [minium size check](../../../../website/guidelines/minimum-size.md).
 
 ## Example
 
@@ -55,4 +55,4 @@ export const SwitchListItem = () => {
 
 ## Related guidelines
 
-- [Forms](/guidelines/forms)
+- [Forms](../../../../website/guidelines/forms.md)
