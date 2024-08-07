@@ -18,7 +18,7 @@ npm install  @react-native-ama/core
 
 ### Config File
 
-When you install the `@react-native-ama/core` package, the ama.rules.json file should be generated automatically. If cases it doesn't generate automatically, run the following from the root of your project:
+When you install the `@react-native-ama/core` package, the ama.rules.json file should be generated automatically. In cases it doesn't generate automatically, run the following from the root of your project:
 
 ```bash
 # Create ama.rules.json with an empty JSON object if it doesn't exist
