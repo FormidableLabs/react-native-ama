@@ -10,13 +10,28 @@ To use `useTextInput` it must be wrapped by the `<Form>` provider component from
 ## Usage
 
 ```jsx
-// MyTextInput
 import { useTextInput } from '@react-native-ama/forms';
 
-const MyTextInput = () => {
+const FormTextInput = () => {
   const { ref, ...rest } = useTextInput({ ...requiredProps });
 
   return <TextInput ref={ref} {...rest} />;
+};
+```
+
+Form TextInputs must be wrapped by a [Form Provider](./Form.md#usage)
+
+```jsx
+import { Form } from '@react-native-ama/forms';
+
+import { MyTextInput } from './MyTextInput';
+
+const CustomForm = () => {
+  return (
+    <Form onSubmit={handleSubmit} ref={ref}>
+      <FormTextInput {...props} />
+    </Form>
+  );
 };
 ```
 
