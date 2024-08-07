@@ -4,10 +4,10 @@ This hook allows to execute (or not) a callback respecting the user "Time to tak
 
 ## Usage
 
-```jsx
-import {useTimedAction} from 'react-native-ama';
+```jsx {1-2}
+import { useTimedAction } from '@react-native-ama/core';
 
-const {onTimeout} = useTimedAction();
+const { onTimeout } = useTimedAction();
 ```
 
 ### onTimeout
@@ -28,10 +28,10 @@ async onTimeout(callback, timeInMilliseconds)
 
 ```jsx
 await onTimeout(() => {
-    setShowContent(false);
+  setShowContent(false);
 }, 30 * 1000);
 ```
 
 ## Related guidelines
 
-- [Timed actions](../guidelines/timed-actions)
+- [Timed actions](../../../../website/guidelines/timed-actions.md)
