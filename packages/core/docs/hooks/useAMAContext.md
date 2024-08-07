@@ -5,7 +5,7 @@ The hook provides information on various accessibility services and can be used 
 ## Usage
 
 ```js title=packages/core/src/hooks/useAMAContext.ts
-import { useAMAContext } from 'react-native-ama';
+import { useAMAContext } from '@react-native-ama/core';
 
 const {
   isReduceTransparencyEnabled: boolean,
@@ -69,7 +69,7 @@ animation: 'default' | 'fade';
 
 #### Example
 
-```jsx {1-5,7-10}
+```jsx {2-5,7-10}
 const { reactNavigationScreenOptions } = useAMAContext();
 
 return (
