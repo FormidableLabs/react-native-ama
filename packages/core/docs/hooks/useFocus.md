@@ -5,8 +5,8 @@ the [setFocus](#set-focus-programmatically) function.
 
 ## Usage
 
-```tsx
-import { useFocus } from 'react-native-ama';
+```tsx {1-2}
+import { useFocus } from '@react-native-ama/core';
 
 const { setFocus } = useFocus(refComponent);
 ```
@@ -22,9 +22,9 @@ const { setFocus } = useFocus(refComponent);
 Automatically focus the `<Text />` component when _MyFancyScreen_ is mounted:
 
 ```tsx
+import { useFocus } from '@react-native-ama/core';
 import * as React from 'react';
 import { Text } from 'react-native';
-import { useFocus } from 'react-native-ama';
 
 const MyFancyScreen = () => {
   const componentRef = React.useRef<Text>(null);
@@ -45,9 +45,10 @@ const MyFancyScreen = () => {
 ### Set focus programmatically
 
 ```tsx
+import { useFocus } from '@react-native-ama/core';
+import { Pressable } from '@react-native-ama/react-native';
 import * as React from 'react';
 import { Text } from 'react-native';
-import { Pressable, useFocus } from 'react-native-ama';
 
 const MyFancyScreen = () => {
   const componentRef = React.useRef<Text>(null);
@@ -68,4 +69,4 @@ const MyFancyScreen = () => {
 
 ## Related guidelines
 
-- [Focus](/guidelines/focus)
+- [Focus](../../../../website/guidelines/focus.md)
