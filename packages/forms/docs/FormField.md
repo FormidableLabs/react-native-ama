@@ -7,32 +7,36 @@ This is a generic form field element capable of receiving focus from a [TextInpu
 ## Example
 
 ```jsx
-import { Form } from 'react-native-ama';
+import { Form } from '@react-native-ama/forms';
 
-<Form.Field id="field-id">
-  <Pressable
-    accessibilityRole="switch"
-    accessibilityLabel={accessibilityLabel}
-    style={[styles.container, style]}
-    onPress={onValueChange}
-    checked={value}>
-    {isLabelPositionLeft ? label : null}
-    {children ? (
-      children
-    ) : (
-      <Switch
-        {...rest}
+const ExampleFormField = () => {
+  return (
+    <Form.Field id="field-id">
+      <Pressable
+        accessibilityRole="switch"
         accessibilityLabel={accessibilityLabel}
-        style={switchStyle}
-        value={value}
-        onValueChange={onValueChange}
-        accessibilityElementsHidden={true}
-        importantForAccessibility="no"
-      />
-    )}
-    {isLabelPositionLeft ? null : label}
-  </Pressable>
-</Form.Field>
+        style={[styles.container, style]}
+        onPress={onValueChange}
+        checked={value}>
+        {isLabelPositionLeft ? label : null}
+        {children ? (
+          children
+        ) : (
+          <Switch
+            {...rest}
+            accessibilityLabel={accessibilityLabel}
+            style={switchStyle}
+            value={value}
+            onValueChange={onValueChange}
+            accessibilityElementsHidden={true}
+            importantForAccessibility="no"
+          />
+        )}
+        {isLabelPositionLeft ? null : label}
+      </Pressable>
+    </Form.Field>
+  );
+};
 ```
 
 ## Props
@@ -66,6 +70,16 @@ If true the field is marked as possible candidate to be automatically focused wh
 ### `errorMessage`
 
 The error to be announced as part of the accessibility hint when the validation fails.
+
+### `wrapInsideAccessibleView`
+
+Form Fields are wrapped inside an accessible\* view by default, to disable this pass false to `wrapInsideAccessibleView`.
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | true    |
+
+> *accessible: *When true, indicates that the view is an accessibility element. By default, all the touchable elements are accessible.\*
 
 ## Related guidelines
 
