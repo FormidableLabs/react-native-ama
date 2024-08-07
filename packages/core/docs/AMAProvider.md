@@ -6,7 +6,7 @@ The provider manages the failure message that appears when AMA accessibility fai
 ## Usage
 
 ```jsx {1-4,8-9}
-import { AMAProvider } from 'react-native-ama';
+import { AMAProvider } from '@react-native-ama/core';
 
 const App = () => {
   return (
@@ -36,7 +36,7 @@ export type AMAContextValue = {
 };
 ```
 
-Check [useAMAContext](../hooks/useAMAContext) for more info.
+Check [useAMAContext](./hooks/useAMAContext.md) for more info.
 
 :::dev
 
