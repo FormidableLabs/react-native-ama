@@ -18,22 +18,31 @@ npm install  @react-native-ama/core
 
 ### Config File
 
-If you install the `react-native-ama` package, the ama.rules.json file should be generated automatically. In case it doesn't generate automatically:
+When you install the `@react-native-ama/core` package, the ama.rules.json file should be generated automatically. If cases it doesn't generate automatically, run the following from the root of your project:
 
 ```bash
+# Create ama.rules.json with an empty JSON object if it doesn't exist
 echo "{}" >> ama.rules.json
-cd node_modules/react-native-ama
-ln -s ../../ama.rules.json .
+
+# Navigate to the internal directory
+cd node_modules/@react-native-ama/internal
+
+# Create symlinks in src and dist directories
+ln -s ../../../ama.rules.json src/ama.rules.json
+ln -s ../../../ama.rules.json dist/ama.rules.json
+
+# Go back to the root directory
+cd -
 ```
 
-For more detailed information about the config file, please refer to [this documentation](/config-file).
+For more detailed information about the config file, please refer to [this documentation](../../../website/docs/ama/config-file.md).
 
 ## Usage
 
-You must include the [AMAProvider](../components/AMAProvider) in your app, as some components and hooks require it.
+You must include the [AMAProvider](./AMAProvider.md) in your app, as some components and hooks require it.
 
 ```jsx {1-4,8-9}
-import { AMAProvider } from 'react-native-ama';
+import { AMAProvider } from '@react-native-ama/core';
 
 const App = () => {
   return (
