@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   LayoutChangeEvent,
   Modal,
+  ModalProps,
   Platform,
   Pressable,
   ScrollViewProps,
@@ -61,6 +62,7 @@ export type BottomSheetProps = {
   visible: boolean;
   ref?: React.RefObject<BottomSheetActions>;
   shouldHandleKeyboardEvents?: boolean;
+  supportedOrientations?: ModalProps['supportedOrientations'];
 };
 
 export type BottomSheetActions = {
@@ -102,6 +104,7 @@ export const BottomSheet = React.forwardRef<
       topInset,
       onBottomSheetHidden,
       shouldHandleKeyboardEvents = true,
+      supportedOrientations,
     },
     ref,
   ) => {
@@ -272,6 +275,7 @@ export const BottomSheet = React.forwardRef<
         visible={isModalVisible}
         onRequestClose={() => onClose()}
         ref={ref as any}
+        supportedOrientations={supportedOrientations}
         testID={testID}>
         <Wrapper>
           {renderContent ? (
