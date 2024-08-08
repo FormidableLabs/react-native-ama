@@ -69,4 +69,4 @@ const MyFancyScreen = () => {
 
 ## Related guidelines
 
-- [Focus](../../../../website/guidelines/focus.md)
+- [Focus](/guidelines/focus)

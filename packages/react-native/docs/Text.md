@@ -7,18 +7,18 @@ import { Text } from 'react-native-ama';
 
 <Text autofocus>I'm pressable</Text>;
 ```
- 
+
 ## Accessibility improvements
 
 Compared to the default React Native component, this one performs the following checks at runtime:
 
-- [Missing accessibilityLabel](../guidelines/text) when using `textTransform: uppercase` style
-- [accessibilityLabel in all caps](../guidelines/text)
-- Performs a [Minimum Size](../guidelines/minimum-size) check <DevOnly /> when the component has the property `onPress` set
+- [Missing accessibilityLabel](/guidelines/text) when using `textTransform: uppercase` style
+- [accessibilityLabel in all caps](/guidelines/text)
+- Performs a [Minimum Size](/guidelines/minimum-size) check <DevOnly /> when the component has the property `onPress` set
 
 ### Minimum size
 
-The component uses the [onLayout](https://reactnative.dev/docs/layoutevent) prop to perform the [minium size check](../guidelines/minimum-size.md).
+The component uses the [onLayout](https://reactnative.dev/docs/layoutevent) prop to perform the [minium size check](/guidelines/minimum-size).
 
 ## Additional Props
 
@@ -27,7 +27,7 @@ The component uses the [onLayout](https://reactnative.dev/docs/layoutevent) prop
 Allows the screen reader to autofocus the Text element when it is rendered.
 
 | Type    | Default   |
-|---------|-----------|
+| ------- | --------- |
 | boolean | undefined |
 
 :::note

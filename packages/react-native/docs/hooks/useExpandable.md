@@ -47,8 +47,8 @@ The hook automatically:
 At runtime, the hook:
 
 - Forces the use of `accessibilityLabel` <DevOnly />
-- Performs a [Minimum Size](../../../../website/guidelines/minimum-size.md) check <DevOnly />
-- Performs a [contrast checker](../../../../website/guidelines/contrast.md) between its background color and its children color <DevOnly />
+- Performs a [Minimum Size](/guidelines/minimum-size) check <DevOnly />
+- Performs a [contrast checker](/guidelines/contrast) between its background color and its children color <DevOnly />
 
 ## Props
 
@@ -64,7 +64,7 @@ Indicates whether an expandable element is currently expanded or collapsed.
 
 ## Related guidelines
 
-- [Accessibility Label](../../../../website/guidelines/accessibility-label.md)
-- [Accessibility Role](../../../../website/guidelines/accessibility-role.md)
-- [Contrast](../../../../website/guidelines/contrast.md)
-- [Minimum Size](../../../../website/guidelines/minimum-size.md)
+- [Accessibility Label](/guidelines/accessibility-label)
+- [Accessibility Role](/guidelines/accessibility-role)
+- [Contrast](/guidelines/contrast)
+- [Minimum Size](/guidelines/minimum-size)

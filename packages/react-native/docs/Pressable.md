@@ -16,8 +16,8 @@ In comparison to the default React Native component, this customized component:
 
 - Forces the use of `accessibilityRole` and `accessibilityLabel`
 - `accessibilityState` has been removed as its states `busy`, `checked`, `selected`, `expanded` are exposed as a property
-- Performs a [Minimum Size](/guidelines/minimum-size.md) check
-- Performs a [contrast checker](/guidelines/contrast.md) between its background color and its children color
+- Performs a [Minimum Size](/guidelines/minimum-size) check
+- Performs a [contrast checker](/guidelines/contrast) between its background color and its children color
 
 <DevOnlyChecks />
 
@@ -75,7 +75,7 @@ Indicates whether a selectable element is currently selected or not.
 
 ### Contrast checker <DevOnly />
 
-The component performs a [contrast check](/guidelines/contrast.md) between its background colour and the children's foreground when in dev mode.
+The component performs a [contrast check](/guidelines/contrast) between its background colour and the children's foreground when in dev mode.
 
 :::info
 AMA does also perform a contrast check on disabled button, as a [poor contrast can make them hard to read](https://axesslab.com/disabled-buttons-suck/#they-are-hard-to-see).
