@@ -34,4 +34,4 @@ await onTimeout(() => {
 
 ## Related guidelines
 
-- [Timed actions](../../../../website/guidelines/timed-actions.md)
+- [Timed actions](/guidelines/timed-actions)

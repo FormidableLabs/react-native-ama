@@ -2,7 +2,7 @@ import { Required } from '@site/src/components';
 
 # Form
 
-The `<Form />` component provides a "local" context for the [`TextInput`](./TextInput.mdx), [`FormField`](./FormField.md) and [`SwitchListItem`](./SwitchListItem.md) components.
+The `<Form />` component provides a "local" context for the [`TextInput`](./TextInput.mdx), [`FormField`](./FormField.md) and [`SwitchListItem`](/react-native/SwitchListItem) components.
 
 The provider hosts the `ref` values used by the [TextInput](./TextInput.mdx) to know which [`returnKey`](./TextInput.mdx#returnkeytype) and what would be the next field to focus.
 

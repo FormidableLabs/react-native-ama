@@ -2,7 +2,7 @@ import { Required } from '@site/src/components';
 
 # Form.Field
 
-This is a generic form field element capable of receiving focus from a [TextInput](./TextInput.mdx) components or by using the [useFocus](../hooks/useFocus.md) hook.
+This is a generic form field element capable of receiving focus from a [TextInput](./TextInput.mdx) components or by using the [useFocus](/core/hooks/useFocus) hook.
 
 ## Example
 

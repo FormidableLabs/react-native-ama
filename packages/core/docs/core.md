@@ -35,7 +35,7 @@ ln -s ../../../ama.rules.json dist/ama.rules.json
 cd -
 ```
 
-For more detailed information about the config file, please refer to [this documentation](../../../website/docs/ama/config-file.md).
+For more detailed information about the config file, please refer to [this documentation](/docs/config-file).
 
 ## Usage
 

@@ -1,6 +1,6 @@
 # Form.Switch (FormSwitch)
 
-Provides Switch functionality to be used in Forms, it is simply a compound component of the wrapper [FormField](./FormField.md) and controller [SwitchListItem](../../react-native/docs/SwitchListItem.md) combined for easy of use so you don't need to roll your own.
+Provides Switch functionality to be used in Forms, it is simply a compound component of the wrapper [FormField](./FormField.md) and controller [SwitchListItem](/react-native/SwitchListItem) combined for easy of use so you don't need to roll your own.
 
 ## Usage
 
@@ -19,4 +19,4 @@ import { Form, FormSwitch } from '@react-native-ama/forms';
 
 ## Props
 
-FormSwitch accepts all [SwitchListItem](../../react-native/docs/SwitchListItem.mdx#Props) Props
+FormSwitch accepts all [SwitchListItem](/react-native/SwitchListItem#Props) Props
