@@ -1,3 +1,7 @@
+---
+displayed_sidebar: docs
+---
+
 # Config file
 
 AMA comes with predefined rules and severity for the built-in components and hooks. Those rules have been created to improve the accessibility of those elements and should always be respected.
@@ -24,21 +28,21 @@ The possible log levels are:
 
 ### AMA Rules
 
-| Log key                                                               | Guideline   | Default | Can override |
-| --------------------------------------------------------------------- | ----------- | ------- | ------------ |
-| [BOTTOM_SHEET_CLOSE_ACTION](../guidelines/bottomsheet)                | <Must />    | error   | <Yes />      |
-| [CONTRAST_FAILED](../guidelines/contrast)                             | <Must />    | error   | <Yes />      |
-| [CONTRAST_FAILED_AAA](../guidelines/contrast)                         | <Should />  | warn    | <Yes />      |
-| [FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE](../guidelines/lists-grids)    | <Should />  | warn    | <Yes />      |
-| [FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE](../guidelines/lists-grids)      | <Must />    | error   | <Yes />      |
-| [MINIMUM_SIZE](../guidelines/minimum-size.md)                         | <Must />    | error   | <Yes />      |
-| [NO_ACCESSIBILITY_LABEL](../guidelines/accessibility-label)[^1]       | <Must />    | error   | <No />       |
-| [NO_ACCESSIBILITY_ROLE](../guidelines/accessibility-rol) [^1]         | <Must />    | error   | <No />       |
-| [NO_FORM_LABEL](../guidelines/forms)                                  | <Must />    | error   | <Yes />      |
-| [NO_FORM_ERROR](../guidelines/forms)                                  | <Must />    | error   | <Yes />      |
-| [NO_KEYBOARD_TRAP](../guidelines/keyboard-trap.md) [^1]               | <MustNot /> | error   | <No />       |
-| [UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL](../guidelines/uppercase-text) | <MustNot /> | error   | <Yes />      |
-| [NO_UPPERCASE_TEXT](../guidelines/uppercase-text)                     | <MustNot /> | error   | <Yes />      |
+| Log key                                                             | Guideline   | Default | Can override |
+| ------------------------------------------------------------------- | ----------- | ------- | ------------ |
+| [BOTTOM_SHEET_CLOSE_ACTION](/guidelines/bottomsheet)                | <Must />    | error   | <Yes />      |
+| [CONTRAST_FAILED](/guidelines/contrast)                             | <Must />    | error   | <Yes />      |
+| [CONTRAST_FAILED_AAA](/guidelines/contrast)                         | <Should />  | warn    | <Yes />      |
+| [FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE](/guidelines/lists-grids)    | <Should />  | warn    | <Yes />      |
+| [FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE](/guidelines/lists-grids)      | <Must />    | error   | <Yes />      |
+| [MINIMUM_SIZE](/guidelines/minimum-size)                            | <Must />    | error   | <Yes />      |
+| [NO_ACCESSIBILITY_LABEL](/guidelines/accessibility-label)[^1]       | <Must />    | error   | <No />       |
+| [NO_ACCESSIBILITY_ROLE](/guidelines/accessibility-rol) [^1]         | <Must />    | error   | <No />       |
+| [NO_FORM_LABEL](/guidelines/forms)                                  | <Must />    | error   | <Yes />      |
+| [NO_FORM_ERROR](/guidelines/forms)                                  | <Must />    | error   | <Yes />      |
+| [NO_KEYBOARD_TRAP](/guidelines/keyboard-trap) [^1]                  | <MustNot /> | error   | <No />       |
+| [UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL](/guidelines/uppercase-text) | <MustNot /> | error   | <Yes />      |
+| [NO_UPPERCASE_TEXT](/guidelines/uppercase-text)                     | <MustNot /> | error   | <Yes />      |
 
 :::note
 

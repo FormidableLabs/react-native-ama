@@ -1,3 +1,7 @@
+---
+displayed_sidebar: docs
+---
+
 # Usage
 
 ## Installation
