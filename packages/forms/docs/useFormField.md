@@ -42,4 +42,4 @@ button.
 
 ## Related guidelines
 
-- [Forms](../guidelines/forms)
+- [Forms](/guidelines/forms)

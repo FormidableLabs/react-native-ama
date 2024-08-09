@@ -233,4 +233,4 @@ This method lets you manually shift the focus to any field controlled by the for
 
 ## Related guidelines
 
-- [Forms](../guidelines/forms)
+- [Forms](/guidelines/forms)
