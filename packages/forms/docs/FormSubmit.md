@@ -34,4 +34,4 @@ This parameter is passed to the accessibilityState busy.
 
 ## Related guidelines
 
-- [Forms](../guidelines/forms)
+- [Forms](/guidelines/forms)

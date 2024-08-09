@@ -2,7 +2,6 @@
 
 When passing a motion property, returns 0 if [Reduce Motion](../hooks/useAMAContext#isreducemotionenabled) is enabled otherwise the given value.
 
-
 ## Usage
 
 ```js
@@ -52,4 +51,4 @@ Because we specified `translateX` as the property we're going to use for the ani
 
 ## Related guidelines
 
-- [Animations](../guidelines/animations)
+- [Animations](/guidelines/animations)

@@ -28,9 +28,9 @@ const App = () => {
 
 ## Example
 
-In the following Example the navigation animation are disabled when the user enables the [Reduce Motion](../guidelines/animations) setting.
+In the following Example the navigation animation are disabled when the user enables the [Reduce Motion](/guidelines/animations) setting.
 
-It also shows how to build a more accessible [form](../guidelines/forms) using the built-in components.
+It also shows how to build a more accessible [form](/guidelines/forms) using the built-in components.
 
 ```jsx
 import * as React from 'react';
@@ -156,7 +156,7 @@ export const HomeScreen = () => {
         <Pressable
             onPress={handleOnSubmit}
             accessibilityLabel="Submit"
-            accessibiltiyRole="button"
+            accessibilityRole="button"
         >
             <Text>Submit</Text>
         </Pressable>

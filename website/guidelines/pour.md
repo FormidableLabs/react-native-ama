@@ -38,7 +38,7 @@ We must ensure the app is compatible with assistive technologies, including keyb
 - The app should be fully functional through keyboard inputs
 - [Users should be given ample time to complete tasks](/guidelines/timed-actions)
 - [The app should be designed in a way that minimizes the risk of triggering seizures or other involuntary reactions](/guidelines/animations)
-- [Focus order](../guidelines/focus), screen titles, [headings](/guidelines/headings), and [labels](/guidelines/accessibility-label) should be clearly defined to facilitate easy navigation
+- [Focus order](/guidelines/focus), screen titles, [headings](/guidelines/headings), and [labels](/guidelines/accessibility-label) should be clearly defined to facilitate easy navigation
 - The app should offer appropriately [sized touch targets](/guidelines/minimum-size) and alternative input methods
 
 ## Understandable

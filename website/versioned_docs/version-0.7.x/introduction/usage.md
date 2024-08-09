@@ -144,7 +144,7 @@ export const HomeScreen = () => {
         <Pressable
             onPress={handleOnSubmit}
             accessibilityLabel="Submit"
-            accessibiltiyRole="button"
+            accessibilityRole="button"
         >
             <Text>Submit</Text>
         </Pressable>

@@ -31,8 +31,7 @@ This is especially crucial for icon-only buttons, where the control lacks textua
 <Pressable
   onPress={contactUs}
   accessibilityRole="button"
-  accessibilityLabel="Contact us"
->
+  accessibilityLabel="Contact us">
   Contact us
 </Pressable>
 ```
@@ -158,7 +157,7 @@ This is used when a component has the `accessibilityLabel` prop in all caps.
 
 :::tip
 
-Is it possible to specify a list of allowed all caps accessibility labels, [more info here](../guidelines/guidelines.md)
+Is it possible to specify a list of allowed all caps accessibility labels, [more info here](/guidelines/guidelines.md)
 :::
 
 ## Related AMA components
