@@ -2,6 +2,7 @@
 slug: /
 title: React Native AMA
 sidebar_position: 0
+displayed_sidebar: docs
 ---
 
 # Accessibility as a First-Class Citizen with React Native AMA
