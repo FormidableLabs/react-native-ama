@@ -152,4 +152,4 @@ The container style
 
 ## Related guidelines
 
-- [Animations](../guidelines/animations)
+- [Animations](/guidelines/animations)

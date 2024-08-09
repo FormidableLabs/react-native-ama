@@ -161,4 +161,4 @@ value.value = withSpring('translateX', Math.random());
 
 ## Related guidelines
 
-- [Animations](../guidelines/animations)
+- [Animations](/guidelines/animations)
