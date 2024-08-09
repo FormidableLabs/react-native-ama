@@ -2,9 +2,9 @@ import { Required } from '@site/src/components'
 
 # AnimatedContainer
 
-This component is built on top of [Reanimated custom animations](https://docs.swmansion.com/react-native-reanimated/docs/api/LayoutAnimations/customAnimations)
+This component is built on top of [Reanimated custom animations](https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/custom-animations)
 and let us animate the entry and exitFrom of the container, honouring
-the [Reduce Motion] (https://reactnative.dev/docs/accessibilityinfo) preference.
+the [Reduce Motion](https://reactnative.dev/docs/accessibilityinfo) preference.
 
 ## Example
 
@@ -60,7 +60,7 @@ The initial value of the animation.
 | ---------------------------------- |
 | ViewStyle \| ReanimatedEntryValues |
 
-This parameter sets the initial values for the [Reanimated custom animations](https://docs.swmansion.com/react-native-reanimated/docs/api/LayoutAnimations/customAnimations).
+This parameter sets the initial values for the [Reanimated custom animations](https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/custom-animations).
 In additional to `ViewStyle`, this property also allows access to special values available by Reanimated:
 
 | Value               | Description                                                   |
