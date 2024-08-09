@@ -1,3 +1,7 @@
+---
+displayed_sidebar: docs
+---
+
 # Config file
 
 AMA comes with predefined rules and severity for the built-in components and hooks. Those rules have been created to improve the accessibility of those elements and should always be respected.
