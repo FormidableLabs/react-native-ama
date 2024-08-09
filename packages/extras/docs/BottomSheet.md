@@ -36,12 +36,12 @@ const Component = () => (
 
 ## Accessibility
 
-- Checks that the `closeActionAccessibilityLabel` is a valid [accessibilityLabel](./guidelines/accessibility-label)
-- Provides a way [to close the bottom sheet](../guidelines/bottomsheet#2-can-be-dismissed) when the user taps on the overlay
+- Checks that the `closeActionAccessibilityLabel` is a valid [accessibilityLabel](/guidelines/accessibility-label)
+- Provides a way [to close the bottom sheet](/guidelines/bottomsheet#2-can-be-dismissed) when the user taps on the overlay
 - Makes sure that the overlay is announced as "button"
 - Uses slide-in and slide-out animation **only** if the [Reduce Motion] (https://reactnative.dev/docs/accessibilityinfo) preference is turned off
-- Prevents the focus from [escaping the bottom sheet](../guidelines/bottomsheet#3-the-focus-stays-inside-it)
-- Provides a draggable area respecting the [minimum size](../guidelines/minimum-size)
+- Prevents the focus from [escaping the bottom sheet](/guidelines/bottomsheet#3-the-focus-stays-inside-it)
+- Provides a draggable area respecting the [minimum size](/guidelines/minimum-size)
 
 ## Props
 
@@ -63,7 +63,7 @@ The duration in milliseconds before auto-closing the bottom sheet
 
 :::tip
 
-The auto-close will respect the user [Timed action](./guidelines/timed-actions) preference.
+The auto-close will respect the user [Timed action](/guidelines/timed-actions) preference.
 
 :::
 
@@ -193,7 +193,7 @@ If true, `children` of `BottomSheet` are wrapped in a [`<ScrollView />`](https:/
 
 | Type    | Default |
 | ------- | ------- |
-| boolean | true   |
+| boolean | true    |
 
 ### `scrollViewProps`
 
@@ -266,5 +266,5 @@ import 'react-native-gesture-handler';
 
 ## Related guidelines
 
-- [BottomSheet](../guidelines/bottomsheet)
-- [Focus](../guidelines/focus)
+- [BottomSheet](/guidelines/bottomsheet)
+- [Focus](/guidelines/focus)
