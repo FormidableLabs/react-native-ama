@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
 ## withTiming
 
 Under the hood calls the
-reanimated [withTiming](https://docs.swmansion.com/react-native-reanimated/docs/api/animations/withTiming) function.
+reanimated [withTiming](https://docs.swmansion.com/react-native-reanimated/docs/animations/withTiming) function.
 
 If the given `propertyKey` is a motion one and [reduce motion](/core/hooks/useAMAContext#isreducemotionenabled) is enabled, the
 force the duration to be 0, before calling `withTiming`.
@@ -108,12 +108,12 @@ WithTimingConfig = {},
 ;
 ```
 
-| Property    | Description                                                                                                                                                                |
-| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| propertyKey | The animation key that will be used with the `useSharedValue`                                                                                                              |
-| toValue     | The [target value](https://docs.swmansion.com/react-native-reanimated/docs/api/animations/withTiming#tovalue-number--string) parameter passed to the original `withTiming` |
-| config      | The [config](https://docs.swmansion.com/react-native-reanimated/docs/api/animations/withTiming#options-object) parameter passed to the original `withTiming`               |
-| callback    | The [callback](https://docs.swmansion.com/react-native-reanimated/docs/api/animations/withTiming#callback-functionoptional) parameter passed to the original `withTiming`  |
+| Property    | Description                                                                                                                                                    |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| propertyKey | The animation key that will be used with the `useSharedValue`                                                                                                  |
+| toValue     | The [target value](https://docs.swmansion.com/react-native-reanimated/docs/animations/withTiming#tovalue-number) parameter passed to the original `withTiming` |
+| config      | The [config](https://docs.swmansion.com/react-native-reanimated/docs/animations/withTiming#config-) parameter passed to the original `withTiming`              |
+| callback    | The [callback](https://docs.swmansion.com/react-native-reanimated/docs/animations/withTiming#callback-) parameter passed to the original `withTiming`          |
 
 #### Example
 
@@ -124,7 +124,7 @@ value.value = withTiming('translateX', Math.random(), { duration: 300 });
 ## withSpring
 
 Under the hood calls the
-reanimated [withSpring](https://docs.swmansion.com/react-native-reanimated/docs/api/animations/withSpring) function.
+reanimated [withSpring](https://docs.swmansion.com/react-native-reanimated/docs/animations/withSpring) function.
 
 If the given `propertyKey` is a motion one and [reduce motion](/core/hooks/useAMAContext#isreducemotionenabled) is enabled,
 then calls `withTiming` function with duration 0 instead.
@@ -146,12 +146,12 @@ number,
 ;
 ```
 
-| Property    | Description                                                                                                                                                                |
-| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| propertyKey | The animation key that will be used with the `useSharedValue`                                                                                                              |
-| toValue     | The [target value](https://docs.swmansion.com/react-native-reanimated/docs/api/animations/withTiming#tovalue-number--string) parameter passed to the original `withTiming` |
-| config      | The [config](https://docs.swmansion.com/react-native-reanimated/docs/api/animations/withTiming#options-object) parameter passed to the original `withTiming`               |
-| callback    | The [callback](https://docs.swmansion.com/react-native-reanimated/docs/api/animations/withTiming#callback-functionoptional) parameter passed to the original `withTiming`  |
+| Property    | Description                                                                                                                                                    |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| propertyKey | The animation key that will be used with the `useSharedValue`                                                                                                  |
+| toValue     | The [target value](https://docs.swmansion.com/react-native-reanimated/docs/animations/withTiming#tovalue-number) parameter passed to the original `withTiming` |
+| config      | The [config](https://docs.swmansion.com/react-native-reanimated/docs/animations/withTiming#config-) parameter passed to the original `withTiming`              |
+| callback    | The [callback](https://docs.swmansion.com/react-native-reanimated/docs/animations/withTiming#callback-) parameter passed to the original `withTiming`          |
 
 #### Example
 
