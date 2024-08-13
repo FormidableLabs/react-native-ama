@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Platform, requireNativeComponent } from 'react-native';
+import { Platform } from 'react-native';
 
 type FlatListWrapperProps = React.PropsWithChildren<{
   rowsCount: number;
@@ -8,16 +8,8 @@ type FlatListWrapperProps = React.PropsWithChildren<{
 
 const isAndroid = Platform.OS === 'android';
 
-export const ListWrapper = ({
-  children,
-  rowsCount,
-  columnsCount = 1,
-}: FlatListWrapperProps) => {
-  return (
-    <AMAFlatListWrapper rowsCount={rowsCount} columnsCount={columnsCount}>
-      {children}
-    </AMAFlatListWrapper>
-  );
+export const ListWrapper = ({ children }: FlatListWrapperProps) => {
+  return <AMAFlatListWrapper>{children}</AMAFlatListWrapper>;
 };
 
 /*
@@ -30,6 +22,4 @@ const EmptyComponent: React.FC = ({
   return <>{children}</>;
 };
 
-const AMAFlatListWrapper = isAndroid
-  ? requireNativeComponent<FlatListWrapperProps>('AmaFlatListWrapper')
-  : EmptyComponent;
+const AMAFlatListWrapper = EmptyComponent;

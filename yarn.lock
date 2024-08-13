@@ -2162,6 +2162,61 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
+"@react-native-ama/animations@*":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@react-native-ama/animations/-/animations-1.0.0.tgz#d5497ddbf9592e02fed7620d710d9d681d076f2c"
+  integrity sha512-v2ikSd7gsZCc+s6ICo6y6AkprkMFFO+8Wy0wp97BlFFZzQOpJL37t4Iu4vg/qvLQqr/ickZt+MHwbuWeXp0siQ==
+  dependencies:
+    "@react-native-ama/core" "*"
+    "@react-native-ama/internal" "*"
+
+"@react-native-ama/core@*":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@react-native-ama/core/-/core-1.0.0.tgz#213fea00bb55dcf627c3316a491cd1b6794a2443"
+  integrity sha512-9z7oD7inbqLAUH/5PTHVhcpnQ53DempL+F4AiGTmYiSi8rCkEDtmb1s6FB7LB8j0HitGFDedsBk16vWzhftviA==
+  dependencies:
+    "@react-native-ama/internal" "*"
+
+"@react-native-ama/extras@*":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@react-native-ama/extras/-/extras-1.0.0.tgz#65a05e39f2665be3c94962523f8ab759e88321c3"
+  integrity sha512-00WHAnDKo+xtNJBK2wcRa6fGgFKmVeMLN9tyiPZ6h4Y1rYrJDsxIO+b0G2qpkcI6wdVS0oEUQB7+QrFwEkk/Cw==
+  dependencies:
+    "@react-native-ama/animations" "*"
+    "@react-native-ama/core" "*"
+    "@react-native-ama/internal" "*"
+
+"@react-native-ama/forms@*":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@react-native-ama/forms/-/forms-1.0.0.tgz#b7911763bc15412eeea0f4f5c789948c8d4797ef"
+  integrity sha512-Ikbh/qJEH9hRrro2ytUvJkUE4pprPYgaTDXl/Ze0vPst/Hvo2fJAxV9j6cb4CuvTHMSZw3hdFyv3idqKRoLH1w==
+  dependencies:
+    "@react-native-ama/core" "*"
+    "@react-native-ama/internal" "*"
+    "@react-native-ama/react-native" "*"
+
+"@react-native-ama/internal@*":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@react-native-ama/internal/-/internal-0.0.1.tgz#829c4812b2687df20533f5f91ecb9c134503eff2"
+  integrity sha512-60/EoLHIjMSf0U+wIv2cutPvG6Je/9hlAcmrvVSVfdMksAx0KAd2NagyCSvMAZ3AjB3GHSbUKJq8rmJ8t3Ew2g==
+  dependencies:
+    wcag-color "^1.1.1"
+
+"@react-native-ama/lists@*":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@react-native-ama/lists/-/lists-1.0.0.tgz#697962f209555ff2fadd1ae26dbe1a5f5726af20"
+  integrity sha512-vEobld03sdrpzSTjYo4wNwhUIE9M5YZJJAoBdC8br7ybWuk9u5OntByF9doqqLCiMxQ5ZQoL5BCNOtb0FdDPlg==
+  dependencies:
+    "@react-native-ama/core" "*"
+    "@react-native-ama/internal" "*"
+
+"@react-native-ama/react-native@*":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@react-native-ama/react-native/-/react-native-1.0.0.tgz#0810e3b44486649d7b1abe2cf9cdbd40c655400b"
+  integrity sha512-Ce+pAnjK0VgqnYmMGTLvyabH08aAPgGHsG/A5aqLrpa6kVEcjR1xj/dSpHTFDb5XC1aqNn/opCr3sG2u78iOAA==
+  dependencies:
+    "@react-native-ama/core" "*"
+
 "@react-native-community/cli-clean@11.3.6":
   version "11.3.6"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-clean/-/cli-clean-11.3.6.tgz#43a06cbee1a5480da804debc4f94662a197720f2"
@@ -4816,6 +4871,13 @@ expo-modules-core@1.5.11:
   dependencies:
     compare-versions "^3.4.0"
     invariant "^2.2.4"
+
+expo-splash-screen@~0.20.5:
+  version "0.20.5"
+  resolved "https://registry.yarnpkg.com/expo-splash-screen/-/expo-splash-screen-0.20.5.tgz#ebeba3e3977606830f74f506ab2cc25042bb7efd"
+  integrity sha512-nTALYdjHpeEA30rdOWSguxn72ctv8WM8ptuUgpfRgsWyn4i6rwYds/rBXisX69XO5fg+XjHAQqijGx/b28+3tg==
+  dependencies:
+    "@expo/prebuild-config" "6.2.6"
 
 expo-status-bar@~1.6.0:
   version "1.6.0"

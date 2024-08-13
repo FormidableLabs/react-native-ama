@@ -6,9 +6,12 @@ import {
   AccessibilityChangeEventName,
   AccessibilityInfo,
   NativeEventSubscription,
+  Platform,
   Text,
   View,
 } from 'react-native';
+
+import { AMAWrapper } from './AMAWrapper';
 
 type AMAProviderProps = {
   children: React.ReactNode;
@@ -170,21 +173,23 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
     };
 
     return (
-      <AMAContext.Provider
-        value={{
-          ...values,
-          trackError,
-          removeError,
-        }}>
-        <View style={{ flex: 1 }}>
-          <>
-            {children}
-            {failedItems.length > 0 ? (
-              <AMAError count={failedItems.length} />
-            ) : null}
-          </>
-        </View>
-      </AMAContext.Provider>
+      <AMAWrapper>
+        <AMAContext.Provider
+          value={{
+            ...values,
+            trackError,
+            removeError,
+          }}>
+          <View style={{ flex: 1 }}>
+            <>
+              {children}
+              {failedItems.length > 0 ? (
+                <AMAError count={failedItems.length} />
+              ) : null}
+            </>
+          </View>
+        </AMAContext.Provider>
+      </AMAWrapper>
     );
   }
 
