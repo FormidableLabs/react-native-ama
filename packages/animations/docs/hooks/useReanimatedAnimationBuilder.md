@@ -1,56 +1,53 @@
 import { Required } from '@site/src/components'
 
-# AnimatedContainer
+# useReanimatedAnimationBuilder
 
-This component is built on top of [Reanimated custom animations](https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/custom-animations)
-and let us animate the entry and exitFrom of the container, honouring
+A hook distilling [Reanimated custom animations](https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/custom-animations) functionality
+to animate the entry and exiting of an Animated components, honouring
 the [Reduce Motion](https://reactnative.dev/docs/accessibilityinfo) preference.
 
-## Example
+## Usage
 
 ```jsx
-import { AnimatedContainer } from '@react-native-ama/animations';
+import { useReanimatedAnimationBuilder } from '@react-native-ama/animations';
 
-<AnimatedContainer
-  from={{ transform: [{ translateY: 'targetHeight' }] }}
-  to={{ transform: [{ translateY: 0 }] }}
-  exitFrom={{ transform: [{ translateY: 'currentHeight' }] }}
-  style={styles.timedContent}
-  duration={300}
-  autofocus
-/>;
+const Example = () => {
+  const { entering, exiting } = useReanimatedAnimationBuilder({
+    from: { transform: [{ translateY: 'targetHeight' }] },
+    to: { transform: [{ translateY: 0 }] },
+    exitFrom: { transform: [{ translateY: 'currentHeight' }] },
+    exitTo,
+    duration: 300,
+  });
+
+  return (
+    <Animated.Text entering={entering} exiting={exiting}>
+      Text
+    </Animated.Text>
+  );
+};
 ```
 
-When the component is mounted, it will animate it from: `from -> to`, and when it is unmounted, it will animate it from: `exitFrom -> exitTo`.
-If the property `exitFrom from` is not specified, it will then play the animation in reverse: `to -> from`.
+When the hook is mounted, it will animate entering: `from -> to`, and when it is unmounted, it will animate exiting: `exitFrom -> exitTo`.
+If the property `exitFrom` is not specified, it will then play the animation in reverse: `to -> from`.
 
 ## Accessibility
 
-For both, enter and exitFrom animation, the component will use a `duration={0}` for each [motion property](../utils/isMotionAnimation) when [Reduce Motion](../hooks/useAMAContext#isreducemotionenabled) option is enabled.
+For both, `from` and `exitFrom` starting animation, the hook will use a `duration={0}` for each [motion property](../utils/isMotionAnimation) when [Reduce Motion](../hooks/useAMAContext#isreducemotionenabled) option is enabled.
 
 ## Props
 
-Props extend the [`UseReanimatedAnimationBuilder`](../hooks/useReanimatedAnimationBuilder.md) props.
-
-### `autofocus`
-
-If set to true, wraps the child inside the [AutofocusContainer](./AutofocusContainer)
-
-| Type    | Default |
-| ------- | ------- |
-| boolean | false   |
-
-### `duration`
+### <Required /> `duration`
 
 The preferred animation duration.
 
-| Type   | Default |
-| ------ | ------- |
-| number | 300     |
+| Type   | Default   |
+| ------ | --------- |
+| number | undefined |
 
 :::note
 
-The component will use a `duration={0}` for each [motion property](../utils/isMotionAnimation) when [Reduce Motion](../hooks/useAMAContext#isreducemotionenabled) option is enabled.
+The hook will use a `duration={0}` for each [motion property](../utils/isMotionAnimation) when [Reduce Motion](../hooks/useAMAContext#isreducemotionenabled) option is enabled.
 
 :::
 
@@ -74,19 +71,6 @@ In additional to `ViewStyle`, this property also allows access to special [value
 | targetGlobalOriginX | X coordinate of top left corner in global coordinate system   |
 | targetGlobalOriginY | Y coordinate of top left corner in global coordinate system   |
 
-#### Example
-
-```jsx
-import { AnimatedContainer } from 'react-native-ama';
-
-<AnimatedContainer
-  from={{ transform: [{ translateY: 'targetHeight' }] }}
-  to={{ transform: [{ translateY: 0 }] }}
-/>;
-```
-
-In this example, `translateY` is assigned the value of the view's height when the container is animated.
-
 ### <Required /> `to`
 
 The final (or initial) value of the animation.
@@ -97,14 +81,6 @@ The final (or initial) value of the animation.
 
 This value is used for both entering and exiting animation.
 For the entering animation, this is used as the final state; for the exitFrom one, as the initial state.
-
-```jsx
-import { AnimatedContainer } from 'react-native-ama';
-
-<AnimatedContainer from={{ opacity: 0 }} to={{ opacity: 1 }} />;
-```
-
-In this case, the view will fade In when mounted and fade out when unmounted.
 
 ### `exitFrom`
 
@@ -125,16 +101,6 @@ In additional to `ViewStyle` this property also allows to access to special [val
 | currentGlobalOriginX | X coordinate of top left corner in global coordinate system   |
 | currentGlobalOriginY | Y coordinate of top left corner in global coordinate system   |
 
-```jsx
-import { AnimatedContainer } from 'react-native-ama';
-
-<AnimatedContainer
-  from={{ transform: [{ translateY: 'targetHeight' }] }}
-  to={{ transform: [{ translateY: 0 }] }}
-  exitFrom={{ transform: [{ translateY: 'currentHeight' }] }}
-/>;
-```
-
 Because in the [from](#from) animation, we did specify the special value **targetHeight** we need to provide a "different" value for the exiting animation
 as that special name does not exist for the exitFrom animation.
 
@@ -144,9 +110,9 @@ If not specified, the [from](#from) value is used as the final one for the unmou
 
 :::
 
-### `style`
+### `exitTo`
 
-The container style
+The final value for the unmounting animation.
 
 | Type      |
 | --------- |

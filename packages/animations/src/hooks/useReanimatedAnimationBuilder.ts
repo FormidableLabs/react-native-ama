@@ -114,7 +114,7 @@ type ReanimatedStyle<K> = {
 } & {
   transform?:
     | (
-        | PerpectiveTransform<K>
+        | PerspectiveTransform<K>
         | RotateTransform<K>
         | RotateXTransform<K>
         | RotateYTransform<K>
@@ -131,7 +131,7 @@ type ReanimatedStyle<K> = {
     | undefined;
 };
 
-type PerpectiveTransform<K> = {
+type PerspectiveTransform<K> = {
   c: string | K;
 };
 
