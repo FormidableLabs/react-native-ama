@@ -3,7 +3,7 @@ import { Required } from '@site/src/components'
 # useReanimatedAnimationBuilder
 
 A hook distilling [Reanimated custom animations](https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/custom-animations) functionality
-to animate the entry and exitFrom of an Animated components, honouring
+to animate the entry and exiting of an Animated components, honouring
 the [Reduce Motion](https://reactnative.dev/docs/accessibilityinfo) preference.
 
 ## Usage
@@ -28,26 +28,26 @@ const Example = () => {
 };
 ```
 
-When the hook is mounted, it will animate entering from: `from -> to`, and when it is unmounted, it will animate exiting from: `exitFrom -> exitTo`.
-If the property `exitFrom from` is not specified, it will then play the animation in reverse: `to -> from`.
+When the hook is mounted, it will animate entering: `from -> to`, and when it is unmounted, it will animate exiting: `exitFrom -> exitTo`.
+If the property `exitFrom` is not specified, it will then play the animation in reverse: `to -> from`.
 
 ## Accessibility
 
-For both, from and exitFrom animation, the component will use a `duration={0}` for each [motion property](../utils/isMotionAnimation) when [Reduce Motion](../hooks/useAMAContext#isreducemotionenabled) option is enabled.
+For both, `from` and `exitFrom` starting animation, the hook will use a `duration={0}` for each [motion property](../utils/isMotionAnimation) when [Reduce Motion](../hooks/useAMAContext#isreducemotionenabled) option is enabled.
 
 ## Props
 
-### `duration`
+### <Required /> `duration`
 
 The preferred animation duration.
 
-| Type   | Default |
-| ------ | ------- |
-| number | 300     |
+| Type   | Default   |
+| ------ | --------- |
+| number | undefined |
 
 :::note
 
-The component will use a `duration={0}` for each [motion property](../utils/isMotionAnimation) when [Reduce Motion](../hooks/useAMAContext#isreducemotionenabled) option is enabled.
+The hook will use a `duration={0}` for each [motion property](../utils/isMotionAnimation) when [Reduce Motion](../hooks/useAMAContext#isreducemotionenabled) option is enabled.
 
 :::
 
@@ -60,7 +60,7 @@ The initial value of the animation.
 | ViewStyle \| ReanimatedEntryValues |
 
 This parameter sets the initial values for the [Reanimated custom animations](https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/custom-animations).
-In additional to `ViewStyle`, this property also allows access to special values available by Reanimated:
+In additional to `ViewStyle`, this property also allows access to special [values](https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/custom-animations/#arguments-1) available by Reanimated:
 
 | Value               | Description                                                   |
 | ------------------- | ------------------------------------------------------------- |
@@ -90,7 +90,7 @@ The initial value for the unmounting animation.
 | --------------------------------- |
 | ViewStyle \| ReanimatedExitValues |
 
-In additional to `ViewStyle` this property also allows to access to special values available by Reanimated:
+In additional to `ViewStyle` this property also allows to access to special [values](https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/custom-animations/#arguments) available by Reanimated:
 
 | Value                | Description                                                   |
 | -------------------- | ------------------------------------------------------------- |
