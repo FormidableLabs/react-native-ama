@@ -48,7 +48,7 @@ const config: Config = {
       '@docusaurus/preset-classic',
       {
         docs: {
-          path: 'docs',
+          path: 'docs/ama',
           // routeBasePath: 'docs',
           sidebarPath: './sidebars.ts',
           ...defaultPresets,
