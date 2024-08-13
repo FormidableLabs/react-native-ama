@@ -63,7 +63,7 @@ The initial value of the animation.
 | ViewStyle \| ReanimatedEntryValues |
 
 This parameter sets the initial values for the [Reanimated custom animations](https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/custom-animations).
-In additional to `ViewStyle`, this property also allows access to special values available by Reanimated:
+In additional to `ViewStyle`, this property also allows access to special [values](https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/custom-animations/#arguments-1) available by Reanimated:
 
 | Value               | Description                                                   |
 | ------------------- | ------------------------------------------------------------- |
@@ -114,7 +114,7 @@ The initial value for the unmounting animation.
 | --------------------------------- |
 | ViewStyle \| ReanimatedExitValues |
 
-In additional to `ViewStyle` this property also allows to access to special values available by Reanimated:
+In additional to `ViewStyle` this property also allows to access to special [values](https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/custom-animations/#arguments) available by Reanimated:
 
 | Value                | Description                                                   |
 | -------------------- | ------------------------------------------------------------- |
