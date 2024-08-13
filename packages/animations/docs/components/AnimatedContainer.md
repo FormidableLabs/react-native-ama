@@ -21,7 +21,7 @@ import { AnimatedContainer } from '@react-native-ama/animations';
 />;
 ```
 
-When the component is mounted, it will animate it from: `from -> to`, and when it is unmounted, it will animate it from: `exitFrom -> to`.
+When the component is mounted, it will animate it from: `from -> to`, and when it is unmounted, it will animate it from: `exitFrom -> exitTo`.
 If the property `exitFrom from` is not specified, it will then play the animation in reverse: `to -> from`.
 
 ## Accessibility
@@ -29,6 +29,8 @@ If the property `exitFrom from` is not specified, it will then play the animatio
 For both, enter and exitFrom animation, the component will use a `duration={0}` for each [motion property](../utils/isMotionAnimation) when [Reduce Motion](../hooks/useAMAContext#isreducemotionenabled) option is enabled.
 
 ## Props
+
+Props extend the [`UseReanimatedAnimationBuilder`](../hooks/useReanimatedAnimationBuilder.md) props.
 
 ### `autofocus`
 
