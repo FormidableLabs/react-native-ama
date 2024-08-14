@@ -67,37 +67,37 @@ export const RULES_HELP: Record<Rule, string> | null = __DEV__
   ? {
       NO_UNDEFINED: '',
       CONTRAST_FAILED:
-        'https://formidable.com/open-source/react-native-ama/guidelines/contrast',
+        'https://commerce.nearform.com/open-source/react-native-ama/guidelines/contrast',
       CONTRAST_FAILED_AAA:
-        'https://formidable.com/open-source/react-native-ama/guidelines/contrast',
+        'https://commerce.nearform.com/open-source/react-native-ama/guidelines/contrast',
       MINIMUM_SIZE:
-        'https://formidable.com/open-source/react-native-ama/guidelines/minimum-size',
+        'https://commerce.nearform.com/open-source/react-native-ama/guidelines/minimum-size',
       UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL:
-        'https://formidable.com/open-source/react-native-ama/guidelines/text',
+        'https://commerce.nearform.com/open-source/react-native-ama/guidelines/text',
       NO_UPPERCASE_TEXT:
-        'https://formidable.com/open-source/react-native-ama/guidelines/text',
+        'https://commerce.nearform.com/open-source/react-native-ama/guidelines/text',
       NO_ACCESSIBILITY_LABEL:
-        'https://formidable.com/open-source/react-native-ama/guidelines/accessibility-labels',
+        'https://commerce.nearform.com/open-source/react-native-ama/guidelines/accessibility-labels',
       NO_ACCESSIBILITY_ROLE:
-        'https://formidable.com/open-source/react-native-ama/guidelines/accessibility-role',
+        'https://commerce.nearform.com/open-source/react-native-ama/guidelines/accessibility-role',
       NO_KEYBOARD_TRAP:
-        'https://formidable.com/open-source/react-native-ama/guidelines/forms',
+        'https://commerce.nearform.com/open-source/react-native-ama/guidelines/forms',
       NO_FORM_LABEL:
-        'https://formidable.com/open-source/react-native-ama/guidelines/forms',
+        'https://commerce.nearform.com/open-source/react-native-ama/guidelines/forms',
       NO_FORM_ERROR:
-        'https://formidable.com/open-source/react-native-ama/guidelines/forms',
+        'https://commerce.nearform.com/open-source/react-native-ama/guidelines/forms',
       FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE:
-        'https://formidable.com/open-source/react-native-ama/guidelines/lists-grids#number-of-results',
+        'https://commerce.nearform.com/open-source/react-native-ama/guidelines/lists-grids#number-of-results',
       FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE:
-        'https://formidable.com/open-source/react-native-ama/guidelines/lists-grids#number-of-results',
+        'https://commerce.nearform.com/open-source/react-native-ama/guidelines/lists-grids#number-of-results',
       BOTTOM_SHEET_CLOSE_ACTION:
-        'https://formidable.com/open-source/react-native-ama/guidelines/bottomsheet',
+        'https://commerce.nearform.com/open-source/react-native-ama/guidelines/bottomsheet',
       INCOMPATIBLE_ACCESSIBILITY_STATE:
-        'https://formidable.com/open-source/react-native-ama/guidelines/accessibility-role',
+        'https://commerce.nearform.com/open-source/react-native-ama/guidelines/accessibility-role',
       INCOMPATIBLE_ACCESSIBILITY_ROLE:
-        'https://formidable.com/open-source/react-native-ama/guidelines/accessibility-role',
+        'https://commerce.nearform.com/open-source/react-native-ama/guidelines/accessibility-role',
       NO_FORM_LABEL_ENDING_WITH_ASTERISK:
-        'https://formidable.com/open-source/react-native-ama/guidelines/forms#labels',
+        'https://commerce.nearform.com/open-source/react-native-ama/guidelines/forms#labels',
     }
   : null;
 
