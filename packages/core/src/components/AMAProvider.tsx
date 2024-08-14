@@ -6,7 +6,6 @@ import {
   AccessibilityChangeEventName,
   AccessibilityInfo,
   NativeEventSubscription,
-  Platform,
   Text,
   View,
 } from 'react-native';
