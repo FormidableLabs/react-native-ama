@@ -7,7 +7,15 @@ buildscript {
 
         // We use NDK 23 which has both M1 support and is the side-by-side NDK version from AGP.
         ndkVersion = "23.1.7779620"
+
+        // Set the kotlin version used in the Braze React SDK's buildscript
+        if (findProperty('android.kotlinVersion')) {
+            kotlin_version = findProperty('android.kotlinVersion')
+        } else {
+            kotlin_version = "1.8.10"
+        }
     }
+
     repositories {
         google()
         mavenCentral()
