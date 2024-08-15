@@ -4,7 +4,7 @@
   "version": "1.0.1-alpha.2",
   "description": "Accessibility as a First-Class Citizen with React Native AMA",
   "repository": "https://github.com/FormidableLabs/react-native-ama.git",
-  "homepage": "https://formidable.com/open-source/react-native-ama/",
+  "homepage": "https://commerce.nearform.com/open-source/react-native-ama/",
   "scripts": {
     "example:bare": "yarn --cwd examples/bare",
     "example:expo": "yarn --cwd examples/expo",
