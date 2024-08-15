@@ -9,7 +9,6 @@ const lightTheme = themes.github;
 const darkTheme = themes.dracula;
 
 const defaultPresets = {
-  sidebarPath: './sidebars.ts',
   editUrl:
     'https://github.com/FormidableLabs/react-native-ama/tree/main/website',
   remarkPlugins: [
@@ -18,7 +17,7 @@ const defaultPresets = {
   admonitions: {
     keywords: ['dev', 'note', 'tip', 'caution', 'danger', 'info', 'warn'],
   },
-  breadcrumbs: true
+  breadcrumbs: true,
 };
 
 const config: Config = {
@@ -49,8 +48,9 @@ const config: Config = {
       '@docusaurus/preset-classic',
       {
         docs: {
-          path: 'docs',
+          path: 'docs/ama',
           // routeBasePath: 'docs',
+          sidebarPath: './sidebars.ts',
           ...defaultPresets,
         },
         pages: {
@@ -92,6 +92,7 @@ const config: Config = {
         id: 'core',
         path: '../packages/core/docs',
         routeBasePath: '/core/',
+        sidebarPath: './sidebarsPackages.ts',
         ...defaultPresets,
       },
     ],
@@ -101,6 +102,7 @@ const config: Config = {
         id: 'animations',
         path: '../packages/animations/docs',
         routeBasePath: '/animations/',
+        sidebarPath: './sidebarsPackages.ts',
         ...defaultPresets,
       },
     ],
@@ -110,6 +112,7 @@ const config: Config = {
         id: 'forms',
         path: '../packages/forms/docs',
         routeBasePath: '/forms/',
+        sidebarPath: './sidebarsPackages.ts',
         ...defaultPresets,
       },
     ],
@@ -119,6 +122,7 @@ const config: Config = {
         id: 'react-native',
         path: '../packages/react-native/docs',
         routeBasePath: '/react-native/',
+        sidebarPath: './sidebarsPackages.ts',
         ...defaultPresets,
       },
     ],
@@ -128,6 +132,7 @@ const config: Config = {
         id: 'lists',
         path: '../packages/lists/docs',
         routeBasePath: '/lists/',
+        sidebarPath: './sidebarsPackages.ts',
         ...defaultPresets,
       },
     ],
@@ -137,6 +142,7 @@ const config: Config = {
         id: 'extras',
         path: '../packages/extras/docs',
         routeBasePath: '/extras/',
+        sidebarPath: './sidebarsPackages.ts',
         ...defaultPresets,
       },
     ],
@@ -146,6 +152,7 @@ const config: Config = {
         id: 'guidelines',
         path: 'guidelines',
         routeBasePath: 'guidelines',
+        sidebarPath: './sidebars.ts',
         ...defaultPresets,
       },
     ],
@@ -155,6 +162,7 @@ const config: Config = {
         id: 'checklist',
         path: 'checklist',
         routeBasePath: '/checklist/',
+        sidebarPath: './sidebars.ts',
         ...defaultPresets,
       },
     ],
