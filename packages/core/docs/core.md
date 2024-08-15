@@ -41,10 +41,10 @@ For more detailed information about the config file, please refer to [this docum
 
 You must include the [AMAProvider](./AMAProvider.md) in your app, as some components and hooks require it.
 
-```jsx {1-4,8-9}
+```jsx {2-4,6,8-9}
 import { AMAProvider } from '@react-native-ama/core';
 
-const App = () => {
+export const App = () => {
   return (
     <AMAProvider>
       <YourApp />
