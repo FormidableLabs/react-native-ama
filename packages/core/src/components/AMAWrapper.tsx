@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Platform, requireNativeComponent } from 'react-native';
+import { NativeModules, Platform, requireNativeComponent } from 'react-native';
 
 const isAndroid = Platform.OS === 'android';
 
@@ -11,6 +11,8 @@ const EmptyComponent: React.FC = ({
   return <>{children}</>;
 };
 
-export const AMAWrapper = isAndroid
-  ? requireNativeComponent<AMAWrapperProps>('AMAWrapper')
-  : EmptyComponent;
+console.info({ NativeModules });
+const a = requireNativeComponent<AMAWrapperProps>('AMAWrapper');
+
+console.info({ a });
+export const AMAWrapper = isAndroid ? a : EmptyComponent;
