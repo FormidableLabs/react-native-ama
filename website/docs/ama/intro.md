@@ -34,7 +34,7 @@ If AMA detects an accessibility issue:
 - Show a banner to inform that something went wrong
 - Provide a guideline link to the issue
 
-<img alt="Example of runtime failure detected by AMA" src="https://github.com/FormidableLabs/react-native-ama/blob/main/website/docs/ama/ama-demo.png?raw=true" height=900 />
+<img alt="Example of runtime failure detected by AMA" src="https://github.com/FormidableLabs/react-native-ama/blob/main/website/docs/ama/ama-demo.png?raw=true" height="900" />
 
 _Example of a failed accessibility check by AMA_
 
