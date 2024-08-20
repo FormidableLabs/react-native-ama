@@ -1,5 +1,3 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 buildscript {
     ext {
         buildToolsVersion = "33.0.0"
@@ -9,7 +7,15 @@ buildscript {
 
         // We use NDK 23 which has both M1 support and is the side-by-side NDK version from AGP.
         ndkVersion = "23.1.7779620"
+
+        // Set the kotlin version used in the Braze React SDK's buildscript
+        if (findProperty('android.kotlinVersion')) {
+            kotlin_version = findProperty('android.kotlinVersion')
+        } else {
+            kotlin_version = "1.8.10"
+        }
     }
+
     repositories {
         google()
         mavenCentral()
@@ -17,5 +23,8 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle")
         classpath("com.facebook.react:react-native-gradle-plugin")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
     }
 }
+
+apply plugin: "com.facebook.react.rootproject"
