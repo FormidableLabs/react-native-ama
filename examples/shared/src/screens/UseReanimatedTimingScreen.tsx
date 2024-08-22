@@ -1,7 +1,7 @@
 import { useReanimatedTiming } from '@react-native-ama/animations';
 import { Text } from '@react-native-ama/react-native';
 import * as React from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { Dimensions, Linking, StyleSheet, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -42,8 +42,17 @@ export const UseReanimatedTimingScreen = () => {
       <Spacer height="big" />
       <Text style={styles.intro}>
         This example shows how to use the{' '}
-        <Text onPress={() => {}}>getAnimationDuration</Text> with Reanimated for
-        a more accessible animations.
+        <Text
+          accessibilityRole="link"
+          style={styles.underline}
+          onPress={() =>
+            Linking.openURL(
+              'https://commerce.nearform.com/open-source/react-native-ama/docs/hooks/useAnimationDuration#getanimationduration',
+            )
+          }>
+          getAnimationDuration
+        </Text>{' '}
+        with Reanimated for a more accessible animations.
       </Text>
       <Spacer height="big" />
       <Animated.View style={[styles.box, animatedStyles]} />
@@ -68,5 +77,8 @@ const styles = StyleSheet.create({
   },
   intro: {
     lineHeight: theme.lineHeight.medium,
+  },
+  underline: {
+    textDecorationLine: 'underline',
   },
 });
