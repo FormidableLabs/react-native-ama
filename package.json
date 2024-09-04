@@ -36,7 +36,7 @@
   "devDependencies": {
     "@changesets/cli": "^2.27.7",
     "@ianvs/prettier-plugin-sort-imports": "^3.4.2",
-    "@svitejs/changesets-changelog-github-compact": "^0.1.1",
+    "@svitejs/changesets-changelog-github-compact": "^1.1.0",
     "@testing-library/react-native": "^12.3.0",
     "@types/jest": "^29.5.10",
     "eslint-plugin-import": "^2.26.0",

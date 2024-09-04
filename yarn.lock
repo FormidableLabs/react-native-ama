@@ -1603,7 +1603,7 @@
     fs-extra "^7.0.1"
     semver "^7.5.3"
 
-"@changesets/get-github-info@^0.5.0":
+"@changesets/get-github-info@^0.5.2":
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/@changesets/get-github-info/-/get-github-info-0.5.2.tgz#0cde2cadba57db85c714dc303c077da919a574e5"
   integrity sha512-JppheLu7S114aEs157fOZDjFqUDpm7eHdq5E8SSR0gUBTEK0cNSHsrSR5a66xs0z3RWuo46QvA3vawp8BxDHvg==
@@ -2991,13 +2991,13 @@
   dependencies:
     "@sinonjs/commons" "^3.0.0"
 
-"@svitejs/changesets-changelog-github-compact@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@svitejs/changesets-changelog-github-compact/-/changesets-changelog-github-compact-0.1.1.tgz#ad46b266b96629623184424fe37a018089098dc1"
-  integrity sha512-eBi211CfmKtkxB6tINicaDPBMbolswPbaAy7kCx+uUFL/LxztLm9cB+7jP54TgCrv+mMz8vSJWIs/baH63PjsA==
+"@svitejs/changesets-changelog-github-compact@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@svitejs/changesets-changelog-github-compact/-/changesets-changelog-github-compact-1.1.0.tgz#f8b101e984ca12467f33b7dbaa917fc253a2852d"
+  integrity sha512-qhUGGDHcpbY2zpjW3SwqchuW8J/5EzlPFud7xNntHKA7f3a/mx5+g+ruJKFHSAiVZYo30PALt+AyhmPUNKH/Og==
   dependencies:
-    "@changesets/get-github-info" "^0.5.0"
-    dotenv "^16.0.0"
+    "@changesets/get-github-info" "^0.5.2"
+    dotenv "^16.0.3"
 
 "@testing-library/react-native@^12.3.0":
   version "12.3.0"
@@ -4657,12 +4657,7 @@ dotenv-expand@~11.0.6:
   dependencies:
     dotenv "^16.4.4"
 
-dotenv@^16.0.0:
-  version "16.3.1"
-  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.3.1.tgz#369034de7d7e5b120972693352a3bf112172cc3e"
-  integrity sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==
-
-dotenv@^16.4.4, dotenv@~16.4.5:
+dotenv@^16.0.3, dotenv@^16.4.4, dotenv@~16.4.5:
   version "16.4.5"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.4.5.tgz#cdd3b3b604cb327e286b4762e13502f717cb099f"
   integrity sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==
