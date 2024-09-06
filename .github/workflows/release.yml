@@ -1,8 +1,9 @@
-name: Release
+name: AMA Release Workflow
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
 jobs:
   release:
     name: Release
