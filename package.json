@@ -19,6 +19,7 @@
     "doc": "cd website && yarn start",
     "ts:check": "tsc --noEmit",
     "lint": "eslint --ext .ts,.tsx ./packages",
+    "version": "yarn changeset version && yarn install --no-frozen-lockfile",
     "build": "yarn build:internal && yarn build:core && yarn build:animations && yarn build:react-native && yarn build:extras && yarn build:forms && yarn build:lists"
   },
   "workspaces": [
