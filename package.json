@@ -19,7 +19,7 @@
     "doc": "cd website && yarn start",
     "ts:check": "tsc --noEmit",
     "lint": "eslint --ext .ts,.tsx ./packages",
-    "build": "yarn workspaces --scope '@react-native-ama/*' run build"
+    "build": "yarn build:internal && yarn build:core && yarn build:animations && yarn build:extras && yarn build:forms && yarn build:lists && yarn build:react-native"
   },
   "workspaces": [
     "packages/animations",
