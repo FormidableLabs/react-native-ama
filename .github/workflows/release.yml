@@ -31,13 +31,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: Run example bare app
+      - name: Install dependencies
         uses: ./.github/actions/setup
 
       - name: Run example bare app
-        run: yarn install && yarn run example:bare
+        run: yarn run example:bare
 
-      - name: Build library
+      - name: Build packages
         run: yarn run build
 
       - name: PR or Publish
