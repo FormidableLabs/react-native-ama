@@ -8,17 +8,11 @@
   "scripts": {
     "build": "rimraf dist && tsc",
     "UNCOMMENT:postinstall": "yarn build",
-		"type:watch": "tsc --watch",
+    "type:watch": "tsc --watch",
     "type:check": "tsc --noEmit"
   },
   "dependencies": {
-    "react-native-svg": "13.9.0",
-    "@react-native-ama/animations": "*",
-    "@react-native-ama/core": "*",
-    "@react-native-ama/extras": "*",
-    "@react-native-ama/forms": "*",
-    "@react-native-ama/lists": "*",
-    "@react-native-ama/react-native": "*"
+    "react-native-svg": "13.9.0"
   },
   "devDependencies": {
     "rimraf": "^3.0.2",
