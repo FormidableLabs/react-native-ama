@@ -31,8 +31,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: Install Dependencies
-        run: yarn install && yarn run example:bare
+      - uses: ./.github/actions/setup
 
       - name: Build library
         run: yarn run build
