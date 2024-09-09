@@ -1,6 +1,6 @@
 {
   "name": "@react-native-ama/core",
-  "version": "1.0.1-alpha.2",
+  "version": "1.0.1",
   "description": "Accessible Mobile App Library for React Native",
   "private": false,
   "react-native": "src/index",
@@ -25,7 +25,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@react-native-ama/internal": "~1.0.1-alpha.1"
+    "@react-native-ama/internal": "~1.0.1"
   },
   "peerDependencies": {
     "react": "*",
