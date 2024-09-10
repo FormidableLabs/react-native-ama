@@ -1,5 +1,11 @@
 # @react-native-ama/internal
 
+## 1.0.1
+
+### Patch Changes
+
+- Changeset changes for release ([#249](https://github.com/FormidableLabs/react-native-ama/pull/249))
+
 ## 1.0.0
 
 ### Major Changes

@@ -1,8 +1,9 @@
-name: Release
+name: AMA Release Workflow
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
 jobs:
   release:
     name: Release
@@ -30,17 +31,20 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: Install Dependencies
-        run: yarn install && yarn run example:bare
+      - name: Install dependencies
+        uses: ./.github/actions/setup
 
-      - name: Build library
+      - name: Run example bare app
+        run: yarn run example:bare
+
+      - name: Build packages
         run: yarn run build
 
       - name: PR or Publish
         id: changesets
         uses: changesets/action@v1
         with:
-          version: yarn changeset version
+          version: yarn run version
           publish: yarn changeset publish
           title: 'chore: release package'
           commit: 'chore: release package'
