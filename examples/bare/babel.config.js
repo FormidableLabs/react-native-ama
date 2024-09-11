@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 module.exports = {
   presets: ['module:@react-native/babel-preset'],
   plugins: [
