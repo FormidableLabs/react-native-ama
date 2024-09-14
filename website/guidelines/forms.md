@@ -93,9 +93,9 @@ Also, some users might forget the error, forcing them to swipe left and right to
 
 <Padding />
 
-| VoiceOver | Talkback                                         |
-| --------- | ------------------------------------------------ |
-|           | hello, edit box, please enter a valid email, ... |
+| VoiceOver | Talkback                                                 |
+| --------- | -------------------------------------------------------- |
+|           | Email address, edit box, please enter a valid email, ... |
 
 ## Focus on the next field
 
