@@ -8,6 +8,12 @@ sidebar_position: 1
 
 The core package `@react-native-ama/core` offers essential hooks and components needed to create an app with accessibility in mind.
 
+:::important
+
+The core package is a dependency for all other AMA packages and is needed to be installed in your project before using any other AMA packages.
+
+:::
+
 ## Installation
 
 Install the `@react-native-ama/core` package with your favourite package manager:
