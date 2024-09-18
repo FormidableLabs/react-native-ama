@@ -44,7 +44,6 @@ The ref passed to the FlatList or ScrollView, used to scroll to index's when acc
 | ------------------------------------ | --------- |
 | React.Ref\<FlatList\<any\> \| null\> | undefined |
 
-## Related
+## Related guidelines
 
-- [Carousel Guidelines](/guidelines/carousel)
-- [CarouseWrapper](/extras/components/carouse-wrapper)
+- [Carousel](/guidelines/carousel)
