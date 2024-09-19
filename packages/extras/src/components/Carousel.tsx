@@ -4,7 +4,7 @@ import { FlatList } from 'react-native-gesture-handler';
 
 import { useCarousel } from '../hooks/useCarousel';
 
-export type CarouselWrapperProps<T> = Omit<
+export type CarouselProps<T> = Omit<
   FlatListProps<T>,
   | 'accessibilityLabel'
   | 'accessibilityRole'
@@ -14,14 +14,13 @@ export type CarouselWrapperProps<T> = Omit<
   accessibilityLabel: string;
 };
 
-export const CarouselWrapper = React.forwardRef<
-  FlatList,
-  CarouselWrapperProps<any>
->((props, forwardedRef) => {
-  const a11yProps = useCarousel({
-    data: props.data,
-    flatListRef: forwardedRef,
-  });
+export const Carousel = React.forwardRef<FlatList, CarouselProps<any>>(
+  (props, forwardedRef) => {
+    const a11yProps = useCarousel({
+      data: props.data,
+      flatListRef: forwardedRef,
+    });
 
-  return <FlatList {...props} {...a11yProps} />;
-});
+    return <FlatList {...props} {...a11yProps} />;
+  },
+);
