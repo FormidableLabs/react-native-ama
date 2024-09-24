@@ -49,6 +49,14 @@ const config: Config = {
       {
         docs: {
           path: 'docs/ama',
+          includeCurrentVersion: true,
+          lastVersion: 'current',
+          versions: {
+            current: {
+              label: '1.0.x',
+              // path: '1.0.x',
+            },
+          },
           // routeBasePath: 'docs',
           sidebarPath: './sidebars.ts',
           ...defaultPresets,
