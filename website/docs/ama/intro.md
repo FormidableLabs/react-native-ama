@@ -40,7 +40,7 @@ _Example of a failed accessibility check by AMA_
 
 <br />
 
-![A screenshot of a  console log which displays an error that indicates NO_KEYBOARD_TRAP - The component did not receive the focus, with a link to the user to navigate to a guide for further details to reference.](https://github.com/FormidableLabs/react-native-ama/blob/main/website/docs/ama-console-error.png?raw=true)
+![A screenshot of a console log which displays an error that indicates NO_KEYBOARD_TRAP - The component did not receive the focus, with a link to the user to navigate to a guide for further details to reference.](https://github.com/FormidableLabs/react-native-ama/blob/main/website/docs/ama-console-error.png?raw=true)
 _Additional information and guideline link provided by AMA in the console_
 
 [^1]: The accessibility support in React Native is [not fully complete](https://github.com/facebook/react-native/projects/15).
