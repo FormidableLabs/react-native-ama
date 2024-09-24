@@ -14,7 +14,7 @@ This is combined with extensive [guidelines](https://commerce.nearform.com/open-
 
 AMA consists of a family of packages under the npm `@react-native-ama` namespace. These packages are designed to work together to build up an accessible mobile app, allowing developers to subscribe to the bits they need without installing the full set of packages from the start. All packages leverage the `@react-native-ama/core` package to provide accessible mobile app functionality. This package must be installed first before any others can work.
 
-## Runtime Dev Tooling (Accessibility Checks)
+## Run time dev tooling (Accessibility Checks)
 
 Adopting an "accessibility-first" approach is the best way to ensure that digital experiences are inclusive for everyone. By prioritizing accessibility in the early stages of code development, you avoid needing time-consuming and expensive retroactive fixes.
 
@@ -26,7 +26,7 @@ The library does not perform any accessibility checks on the production build!
 
 :::
 
-### Example of a Failed Accessibility Check
+### Example of a failed accessibility check
 
 If AMA detects an accessibility issue:
 
