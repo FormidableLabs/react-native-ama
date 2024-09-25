@@ -46,6 +46,6 @@ Ensure all the following checks are true:
 
 | VoiceOver                                      | Talkback                                       |          |
 | ---------------------------------------------- | ---------------------------------------------- | -------- |
-| Contact us, **button**, double tap to activate | Contact us, **button**, double tap to activate | <Good /> |
+| Contact us, **button** | Contact us, **button**, double tap to activate | <Good /> |
 
 [^1]: In some cases, Talkback announces the accessibility state before the label.
