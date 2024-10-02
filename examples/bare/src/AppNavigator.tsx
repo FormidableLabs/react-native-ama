@@ -13,6 +13,7 @@ import {
   TouchableOpacityScreen,
   TouchableWithoutFeedbackScreen,
   UseAMAContextScreen,
+  UseAnimationDurationScreen,
   UseAnimationScreen,
   UseReanimatedTimingScreen,
   UseTimedActionScreen,
@@ -86,6 +87,16 @@ export const AppNavigator = () => {
             headerLeft: () => <BackButton />,
             headerTitle: () => (
               <Header title={'Reduce Motion Demo'} autofocus />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="UseAnimationDuration"
+          component={UseAnimationDurationScreen}
+          options={{
+            headerLeft: () => <BackButton />,
+            headerTitle: () => (
+              <Header title={'Animation Duration Demo'} autofocus />
             ),
           }}
         />
@@ -192,6 +203,7 @@ type StackParamList = {
   TouchableWithoutFeedback: undefined;
   Text: undefined;
   UseAnimation: undefined;
+  UseAnimationDuration: undefined;
   UseReanimatedTiming: undefined;
   Form: undefined;
   FlatList: undefined;

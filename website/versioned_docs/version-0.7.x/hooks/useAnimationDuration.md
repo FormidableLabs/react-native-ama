@@ -8,7 +8,7 @@ When passing a motion property, returns 0 if [Reduce Motion](../hooks/useAMACont
 ```js
 import { useAnimationDuration } from 'react-native-ama';
 
-const { getAnimationDuration } = useAccessibleAnimationDuration();
+const { getAnimationDuration } = useAnimationDuration();
 ```
 
 ## getAnimationDuration
@@ -43,12 +43,14 @@ const animatedStyles = useAnimatedStyle(() => {
 const playAnimation = () => {
   value.value = withTiming(
     Math.random(),
-    getAnimationDuration('translateX', 300),
+    {
+      duration: getAnimationDuration('translateX', 300),
+    }
   );
 };
 ```
 
-Because we specified `translateX` as the property we're going to use for the animation, and considering that that property is a [motion animation](../utils/isMotionAnimation.md); `playAnimation` will use a duration of **300ms** when reduce motion is _off_, and duration of **0s** when is on
+Because we specified `translateX` as the property we're going to use for the animation, and considering that that property is a [motion animation](../utilities/isMotionAnimation.md); `playAnimation` will use a duration of **300ms** when reduce motion is _off_, and duration of **0s** when is on
 
 ## Related guidelines
 

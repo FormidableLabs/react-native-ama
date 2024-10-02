@@ -5,6 +5,7 @@ export type RootStackParamList = {
   TouchableWithoutFeedback: undefined;
   Text: undefined;
   UseAnimation: undefined;
+  UseAnimationDuration: undefined;
   UseReanimatedTiming: undefined;
   Form: undefined;
   FlatList: undefined;

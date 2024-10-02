@@ -58,6 +58,11 @@ export const HomeScreen = ({ navigation }) => {
         />
         <Spacer height={'normal'} />
         <CTAPressable
+          title="useAnimationDuration"
+          onPress={() => navigate('UseAnimationDuration')}
+        />
+        <Spacer height={'normal'} />
+        <CTAPressable
           title="useReanimatedTiming"
           onPress={() => navigate('UseReanimatedTiming')}
         />

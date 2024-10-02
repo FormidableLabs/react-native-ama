@@ -20,7 +20,7 @@ import { StyleSheet, View } from 'react-native';
 import {
   isMotionAnimation,
   useAMAContext,
-  useAccessibleAnimationDuration,
+  useAnimationDuration,
 } from 'react-native-ama';
 import Animated, {
   useAnimatedStyle,
@@ -30,7 +30,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 export const ReanimatedReduceMotionScreen = () => {
-  const { getAnimationDuration } = useAccessibleAnimationDuration();
+  const { getAnimationDuration } = useAnimationDuration();
   const { isReduceMotionEnabled } = useAMAContext();
   const value = useSharedValue(0);
 
