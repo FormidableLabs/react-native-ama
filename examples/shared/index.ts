@@ -21,6 +21,7 @@ export { TouchableWithoutFeedbackScreen } from './src/screens/TouchableWithoutFe
 export { UseAMAContextScreen } from './src/screens/UseAMAContext.screen';
 export { UseAnimationDurationScreen } from './src/screens/UseAnimationDurationScreen';
 export { UseAnimationScreen } from './src/screens/UseAnimationScreen';
+export { UseReanimatedAnimationBuilderScreen } from './src/screens/UseReanimatedAnimationBuilderScreen';
 export { UseReanimatedTimingScreen } from './src/screens/UseReanimatedTimingScreen';
 export { UseTimedActionScreen } from './src/screens/UseTimedAction.screen';
 

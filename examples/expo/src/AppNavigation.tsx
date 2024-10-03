@@ -15,6 +15,7 @@ import {
   UseAMAContextScreen,
   UseAnimationDurationScreen,
   UseAnimationScreen,
+  UseReanimatedAnimationBuilderScreen,
   UseReanimatedTimingScreen,
   UseTimedActionScreen,
 } from '@examples/shared-ui';
@@ -107,6 +108,16 @@ export const AppNavigator = () => {
             headerLeft: () => <BackButton />,
             headerTitle: () => (
               <Header title={'Reanimated Reduce Motion Demo'} autofocus />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="UseReanimatedAnimationBuilder"
+          component={UseReanimatedAnimationBuilderScreen}
+          options={{
+            headerLeft: () => <BackButton />,
+            headerTitle: () => (
+              <Header title={'Reanimated Animation Builder Demo'} autofocus />
             ),
           }}
         />
@@ -205,6 +216,7 @@ type StackParamList = {
   UseAnimation: undefined;
   UseAnimationDuration: undefined;
   UseReanimatedTiming: undefined;
+  UseReanimatedAnimationBuilder: undefined;
   Form: undefined;
   FlatList: undefined;
   ExpandablePressable: undefined;

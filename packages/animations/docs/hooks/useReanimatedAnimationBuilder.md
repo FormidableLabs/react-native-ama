@@ -33,7 +33,7 @@ If the property `exitFrom` is not specified, it will then play the animation in 
 
 ## Accessibility
 
-For both, `from` and `exitFrom` starting animation, the hook will use a `duration={0}` for each [motion property](../utilities/isMotionAnimation) when [Reduce Motion](/core/hooks/useAMAContext#isreducemotionenabled) option is enabled.
+For both, `from` and `exitFrom` starting animation, the hook will use a `duration={0}` for each [motion property](../utilities/isMotionAnimation) when [Reduce Motion](../../../core/docs/hooks/useAMAContext#isreducemotionenabled) option is enabled.
 
 ## Props
 
@@ -47,7 +47,7 @@ The preferred animation duration.
 
 :::note
 
-The hook will use a `duration={0}` for each [motion property](../utilities/isMotionAnimation) when [Reduce Motion](/core/hooks/useAMAContext#isreducemotionenabled) option is enabled.
+The hook will use a `duration={0}` for each [motion property](../utilities/isMotionAnimation) when [Reduce Motion](../../../core/docs/hooks/useAMAContext#isreducemotionenabled) option is enabled.
 
 
 :::

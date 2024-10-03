@@ -6,6 +6,7 @@ export type RootStackParamList = {
   Text: undefined;
   UseAnimation: undefined;
   UseAnimationDuration: undefined;
+  UseReanimatedAnimationBuilder: undefined;
   UseReanimatedTiming: undefined;
   Form: undefined;
   FlatList: undefined;
