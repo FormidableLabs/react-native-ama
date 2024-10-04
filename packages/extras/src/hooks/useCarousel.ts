@@ -29,6 +29,7 @@ export const useCarousel = ({ data, flatListRef }: UseCarousel) => {
   };
 
   return {
+    accessible: true,
     accessibilityRole: 'adjustable' as AccessibilityRole,
     accessibilityActions,
     onAccessibilityAction,
