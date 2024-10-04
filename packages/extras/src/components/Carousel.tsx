@@ -37,9 +37,6 @@ const CarouselInner = <T,>(
       decelerationRate="fast"
       horizontal
       {...props}
-      onLayout={(event: LayoutChangeEvent) => {
-        props?.onLayout?.(event);
-      }}
       {...a11yProps}
     />
   );
