@@ -1,16 +1,17 @@
 import { useRef } from 'react';
+// import { FlatList } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import {
   AccessibilityActionEvent,
   AccessibilityRole,
 } from 'react-native/types';
 
-type UseCarousel = {
-  data: ArrayLike<any> | null | undefined;
-  flatListRef: React.Ref<FlatList<any> | null>;
+type UseCarousel<T> = {
+  data: ArrayLike<T> | null | undefined;
+  flatListRef: React.Ref<FlatList<T> | null>;
 };
 
-export const useCarousel = ({ data, flatListRef }: UseCarousel) => {
+export const useCarousel = <T = any>({ data, flatListRef }: UseCarousel<T>) => {
   const carouselIndexForScreenReader = useRef(0);
   const totalItems = data?.length || 0;
 
