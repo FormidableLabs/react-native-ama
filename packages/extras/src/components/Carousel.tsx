@@ -1,10 +1,16 @@
 import * as React from 'react';
-import { FlatListProps } from 'react-native';
+import { FlatListProps, LayoutChangeEvent } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
 import { useCarousel } from '../hooks/useCarousel';
 
-export type CarouselProps<T> = Omit<
+function fixedForwardRef<T, P = {}>(
+  render: (props: P, ref: React.Ref<T>) => React.ReactNode,
+): (props: P & React.RefAttributes<T>) => React.ReactNode {
+  return React.forwardRef(render) as any;
+}
+
+export type CarouselProps<T = any> = Omit<
   FlatListProps<T>,
   | 'accessibilityLabel'
   | 'accessibilityRole'
@@ -14,13 +20,29 @@ export type CarouselProps<T> = Omit<
   accessibilityLabel: string;
 };
 
-export const Carousel = React.forwardRef<FlatList, CarouselProps<any>>(
-  (props, forwardedRef) => {
-    const a11yProps = useCarousel({
-      data: props.data,
-      flatListRef: forwardedRef,
-    });
+const CarouselInner = <T,>(
+  props: CarouselProps<T>,
+  forwardedRef: React.ForwardedRef<FlatList<T>>,
+) => {
+  const a11yProps = useCarousel({
+    data: props.data,
+    flatListRef: forwardedRef,
+  });
 
-    return <FlatList {...props} {...a11yProps} />;
-  },
-);
+  return (
+    <FlatList
+      ref={forwardedRef}
+      showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
+      decelerationRate="fast"
+      horizontal
+      {...props}
+      onLayout={(event: LayoutChangeEvent) => {
+        props?.onLayout?.(event);
+      }}
+      {...a11yProps}
+    />
+  );
+};
+
+export const Carousel = fixedForwardRef(CarouselInner);
