@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FlatListProps, LayoutChangeEvent } from 'react-native';
+import { FlatListProps } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
 import { useCarousel } from '../hooks/useCarousel';
