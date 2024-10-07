@@ -16,4 +16,5 @@ export type RootStackParamList = {
   BottomSheet: undefined;
   UseTimedAction: undefined;
   UseAMAContext: undefined;
+  SwitchListItem: undefined;
 };

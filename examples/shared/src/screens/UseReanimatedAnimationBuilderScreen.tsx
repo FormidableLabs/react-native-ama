@@ -29,9 +29,9 @@ export const UseReanimatedAnimationBuilderScreen = () => {
               'https://commerce.nearform.com/open-source/react-native-ama/animations/hooks/useReanimatedAnimationBuilder',
             )
           }>
-          getAnimationDuration
+          useReanimatedAnimationBuilder
         </Text>{' '}
-        with Reanimated for a more accessible animations.
+        for a more accessible custom animations.
       </Text>
       <Spacer height="big" />
       <Animated.View entering={entering} exiting={exiting} style={styles.box} />

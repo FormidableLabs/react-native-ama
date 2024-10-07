@@ -9,6 +9,7 @@ import {
   Header,
   HomeScreen,
   PressableScreen,
+  SwitchListItemScreen,
   TextScreen,
   TouchableOpacityScreen,
   TouchableWithoutFeedbackScreen,
@@ -51,6 +52,16 @@ export const AppNavigator = () => {
           options={{
             headerLeft: () => <BackButton />,
             headerTitle: () => <Header title={'Pressable Demo'} autofocus />,
+          }}
+        />
+        <Stack.Screen
+          name="SwitchListItem"
+          component={SwitchListItemScreen}
+          options={{
+            headerLeft: () => <BackButton />,
+            headerTitle: () => (
+              <Header title={'Switch List Item Demo'} autofocus />
+            ),
           }}
         />
         <Stack.Screen
@@ -217,6 +228,7 @@ type StackParamList = {
   UseAnimationDuration: undefined;
   UseReanimatedAnimationBuilder: undefined;
   UseReanimatedTiming: undefined;
+  SwitchListItem: undefined;
   Form: undefined;
   FlatList: undefined;
   ExpandablePressable: undefined;

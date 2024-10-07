@@ -24,6 +24,7 @@ export { UseAnimationScreen } from './src/screens/UseAnimationScreen';
 export { UseReanimatedAnimationBuilderScreen } from './src/screens/UseReanimatedAnimationBuilderScreen';
 export { UseReanimatedTimingScreen } from './src/screens/UseReanimatedTimingScreen';
 export { UseTimedActionScreen } from './src/screens/UseTimedAction.screen';
+export { SwitchListItemScreen } from './src/screens/SwitchListItemScreen';
 
 // other
 
