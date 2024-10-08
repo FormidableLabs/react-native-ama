@@ -25,7 +25,7 @@ The component:
 
 - is announced as a "switch"
 - handles the `accessibilityState` **checked**
-- user the label text as `accessibilityLabel`
+- uses the label text as `accessibilityLabel`
 
 ## Props
 

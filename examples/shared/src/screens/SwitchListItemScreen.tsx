@@ -1,17 +1,27 @@
-import { SwitchListItem, Text } from '@react-native-ama/react-native';
+import {
+  SwitchListItem,
+  Text,
+  useSwitch,
+} from '@react-native-ama/react-native';
 import React, { useState } from 'react';
 import { Linking, StyleSheet, TouchableOpacity } from 'react-native';
 import { View } from 'react-native';
 import { Path, Svg } from 'react-native-svg';
 
+import { CTAPressable } from '../components/CTAPressable';
 import { Spacer } from '../components/Spacer';
 import { theme } from '../theme';
 
-const getStyles = value => {
-  return {
-    ...styles.touchableOpacity,
-    backgroundColor: value ? '#4CAF50' : 'white',
-  };
+const getStyles = (value, isError) => {
+  return isError
+    ? {
+      ...styles.touchableOpacityError,
+      backgroundColor: value ? '#4CAF50' : 'white',
+    }
+    : {
+      ...styles.touchableOpacity,
+      backgroundColor: value ? '#4CAF50' : 'white',
+    };
 };
 
 const CheckCircle = props => {
@@ -39,22 +49,23 @@ const Circle = props => {
     </Svg>
   );
 };
-const CustomSwitch = ({ value, onValueChange }) => {
+const CustomSwitch = ({ value, onValueChange, isError = false }) => {
+  const props = useSwitch({
+    accessibilityLabel: 'My Switch',
+    style: getStyles(value, isError),
+  });
   return (
-    <TouchableOpacity onPress={onValueChange} style={getStyles(value)}>
-      {value ? (
-        <CheckCircle size={25} color={'black'} />
-      ) : (
-        <Circle size={25} color={'grey'} />
-      )}
+    <TouchableOpacity onPress={onValueChange} {...props}>
+      {value ? <CheckCircle color={'black'} /> : <Circle color={'grey'} />}
     </TouchableOpacity>
   );
 };
 
-export default CustomSwitch;
 export const SwitchListItemScreen = () => {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [isCustomSwitchOn, setCustomIsSwitchOn] = useState(false);
+  const [isErrorCustomSwitchOn, setErrorCustomIsSwitchOn] = useState(false);
+  const [showTouchableAreaError, setShowTouchableAreaError] = useState(false);
   const toggleRNSwitch = () => {
     setIsSwitchOn(previousState => !previousState);
   };
@@ -63,9 +74,12 @@ export const SwitchListItemScreen = () => {
     setCustomIsSwitchOn(previousState => !previousState);
   };
 
+  const toggleErrorCustomSwitch = () => {
+    setErrorCustomIsSwitchOn(previousState => !previousState);
+  };
+
   return (
-    <View style={styles.container}>
-      <Spacer height="big" />
+    <View style={styles.view}>
       <Text style={styles.intro}>
         This example shows how to use the{' '}
         <Text
@@ -79,7 +93,7 @@ export const SwitchListItemScreen = () => {
           SwitchListItem.
         </Text>
       </Text>
-      <View style={styles.view}>
+      <View style={styles.container}>
         <SwitchListItem
           accessibilityLabel={'Accessible React Native Switch'}
           labelComponent={
@@ -90,9 +104,14 @@ export const SwitchListItemScreen = () => {
           onValueChange={toggleRNSwitch}
         />
         <SwitchListItem
-          accessibilityLabel={'Accessible Custom Switch'}
+          accessibilityLabel={'Accessible Custom Switch '}
           labelComponent={
-            <Text style={styles.switchText}>I'm a Custom Switch</Text>
+            <Text style={styles.switchText}>
+              I'm a Custom Switch with{'\n'}
+              <Text style={styles.switchText}>height:46px{'\n'}</Text>
+              <Text style={styles.switchText}>width:46px{'\n'}</Text>
+              <Text style={styles.switchText}>and no error</Text>
+            </Text>
           }
           style={styles.switchListItem}
           value={isCustomSwitchOn}
@@ -102,16 +121,40 @@ export const SwitchListItemScreen = () => {
             onValueChange={toggleCustomSwitch}
           />
         </SwitchListItem>
+        <CTAPressable
+          title="Show Touchable area error example "
+          onPress={() => setShowTouchableAreaError(true)}
+        />
+        {showTouchableAreaError ? (
+          <SwitchListItem
+            labelComponent={
+              <Text style={styles.switchText}>
+                I'm a Custom Switch with{'\n'}
+                <Text style={styles.switchText}>height:40px{'\n'}</Text>
+                <Text style={styles.switchText}>width:40px{'\n'}</Text>
+              </Text>
+            }
+            style={styles.switchListItem}
+            value={isErrorCustomSwitchOn}
+            onValueChange={toggleErrorCustomSwitch}>
+            <CustomSwitch
+              value={isErrorCustomSwitchOn}
+              onValueChange={toggleErrorCustomSwitch}
+              isError
+            />
+          </SwitchListItem>
+        ) : null}
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  view: {
+    paddingHorizontal: theme.padding.big,
+    paddingTop: theme.padding.big,
+  },
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
     paddingHorizontal: theme.padding.normal,
     paddingTop: theme.padding.normal,
   },
@@ -120,10 +163,6 @@ const styles = StyleSheet.create({
   },
   underline: {
     textDecorationLine: 'underline',
-  },
-  view: {
-    paddingHorizontal: theme.padding.normal,
-    paddingVertical: theme.padding.normal,
   },
   labelComponent: {
     paddingBottom: theme.padding.small,
@@ -135,7 +174,19 @@ const styles = StyleSheet.create({
     marginVertical: theme.padding.normal,
   },
   touchableOpacity: {
+    width: 46,
+    height: 46,
     borderRadius: 100,
     padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  touchableOpacityError: {
+    width: 40,
+    height: 40,
+    borderRadius: 100,
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
