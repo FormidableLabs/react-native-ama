@@ -9,7 +9,6 @@ import { View } from 'react-native';
 import { Path, Svg } from 'react-native-svg';
 
 import { CTAPressable } from '../components/CTAPressable';
-import { Spacer } from '../components/Spacer';
 import { theme } from '../theme';
 
 const getStyles = (value, isError) => {
