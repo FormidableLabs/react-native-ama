@@ -1,5 +1,18 @@
 # @react-native-ama/core
 
+## 1.1.0
+
+### Minor Changes
+
+- Added Carousel and useCarousel to extras package ([#259](https://github.com/FormidableLabs/react-native-ama/pull/259))
+
+### Patch Changes
+
+- Removed babel.config ([#253](https://github.com/FormidableLabs/react-native-ama/pull/253))
+
+- Updated dependencies [[`fce6630cb65b02ffa27453dd5ed4eaf7faf3dcc5`](https://github.com/FormidableLabs/react-native-ama/commit/fce6630cb65b02ffa27453dd5ed4eaf7faf3dcc5)]:
+  - @react-native-ama/internal@1.1.0
+
 ## 1.0.1
 
 ### Patch Changes
