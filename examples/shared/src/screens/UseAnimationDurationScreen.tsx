@@ -2,7 +2,7 @@ import { useAnimationDuration } from '@react-native-ama/animations';
 import { useAMAContext } from '@react-native-ama/core';
 import { Text } from '@react-native-ama/react-native';
 import React from 'react';
-import { Linking, StyleSheet, View } from 'react-native';
+import { Linking, Platform, StyleSheet, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -12,6 +12,9 @@ import Animated, {
 import { CTAPressable } from '../components/CTAPressable';
 import { Spacer } from '../components/Spacer';
 import { theme } from '../theme';
+
+const isIOS = Platform.OS === 'ios';
+const isAndroid = Platform.OS === 'android';
 
 export const UseAnimationDurationScreen = () => {
   const value = useSharedValue(0);
@@ -46,19 +49,27 @@ export const UseAnimationDurationScreen = () => {
             }>
             'useAnimatedDuration'
           </Text>
-          , use the below phone setting.
+          {`, enable / disable the ${
+            isIOS ? "'Reduced Motion'" : "'Remove Animations'"
+          } phone setting. To do this:`}
         </Text>
-        <Spacer height="normal" />
-        <Text style={styles.text}>
-          <Text style={styles.bold}>iOS:</Text> Go to Settings &gt;
-          Accessibility &gt;Motion &gt; enable "Reduce Motion".
-        </Text>
-        <Spacer height="normal" />
-        <Text style={styles.text}>
-          <Text style={styles.bold}>Android:</Text> Go to Settings &gt;
-          Accessibility &gt; Visibility Enhancements &gt; enable "Remove
-          Animations"{' '}
-        </Text>
+        {isIOS ? (
+          <>
+            <Spacer height="normal" />
+            <Text style={styles.text}>
+              Go to Settings &gt; Accessibility &gt; Motion &gt; Reduce Motion.
+            </Text>
+          </>
+        ) : null}
+        {isAndroid ? (
+          <>
+            <Spacer height="normal" />
+            <Text style={styles.text}>
+              Go to Settings &gt; Accessibility &gt; Visibility Enhancements
+              &gt; Remove Animations.
+            </Text>
+          </>
+        ) : null}
         <Spacer height="normal" />
         <Text style={styles.text}>
           Reduce Motion Enabled status:{' '}
