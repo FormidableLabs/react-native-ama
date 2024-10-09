@@ -2,7 +2,7 @@ import { Required } from '@site/src/components';
 
 # SwitchListItem
 
-It is a utility component that provides a list item with a customisable label and switch control [focused on accessibility](#accessibility).
+It is a utility component that provides a list item with a customizable label and switch control [focused on accessibility](#accessibility).
 
 ## Usage
 
@@ -25,7 +25,7 @@ The component:
 
 - is announced as a "switch"
 - handles the `accessibilityState` **checked**
-- user the label text as `accessibilityLabel`
+- uses the label text as `accessibilityLabel`
 
 ## Props
 
@@ -65,7 +65,7 @@ By default, the component uses the [React Native switch](https://reactnative.dev
 
 ```jsx
 <SwitchListItem
-  label={<Text style={styles.switchText}>I'm a switch</Text>}
+  labelComponent={<Text style={styles.switchText}>I'm a switch</Text>}
   style={styles.switchListItem}
   value={isSwitchOn}
   onValueChange={toggleSwitch}>

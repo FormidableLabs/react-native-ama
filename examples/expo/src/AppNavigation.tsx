@@ -9,11 +9,14 @@ import {
   Header,
   HomeScreen,
   PressableScreen,
+  SwitchListItemScreen,
   TextScreen,
   TouchableOpacityScreen,
   TouchableWithoutFeedbackScreen,
   UseAMAContextScreen,
+  UseAnimationDurationScreen,
   UseAnimationScreen,
+  UseReanimatedAnimationBuilderScreen,
   UseReanimatedTimingScreen,
   UseTimedActionScreen,
 } from '@examples/shared-ui';
@@ -49,6 +52,16 @@ export const AppNavigator = () => {
           options={{
             headerLeft: () => <BackButton />,
             headerTitle: () => <Header title={'Pressable Demo'} autofocus />,
+          }}
+        />
+        <Stack.Screen
+          name="SwitchListItem"
+          component={SwitchListItemScreen}
+          options={{
+            headerLeft: () => <BackButton />,
+            headerTitle: () => (
+              <Header title={'Switch List Item Demo'} autofocus />
+            ),
           }}
         />
         <Stack.Screen
@@ -90,12 +103,32 @@ export const AppNavigator = () => {
           }}
         />
         <Stack.Screen
+          name="UseAnimationDuration"
+          component={UseAnimationDurationScreen}
+          options={{
+            headerLeft: () => <BackButton />,
+            headerTitle: () => (
+              <Header title={'Animation Duration Demo'} autofocus />
+            ),
+          }}
+        />
+        <Stack.Screen
           name="UseReanimatedTiming"
           component={UseReanimatedTimingScreen}
           options={{
             headerLeft: () => <BackButton />,
             headerTitle: () => (
               <Header title={'Reanimated Reduce Motion Demo'} autofocus />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="UseReanimatedAnimationBuilder"
+          component={UseReanimatedAnimationBuilderScreen}
+          options={{
+            headerLeft: () => <BackButton />,
+            headerTitle: () => (
+              <Header title={'Reanimated Animation Builder Demo'} autofocus />
             ),
           }}
         />
@@ -192,9 +225,12 @@ type StackParamList = {
   TouchableWithoutFeedback: undefined;
   Text: undefined;
   UseAnimation: undefined;
+  UseAnimationDuration: undefined;
   UseReanimatedTiming: undefined;
+  UseReanimatedAnimationBuilder: undefined;
   Form: undefined;
   FlatList: undefined;
+  SwitchListItem: undefined;
   ExpandablePressable: undefined;
   FlatListDynamic: undefined;
   FlatListStatic: undefined;

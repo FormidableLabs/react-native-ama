@@ -27,6 +27,11 @@ export const HomeScreen = ({ navigation }) => {
         />
         <Spacer height={'normal'} />
         <CTAPressable
+          title="SwitchListItem"
+          onPress={() => navigate('SwitchListItem')}
+        />
+        <Spacer height={'normal'} />
+        <CTAPressable
           title="ExpandablePressable"
           onPress={() => navigate('ExpandablePressable')}
         />
@@ -55,6 +60,16 @@ export const HomeScreen = ({ navigation }) => {
         <CTAPressable
           title="useAnimation"
           onPress={() => navigate('UseAnimation')}
+        />
+        <Spacer height={'normal'} />
+        <CTAPressable
+          title="useAnimationDuration"
+          onPress={() => navigate('UseAnimationDuration')}
+        />
+        <Spacer height={'normal'} />
+        <CTAPressable
+          title="useReanimatedAnimationBuilder"
+          onPress={() => navigate('UseReanimatedAnimationBuilder')}
         />
         <Spacer height={'normal'} />
         <CTAPressable

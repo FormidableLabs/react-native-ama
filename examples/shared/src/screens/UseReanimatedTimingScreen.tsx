@@ -47,7 +47,7 @@ export const UseReanimatedTimingScreen = () => {
           style={styles.underline}
           onPress={() =>
             Linking.openURL(
-              'https://commerce.nearform.com/open-source/react-native-ama/docs/hooks/useAnimationDuration#getanimationduration',
+              'https://commerce.nearform.com/open-source/react-native-ama/animations/hooks/useReanimatedTiming',
             )
           }>
           getAnimationDuration

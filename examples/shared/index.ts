@@ -19,9 +19,12 @@ export { TextScreen } from './src/screens/Text.screen';
 export { TouchableOpacityScreen } from './src/screens/TouchableOpacity.screen';
 export { TouchableWithoutFeedbackScreen } from './src/screens/TouchableWithoutFeedback.screen';
 export { UseAMAContextScreen } from './src/screens/UseAMAContext.screen';
+export { UseAnimationDurationScreen } from './src/screens/UseAnimationDurationScreen';
 export { UseAnimationScreen } from './src/screens/UseAnimationScreen';
+export { UseReanimatedAnimationBuilderScreen } from './src/screens/UseReanimatedAnimationBuilderScreen';
 export { UseReanimatedTimingScreen } from './src/screens/UseReanimatedTimingScreen';
 export { UseTimedActionScreen } from './src/screens/UseTimedAction.screen';
+export { SwitchListItemScreen } from './src/screens/SwitchListItemScreen';
 
 // other
 
