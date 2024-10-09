@@ -20,7 +20,7 @@ export const UseReanimatedAnimationBuilderScreen = () => {
     <View style={styles.container}>
       <Spacer height="big" />
       <Text style={styles.intro}>
-        This example shows how to use the{' '}
+        The animation below is an example built with the{' '}
         <Text
           accessibilityRole="link"
           style={styles.underline}
@@ -31,7 +31,12 @@ export const UseReanimatedAnimationBuilderScreen = () => {
           }>
           useReanimatedAnimationBuilder
         </Text>{' '}
-        for a more accessible custom animations.
+        hook.
+      </Text>
+      <Spacer height="normal" />
+      <Text>
+        This hook allows for animations to be built with accessibility in mind,
+        honoring the reduce motion preference of users.
       </Text>
       <Spacer height="big" />
       <Animated.View entering={entering} exiting={exiting} style={styles.box} />
