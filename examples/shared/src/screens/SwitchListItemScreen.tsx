@@ -9,18 +9,19 @@ import { View } from 'react-native';
 import { Path, Svg } from 'react-native-svg';
 
 import { CTAPressable } from '../components/CTAPressable';
+import { Spacer } from '../components/Spacer';
 import { theme } from '../theme';
 
 const getStyles = (value, isError) => {
   return isError
     ? {
-      ...styles.touchableOpacityError,
-      backgroundColor: value ? '#4CAF50' : 'white',
-    }
+        ...styles.touchableOpacityError,
+        backgroundColor: value ? '#4CAF50' : 'white',
+      }
     : {
-      ...styles.touchableOpacity,
-      backgroundColor: value ? '#4CAF50' : 'white',
-    };
+        ...styles.touchableOpacity,
+        backgroundColor: value ? '#4CAF50' : 'white',
+      };
 };
 
 const CheckCircle = props => {
@@ -96,7 +97,7 @@ export const SwitchListItemScreen = () => {
         <SwitchListItem
           accessibilityLabel={'Accessible React Native Switch'}
           labelComponent={
-            <Text style={styles.switchText}>I'm a React Native Switch</Text>
+            <Text style={styles.switchText}>React Native Switch</Text>
           }
           style={styles.switchListItem}
           value={isSwitchOn}
@@ -106,7 +107,7 @@ export const SwitchListItemScreen = () => {
           accessibilityLabel={'Accessible Custom Switch '}
           labelComponent={
             <Text style={styles.switchText}>
-              I'm a Custom Switch with{'\n'}
+              Custom Switch with{'\n'}
               <Text style={styles.switchText}>height:46px{'\n'}</Text>
               <Text style={styles.switchText}>width:46px{'\n'}</Text>
               <Text style={styles.switchText}>and no error</Text>
@@ -120,28 +121,35 @@ export const SwitchListItemScreen = () => {
             onValueChange={toggleCustomSwitch}
           />
         </SwitchListItem>
+        <Spacer height="big" />
+
         <CTAPressable
-          title="Show Touchable area error example "
+          title="Show error example "
+          disabled={showTouchableAreaError}
           onPress={() => setShowTouchableAreaError(true)}
         />
         {showTouchableAreaError ? (
-          <SwitchListItem
-            labelComponent={
-              <Text style={styles.switchText}>
-                I'm a Custom Switch with{'\n'}
-                <Text style={styles.switchText}>height:40px{'\n'}</Text>
-                <Text style={styles.switchText}>width:40px{'\n'}</Text>
-              </Text>
-            }
-            style={styles.switchListItem}
-            value={isErrorCustomSwitchOn}
-            onValueChange={toggleErrorCustomSwitch}>
-            <CustomSwitch
+          <>
+            <Spacer height="normal" />
+            <Text>Custom Switch with breaking guidelines: </Text>
+            <SwitchListItem
+              labelComponent={
+                <Text style={styles.switchText}>
+                  Custom Switch{'\n'}
+                  <Text style={styles.switchText}>height:40px{'\n'}</Text>
+                  <Text style={styles.switchText}>width:40px{'\n'}</Text>
+                </Text>
+              }
+              style={styles.switchListItem}
               value={isErrorCustomSwitchOn}
-              onValueChange={toggleErrorCustomSwitch}
-              isError
-            />
-          </SwitchListItem>
+              onValueChange={toggleErrorCustomSwitch}>
+              <CustomSwitch
+                value={isErrorCustomSwitchOn}
+                onValueChange={toggleErrorCustomSwitch}
+                isError
+              />
+            </SwitchListItem>
+          </>
         ) : null}
       </View>
     </View>
@@ -167,6 +175,7 @@ const styles = StyleSheet.create({
     paddingBottom: theme.padding.small,
   },
   switchText: {
+    flex: 1,
     paddingRight: theme.padding.normal,
   },
   switchListItem: {
