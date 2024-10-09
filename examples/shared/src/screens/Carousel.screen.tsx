@@ -61,7 +61,7 @@ export const CarouselScreen = () => {
         renderItem={renderItem}
         ItemSeparatorComponent={ItemSeparator}
       />
-      <Text style={styles.text}>{`Carousel is fully accessible, use ${
+      <Text style={styles.text}>{`The Carousel above is fully accessible, use ${
         isAndroid ? 'TalkBack on Android' : 'VoiceOver on iOS'
       } to interact with it.`}</Text>
     </SafeAreaView>
@@ -75,6 +75,7 @@ const ItemSeparator: React.FC = () => (
 const styles = StyleSheet.create({
   wrapper: {
     paddingHorizontal: theme.padding.big,
+    marginTop: theme.padding.big,
   },
   image: {
     width: IMAGE_WIDTH,
