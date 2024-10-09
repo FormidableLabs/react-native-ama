@@ -53,6 +53,11 @@ export const HomeScreen = ({ navigation }) => {
           onPress={() => navigate('BottomSheet')}
         />
 
+        {/**/}
+        <Spacer height={'normal'} />
+
+        <CTAPressable title="Carousel" onPress={() => navigate('Carousel')} />
+
         {/* */}
         <Spacer height={'big'} />
         <Header title="Hooks" />

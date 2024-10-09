@@ -1,6 +1,7 @@
 import {
   BackButton,
   BottomSheetScreen,
+  CarouselScreen,
   ExpandablePressableScreen,
   FlatListDynamicScreen,
   FlatListScreen,
@@ -187,6 +188,14 @@ export const AppNavigator = () => {
           }}
         />
         <Stack.Screen
+          name="Carousel"
+          component={CarouselScreen}
+          options={{
+            headerLeft: () => <BackButton />,
+            headerTitle: () => <Header title={'Carousel Demo'} autofocus />,
+          }}
+        />
+        <Stack.Screen
           name="UseTimedAction"
           component={UseTimedActionScreen}
           options={{
@@ -235,6 +244,7 @@ type StackParamList = {
   FlatListDynamic: undefined;
   FlatListStatic: undefined;
   BottomSheet: undefined;
+  Carousel: undefined;
   UseTimedAction: undefined;
   UseAMAContext: undefined;
 };
