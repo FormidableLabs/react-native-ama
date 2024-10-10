@@ -1,5 +1,4 @@
 import { useRef } from 'react';
-// import { FlatList } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import {
   AccessibilityActionEvent,
@@ -15,7 +14,10 @@ export const useCarousel = <T = any>({ data, flatListRef }: UseCarousel<T>) => {
   const carouselIndexForScreenReader = useRef(0);
   const totalItems = data?.length || 0;
 
-  const accessibilityActions = [{ name: 'increment' }, { name: 'decrement' }];
+  const accessibilityActions = [
+    { name: 'increment' },
+    { name: 'decrement' },
+  ] as const;
 
   const onAccessibilityAction = (event: AccessibilityActionEvent) => {
     const value = event.nativeEvent.actionName === 'increment' ? 1 : -1;
