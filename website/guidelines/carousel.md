@@ -67,5 +67,5 @@ To implement this navigation behavior in React Native when the Screen Reader is 
 
 ### Related AMA utility
 
-- [CarouseWrapper](/extras/docs/components/carouse-wrapper)
-- [useCarousel](/extras/docs/hooks/use-carousel)
+- [Carouse](/extras/components/Carousel)
+- [useCarousel](/extras/hooks/useCarousel)
