@@ -26,7 +26,7 @@ const ExampleCarousel = props => {
 };
 ```
 
-## Props
+## Arguments
 
 ### <Required /> `data`
 
