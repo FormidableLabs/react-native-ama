@@ -38,7 +38,7 @@ module.exports = {
         },
         'theme-1': NearFormColors.Green,
         'theme-2': NearFormColors.DeepNavy,
-        'theme-3': NearFormColors.DeepNavy,
+        'theme-3': NearFormColors.LightNavy,
         'theme-4': NearFormColors.White,
         'header-bg': NearFormColors.White,
         'header-fg': NearFormColors.DeepNavy,
