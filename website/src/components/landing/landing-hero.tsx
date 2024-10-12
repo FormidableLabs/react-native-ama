@@ -24,13 +24,13 @@ export const LandingHero = ({
         <div className="flex-col md:flex-row flex justify-between gap-16 lg:gap-24 mx-auto">
           <div className="self-center md:self-left">
             <ProjectBadge
-              color="#FFC951"
+              color="#CD9AF5"
               description={'react native ama'}
               abbreviation={'Ra'}
               className="h-[320px] w-[320px]"
             />
           </div>
-          <div className="text-left lg:w-6/12 text-white">
+          <div className="text-left lg:w-6/12 text-black">
             <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
               {heading}
             </h1>
@@ -54,7 +54,7 @@ export const LandingHero = ({
               <ul className="list-none flex justify-items-start content-start items-start align-left pl-0 gap-6 lg:gap-12 font-bold">
                 {navItems.map(({ link, title }) => (
                   <li key={link}>
-                    <a href={link} className="text-white hover:text-white">
+                    <a href={link} className="text-black hover:text-white">
                       {title}
                     </a>
                   </li>
