@@ -21,7 +21,7 @@ const KEYBOARD_EVENT_HIDE: KeyboardEventName = Platform.select({
   default: 'keyboardDidHide',
 });
 
-export const useKeyboard = (shouldHandleKeyboardEvents: boolean) => {
+export const useKeyboard = (shouldHandleKeyboardEvents: boolean = true) => {
   const keyboardHeight = useSharedValue(0);
   const keyboardFinalHeight = useSharedValue(0);
   const isKeyboardVisible = useSharedValue(false);
@@ -29,11 +29,11 @@ export const useKeyboard = (shouldHandleKeyboardEvents: boolean) => {
   const handleKeyboardEvent = useCallback(
     (
       isVisible: boolean,
-      height: number,
+      endCoordinatesHeight: number,
       duration: number,
       easing: KeyboardEventEasing,
     ) => {
-      const finalHeight = isVisible ? height : 0;
+      const finalHeight = isVisible ? endCoordinatesHeight : 0;
 
       const animationConfig = getKeyboardAnimationConfigs(easing, duration);
 
