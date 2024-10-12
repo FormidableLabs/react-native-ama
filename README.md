@@ -69,8 +69,8 @@ The documentation contains everything you need to know about `@react-native-ama/
 
 - **[Getting started](https://commerce.nearform.com/open-source/react-native-ama/)** — contains the "Getting Started" guide.
 - **[Packages](https://commerce.nearform.com/open-source/react-native-ama/core/packages/)** — documentation for each package under React Native AMA
-- **[Guidelines](https://commerce.nearform.com/open-source/react-native-ama/guidelines/)** — guidelines enforced by AMA components
-- **[Checklist](https://commerce.nearform.com/open-source/react-native-ama/checklist/)** — guidelines enforced by AMA components
+- **[Guidelines](https://commerce.nearform.com/open-source/react-native-ama/guidelines/)** — mobile accessibility guidelines enforced by AMA
+- **[Checklist](https://commerce.nearform.com/open-source/react-native-ama/checklist/)** — condensed guidelines enforced by AMA
 
 _You can find the raw markdown files inside this repository's `docs` folders._
 
