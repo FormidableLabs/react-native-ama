@@ -2,6 +2,8 @@
 
 This website is built using [Docusaurus 3](https://docusaurus.io/), a modern static website generator.
 
+The figma file for the website can be found [here](https://www.figma.com/design/uLiMeE995DH541t5AxqThS)
+
 ### Installation
 
 ```
