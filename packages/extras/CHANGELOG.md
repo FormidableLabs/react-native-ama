@@ -1,5 +1,20 @@
 # @react-native-ama/extras
 
+## 1.1.0
+
+### Minor Changes
+
+- Added Carousel and useCarousel to extras package ([#259](https://github.com/FormidableLabs/react-native-ama/pull/259))
+
+### Patch Changes
+
+- Updated useKeyboard hook argument shouldHandleKeyboardEvents to default to true and not be required. ([#265](https://github.com/FormidableLabs/react-native-ama/pull/265))
+
+- Updated dependencies [[`fce6630cb65b02ffa27453dd5ed4eaf7faf3dcc5`](https://github.com/FormidableLabs/react-native-ama/commit/fce6630cb65b02ffa27453dd5ed4eaf7faf3dcc5), [`f0f1b6be13cdf2d57ce2b7fc923ac9bbd3fc9c5d`](https://github.com/FormidableLabs/react-native-ama/commit/f0f1b6be13cdf2d57ce2b7fc923ac9bbd3fc9c5d)]:
+  - @react-native-ama/internal@1.1.0
+  - @react-native-ama/animations@1.1.0
+  - @react-native-ama/core@1.1.0
+
 ## 1.0.1
 
 ### Patch Changes
