@@ -9,18 +9,24 @@ beforeEach(() => {
 
 let withTiming: jest.Mock;
 
+// const renderHookWrapper = ({ children }) => (
+//   <AMAProvider.AMAProvider>{children}</AMAProvider.AMAProvider>
+// );
+
 describe('useReanimatedAnimationBuilder', () => {
   describe('entering animation', () => {
     it('handles the custom reanimated params', () => {
-      const { result } = renderHook(() =>
-        useReanimatedAnimationBuilder({
-          from: { transform: [{ translateY: 'targetHeight' }], opacity: 0 },
-          to: {
-            transform: [{ translateY: -42 }],
-            opacity: 1,
-          },
-          duration: 300,
-        }),
+      const { result } = renderHook(
+        () =>
+          useReanimatedAnimationBuilder({
+            from: { transform: [{ translateY: 'targetHeight' }], opacity: 0 },
+            to: {
+              transform: [{ translateY: -42 }],
+              opacity: 1,
+            },
+            duration: 300,
+          }),
+        // { wrapper: renderHookWrapper },
       );
 
       expect(
