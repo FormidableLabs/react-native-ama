@@ -47,9 +47,8 @@ export const AnimatedContainer = React.forwardRef<
       duration,
     });
 
-    const Wrapper = autofocus ? AutofocusContainer : React.Fragment;
-    return (
-      <Wrapper>
+    return autofocus ? (
+      <AutofocusContainer>
         <Animated.View
           style={style}
           entering={entering}
@@ -58,7 +57,16 @@ export const AnimatedContainer = React.forwardRef<
           {...rest}>
           {children}
         </Animated.View>
-      </Wrapper>
+      </AutofocusContainer>
+    ) : (
+      <Animated.View
+        style={style}
+        entering={entering}
+        exiting={exiting}
+        ref={forwardRef}
+        {...rest}>
+        {children}
+      </Animated.View>
     );
   },
 );

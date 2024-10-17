@@ -21,7 +21,8 @@
     "lint": "eslint --ext .js,.ts,.tsx ./packages",
     "version": "yarn changeset version && yarn install --no-frozen-lockfile",
     "build": "yarn build:internal && yarn build:core && yarn build:animations && yarn build:react-native && yarn build:extras && yarn build:forms && yarn build:lists",
-    "test:animations": "jest --selectProjects=animations"
+    "test:animations": "jest --selectProjects=animations",
+    "test:core": "jest --selectProjects=core"
   },
   "workspaces": [
     "packages/animations",
@@ -49,6 +50,7 @@
     "@types/jest": "^29.5.10",
     "@types/react-test-renderer": "^18.3.0",
     "babel-jest": "^29.7.0",
+    "babel-plugin-module-resolver": "^5.0.2",
     "babel-preset-react-native": "^4.0.1",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^3.1.3",

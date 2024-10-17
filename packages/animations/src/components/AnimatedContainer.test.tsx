@@ -81,8 +81,9 @@ describe('AnimatedContainer', () => {
 });
 
 jest.mock('../hooks/useReanimatedAnimationBuilder');
-jest.mock('../hooks/useFocus', () => {
+jest.mock('@react-native-ama/core', () => {
   return {
+    AutofocusContainer: jest.fn(() => <div />),
     useFocus: () => {
       return {
         setFocus: jest.fn(),

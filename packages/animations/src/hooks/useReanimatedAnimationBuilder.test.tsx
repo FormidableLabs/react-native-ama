@@ -1,5 +1,6 @@
 import * as AMAProvider from '@react-native-ama/core';
-import { renderHook } from '@testing-library/react-native';
+import { act, renderHook } from '@testing-library/react-native';
+import * as React from 'react';
 
 import { useReanimatedAnimationBuilder } from './useReanimatedAnimationBuilder';
 
@@ -9,13 +10,13 @@ beforeEach(() => {
 
 let withTiming: jest.Mock;
 
-// const renderHookWrapper = ({ children }) => (
-//   <AMAProvider.AMAProvider>{children}</AMAProvider.AMAProvider>
-// );
+const renderHookWrapper = ({ children }) => (
+  <AMAProvider.AMAProvider>{children}</AMAProvider.AMAProvider>
+);
 
 describe('useReanimatedAnimationBuilder', () => {
   describe('entering animation', () => {
-    it('handles the custom reanimated params', () => {
+    it('handles the custom reanimated params', async () => {
       const { result } = renderHook(
         () =>
           useReanimatedAnimationBuilder({
@@ -26,9 +27,16 @@ describe('useReanimatedAnimationBuilder', () => {
             },
             duration: 300,
           }),
-        // { wrapper: renderHookWrapper },
+        { wrapper: renderHookWrapper },
       );
+      await act(() => {
+        // Call the entering method within act
+        result.current.entering({
+          targetHeight: 42,
+        } as any);
+      });
 
+      // Assert the expected result after the act
       expect(
         result.current.entering({
           targetHeight: 42,

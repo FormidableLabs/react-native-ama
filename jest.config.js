@@ -30,12 +30,25 @@ module.exports = {
   // moduleNameMapper: {
   //   '^@babel/runtime': '<rootDir>/node_modules/@babel/runtime',
   // },
+  moduleNameMapper: {
+    '^@react-native-ama/core$': '<rootDir>/packages/core/src',
+  },
   projects: [
     {
       testPathIgnorePatterns: ["<rootDir>/node_modules/"],
       preset: "react-native",
       displayName: "animations",
-      testMatch: ["<rootDir>/packages/animations/src/**/*.test.ts"],
+      testMatch: ["<rootDir>/packages/animations/src/**/*.test.ts",
+        "<rootDir>/packages/animations/src/**/*.test.tsx"
+      ],
+    },
+    {
+      testPathIgnorePatterns: ["<rootDir>/node_modules/"],
+      preset: "react-native",
+      displayName: "core",
+      testMatch: ["<rootDir>/packages/core/src/**/*.test.ts",
+          "<rootDir>/packages/core/src/**/*.test.tsx"
+      ],
     }
   ],
 }
