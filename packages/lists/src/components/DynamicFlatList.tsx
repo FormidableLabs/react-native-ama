@@ -2,7 +2,6 @@ import React from 'react';
 import { FlatList, FlatListProps } from 'react-native';
 
 import { useDynamicList } from '../hooks/useDynamicList';
-import { ListWrapper } from './ListWrapper';
 
 type DynamicFlatListProps<T> = FlatListProps<T> & {
   singularMessage: string;
@@ -27,22 +26,14 @@ export const DynamicFlatList = React.forwardRef<
     });
 
     return __DEV__ ? (
-      <ListWrapper
-        rowsCount={dynamicList.rowsCount}
-        columnsCount={dynamicList.columnsCount}>
-        <FlatList
-          data={data}
-          {...rest}
-          ref={forwardedRef}
-          style={dynamicList.style}
-        />
-      </ListWrapper>
+      <FlatList
+        data={data}
+        {...rest}
+        ref={forwardedRef}
+        style={dynamicList.style}
+      />
     ) : (
-      <ListWrapper
-        rowsCount={dynamicList.rowsCount}
-        columnsCount={dynamicList.columnsCount}>
-        <FlatList data={data} {...rest} ref={forwardedRef} />
-      </ListWrapper>
+      <FlatList data={data} {...rest} ref={forwardedRef} />
     );
   },
 );
