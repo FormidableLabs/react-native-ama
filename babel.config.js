@@ -8,6 +8,15 @@ module.exports = {
     'module:@react-native/babel-preset'
   ],
   plugins: [
+    [
+      'module-resolver',
+      {
+          alias: {
+              '@': './src',
+              'assets': './assets',
+          }
+      },
+  ],
     'react-native-reanimated/plugin', // reanimated plugin must be listed last
   ],
   // plugins: [

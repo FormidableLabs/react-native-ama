@@ -1,7 +1,5 @@
 import { type RuleAction } from '@react-native-ama/internal';
-import * as CheckForAccessibilityRole from '@react-native-ama/internal/src/checks/checkAccessibilityRole';
-import * as CheckForAccessibilityState from '@react-native-ama/internal/src/checks/checkForAccessibilityState';
-import * as Logger from '@react-native-ama/internal/src/utils/logger';
+import * as RNAInternal from '@react-native-ama/internal';
 import { renderHook } from '@testing-library/react-native';
 
 import * as AMAProvider from '../components/AMAProvider';
@@ -29,7 +27,7 @@ describe('useChecks', () => {
     ruleValue => {
       jest
         // @ts-ignore
-        .spyOn(Logger, 'getRuleAction')
+        .spyOn(RNAInternal, 'getRuleAction')
         // @ts-ignore
         .mockReturnValue(ruleValue as RuleAction);
 
@@ -53,7 +51,7 @@ describe('useChecks', () => {
 
       jest
         // @ts-ignore
-        .spyOn(Logger, 'getRuleAction')
+        .spyOn(RNAInternal, 'getRuleAction')
         // @ts-ignore
         .mockReturnValue(ruleValue as RuleAction);
 
@@ -76,7 +74,7 @@ describe('useChecks', () => {
     ruleValue => {
       jest
         // @ts-ignore
-        .spyOn(Logger, 'getRuleAction')
+        .spyOn(RNAInternal, 'getRuleAction')
         // @ts-ignore
         .mockReturnValue(ruleValue as RuleAction);
 
@@ -104,7 +102,7 @@ describe('useChecks', () => {
 
   it('removes the tracked error after has been fixed', () => {
     // @ts-ignore
-    jest.spyOn(Logger, 'getRuleAction').mockReturnValue('MUST');
+    jest.spyOn(RNAInternal, 'getRuleAction').mockReturnValue('MUST');
 
     const { result } = renderHook(() => useChecks());
 
@@ -123,7 +121,7 @@ describe('useChecks', () => {
 
   it('checks for compatible accessibility state', () => {
     const check = jest
-      .spyOn(CheckForAccessibilityState, 'checkForAccessibilityState')
+      .spyOn(RNAInternal, 'checkForAccessibilityState')
       .mockReturnValue(null);
     const { result } = renderHook(() => useChecks());
 
@@ -143,7 +141,7 @@ describe('useChecks', () => {
 
   it('checks for compatible accessibility state when accessibilityState is passed', () => {
     const check = jest
-      .spyOn(CheckForAccessibilityState, 'checkForAccessibilityState')
+      .spyOn(RNAInternal, 'checkForAccessibilityState')
       .mockReturnValue(null);
     const { result } = renderHook(() => useChecks());
 
@@ -167,7 +165,7 @@ describe('useChecks', () => {
 
   it('checks for compatible accessibility role', () => {
     const check = jest
-      .spyOn(CheckForAccessibilityRole, 'checkAccessibilityRole')
+      .spyOn(RNAInternal, 'checkAccessibilityRole')
       .mockReturnValue(null);
     const { result } = renderHook(() => useChecks());
 

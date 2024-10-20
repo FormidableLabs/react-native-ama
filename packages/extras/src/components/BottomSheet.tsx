@@ -225,11 +225,11 @@ export const BottomSheet = React.forwardRef<
     useDerivedValue(() => {
       const maxScrollHeight = Math.ceil(
         maxHeight -
-          keyboardFinalHeight.value -
-          footerHeight -
-          headerHeight -
-          handleHeight -
-          topInset,
+        keyboardFinalHeight.value -
+        footerHeight -
+        headerHeight -
+        handleHeight -
+        topInset,
       );
 
       if (
@@ -330,11 +330,11 @@ export const BottomSheet = React.forwardRef<
                       {handleComponent === 'none'
                         ? null
                         : handleComponent || (
-                            <View
-                              style={[styles.line, handleStyle]}
-                              testID={`${testID}-line`}
-                            />
-                          )}
+                          <View
+                            style={[styles.line, handleStyle]}
+                            testID={`${testID}-line`}
+                          />
+                        )}
                     </View>
                     <View
                       onLayout={event => {
