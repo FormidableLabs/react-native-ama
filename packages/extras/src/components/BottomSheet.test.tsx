@@ -1,18 +1,19 @@
-import * as UseChecks from '@react-native-ama/core/src/hooks/useChecks';
-import * as UseTimedAction from '@react-native-ama/core/src/hooks/useTimedAction';
+import * as UseTimedAction from '@react-native-ama/core';
+import * as UseChecks from '@react-native-ama/core';
+import { AMAProvider } from '@react-native-ama/core';
 import { act, render } from '@testing-library/react-native';
 import * as React from 'react';
 import { KeyboardAvoidingView, Text } from 'react-native';
 
-import * as UseBottomSheetGestureHandler from '../hooks/useBottomSheetGestureHandler';
+//import * as UseBottomSheetGestureHandler from '../hooks/useBottomSheetGestureHandler';
 import { BottomSheet } from './BottomSheet';
 
 beforeEach(() => {
   jest.clearAllMocks();
 
-  jest
-    .spyOn(UseBottomSheetGestureHandler, 'useBottomSheetGestureHandler')
-    .mockReturnValue({ gestureHandler: jest.fn() });
+  jest.mock('../hooks/useBottomSheetGestureHandler', () => ({
+    useBottomSheetGestureHandler: jest.fn().mockReturnValue({ gestureHandler: jest.fn() }),
+  }));
 });
 
 jest.useFakeTimers();
@@ -30,13 +31,15 @@ describe('BottomSheet', () => {
       } as any);
 
       render(
-        <BottomSheet
-          topInset={0}
-          visible={true}
-          onClose={() => {}}
-          closeActionAccessibilityLabel={'close me'}
-          headerComponent={<Text>Header</Text>}
-        />,
+        <AMAProvider>
+          <BottomSheet
+            topInset={0}
+            visible={true}
+            onClose={() => { }}
+            closeActionAccessibilityLabel={'close me'}
+            headerComponent={<Text>Header</Text>}
+          />
+        </AMAProvider>,
       );
 
       expect(noUndefinedProperty).toHaveBeenCalledWith({
@@ -61,14 +64,16 @@ describe('BottomSheet', () => {
       } as any);
 
       const { getByTestId } = render(
-        <BottomSheet
-          topInset={0}
-          visible={true}
-          onClose={() => {}}
-          closeActionAccessibilityLabel={'close me'}
-          headerComponent={<Text>Header</Text>}
-          testID="bottom-sheet"
-        />,
+        <AMAProvider>
+          <BottomSheet
+            topInset={0}
+            visible={true}
+            onClose={() => { }}
+            closeActionAccessibilityLabel={'close me'}
+            headerComponent={<Text>Header</Text>}
+            testID="bottom-sheet"
+          />
+        </AMAProvider>,
       );
 
       expect(getByTestId('bottom-sheet-overlay-wrapper').props.style).toEqual({
@@ -100,7 +105,7 @@ describe('BottomSheet', () => {
         <OriginalBottomSheet
           topInset={0}
           visible={true}
-          onClose={() => {}}
+          onClose={() => { }}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text>Header</Text>}
         />,
@@ -127,7 +132,7 @@ describe('BottomSheet', () => {
         <OriginalBottomSheet
           topInset={0}
           visible={true}
-          onClose={() => {}}
+          onClose={() => { }}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text>Header</Text>}
           testID="bottom-sheet"
@@ -144,14 +149,16 @@ describe('BottomSheet', () => {
 
   it('does not render the content when not visible', () => {
     const { toJSON } = render(
-      <BottomSheet
-        topInset={0}
-        visible={false}
-        onClose={() => {}}
-        closeActionAccessibilityLabel={'close me'}
-        headerComponent={<Text>Header</Text>}
-        testID="bottom-sheet"
-      />,
+      <AMAProvider>
+        <BottomSheet
+          topInset={0}
+          visible={false}
+          onClose={() => { }}
+          closeActionAccessibilityLabel={'close me'}
+          headerComponent={<Text>Header</Text>}
+          testID="bottom-sheet"
+        />
+      </AMAProvider>,
     );
 
     expect(toJSON()).toMatchInlineSnapshot(`
@@ -169,15 +176,17 @@ describe('BottomSheet', () => {
   describe('Styling...', () => {
     it('allows customising the overlay style', () => {
       const { getByTestId } = render(
-        <BottomSheet
-          topInset={0}
-          visible={true}
-          onClose={() => {}}
-          closeActionAccessibilityLabel={'close me'}
-          headerComponent={<Text>Header</Text>}
-          overlayStyle={{ backgroundColor: 'yellow', width: 42 }}
-          testID="bottom-sheet"
-        />,
+        <AMAProvider>
+          <BottomSheet
+            topInset={0}
+            visible={true}
+            onClose={() => { }}
+            closeActionAccessibilityLabel={'close me'}
+            headerComponent={<Text>Header</Text>}
+            overlayStyle={{ backgroundColor: 'yellow', width: 42 }}
+            testID="bottom-sheet"
+          />
+        </AMAProvider>,
       );
 
       expect(getByTestId('bottom-sheet-overlay-wrapper').props.style).toEqual({
@@ -190,15 +199,17 @@ describe('BottomSheet', () => {
 
     it('allows customising the bottom sheet panel', () => {
       const { getByTestId } = render(
-        <BottomSheet
-          topInset={0}
-          visible={true}
-          onClose={() => {}}
-          closeActionAccessibilityLabel={'close me'}
-          headerComponent={<Text>Header</Text>}
-          bottomSheetStyle={{ borderRadius: 42 }}
-          testID="bottom-sheet"
-        />,
+        <AMAProvider>
+          <BottomSheet
+            topInset={0}
+            visible={true}
+            onClose={() => { }}
+            closeActionAccessibilityLabel={'close me'}
+            headerComponent={<Text>Header</Text>}
+            bottomSheetStyle={{ borderRadius: 42 }}
+            testID="bottom-sheet"
+          />
+        </AMAProvider>,
       );
 
       expect(getByTestId('bottom-sheet-panel').props.style).toEqual({
@@ -211,15 +222,17 @@ describe('BottomSheet', () => {
 
     it('allows customising the line style', () => {
       const { getByTestId } = render(
-        <BottomSheet
-          topInset={0}
-          visible={true}
-          onClose={() => {}}
-          closeActionAccessibilityLabel={'close me'}
-          headerComponent={<Text>Header</Text>}
-          handleStyle={{ width: '100%' }}
-          testID="bottom-sheet"
-        />,
+        <AMAProvider>
+          <BottomSheet
+            topInset={0}
+            visible={true}
+            onClose={() => { }}
+            closeActionAccessibilityLabel={'close me'}
+            headerComponent={<Text>Header</Text>}
+            handleStyle={{ width: '100%' }}
+            testID="bottom-sheet"
+          />
+        </AMAProvider>,
       );
 
       expect(getByTestId('bottom-sheet-line').props.style).toEqual([
@@ -238,15 +251,17 @@ describe('BottomSheet', () => {
 
     it('allows not rendering the line', () => {
       const { getByTestId } = render(
-        <BottomSheet
-          topInset={0}
-          visible={true}
-          onClose={() => {}}
-          closeActionAccessibilityLabel={'close me'}
-          headerComponent={<Text>Header</Text>}
-          handleComponent="none"
-          testID="bottom-sheet"
-        />,
+        <AMAProvider>
+          <BottomSheet
+            topInset={0}
+            visible={true}
+            onClose={() => { }}
+            closeActionAccessibilityLabel={'close me'}
+            headerComponent={<Text>Header</Text>}
+            handleComponent="none"
+            testID="bottom-sheet"
+          />
+        </AMAProvider>
       );
 
       expect(() => getByTestId('bottom-sheet-line')).toThrow();
@@ -254,19 +269,21 @@ describe('BottomSheet', () => {
 
     it('allows customising the ScrollView style', () => {
       const { getByTestId } = render(
-        <BottomSheet
-          visible={true}
-          onClose={() => {}}
-          closeActionAccessibilityLabel={'close me'}
-          headerComponent={<Text>Header</Text>}
-          scrollViewProps={{
-            style: {
-              backgroundColor: 'fucsia',
-            },
-          }}
-          topInset={3}
-          testID="bottom-sheet"
-        />,
+        <AMAProvider>
+          <BottomSheet
+            visible={true}
+            onClose={() => { }}
+            closeActionAccessibilityLabel={'close me'}
+            headerComponent={<Text>Header</Text>}
+            scrollViewProps={{
+              style: {
+                backgroundColor: 'fucsia',
+              },
+            }}
+            topInset={3}
+            testID="bottom-sheet"
+          />
+        </AMAProvider>
       );
 
       expect(getByTestId('bottom-sheet-scrollview').props.style).toEqual([
@@ -277,13 +294,15 @@ describe('BottomSheet', () => {
 
     it('allows rendering a custom header', () => {
       const { getByTestId } = render(
-        <BottomSheet
-          topInset={0}
-          visible={true}
-          onClose={() => {}}
-          closeActionAccessibilityLabel={'close me'}
-          headerComponent={<Text testID="Header">Header</Text>}
-        />,
+        <AMAProvider>
+          <BottomSheet
+            topInset={0}
+            visible={true}
+            onClose={() => { }}
+            closeActionAccessibilityLabel={'close me'}
+            headerComponent={<Text testID="Header">Header</Text>}
+          />
+        </AMAProvider>
       );
 
       expect(getByTestId('Header')).toBeDefined();
@@ -296,7 +315,7 @@ describe('BottomSheet', () => {
       <BottomSheet
         topInset={0}
         visible={true}
-        onClose={() => {}}
+        onClose={() => { }}
         closeActionAccessibilityLabel={'close me'}
         animationDuration={100}
         headerComponent={<Text testID="Header">Header</Text>}
@@ -308,7 +327,7 @@ describe('BottomSheet', () => {
         <BottomSheet
           topInset={0}
           visible={false}
-          onClose={() => {}}
+          onClose={() => { }}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text testID="Header">Header</Text>}
           animationDuration={100}
@@ -332,15 +351,17 @@ describe('BottomSheet', () => {
 
   it('uses the animatedStyle for the bottom sheet wrapper', () => {
     const { getByTestId } = render(
-      <BottomSheet
-        topInset={0}
-        visible={true}
-        onClose={() => {}}
-        closeActionAccessibilityLabel={'close me'}
-        animationDuration={100}
-        headerComponent={<Text testID="Header">Header</Text>}
-        testID="bottom-sheet"
-      />,
+      <AMAProvider>
+        <BottomSheet
+          topInset={0}
+          visible={true}
+          onClose={() => { }}
+          closeActionAccessibilityLabel={'close me'}
+          animationDuration={100}
+          headerComponent={<Text testID="Header">Header</Text>}
+          testID="bottom-sheet"
+        />
+      </AMAProvider>
     );
 
     expect(getByTestId('bottom-sheet-wrapper').props.style).toEqual({
@@ -402,17 +423,19 @@ describe('BottomSheet', () => {
     });
 
     render(
-      <BottomSheet
-        topInset={0}
-        visible={true}
-        autoCloseDelay={100}
-        closeDistance={0.1}
-        onClose={() => {}}
-        closeActionAccessibilityLabel={'close me'}
-        animationDuration={100}
-        headerComponent={<Text testID="Header">Header</Text>}
-        testID="bottom-sheet"
-      />,
+      <AMAProvider>
+        <BottomSheet
+          topInset={0}
+          visible={true}
+          autoCloseDelay={100}
+          closeDistance={0.1}
+          onClose={() => { }}
+          closeActionAccessibilityLabel={'close me'}
+          animationDuration={100}
+          headerComponent={<Text testID="Header">Header</Text>}
+          testID="bottom-sheet"
+        />
+      </AMAProvider>
     );
 
     expect(onTimeout).toHaveBeenCalledWith(expect.any(Function), 100);
@@ -420,19 +443,21 @@ describe('BottomSheet', () => {
 
   it('wraps the Modal content inside KeyboardAvoidingView when the avoidKeyboard prop is true and shouldHandleKeyboardEvents = false', () => {
     const { UNSAFE_getByType } = render(
-      <BottomSheet
-        topInset={0}
-        visible={true}
-        autoCloseDelay={100}
-        closeDistance={0.1}
-        onClose={() => {}}
-        closeActionAccessibilityLabel={'close me'}
-        animationDuration={100}
-        headerComponent={<Text testID="Header">Header</Text>}
-        testID="bottom-sheet"
-        avoidKeyboard={true}
-        shouldHandleKeyboardEvents={false}
-      />,
+      <AMAProvider>
+        <BottomSheet
+          topInset={0}
+          visible={true}
+          autoCloseDelay={100}
+          closeDistance={0.1}
+          onClose={() => { }}
+          closeActionAccessibilityLabel={'close me'}
+          animationDuration={100}
+          headerComponent={<Text testID="Header">Header</Text>}
+          testID="bottom-sheet"
+          avoidKeyboard={true}
+          shouldHandleKeyboardEvents={false}
+        />
+      </AMAProvider>
     );
 
     expect(UNSAFE_getByType(KeyboardAvoidingView)).toBeDefined();
@@ -440,18 +465,20 @@ describe('BottomSheet', () => {
 
   it('does not wrap the Modal content inside KeyboardAvoidingView when the avoidKeyboard prop is true and shouldHandleKeyboardEvents = true', () => {
     const { UNSAFE_getByType } = render(
-      <BottomSheet
-        topInset={0}
-        visible={true}
-        autoCloseDelay={100}
-        closeDistance={0.1}
-        onClose={() => {}}
-        closeActionAccessibilityLabel={'close me'}
-        animationDuration={100}
-        headerComponent={<Text testID="Header">Header</Text>}
-        testID="bottom-sheet"
-        avoidKeyboard={true}
-      />,
+      <AMAProvider>
+        <BottomSheet
+          topInset={0}
+          visible={true}
+          autoCloseDelay={100}
+          closeDistance={0.1}
+          onClose={() => { }}
+          closeActionAccessibilityLabel={'close me'}
+          animationDuration={100}
+          headerComponent={<Text testID="Header">Header</Text>}
+          testID="bottom-sheet"
+          avoidKeyboard={true}
+        />
+      </AMAProvider>
     );
 
     expect(() => UNSAFE_getByType(KeyboardAvoidingView)).toThrow();
@@ -461,18 +488,20 @@ describe('BottomSheet', () => {
     'does not wraps the Modal content inside KeyboardAvoidingView when avoidKeyboard prop is %s',
     avoidKeyboard => {
       const { UNSAFE_getByType } = render(
-        <BottomSheet
-          topInset={0}
-          visible={true}
-          autoCloseDelay={100}
-          closeDistance={0.1}
-          onClose={() => {}}
-          closeActionAccessibilityLabel={'close me'}
-          animationDuration={100}
-          headerComponent={<Text testID="Header">Header</Text>}
-          testID="bottom-sheet"
-          avoidKeyboard={avoidKeyboard}
-        />,
+        <AMAProvider>
+          <BottomSheet
+            topInset={0}
+            visible={true}
+            autoCloseDelay={100}
+            closeDistance={0.1}
+            onClose={() => { }}
+            closeActionAccessibilityLabel={'close me'}
+            animationDuration={100}
+            headerComponent={<Text testID="Header">Header</Text>}
+            testID="bottom-sheet"
+            avoidKeyboard={avoidKeyboard}
+          />
+        </AMAProvider>
       );
 
       expect(() => UNSAFE_getByType(KeyboardAvoidingView)).toThrow();
@@ -483,16 +512,18 @@ describe('BottomSheet', () => {
     const onClose = jest.fn();
 
     const { getByTestId } = render(
-      <BottomSheet
-        topInset={0}
-        visible={true}
-        closeDistance={0.1}
-        onClose={onClose}
-        closeActionAccessibilityLabel={'close me'}
-        animationDuration={100}
-        headerComponent={<Text testID="Header">Header</Text>}
-        testID="bottom-sheet"
-      />,
+      <AMAProvider>
+        <BottomSheet
+          topInset={0}
+          visible={true}
+          closeDistance={0.1}
+          onClose={onClose}
+          closeActionAccessibilityLabel={'close me'}
+          animationDuration={100}
+          headerComponent={<Text testID="Header">Header</Text>}
+          testID="bottom-sheet"
+        />
+      </AMAProvider>
     );
 
     act(() => {
@@ -508,5 +539,5 @@ describe('BottomSheet', () => {
   it.todo('handles keyboard correctly');
 });
 
-jest.mock('../hooks/useBottomSheetGestureHandler');
-jest.mock('../internal/useChecks');
+// jest.mock('../hooks/useBottomSheetGestureHandler');
+// jest.mock('../internal/useChecks');

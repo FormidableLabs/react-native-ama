@@ -1,4 +1,4 @@
-import * as UseChecks from '@react-native-ama/core/src/hooks/useChecks';
+import * as UseChecks from '@react-native-ama/core';
 import { render, waitFor } from '@testing-library/react-native';
 import * as React from 'react';
 
@@ -254,9 +254,13 @@ function customRender(onSubmit = jest.fn()) {
   return providerValues;
 }
 
-jest.mock('../hooks/useFocus', () => mockUseFocus());
-jest.mock('../internal/checks/checkFocusTrap', () => {
+jest.mock('@react-native-ama/core', () => ({
+  ...mockUseFocus(),
+  useChecks: jest.fn(),
+}));
+jest.mock('@react-native-ama/internal', () => {
   return {
     checkFocusTrap: jest.fn().mockResolvedValue(null),
+    isFocused: jest.fn().mockReturnValue(false),
   };
 });

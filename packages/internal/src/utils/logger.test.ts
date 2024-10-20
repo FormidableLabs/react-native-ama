@@ -26,7 +26,7 @@ describe('getRuleAction', () => {
   );
 
   it('uses the custom value if have been defined', () => {
-    jest.doMock('./../../ama.rules.json', () => {
+    jest.doMock('../ama.rules.json', () => {
       return {
         rules: {
           CONTRAST_FAILED: 'warn',
@@ -49,7 +49,7 @@ describe('getRuleAction', () => {
       // @ts-ignore
       rules[rule] = 'SHOULD_NOT';
 
-      jest.doMock('./../../ama.rules.json', () => {
+      jest.doMock('../ama.rules.json', () => {
         return {
           rules,
         };
@@ -84,7 +84,7 @@ describe('logFailure', () => {
   });
 });
 
-jest.mock('./../../ama.rules.json', () => {
+jest.mock('../ama.rules.json', () => {
   return {};
 });
 

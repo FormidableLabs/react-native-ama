@@ -1,4 +1,4 @@
-import * as UseChecks from '@react-native-ama/core/src/hooks/useChecks';
+import { useChecks } from '@react-native-ama/core';
 import { renderHook } from '@testing-library/react-native';
 
 import { useDynamicList } from './useDynamicList';
@@ -11,10 +11,10 @@ const logResult = jest.fn();
 
 describe('useDynamicFlatList', () => {
   beforeEach(function () {
-    // @ts-ignore
-    jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
+    //@ts-ignore
+    (useChecks as jest.Mock).mockReturnValue({
       logResult,
-    } as any);
+    });
   });
 
   it('checks that the singular message contains the word %count%', () => {
@@ -48,3 +48,7 @@ describe('useDynamicFlatList', () => {
     });
   });
 });
+
+jest.mock('@react-native-ama/core', () => ({
+  useChecks: jest.fn(),
+}));
