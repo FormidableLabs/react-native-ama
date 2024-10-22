@@ -1,8 +1,6 @@
 import React from 'react';
 import { FlatList, FlatListProps } from 'react-native';
 
-import { ListWrapper } from './ListWrapper';
-
 export type StaticFlatListProps = {
   rowsCount?: number;
   numColumns?: number;
@@ -24,9 +22,5 @@ export const StaticFlatList = React.forwardRef<
     return Math.ceil(columns > 1 && length > 0 ? length / columns : length);
   }, [columns, data?.length, rowsCount]);
 
-  return (
-    <ListWrapper rowsCount={rows} columnsCount={columns}>
-      <FlatList data={data} {...rest} ref={ref} />
-    </ListWrapper>
-  );
+  return <FlatList data={data} {...rest} ref={ref} />;
 });
