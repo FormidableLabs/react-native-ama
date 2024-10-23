@@ -2,11 +2,19 @@ import * as React from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 
 type Props = {
+  isLoading: boolean;
   title?: string;
   activityIndicatorProps?: React.ComponentProps<typeof ActivityIndicator>;
 };
 
-export const Loading = ({ title, activityIndicatorProps }: Props) => {
+export const Loading = ({
+  isLoading,
+  title,
+  activityIndicatorProps,
+}: Props) => {
+  if (!isLoading) {
+    return null;
+  }
   return (
     <View style={styles.container}>
       <ActivityIndicator size="large" {...activityIndicatorProps} />
