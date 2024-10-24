@@ -57,6 +57,8 @@ export const HomeScreen = ({ navigation }) => {
         <Spacer height={'normal'} />
 
         <CTAPressable title="Carousel" onPress={() => navigate('Carousel')} />
+        <Spacer height={'normal'} />
+        <CTAPressable title="Loading" onPress={() => navigate('Loading')} />
 
         {/* */}
         <Spacer height={'big'} />
