@@ -3,7 +3,7 @@ import { TouchableWithoutFeedback, View, ViewProps } from 'react-native';
 
 import { useFocus } from '../hooks/useFocus';
 
-type AutofocusContainerProps = React.PropsWithChildren<
+export type AutofocusContainerProps = React.PropsWithChildren<
   | ({
       wrapChildrenInAccessibleView?: true;
     } & ViewProps)
