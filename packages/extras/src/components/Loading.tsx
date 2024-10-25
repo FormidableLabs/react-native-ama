@@ -26,6 +26,7 @@ export const Loading = ({
   return (
     <AutofocusContainer
       style={styles.container}
+      accessibilityState={{ busy: true }}
       accessibilityLabel={title ?? 'Loading'}
       {...containerProps}>
       <ActivityIndicator
