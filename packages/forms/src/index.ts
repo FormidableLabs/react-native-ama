@@ -4,8 +4,8 @@ import { isFocused } from '@react-native-ama/internal';
 
 import {
   FormActions,
-  FormProps,
   Form as FormProvider,
+  type FormProps,
 } from './components/Form';
 import { FormField, FormFieldProps } from './components/FormField';
 import { FormSubmit, FormSubmitProps } from './components/FormSubmit';
@@ -26,11 +26,11 @@ Form.Switch = FormSwitch;
 export { Form, FormField, FormSubmit, FormSwitch };
 
 // Components
-export { TextInput } from './components/TextInput';
+export { TextInput, type TextInputProps } from './components/TextInput';
 
 // Hooks
-export { useFormField } from './hooks/useFormField';
-export { useTextInput } from './hooks/useTextInput';
+export { useFormField, type UseFormField } from './hooks/useFormField';
+export { useTextInput, type UseTextInput } from './hooks/useTextInput';
 
 // utils
 export { isFocused };

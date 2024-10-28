@@ -14,7 +14,7 @@ import type {
 import { TextInputProps } from '../components/TextInput';
 import { UseFormField, useFormField } from './useFormField';
 
-type UseTextInput = Omit<UseFormField, 'hasFocusCallback'> & {
+export type UseTextInput = Omit<UseFormField, 'hasFocusCallback'> & {
   onLayout?: (event: LayoutChangeEvent) => void;
   returnKeyType?: ReturnKeyTypeOptions;
   onSubmitEditing?: (
