@@ -26,7 +26,6 @@ export const FormField = ({
     typeof TouchableWithoutFeedback
   > | null>(null);
 
-  // @ts-ignore
   const formProps = useFormField({
     hasFocusCallback: false,
     ref: viewRef,
