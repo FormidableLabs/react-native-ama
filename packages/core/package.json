@@ -2,7 +2,6 @@
   "name": "@react-native-ama/core",
   "version": "1.0.1",
   "description": "Accessible Mobile App Library for React Native",
-  "private": false,
   "react-native": "src/index",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
