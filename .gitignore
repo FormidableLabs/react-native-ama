@@ -39,3 +39,11 @@ DerivedData
 .vscode
 coverage
 .expo
+
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

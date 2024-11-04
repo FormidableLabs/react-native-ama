@@ -11,7 +11,6 @@ module.exports = {
   parserOptions: {
     project: ['./tsconfig.json'],
   },
-  extends: ['@react-native'],
   plugins: ['jest', 'import'],
   ignorePatterns: [
     '**/**/metro.config.js',
