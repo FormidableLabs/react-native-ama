@@ -59,7 +59,9 @@ Elements that perform a contrast check do it on all the children up to the level
 
 ```json
 {
-  "CONTRAST_CHECKER_MAX_DEPTH": 0
+  rules: {
+    "CONTRAST_CHECKER_MAX_DEPTH": 0
+  }
 }
 ```
 
@@ -87,8 +89,10 @@ The JSON file does not need to contain all log keys. AMA uses the default rule i
 
 ```json
 {
-  "CONTRAST_FAILED": "warn",
-  "CONTRAST_CHECKER_MAX_DEPTH": 0,
+  rules: {
+    "CONTRAST_FAILED": "warn",
+    "CONTRAST_CHECKER_MAX_DEPTH": 0,
+  }
   "accessibilityLabelExceptions": ["FAQ"]
 }
 ```
