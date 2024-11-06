@@ -24,7 +24,7 @@ export default function Home(): JSX.Element {
           copyText="yarn add @react-native-ama/core"
           navItems={[
             {
-              link: '/open-source/react-native-ama/docs',
+              link: '/open-source/react-native-ama/docs/',
               title: 'Documentation',
             },
             {

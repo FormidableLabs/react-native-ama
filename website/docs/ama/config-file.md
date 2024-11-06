@@ -93,16 +93,4 @@ The JSON file does not need to contain all log keys. AMA uses the default rule i
 }
 ```
 
-:::caution
-
-Whenever the `ama.rules.json` file is updated, update the copy within the `node_modules` folder and restart the development server.
-
-```bash
-cp ama.rules.json node_modules/react-native-ama/
-
-yarn start
-```
-
-:::
-
 [^1]: The rule cannot be overridden
