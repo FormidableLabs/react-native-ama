@@ -1,3 +1,6 @@
+> [!NOTE]  
+> This branch represents the last saved state of the previous version of the library before the project was broken out into a monorepo and split into multiple package. The new version of the library is being developed in the `main` branch.
+
 [![React Native AMA — Formidable, We build the modern web](https://raw.githubusercontent.com/FormidableLabs/react-native-ama/main/react-native-ama-Hero.png)](https://formidable.com/open-source/)
 
 # Accessibility as a First-Class Citizen with React Native AMA
