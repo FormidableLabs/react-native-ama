@@ -1,6 +1,6 @@
 import {
   SwitchListItem,
-  SwitchListItemProps,
+  type SwitchListItemProps,
 } from '@react-native-ama/react-native';
 import React from 'react';
 

@@ -8,20 +8,18 @@ import {
   TextInputProps as RNTextInputProps,
 } from 'react-native';
 
-import { useTextInput } from '../hooks/useTextInput';
+import { UseTextInput, useTextInput } from '../hooks/useTextInput';
 
-export type TextInputProps = RNTextInputProps & {
-  labelComponent: JSX.Element;
-  labelPosition?: 'beforeInput' | 'afterInput';
-  nextFormField?: React.RefObject<RNTextInput>;
-  id?: string;
-  nextFieldId?: string;
-  hasValidation: boolean;
-  errorComponent?: JSX.Element;
-  hasError?: boolean;
-  errorPosition?: 'belowLabel' | 'afterInput';
-  errorMessage?: string;
-};
+export type TextInputProps = RNTextInputProps &
+  Omit<UseTextInput, 'required' | 'accessibilityLabel'> & {
+    labelComponent: JSX.Element;
+    labelPosition?: 'beforeInput' | 'afterInput';
+    nextFormField?: React.RefObject<RNTextInput>;
+    id?: string;
+    nextFieldId?: string;
+    errorComponent?: JSX.Element;
+    errorPosition?: 'belowLabel' | 'afterInput';
+  };
 
 export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
   (
@@ -55,9 +53,8 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       [labelComponent, rest.accessibilityLabel],
     );
 
-    // @ts-ignore
     const textInputProps = useTextInput({
-      required: false,
+      ...rest,
       ref: inputRef,
       id,
       nextFieldId,
@@ -65,8 +62,8 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       hasError,
       hasValidation,
       errorMessage,
+      required: false,
       accessibilityLabel,
-      ...rest,
     });
 
     const checks = __DEV__ ? useChecks?.() : undefined;

@@ -29,6 +29,7 @@ export const FlatListDynamicScreen = () => {
     <View style={styles.container}>
       <Spacer height="normal" />
       <TextInput
+        suppressError={true}
         labelComponent={<Text>Filter:</Text>}
         returnKeyType={'done'}
         style={styles.input}
