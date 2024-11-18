@@ -25,12 +25,15 @@ import { UseAnimationScreen } from './screens/UseAnimationScreen';
 import { UseReanimatedTimingScreen } from './screens/UseReanimatedTimingScreen';
 import { UseTimedActionScreen } from './screens/UseTimedAction.screen';
 import type { RootStackParamList } from './types';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const App = () => {
   return (
-    <AMAProvider>
-      <AppNavigator />
-    </AMAProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <AMAProvider>
+        <AppNavigator />
+      </AMAProvider>
+    </GestureHandlerRootView>
   );
 };
 
