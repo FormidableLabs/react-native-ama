@@ -1,5 +1,11 @@
 # @react-native-ama/internal
 
+## 1.1.1
+
+### Patch Changes
+
+- Added `suppressError` to `forms` package Form provider ([#274](https://github.com/FormidableLabs/react-native-ama/pull/274))
+
 ## 1.1.0
 
 ### Minor Changes
