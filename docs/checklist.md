@@ -63,7 +63,7 @@ Example:
 
 - [ ]  Does the first element/header of the screen receive the focus automatically when navigating to a new screen/modal?
 - 
-### [Form](./guidelines/form)
+### [Form](./guidelines/forms)
 
 - [ ]  Can you navigate through the various fields using the corresponding keyboard "next" key?
 - [ ]  Can you submit the form using the "enter" key?
@@ -81,7 +81,7 @@ Example:
 - [ ]  Does TalkBack announce "in list/grid" and/or "out of list/grid"?
 - [ ]  If there is a filtering: Does the screen reader automatically announce how many items the list is showing?
 
-### [Text](./guideines/text)
+### [Text](./guidelines/text)
 
 - [ ]  Is the text readable with a font size scaled up to 300%?
 - [ ]  If the text is uppercase, does the screen reader read it correctly or does it spell the words?

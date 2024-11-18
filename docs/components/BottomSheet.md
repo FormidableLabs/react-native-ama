@@ -60,7 +60,7 @@ The duration in milliseconds before auto-closing the bottom sheet
 
 :::tip
 
-The auto-close will respect the user [Timed action](./guidelines/timed-action) preference.
+The auto-close will respect the user [Timed action](./guidelines/timed-actions) preference.
 
 :::
 

@@ -1,6 +1,6 @@
 # useTextInput
 
-This hook can be used to create a custom TextInput keeping all the accessibility checks and enhancement provided by the [built-in one](./TextInput).
+This hook can be used to create a custom TextInput keeping all the accessibility checks and enhancement provided by the [built-in one](../components/TextInput).
 
 ## Usage
 
@@ -35,9 +35,9 @@ When the user lands on a `<TextInput />` the [`returnKeyType`](https://reactnati
 
 Instead, the AMA customised `TextInput` automatically handles the property `returnKeyType` and its action:
 
-- If the `TextInput` is the last one of the [Form](./Form.md) then sets `returnKeyType="done"`, otherwise `returnKeyType="next"`
-- The next key focuses the next `TextInput` or [FormField](./FormField.md)
-- The done button submits the [Form](./Form.md)
+- If the `TextInput` is the last one of the [Form](../components/Form.md) then sets `returnKeyType="done"`, otherwise `returnKeyType="next"`
+- The next key focuses the next `TextInput` or [FormField](../components/FormField.md)
+- The done button submits the [Form](../components/Form.md)
 
 :::note
 
@@ -55,7 +55,7 @@ Once the user presses the **next** key, AMA checks that the:
 
 ### `editable` _(optional)_
 
-If false tells the [Form](./Form) to focus the field using the [useFocus](../hooks/useFocus.md) hook, instead of the `.focus` callback.
+If false tells the [Form](../components/Form) to focus the field using the [useFocus](../hooks/useFocus.md) hook, instead of the `.focus` callback.
 
 | Type      | Default   |
 |-----------|-----------|
@@ -86,7 +86,7 @@ This parameter specifies the next form field to focus on when the next button is
 
 ### `id`
 
-The field ID. This info is stored, with the field `ref`, inside the [<Form />](./Form) component.
+The field ID. This info is stored, with the field `ref`, inside the [<Form />](../components/Form) component.
 
 | Type   | Default   |
 |--------|-----------|
