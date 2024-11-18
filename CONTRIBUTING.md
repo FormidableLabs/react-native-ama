@@ -2,7 +2,9 @@
 
 Contributions welcome!
 
-To get started, first install:
+In order to clone the repo, you need `git-lfs` installed. You can find the installation instructions [here](https://git-lfs.github.com/).
+
+Then, after cloing, to get started, first install the dependencies:
 
 ```sh
 $ yarn
