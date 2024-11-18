@@ -1,5 +1,13 @@
 # @react-native-ama/internal
 
+## 1.1.0
+
+### Minor Changes
+
+- Added Carousel and useCarousel to extras package ([#259](https://github.com/FormidableLabs/react-native-ama/pull/259))
+
+- Removed ListWrapper and corresponding native module allowing `lists` package to be used in expo apps ([#269](https://github.com/FormidableLabs/react-native-ama/pull/269))
+
 ## 1.0.1
 
 ### Patch Changes
