@@ -26,7 +26,7 @@ class AmaFlatListWrapperManager : ViewGroupManager<AmaFlatListWrapper>() {
     view.setColumnsCount(count)
   }
 
-  override fun addView(parent: AmaFlatListWrapper?, child: View?, index: Int) {
+  fun addView(parent: AmaFlatListWrapper?, child: View?, index: Int) {
      container.addView(child)
   }
 }
