@@ -1,9 +1,10 @@
-
 {
   "compilerOptions": {
     "target": "esnext",
     "module": "commonjs",
-    "lib": ["es2019"],
+    "lib": [
+      "es2019"
+    ],
     "allowJs": true,
     "jsx": "react-native",
     "noEmit": true,
@@ -15,18 +16,24 @@
     "moduleResolution": "node",
     "baseUrl": "./",
     "paths": {
-      "react-native-ama": ["../lib/index"]
+      "react-native-ama": [
+        "../lib/index"
+      ]
     },
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "types": ["node", "jest"]
+    "types": [
+      "node",
+      "jest"
+    ]
   },
   "exclude": [
     "node_modules",
     "babel.config.js",
     "metro.config.js",
     "jest.config.js"
-  ]
+  ],
+  "extends": "expo/tsconfig.base"
 }
