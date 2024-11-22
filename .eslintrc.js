@@ -1,5 +1,7 @@
 module.exports = {
   root: true,
+  extends: ['@react-native'],
+  plugins: ['jest', 'import'],
   env: {
     browser: true,
     'jest/globals': true,
@@ -11,7 +13,6 @@ module.exports = {
   parserOptions: {
     project: ['./tsconfig.json'],
   },
-  plugins: ['jest', 'import'],
   ignorePatterns: [
     '**/**/metro.config.js',
     '**/dist/**/*',
