@@ -12,6 +12,7 @@ export const StaticFlatList = React.forwardRef<
 >(({ data, numColumns, rowsCount, ...rest }, ref) => {
   const columns = numColumns || 1;
 
+  // @ts-ignore
   const rows = React.useMemo(() => {
     if (rowsCount) {
       return rowsCount;
