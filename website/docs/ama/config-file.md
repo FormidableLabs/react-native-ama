@@ -1,10 +1,12 @@
 ---
 displayed_sidebar: docs
+pagination_next: 'usage'
+pagination_prev: 'getting-started'
 ---
 
-# Config file
+# Config File
 
-AMA comes with predefined rules and severity for the built-in components and hooks. Those rules have been created to improve the accessibility of those elements and should always be respected.
+**AMA** comes with predefined rules and severity levels for the built-in components and hooks. These rules have been created to improve the accessibility of each element and should always be respected.
 
 Customizing log levels can be done via the `ama.config.json` file to handle edge cases that are out of our control, and require breaking a rule or two.
 
@@ -14,16 +16,34 @@ The library does not perform any accessibility checks on the production build!
 
 :::
 
-## The log levels
+## Customising the Log Levels
 
-AMA guidelines are categorised as:
+Create a JSON file called `ama.config.json` in the project's root folder to customise the log rules, then specify the custom log level for the wanted key.
+
+### Example
+
+The JSON file does not need to contain all log keys. **AMA** uses the default rule if a key is not present:
+
+```json
+{
+  rules: {
+    "CONTRAST_FAILED": "warn",
+    "CONTRAST_CHECKER_MAX_DEPTH": 0,
+  }
+  "accessibilityLabelExceptions": ["FAQ"]
+}
+```
+
+## Log Levels
+
+**AMA** guidelines are categorised as:
 
 - <Must /> and <MustNot />: Those best practices are <b>enforced</b> and AMA overlays an error when fail
 - <Should /> and <ShouldNot />: Those best practices are <b>preferred</b> and AMA prints only prints a warning message when fail
 
 The possible log levels are:
 
-- **error**: The AMA error overlay when a check fails
+- **error**: The **AMA** error overlay when a check fails
 - **warn**: A `console.warn` is performed when a check fails
 
 ### AMA Rules
@@ -59,7 +79,7 @@ Elements that perform a contrast check do it on all the children up to the level
 
 ```json
 {
-  rules: {
+  "rules": {
     "CONTRAST_CHECKER_MAX_DEPTH": 0
   }
 }
@@ -71,7 +91,7 @@ This can be turned off by specifying a level of **0**
 
 ### accessibilityLabelExceptions
 
-AMA performs various checks, including one for [uppercase](/guideliens/uppercase). This rule allows specifying a list of approved all-caps accessibility labels.
+**AMA** performs various checks, including one for [uppercase](/guidelines/uppercase). This rule allows specifying a list of approved all-caps accessibility labels.
 
 ```json
 {
@@ -79,22 +99,9 @@ AMA performs various checks, including one for [uppercase](/guideliens/uppercase
 }
 ```
 
-## Customising the log levels
+:::note
 
-Create a JSON file called `ama.config.json` in the project's root folder to customise the log rules, then specify the custom log level for the wanted key.
-
-### Example
-
-The JSON file does not need to contain all log keys. AMA uses the default rule if a key is not present:
-
-```json
-{
-  rules: {
-    "CONTRAST_FAILED": "warn",
-    "CONTRAST_CHECKER_MAX_DEPTH": 0,
-  }
-  "accessibilityLabelExceptions": ["FAQ"]
-}
-```
+The key `accessibilityLabelExceptions` is not nested under the `rules` key as the above values must be.
+:::
 
 [^1]: The rule cannot be overridden

@@ -54,7 +54,25 @@ function autoGenerate(path: string) {
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
 const sidebars: SidebarsConfig = {
   docs: [
-    ...autoGenerate('docs/ama'),
+    {
+      type: 'link',
+      label: 'Overview',
+      href: '/docs/',
+      autoAddBaseUrl: true,
+    },
+    {
+      type: 'link',
+      label: 'Getting Started',
+      href: 'getting-started',
+      autoAddBaseUrl: true,
+    },
+    {
+      type: 'link',
+      label: 'Config File',
+      href: 'config-file',
+      autoAddBaseUrl: true,
+    },
+    { type: 'link', label: 'Usage', href: 'usage', autoAddBaseUrl: true },
     {
       type: 'category',
       label: 'Packages',

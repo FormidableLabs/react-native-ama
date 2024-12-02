@@ -1,11 +1,13 @@
 ---
 sidebar_position: 1
 displayed_sidebar: docs
+pagination_next: 'config-file'
+pagination_prev: 'index'
 ---
 
-# Getting started
+# Getting Started
 
-AMA is made of the following packages:
+**AMA** is made of the following packages:
 
 - `@react-native-ama/core`: the core components and hooks, providers and consumers used by AMA packages
 - `@react-native-ama/animations`: to create accessible animations
@@ -16,7 +18,7 @@ AMA is made of the following packages:
 
 ## Setup
 
-The `core` package, is the minimum installable setup for AMA to function. This package contains the AMA context provider and consumer as well various other hooks and utilities for focusing, WCAG checks, accessibility tree management, etc.
+The `core` package, is the minimum installable setup for **AMA** to function. This package contains the **AMA** context provider and consumer as well various other hooks and utilities for focusing, WCAG checks, accessibility tree management, etc.
 
 Start off by installing `core` and then any other packages you wish to make use of for building an accessible mobile app.
 
@@ -29,13 +31,21 @@ npm install  @react-native-ama/core
 When you install the `@react-native-ama/core` package, `the ama.rules.json` file should be generated automatically. If this didn't happen you can run the following from the root of your project:
 
 ```bash
+# Create ama.rules.json with an empty JSON object if it doesn't exist
+echo "{}" >> ama.rules.json
+
+# Navigate to the internal directory
 cd node_modules/@react-native-ama/internal
+
+# Create symlinks in src and dist directories
 ln -s ../../../ama.rules.json src/ama.rules.json
 ln -s ../../../ama.rules.json dist/ama.rules.json
+
+# Go back to the root directory
 cd -
 ```
 
-See more on configuring AMA rules and severity [here](./config-file.md).
+See more on configuring **AMA** rules and severity [here](./config-file.md).
 
 ### Jest
 
