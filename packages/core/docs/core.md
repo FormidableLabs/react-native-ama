@@ -1,6 +1,6 @@
 ---
 slug: /
-title: The core package
+title: The Core Package
 sidebar_position: 1
 ---
 

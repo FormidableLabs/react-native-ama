@@ -1,6 +1,6 @@
 ---
 slug: /
-title: The animations package
+title: The Animations Package
 sidebar_position: 1
 ---
 
