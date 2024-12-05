@@ -16,23 +16,6 @@ The library does not perform any accessibility checks on the production build!
 
 :::
 
-## Customising the Log Levels
-
-Create a JSON file called `ama.config.json` in the project's root folder to customise the log rules, then specify the custom log level for the wanted key.
-
-### Example
-
-The JSON file does not need to contain all log keys. **AMA** uses the default rule if a key is not present:
-
-```json
-{
-  rules: {
-    "CONTRAST_FAILED": "warn",
-    "CONTRAST_CHECKER_MAX_DEPTH": 0,
-  }
-  "accessibilityLabelExceptions": ["FAQ"]
-}
-```
 
 ## Log Levels
 
@@ -68,6 +51,24 @@ The possible log levels are:
 
 Rules marked with <No /> are considered bad practices and cannot be turned off!
 :::
+
+## Customising the Log Levels
+
+Create a JSON file called `ama.config.json` in the project's root folder to customise the log rules, then specify the custom log level for the wanted key.
+
+### Example
+
+The JSON file does not need to contain all log keys. **AMA** uses the default rule if a key is not present:
+
+```json
+{
+  rules: {
+    "CONTRAST_FAILED": "warn",
+    "CONTRAST_CHECKER_MAX_DEPTH": 0,
+  }
+  "accessibilityLabelExceptions": ["FAQ"]
+}
+```
 
 ### Constants
 
