@@ -1,6 +1,6 @@
 ---
 slug: /
-title: The forms package
+title: The Forms Package
 sidebar_position: 1
 ---
 

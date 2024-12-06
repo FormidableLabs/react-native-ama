@@ -21,7 +21,8 @@ const sidebars: SidebarsConfig = {
           type: 'link',
           label: 'Core',
           href: '/core/',
-          description: 'Needed to create an app with accessibility in mind',
+          description:
+            'The core functionality needed to create an app with accessibility in mind',
           autoAddBaseUrl: true,
         },
         {
@@ -43,7 +44,7 @@ const sidebars: SidebarsConfig = {
           type: 'link',
           label: 'React Native',
           href: '/react-native/',
-          description: 'Extends react-native components with accessibility',
+          description: 'Extends React Native components with accessibility',
           autoAddBaseUrl: true,
         },
         {

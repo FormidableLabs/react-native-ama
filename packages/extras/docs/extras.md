@@ -1,6 +1,6 @@
 ---
 slug: /
-title: The extras package
+title: The Extras Package
 sidebar_position: 1
 ---
 

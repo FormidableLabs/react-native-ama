@@ -7,15 +7,15 @@ displayed_sidebar: docs
 ## Installation
 
 ```bash npm2yarn
-npm install -D react-native-ama
+npm install  @react-native-ama/core
 ```
 
-## The provider
+## Wrap App with Provider
 
-You need to add the [AMAProvider](../components/AMAProvider) to your app as is needed by some components/hooks.
+You need to add the [AMAProvider](../components/AMAProvider) to your app as it is needed by the components, hooks, and to provide information about accessbility violations.
 
 ```jsx {1-4,8-9}
-import { AMAProvider } from 'react-native-ama';
+import { AMAProvider } from '@react-native-ama/core';
 
 const App = () => {
   return (
@@ -28,14 +28,15 @@ const App = () => {
 
 ## Example
 
-In the following Example the navigation animation are disabled when the user enables the [Reduce Motion](/guidelines/animations) setting.
+In the following example, the navigation animation is disabled when the user enables the [Reduce Motion](/guidelines/animations) setting.
 
 It also shows how to build a more accessible [form](/guidelines/forms) using the built-in components.
 
 ```jsx
 import * as React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
-import { AMAProvider, useAMAContext, Form, SwitchListItem, Text, TextInput } from 'react-native-ama'
+import { AMAProvider, useAMAContext } from '@react-native-ama/core'
+import { Form, SwitchListItem, Text, TextInput } from '@react-native-ama/forms'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react-navigation/native-stack';
 
