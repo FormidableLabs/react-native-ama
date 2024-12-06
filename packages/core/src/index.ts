@@ -1,5 +1,8 @@
 // Components
-export { AutofocusContainer } from './components/AutofocusContainer';
+export {
+  AutofocusContainer,
+  type AutofocusContainerProps,
+} from './components/AutofocusContainer';
 export {
   AMAProvider,
   useAMAContext,
