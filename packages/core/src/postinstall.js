@@ -5,7 +5,7 @@ const initCwd = process.env.INIT_CWD || '';
 const packageRoot = __dirname;
 
 // Detect if this is running as part of the monorepo installation
-const isMonorepo = initCwd.includes(path.join(packageRoot, '..', '..'));
+const isMonorepo = initCwd.includes(path.join(packageRoot, '..', '..', '..'));
 
 // If running in the monorepo context, skip the postinstall script
 if (isMonorepo) {
