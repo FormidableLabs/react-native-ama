@@ -23,7 +23,7 @@
     "build": "rm -rf dist && tsc -p ./tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "test": "jest",
-    "postinstall": "node ./dist/scripts/create-config.js"
+    "postinstall": "node ./src/postinstall.js"
   },
   "dependencies": {
     "@react-native-ama/internal": "~1.1.1"
