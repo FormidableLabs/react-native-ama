@@ -3,25 +3,27 @@
   "version": "1.1.1",
   "description": "Accessible Mobile App Library for React Native",
   "react-native": "src/index",
-  "types": "dist/index.d.ts",
-  "main": "dist/index.js",
+  "types": "dist/src/index.d.ts",
+  "main": "dist/src/index.js",
   "exports": {
     ".": [
       {
-        "imports": "./dist/index.js",
-        "types": "./dist/index.d.ts"
+        "imports": "./dist/src/index.js",
+        "types": "./dist/src/index.d.ts"
       },
-      "./dist/index.js"
+      "./dist/src/index.js"
     ]
   },
   "files": [
     "src",
-    "dist"
+    "dist",
+    "dist/scripts"
   ],
   "scripts": {
     "build": "rm -rf dist && tsc -p ./tsconfig.build.json",
     "typecheck": "tsc --noEmit",
-    "test": "jest"
+    "test": "jest",
+    "postinstall": "node ./src/postinstall.js"
   },
   "dependencies": {
     "@react-native-ama/internal": "~1.1.1"
