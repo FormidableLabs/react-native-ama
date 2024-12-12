@@ -10,8 +10,8 @@ pagination_prev: 'index'
 **AMA** is made of the following packages:
 
 - `@react-native-ama/core`: the core components and hooks, providers and consumers used by AMA packages
-- `@react-native-ama/animations`: to create accessible animations
-- `@react-native-ama/react-native`: for accessibility-first React Native replacement components
+- `@react-native-ama/animations`: to create accessible animations with support for user motion preferences
+- `@react-native-ama/react-native`: for accessibility-first replacement for core React Native components
 - `@react-native-ama/forms`: to create accessible forms
 - `@react-native-ama/lists`: to create accessible lists
 - `@react-native-ama/extras`: extra compound components and hooks beyond the scope of the base React Native components for building accessible react native apps
