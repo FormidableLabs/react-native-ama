@@ -59,5 +59,7 @@ export {
   MINIMUM_TOUCHABLE_SIZE,
 } from './utils/minimumTouchableSize';
 
+export { IS_ANDROID, IS_IOS } from './utils/platformHelpers';
+
 // Types
 export { type AMAAccessibilityState, type AccessibilityRoles } from './types';
