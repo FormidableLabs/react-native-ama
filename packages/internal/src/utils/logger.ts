@@ -11,7 +11,17 @@ import {
   RULES_HELP,
 } from './logger.rules';
 
-const overrideRules: OverrideRule = require('./../ama.rules.json');
+const defaultRules: OverrideRule = require('./../ama.rules.json');
+let projectRules = defaultRules;
+try {
+  // look upwards to user's project root
+  // e.g we are here:
+  // root/node_modules/@react-native-ama/internal/dist/utils/logger.ts
+  const userDefinedRules: OverrideRule = require('./../../../../../ama.rules.json');
+  projectRules = Object.assign(projectRules, userDefinedRules);
+} catch (error) {
+  // noop
+}
 
 type OverrideRule = {
   rules: Record<
@@ -32,7 +42,7 @@ export type LogParams = {
 export const getRuleAction = __DEV__
   ? (rule: Rule): RuleAction => {
       const customRule = canRuleBeOverridden?.(rule)
-        ? overrideRules?.rules?.[rule]
+        ? projectRules?.rules?.[rule]
         : undefined;
 
       return customRule || LOGGER_RULES![rule];
@@ -70,7 +80,7 @@ export const logFailure = __DEV__
 export const getContrastCheckerMaxDepth = __DEV__
   ? () => {
       return (
-        overrideRules?.rules?.CONTRAST_CHECKER_MAX_DEPTH ||
+        projectRules?.rules?.CONTRAST_CHECKER_MAX_DEPTH ||
         CONTRAST_CHECKER_MAX_DEPTH
       );
     }
@@ -79,7 +89,7 @@ export const getContrastCheckerMaxDepth = __DEV__
 export const shouldIgnoreContrastCheckForDisabledElement = __DEV__
   ? () => {
       return (
-        overrideRules?.rules?.IGNORE_CONTRAST_FOR_DISABLED_ELEMENTS ||
+        projectRules?.rules?.IGNORE_CONTRAST_FOR_DISABLED_ELEMENTS ||
         IGNORE_CONTRAST_FOR_DISABLED_ELEMENTS
       );
     }
@@ -87,7 +97,7 @@ export const shouldIgnoreContrastCheckForDisabledElement = __DEV__
 
 export const isAccessibilityLabelAllowed = __DEV__
   ? (accessibilityLabel: string) => {
-      return overrideRules?.accessibilityLabelExceptions?.includes(
+      return projectRules?.accessibilityLabelExceptions?.includes(
         accessibilityLabel,
       );
     }
