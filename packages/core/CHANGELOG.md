@@ -1,5 +1,14 @@
 # @react-native-ama/core
 
+## 1.1.2
+
+### Patch Changes
+
+- fix config/rules file generation ([#289](https://github.com/FormidableLabs/react-native-ama/pull/289))
+
+- Updated dependencies [[`4fb505181840a0ab5914f7abbd08009a4c0909ea`](https://github.com/FormidableLabs/react-native-ama/commit/4fb505181840a0ab5914f7abbd08009a4c0909ea)]:
+  - @react-native-ama/internal@1.1.2
+
 ## 1.1.1
 
 ### Patch Changes

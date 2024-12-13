@@ -4178,7 +4178,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@react-native-ama/core@workspace:packages/core"
   dependencies:
-    "@react-native-ama/internal": ~1.1.1
+    "@react-native-ama/internal": ~1.1.2
     babel-jest: ^29.7.0
   peerDependencies:
     react: "*"
@@ -4215,7 +4215,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-ama/internal@workspace:packages/internal, @react-native-ama/internal@~1.1.1":
+"@react-native-ama/internal@workspace:packages/internal, @react-native-ama/internal@~1.1.1, @react-native-ama/internal@~1.1.2":
   version: 0.0.0-use.local
   resolution: "@react-native-ama/internal@workspace:packages/internal"
   dependencies:
