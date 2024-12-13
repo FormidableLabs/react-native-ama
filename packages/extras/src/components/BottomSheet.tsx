@@ -2,10 +2,9 @@
 
 import { AnimatedContainer } from '@react-native-ama/animations';
 import { useChecks, useTimedAction } from '@react-native-ama/core';
-import * as React from 'react';
 import type { PropsWithChildren } from 'react';
+import * as React from 'react';
 import {
-  Dimensions,
   KeyboardAvoidingView,
   LayoutChangeEvent,
   Modal,
@@ -16,6 +15,7 @@ import {
   StyleSheet,
   View,
   ViewStyle,
+  useWindowDimensions,
 } from 'react-native';
 import {
   GestureHandlerRootView,
@@ -70,7 +70,6 @@ export type BottomSheetActions = {
   isVisible: () => boolean;
 };
 
-const DEFAULT_MAX_HEIGHT = Dimensions.get('window').height * 0.9;
 const isIOS = Platform.OS === 'ios';
 
 export const BottomSheet = React.forwardRef<
@@ -99,7 +98,7 @@ export const BottomSheet = React.forwardRef<
       overlayOpacity = 1,
       footerComponent,
       avoidKeyboard,
-      maxHeight = DEFAULT_MAX_HEIGHT,
+      maxHeight,
       minVelocityToClose = 1000,
       topInset,
       onBottomSheetHidden,
@@ -124,6 +123,8 @@ export const BottomSheet = React.forwardRef<
     const { keyboardHeight, keyboardFinalHeight } = useKeyboard(
       shouldHandleKeyboardEvents,
     );
+    const { height } = useWindowDimensions();
+    const DEFAULT_MAX_HEIGHT = React.useMemo(() => height * 0.9, [height]);
 
     const checks = __DEV__ ? useChecks?.() : null;
     const debugStyle = __DEV__ ? checks?.debugStyle : {};
@@ -210,8 +211,8 @@ export const BottomSheet = React.forwardRef<
     });
 
     const maxHeightValue = useDerivedValue(() => {
-      return maxHeight - keyboardHeight.value;
-    }, [keyboardHeight, maxHeight]);
+      return (maxHeight ?? DEFAULT_MAX_HEIGHT) - keyboardHeight.value;
+    }, [keyboardHeight, maxHeight, DEFAULT_MAX_HEIGHT]);
 
     const animatedStyle = useAnimatedStyle(() => {
       const keyboard = isIOS ? keyboardHeight.value : 0;
@@ -224,7 +225,7 @@ export const BottomSheet = React.forwardRef<
 
     useDerivedValue(() => {
       const maxScrollHeight = Math.ceil(
-        maxHeight -
+        (maxHeight ?? DEFAULT_MAX_HEIGHT) -
           keyboardFinalHeight.value -
           footerHeight -
           headerHeight -
@@ -245,6 +246,7 @@ export const BottomSheet = React.forwardRef<
       keyboardFinalHeight,
       topInset,
       maxHeight,
+      DEFAULT_MAX_HEIGHT,
     ]);
 
     const handleOnLayout = (event: LayoutChangeEvent) => {
