@@ -7,6 +7,7 @@ export { Header } from './src/components/Header';
 export { Spacer } from './src/components/Spacer';
 
 // Screens
+export { LoadingScreen } from './src/screens/Loading.screen';
 export { CarouselScreen } from './src/screens/Carousel.screen';
 export { BottomSheetScreen } from './src/screens/BottomSheet.screen';
 export { ExpandablePressableScreen } from './src/screens/ExpandablePressableScreen';

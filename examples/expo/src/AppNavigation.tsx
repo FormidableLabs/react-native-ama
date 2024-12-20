@@ -9,6 +9,7 @@ import {
   FormScreen,
   Header,
   HomeScreen,
+  LoadingScreen,
   PressableScreen,
   SwitchListItemScreen,
   TextScreen,
@@ -196,6 +197,14 @@ export const AppNavigator = () => {
           }}
         />
         <Stack.Screen
+          name="Loading"
+          component={LoadingScreen}
+          options={{
+            headerLeft: () => <BackButton />,
+            headerTitle: () => <Header title={'Carousel Demo'} autofocus />,
+          }}
+        />
+        <Stack.Screen
           name="UseTimedAction"
           component={UseTimedActionScreen}
           options={{
@@ -245,6 +254,7 @@ type StackParamList = {
   FlatListStatic: undefined;
   BottomSheet: undefined;
   Carousel: undefined;
+  Loading: undefined;
   UseTimedAction: undefined;
   UseAMAContext: undefined;
 };
