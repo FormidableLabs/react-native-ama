@@ -15,6 +15,7 @@
   },
   "files": [
     "src",
+    "ama.rules.json",
     "dist"
   ],
   "scripts": {
