@@ -19,7 +19,21 @@ export const DEFAULT_BADGE_COLOR_OPTIONS = [
   '#166BFF',
 ];
 
-type featuredProject = Parameters<typeof FeaturedBadge>[0]['name'];
+function isFeaturedBadgeName(value: string): value is FeaturedBadgeNames {
+  return [
+    'envy',
+    'figlog',
+    'cloudsplice',
+    'ama',
+    'renature',
+    'victory',
+    'spectacle',
+    'urql',
+    'nuka',
+    'owl',
+    'groqd',
+  ].includes(value);
+}
 
 export const LandingFeaturedProjects = <Name extends string>({
   heading,
