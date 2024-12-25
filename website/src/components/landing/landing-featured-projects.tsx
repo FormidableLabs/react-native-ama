@@ -1,7 +1,7 @@
 import {
   FeaturedBadge,
   ProjectBadge,
-  featuredBadgeNames,
+  FeaturedBadgeNames,
 } from 'formidable-oss-badges';
 import React from 'react';
 
@@ -19,7 +19,21 @@ export const DEFAULT_BADGE_COLOR_OPTIONS = [
   '#166BFF',
 ];
 
-type featuredProject = Parameters<typeof FeaturedBadge>[0]['name'];
+function isFeaturedBadgeName(value: string): value is FeaturedBadgeNames {
+  return [
+    'envy',
+    'figlog',
+    'cloudsplice',
+    'ama',
+    'renature',
+    'victory',
+    'spectacle',
+    'urql',
+    'nuka',
+    'owl',
+    'groqd',
+  ].includes(value);
+}
 
 export const LandingFeaturedProjects = <Name extends string>({
   heading,
@@ -28,7 +42,7 @@ export const LandingFeaturedProjects = <Name extends string>({
 }: {
   heading: string;
   projects: {
-    name: featuredProject | Name;
+    name: FeaturedBadgeNames | Name;
     link: string;
     description: string;
     title?: string;
@@ -44,10 +58,9 @@ export const LandingFeaturedProjects = <Name extends string>({
           href={link}
           key={link}
           className="col-span-2 sm:col-span-1 block grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 align-center items-center text-theme-2 hover:text-theme-2 dark:text-white dark:hover:text-white">
-          {featuredBadgeNames.includes(name.toLocaleLowerCase()) ||
-          name === 'Victory Native' ? (
+          {isFeaturedBadgeName(name.toLocaleLowerCase()) ? (
             <FeaturedBadge
-              name={name as featuredProject}
+              name={name as FeaturedBadgeNames}
               isHoverable
               className="col-span-1"
             />
