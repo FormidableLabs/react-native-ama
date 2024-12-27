@@ -7,10 +7,11 @@
     }
   ],
   "commit": false,
-  "fixed": [],
+  "fixed": [["react-native-ama/*"]],
   "linked": [],
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
+  "privatePackages": { "version": true, "tag": true },
   "ignore": []
 }
