@@ -1,4 +1,4 @@
-import { ProjectBadge } from 'formidable-oss-badges';
+import { AMABadge } from 'formidable-oss-badges';
 import React, { useState } from 'react';
 
 export const LandingHero = ({
@@ -23,12 +23,7 @@ export const LandingHero = ({
       <div className="py-12 lg:py-24 mx-16 lg:mx-32 xl:mx-64 relative">
         <div className="flex-col md:flex-row flex justify-between gap-16 lg:gap-24 mx-auto">
           <div className="self-center md:self-left">
-            <ProjectBadge
-              color="#CD9AF5"
-              description={'react native ama'}
-              abbreviation={'Ra'}
-              className="h-[320px] w-[320px]"
-            />
+            <AMABadge name={'ama'} className="h-[320px] w-[320px]" />
           </div>
           <div className="text-left lg:w-6/12 text-black">
             <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
