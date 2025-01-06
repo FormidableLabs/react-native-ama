@@ -21,6 +21,22 @@ $ yarn test
 
 ```
 
+### Versioning
+
+We loosely follow [Semantic Versioning](https://semver.org/) and use the `changesets` tool to manage our versioning. That means:
+
+Given a version number MAJOR.MINOR.PATCH, increment the:
+
+MAJOR version when there is a fundamental and incompatible API changes
+MINOR version when you add functionality in a backward compatible manner or when a minor breaking changes is added
+PATCH version when you make backward compatible bug fixes
+
+#### One Major and Minor version for all packages
+
+We keep all our @react-native-ama/\* packages synced to the same version (One True Version). This means that if you make a change to one package that requires a new version, all packages will be bumped to the same version. We do this to reduce the number of dependent issues a consumer may have and prevent miss-matching package versions.
+
+Here are more details on using and adding changesets:
+
 ### Using changesets
 
 Our official release path is to use automation to perform the actual publishing of our packages. The steps are to:
@@ -29,9 +45,7 @@ Our official release path is to use automation to perform the actual publishing 
 2. On merge of a PR our automation system opens a "Version Packages" PR.
 3. On merging the "Version Packages" PR, the automation system publishes the packages.
 
-Here are more details:
-
-### Add a changeset
+#### Add a changeset
 
 When you would like to add a changeset (which creates a file indicating the type of change), in your branch/PR issue this command:
 
