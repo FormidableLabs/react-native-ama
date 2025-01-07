@@ -7,7 +7,7 @@
     }
   ],
   "commit": false,
-  "fixed": [["react-native-ama/*"]],
+  "fixed": [["@react-native-ama/*"]],
   "linked": [],
   "access": "public",
   "baseBranch": "main",
