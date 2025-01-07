@@ -1,5 +1,13 @@
 # @react-native-ama/animations
 
+## 1.1.3
+
+### Patch Changes
+
+- Updated dependencies [[`460e339cdd68ab243daf5e8f197dec9bd4d6a8d0`](https://github.com/FormidableLabs/react-native-ama/commit/460e339cdd68ab243daf5e8f197dec9bd4d6a8d0)]:
+  - @react-native-ama/internal@1.1.3
+  - @react-native-ama/core@1.1.3
+
 ## 1.1.1
 
 ### Patch Changes
