@@ -11,7 +11,7 @@ import {
   RULES_HELP,
 } from './logger.rules';
 
-const defaultRules: OverrideRule = require('./../ama.rules.json');
+const defaultRules: OverrideRule = require('./../../ama.rules.json');
 let projectRules = defaultRules;
 try {
   // look upwards to user's project root
