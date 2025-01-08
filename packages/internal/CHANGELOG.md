@@ -1,5 +1,12 @@
 # @react-native-ama/internal
 
+## 1.1.3
+
+### Patch Changes
+
+- - Added skeleton structure for the `ama.rules.json` file ([#291](https://github.com/FormidableLabs/react-native-ama/pull/291))
+  - Moved ama.rules.json file to the root of internal package and included it in the package.json files to be published to npm.
+
 ## 1.1.2
 
 ### Patch Changes
