@@ -15,7 +15,6 @@ Install _react-native-ama_ using either `yarn` or `npm`:
 npm install react-native-ama
 ```
 
-
 ### Dependencies
 
 Some component relies on [react-native-reanimated](https://github.com/software-mansion/react-native-reanimated) and/or [react-native-gesture-handler](https://github.com/software-mansion/react-native-gesture-handler),
@@ -37,8 +36,8 @@ The installation command should have automatically generated the `ama.rules.json
 ```bash
 
 echo "{}" >> ama.rules.json
-cd node_modules/react-native-ama
-ln -s ../../ama.rules.json .
+
+ln -s node_modules/react-native-ama/ama.rules.json ama.rules.json
 ```
 
 ### Jest
@@ -50,10 +49,9 @@ When running a test, if jest fails with the following error:
 add those lines to the `.jest.config.js` file:
 
 ```js
-
 jest.mock('react-native-ama/dist/commonjs/internal/logger.js', () => {
-    return {
-        getContrastCheckerMaxDepth: () => 5,
-    };
+  return {
+    getContrastCheckerMaxDepth: () => 5,
+  };
 });
 ```

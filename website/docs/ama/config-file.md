@@ -16,7 +16,6 @@ The library does not perform any accessibility checks on the production build!
 
 :::
 
-
 ## Log Levels
 
 **AMA** guidelines are categorised as:
@@ -52,9 +51,56 @@ The possible log levels are:
 Rules marked with <No /> are considered bad practices and cannot be turned off!
 :::
 
-## Customising the Log Levels
+## Customizing the Log Levels
 
-Create a JSON file called `ama.config.json` in the project's root folder to customise the log rules, then specify the custom log level for the wanted key.
+A JSON file called `ama.config.json` should have been automatically generated in the project's root folder (If it didn't simply create it). This file is used to customize the log rules, then specify the custom log level for the wanted key. `accessibilityLabelExceptions` can also be specified in this file. Any changes to this file will automatically be picked up by AMA's config and applied to the applications warnings and errors in Dev mode. (You will need to restart your application to see the changes applied)
+
+:::warning
+If you are running a monorepo setup this file won't automatically generate and you will have two options customize AMA's config.
+
+<details>
+  <summary>Options for monorepos (Expand me)</summary>
+
+You have two options to add `userDefinedRules` to AMA's config:
+
+- You can create a symlink to the `ama.rules.json` file in the root of your project _(recommended)_
+- You can create a new `ama.rules.json` file in the root of your project and copy this file over the `ama.rules.json` file in `@react-native-ama/internal` package every time you make changes to it.
+  (This will also need to be done every time you update or delete and reinstall AMA node_modules)
+
+**Option 1:** _(recommended)_
+
+To create a symlink to the `ama.rules.json` file in the root of your project, run the following command:
+
+```bash
+
+# In the root of your App or root of your project create a symlink to the ama.rules.json file
+# Adjust the file path as needed depending on where the ama.rules.json file is located in your monorepo relative to the root of your project
+ln -s node_modules/@react-native-ama/internal/ama.rules.json ./ama.rules.json
+```
+
+**Option 2:**
+
+To create a new `ama.rules.json` file in the root of your project, run the following command:
+
+```bash
+# In the root of your App or root of your project
+# Adjust the file path as needed depending on where the ama.rules.json file is located in your monorepo relative to the root of your project
+cp node_modules/@react-native-ama/internal/ama.rules.json ./ama.rules.json
+```
+
+Don't forget if you make changes to the `ama.rules.json` file in the root you will need to copy the changes over to the `ama.rules.json` file in the `@react-native-ama/internal` package of your project.
+
+```bash
+# In the root of your App or root of your project
+# Adjust the file path as needed depending on where the ama.rules.json file is located in your monorepo relative to the root of your project
+cp ama.rules.json node_modules/@react-native-ama/internal/ama.rules.json
+
+# Restart your application to see the changes
+```
+
+</details>
+
+:::
 
 ### Example
 
