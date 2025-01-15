@@ -3,12 +3,19 @@ import {
   AutofocusContainerProps,
 } from '@react-native-ama/core';
 import * as React from 'react';
-import { ActivityIndicator, StyleSheet, Text } from 'react-native';
+import {
+  ActivityIndicator,
+  StyleProp,
+  StyleSheet,
+  Text,
+  ViewStyle,
+} from 'react-native';
 
 type Props = {
   isLoading: boolean;
   title?: string;
   showTitle?: boolean;
+  style?: StyleProp<ViewStyle>;
   containerProps?: Omit<AutofocusContainerProps, 'children'>;
   activityIndicatorProps?: React.ComponentProps<typeof ActivityIndicator>;
 };
@@ -16,6 +23,7 @@ type Props = {
 export const Loading = ({
   isLoading,
   title,
+  style,
   containerProps,
   showTitle = true,
   activityIndicatorProps,
@@ -25,7 +33,7 @@ export const Loading = ({
   }
   return (
     <AutofocusContainer
-      style={styles.container}
+      style={[styles.container, style]}
       accessibilityState={{ busy: true }}
       accessibilityLabel={title ?? 'Loading'}
       {...containerProps}>
