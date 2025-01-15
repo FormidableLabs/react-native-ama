@@ -2,7 +2,7 @@ import { Required } from '@site/src/components';
 
 # BottomSheet
 
-AMA Provides an accessible bottom sheet built on top
+AMA provides an accessible bottom sheet built on top
 of [react-native-reanimated](https://github.com/software-mansion/react-native-reanimated)
 and [react-native-gesture-handler](https://github.com/software-mansion/react-native-gesture-handler).
 

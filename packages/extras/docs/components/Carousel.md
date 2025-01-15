@@ -2,7 +2,7 @@ import { Required } from '@site/src/components';
 
 # Carousel
 
-AMA Provides an accessible Carousel component built on top
+AMA provides an accessible Carousel component built on top
 of [React Native FlatList](https://reactnative.dev/docs/flatlist)
 using the [useCarousel](./../hooks/useCarousel.md) hook.
 
