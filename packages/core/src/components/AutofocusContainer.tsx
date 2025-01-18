@@ -1,20 +1,37 @@
 import * as React from 'react';
-import { TouchableWithoutFeedback, View, ViewProps } from 'react-native';
+import {
+  TouchableWithoutFeedback,
+  TouchableWithoutFeedbackProps,
+  View,
+  ViewProps,
+} from 'react-native';
 
 import { useFocus } from '../hooks/useFocus';
+import { PickAccessibleProps } from '@react-native-ama/internal';
 
-type AutofocusContainerProps = React.PropsWithChildren<
-  | ({
-      wrapChildrenInAccessibleView?: true;
-    } & ViewProps)
-  | {
-      wrapChildrenInAccessibleView: false;
-    }
+type TouchableAccessibleProps =
+  PickAccessibleProps<TouchableWithoutFeedbackProps>;
+
+export type AutofocusContainerProps = React.PropsWithChildren<
+  (
+    | ({
+        wrapChildrenInAccessibleView?: true;
+      } & ViewProps)
+    | {
+        wrapChildrenInAccessibleView: false;
+      }
+  ) & {
+    /**
+     * touchableContainerAccessibilityProps is provided as a workaround for any accessibility props that need to be passed to the TouchableWithoutFeedback component which are not recognized on the accessible view.
+     */
+    touchableContainerAccessibilityProps?: TouchableAccessibleProps;
+  }
 >;
 
 export const AutofocusContainer = ({
   children,
   wrapChildrenInAccessibleView = true,
+  touchableContainerAccessibilityProps,
   ...viewProps
 }: AutofocusContainerProps) => {
   const containerRef = React.useRef(null);
@@ -27,7 +44,9 @@ export const AutofocusContainer = ({
   }, [setFocus]);
 
   return wrapChildrenInAccessibleView ? (
-    <TouchableWithoutFeedback ref={containerRef}>
+    <TouchableWithoutFeedback
+      ref={containerRef}
+      {...touchableContainerAccessibilityProps}>
       <View
         accessible={true}
         testID="autofocusContainer.accessibleView"
@@ -36,7 +55,9 @@ export const AutofocusContainer = ({
       </View>
     </TouchableWithoutFeedback>
   ) : (
-    <TouchableWithoutFeedback ref={containerRef}>
+    <TouchableWithoutFeedback
+      ref={containerRef}
+      {...touchableContainerAccessibilityProps}>
       {children}
     </TouchableWithoutFeedback>
   );
