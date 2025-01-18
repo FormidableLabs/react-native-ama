@@ -1,7 +1,16 @@
-/* istanbul ignore file */
 import type { AccessibilityState } from 'react-native';
 
 export type AMAAccessibilityState = Pick<AccessibilityState, 'busy'>;
+
+export type PickAccessibleProps<T> = {
+  [K in keyof T as K extends
+    | `${string}accessible${string}`
+    | `${string}accessibility${string}`
+    | `${string}Accessible${string}`
+    | `${string}Accessibility${string}`
+    ? K
+    : never]: T[K];
+};
 
 export type AccessibilityRoles =
   | {
