@@ -1,5 +1,14 @@
 # @react-native-ama/core
 
+## 1.1.4
+
+### Patch Changes
+
+- Added `touchableContainerAccessibilityProps` prop to `AutofocusContainer` to fix issue with accessible view on container ([#300](https://github.com/FormidableLabs/react-native-ama/pull/300))
+
+- Updated dependencies [[`d35a59475facdf70f5ea2e400f877fd5b62fb0c0`](https://github.com/FormidableLabs/react-native-ama/commit/d35a59475facdf70f5ea2e400f877fd5b62fb0c0)]:
+  - @react-native-ama/internal@1.1.4
+
 ## 1.1.3
 
 ### Patch Changes

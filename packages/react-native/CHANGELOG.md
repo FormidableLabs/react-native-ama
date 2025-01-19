@@ -1,5 +1,13 @@
 # @react-native-ama/react-native
 
+## 1.1.4
+
+### Patch Changes
+
+- Updated dependencies [[`d35a59475facdf70f5ea2e400f877fd5b62fb0c0`](https://github.com/FormidableLabs/react-native-ama/commit/d35a59475facdf70f5ea2e400f877fd5b62fb0c0), [`d35a59475facdf70f5ea2e400f877fd5b62fb0c0`](https://github.com/FormidableLabs/react-native-ama/commit/d35a59475facdf70f5ea2e400f877fd5b62fb0c0)]:
+  - @react-native-ama/internal@1.1.4
+  - @react-native-ama/core@1.1.4
+
 ## 1.1.3
 
 ### Patch Changes

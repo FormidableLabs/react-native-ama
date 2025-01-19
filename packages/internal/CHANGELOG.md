@@ -1,5 +1,11 @@
 # @react-native-ama/internal
 
+## 1.1.4
+
+### Patch Changes
+
+- Added `PickAccessibleProps` type helper to AMA internal package ([#300](https://github.com/FormidableLabs/react-native-ama/pull/300))
+
 ## 1.1.3
 
 ### Patch Changes
