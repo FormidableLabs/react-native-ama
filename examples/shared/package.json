@@ -1,6 +1,6 @@
 {
   "name": "@examples/shared-ui",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "Example Apps shared UI components",
   "private": true,
   "react-native": "index",
