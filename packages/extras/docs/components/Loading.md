@@ -5,11 +5,7 @@ import { Required } from '@site/src/components';
 AMA provides an accessible `<Loading ... />` component that auto focuses and announces the accessibility label and busy state. This component wraps the standard [React Native ActivityIndicator](https://reactnative.dev/docs/activityindicator).
 
 :::note
-The `Loading` component by default is absolutely positioned and will fill it's parents container. In the example below this would be the `<View>`. This behaviour can be overridden by the `Loading` components props. See props section below.
-:::
-
-:::tip
-Use the `Loading` component it as a top-level component in your screen while data is being fetched or as a replacement for sections of your screen that are loading to prevent accessibility users from interacting with data that is stale.
+The `Loading` component by default is absolutely positioned and will fill it's parents container. This behavior can be overridden by the `Loading` components props. See [props](#props) section below.
 :::
 
 ## Example
@@ -30,6 +26,10 @@ const Screen = () => {
   );
 };
 ```
+
+:::tip
+Use the `Loading` component it as a top-level component in your screen while data is being fetched or as a replacement for sections of your screen that are loading to prevent accessibility users from interacting with data that is stale.
+:::
 
 ## Props
 
@@ -69,13 +69,13 @@ A prop to add styles to use for the `Loading` component container view with styl
 | --------- | --------- |
 | ViewStyle | undefined |
 
-:::note
-
-<details>
+<details open>
   <summary>Styles already applied to the `Loading` component container view</summary>
+ 
 Your styles will be merged with these styles:
 
-```{
+```css
+{
     position: 'absolute',
     top: 0,
     left: 0,
@@ -88,7 +88,6 @@ Your styles will be merged with these styles:
 ```
 
 </details>
-:::
 
 ### `containerProps`
 
