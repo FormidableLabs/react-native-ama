@@ -2,7 +2,7 @@ import { Required } from '@site/src/components';
 
 # Loading
 
-AMA provides an accessible `<Loading ... />` component that auto focuses and announces the accessibility label and busy state. This component wraps the standard [React Native Activity Indicator](https://reactnative.dev/docs/activityindicator).
+AMA provides an accessible `<Loading ... />` component that auto focuses and announces the accessibility label and busy state. This component wraps the standard [React Native ActivityIndicator](https://reactnative.dev/docs/activityindicator).
 
 :::note
 The `Loading` component by default is absolutely positioned and will fill it's parents container. In the example below this would be the `<View>`. This behaviour can be overridden by the `Loading` components props. See props section below.
