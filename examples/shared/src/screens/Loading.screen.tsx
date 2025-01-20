@@ -15,6 +15,14 @@ export const LoadingScreen = () => {
     }, 1500);
   };
 
+  // onMount set isLoading to true
+  React.useEffect(() => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+  }, []);
+
   return (
     <View style={styles.container}>
       <Loading isLoading={isLoading} />
