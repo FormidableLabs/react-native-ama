@@ -26,7 +26,11 @@ export const LoadingScreen = () => {
   return (
     <View style={styles.container}>
       <Loading isLoading={isLoading} />
-      <CTAPressable title="Trigger Loading" onPress={triggerLoading} />
+      <CTAPressable
+        title="Trigger Loading"
+        onPress={triggerLoading}
+        disabled={isLoading}
+      />
     </View>
   );
 };
