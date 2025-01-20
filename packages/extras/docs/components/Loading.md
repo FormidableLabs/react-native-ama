@@ -30,3 +30,74 @@ const Screen = () => {
   );
 };
 ```
+
+## Props
+
+:::note
+If you want to control the position of the loading indicator you can pass a `style` prop to the `Loading` component which will add styles to the `Loading` containers view. Alternatively you can completely override the current containers style by passing a `containerProps` prop with a style object key-value pair.
+:::
+
+### <Required /> `isLoading`
+
+The isLoading state determines if the `Loading` component is returned and is required for the component to function.
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | false   |
+
+### `title`
+
+The text used in the `accessibilityLabel` and also shown below the activity indicator if `showTitle` is set to true (default).
+
+| Type   | Default   |
+| ------ | --------- |
+| string | 'Loading' |
+
+### `showTitle`
+
+Whether or not a title text should be shown below the activity indicator.
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | true    |
+
+### `style`
+
+A prop to add styles to use for the `Loading` component container view with style merging (style arrays).
+
+| Type      | Default   |
+| --------- | --------- |
+| ViewStyle | undefined |
+
+:::note
+
+<details>
+  <summary>Styles already applied to the `Loading` component container view</summary>
+Your styles will be merged with these styles:
+
+```{
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 100,
+  }
+```
+
+</details>
+:::
+
+### `containerProps`
+
+A prop to control any `Loading` component container view props.
+
+| Type                                        | Default   |
+| ------------------------------------------- | --------- |
+| Omit\<AutofocusContainerProps, 'children'\> | undefined |
+
+:::note
+The `Loading` component container is AMA's `AutofocusContainer` component. The `containerProps` prop is an object that will be spread onto the `AutofocusContainer` component.
+:::
