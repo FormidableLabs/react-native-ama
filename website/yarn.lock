@@ -6753,13 +6753,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"formidable-oss-badges@npm:^1.7.0":
-  version: 1.7.0
-  resolution: "formidable-oss-badges@npm:1.7.0"
+"formidable-oss-badges@npm:^1.7.2":
+  version: 1.7.2
+  resolution: "formidable-oss-badges@npm:1.7.2"
   peerDependencies:
     react: ">= 18.0.0"
     react-dom: ">= 18.0.0"
-  checksum: a4ff18f5bce95155ae62d3438411dad329395b022f6d5eaa1a869c9ee30101eb2138aad59a2813000561c98a6f5bf426cdb7afc5d781d0b6d4c0ff80ec48207a
+  checksum: 822f7855e9b91145f10761a9823ea84b26db9540959b5cec0c414996402d72a12a6016fa52616a29cbf9a5f54fb2b51bb6da22acb7f73fb872bff5248c3251e2
   languageName: node
   linkType: hard
 
@@ -13144,7 +13144,7 @@ __metadata:
     autoprefixer: ^10.4.19
     clsx: ^2.1.1
     docusaurus-plugin-image-zoom: ^2.0.0
-    formidable-oss-badges: ^1.7.0
+    formidable-oss-badges: ^1.7.2
     postcss: ^8.4.39
     prism-react-renderer: ^2.3.1
     react: ^18.3.1
