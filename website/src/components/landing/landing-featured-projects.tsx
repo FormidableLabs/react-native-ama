@@ -19,7 +19,7 @@ export const DEFAULT_BADGE_COLOR_OPTIONS = [
   '#166BFF',
 ];
 
-function isFeaturedBadgeName(value: string): value is FeaturedBadgeName {
+function isFeaturedBadgeName(name: string): name is FeaturedBadgeName {
   return [
     'envy',
     'figlog',
@@ -32,7 +32,7 @@ function isFeaturedBadgeName(value: string): value is FeaturedBadgeName {
     'nuka',
     'owl',
     'groqd',
-  ].includes(value);
+  ].includes(name);
 }
 
 export const LandingFeaturedProjects = <Name extends string>({
@@ -53,35 +53,38 @@ export const LandingFeaturedProjects = <Name extends string>({
     {showDivider && <Divider />}
     <h2 className="my-8 text-4xl font-semibold">{heading}</h2>
     <div className="grid grid-cols-2 gap-8">
-      {projects.map(({ name, link, description, title }) => (
-        <a
-          href={link}
-          key={link}
-          className="col-span-2 sm:col-span-1 block grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 align-center items-center text-theme-2 hover:text-theme-2 dark:text-white dark:hover:text-white">
-          {isFeaturedBadgeName(name.toLocaleLowerCase()) ? (
-            <FeaturedBadge
-              name={name as FeaturedBadgeName}
-              isHoverable
-              className="col-span-1"
-            />
-          ) : (
-            <ProjectBadge
-              color={
-                DEFAULT_BADGE_COLOR_OPTIONS[Math.floor(Math.random() * 5) + 1]
-              }
-              isHoverable
-              abbreviation={name.charAt(0).toUpperCase() + name.slice(1, 2)}
-              description={name}
-            />
-          )}
-          <span className="flex flex-col col-span-1 lg:col-span-2">
-            <span className="text-xl font-semibold capitalize">
-              {title || name}
+      {projects.map(({ name, link, description, title }) => {
+        const lowerCaseName = name.toLocaleLowerCase();
+        return (
+          <a
+            href={link}
+            key={link}
+            className="col-span-2 sm:col-span-1 block grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 align-center items-center text-theme-2 hover:text-theme-2 dark:text-white dark:hover:text-white">
+            {isFeaturedBadgeName(lowerCaseName) ? (
+              <FeaturedBadge
+                name={lowerCaseName}
+                isHoverable
+                className="col-span-1"
+              />
+            ) : (
+              <ProjectBadge
+                color={
+                  DEFAULT_BADGE_COLOR_OPTIONS[Math.floor(Math.random() * 5) + 1]
+                }
+                isHoverable
+                abbreviation={name.charAt(0).toUpperCase() + name.slice(1, 2)}
+                description={name}
+              />
+            )}
+            <span className="flex flex-col col-span-1 lg:col-span-2">
+              <span className="text-xl font-semibold capitalize">
+                {title || name}
+              </span>
+              <span className="text-sm ">{description}</span>
             </span>
-            <span className="text-sm ">{description}</span>
-          </span>
-        </a>
-      ))}
+          </a>
+        );
+      })}
     </div>
 
     <div className="my-8 pt-8 align-center">
