@@ -15,10 +15,22 @@ export const LoadingScreen = () => {
     }, 1500);
   };
 
+  // onMount set isLoading to true
+  React.useEffect(() => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+  }, []);
+
   return (
     <View style={styles.container}>
       <Loading isLoading={isLoading} />
-      <CTAPressable title="Trigger Loading" onPress={triggerLoading} />
+      <CTAPressable
+        title="Trigger Loading"
+        onPress={triggerLoading}
+        disabled={isLoading}
+      />
     </View>
   );
 };
