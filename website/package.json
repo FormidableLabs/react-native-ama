@@ -38,7 +38,7 @@
     "docusaurus-plugin-image-zoom": "^2.0.0",
     "postcss": "^8.4.39",
     "tailwindcss": "^3.4.4",
-    "typescript": "^5.5.3"
+    "typescript": "^5.7.3"
   },
   "browserslist": {
     "production": [
@@ -53,7 +53,7 @@
     ]
   },
   "engines": {
-    "node": ">=18.0"
+    "node": ">=18.0.0"
   },
   "packageManager": "yarn@3.6.4"
 }
