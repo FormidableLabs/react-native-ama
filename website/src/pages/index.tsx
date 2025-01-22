@@ -88,6 +88,7 @@ export default function Home(): JSX.Element {
           {
             title: 'React Native App Auth',
             name: 'React Native App Auth',
+            color: '#5ABDEE',
             link: 'https://commerce.nearform.com/open-source/react-native-app-auth',
             description:
               'React native bridge for AppAuth - an SDK for communicating with OAuth2 providers',

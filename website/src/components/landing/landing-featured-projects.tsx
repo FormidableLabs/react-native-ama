@@ -43,6 +43,7 @@ export const LandingFeaturedProjects = <Name extends string>({
   heading: string;
   projects: {
     name: FeaturedBadgeName | Name;
+    color?: string;
     link: string;
     description: string;
     title?: string;
@@ -53,7 +54,7 @@ export const LandingFeaturedProjects = <Name extends string>({
     {showDivider && <Divider />}
     <h2 className="my-8 text-4xl font-semibold">{heading}</h2>
     <div className="grid grid-cols-2 gap-12">
-      {projects.map(({ name, link, description, title }) => {
+      {projects.map(({ name, link, description, title, color }) => {
         const lowerCaseName = name.toLocaleLowerCase();
         return (
           <a
@@ -69,6 +70,7 @@ export const LandingFeaturedProjects = <Name extends string>({
             ) : (
               <ProjectBadge
                 color={
+                  color ||
                   DEFAULT_BADGE_COLOR_OPTIONS[Math.floor(Math.random() * 5) + 1]
                 }
                 isHoverable
