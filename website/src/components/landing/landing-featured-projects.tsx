@@ -43,44 +43,47 @@ export const LandingFeaturedProjects = <Name extends string>({
   heading: string;
   projects: {
     name: FeaturedBadgeName | Name;
+    color?: string;
     link: string;
     description: string;
     title?: string;
   }[];
   showDivider?: boolean;
 }) => (
-  <div className="flex flex-col text-left mx-16 lg:mx-32 xl:mx-64 mt-12 py-12">
+  <div className="flex flex-col gap-6 text-center md:text-left mx-16 lg:mx-32 xl:mx-64 mt-12 py-12">
     {showDivider && <Divider />}
     <h2 className="my-8 text-4xl font-semibold">{heading}</h2>
-    <div className="grid grid-cols-2 gap-8">
-      {projects.map(({ name, link, description, title }) => {
+    <div className="grid grid-cols-2 gap-12">
+      {projects.map(({ name, link, description, title, color }) => {
         const lowerCaseName = name.toLocaleLowerCase();
         return (
           <a
             href={link}
             key={link}
-            className="col-span-2 sm:col-span-1 block grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 align-center items-center text-theme-2 hover:text-theme-2 dark:text-white dark:hover:text-white">
+            className="col-span-2 sm:col-span-1 flex flex-col lg:flex-row gap-6 align-center items-center text-theme-2 hover:text-theme-2 dark:text-white dark:hover:text-white">
             {isFeaturedBadgeName(lowerCaseName) ? (
               <FeaturedBadge
                 name={lowerCaseName}
                 isHoverable
-                className="col-span-1"
+                className="lg:basis-1/3 max-w-xs md:justify-self-end"
               />
             ) : (
               <ProjectBadge
                 color={
+                  color ||
                   DEFAULT_BADGE_COLOR_OPTIONS[Math.floor(Math.random() * 5) + 1]
                 }
                 isHoverable
                 abbreviation={name.charAt(0).toUpperCase() + name.slice(1, 2)}
                 description={name}
+                className="lg:basis-1/3 max-w-xs md:justify-self-end"
               />
             )}
-            <span className="flex flex-col col-span-1 lg:col-span-2">
+            <span className="flex flex-col lg:basis-2/3 text-center md:text-left">
               <span className="text-xl font-semibold capitalize">
                 {title || name}
               </span>
-              <span className="text-sm ">{description}</span>
+              <span className="text-sm max-w-md">{description}</span>
             </span>
           </a>
         );
