@@ -35,7 +35,7 @@ const config: Config = {
   organizationName: 'NearForm',
   customFields: {
     pastOrganizationName: 'FormidableLabs',
-    latestMinorVersions: ['0.7.5', '1.0.1'], // this is the latest patch version for each minor version
+    latestMinorVersions: ['0.7.5', '1.0.1', '1.1.4', '1.2.0'], // this is the latest patch version for each minor version
   },
   projectName: 'react-native-ama',
 
@@ -53,7 +53,7 @@ const config: Config = {
           lastVersion: 'current',
           versions: {
             current: {
-              label: '1.0.x',
+              label: '1.2.x',
               // path: '1.0.x',
             },
           },
