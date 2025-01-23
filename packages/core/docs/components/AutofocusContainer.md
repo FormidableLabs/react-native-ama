@@ -5,9 +5,9 @@ It is a utility component that automatically calls the [useFocus](../hooks/useFo
 ## Usage
 
 ```jsx
-import { AutofocusContainer } from 'react-native-ama'
+import { AutofocusContainer } from 'react-native-ama';
 
-<AutofocusContainer>{children}</AutofocusContainer>
+<AutofocusContainer>{children}</AutofocusContainer>;
 ```
 
 ## Example
@@ -29,12 +29,6 @@ This component can be used to move the focus on dynamically shown components, fo
 
 In this example, we want to move the focus to the view rendered once the user taps on "Show timed content".
 
-:::warning
-
-The autofocus works only if the container contains accessible elements, like Text, Buttons, etc.
-Alternatively, bypassing the [accessibilityLabel](#accessibilitylabel) property, the child will be wrapped in an accessible View.
-:::
-
 ## Accessibility
 
 - Once the focus is moved makes, the screen reader announces all the text present in that container
@@ -44,6 +38,21 @@ Alternatively, bypassing the [accessibilityLabel](#accessibilitylabel) property,
 ### `accessibilityLabel`
 
 The label to assign to the wrapping View container.
+
+### `wrapChildrenInAccessibleView`
+
+Weather or not the child should be wrapped in an accessible View. By default, this is the case.
+
+:::warning
+**Autofocus may not work as expected when this prop is false!**
+
+If `wrapChildrenInAccessibleView` is set to `false` the children of the AutofocusContainer will not be wrapped in an accessible view and **autofocus** will only works if the container contains accessible elements, like Text, Buttons, etc.
+
+:::
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | true    |
 
 ## Related guidelines
 
