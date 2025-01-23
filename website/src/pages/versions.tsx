@@ -149,7 +149,7 @@ export default function Version(): JSX.Element {
                     </td>
                     <td>
                       <Link
-                        href={`${repoUrl}/releases${matchPastVersion(
+                        href={`${repoUrl}/releases/tag/v${matchPastVersion(
                           version.label,
                         )}`}>
                         <ReleaseNotesLabel />
