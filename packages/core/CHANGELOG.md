@@ -1,5 +1,14 @@
 # @react-native-ama/core
 
+## 1.2.0
+
+### Patch Changes
+
+- add export for `AutofocusContainerProps` type from `core` package ([#272](https://github.com/FormidableLabs/react-native-ama/pull/272))
+
+- Updated dependencies []:
+  - @react-native-ama/internal@1.2.0
+
 ## 1.1.4
 
 ### Patch Changes
