@@ -39,7 +39,7 @@ For more detailed information about the config file, please refer to [this docum
 
 ## Usage
 
-You must include the [AMAProvider](./AMAProvider.md) in your app, as some components and hooks require it.
+You must include the [AMAProvider](./components/AMAProvider.md) in your app, as some components and hooks require it.
 
 ```jsx {2-4,6,8-9}
 import { AMAProvider } from '@react-native-ama/core';
