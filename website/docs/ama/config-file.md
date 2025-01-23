@@ -109,7 +109,7 @@ cp ama.rules.json node_modules/@react-native-ama/internal/ama.rules.json
 
 The JSON file does not need to contain all log keys. **AMA** uses the default rule if a key is not present:
 
-```json
+```json title="ama.rules.json"
 {
   rules: {
     "CONTRAST_FAILED": "warn",
@@ -127,7 +127,7 @@ Elements that perform a contrast check do it on all the children up to the level
 | -------------------------- | ------------- |
 | CONTRAST_CHECKER_MAX_DEPTH | 5             |
 
-```json
+```json title="ama.rules.json"
 {
   "rules": {
     "CONTRAST_CHECKER_MAX_DEPTH": 0
@@ -143,7 +143,7 @@ This can be turned off by specifying a level of **0**
 
 **AMA** performs various checks, including one for [uppercase](/guidelines/uppercase). This rule allows specifying a list of approved all-caps accessibility labels.
 
-```json
+```json title="ama.rules.json"
 {
   "accessibilityLabelExceptions": ["FAQ"]
 }
