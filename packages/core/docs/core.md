@@ -24,22 +24,16 @@ npm install  @react-native-ama/core
 
 ### Config File
 
-When you install the `@react-native-ama/core` package, the ama.rules.json file should be generated automatically. In cases it doesn't generate automatically, run the following from the root of your project:
+When you install the `@react-native-ama/core` package, the `ama.rules.json` file should be generated automatically in your project's root folder. If it didn't generate automatically when you installed the package, you can create it manually with the default config:
 
-```bash
-# Create ama.rules.json with an empty JSON object if it doesn't exist
-echo "{}" >> ama.rules.json
-
-# Navigate to the internal directory
-cd node_modules/@react-native-ama/internal
-
-# Create symlinks in src and dist directories
-ln -s ../../../ama.rules.json src/ama.rules.json
-ln -s ../../../ama.rules.json dist/ama.rules.json
-
-# Go back to the root directory
-cd -
+```json title="ama.rules.json"
+{
+  rules: {},
+  accessibilityLabelExceptions: [],
+};
 ```
+
+If you are running a monorepo setup your config file may not be configured correctly, be sure to check the [options for customizing AMA's config](/docs/config-file#monorepo-options).
 
 For more detailed information about the config file, please refer to [this documentation](/docs/config-file).
 
