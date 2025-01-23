@@ -5,9 +5,9 @@ It is a utility component that automatically calls the [useFocus](../hooks/useFo
 ## Usage
 
 ```jsx
-import {AutofocusContainer} from "react-native-ama";
+import { AutofocusContainer } from 'react-native-ama'
 
-<AutofocusContainer props={}>{children}</AutofocusContainer>
+<AutofocusContainer>{children}</AutofocusContainer>
 ```
 
 ## Example
