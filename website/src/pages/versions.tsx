@@ -35,12 +35,20 @@ export default function Version(): JSX.Element {
     version => version !== latestVersion && version.name !== 'current',
   );
 
-  function matchVersion(wildCardVersion: string) {
+  function matchPastVersion(wildCardVersion: string) {
     const regex = new RegExp('^' + wildCardVersion.replace('.x', '\\.'));
 
     return (customFields?.latestMinorVersions as string[]).filter(version =>
       regex.test(version),
     );
+  }
+  function matchCurrentVersion(wildCardVersion: string) {
+    const regex = new RegExp('^' + wildCardVersion.replace('.x', '\\.'));
+
+    const foundVersion = (customFields?.latestMinorVersions as string[]).find(
+      version => regex.test(version),
+    );
+    return foundVersion ? `?q="%40${foundVersion}"` : '';
   }
 
   const repoUrl = `https://github.com/${customFields?.pastOrganizationName}/${projectName}`;
@@ -79,9 +87,7 @@ export default function Version(): JSX.Element {
                 </td>
                 <td>
                   <Link
-                    to={`${repoUrl}/releases/tag/v${matchVersion(
-                      latestVersion.name,
-                    )}`}>
+                    to={`${repoUrl}/releases${matchCurrentVersion(latestVersion.label)}`}>
                     <ReleaseNotesLabel />
                   </Link>
                 </td>
@@ -143,8 +149,8 @@ export default function Version(): JSX.Element {
                     </td>
                     <td>
                       <Link
-                        href={`${repoUrl}/releases/tag/v${matchVersion(
-                          version.name,
+                        href={`${repoUrl}/releases/tag/v${matchPastVersion(
+                          version.label,
                         )}`}>
                         <ReleaseNotesLabel />
                       </Link>
