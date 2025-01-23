@@ -55,6 +55,7 @@ Rules marked with <No /> are considered bad practices and cannot be turned off!
 
 A JSON file called `ama.config.json` should have been automatically generated in the project's root folder (If it didn't simply create it). This file is used to customize the log rules, then specify the custom log level for the wanted key. `accessibilityLabelExceptions` can also be specified in this file. Any changes to this file will automatically be picked up by AMA's config and applied to the applications warnings and errors in Dev mode. (You will need to restart your application to see the changes applied)
 
+<p id="monorepo-options">
 :::warning
 If you are running a monorepo setup this file won't automatically generate and you will have two options customize AMA's config.
 
@@ -101,6 +102,8 @@ cp ama.rules.json node_modules/@react-native-ama/internal/ama.rules.json
 </details>
 
 :::
+
+</p>
 
 ### Example
 
