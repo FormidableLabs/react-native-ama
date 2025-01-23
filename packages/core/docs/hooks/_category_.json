@@ -1,3 +1,5 @@
 {
-  "label": "Hooks"
+  "label": "Hooks",
+  "collapsible": true,
+  "collapsed": false
 }
