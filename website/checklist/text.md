@@ -2,7 +2,7 @@
 displayed_sidebar: checklist
 ---
 
-import Text from './text.gif';
+import Text from '../static/gif/text.gif';
 
 # Text
 
