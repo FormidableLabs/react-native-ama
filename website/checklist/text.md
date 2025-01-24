@@ -2,13 +2,11 @@
 displayed_sidebar: checklist
 ---
 
-import Text from '../static/gif/text.gif';
-
 # Text
 
 **Guideline**: [Text](/guidelines/text)
 
-![dodge gif](${Text})
+![dodge gif](../static/gif/text.gi)
 
 | Accessibility Setting | I see                                                              |
 | --------------------- | ------------------------------------------------------------------ |
