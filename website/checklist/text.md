@@ -9,7 +9,7 @@ import Image from 'next/image'
 
 **Guideline**: [Text](/guidelines/text)
 
-![dodge gif](${Text})
+![dodge gif](../static/gif/text.gif)
 
 | Accessibility Setting | I see                                                              |
 | --------------------- | ------------------------------------------------------------------ |
