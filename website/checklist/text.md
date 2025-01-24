@@ -8,7 +8,7 @@ import Text from '../static/gif/text.gif';
 
 **Guideline**: [Text](/guidelines/text)
 
-<img src={Text} className="zoom-me" />
+<img src={Text} className="zoom-me" unoptimized={true} />
 
 | Accessibility Setting | I see                                                              |
 | --------------------- | ------------------------------------------------------------------ |
