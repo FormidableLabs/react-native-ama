@@ -2,13 +2,11 @@
 displayed_sidebar: checklist
 ---
 
-import Text from '../static/gif/text.gif';
-
 # Text
 
 **Guideline**: [Text](/guidelines/text)
 
-![dodge gif](https://user-images.githubusercontent.com/53836911/97882115-37263100-1d49-11eb-86d2-e2d10837da63.gif)
+<img src={require(@site/static/gif/text.gif).default} className="zoom-me" />
 
 | Accessibility Setting | I see                                                              |
 | --------------------- | ------------------------------------------------------------------ |
