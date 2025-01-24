@@ -6,7 +6,7 @@ displayed_sidebar: checklist
 
 **Guideline**: [Text](/guidelines/text)
 
-![dodge gif](../static/gif/text.gi)
+![dodge gif](../static/gif/text.gif)
 
 | Accessibility Setting | I see                                                              |
 | --------------------- | ------------------------------------------------------------------ |
