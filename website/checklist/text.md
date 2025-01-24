@@ -6,7 +6,7 @@ displayed_sidebar: checklist
 
 **Guideline**: [Text](/guidelines/text)
 
-<img src={require('@site/static/gif/text.gif').default} className="zoom-me" />
+<img src={require('@site/static/gif/text.gif').default} width="300" />
 
 | Accessibility Setting | I see                                                              |
 | --------------------- | ------------------------------------------------------------------ |
