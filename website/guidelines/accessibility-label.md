@@ -157,15 +157,15 @@ This is used when a component has the `accessibilityLabel` prop in all caps.
 
 :::tip
 
-Is it possible to specify a list of allowed all caps accessibility labels, [more info here](/guidelines/guidelines.md)
+Is it possible to specify a list of allowed all caps accessibility labels, [more info here](/guidelines)
 :::
 
 ## Related AMA components
 
-- [ExpandablePressable](/core/components/expandablepressable)
-- [Pressable](/core/components/pressable)
-- [TouchableOpacity](/core/components/touchableopacity)
-- [TouchableWithoutFeedback](/core/components/TouchableWithoutFeedback)
+- [ExpandablePressable](/react-native/components/expandablepressable)
+- [Pressable](/react-native/components/pressable)
+- [TouchableOpacity](/react-native/components/touchableopacity)
+- [TouchableWithoutFeedback](/react-native/components/TouchableWithoutFeedback)
 
 ## External resources
 

@@ -82,7 +82,7 @@ This rule is mandatory and cannot be turned off!
 
 ## Related AMA components
 
-- [ExpandablePressable](/core/components/expandablepressable)
-- [Pressable](/core/components/pressable)
-- [TouchableOpacity](/core/components/touchableopacity)
-- [TouchableWithoutFeedback](/core/components/TouchableWithoutFeedback)
+- [ExpandablePressable](/react-native/components/expandablepressable)
+- [Pressable](/react-native/components/pressable)
+- [TouchableOpacity](/react-native/components/touchableopacity)
+- [TouchableWithoutFeedback](/react-native/components/TouchableWithoutFeedback)

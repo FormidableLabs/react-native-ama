@@ -49,8 +49,7 @@ const AddToCart = ({ productID }: { productID: string }) => {
       accessibilityLabel="Add to cart"
       accessibilityRole="button"
       ariaBusy={isAddingToCart}
-      onPress={isAddingToCart ? undefined : onPress}
-    >
+      onPress={isAddingToCart ? undefined : onPress}>
       {isAddingToCart} ? <ActivityIndicator /> : <Text>Add to cart</Text>
     </Pressable>
   );
@@ -119,8 +118,7 @@ export const ToggleButton = ({ checked, label }: ToggleButtonProps) => {
     <Pressable
       accessibilityLabel={label}
       ariaChecked={checked}
-      ariaRole="button"
-    >
+      ariaRole="button">
       {label}
     </Pressable>
   );
@@ -173,8 +171,7 @@ const AddToCart = ({ disabled }) => {
     <Pressable
       accessibilityLabel="Add to cart"
       accessibilityRole="button"
-      disabled={disabled}
-    >
+      disabled={disabled}>
       Add to cart
     </Pressable>
   );
@@ -221,8 +218,7 @@ export const Content = ({ content }) => {
         accessibilityLabel="Show more"
         accessibilityRole="button"
         ariaExpanded={isShowingMore}
-        onPress={() => setIsShowingMore(showMore => !showMore)}
-      >
+        onPress={() => setIsShowingMore(showMore => !showMore)}>
         {isShowingMore ? 'Show less' : 'Show more'}
       </Pressable>
     </View>
@@ -268,8 +264,7 @@ const OptionButton = ({ selected, label }) => {
     <Pressable
       accessibilityLabel={label}
       accessibilityRole="button"
-      ariaSelected={selected}
-    >
+      ariaSelected={selected}>
       <Text>{label}</Text>
     </Pressable>
   );
@@ -306,10 +301,10 @@ const TestScreen = () => {
 
 ## Related AMA components
 
-- [ExpandablePressable](/core/components/expandablepressable)
-- [Pressable](/core/components/pressable)
-- [TouchableOpacity](/core/components/touchableopacity)
-- [TouchableWithoutFeedback](/core/components/TouchableWithoutFeedback)
+- [ExpandablePressable](/react-native/components/expandablepressable)
+- [Pressable](/react-native/components/pressable)
+- [TouchableOpacity](/react-native/components/touchableopacity)
+- [TouchableWithoutFeedback](/react-native/components/TouchableWithoutFeedback)
 
 ## External references
 
