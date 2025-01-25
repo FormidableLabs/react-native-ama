@@ -258,7 +258,7 @@ Indicates whether a selectable element is currently selected or not.
 
 ### Screen Reader behaviour
 
-```jsx {1-5,7-19,21-99}
+```jsx {1-5,7-18,20-99}
 const OptionButton = ({ selected, label }) => {
   return (
     <Pressable
