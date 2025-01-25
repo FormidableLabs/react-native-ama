@@ -107,7 +107,7 @@ When on TextInput, the user should be able to access the next field or submit th
 
 :::tip
 
-The built-in [TextInput](../components/TextInput) automatically handles the `returnKeyLabel` property and its action.
+The built-in [TextInput](/forms/components/TextInput) automatically handles the `returnKeyLabel` property and its action.
 
 :::
 
@@ -132,15 +132,15 @@ Alternatively, the first failed field should be autofocused if no message is ava
 
 ### NO_FORM_LABEL
 
-This error is used when no label has been provided for the [TextInput](../components/TextInput) component.
+This error is used when no label has been provided for the [TextInput](/forms/components/TextInput) component.
 
 ### NO_FORM_ERROR
 
-This error is used when no error has been provided for the [TextInput](../components/TextInput) component.
+This error is used when no error has been provided for the [TextInput](/forms/components/TextInput) component.
 
 ### NO_KEYBOARD_TRAP <MustNot />
 
-This error is triggered by the [TextInput](../components/TextInput) component if the next input field does not have the focus as expected.
+This error is triggered by the [TextInput](/forms/components/TextInput) component if the next input field does not have the focus as expected.
 
 :::note
 
@@ -149,8 +149,8 @@ This rule cannot be turned off!
 
 ## Related AMA components
 
-- [Form](../components/form)
-- [FormField](../components/formfield)
-- [SwitchListItem](../components/switchlistitem)
-- [SwitchWrapper](../components/switchwrapper)
-- [TextInput](../components/textinput)
+- [Form](/forms/components/form)
+- [FormField](/forms/components/formfield)
+- [SwitchListItem](/react-native/components/switchlistitem)
+- [SwitchWrapper](/react-native/components/switchwrapper)
+- [TextInput](/forms/components/textinput)
