@@ -12,7 +12,7 @@ npm install  @react-native-ama/core
 
 ## Wrap App with Provider
 
-You need to add the [AMAProvider](../components/AMAProvider) to your app as it is needed by the components, hooks, and to provide information about accessbility violations.
+You need to add the [AMAProvider](/core/components/AMAProvider) to your app as it is needed by the components, hooks, and to provide information about accessibility violations.
 
 ```jsx {1-4,8-9}
 import { AMAProvider } from '@react-native-ama/core';

@@ -28,11 +28,11 @@ Some people might turn off animation on the device because moving content can di
 
 ## Related AMA components & hooks
 
-- [AnimatedContainer](../components/animatedcontainer)
-- [BottomSheet](../components/bottomsheet)
-- [useAMAContext](../hooks/useAMAContext)
-- [useAnimation](../hooks/useAnimation)
-- [useAnimationDuration](../hooks/useanimationduration)
-- [useReanimatedTiming](../hooks/useReanimatedTiming)
+- [AnimatedContainer](/animations/components/animatedcontainer)
+- [BottomSheet](/extras/components/bottomsheet)
+- [useAMAContext](/core/hooks/useAMAContext)
+- [useAnimation](/animations/hooks/useAnimation)
+- [useAnimationDuration](/animations/hooks/useanimationduration)
+- [useReanimatedTiming](/animations/hooks/useReanimatedTiming)
 
 [^1]: If removed, it would fundamentally change the information or functionality of the content, and information and functionality cannot be achieved in another way that would conform. Basic content scrolling is considered an essential function and is excluded from this requirement.

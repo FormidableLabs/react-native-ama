@@ -42,11 +42,11 @@ The visual presentation of text and images of text has a contrast ratio of at le
 
 AMA performs a contrast check between the component background and its children for:
 
-- [ExpandablePressable](../components/expandablepressable)
-- [Pressable](../components/pressable)
-- [TouchableOpacity](../components/touchableopacity)
-- [TouchableWithoutFeedback](../components/TouchableWithoutFeedback)
-- [usePressable](/hooks/usePressable)
+- [ExpandablePressable](/react-native/components/expandablepressable)
+- [Pressable](/react-native/components/pressable)
+- [TouchableOpacity](/react-native/components/touchableopacity)
+- [TouchableWithoutFeedback](/react-native/components/TouchableWithoutFeedback)
+- [usePressable](/react-native/hooks/usePressable)
 
 The check is performed on the component children and sub children up to a depth level of [5](./custom-log-rules.md#constants).
 
