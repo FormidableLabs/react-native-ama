@@ -29,10 +29,10 @@
     "react-player": "^2.16.0"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "^3.4.0",
-    "@docusaurus/remark-plugin-npm2yarn": "^3.4.0",
-    "@docusaurus/tsconfig": "^3.4.0",
-    "@docusaurus/types": "^3.4.0",
+    "@docusaurus/module-type-aliases": "^3.6.3",
+    "@docusaurus/remark-plugin-npm2yarn": "^3.6.3",
+    "@docusaurus/tsconfig": "^3.6.3",
+    "@docusaurus/types": "^3.6.3",
     "@types/react": "^18.3.3",
     "autoprefixer": "^10.4.19",
     "docusaurus-plugin-image-zoom": "^2.0.0",

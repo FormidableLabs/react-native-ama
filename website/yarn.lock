@@ -3925,7 +3925,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docusaurus/module-type-aliases@npm:3.4.0, @docusaurus/module-type-aliases@npm:^3.4.0":
+"@docusaurus/module-type-aliases@npm:3.4.0":
   version: 3.4.0
   resolution: "@docusaurus/module-type-aliases@npm:3.4.0"
   dependencies:
@@ -3943,7 +3943,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docusaurus/module-type-aliases@npm:3.7.0":
+"@docusaurus/module-type-aliases@npm:3.7.0, @docusaurus/module-type-aliases@npm:^3.6.3":
   version: 3.7.0
   resolution: "@docusaurus/module-type-aliases@npm:3.7.0"
   dependencies:
@@ -4192,16 +4192,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docusaurus/remark-plugin-npm2yarn@npm:^3.4.0":
-  version: 3.4.0
-  resolution: "@docusaurus/remark-plugin-npm2yarn@npm:3.4.0"
+"@docusaurus/remark-plugin-npm2yarn@npm:^3.6.3":
+  version: 3.7.0
+  resolution: "@docusaurus/remark-plugin-npm2yarn@npm:3.7.0"
   dependencies:
     mdast-util-mdx: ^3.0.0
-    npm-to-yarn: ^2.2.1
+    npm-to-yarn: ^3.0.0
     tslib: ^2.6.0
     unified: ^11.0.3
     unist-util-visit: ^5.0.0
-  checksum: 01dee94430779ce47d417f5b312fa1eeb593542e070649fc1718e74b4d4f0a0ef9b5b1d4d317eca2639cd92f3922f384b584cb31550dec29f8716fcbf0ea6c4c
+  checksum: 30c87a41b7ca67d10f983adb83c3a53d78f3a6d637a8d60e433f3899d5e1af754e91dab4405ac86a153232725b6307b08e217b7afe50ce45e88bc7c264711eb7
   languageName: node
   linkType: hard
 
@@ -4313,14 +4313,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docusaurus/tsconfig@npm:^3.4.0":
-  version: 3.4.0
-  resolution: "@docusaurus/tsconfig@npm:3.4.0"
-  checksum: 96d0cee56186256f04405c7b1cc45103a7d13862a8e4f1fc083c2b8e46d03a654ff6ec58ff154141ba2b30cdc3f708130f7ac88749fc1e0a88bf37ded6defb97
+"@docusaurus/tsconfig@npm:^3.6.3":
+  version: 3.7.0
+  resolution: "@docusaurus/tsconfig@npm:3.7.0"
+  checksum: 21742584fb3753c4fae80f92f9a8ad405653e3d8703aa2e195f043d5d93005703a55416cb4294e80b85d05c25cb4ccbc6e1dad8645b95a9b93df7219b62bab3c
   languageName: node
   linkType: hard
 
-"@docusaurus/types@npm:3.4.0, @docusaurus/types@npm:^3.4.0":
+"@docusaurus/types@npm:3.4.0":
   version: 3.4.0
   resolution: "@docusaurus/types@npm:3.4.0"
   dependencies:
@@ -4340,7 +4340,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docusaurus/types@npm:3.7.0":
+"@docusaurus/types@npm:3.7.0, @docusaurus/types@npm:^3.6.3":
   version: 3.7.0
   resolution: "@docusaurus/types@npm:3.7.0"
   dependencies:
@@ -11703,10 +11703,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"npm-to-yarn@npm:^2.2.1":
-  version: 2.2.1
-  resolution: "npm-to-yarn@npm:2.2.1"
-  checksum: 8596169260f80add174918b742161e139ebe34688e5e4506e6826da46ca6b15ff729f42a35c24eac66d33b3aaecc57386492e0363026a292d588b1d953b46aef
+"npm-to-yarn@npm:^3.0.0":
+  version: 3.0.1
+  resolution: "npm-to-yarn@npm:3.0.1"
+  checksum: 545f16edb5d70f3f66091bbff2e1e8326a83e99ff92be05b5f45e6e3705049c9f30d83a4de0d813b1b8cd42ca2e67a578ce6482133610c13402da65ac6be97a6
   languageName: node
   linkType: hard
 
@@ -15666,13 +15666,13 @@ __metadata:
   resolution: "website@workspace:."
   dependencies:
     "@docusaurus/core": ^3.6.3
-    "@docusaurus/module-type-aliases": ^3.4.0
+    "@docusaurus/module-type-aliases": ^3.6.3
     "@docusaurus/plugin-content-docs": ^3.6.3
     "@docusaurus/plugin-google-gtag": ^3.6.3
     "@docusaurus/preset-classic": ^3.6.3
-    "@docusaurus/remark-plugin-npm2yarn": ^3.4.0
-    "@docusaurus/tsconfig": ^3.4.0
-    "@docusaurus/types": ^3.4.0
+    "@docusaurus/remark-plugin-npm2yarn": ^3.6.3
+    "@docusaurus/tsconfig": ^3.6.3
+    "@docusaurus/types": ^3.6.3
     "@easyops-cn/docusaurus-search-local": ^0.44.2
     "@iconify/react": ^4.1.1
     "@mdx-js/react": ^3.0.1
