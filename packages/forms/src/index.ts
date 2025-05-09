@@ -3,13 +3,13 @@
 import { isFocused } from '@react-native-ama/internal';
 
 import {
-  FormActions,
+  type FormActions,
   Form as FormProvider,
   type FormProps,
 } from './components/Form';
-import { FormField, FormFieldProps } from './components/FormField';
-import { FormSubmit, FormSubmitProps } from './components/FormSubmit';
-import { FormSwitch, FormSwitchProps } from './components/FormSwitch';
+import { FormField, type FormFieldProps } from './components/FormField';
+import { FormSubmit, type FormSubmitProps } from './components/FormSubmit';
+import { FormSwitch, type FormSwitchProps } from './components/FormSwitch';
 
 type FormComponent = React.FunctionComponent<FormProps> & {
   Submit: (props: FormSubmitProps) => JSX.Element;
