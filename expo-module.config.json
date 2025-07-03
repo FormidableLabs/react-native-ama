@@ -1,0 +1,9 @@
+{
+  "platforms": ["apple", "android", "web"],
+  "apple": {
+    "modules": ["ReactNativeAmaModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.ama.ReactNativeAmaModule"]
+  }
+}
