@@ -19,7 +19,7 @@ config.resolver.nodeModulesPaths = [
 ];
 
 config.resolver.extraNodeModules = {
-  '@react-native-ama': '../packages/core',
+  '@react-native-ama/core': '../packages/core',
 };
 
 config.watchFolders = [path.resolve(__dirname, '..')];
