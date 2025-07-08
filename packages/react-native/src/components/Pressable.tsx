@@ -3,7 +3,6 @@ import {
   Pressable as RNPressable,
   PressableProps as RNPressableProps,
 } from 'react-native';
-
 import { usePressable } from '../hooks/usePressable';
 import type { UsePressable } from '../hooks/usePressable';
 

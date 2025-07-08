@@ -1,6 +1,5 @@
 import { renderHook } from '@testing-library/react-native';
 import { SharedValue } from 'react-native-reanimated';
-
 import { useBottomSheetGestureHandler } from './useBottomSheetGestureHandler';
 
 beforeEach(() => {

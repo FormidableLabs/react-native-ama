@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { useExpandable } from '../hooks/useExpandable';
 import type { UseExpandable } from '../hooks/useExpandable';
 import { Pressable, type PressableProps } from './Pressable';

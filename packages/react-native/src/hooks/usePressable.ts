@@ -4,8 +4,8 @@ import {
   shouldIgnoreContrastCheckForDisabledElement,
 } from '@react-native-ama/internal';
 import type {
-  AMAAccessibilityState,
   AccessibilityRoles,
+  AMAAccessibilityState,
 } from '@react-native-ama/internal';
 import type React from 'react';
 import type {

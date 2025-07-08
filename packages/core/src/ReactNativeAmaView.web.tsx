@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import { ReactNativeAmaViewProps } from './ReactNativeAma.types';
 
 export default function ReactNativeAmaView(props: ReactNativeAmaViewProps) {

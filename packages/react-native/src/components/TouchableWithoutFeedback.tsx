@@ -3,7 +3,6 @@ import {
   TouchableWithoutFeedback as RNTouchableWithoutFeedback,
   TouchableWithoutFeedbackProps as RNTouchableWithoutFeedbackProps,
 } from 'react-native';
-
 import { UsePressable, usePressable } from '../hooks/usePressable';
 
 export type TouchableWithoutFeedbackProps = React.PropsWithChildren<

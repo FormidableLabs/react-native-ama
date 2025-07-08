@@ -1,6 +1,5 @@
 import React from 'react';
 import { FlatList, FlatListProps } from 'react-native';
-
 import { useDynamicList } from '../hooks/useDynamicList';
 
 type DynamicFlatListProps<T> = FlatListProps<T> & {

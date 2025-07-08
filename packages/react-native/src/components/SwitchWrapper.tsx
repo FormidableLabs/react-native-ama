@@ -6,11 +6,11 @@ import React from 'react';
 import {
   AccessibilityState,
   GestureResponderEvent,
+  StyleSheet,
+  TouchableWithoutFeedback,
   View,
   ViewProps,
 } from 'react-native';
-import { StyleSheet, TouchableWithoutFeedback } from 'react-native';
-
 import { useSwitch } from '../hooks/useSwitch';
 
 type SwitchWrapperProps = React.PropsWithChildren<

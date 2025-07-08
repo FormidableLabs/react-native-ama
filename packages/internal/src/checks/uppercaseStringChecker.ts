@@ -1,4 +1,4 @@
-import { LogParams, isAccessibilityLabelAllowed } from '../utils/logger';
+import { isAccessibilityLabelAllowed, LogParams } from '../utils/logger';
 import type { Rule } from '../utils/logger.rules';
 
 export type UppercaseStringChecker = {

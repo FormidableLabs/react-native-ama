@@ -1,13 +1,13 @@
 import {
-  ERROR_STYLE,
-  LogParams,
   checkAccessibilityRole as checkAccessibilityRoleImplementation,
   checkFocusTrap as checkFocusTrapImplementation,
   checkForAccessibilityState,
   checkMinimumSize as checkMinimumSizeImplementation,
   contrastChecker as contrastCheckerImplementation,
+  ERROR_STYLE,
   getRuleAction,
   logFailure,
+  LogParams,
   noUndefinedProperty as noUndefinedPropertyImplementation,
   uppercaseStringChecker as noUppercaseStringCheckerImplementation,
   uppercaseChecker as uppercaseCheckerImplementation,
@@ -24,7 +24,6 @@ import {
   InteractionManager,
   LayoutChangeEvent,
 } from 'react-native';
-
 import { isDevContextValue, useAMAContext } from '../components/AMAProvider';
 
 export const useChecks = () => {

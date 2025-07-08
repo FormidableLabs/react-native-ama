@@ -1,5 +1,4 @@
 import type { Animated, ViewStyle } from 'react-native';
-
 import { MOTION_ANIMATIONS } from './constants';
 
 export const interpolateAnimationStates = (

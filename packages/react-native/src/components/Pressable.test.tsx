@@ -1,6 +1,5 @@
 import { render } from '@testing-library/react-native';
 import * as React from 'react';
-
 import * as UsePressable from '../hooks/usePressable';
 import { Pressable, PressableProps } from './Pressable';
 

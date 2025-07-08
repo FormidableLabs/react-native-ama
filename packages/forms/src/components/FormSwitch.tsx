@@ -3,7 +3,6 @@ import {
   type SwitchListItemProps,
 } from '@react-native-ama/react-native';
 import React from 'react';
-
 import { FormField } from './FormField';
 
 export type FormSwitchProps = SwitchListItemProps;

@@ -1,8 +1,8 @@
 import { useAMAContext } from '@react-native-ama/core';
 import type { PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
 import {
-  SharedValue,
   runOnJS,
+  SharedValue,
   useAnimatedGestureHandler,
   withTiming,
 } from 'react-native-reanimated';

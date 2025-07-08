@@ -1,7 +1,6 @@
 import { useAMAContext } from '@react-native-ama/core';
 import React from 'react';
 import type { ViewStyle } from 'react-native';
-
 import { isMotionAnimation } from '../utils/isMotionAnimation';
 
 export const useAnimationDuration = () => {

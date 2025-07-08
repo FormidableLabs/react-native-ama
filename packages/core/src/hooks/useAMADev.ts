@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import { useEffect, useState } from 'react';
 import { DevSettings } from 'react-native';
-
 import ReactNativeAmaModule from '../ReactNativeAmaModule';
 
 export type Rule =

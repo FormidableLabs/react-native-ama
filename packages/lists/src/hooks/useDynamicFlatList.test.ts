@@ -1,6 +1,5 @@
 import * as UseChecks from '@react-native-ama/core/src/hooks/useChecks';
 import { renderHook } from '@testing-library/react-native';
-
 import { useDynamicList } from './useDynamicList';
 
 beforeEach(() => {

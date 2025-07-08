@@ -3,7 +3,6 @@ import * as UseFocus from '@react-native-ama/core/src/hooks/useFocus';
 import { ERROR_STYLE } from '@react-native-ama/internal';
 import { render } from '@testing-library/react-native';
 import * as React from 'react';
-
 import { Text } from './Text';
 
 beforeEach(() => {
@@ -60,7 +59,8 @@ describe('Text', () => {
         render(
           <Text
             style={{ textTransform: 'uppercase' }}
-            accessibilityLabel={accessibilityLabel}>
+            accessibilityLabel={accessibilityLabel}
+          >
             This is a test
           </Text>,
         );
@@ -140,7 +140,8 @@ describe('Text', () => {
           <TextWithoutDebug
             testID={'text'}
             style={{ textTransform: 'uppercase' }}
-            accessibilityLabel={accessibilityLabel}>
+            accessibilityLabel={accessibilityLabel}
+          >
             This is a test
           </TextWithoutDebug>,
         );

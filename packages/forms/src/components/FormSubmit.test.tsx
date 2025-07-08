@@ -1,7 +1,6 @@
 import { render } from '@testing-library/react-native';
 import * as React from 'react';
 import { Pressable, View } from 'react-native';
-
 import { FormSubmit } from './FormSubmit';
 
 beforeEach(() => {
@@ -37,7 +36,8 @@ describe('FormSubmit', () => {
       <FormSubmit
         accessibilityLabel="This is the label"
         busy={false}
-        testID="test-me">
+        testID="test-me"
+      >
         <View testID="child" />
       </FormSubmit>,
     );

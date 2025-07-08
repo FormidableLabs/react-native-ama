@@ -1,5 +1,4 @@
-import { registerWebModule, NativeModule } from 'expo';
-
+import { NativeModule, registerWebModule } from 'expo';
 import { ReactNativeAmaModuleEvents } from './ReactNativeAma.types';
 
 class ReactNativeAmaModule extends NativeModule<ReactNativeAmaModuleEvents> {

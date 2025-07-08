@@ -3,7 +3,6 @@ import { maybeGenerateStringFromElement } from '@react-native-ama/internal';
 import React from 'react';
 import type { StyleProp, SwitchProps, ViewStyle } from 'react-native';
 import { StyleSheet, Switch } from 'react-native';
-
 import { SwitchWrapper } from './SwitchWrapper';
 
 export type SwitchListItemProps = React.PropsWithChildren<
@@ -42,7 +41,8 @@ export const SwitchListItemBase = ({
       style={[allStyles.container, style]}
       onPress={onValueChange}
       checked={value}
-      testID={testID}>
+      testID={testID}
+    >
       {isLabelPositionLeft ? labelComponent : null}
       <HideChildrenFromAccessibilityTree>
         {children ? (

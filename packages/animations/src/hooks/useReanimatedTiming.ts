@@ -8,7 +8,6 @@ import {
   WithSpringConfig,
   WithTimingConfig,
 } from 'react-native-reanimated';
-
 import { isMotionAnimation } from '../utils/isMotionAnimation';
 
 export const useReanimatedTiming = () => {

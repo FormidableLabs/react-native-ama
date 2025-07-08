@@ -1,7 +1,6 @@
 import { render, waitFor } from '@testing-library/react-native';
 import * as React from 'react';
 import { AccessibilityInfo, Platform } from 'react-native';
-
 import { FlatList } from './FlatList';
 
 beforeEach(() => {
