@@ -1,7 +1,7 @@
 import {
-  Pressable as AMAPressable,
   type PressableProps,
-} from '@react-native-ama/react-native';
+  Pressable,
+} from 'react-native';
 import React from 'react';
 import {
   AccessibilityState,
@@ -14,7 +14,7 @@ import { theme } from '../theme';
 
 type CTAPressableProps = Omit<
   PressableProps,
-  'children' | 'accessibilityRole' | 'accessibilityLabel'
+  'children'
 > & {
   title: string;
   accessibilityLabel?: string;
@@ -36,12 +36,13 @@ export const CTAPressable = ({
   marginLeft,
   marginRight,
   accessibilityLabel,
+  role,
   ...rest
 }: CTAPressableProps) => {
   return (
-    <AMAPressable
-      accessibilityRole="button"
-      accessibilityLabel={accessibilityLabel || title}
+    <Pressable
+    role={role ?? "button"}
+      accessibilityLabel={accessibilityLabel}
       disabled={disabled}
       style={({ pressed }) => {
         const buttonStyles = getButtonStyle({
@@ -64,11 +65,10 @@ export const CTAPressable = ({
       {rest.busy ? <ActivityIndicator color={theme.color.white} /> : null}
       <Text
         style={[styles.text, { textTransform }]}
-        accessibilityElementsHidden={rest.accessibilityElementsHidden}
-        importantForAccessibility={rest.importantForAccessibility}>
+       >
         {title}
       </Text>
-    </AMAPressable>
+    </Pressable>
   );
 };
 

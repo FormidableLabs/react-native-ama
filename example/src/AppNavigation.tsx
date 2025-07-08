@@ -40,6 +40,7 @@ export const AppNavigator = () => {
           ...BaseNavigatorOptions,
           ...amaAnimationScreenOptions,
         }}
+        initialRouteName="Pressable"
       >
         <Stack.Screen
           name="Home"

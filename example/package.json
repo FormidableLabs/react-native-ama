@@ -24,6 +24,7 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@types/react": "~19.0.10",
+    "eslint-plugin-jest": "^29.0.1",
     "typescript": "~5.8.3"
   },
   "private": true,

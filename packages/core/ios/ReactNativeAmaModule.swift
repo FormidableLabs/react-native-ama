@@ -1,48 +1,113 @@
 import ExpoModulesCore
+import UIKit
+
+struct Constants {
+    static let debounce: TimeInterval = 0.5
+}
+
+public struct AMAConfig: CustomDebugStringConvertible {
+    public let rules: [String: String]
+    public let accessibilityLabelExceptions: [String]
+    public let highlight: String
+
+    public init(from dictionary: [String: Any?]) {
+        self.rules = dictionary["rules"] as? [String: String] ?? [:]
+        self.accessibilityLabelExceptions =
+            dictionary["accessibilityLabelExceptions"] as? [String] ?? []
+        self.highlight = dictionary["highlight"] as? String ?? "both"
+    }
+
+    public var debugDescription: String {
+        return """
+            AMAConfig(
+                rules: \(rules),
+                accessibilityLabelExceptions: \(accessibilityLabelExceptions),
+                highlight: "\(highlight)"
+            )
+            """
+    }
+}
 
 public class ReactNativeAmaModule: Module {
-  // Each module class must implement the definition function. The definition consists of components
-  // that describes the module's functionality and behavior.
-  // See https://docs.expo.dev/modules/module-api for more details about available components.
-  public func definition() -> ModuleDefinition {
-    // Sets the name of the module that JavaScript code will use to refer to the module. Takes a string as an argument.
-    // Can be inferred from module's class name, but it's recommended to set it explicitly for clarity.
-    // The module will be accessible from `requireNativeModule('ReactNativeAma')` in JavaScript.
-    Name("ReactNativeAma")
+    private var isMonitoring = false
+    private var currentDecorView: UIView?
+    private var displayLink: CADisplayLink?
 
-    // Sets constant properties on the module. Can take a dictionary or a closure that returns a dictionary.
-    Constants([
-      "PI": Double.pi
-    ])
+    private var a11yChecker: A11yChecker?
+    private var isCheckScheduled = false
 
-    // Defines event names that the module can send to JavaScript.
-    Events("onChange")
+    public func definition() -> ModuleDefinition {
+        Name("ReactNativeAma")
 
-    // Defines a JavaScript synchronous function that runs the native code on the JavaScript thread.
-    Function("hello") {
-      return "Hello world! 👋"
-    }
+        Events("onA11yIssues")
 
-    // Defines a JavaScript function that always returns a Promise and whose native code
-    // is by default dispatched on the different thread than the JavaScript runtime runs on.
-    AsyncFunction("setValueAsync") { (value: String) in
-      // Send an event to JavaScript.
-      self.sendEvent("onChange", [
-        "value": value
-      ])
-    }
+        Function("start") { (configMap: [String: Any?]) in
+            guard !isMonitoring else { return }
 
-    // Enables the module to be used as a native view. Definition components that are accepted as part of the
-    // view definition: Prop, Events.
-    View(ReactNativeAmaView.self) {
-      // Defines a setter for the `url` prop.
-      Prop("url") { (view: ReactNativeAmaView, url: URL) in
-        if view.webView.url != url {
-          view.webView.load(URLRequest(url: url))
+            let config = AMAConfig(from: configMap)
+
+            Logger.info("start", "👀 Start Monitoring 👀", extra: config.debugDescription)
+
+            self.a11yChecker = A11yChecker(appContext: self.appContext!, config: config)
+
+            DispatchQueue.main.async {
+                guard let viewController = self.appContext?.utilities?.currentViewController(),
+                    let decorView = viewController.view
+                else {
+                    return
+                }
+
+                self.currentDecorView = decorView
+                self.setupDisplayLink()
+                self.isMonitoring = true
+            }
         }
-      }
 
-      Events("onLoad")
+        Function("stop") {
+            guard isMonitoring else { return }
+            displayLink?.invalidate()
+            displayLink = nil
+            isMonitoring = false
+        }
     }
-  }
+
+    private func setupDisplayLink() {
+        displayLink = CADisplayLink(target: self, selector: #selector(scheduleA11yCheck))
+        displayLink?.add(to: .main, forMode: .default)
+    }
+
+    @objc private func scheduleA11yCheck() {
+        guard !isCheckScheduled else { return }
+
+        isCheckScheduled = true
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + Constants.debounce) { [weak self] in
+            guard let self = self, let decorView = self.currentDecorView else {
+                self?.isCheckScheduled = false
+
+                return
+            }
+
+            self.displayLink?.isPaused = true
+            self.performA11yChecks()
+
+            DispatchQueue.main.async {
+                self.displayLink?.isPaused = false
+                self.isCheckScheduled = false
+            }
+        }
+    }
+
+    private func performA11yChecks() {
+        // Logger.info("performA11yChecks", "doing the job")
+
+        guard let issues = a11yChecker?.performA11yChecks(on: currentDecorView) else { return }
+
+        if !issues.isEmpty {
+            sendEvent(
+                "onA11yIssues",
+                ["timestamp": Date().timeIntervalSince1970 * 1000, "issues": issues]
+            )
+        }
+    }
 }

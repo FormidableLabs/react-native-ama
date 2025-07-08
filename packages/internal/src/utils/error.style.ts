@@ -1,4 +1,5 @@
-export const RED = '#A31420';
+export const RED = __DEV__ ? '#A31420' : null;
+export const WARNING = __DEV__ ? '#FFF700' : null;
 
 export const ERROR_STYLE = __DEV__
   ? {

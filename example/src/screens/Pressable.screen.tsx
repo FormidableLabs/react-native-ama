@@ -18,7 +18,12 @@ export const PressableScreen = () => {
     <SafeAreaView>
       <ScrollView style={styles.list}>
         <Spacer height="big" />
-        <Header title={'Accessibility states'} />
+        <Header title={'Accessibility Checks'} />
+        <Text>
+          This screen displays the accessibility checks AMA can perform on
+          pressable elements:
+        </Text>
+        <CTAPressable title="Missing role" role="" />
         <Spacer height={'normal'} />
 
         {/*  Disabled */}
@@ -76,7 +81,8 @@ const CheckedButton = () => {
       <Text
         style={styles.checkLabel}
         accessibilityElementsHidden
-        importantForAccessibility={'no'}>{`${state}`}</Text>
+        importantForAccessibility={'no'}
+      >{`${state}`}</Text>
     </View>
   );
 };
@@ -98,7 +104,8 @@ const SelectedButton = () => {
       <Text
         style={styles.checkLabel}
         accessibilityElementsHidden
-        importantForAccessibility={'no'}>{`${state}`}</Text>
+        importantForAccessibility={'no'}
+      >{`${state}`}</Text>
     </View>
   );
 };
@@ -120,7 +127,8 @@ const ExpandedButton = () => {
       <Text
         style={styles.checkLabel}
         accessibilityElementsHidden
-        importantForAccessibility={'no'}>{`${state}`}</Text>
+        importantForAccessibility={'no'}
+      >{`${state}`}</Text>
     </View>
   );
 };
@@ -163,7 +171,8 @@ const ContrastCheckerFailing = () => {
         <Pressable
           style={styles.failingButtonStyle}
           accessibilityRole="button"
-          accessibilityLabel="This fails">
+          accessibilityLabel="This fails"
+        >
           <>
             <Text style={failingStyle}>
               `This fails {activeButton.toUpperCase()} level`
@@ -193,7 +202,8 @@ const MinimumSizeFailing = () => {
           <Pressable
             style={styles.minSizeFailing}
             accessibilityRole="button"
-            accessibilityLabel="This fails">
+            accessibilityLabel="This fails"
+          >
             <Text style={{ color: theme.color.white }}>This fails</Text>
           </Pressable>
         </>
