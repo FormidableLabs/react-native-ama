@@ -6,8 +6,8 @@
   "repository": "https://github.com/FormidableLabs/react-native-ama.git",
   "homepage": "https://commerce.nearform.com/open-source/react-native-ama/",
   "scripts": {
-    "example:bare": "yarn --cwd examples/bare",
-    "example:expo": "yarn --cwd examples/expo",
+    "playground": "yarn --cwd playground",
+    "playground:ios": "yarn --cwd playground run ios",
     "build:animations": "yarn workspace @react-native-ama/animations build",
     "build:core": "yarn workspace @react-native-ama/core build",
     "build:extras": "yarn workspace @react-native-ama/extras build",
@@ -20,7 +20,8 @@
     "ts:check": "tsc --noEmit",
     "lint": "eslint --ext .js,.ts,.tsx ./packages",
     "version": "yarn changeset version && yarn install --no-frozen-lockfile",
-    "build": "yarn build:internal && yarn build:core && yarn build:animations && yarn build:react-native && yarn build:extras && yarn build:forms && yarn build:lists"
+    "build": "yarn build:internal && yarn build:core && yarn build:animations && yarn build:react-native && yarn build:extras && yarn build:forms && yarn build:lists",
+    "prettier": "yarn prettier --write 'packages/**/*.{js,jsx,ts,tsx}'"
   },
   "workspaces": [
     "packages/animations",

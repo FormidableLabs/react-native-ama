@@ -13,8 +13,6 @@ export {
 export { HideChildrenFromAccessibilityTree } from './components/HideChildrenFromAccessibilityTree';
 
 // Hooks
-export { useButtonChecks } from './hooks/useButtonChecks';
-export { useChecks } from './hooks/useChecks';
 export { useFocus } from './hooks/useFocus';
 export { useTimedAction } from './hooks/useTimedAction';
 

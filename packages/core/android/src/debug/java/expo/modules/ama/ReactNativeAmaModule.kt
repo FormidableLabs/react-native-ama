@@ -98,7 +98,7 @@ class ReactNativeAmaModule : Module() {
 
     private fun performA11yChecks() {
         Logger.info("performA11yChecks", "doing the job")
-        val issues = a11yChecker.performA11yChecks(currentDecorView)
+        val issues = a11yChecker.performA11yChecks(currentDecorView!!)
 
         sendEvent(
                 "onA11yIssues",

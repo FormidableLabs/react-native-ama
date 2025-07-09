@@ -40,27 +40,62 @@ class Highlight(private val appContext: AppContext) {
         }
     }
 
+    private fun applyGridBackground(view: View, color: Int?) {
+        val stripeSize = 40
+        val bmp = Bitmap.createBitmap(stripeSize * 2, stripeSize * 2, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bmp)
+        val paint =
+                Paint().apply {
+                    style = Paint.Style.FILL
+                }
+        canvas.drawRect(0f, 0f, stripeSize.toFloat(), stripeSize.toFloat(), paint)
+        canvas.drawRect(
+                stripeSize.toFloat(),
+                stripeSize.toFloat(),
+                stripeSize * 2f,
+                stripeSize * 2f,
+                paint
+        )
+
+        val shader = BitmapShader(bmp, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT)
+        val bgPaint = Paint().apply { this.shader = shader }
+        val drawable =
+                object : Drawable() {
+                    override fun draw(c: Canvas) = c.drawRect(bounds, bgPaint)
+                    override fun setAlpha(alpha: Int) {
+                        bgPaint.alpha = alpha
+                    }
+                    override fun setColorFilter(cf: ColorFilter?) {
+                        bgPaint.colorFilter = cf
+                    }
+                    override fun getOpacity(): Int = PixelFormat.TRANSLUCENT
+                }
+
+        view.background = drawable
+    }
+
     private fun applyStripyBackground(view: View, color: Int?) {
         val originalBackground = view.background
 
-        val stripeWidth = 25f // The width of a single black stripe
-        val gapWidth = 25f // The width of the transparent gap between stripes
-        val bmpSize = 150 // The size of the bitmap tile we'll create (e.g., 100x100 pixels)
+        val stripeWidth = 5f
+        val gapWidth = 25f
+        val bmpWidth = 150 
+        val bmpHeight = bmpWidth
 
-        val bmp = Bitmap.createBitmap(bmpSize, bmpSize * 2, Bitmap.Config.ARGB_8888)
+        val bmp = Bitmap.createBitmap(bmpWidth, bmpHeight, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bmp)
 
         val stripePaint =
                 Paint().apply {
                     this.color = color ?: Color.RED
-                    isAntiAlias = true // For smooth edges
+                    isAntiAlias = true 
                 }
 
-        val canvasCenter = bmpSize / 2f
+        val canvasCenter = bmpWidth / 2f
         canvas.save()
         canvas.rotate(-45f, canvasCenter, canvasCenter)
 
-        val extendedSize = (bmpSize * 1.5f)
+        val extendedSize = (bmpWidth * 1.5f)
         var y = -extendedSize
         while (y < extendedSize) {
             canvas.drawRect(-extendedSize, y, extendedSize, y + stripeWidth, stripePaint)
@@ -69,7 +104,7 @@ class Highlight(private val appContext: AppContext) {
 
         canvas.restore()
 
-        val shader = BitmapShader(bmp, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT)
+        val shader = BitmapShader(bmp, Shader.TileMode.MIRROR, Shader.TileMode.REPEAT)
 
         val backgroundPaint = Paint().apply { this.shader = shader }
 
@@ -103,7 +138,7 @@ class Highlight(private val appContext: AppContext) {
     private fun applyRedBorderOverlay(view: View, color: Int?) {
         view.overlay.clear()
 
-        val stroke = 6f // px
+        val stroke = 6f 
         val half = (stroke / 2).toInt()
         val shape =
                 ShapeDrawable(RectShape()).apply {

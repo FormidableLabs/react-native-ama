@@ -63,6 +63,12 @@ export const App = () => {
 };
 ```
 
+### Playground
+
+You can use the playground app within this repository to see how AMA checks work in practice.
+The playground can also be used to learn how to fix accessibility issues in your app.
+
+
 ## 📃 [Documentation](https://commerce.nearform.com/open-source/react-native-ama)
 
 The documentation contains everything you need to know about `@react-native-ama/...`. It contains several sections in order of importance when you first get started:

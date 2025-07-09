@@ -1,7 +1,9 @@
 package expo.modules.ama
 
 import android.graphics.Color
+import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
+import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -13,7 +15,9 @@ import kotlin.math.pow
 data class A11yIssue(
         val type: RuleAction,
         val rule: Rule,
-        val message: String? = null,
+        val label: String? = null,
+        val reason: String? = null,
+        val bounds: List<Int>,
         val viewId: Int? = null,
 )
 
@@ -69,11 +73,14 @@ val LOGGER_RULES: Map<Rule, RuleAction> =
 class A11yChecker(private val appContext: AppContext, private val config: AMAConfig) {
     private val issues = Collections.synchronizedList(mutableListOf<A11yIssue>())
     private val highlighter = Highlight(appContext)
+    private lateinit var rootView: View
 
-    public fun performA11yChecks(rootView: View?): List<Map<String, Any?>> {
+    public fun performA11yChecks(rootView: View): List<Map<String, Any?>> {
         Logger.info("performA11yChecks", "Performing a11y checks")
 
-        rootView?.let { root ->
+        this.rootView = rootView
+
+        rootView.let { root ->
             traverseAndCheck(root)
 
             if (issues.isNotEmpty()) {
@@ -83,7 +90,10 @@ class A11yChecker(private val appContext: AppContext, private val config: AMACon
                         issues.map { issue ->
                             mapOf(
                                     "type" to issue.type,
-                                    "message" to (issue.message ?: ""),
+                                    "rule" to issue.rule,
+                                    "label" to (issue.label ?: ""),
+                                    "reason" to (issue.reason ?: ""),
+                                    "bounds" to issue.bounds,
                                     "viewId" to issue.viewId
                             )
                         }
@@ -114,9 +124,7 @@ class A11yChecker(private val appContext: AppContext, private val config: AMACon
         }
     }
 
-    private fun getRuleSeverity(rule: String) {}
-
-    private fun addIssue(rule: Rule, message: String, view: View) {
+    private fun addIssue(rule: Rule, label: String, reason: String, view: View) {
         val action = getRuleAction(rule)
 
         if (action == RuleAction.IGNORE) {
@@ -128,7 +136,16 @@ class A11yChecker(private val appContext: AppContext, private val config: AMACon
         if (existingIssue == null) {
             view.id.let { id -> highlighter.highlight(id, config.highlight, action) }
 
-            issues.add(A11yIssue(type = action, rule = rule, message = message, viewId = view.id))
+            issues.add(
+                    A11yIssue(
+                            type = action,
+                            rule = rule,
+                            label = label,
+                            reason = reason,
+                            bounds = view.getGlobalDpBounds(this.rootView),
+                            viewId = view.id
+                    )
+            )
         }
     }
 
@@ -157,7 +174,8 @@ class A11yChecker(private val appContext: AppContext, private val config: AMACon
 
             addIssue(
                     rule = Rule.NO_ACCESSIBILITY_LABEL,
-                    message = view.getTextOrContent() + " is missing the accessibility label.",
+                    label = view.getTextOrContent(),
+                    reason = "is missing the accessibility label.",
                     view = view
             )
         }
@@ -182,7 +200,8 @@ class A11yChecker(private val appContext: AppContext, private val config: AMACon
 
             addIssue(
                     rule = Rule.NO_ACCESSIBILITY_ROLE,
-                    message = view.getTextOrContent() + " is missing the accessibility role.",
+                    label = view.getTextOrContent(),
+                    reason = "is missing the accessibility role.",
                     view = view
             )
         }
@@ -194,7 +213,8 @@ class A11yChecker(private val appContext: AppContext, private val config: AMACon
 
             addIssue(
                     rule = Rule.MINIMUM_SIZE,
-                    message =
+                    label = view.toString(),
+                    reason =
                             "The touchable area must have a minimum size of 48x48, found ${view.width}x${view.height} instead",
                     view = view
             )
@@ -222,7 +242,8 @@ class A11yChecker(private val appContext: AppContext, private val config: AMACon
             if (contrastRatio < minContrast) {
                 addIssue(
                         rule = Rule.CONTRAST_FAILED,
-                        message =
+                        label = textView.toString(),
+                        reason =
                                 "Color contrast ratio ${String.format("%.2f", contrastRatio)} is below minimum ${minContrast} (WCAG AA)",
                         view = textView
                 )
@@ -322,4 +343,26 @@ fun View.getTextOrContent(): String {
     val a11yInfo = AccessibilityNodeInfoCompat.wrap(info)
 
     return a11yInfo.contentDescription?.toString().orEmpty()
+}
+
+private fun View.getGlobalDpBounds(rootView: View): List<Int> {
+    // 1) grab absolute screen bounds
+    val abs = Rect().also { createAccessibilityNodeInfo().getBoundsInScreen(it) }
+
+    // 2) find your root’s absolute origin
+    val origin = IntArray(2).also { rootView.getLocationOnScreen(it) }
+    val relLeftPx = abs.left - origin[0]
+    val relTopPx = abs.top - origin[1]
+    val widthPx = abs.width()
+    val heightPx = abs.height()
+
+    // 3) convert px → dp
+    val metrics: DisplayMetrics = resources.displayMetrics
+    val d = metrics.density
+    val leftDp = (relLeftPx / d).toInt()
+    val topDp = (relTopPx / d).toInt()
+    val widthDp = (widthPx / d).toInt()
+    val heightDp = (heightPx / d).toInt()
+
+    return listOf(leftDp, topDp, widthDp, heightDp)
 }

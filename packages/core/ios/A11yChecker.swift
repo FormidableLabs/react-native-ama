@@ -4,7 +4,9 @@ import UIKit
 public struct A11yIssue: Equatable {
     public let type: RuleAction
     public let rule: Rule
-    public let message: String?
+    public let label: String?
+    public let issue: String?
+    public let bounds: CGRect?
     public let viewId: Int
     public var sent: Bool
 
@@ -92,7 +94,14 @@ public class A11yChecker {
                 [
                     "type": issue.type.rawValue,
                     "rule": issue.rule.rawValue,
-                    "message": issue.message ?? "",
+                    "issue": issue.issue ?? "",
+                    "label": issue.label ?? "",
+                    "bounds": [
+                        issue.bounds?.origin.x,
+                        issue.bounds?.origin.y,
+                        issue.bounds?.width,
+                        issue.bounds?.height,
+                    ],
                     "viewId": issue.viewId,
                 ]
             }
@@ -110,8 +119,12 @@ public class A11yChecker {
     }
 
     private func checkView(_ view: UIView) {
-        checkForA11yLabel(view)
-        checkForMinimumTargetArea(view)
+        if view.isPressable {
+            checkForA11yLabel(view)
+            checkForA11yRole(view)
+        }
+
+        // checkForMinimumTargetArea(view)
 
         //
         // // Minimum touch target
@@ -126,22 +139,62 @@ public class A11yChecker {
     }
 
     private func checkForA11yLabel(_ view: UIView) {
-        if view.isPressable && (view.accessibilityLabel?.isEmpty ?? true) {
+        if view.accessibilityLabel?.isEmpty ?? true {
             addIssue(
                 rule: .noAccessibilityLabel,
-                message: "\(view.getTextOrContent()) is missing the accessibility label.",
+                label: view.getTextOrContent(),
+                issue: "",
                 view: view
             )
         }
+    }
 
+    private func checkForA11yRole(_ view: UIView) {
+        let defaultRole: String? = {
+            switch view {
+            case is UIButton:
+                return "button"
+            case is UISwitch:
+                return "switch"
+            case is UITextField:
+                return "text field"
+            case let iv as UIImageView where iv.isUserInteractionEnabled:
+                return "image button"
+            default:
+                return nil
+            }
+        }()
+
+        let traits = view.accessibilityTraits
+        let hasRoleTrait =
+            traits.contains(.button)
+            || traits.contains(.link)
+            || traits.contains(.searchField)
+            || traits.contains(.image)
+
+        if !(hasRoleTrait || defaultRole != nil) {
+            let label = view.getTextOrContent()
+            let traitNames = view.accessibilityTraits.names
+            Logger.info(
+                label, defaultRole ?? "no role",
+                extra: traitNames.joined(separator: ", "))
+
+            addIssue(
+                rule: .noAccessibilityRole,
+                label: label,
+                issue: "",
+                view: view
+            )
+        }
     }
 
     private func checkForMinimumTargetArea(_ view: UIView) {
         if view.isPressable && (view.bounds.width < 48 || view.bounds.height < 48) {
             addIssue(
                 rule: .minimumSize,
-                message:
-                    "The touchable area must have a minimum size of 48x48, found \(Int(view.bounds.width))x\(Int(view.bounds.height)) instead",
+                label: view.getTextOrContent(),
+                issue:
+                    "\(Int(view.bounds.width))x\(Int(view.bounds.height))",
                 view: view
             )
         }
@@ -163,7 +216,8 @@ public class A11yChecker {
         if contrastRatio < minContrast {
             addIssue(
                 rule: .contrastFailed,
-                message: String(
+                label: label.description,
+                issue: String(
                     format: "Color contrast ratio %.2f is below minimum %.1f (WCAG AA)",
                     contrastRatio, minContrast
                 ),
@@ -218,18 +272,25 @@ public class A11yChecker {
         return loggerRules[rule]!
     }
 
-    private func addIssue(rule: Rule, message: String, view: UIView) {
+    private func addIssue(rule: Rule, label: String, issue: String, view: UIView) {
         let action = getRuleAction(rule)
-        guard action != .ignore else { return }
         let viewId = view.tag
+        guard action != .ignore, viewId > 0 else { return }
 
         if !issues.contains(where: { $0.rule == rule && $0.viewId == viewId }) {
             self.newIssues = true
 
             highlighter.highlight(view: view, mode: config.highlight, action: action)
 
+            let global = view.convert(view.bounds, to: nil)
+
             issues.append(
-                A11yIssue(type: action, rule: rule, message: message, viewId: viewId, sent: false))
+                A11yIssue(
+                    type: action, rule: rule, label: label, issue: issue,
+                    bounds: global,
+                    viewId: viewId,
+                    sent: false,
+                ))
         }
     }
 }
@@ -253,5 +314,32 @@ extension UIView {
      */
     var isPressable: Bool {
         return isUserInteractionEnabled && isAccessibilityElement
+    }
+}
+
+extension UIAccessibilityTraits {
+    /// Returns the names of all traits present in this bitmask.
+    fileprivate var names: [String] {
+        let all: [(UIAccessibilityTraits, String)] = [
+            (.button, "button"),
+            (.link, "link"),
+            (.header, "header"),
+            (.searchField, "searchField"),
+            (.image, "image"),
+            (.selected, "selected"),
+            (.playsSound, "playsSound"),
+            (.keyboardKey, "keyboardKey"),
+            (.staticText, "staticText"),
+            (.summaryElement, "summaryElement"),
+            (.notEnabled, "notEnabled"),
+            (.updatesFrequently, "updatesFrequently"),
+            (.startsMediaSession, "startsMediaSession"),
+            (.adjustable, "adjustable"),
+            (.allowsDirectInteraction, "allowsDirectInteraction"),
+            (.causesPageTurn, "causesPageTurn"),
+        ]
+        return all.compactMap { (trait, name) in
+            (self.rawValue & trait.rawValue) != 0 ? name : nil
+        }
     }
 }
