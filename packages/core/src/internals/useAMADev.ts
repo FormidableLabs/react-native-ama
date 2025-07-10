@@ -2,7 +2,8 @@
 import { useEffect, useState } from 'react';
 import { DevSettings } from 'react-native';
 import ReactNativeAmaModule from '../ReactNativeAmaModule';
-import { logAMAError, Rule, RuleAction } from '../utils/logAMAError';
+import { logAMAError } from './logAMAError';
+import { A11yIssue, Rule, RuleAction } from './types';
 
 export const NON_OVERRIDABLE_RULES: string[] | undefined = __DEV__
   ? [
@@ -56,10 +57,6 @@ export const useAMADev = () => {
       'onA11yIssues',
       ({ issues }: { issues: A11yIssue[] }) => {
         setIssues(issues);
-
-        for (const issue of issues) {
-          logAMAError(issue);
-        }
       },
     );
   }, []);

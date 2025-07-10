@@ -1,11 +1,10 @@
 import { useAMAContext } from '@react-native-ama/core';
 import { NavigationContainer } from '@react-navigation/native';
 import {
-  NativeStackNavigationOptions,
   createNativeStackNavigator,
+  NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
 import React from 'react';
-
 import { BackButton } from './components/BackButton';
 import { Header } from './components/Header';
 import { BottomSheetScreen } from './screens/BottomSheet.screen';
@@ -40,7 +39,6 @@ export const AppNavigator = () => {
           ...BaseNavigatorOptions,
           ...amaAnimationScreenOptions,
         }}
-        initialRouteName="Pressable"
       >
         <Stack.Screen
           name="Home"

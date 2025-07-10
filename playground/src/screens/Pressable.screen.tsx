@@ -1,7 +1,7 @@
-import { Pressable, Text } from '@react-native-ama/react-native';
 import * as React from 'react';
 import {
   AccessibilityState,
+  Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -10,6 +10,7 @@ import {
 import { CTAPressable } from '../components/CTAPressable';
 import { Header } from '../components/Header';
 import { Spacer } from '../components/Spacer';
+import { Text } from '../components/Text';
 import { theme } from '../theme';
 
 export const PressableScreen = () => {
@@ -17,10 +18,9 @@ export const PressableScreen = () => {
     <SafeAreaView>
       <ScrollView style={styles.list}>
         <Spacer height="big" />
-        <Header title={'Accessibility Checks'} />
-        <Text>
+        <Text mt={8} mb={8}>
           This screen displays the accessibility checks AMA can perform on
-          pressable elements:
+          pressable elements.
         </Text>
         <CTAPressable title="Missing role" role="" />
         <Spacer height={'normal'} />
@@ -47,6 +47,15 @@ export const PressableScreen = () => {
 
         {/*  Test rule breakage */}
         <ContrastCheckerFailing />
+
+        {/*  Test minimum size failing  */}
+        <MinimumSizeFailing />
+
+        {/*  Test minimum size failing  */}
+        <MinimumSizeFailing />
+
+        {/*  Test minimum size failing  */}
+        <MinimumSizeFailing />
 
         {/*  Test minimum size failing  */}
         <MinimumSizeFailing />

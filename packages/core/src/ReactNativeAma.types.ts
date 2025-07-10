@@ -1,11 +1,12 @@
 import type { StyleProp, ViewStyle } from 'react-native';
+import { A11yIssue } from './internals/types';
 
 export type OnLoadEventPayload = {
   url: string;
 };
 
 export type ReactNativeAmaModuleEvents = {
-  onChange: (params: ChangeEventPayload) => void;
+  onA11yIssues: (params: A11yIssue[]) => void;
 };
 
 export type ChangeEventPayload = {

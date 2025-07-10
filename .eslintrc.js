@@ -9,6 +9,7 @@ module.exports = {
   rules: {
     '@typescript-eslint/no-unused-vars': 'off',
     'react-hooks/rules-of-hooks': 'off',
+    '@typescript-eslint/func-call-spacing': 'off',
   },
   parserOptions: {
     project: ['./tsconfig.json'],

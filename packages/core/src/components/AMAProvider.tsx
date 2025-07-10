@@ -6,8 +6,8 @@ import {
   NativeEventSubscription,
   View,
 } from 'react-native';
-import { useAMADev } from '../hooks/useAMADev';
-import { AMAError } from './AMAError';
+import { useAMADev } from '../internals/useAMADev';
+import { AMAError } from '../internals/AMAError';
 
 type AMAProviderProps = {
   children: React.ReactNode;

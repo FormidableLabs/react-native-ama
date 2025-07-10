@@ -19,13 +19,13 @@ public struct Logger {
 
     public static func debug(_ fn: String, _ message: String, extra: String? = nil) {
         if let extra = extra, !extra.isEmpty {
-            log.debug("[DEBUG]: \(fn) \(message)  >>> \(extra, privacy: .public)")
+            log.info("[DEBUG]: \(fn) \(message)  >>> \(extra, privacy: .public)")
         } else {
-            log.debug("[DEBUG]: \(fn) \(message, privacy: .public)")
+            log.info("[DEBUG]: \(fn) \(message, privacy: .public)")
         }
     }
 
     public static func error(_ fn: String, _ message: String) {
-        log.error("[ERROR]: \(fn) \(message, privacy: .public)")
+        log.info("[ERROR]: \(fn) \(message, privacy: .public)")
     }
 }

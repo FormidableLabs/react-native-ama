@@ -69,6 +69,34 @@ public class ReactNativeAmaModule: Module {
             displayLink = nil
             isMonitoring = false
         }
+
+        AsyncFunction("getPosition") { (viewId: Int) async -> [Double]? in
+            guard
+                let root = self.currentDecorView,
+                let target = root.viewWithTag(viewId)
+            else { return nil }
+
+            await MainActor.run {
+                if let scroll = target.enclosingScrollView {
+                    var frameInScroll = target.convert(target.bounds, to: scroll)
+                    let m = CGFloat(10)
+
+                    frameInScroll.origin.y = max(0, frameInScroll.origin.y - m)
+                    scroll.scrollRectToVisible(frameInScroll, animated: false)
+                }
+            }
+
+            let bounds: CGRect = await MainActor.run {
+                target.convert(target.bounds, to: nil)
+            }
+
+            return [
+                bounds.origin.x,
+                bounds.origin.y,
+                bounds.width,
+                bounds.height,
+            ]
+        }
     }
 
     private func setupDisplayLink() {
@@ -99,15 +127,28 @@ public class ReactNativeAmaModule: Module {
     }
 
     private func performA11yChecks() {
-        // Logger.info("performA11yChecks", "doing the job")
+        guard let result = a11yChecker?.performA11yChecks(on: currentDecorView) else { return }
 
-        guard let issues = a11yChecker?.performA11yChecks(on: currentDecorView) else { return }
-
-        if !issues.isEmpty {
-            sendEvent(
-                "onA11yIssues",
-                ["timestamp": Date().timeIntervalSince1970 * 1000, "issues": issues]
-            )
+        if let shouldSend = result["sendEvent"] as? Bool, shouldSend {
+            if let issueList = result["issues"] {
+                sendEvent(
+                    "onA11yIssues",
+                    ["timestamp": Date().timeIntervalSince1970 * 1000, "issues": issueList]
+                )
+            }
         }
+    }
+}
+
+extension UIView {
+    fileprivate var enclosingScrollView: UIScrollView? {
+        var v: UIView? = self
+        while let view = v {
+            if let scroll = view as? UIScrollView {
+                return scroll
+            }
+            v = view.superview
+        }
+        return nil
     }
 }

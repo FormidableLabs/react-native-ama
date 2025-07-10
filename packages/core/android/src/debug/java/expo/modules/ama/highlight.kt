@@ -8,6 +8,7 @@ import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.RectShape
 import android.view.View
 import expo.modules.kotlin.AppContext
+import java.util.concurrent.ConcurrentHashMap
 
 val ruleColors: Map<RuleAction, Int> =
         mapOf(
@@ -17,6 +18,8 @@ val ruleColors: Map<RuleAction, Int> =
         )
 
 class Highlight(private val appContext: AppContext) {
+    private val originalBackgrounds = ConcurrentHashMap<Int, Drawable?>()
+
     /**
      * Highlight the view with the given ID.
      * @param viewId the Android view ID
@@ -29,6 +32,9 @@ class Highlight(private val appContext: AppContext) {
         activity.runOnUiThread {
             val target = activity.findViewById<View>(viewId) ?: return@runOnUiThread
 
+            val view = activity.findViewById<View>(viewId) ?: return@runOnUiThread
+            originalBackgrounds.putIfAbsent(viewId, view.background)
+
             when (mode) {
                 "background" -> applyStripyBackground(target, color)
                 "border" -> applyRedBorderOverlay(target, color)
@@ -40,46 +46,24 @@ class Highlight(private val appContext: AppContext) {
         }
     }
 
-    private fun applyGridBackground(view: View, color: Int?) {
-        val stripeSize = 40
-        val bmp = Bitmap.createBitmap(stripeSize * 2, stripeSize * 2, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bmp)
-        val paint =
-                Paint().apply {
-                    style = Paint.Style.FILL
-                }
-        canvas.drawRect(0f, 0f, stripeSize.toFloat(), stripeSize.toFloat(), paint)
-        canvas.drawRect(
-                stripeSize.toFloat(),
-                stripeSize.toFloat(),
-                stripeSize * 2f,
-                stripeSize * 2f,
-                paint
-        )
+    fun clearHighlight(viewId: Int) {
+        val activity: Activity = appContext.currentActivity ?: return
+        activity.runOnUiThread {
+            val view = activity.findViewById<View>(viewId) ?: return@runOnUiThread
 
-        val shader = BitmapShader(bmp, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT)
-        val bgPaint = Paint().apply { this.shader = shader }
-        val drawable =
-                object : Drawable() {
-                    override fun draw(c: Canvas) = c.drawRect(bounds, bgPaint)
-                    override fun setAlpha(alpha: Int) {
-                        bgPaint.alpha = alpha
-                    }
-                    override fun setColorFilter(cf: ColorFilter?) {
-                        bgPaint.colorFilter = cf
-                    }
-                    override fun getOpacity(): Int = PixelFormat.TRANSLUCENT
-                }
+            val original = originalBackgrounds.remove(viewId)
+            view.background = original
 
-        view.background = drawable
-    }
+            view.overlay.clear()
+        }
+   }
 
     private fun applyStripyBackground(view: View, color: Int?) {
         val originalBackground = view.background
 
         val stripeWidth = 5f
         val gapWidth = 25f
-        val bmpWidth = 150 
+        val bmpWidth = 150
         val bmpHeight = bmpWidth
 
         val bmp = Bitmap.createBitmap(bmpWidth, bmpHeight, Bitmap.Config.ARGB_8888)
@@ -88,7 +72,7 @@ class Highlight(private val appContext: AppContext) {
         val stripePaint =
                 Paint().apply {
                     this.color = color ?: Color.RED
-                    isAntiAlias = true 
+                    isAntiAlias = true
                 }
 
         val canvasCenter = bmpWidth / 2f
@@ -138,7 +122,7 @@ class Highlight(private val appContext: AppContext) {
     private fun applyRedBorderOverlay(view: View, color: Int?) {
         view.overlay.clear()
 
-        val stroke = 6f 
+        val stroke = 6f
         val half = (stroke / 2).toInt()
         val shape =
                 ShapeDrawable(RectShape()).apply {

@@ -7,14 +7,11 @@ private let ruleColors: [RuleAction: UIColor] = [
 ]
 
 public class Highlight {
-    // Unique tag to identify/remove stripe views
     private let stripeOverlayTag = 0xA11
-    // Layer name to identify/remove border layers
     private let borderLayerName = "ama_border"
 
     public init() {}
 
-    /// mode = "background" | "border" | "both"
     public func highlight(view: UIView, mode: String, action: RuleAction) {
         let color = ruleColors[action] ?? .red
         DispatchQueue.main.async {
@@ -28,6 +25,18 @@ public class Highlight {
                 self.applyStripyBackground(to: view, color: color)
             }
         }
+    }
+
+    public func clearHighlight(viewId: Int) {
+        guard let root = UIApplication.shared.keyWindow,
+            let target = root.viewWithTag(viewId)
+        else { return }
+
+        target.viewWithTag(stripeOverlayTag)?.removeFromSuperview()
+
+        target.layer.sublayers?
+            .filter { $0.name == borderLayerName }
+            .forEach { $0.removeFromSuperlayer() }
     }
 
     private func applyStripyBackground(to view: UIView, color: UIColor) {

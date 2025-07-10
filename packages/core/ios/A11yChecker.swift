@@ -6,7 +6,6 @@ public struct A11yIssue: Equatable {
     public let rule: Rule
     public let label: String?
     public let issue: String?
-    public let bounds: CGRect?
     public let viewId: Int
     public var sent: Bool
 
@@ -76,10 +75,15 @@ public class A11yChecker {
         self.highlighter = Highlight()
     }
 
-    public func performA11yChecks(on rootView: UIView?) -> [[String: Any]] {
-        guard let root = rootView else { return [] }
+    public func performA11yChecks(on rootView: UIView?) -> [String: Any] {
+        guard let root = rootView else { return [:] }
+
+        let oldIssues = issues.map { $0 }
+
+        issues.removeAll()
 
         traverseAndCheck(view: root)
+        var shouldSendEvent = clearFixedIssues(oldIssues)
 
         let newIssuesToSend = issues.filter { !$0.sent }
 
@@ -90,24 +94,46 @@ public class A11yChecker {
                 }
             }
 
-            return newIssuesToSend.map { issue in
-                [
-                    "type": issue.type.rawValue,
-                    "rule": issue.rule.rawValue,
-                    "issue": issue.issue ?? "",
-                    "label": issue.label ?? "",
-                    "bounds": [
-                        issue.bounds?.origin.x,
-                        issue.bounds?.origin.y,
-                        issue.bounds?.width,
-                        issue.bounds?.height,
-                    ],
-                    "viewId": issue.viewId,
-                ]
+            return [
+                "issues": newIssuesToSend.map { issue in
+                    [
+                        "type": issue.type.rawValue,
+                        "rule": issue.rule.rawValue,
+                        "issue": issue.issue ?? "",
+                        "label": issue.label ?? "",
+                        "viewId": issue.viewId,
+                    ]
+                },
+                "sendEvent": true,
+            ]
+        }
+
+        return [
+            "issues": [],
+            "sendEvent": shouldSendEvent,
+        ]
+    }
+
+    private func clearFixedIssues(_ oldIssues: [A11yIssue]) -> Bool {
+        let fixed = oldIssues.filter {
+            old in !issues.contains(old)
+        }
+
+        fixed.forEach { issue in
+            highlighter.clearHighlight(viewId: issue.viewId)
+        }
+
+        for idx in issues.indices {
+            if oldIssues.contains(issues[idx]) {
+                issues[idx].sent = true
             }
         }
 
-        return []
+        // if !fixed.isEmpty {
+        //     Logger.debug("is empty", "not is emptyyyyy", extra: fixed.description)
+        // }
+        //
+        return !fixed.isEmpty
     }
 
     private func traverseAndCheck(view: UIView) {
@@ -282,12 +308,9 @@ public class A11yChecker {
 
             highlighter.highlight(view: view, mode: config.highlight, action: action)
 
-            let global = view.convert(view.bounds, to: nil)
-
             issues.append(
                 A11yIssue(
                     type: action, rule: rule, label: label, issue: issue,
-                    bounds: global,
                     viewId: viewId,
                     sent: false,
                 ))

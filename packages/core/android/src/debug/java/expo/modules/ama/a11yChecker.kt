@@ -1,23 +1,22 @@
 package expo.modules.ama
 
 import android.graphics.Color
-import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
-import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import expo.modules.kotlin.AppContext
 import java.util.Collections
+import kotlin.collections.mutableListOf
 import kotlin.math.pow
+import kotlin.synchronized
 
 data class A11yIssue(
         val type: RuleAction,
         val rule: Rule,
         val label: String? = null,
         val reason: String? = null,
-        val bounds: List<Int>,
         val viewId: Int? = null,
 )
 
@@ -81,7 +80,13 @@ class A11yChecker(private val appContext: AppContext, private val config: AMACon
         this.rootView = rootView
 
         rootView.let { root ->
+            val oldIssues = synchronized(issues) { issues.toList() }
+
+            synchronized(issues) { issues.clear() }
+
             traverseAndCheck(root)
+
+            clearFixedIssues(oldIssues)
 
             if (issues.isNotEmpty()) {
                 Logger.debug("performA11yChecks", issues.toString())
@@ -93,7 +98,6 @@ class A11yChecker(private val appContext: AppContext, private val config: AMACon
                                     "rule" to issue.rule,
                                     "label" to (issue.label ?: ""),
                                     "reason" to (issue.reason ?: ""),
-                                    "bounds" to issue.bounds,
                                     "viewId" to issue.viewId
                             )
                         }
@@ -105,10 +109,14 @@ class A11yChecker(private val appContext: AppContext, private val config: AMACon
         return emptyList()
     }
 
+    private fun clearFixedIssues(oldIssues: List<A11yIssue>) {
+        val fixed = oldIssues.filter { it !in issues }
+
+        fixed.forEach { issue -> issue.viewId?.let { highlighter.clearHighlight(it) } }
+    }
+
     private fun traverseAndCheck(view: View) {
         val className = view.javaClass.name
-
-        Logger.debug("traverseAndCheck", className)
 
         // Ignores the debug overlay
         if (className.startsWith("com.facebook.react.views.debuggingoverlay")) {
@@ -142,7 +150,6 @@ class A11yChecker(private val appContext: AppContext, private val config: AMACon
                             rule = rule,
                             label = label,
                             reason = reason,
-                            bounds = view.getGlobalDpBounds(this.rootView),
                             viewId = view.id
                     )
             )
@@ -150,10 +157,10 @@ class A11yChecker(private val appContext: AppContext, private val config: AMACon
     }
 
     private fun checkView(view: View, issues: MutableList<A11yIssue>) {
-        if (view.isClickable) {
-            val info = view.createAccessibilityNodeInfo()
-            val a11yInfo = AccessibilityNodeInfoCompat.wrap(info)
+        val info = view.createAccessibilityNodeInfo()
+        val a11yInfo = AccessibilityNodeInfoCompat.wrap(info)
 
+        if (view.isPressable(a11yInfo)) {
             checkForA11yLabel(view, a11yInfo)
             checkForA11yRole(view, a11yInfo)
             checkForMinimumTargetSize(view)
@@ -195,13 +202,13 @@ class A11yChecker(private val appContext: AppContext, private val config: AMACon
 
         val role = roleDescription ?: defaultRole
 
-        if (view.isClickable && role.isNullOrEmpty()) {
+        if (role.isNullOrEmpty()) {
             Logger.error("checkForA11yRole", view.getTextOrContent())
 
             addIssue(
                     rule = Rule.NO_ACCESSIBILITY_ROLE,
                     label = view.getTextOrContent(),
-                    reason = "is missing the accessibility role.",
+                    reason = "",
                     view = view
             )
         }
@@ -214,8 +221,7 @@ class A11yChecker(private val appContext: AppContext, private val config: AMACon
             addIssue(
                     rule = Rule.MINIMUM_SIZE,
                     label = view.toString(),
-                    reason =
-                            "The touchable area must have a minimum size of 48x48, found ${view.width}x${view.height} instead",
+                    reason = "Touchable are found ${view.width}x${view.height}",
                     view = view
             )
         }
@@ -243,8 +249,7 @@ class A11yChecker(private val appContext: AppContext, private val config: AMACon
                 addIssue(
                         rule = Rule.CONTRAST_FAILED,
                         label = textView.toString(),
-                        reason =
-                                "Color contrast ratio ${String.format("%.2f", contrastRatio)} is below minimum ${minContrast} (WCAG AA)",
+                        reason = "Color contrast ratio ${String.format("%.2f", contrastRatio)}",
                         view = textView
                 )
             }
@@ -324,6 +329,20 @@ class A11yChecker(private val appContext: AppContext, private val config: AMACon
     }
 }
 
+fun View.isPressable(a11yInfo: AccessibilityNodeInfoCompat): Boolean {
+    return this.isClickable && this.isAccessible(a11yInfo)
+}
+
+fun View.isAccessible(a11yInfo: AccessibilityNodeInfoCompat): Boolean {
+    if (this.importantForAccessibility == View.IMPORTANT_FOR_ACCESSIBILITY_NO ||
+                    !a11yInfo.isVisibleToUser
+    ) {
+        return false
+    }
+
+    return true
+}
+
 fun View.getTextOrContent(): String {
     if (!this.contentDescription.isNullOrEmpty()) {
         return this.contentDescription.toString()
@@ -343,26 +362,4 @@ fun View.getTextOrContent(): String {
     val a11yInfo = AccessibilityNodeInfoCompat.wrap(info)
 
     return a11yInfo.contentDescription?.toString().orEmpty()
-}
-
-private fun View.getGlobalDpBounds(rootView: View): List<Int> {
-    // 1) grab absolute screen bounds
-    val abs = Rect().also { createAccessibilityNodeInfo().getBoundsInScreen(it) }
-
-    // 2) find your root’s absolute origin
-    val origin = IntArray(2).also { rootView.getLocationOnScreen(it) }
-    val relLeftPx = abs.left - origin[0]
-    val relTopPx = abs.top - origin[1]
-    val widthPx = abs.width()
-    val heightPx = abs.height()
-
-    // 3) convert px → dp
-    val metrics: DisplayMetrics = resources.displayMetrics
-    val d = metrics.density
-    val leftDp = (relLeftPx / d).toInt()
-    val topDp = (relTopPx / d).toInt()
-    val widthDp = (widthPx / d).toInt()
-    val heightDp = (heightPx / d).toInt()
-
-    return listOf(leftDp, topDp, widthDp, heightDp)
 }

@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
-import { A11yIssue, getRuleErrorInfo, logAMAError } from '../utils/logAMAError';
+import { logAMAError } from './logAMAError';
+import { A11yIssue, Position } from './types';
+import { getRuleErrorInfo } from './getRuleErrorInfo';
+import ReactNativeAmaModule from '../ReactNativeAmaModule';
 
 type A11yCounts = {
     must: number;
     should: number;
 };
-
-
 
 function countA11yIssues(issues: A11yIssue[]): A11yCounts {
     return issues.reduce<A11yCounts>(
@@ -23,64 +24,103 @@ function countA11yIssues(issues: A11yIssue[]): A11yCounts {
     );
 }
 
-export const AMAError = __DEV__ ? ({ issues }: { issues?: A11yIssue[] }) => {
-    const [activeIssue, setActiveIssue] = useState<number>();
+const AMAErrorComponent = ({ issues }: { issues?: A11yIssue[] }) => {
+    const [activeIssueIndex, setActiveIssueIndex] = useState<{ id: number, position: Position }>();
     const { must, should } = countA11yIssues(issues ?? []);
+    const filteredIssues = useRef<A11yIssue[]>([]);
+    const issueToView = useRef<A11yIssue>(null);
+
+    const setActiveIssue = async (newIndex: number) => {
+        issueToView.current = filteredIssues.current?.[newIndex];
+
+        if (issueToView.current) {
+            const position = await ReactNativeAmaModule.getPosition(issueToView.current.viewId);
+            console.info({ position })
+
+            setActiveIssueIndex({ id: newIndex, position });
+        } else {
+            setActiveIssueIndex(undefined);
+        }
+    };
 
     const showNextIssue = () => {
-        setActiveIssue(current => {
-            return current ? current + 1 : 0;
-        });
+        setActiveIssue(activeIssueIndex?.id ? activeIssueIndex.id + 1 : 0);
     };
 
     const showPrevIssue = () => {
-        setActiveIssue(current => {
-            return current && current > 0 ? current - 1 : 0;
-        });
+        setActiveIssue(activeIssueIndex?.id && activeIssueIndex?.id > 0 ? activeIssueIndex?.id - 1 : 0);
     };
 
     const closeIssues = () => {
-        setActiveIssue(undefined);
+        setActiveIssueIndex(undefined);
     };
+
+    const showFirstError = () => {
+        filteredIssues.current = issues?.filter(issue => ['MUST', 'MUST_NOT'].includes(issue.type)) ?? [];
+
+        showNextIssue();
+    };
+
+    const showFirstWarning = () => {
+        filteredIssues.current = issues?.filter(issue => ['SHOULD', 'SHOULD_NOT'].includes(issue.type)) ?? [];
+
+        showNextIssue();
+    };
+
+    useEffect(() => {
+        if (issues?.length) {
+            for (const issue of issues) {
+                // if (Platform.OS === 'android') {
+                //     ReactNativeAmaModule.inspectViewAttributes(issue.viewId).then(data => {
+                //         console.info('attrs', data)
+                //     })
+                // }
+
+                logAMAError!(issue);
+            }
+        } else {
+            console.info('[React Native AMA]: No issues found')
+        }
+    }, [issues]);
 
     if (!issues?.length) {
         return null;
     }
 
-    const showActiveIssue = activeIssue !== undefined;
+    const showActiveIssue = activeIssueIndex !== undefined && issueToView.current;
 
     return (
         <>
-            {showActiveIssue ? <AMAOverlay issue={issues[0]} /> : null}
+            {showActiveIssue ? <AMAOverlay issue={issueToView.current!} position={activeIssueIndex.position} closeOverlay={closeIssues} /> : null}
             <View
-                style={styles!.failed}
+                style={styles!.failedBar}
             >
                 {showActiveIssue ? (<>
                     <AMAButton singular="next" bg="#000" color="#B3B3B3" line="#969696" onPress={showNextIssue} />
-                    <AMAButton singular="prev" bg="#000" color="#B3B3B3" line="#969696" onPress={showPrevIssue} disabled={activeIssue <= 0} />
+                    <AMAButton singular="prev" bg="#000" color="#B3B3B3" line="#969696" onPress={showPrevIssue} disabled={activeIssueIndex.id <= 0} />
                     <AMAButton singular="close" bg="#000" color="#B3B3B3" onPress={closeIssues} />
                 </>) : (
                     <>
-                        <AMAButton count={must} singular="error" bg="#FF0000" color="#fff" line="#000" onPress={showNextIssue} />
-                        <AMAButton count={should} singular="warning" bg="#FFFf00" color="#000" onPress={showNextIssue} />
+                        <AMAButton count={must} singular="error" bg="#FF0000" color="#fff" line="#000" onPress={showFirstError} disabled={must === 0} />
+                        <AMAButton count={should} singular="warning" bg="#FFFf00" color="#000" onPress={showFirstWarning} disabled={should === 0} />
                     </>
                 )}
             </View>
         </>
     );
-} : null;
+};
 
 type AMAButtonProps = {
     count?: number,
     singular: string,
     color: string,
     bg: string,
-    line: string,
+    line?: string,
     onPress: () => void,
     disabled?: boolean
 }
 
-const AMAButton = __DEV__ ? ({ count, singular, color, bg, onPress, line, disabled }: AMAButtonProps) => {
+const AMAButton = ({ count, singular, color, bg, onPress, line, disabled }: AMAButtonProps) => {
     const plural = count ? `${singular}${count !== 1 ? 's' : ''} ` : singular;
 
     return (
@@ -107,45 +147,41 @@ const AMAButton = __DEV__ ? ({ count, singular, color, bg, onPress, line, disabl
         >
 
             <Text
-                style={{
-                    flex: 1,
-                    color,
-                    fontSize: 16,
-                    lineHeight: 24,
-                    textAlign: 'center',
-                }}
+                style={[styles!.buttonText, { color }]}
             >
                 {count} {plural}
             </Text>
         </Pressable>
 
     );
-} : null;
+};
 
 type AMAOverlayProps = {
     issue: A11yIssue
+    position: Position
+    closeOverlay: () => void
 }
 
-const AMAOverlay = __DEV__ ? ({ issue }: AMAOverlayProps) => {
-    const { message, url } = getRuleErrorInfo(issue);
-    const [x, y, width, height] = issue.bounds;
+const AMAOverlay = ({ issue, position, closeOverlay }: AMAOverlayProps) => {
+    const { message, url } = getRuleErrorInfo!(issue);
+    const [x, y, width, height] = position;
 
     const openHelp = () => {
         Linking.openURL(url);
     };
 
     useEffect(() => {
-        logAMAError(issue);
+        logAMAError!(issue);
     }, [issue.viewId]);
 
     return (
         <>
+            <Pressable style={styles!.transparentOverlay} onPress={closeOverlay} accessible={false} importantForAccessibility='no' />
             <View style={[styles?.callout, {
-                left: x,
                 top: y + height + POINTER_SIZE + SPACER,
-                width: width,
             }]}>
                 <Text style={styles!.calloutText}>{message}</Text>
+                {issue.reason ? <Text style={styles!.calloutText}>{issue.reason}</Text> : null}
                 <Pressable onPress={openHelp} role="button">
                     <Text style={styles!.link}>Learn more</Text>
                 </Pressable>
@@ -161,20 +197,25 @@ const AMAOverlay = __DEV__ ? ({ issue }: AMAOverlayProps) => {
             ]} />
         </ >
     );
-} : null;
+};
+
+export const AMAError = __DEV__ ? AMAErrorComponent : null
 
 const SPACER = 4;
 const POINTER_SIZE = 8;
+const Z_INDEX = 9999;
 
 const styles = __DEV__ ? StyleSheet.create({
     callout: {
         position: 'absolute',
+        left: 24,
+        right: 24,
         backgroundColor: '#fff',
         padding: 12,
         borderRadius: 4,
         justifyContent: 'center',
         alignItems: 'center',
-        zIndex: 999999,
+        zIndex: Z_INDEX,
         borderColor: '#f00',
         borderWidth: 1,
         shadowOffset: {
@@ -206,9 +247,9 @@ const styles = __DEV__ ? StyleSheet.create({
         borderBottomWidth: POINTER_SIZE,
         borderLeftColor: 'transparent',
         borderRightColor: 'transparent',
-        zIndex: 9999999,
+        zIndex: Z_INDEX + 10,
     },
-    failed: {
+    failedBar: {
         flexDirection: 'row',
         alignItems: 'center',
         borderTopColor: 'black',
@@ -220,6 +261,7 @@ const styles = __DEV__ ? StyleSheet.create({
         boxShadow: '0px 2px 20px #000',
         shadowOpacity: 1.0,
         shadowRadius: 24,
+        zIndex: Z_INDEX,
     },
     button: {
         flexDirection: 'row',
@@ -228,5 +270,21 @@ const styles = __DEV__ ? StyleSheet.create({
         padding: 24,
         paddingBottom: 32,
     },
+    buttonText: {
+        flex: 1,
+        fontSize: 16,
+        lineHeight: 24,
+        textAlign: 'center',
+    },
+    transparentOverlay: {
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: Z_INDEX - 1,
+        backgroundColor: 'transparent',
+    },
 }) : null;
+
 
