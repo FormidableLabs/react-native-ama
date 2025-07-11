@@ -44,7 +44,7 @@ export const AppNavigator = () => {
           name="Home"
           component={HomeScreen}
           options={{
-            headerTitle: () => <Header title={'AMA Examples'} />,
+            headerShown: false,
           }}
         />
         <Stack.Screen
@@ -52,7 +52,9 @@ export const AppNavigator = () => {
           component={PressableScreen}
           options={{
             headerLeft: () => <BackButton />,
-            headerTitle: () => <Header title={'Pressable Demo'} autofocus />,
+            headerTitle: () => (
+              <Header noMargin title={'Pressable elements'} autofocus />
+            ),
           }}
         />
         <Stack.Screen
@@ -228,14 +230,14 @@ export const AppNavigator = () => {
   );
 };
 
-const Stack = createNativeStackNavigator<StackParamList>();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const BaseNavigatorOptions: NativeStackNavigationOptions = {
   headerTitleAlign: 'center',
   headerBackVisible: false,
 };
 
-type StackParamList = {
+export type RootStackParamList = {
   Home: undefined;
   Pressable: undefined;
   TouchableOpacity: undefined;
@@ -257,3 +259,9 @@ type StackParamList = {
   UseTimedAction: undefined;
   UseAMAContext: undefined;
 };
+
+declare global {
+  namespace ReactNavigation {
+    interface RootParamList extends RootStackParamList {}
+  }
+}

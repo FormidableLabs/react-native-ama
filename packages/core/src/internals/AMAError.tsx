@@ -44,7 +44,7 @@ const AMAErrorComponent = ({ issues }: { issues?: A11yIssue[] }) => {
     };
 
     const showNextIssue = () => {
-        setActiveIssue(activeIssueIndex?.id ? activeIssueIndex.id + 1 : 0);
+        setActiveIssue(activeIssueIndex?.id != null ? activeIssueIndex.id + 1 : 0);
     };
 
     const showPrevIssue = () => {
@@ -96,8 +96,8 @@ const AMAErrorComponent = ({ issues }: { issues?: A11yIssue[] }) => {
                 style={styles!.failedBar}
             >
                 {showActiveIssue ? (<>
-                    <AMAButton singular="next" bg="#000" color="#B3B3B3" line="#969696" onPress={showNextIssue} />
                     <AMAButton singular="prev" bg="#000" color="#B3B3B3" line="#969696" onPress={showPrevIssue} disabled={activeIssueIndex.id <= 0} />
+                    <AMAButton singular="next" bg="#000" color="#B3B3B3" line="#969696" onPress={showNextIssue} disabled={activeIssueIndex.id + 1 >= filteredIssues.current.length} />
                     <AMAButton singular="close" bg="#000" color="#B3B3B3" onPress={closeIssues} />
                 </>) : (
                     <>

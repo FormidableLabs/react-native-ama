@@ -10,7 +10,10 @@ const RULES_HELP = __DEV__
       MINIMUM_SIZE: '/guidelines/minimum-size',
       UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL: '/guidelines/text',
       NO_UPPERCASE_TEXT: '/guidelines/text',
-      NO_ACCESSIBILITY_LABEL: '/guidelines/accessibility-labels',
+      NO_ACCESSIBILITY_LABEL: {
+        url: '/guidelines/accessibility-label',
+        message: 'The component is missing the accessibility label.',
+      },
       NO_ACCESSIBILITY_ROLE: {
         url: '/guidelines/accessibility-role',
         message: 'The component is missing the accessibility role.',

@@ -177,12 +177,13 @@ class A11yChecker(private val appContext: AppContext, private val config: AMACon
         val a11yLabel: String? = a11yInfo.contentDescription?.toString()
 
         if (a11yLabel.isNullOrEmpty()) {
-            Logger.error("checkForA11yLabel", view.id.toString())
+            Logger.error("checkForA11yLabel", view.toString())
+            Logger.error("checkForA11yLabel", view.getTextOrContent())
 
             addIssue(
                     rule = Rule.NO_ACCESSIBILITY_LABEL,
                     label = view.getTextOrContent(),
-                    reason = "is missing the accessibility label.",
+                    reason = "",
                     view = view
             )
         }

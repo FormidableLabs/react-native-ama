@@ -1,28 +1,50 @@
 import * as React from 'react';
 import {
   AccessibilityState,
-  Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   View,
 } from 'react-native';
+import Svg, { Path } from 'react-native-svg';
 import { CTAPressable } from '../components/CTAPressable';
 import { Header } from '../components/Header';
+import { Pressable } from '../components/Pressable';
 import { Spacer } from '../components/Spacer';
 import { Text } from '../components/Text';
 import { theme } from '../theme';
 
 export const PressableScreen = () => {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={theme.safeAreaView}>
       <ScrollView style={styles.list}>
         <Spacer height="big" />
         <Text mt={8} mb={8}>
           This screen displays the accessibility checks AMA can perform on
           pressable elements.
         </Text>
-        <CTAPressable title="Missing role" role="" />
+        <Text>
+          Tap the error or warning icon in AMA’s bottom bar to learn why an
+          issue is failing.
+        </Text>
+        <Text>
+          You can also try fixing it by updating the code to see the checker
+          respond in real time.
+        </Text>
+        <Spacer height="big" />
+        <CTAPressable title="Missing role" role="" hasMaring />
+
+        {/* No a11y label */}
+        <Pressable role="button">
+          <Svg width={32} height={32} viewBox="0 0 24 24" fill="none">
+            <Path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M13.94 12L8.47 6.53l1.06-1.06L16.06 12l-6.53 6.53-1.06-1.06L13.94 12z"
+              fill="#080341"
+            />
+          </Svg>
+        </Pressable>
         <Spacer height={'normal'} />
 
         {/*  Disabled */}

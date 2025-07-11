@@ -33,13 +33,16 @@ class Highlight(private val appContext: AppContext) {
             val target = activity.findViewById<View>(viewId) ?: return@runOnUiThread
 
             val view = activity.findViewById<View>(viewId) ?: return@runOnUiThread
-            originalBackgrounds.putIfAbsent(viewId, view.background)
+
+            view.background?.let { bg -> originalBackgrounds.putIfAbsent(viewId, bg) }
 
             when (mode) {
                 "background" -> applyStripyBackground(target, color)
                 "border" -> applyRedBorderOverlay(target, color)
                 else -> {
+                    Logger.info("highlight", "3")
                     applyRedBorderOverlay(target, color)
+                    Logger.info("highlight", "4")
                     applyStripyBackground(target, color)
                 }
             }
@@ -56,7 +59,7 @@ class Highlight(private val appContext: AppContext) {
 
             view.overlay.clear()
         }
-   }
+    }
 
     private fun applyStripyBackground(view: View, color: Int?) {
         val originalBackground = view.background

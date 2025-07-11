@@ -7,7 +7,6 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-
 import { CTATouchableOpacity } from '../components/CTATouchableOpacity';
 import { Header } from '../components/Header';
 import { Spacer } from '../components/Spacer';
@@ -15,7 +14,7 @@ import { theme } from '../theme';
 
 export const TouchableOpacityScreen = () => {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.list}>
         <Spacer height="big" />
 
@@ -56,10 +55,7 @@ export const TouchableOpacityScreen = () => {
   );
 };
 
-const TouchableOpacityExample: React.FC<{
-  state: 'checked' | 'disabled' | 'busy' | 'selected' | 'expanded';
-  children: React.ReactNode;
-}> = ({ state, children }) => {
+const TouchableOpacityExample: React.FC = ({ state, children }) => {
   return (
     <>
       <Header title={`Accessibility state: ${state}`} />
@@ -93,7 +89,8 @@ const CheckedButton = () => {
       <Text
         style={styles.checkLabel}
         accessibilityElementsHidden
-        importantForAccessibility={'no'}>{`${state}`}</Text>
+        importantForAccessibility={'no'}
+      >{`${state}`}</Text>
     </View>
   );
 };
@@ -115,7 +112,8 @@ const SelectedButton = () => {
       <Text
         style={styles.checkLabel}
         accessibilityElementsHidden
-        importantForAccessibility={'no'}>{`${state}`}</Text>
+        importantForAccessibility={'no'}
+      >{`${state}`}</Text>
     </View>
   );
 };
@@ -137,7 +135,8 @@ const ExpandedButton = () => {
       <Text
         style={styles.checkLabel}
         accessibilityElementsHidden
-        importantForAccessibility={'no'}>{`${state}`}</Text>
+        importantForAccessibility={'no'}
+      >{`${state}`}</Text>
     </View>
   );
 };
@@ -180,7 +179,8 @@ const ContrastCheckerFailing = () => {
         <TouchableOpacity
           style={styles.failingButtonStyle}
           accessibilityRole="button"
-          accessibilityLabel="This fails">
+          accessibilityLabel="This fails"
+        >
           <>
             <Text style={failingStyle}>This fails</Text>
           </>
@@ -206,7 +206,8 @@ const MinimumSizeFailing = () => {
         <TouchableOpacity
           style={styles.minSizeFailing}
           accessibilityRole="button"
-          accessibilityLabel="This fails">
+          accessibilityLabel="This fails"
+        >
           <>
             <Text style={{ color: theme.color.white }}>This fails</Text>
           </>

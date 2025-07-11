@@ -5,13 +5,13 @@ export const theme = {
     big: 24,
   },
   fontSize: {
-    small: 12,
-    normal: 15,
+    normal: 14,
     medium: 18,
     big: 24,
   },
   color: {
     black: '#000',
+    gray: '#cfcfd1',
     white: '#fff',
     hover: '#005D85',
     disabled: '#5C5757',
@@ -26,5 +26,10 @@ export const theme = {
   },
   flex1: {
     flex: 1,
+  },
+  border: 8,
+  safeAreaView: {
+    flex: 1,
+    backgroundColor: '#fff',
   },
 };

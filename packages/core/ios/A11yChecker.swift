@@ -129,10 +129,6 @@ public class A11yChecker {
             }
         }
 
-        // if !fixed.isEmpty {
-        //     Logger.debug("is empty", "not is emptyyyyy", extra: fixed.description)
-        // }
-        //
         return !fixed.isEmpty
     }
 

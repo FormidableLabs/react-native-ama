@@ -9,11 +9,14 @@ private let ruleColors: [RuleAction: UIColor] = [
 public class Highlight {
     private let stripeOverlayTag = 0xA11
     private let borderLayerName = "ama_border"
+    private var stripeOverlays = [Int: UIView]()
+    private var borderLayers = [Int: CAShapeLayer]()
 
     public init() {}
 
     public func highlight(view: UIView, mode: String, action: RuleAction) {
         let color = ruleColors[action] ?? .red
+
         DispatchQueue.main.async {
             switch mode {
             case "background":
@@ -28,6 +31,31 @@ public class Highlight {
     }
 
     public func clearHighlight(viewId: Int) {
+        clearStripeOverlay(viewId: viewId)
+        clearBorderOverlay(viewId: viewId)
+    }
+
+    private func clearStripeOverlay(viewId: Int) {
+        if let overlay = stripeOverlays.removeValue(forKey: viewId) {
+            overlay.removeFromSuperview()
+        }
+    }
+
+    private func clearBorderOverlay(viewId: Int) {
+        if let border = borderLayers.removeValue(forKey: viewId) {
+            border.removeFromSuperlayer()
+        }
+    }
+
+    /// Call this when you know the screen is going away
+    public func clearAll() {
+        stripeOverlays.values.forEach { $0.removeFromSuperview() }
+        borderLayers.values.forEach { $0.removeFromSuperlayer() }
+        stripeOverlays.removeAll()
+        borderLayers.removeAll()
+    }
+
+    public func clearHighlight2(viewId: Int) {
         guard let root = UIApplication.shared.keyWindow,
             let target = root.viewWithTag(viewId)
         else { return }
@@ -49,6 +77,8 @@ public class Highlight {
         overlay.backgroundColor = UIColor(patternImage: stripeImage)
         overlay.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(overlay)
+
+        stripeOverlays[view.tag] = overlay
     }
 
     private func applyBorderOverlay(to view: UIView, color: UIColor) {
@@ -67,6 +97,8 @@ public class Highlight {
         let rect = view.bounds.insetBy(dx: inset, dy: inset)
         border.path = UIBezierPath(rect: rect).cgPath
         view.layer.addSublayer(border)
+
+        borderLayers[view.tag] = border
     }
 
     func makeStripyPatternImage(

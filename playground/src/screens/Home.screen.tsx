@@ -1,21 +1,32 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-
-import { CTAPressable } from '../components/CTAPressable';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Header } from '../components/Header';
+import { ListItem } from '../components/ListItem';
 import { Spacer } from '../components/Spacer';
+import { Text } from '../components/Text';
 import { theme } from '../theme';
 
 export const HomeScreen = ({ navigation }) => {
-  const { navigate } = navigation;
-
   return (
-    <View style={styles.view}>
+    <SafeAreaView style={theme.safeAreaView}>
       <ScrollView style={styles.list}>
-        <Header title="Example components" />
+        <Header title="Welcome to the AMA Playground" />
+        <Text>
+          This app helps you explore and learn about accessibility in React
+          Native.
+        </Text>
+        <Text>
+          See issues, learn fixes, and improve your app’s inclusivity.
+        </Text>
+        <Header title="Playground" />
+        <View style={styles.group}>
+          <ListItem title="Pressable components" navigateTo="Pressable" />
+          <ListItem title="Text" border={false} navigateTo="Text" />
+        </View>
+        {/*
         <Spacer height={'normal'} />
         <CTAPressable title="Pressable" onPress={() => navigate('Pressable')} />
-        <Spacer height={'normal'} />
         <CTAPressable
           title="TouchableOpacity"
           onPress={() => navigate('TouchableOpacity')}
@@ -39,13 +50,11 @@ export const HomeScreen = ({ navigation }) => {
         <CTAPressable title="Text" onPress={() => navigate('Text')} />
         <Spacer height={'normal'} />
 
-        {/* */}
         <CTAPressable title="Form" onPress={() => navigate('Form')} />
 
         <Spacer height={'normal'} />
         <CTAPressable title="FlatList" onPress={() => navigate('FlatList')} />
 
-        {/**/}
         <Spacer height={'normal'} />
 
         <CTAPressable
@@ -53,14 +62,12 @@ export const HomeScreen = ({ navigation }) => {
           onPress={() => navigate('BottomSheet')}
         />
 
-        {/**/}
         <Spacer height={'normal'} />
 
         <CTAPressable title="Carousel" onPress={() => navigate('Carousel')} />
         <Spacer height={'normal'} />
         <CTAPressable title="Loading" onPress={() => navigate('Loading')} />
 
-        {/* */}
         <Spacer height={'big'} />
         <Header title="Hooks" />
         <Spacer height={'normal'} />
@@ -94,22 +101,20 @@ export const HomeScreen = ({ navigation }) => {
           onPress={() => navigate('UseAMAContext')}
         />
 
+        {*/}
         <Spacer height={'big'} />
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  view: {
-    flex: 1,
-    paddingVertical: theme.padding.normal,
-  },
   list: {
     paddingHorizontal: theme.padding.big,
   },
-  header: {
-    fontSize: theme.fontSize.medium,
-    fontWeight: 'bold',
+  group: {
+    borderWidth: 1,
+    borderColor: theme.color.gray,
+    borderRadius: theme.border,
   },
 });

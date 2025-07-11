@@ -77,7 +77,6 @@ class ReactNativeAmaModule : Module() {
             val root = activity.window.decorView as? ViewGroup ?: return@AsyncFunction null
             val target = root.findViewById<View>(viewId) ?: return@AsyncFunction null
 
-            // 1) Scroll into view if in a ScrollView
             val scroll =
                     generateSequence(target.parent) { (it as? View)?.parent }
                             .filterIsInstance<ScrollView>()
@@ -85,9 +84,20 @@ class ReactNativeAmaModule : Module() {
             scroll?.let { sv ->
                 val frame = Rect().apply { target.getDrawingRect(this) }
                 sv.offsetDescendantRectToMyCoords(target, frame)
-                val mPx = (10 * activity.resources.displayMetrics.density).toInt()
-                frame.top = max(0, frame.top - mPx)
-                sv.scrollTo(frame.left, frame.top)
+
+                val topVisible = frame.top >= 0
+                val bottomVisible = frame.bottom <= sv.height
+
+                if (!topVisible || !bottomVisible) {
+                    val mPx = (10 * activity.resources.displayMetrics.density).toInt()
+                    val scrollToY =
+                            when {
+                                frame.top < 0 -> max(0, frame.top - mPx)
+                                frame.bottom > sv.height -> frame.bottom - sv.height + mPx
+                                else -> sv.scrollY
+                            }
+                    sv.scrollTo(sv.scrollX, scrollToY)
+                }
             }
 
             target.getGlobalDpBounds(root)
