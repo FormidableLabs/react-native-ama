@@ -1,10 +1,9 @@
 // Components
 
 import { isFocused } from '@react-native-ama/internal';
-
 import {
-  type FormActions,
   Form as FormProvider,
+  type FormActions,
   type FormProps,
 } from './components/Form';
 import { FormField, type FormFieldProps } from './components/FormField';

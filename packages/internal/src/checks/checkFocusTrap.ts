@@ -1,6 +1,5 @@
 import type React from 'react';
 import type { TextInput } from 'react-native';
-
 import { isFocused } from '../utils/isFocused';
 import type { LogParams } from '../utils/logger';
 

@@ -1,6 +1,5 @@
 import * as AMAProvider from '@react-native-ama/core';
 import { renderHook } from '@testing-library/react-native';
-
 import { useReanimatedAnimationBuilder } from './useReanimatedAnimationBuilder';
 
 beforeEach(() => {

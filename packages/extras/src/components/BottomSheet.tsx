@@ -23,13 +23,12 @@ import {
   ScrollView,
 } from 'react-native-gesture-handler';
 import Animated, {
-  SharedValue,
   runOnJS,
+  SharedValue,
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
 } from 'react-native-reanimated';
-
 import { useBottomSheetGestureHandler } from '../hooks/useBottomSheetGestureHandler';
 import { useKeyboard } from '../hooks/useKeyboard';
 
@@ -276,7 +275,8 @@ export const BottomSheet = React.forwardRef<
         onRequestClose={() => onClose()}
         ref={ref as any}
         supportedOrientations={supportedOrientations}
-        testID={testID}>
+        testID={testID}
+      >
         <Wrapper>
           {renderContent ? (
             <GestureHandlerRootView style={{ flex: 1, opacity }}>
@@ -285,7 +285,8 @@ export const BottomSheet = React.forwardRef<
                 from={{ opacity: 0 }}
                 to={{ opacity: overlayOpacity }}
                 testID={`${testID}-overlay-wrapper`}
-                duration={animationDuration}>
+                duration={animationDuration}
+              >
                 <Pressable
                   style={styles.closeButton}
                   accessibilityRole="button"
@@ -302,7 +303,8 @@ export const BottomSheet = React.forwardRef<
               </AnimatedContainer>
               <Animated.View
                 style={[styles.contentWrapper, animatedStyle]}
-                testID={`${testID}-wrapper`}>
+                testID={`${testID}-wrapper`}
+              >
                 <AnimatedContainer
                   from={{ transform: [{ translateY: 'targetHeight' }] }}
                   to={{ transform: [{ translateY: 0 }] }}
@@ -312,7 +314,8 @@ export const BottomSheet = React.forwardRef<
                   duration={animationDuration}
                   style={[styles.content, bottomSheetStyle, debugStyle]}
                   onLayout={handleOnLayout}
-                  testID={`${testID}-panel`}>
+                  testID={`${testID}-panel`}
+                >
                   <GestureHandler
                     translateY={translateY}
                     closeDistance={closeDistance}
@@ -322,11 +325,13 @@ export const BottomSheet = React.forwardRef<
                     overlayOpacity={overlayOpacity}
                     dragOpacity={dragOpacity}
                     minVelocityToClose={minVelocityToClose}
-                    panGestureEnabled={panGestureEnabled}>
+                    panGestureEnabled={panGestureEnabled}
+                  >
                     <View
                       onLayout={event => {
                         setHandleHeight(event.nativeEvent.layout.height);
-                      }}>
+                      }}
+                    >
                       {handleComponent === 'none'
                         ? null
                         : handleComponent || (
@@ -339,19 +344,22 @@ export const BottomSheet = React.forwardRef<
                     <View
                       onLayout={event => {
                         setHeaderHeight(event.nativeEvent.layout.height);
-                      }}>
+                      }}
+                    >
                       {headerComponent}
                     </View>
                     <ContentWrapper
                       {...scrollViewProps}
                       testID={`${testID}-scrollview`}
-                      maxScrollViewHeight={maxScrollViewHeight}>
+                      maxScrollViewHeight={maxScrollViewHeight}
+                    >
                       {children}
                     </ContentWrapper>
                     <View
                       onLayout={event => {
                         setFooterHeight(event.nativeEvent.layout.height);
-                      }}>
+                      }}
+                    >
                       {footerComponent}
                     </View>
                   </GestureHandler>
@@ -372,7 +380,8 @@ const BottomSheetKeyboardAvoidingView = ({
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       pointerEvents="box-none"
-      style={{ flex: 1 }}>
+      style={{ flex: 1 }}
+    >
       {children}
     </KeyboardAvoidingView>
   );
@@ -415,7 +424,8 @@ const GestureHandler = ({
   return (
     <PanGestureHandler
       onGestureEvent={panGestureEnabled ? gestureHandler : undefined}
-      testID={testID}>
+      testID={testID}
+    >
       <Animated.View>{children}</Animated.View>
     </PanGestureHandler>
   );
@@ -439,7 +449,8 @@ const ScrollViewWrapper: React.FC<ScrollViewWrapperProps> = ({
       {...rest}
       style={[{ maxHeight: maxScrollViewHeight }, style]}
       scrollEnabled={scrollEnabled}
-      testID={`${testID}-scrollview`}>
+      testID={`${testID}-scrollview`}
+    >
       {children}
     </ScrollView>
   );

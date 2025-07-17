@@ -3,7 +3,6 @@ import * as React from 'react';
 import type { PropsWithChildren } from 'react';
 import type { ViewProps } from 'react-native';
 import Animated, { AnimateProps } from 'react-native-reanimated';
-
 import {
   AnimatedEntryViewStyle,
   AnimatedExitViewStyle,
@@ -55,7 +54,8 @@ export const AnimatedContainer = React.forwardRef<
           entering={entering}
           exiting={exiting}
           ref={forwardRef}
-          {...rest}>
+          {...rest}
+        >
           {children}
         </Animated.View>
       </Wrapper>

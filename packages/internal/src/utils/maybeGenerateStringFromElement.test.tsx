@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text } from 'react-native';
-
 import { maybeGenerateStringFromElement } from './maybeGenerateStringFromElement';
 
 beforeEach(() => {

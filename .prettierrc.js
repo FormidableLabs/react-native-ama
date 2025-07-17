@@ -1,10 +1,10 @@
 module.exports = {
-    bracketSpacing: true,
-    jsxBracketSameLine: true,
-    singleQuote: true,
-    trailingComma: 'all',
-    arrowParens: 'avoid',
-    importOrder: ['<THIRD_PARTY_MODULES>', '^~(.*)/(.*)$', '^[./]'],
-    importOrderSeparation: true,
-    importOrderSortSpecifiers: true,
+  plugins: [require('@ianvs/prettier-plugin-sort-imports')],
+  bracketSpacing: true,
+  jsxBracketSameLine: true,
+  singleQuote: true,
+  trailingComma: 'all',
+  arrowParens: 'avoid',
+  importOrder: ['<THIRD_PARTY_MODULES>', '^~(.*)/(.*)$', '^[./]'],
+  parser: 'typescript',
 };

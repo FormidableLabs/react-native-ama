@@ -1,8 +1,6 @@
 import * as AMAProvider from '@react-native-ama/core';
-import { renderHook } from '@testing-library/react-native';
-import { waitFor } from '@testing-library/react-native';
+import { renderHook, waitFor } from '@testing-library/react-native';
 import * as React from 'react';
-
 import * as Form from '../components/Form';
 import { useFormField } from './useFormField';
 

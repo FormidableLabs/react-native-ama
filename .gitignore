@@ -47,3 +47,5 @@ coverage
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+example/.yarn
+playground/.yarn/cache/

@@ -1,7 +1,6 @@
 import * as UseChecks from '@react-native-ama/core/src/hooks/useChecks';
 import { render, waitFor } from '@testing-library/react-native';
 import * as React from 'react';
-
 import { Form, FormContext } from './Form';
 
 beforeEach(() => {

@@ -3,7 +3,6 @@ import type {
   FlatList as RNFlatList,
   FlatListProps as RNFlatListProps,
 } from 'react-native';
-
 import type { UseDynamicList } from '../hooks/useDynamicList';
 import { DynamicFlatList } from './DynamicFlatList';
 import { StaticFlatList, StaticFlatListProps } from './StaticFlatList';

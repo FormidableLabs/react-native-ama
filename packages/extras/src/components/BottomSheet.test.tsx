@@ -3,7 +3,6 @@ import * as UseTimedAction from '@react-native-ama/core/src/hooks/useTimedAction
 import { act, render } from '@testing-library/react-native';
 import * as React from 'react';
 import { KeyboardAvoidingView, Text } from 'react-native';
-
 import * as UseBottomSheetGestureHandler from '../hooks/useBottomSheetGestureHandler';
 import { BottomSheet } from './BottomSheet';
 

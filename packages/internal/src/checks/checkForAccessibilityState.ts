@@ -1,6 +1,5 @@
 import type { AccessibilityRole, AccessibilityState } from 'react-native';
-
-import type { AMAAccessibilityState, AccessibilityRoles } from '../types';
+import type { AccessibilityRoles, AMAAccessibilityState } from '../types';
 import type { LogParams } from '../utils/logger';
 
 export type CheckForAccessibilityState = AMAAccessibilityState & {

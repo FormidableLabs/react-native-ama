@@ -3,7 +3,6 @@ import { act, render } from '@testing-library/react-native';
 import { flushMicroTasks } from '@testing-library/react-native/build/flush-micro-tasks';
 import * as React from 'react';
 import { Pressable, Text } from 'react-native';
-
 import { AMAProvider } from './AMAProvider';
 import { HideChildrenFromAccessibilityTree } from './HideChildrenFromAccessibilityTree';
 

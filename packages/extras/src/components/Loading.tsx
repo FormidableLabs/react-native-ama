@@ -39,7 +39,8 @@ export const Loading = ({
       touchableContainerAccessibilityProps={{
         accessibilityState: { busy: true }, // this is a workaround for the issue where the screen reader does not announce the loading state busy when accessibilityState is set on the accessible view
       }}
-      {...containerProps}>
+      {...containerProps}
+    >
       <ActivityIndicator
         size="large"
         style={styles.indicator}

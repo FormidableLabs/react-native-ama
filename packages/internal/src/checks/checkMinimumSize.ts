@@ -1,6 +1,5 @@
 import type { LayoutChangeEvent } from 'react-native';
 import { Platform } from 'react-native';
-
 import type { LogParams } from '../utils/logger';
 import { getRuleAction } from '../utils/logger';
 import {

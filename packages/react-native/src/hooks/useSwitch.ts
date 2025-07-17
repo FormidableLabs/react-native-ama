@@ -4,8 +4,7 @@ import {
   generateAccessibilityStateFromProp,
 } from '@react-native-ama/internal';
 import React from 'react';
-import type { ViewProps } from 'react-native';
-import type { AccessibilityState } from 'react-native';
+import type { AccessibilityState, ViewProps } from 'react-native';
 
 type UseSwitch = Omit<
   ViewProps,

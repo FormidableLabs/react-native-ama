@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react';
 import { ViewStyle } from 'react-native';
-
 import type { ContrastChecker } from '../checks/contrastChecker';
 
 const applyStyleFunction = __DEV__

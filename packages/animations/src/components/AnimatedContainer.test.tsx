@@ -1,7 +1,6 @@
 import { AutofocusContainer } from '@react-native-ama/core';
 import { render } from '@testing-library/react-native';
 import * as React from 'react';
-
 import * as UseReanimatedAnimationBuilder from '../hooks/useReanimatedAnimationBuilder';
 import { AnimatedContainer } from './AnimatedContainer';
 

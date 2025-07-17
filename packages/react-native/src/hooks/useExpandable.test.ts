@@ -1,6 +1,5 @@
 import * as UseChecks from '@react-native-ama/core/src/hooks/useChecks';
 import { renderHook } from '@testing-library/react-native';
-
 import { type PressableProps } from '../components/Pressable';
 import { useExpandable } from './useExpandable';
 

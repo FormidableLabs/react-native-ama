@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { AccessibilityInfo, Platform } from 'react-native';
-
 import { useAMAContext } from '../components/AMAProvider';
 
 export const useTimedAction = () => {

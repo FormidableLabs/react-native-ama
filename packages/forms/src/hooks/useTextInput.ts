@@ -10,7 +10,6 @@ import type {
   TextStyle,
   ViewStyle,
 } from 'react-native';
-
 import { TextInputProps } from '../components/TextInput';
 import { UseFormField, useFormField } from './useFormField';
 

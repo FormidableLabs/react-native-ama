@@ -1,8 +1,8 @@
 import { getRuleAction, logFailure } from './logger';
 import {
   NON_OVERRIDABLE_RULES,
-  RULES_HELP,
   Rule,
+  RULES_HELP,
   SHELL_COLORS,
 } from './logger.rules';
 

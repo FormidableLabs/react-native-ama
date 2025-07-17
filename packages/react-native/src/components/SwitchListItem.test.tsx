@@ -1,7 +1,6 @@
 import { render } from '@testing-library/react-native';
 import * as React from 'react';
 import { Switch, Text, View } from 'react-native';
-
 import { SwitchListItem } from './SwitchListItem';
 
 beforeEach(() => {
@@ -228,7 +227,8 @@ describe('SwitchListItem', () => {
       <SwitchListItem
         labelComponent={<Text>labelComponent</Text>}
         value={true}
-        onValueChange={() => {}}>
+        onValueChange={() => {}}
+      >
         <View testID="custom-switch" />
       </SwitchListItem>,
     );

@@ -1,5 +1,4 @@
 import type { StyleProp, TextStyle } from 'react-native';
-
 import { getPropertyFromStyle } from '../utils/getPropertyFromStyle';
 import type { LogParams } from '../utils/logger';
 

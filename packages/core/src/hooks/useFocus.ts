@@ -2,8 +2,8 @@ import { SHELL_COLORS } from '@react-native-ama/internal';
 import * as React from 'react';
 import {
   AccessibilityInfo,
-  InteractionManager,
   findNodeHandle,
+  InteractionManager,
 } from 'react-native';
 
 export const useFocus = (refComponent?: React.RefObject<any>) => {

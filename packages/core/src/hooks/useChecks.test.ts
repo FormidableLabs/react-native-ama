@@ -3,7 +3,6 @@ import * as CheckForAccessibilityRole from '@react-native-ama/internal/src/check
 import * as CheckForAccessibilityState from '@react-native-ama/internal/src/checks/checkForAccessibilityState';
 import * as Logger from '@react-native-ama/internal/src/utils/logger';
 import { renderHook } from '@testing-library/react-native';
-
 import * as AMAProvider from '../components/AMAProvider';
 import { useChecks } from './useChecks';
 

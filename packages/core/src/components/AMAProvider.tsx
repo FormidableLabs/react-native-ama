@@ -1,14 +1,13 @@
-/* eslint-disable react-native/no-inline-styles */
-
-import { RED } from '@react-native-ama/internal';
 import * as React from 'react';
 import {
   AccessibilityChangeEventName,
   AccessibilityInfo,
+  LogBox,
   NativeEventSubscription,
-  Text,
   View,
 } from 'react-native';
+import { useAMADev } from '../internals/useAMADev';
+import { AMAError } from '../internals/AMAError';
 
 type AMAProviderProps = {
   children: React.ReactNode;
@@ -79,8 +78,12 @@ const DEFAULT_VALUES = {
 
 const AMAContext = React.createContext<AMAContextValue | null>(null);
 
+LogBox.ignoreAllLogs();
+
 export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
   const [values, setValues] = React.useState<AMAContextValue>(DEFAULT_VALUES);
+
+  const { issues } = (__DEV__ && useAMADev()) || {};
 
   const handleAccessibilityInfoChanged = (key: AccessibilityInfoKey) => {
     return (newValue: boolean) => {
@@ -140,48 +143,17 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
     };
   }, []);
 
-  const [failedItems, setFailedItems] = React.useState<string[]>([]);
-
   if (__DEV__) {
-    const trackError = (id: string) => {
-      if (failedItems.includes(id)) {
-        return;
-      }
-
-      setFailedItems(items => [...items, id]);
-
-      AccessibilityInfo.announceForAccessibility(
-        "One or more component didn't pass the accessibility check, please check the console for more info",
-      );
-    };
-
-    const removeError = (id: string) => {
-      setFailedItems(items => {
-        const index = items.indexOf(id);
-
-        if (index >= 0) {
-          items.splice(index);
-
-          return [...items];
-        }
-
-        return items;
-      });
-    };
-
     return (
       <AMAContext.Provider
         value={{
           ...values,
-          trackError,
-          removeError,
-        }}>
+        }}
+      >
         <View style={{ flex: 1 }}>
           <>
             {children}
-            {failedItems.length > 0 ? (
-              <AMAError count={failedItems.length} />
-            ) : null}
+            <AMAError issues={issues} />
           </>
         </View>
       </AMAContext.Provider>
@@ -189,34 +161,6 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
   }
 
   return <AMAContext.Provider value={values}>{children}</AMAContext.Provider>;
-};
-
-const AMAError = ({ count }: { count: number }) => {
-  const error = `${count} component(s) didn't pass the accessibility check(s)`;
-
-  return (
-    <View
-      accessibilityLabel={error}
-      accessibilityHint="Please check the console for more info..."
-      style={{
-        paddingHorizontal: 24,
-        paddingTop: 24,
-        paddingBottom: 48,
-        backgroundColor: RED,
-      }}
-      testID="amaError">
-      <View accessible={true}>
-        <Text
-          style={{ color: 'white', fontSize: 16, lineHeight: 26 }}
-          testID="amaError.message">
-          {error}
-        </Text>
-        <Text style={{ color: 'white', fontSize: 16, lineHeight: 24 }}>
-          Please check the console for more info...
-        </Text>
-      </View>
-    </View>
-  );
 };
 
 export const useAMAContext = () => {
