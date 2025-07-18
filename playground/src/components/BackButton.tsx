@@ -19,7 +19,7 @@ export const BackButton = () => {
         <Path
           d="M5.283 1.907l-2.251 2.25L5.434 6.56"
           fill="none"
-          stroke="#000"
+          stroke={theme.color.white}
           strokeWidth={0.79378125}
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -34,7 +34,6 @@ export const BackButton = () => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: theme.color.white,
     justifyContent: 'center',
     alignItems: 'center',
   },

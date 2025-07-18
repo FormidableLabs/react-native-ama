@@ -8,9 +8,10 @@ type TextProps = Omit<RNTextProps, 'style'> & {
   mt?: number;
   bold?: boolean;
   style?: StyleProps
+  white?:boolean
 };
 
-export const Text = ({ mb, mt, bold, style, ...props }: TextProps) => {
+export const Text = ({ mb, mt, bold, style,white, ...props }: TextProps) => {
   return (
     <RNText
       {...props}
@@ -20,6 +21,7 @@ export const Text = ({ mb, mt, bold, style, ...props }: TextProps) => {
         marginBottom: mb,
         marginTop: mt,
         fontWeight: bold ? 600 : undefined,
+        color: white ? theme.color.white : undefined,
         ...style,
       }}
     />

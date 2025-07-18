@@ -211,6 +211,7 @@ public class A11yChecker {
     }
 
     private func checkForMinimumTargetArea(_ view: UIView) {
+        Logger.info("checkForMinimumTargetArea", "\(view.bounds.width) \(view.bounds.height)")
         if view.isPressable && (view.bounds.width < 48 || view.bounds.height < 48) {
             addIssue(
                 rule: .minimumSize,

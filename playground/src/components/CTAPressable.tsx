@@ -38,6 +38,7 @@ export const CTAPressable = ({
     marginRight,
     role,
     hasMaring = false,
+        style,
     ...rest
 }: CTAPressableProps) => {
     return (
@@ -61,7 +62,7 @@ export const CTAPressable = ({
                         marginLeft, marginRight,
                         marginBottom: hasMaring ? theme.padding.normal : undefined
                     },
-                    rest.style,
+                    style,
 
                 ];
             }}

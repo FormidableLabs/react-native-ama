@@ -27,6 +27,7 @@ import { UseAnimationScreen } from './screens/UseAnimationScreen';
 import { UseReanimatedAnimationBuilderScreen } from './screens/UseReanimatedAnimationBuilderScreen';
 import { UseReanimatedTimingScreen } from './screens/UseReanimatedTimingScreen';
 import { UseTimedActionScreen } from './screens/UseTimedAction.screen';
+import { theme } from './theme';
 
 export const AppNavigator = () => {
   const { reactNavigationScreenOptions: amaAnimationScreenOptions } =
@@ -38,6 +39,10 @@ export const AppNavigator = () => {
         screenOptions={{
           ...BaseNavigatorOptions,
           ...amaAnimationScreenOptions,
+          headerStyle: {
+            backgroundColor: theme.color.header,
+          },
+          headerLeft: () => <BackButton />,
         }}
       >
         <Stack.Screen
@@ -51,9 +56,8 @@ export const AppNavigator = () => {
           name="Pressable"
           component={PressableScreen}
           options={{
-            headerLeft: () => <BackButton />,
             headerTitle: () => (
-              <Header noMargin title={'Pressable elements'} autofocus />
+              <Header noMargin title={'Pressable elements'} autofocus white />
             ),
           }}
         />

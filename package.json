@@ -6,8 +6,9 @@
   "repository": "https://github.com/FormidableLabs/react-native-ama.git",
   "homepage": "https://commerce.nearform.com/open-source/react-native-ama/",
   "scripts": {
-    "playground": "yarn --cwd playground",
-    "playground:ios": "yarn --cwd playground run ios",
+    "playground": "cd playground && yarn start",
+    "playground:ios": "cd playground && yarn ios",
+    "playground:android": "cd playground && yarn android",
     "build:animations": "yarn workspace @react-native-ama/animations build",
     "build:core": "yarn workspace @react-native-ama/core build",
     "build:extras": "yarn workspace @react-native-ama/extras build",
