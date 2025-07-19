@@ -15,12 +15,12 @@ import { UseTextInput, useTextInput } from '../hooks/useTextInput';
 
 export type TextInputProps = RNTextInputProps &
   Omit<UseTextInput, 'required' | 'accessibilityLabel'> & {
-    labelComponent: JSX.Element;
+    labelComponent: React.ReactElement;
     labelPosition?: 'beforeInput' | 'afterInput';
     nextFormField?: React.RefObject<RNTextInput>;
     id?: string;
     nextFieldId?: string;
-    errorComponent?: JSX.Element;
+    errorComponent?: React.ReactElement;
     errorPosition?: 'belowLabel' | 'afterInput';
   };
 

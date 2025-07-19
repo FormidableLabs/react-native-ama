@@ -9,17 +9,15 @@ export const useExpandable = <T>(props: UseExpandable<T>) => {
   const checks = __DEV__ ? useChecks?.() : undefined;
 
   __DEV__ &&
-    checks?.noUndefinedProperty<UseExpandable<T>>({
+    checks?.noUndefinedProperty({
       properties: props,
-      // @ts-ignore
-      property: 'expanded',
+      property: 'expanded' as keyof UseExpandable<T>,
       rule: 'NO_UNDEFINED',
     });
   __DEV__ &&
-    checks?.noUndefinedProperty<UseExpandable<T>>({
+    checks?.noUndefinedProperty({
       properties: props,
-      // @ts-ignore
-      property: 'accessibilityLabel',
+      property: 'accessibilityLabel' as keyof UseExpandable<T>,
       rule: 'NO_UNDEFINED',
     });
   /* block:end */

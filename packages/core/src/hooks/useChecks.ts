@@ -41,7 +41,7 @@ export const useChecks = () => {
   const hasErrors = React.useRef(false);
   const failedTests = React.useRef<string[]>([]);
   const shouldCheckLayout = React.useRef(true);
-  const layoutCheckTimeout = React.useRef<NodeJS.Timeout>();
+  const layoutCheckTimeout = React.useRef<ReturnType<typeof setTimeout> | null>(null);
   const [minimumSizeFailed, setMinimumSizeFailed] = React.useState(false);
   const [debugStyle, setDebugStyle] = React.useState<any>({});
 
@@ -178,8 +178,9 @@ export const useChecks = () => {
 
     shouldCheckLayout.current = false;
 
-    // @ts-ignore
-    clearTimeout(layoutCheckTimeout.current);
+    if (layoutCheckTimeout.current) {
+      clearTimeout(layoutCheckTimeout.current);
+    }
 
     layoutCheckTimeout.current = setTimeout(() => {
       shouldCheckLayout.current = true;

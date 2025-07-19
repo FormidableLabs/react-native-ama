@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, type JSX } from 'react';
 import { Platform, View } from 'react-native';
 import { useAMAContext } from './AMAProvider';
 
@@ -38,17 +38,19 @@ const HideChildrenFromAccessibilityTreeIOS = ({
   return hideChildrenFromAccessibilityTree(children);
 };
 
-const hideChildrenFromAccessibilityTree = (component: React.ReactNode): any => {
+const hideChildrenFromAccessibilityTree = (component: React.ReactNode): React.ReactNode => {
   return (
     React.Children.map(component, child => {
-      return React.isValidElement(child)
-        ? React.cloneElement(child, {
-            // @ts-ignore
-            importantForAccessibility: 'no',
-            accessibilityElementsHidden: true,
-            children: hideChildrenFromAccessibilityTree(child.props.children),
-          })
-        : child;
+      if (React.isValidElement(child)) {
+        const element = child as React.ReactElement<{ children?: React.ReactNode }>;
+        return React.cloneElement(element, {
+          // @ts-ignore
+          importantForAccessibility: 'no',
+          accessibilityElementsHidden: true,
+          children: hideChildrenFromAccessibilityTree(element.props.children),
+        });
+      }
+      return child;
     }) || null
   );
 };

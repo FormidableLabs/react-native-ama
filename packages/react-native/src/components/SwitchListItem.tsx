@@ -7,7 +7,7 @@ import { SwitchWrapper } from './SwitchWrapper';
 
 export type SwitchListItemProps = React.PropsWithChildren<
   Omit<SwitchProps, 'style' | 'value' | 'onValueChange'> & {
-    labelComponent: JSX.Element;
+    labelComponent: React.ReactElement;
     labelPosition?: 'left' | 'right';
     style?: StyleProp<ViewStyle>;
     switchStyle?: StyleProp<ViewStyle>;

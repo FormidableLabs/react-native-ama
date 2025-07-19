@@ -27,7 +27,8 @@
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "react-native-reanimated": ">=2.0.0"
   },
   "keywords": [
     "react-native",

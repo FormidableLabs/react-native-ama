@@ -19,6 +19,7 @@ const RULES_HELP = __DEV__
         message: 'The component is missing the accessibility role.',
       },
       NO_KEYBOARD_TRAP: '/guidelines/forms',
+      NO_UNDEFINED: '/guidelines/accessibility-label',
       NO_FORM_LABEL: '/guidelines/forms',
       NO_FORM_ERROR: '/guidelines/forms',
       FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE:
@@ -36,13 +37,14 @@ export const getRuleErrorInfo = __DEV__
   ? (issue: A11yIssue) => {
       const ruleHelp = RULES_HELP![issue.rule];
 
-      let message = ruleHelp.message;
+      let message = typeof ruleHelp === 'string' ? '' : ruleHelp.message;
+      const helpUrl = typeof ruleHelp === 'string' ? ruleHelp : ruleHelp.url;
 
       if (issue.reason) {
         message += ': ' + issue.reason;
       }
 
-      const url = `https://nearform.com/open-source/react-native-ama/${ruleHelp.url}`;
+      const url = `https://nearform.com/open-source/react-native-ama${helpUrl}`;
 
       return { message, url };
     }
