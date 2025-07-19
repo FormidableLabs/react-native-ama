@@ -8,7 +8,7 @@ beforeEach(() => {
 });
 
 describe('AutofocusContainer', () => {
-  it('it call setFocus when gets rendered', async () => {
+  it('call setFocus when gets rendered', async () => {
     const setFocus = jest.fn();
     jest.spyOn(UseFocus, 'useFocus').mockReturnValue({
       setFocus,
@@ -20,7 +20,7 @@ describe('AutofocusContainer', () => {
       </AutofocusContainer>,
     );
 
-    await waitFor(() => expect(setFocus).toBeCalled());
+    await waitFor(() => expect(setFocus).toHaveBeenCalled());
   });
 
   it.each([undefined, true])(
@@ -37,7 +37,7 @@ describe('AutofocusContainer', () => {
         </AutofocusContainer>,
       );
 
-      await waitFor(() => expect(setFocus).toBeCalled());
+      await waitFor(() => expect(setFocus).toHaveBeenCalled());
 
       expect(
         renderAPI.getByTestId('autofocusContainer.accessibleView'),
@@ -57,7 +57,7 @@ describe('AutofocusContainer', () => {
       </AutofocusContainer>,
     );
 
-    await waitFor(() => expect(setFocus).toBeCalled());
+    await waitFor(() => expect(setFocus).toHaveBeenCalled());
 
     expect(
       renderAPI.queryByTestId('autofocusContainer.accessibleView'),

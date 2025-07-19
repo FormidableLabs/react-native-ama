@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import * as React from 'react';
 import {
   AccessibilityChangeEventName,
@@ -20,6 +21,8 @@ type SharedContextValue = {
   isInvertColorsEnabled: boolean;
   isReduceMotionEnabled: boolean;
   isReduceTransparencyEnabled: boolean;
+  isHighTextContrastEnabled: boolean;
+  isDarkerSystemColorsEnabled: boolean;
   reactNavigationScreenOptions: {
     animationEnabled: boolean;
     animation: 'default' | 'fade';
@@ -56,6 +59,8 @@ const eventsMapping: AccessibilityInfoEvents = {
   boldTextChanged: 'isBoldTextEnabled',
   invertColorsChanged: 'isInvertColorsEnabled',
   screenReaderChanged: 'isScreenReaderEnabled',
+  highTextContrastChanged: 'isHighTextContrastEnabled',
+  darkerSystemColorsChanged: 'isDarkerSystemColorsEnabled',
 };
 
 export const isDevContextValue = (
@@ -70,6 +75,8 @@ const DEFAULT_VALUES = {
   isInvertColorsEnabled: false,
   isReduceMotionEnabled: false,
   isScreenReaderEnabled: false,
+  isHighTextContrastEnabled: false,
+  isDarkerSystemColorsEnabled: false,
   reactNavigationScreenOptions: {
     animationEnabled: true,
     animation: 'default',
@@ -153,7 +160,7 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
         <View style={{ flex: 1 }}>
           <>
             {children}
-            <AMAError issues={issues} />
+            {AMAError && <AMAError issues={issues} />}
           </>
         </View>
       </AMAContext.Provider>
