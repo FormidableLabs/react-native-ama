@@ -35,7 +35,7 @@ const AMAErrorComponent = ({ issues }: { issues?: A11yIssue[] }) => {
 
         if (issueToView.current) {
             const position = await ReactNativeAmaModule.getPosition(issueToView.current.viewId);
-            console.info({ position })
+            console.info({ position });
 
             setActiveIssueIndex({ id: newIndex, position });
         } else {
@@ -79,7 +79,7 @@ const AMAErrorComponent = ({ issues }: { issues?: A11yIssue[] }) => {
                 logAMAError!(issue);
             }
         } else {
-            console.info('[React Native AMA]: No issues found')
+            console.info('[React Native AMA]: No issues found');
         }
     }, [issues]);
 
@@ -172,11 +172,11 @@ const AMAOverlay = ({ issue, position, closeOverlay }: AMAOverlayProps) => {
 
     useEffect(() => {
         logAMAError!(issue);
-    }, [issue.viewId]);
+    }, [issue]);
 
     return (
         <>
-            <Pressable style={styles!.transparentOverlay} onPress={closeOverlay} accessible={false} importantForAccessibility='no' />
+            <Pressable style={styles!.transparentOverlay} onPress={closeOverlay} accessible={false} importantForAccessibility="no" />
             <View style={[styles?.callout, {
                 top: y + height + POINTER_SIZE + SPACER,
             }]}>
@@ -199,7 +199,7 @@ const AMAOverlay = ({ issue, position, closeOverlay }: AMAOverlayProps) => {
     );
 };
 
-export const AMAError = __DEV__ ? AMAErrorComponent : null
+export const AMAError = __DEV__ ? AMAErrorComponent : null;
 
 const SPACER = 4;
 const POINTER_SIZE = 8;

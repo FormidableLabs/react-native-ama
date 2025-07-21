@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 export const maybeGenerateStringFromElement = (
-  element?: JSX.Element,
+  element?: React.JSX.Element,
   alternativeString?: string | null,
 ) => {
   if (alternativeString || element == null) {
@@ -19,7 +19,7 @@ export const maybeGenerateStringFromElement = (
   return pieces?.join(' ')?.replace(/\*$/, '');
 };
 
-const extractPieces = (component: JSX.Element | JSX.Element[]): any[] => {
+const extractPieces = (component: React.JSX.Element | React.JSX.Element[]): any[] => {
   return React.Children.map(component, child => {
     if (!React.isValidElement(child)) {
       return '';

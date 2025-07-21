@@ -83,7 +83,7 @@ public class A11yChecker {
         issues.removeAll()
 
         traverseAndCheck(view: root)
-        var shouldSendEvent = clearFixedIssues(oldIssues)
+        let shouldSendEvent = clearFixedIssues(oldIssues)
 
         let newIssuesToSend = issues.filter { !$0.sent }
 
@@ -306,9 +306,12 @@ public class A11yChecker {
 
             issues.append(
                 A11yIssue(
-                    type: action, rule: rule, label: label, issue: issue,
+                    type: action,
+                    rule: rule,
+                    label: label,
+                    issue: issue,
                     viewId: viewId,
-                    sent: false,
+                    sent: false
                 ))
         }
     }

@@ -103,13 +103,13 @@ describe('interpolateAnimationStates', () => {
         );
 
         expect(normalInterpolate).toHaveBeenCalledTimes(1);
-        expect(normalInterpolate).toBeCalledWith({
+        expect(normalInterpolate).toHaveBeenCalledWith({
           inputRange: [0, 1],
           outputRange: [0, 1],
         });
 
         expect(reduceMotionInterpolate).toHaveBeenCalledTimes(1);
-        expect(reduceMotionInterpolate).toBeCalledWith({
+        expect(reduceMotionInterpolate).toHaveBeenCalledWith({
           inputRange: [0, 1],
           outputRange: [142, 42],
         });
@@ -144,13 +144,13 @@ describe('interpolateAnimationStates', () => {
       );
 
       expect(normalInterpolate).toHaveBeenCalledTimes(1);
-      expect(normalInterpolate).toBeCalledWith({
+      expect(normalInterpolate).toHaveBeenCalledWith({
         inputRange: [0, 1],
         outputRange: [1, 0],
       });
 
       expect(reduceMotionInterpolate).toHaveBeenCalledTimes(1);
-      expect(reduceMotionInterpolate).toBeCalledWith({
+      expect(reduceMotionInterpolate).toHaveBeenCalledWith({
         inputRange: [0, 1],
         outputRange: [200, 42],
       });

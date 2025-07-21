@@ -15,6 +15,8 @@ export { HideChildrenFromAccessibilityTree } from './components/HideChildrenFrom
 // Hooks
 export { useFocus } from './hooks/useFocus';
 export { useTimedAction } from './hooks/useTimedAction';
+export { useButtonChecks } from './hooks/useButtonChecks';
+export { useChecks } from './hooks/useChecks';
 
 export { default } from './ReactNativeAmaModule';
 export { default as ReactNativeAmaView } from './ReactNativeAmaView';

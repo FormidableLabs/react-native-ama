@@ -12,7 +12,7 @@
       "@react-native-ama/react-native": ["packages/react-native/src/index"]
     },
     "jsx": "react",
-    "lib": ["esnext"],
+    "lib": ["esnext", "dom"],
     "module": "esnext",
     "moduleResolution": "node",
     "target": "esnext",

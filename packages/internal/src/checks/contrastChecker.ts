@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import type { StyleProp } from 'react-native';
 import { score } from 'wcag-color';
 import { getPropertyFromStyle } from '../utils/getPropertyFromStyle';

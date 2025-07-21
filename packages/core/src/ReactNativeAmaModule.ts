@@ -1,6 +1,7 @@
 import { NativeModule, requireNativeModule } from 'expo';
+import { ReactNativeAmaModuleEvents } from './ReactNativeAma.types';
 
-declare class ReactNativeAmaModule extends NativeModule {
+declare class ReactNativeAmaModule extends NativeModule<ReactNativeAmaModuleEvents> {
   start(config?: any): void;
   stop(): void;
 }

@@ -39,10 +39,10 @@ export type BottomSheetProps = {
   bottomSheetStyle?: ViewStyle | ViewStyle[];
   closeActionAccessibilityLabel: string;
   closeDistance?: number;
-  footerComponent?: JSX.Element;
-  handleComponent?: JSX.Element | 'none';
+  footerComponent?: React.ReactElement;
+  handleComponent?: React.ReactElement | 'none';
   handleStyle?: ViewStyle | ViewStyle[];
-  headerComponent?: JSX.Element;
+  headerComponent?: React.ReactElement;
   maxHeight?: number;
   minVelocityToClose?: number;
   onBottomSheetHidden?: () => void;

@@ -1,12 +1,12 @@
-import * as React from 'react';
+// import * as React from 'react';
 import {
   Pressable as RNPressable,
   PressableProps as RNPressableProps,
 } from 'react-native';
-import { usePressable } from '../hooks/usePressable';
+// import { usePressable } from '../hooks/usePressable';
 import type { UsePressable } from '../hooks/usePressable';
 
-export type PressableProps = UsePressable;
+export type PressableProps = UsePressable<RNPressableProps>;
 
 export const Pressable = RNPressable;
 // React.forwardRef<typeof RNPressable, PressableProps>(
