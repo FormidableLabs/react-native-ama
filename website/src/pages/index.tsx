@@ -1,6 +1,5 @@
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
-
 import { Divider } from '../components/landing/divider';
 import { LandingBanner } from '../components/landing/landing-banner';
 import { LandingFeaturedProjects } from '../components/landing/landing-featured-projects';
@@ -39,8 +38,8 @@ export default function Home(): JSX.Element {
         list={[
           {
             imgSrc: feature1,
-            alt: 'Built-in Accessibility',
-            title: 'Built-in Accessibility',
+            alt: 'Real-time Accessibility checks',
+            title: 'Real-time Accessibility checks',
             html: {
               __html:
                 'AMA provides a comprehensive suite of pre-built components and functions designed to handle accessibility concerns out of the box. This allows developers to quickly and easily integrate accessible features into mobile apps without the need to implement complex accessibility logic.',

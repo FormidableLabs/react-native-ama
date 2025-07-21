@@ -53,12 +53,9 @@ export const useAMADev = () => {
   useEffect(() => {
     startAMA();
 
-    ReactNativeAmaModule.addListener(
-      'onA11yIssues',
-      (issues: A11yIssue[]) => {
-        setIssues(issues);
-      },
-    );
+    ReactNativeAmaModule.addListener('onA11yIssues', (issues: A11yIssue[]) => {
+      setIssues(issues.issues);
+    });
   }, []);
 
   useEffect(() => {
@@ -66,6 +63,7 @@ export const useAMADev = () => {
     DevSettings.addMenuItem(`${nextAction} React Native AMA`, () => {
       if (isMonitoring) {
         ReactNativeAmaModule.stop();
+        setIssues([]);
       } else {
         startAMA();
       }

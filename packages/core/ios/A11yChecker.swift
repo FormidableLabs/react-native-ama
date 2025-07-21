@@ -144,9 +144,8 @@ public class A11yChecker {
         if view.isPressable {
             checkForA11yLabel(view)
             checkForA11yRole(view)
+            checkForMinimumTargetArea(view)
         }
-
-        // checkForMinimumTargetArea(view)
 
         //
         // // Minimum touch target
@@ -197,9 +196,6 @@ public class A11yChecker {
         if !(hasRoleTrait || defaultRole != nil) {
             let label = view.getTextOrContent()
             let traitNames = view.accessibilityTraits.names
-            Logger.info(
-                label, defaultRole ?? "no role",
-                extra: traitNames.joined(separator: ", "))
 
             addIssue(
                 rule: .noAccessibilityRole,

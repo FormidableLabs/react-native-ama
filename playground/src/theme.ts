@@ -1,4 +1,4 @@
-export const theme = {
+const baseTheme = {
   padding: {
     small: 6,
     normal: 12,
@@ -18,6 +18,7 @@ export const theme = {
     checked: '#820085',
     mixed: '#006602',
     selected: '#660000',
+    header: '#17387e',
   },
   lineHeight: {
     normal: 16,
@@ -28,8 +29,16 @@ export const theme = {
     flex: 1,
   },
   border: 8,
+};
+
+export const theme = {
+  ...baseTheme,
   safeAreaView: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: baseTheme.color.white,
+  },
+  safeAreaViewBlue: {
+    flex: 0,
+    backgroundColor: baseTheme.color.header,
   },
 };

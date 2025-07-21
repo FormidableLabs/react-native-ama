@@ -1,3 +1,4 @@
+import { StatusBar } from 'expo-status-bar';
 import * as React from 'react';
 import {
   AccessibilityState,
@@ -17,6 +18,7 @@ import { theme } from '../theme';
 export const PressableScreen = () => {
   return (
     <SafeAreaView style={theme.safeAreaView}>
+      <StatusBar style="light" />
       <ScrollView style={styles.list}>
         <Spacer height="big" />
         <Text mt={8} mb={8}>
@@ -32,6 +34,8 @@ export const PressableScreen = () => {
           respond in real time.
         </Text>
         <Spacer height="big" />
+
+        {/* No a11y role */}
         <CTAPressable title="Missing role" role="" hasMaring />
 
         {/* No a11y label */}
@@ -47,40 +51,27 @@ export const PressableScreen = () => {
         </Pressable>
         <Spacer height={'normal'} />
 
-        {/*  Disabled */}
-        <CTAPressable title="This button is 'disabled'" disabled />
-        <Spacer height={'normal'} />
+        {/* Too small */}
+        <CTAPressable
+          title="X"
+          style={{
+            width: 24,
+            height: 24,
+            minHeight: 0,
+            minWidth: 0,
+            paddingVertical: 0,
+            paddingHorizontal: 0,
+          }}
+          hitSlop={0}
+          hasMaring
+        />
 
-        {/*  Busy */}
-        <CTAPressable title="This button is 'busy'" busy />
-        <Spacer height={'normal'} />
-
-        {/*  Checked */}
-        <CheckedButton />
-        <Spacer height={'normal'} />
-
-        {/*  Selected*/}
-        <SelectedButton />
-        <Spacer height={'normal'} />
-
-        {/*  Expanded*/}
-        <ExpandedButton />
-        <Spacer height={'normal'} />
-
-        {/*  Test rule breakage */}
-        <ContrastCheckerFailing />
-
-        {/*  Test minimum size failing  */}
-        <MinimumSizeFailing />
-
-        {/*  Test minimum size failing  */}
-        <MinimumSizeFailing />
-
-        {/*  Test minimum size failing  */}
-        <MinimumSizeFailing />
-
-        {/*  Test minimum size failing  */}
-        <MinimumSizeFailing />
+        {/* Contrast failed */}
+        <CTAPressable
+          title="Contrast failed"
+          style={{ backgroundColor: '#e0e0e0' }}
+          hasMaring
+        />
 
         <Spacer height={'big'} />
       </ScrollView>

@@ -217,7 +217,7 @@ class A11yChecker(private val appContext: AppContext, private val config: AMACon
 
     private fun checkForMinimumTargetSize(view: View) {
         if (view.width < 48 || view.height < 48) {
-            Logger.error("checkView", "Small touch target")
+            Logger.info("checkView", "Small touch target")
 
             addIssue(
                     rule = Rule.MINIMUM_SIZE,
