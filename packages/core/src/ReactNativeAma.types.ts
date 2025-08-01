@@ -6,7 +6,7 @@ export type OnLoadEventPayload = {
 };
 
 export type ReactNativeAmaModuleEvents = {
-  onA11yIssues: (params: A11yIssue[]) => void;
+  onA11yIssues: (params: {issues: A11yIssue[]}) => void;
 };
 
 export type ChangeEventPayload = {
