@@ -7,13 +7,9 @@
   "main": "dist/src/index.js",
   "exports": {
     ".": {
-      "react-native": "./dist/src/index.js",
-      "import": "./dist/src/index.js",
-      "require": "./dist/src/index.js",
       "types": "./dist/src/index.d.ts",
       "default": "./dist/src/index.js"
-    },
-    "./package.json": "./package.json"
+    }
   },
   "files": [
     "src",
