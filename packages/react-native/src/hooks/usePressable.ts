@@ -1,4 +1,4 @@
-import { useButtonChecks } from '@react-native-ama/core/src/hooks/useButtonChecks';
+import { useButtonChecks } from '@react-native-ama/core';
 import {
   generateAccessibilityStateFromProp,
   shouldIgnoreContrastCheckForDisabledElement,

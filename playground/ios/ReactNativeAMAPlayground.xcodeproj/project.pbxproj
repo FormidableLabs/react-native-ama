@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		4C3806B980A02CB377230616 /* libPods-ReactNativeAMAPlayground.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FA29B4998381687B60AED3 /* libPods-ReactNativeAMAPlayground.a */; };
-		5DBAA92C026F5789A497BF3C /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B486666758AB0A6C9F8B3D /* ExpoModulesProvider.swift */; };
-		83D2F41DD20B78C5C25BD75F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = C1F54301D624FC2DC935FC74 /* PrivacyInfo.xcprivacy */; };
+		5C2858D2AC4F76083FBA25B3 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666356D44867BD7E05C7F70C /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
+		BF29F809D8E11E3E332D3EEB /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A4471D3948CAC16C67F8D303 /* PrivacyInfo.xcprivacy */; };
+		C1A59F21AA8DD40338E8C995 /* libPods-ReactNativeAMAPlayground.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A3E22C92495868FA0725B4B1 /* libPods-ReactNativeAMAPlayground.a */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -20,16 +20,16 @@
 		13B07F961A680F5B00A75B9A /* ReactNativeAMAPlayground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactNativeAMAPlayground.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ReactNativeAMAPlayground/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ReactNativeAMAPlayground/Info.plist; sourceTree = "<group>"; };
-		20B486666758AB0A6C9F8B3D /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-ReactNativeAMAPlayground/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		40C0629656F10A59657E444C /* Pods-ReactNativeAMAPlayground.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeAMAPlayground.debug.xcconfig"; path = "Target Support Files/Pods-ReactNativeAMAPlayground/Pods-ReactNativeAMAPlayground.debug.xcconfig"; sourceTree = "<group>"; };
+		4D10512C1059152EF2B0635D /* Pods-ReactNativeAMAPlayground.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeAMAPlayground.release.xcconfig"; path = "Target Support Files/Pods-ReactNativeAMAPlayground/Pods-ReactNativeAMAPlayground.release.xcconfig"; sourceTree = "<group>"; };
+		666356D44867BD7E05C7F70C /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-ReactNativeAMAPlayground/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		A3E22C92495868FA0725B4B1 /* libPods-ReactNativeAMAPlayground.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNativeAMAPlayground.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A4471D3948CAC16C67F8D303 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = ReactNativeAMAPlayground/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = ReactNativeAMAPlayground/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
-		C1F54301D624FC2DC935FC74 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = ReactNativeAMAPlayground/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		CE8DE218FF64B15EAF7FD99A /* Pods-ReactNativeAMAPlayground.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeAMAPlayground.debug.xcconfig"; path = "Target Support Files/Pods-ReactNativeAMAPlayground/Pods-ReactNativeAMAPlayground.debug.xcconfig"; sourceTree = "<group>"; };
-		D2FA29B4998381687B60AED3 /* libPods-ReactNativeAMAPlayground.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNativeAMAPlayground.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ReactNativeAMAPlayground/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* ReactNativeAMAPlayground-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ReactNativeAMAPlayground-Bridging-Header.h"; path = "ReactNativeAMAPlayground/ReactNativeAMAPlayground-Bridging-Header.h"; sourceTree = "<group>"; };
-		F2C1F3FD1FFA05A8B39823DC /* Pods-ReactNativeAMAPlayground.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeAMAPlayground.release.xcconfig"; path = "Target Support Files/Pods-ReactNativeAMAPlayground/Pods-ReactNativeAMAPlayground.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,7 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C3806B980A02CB377230616 /* libPods-ReactNativeAMAPlayground.a in Frameworks */,
+				C1A59F21AA8DD40338E8C995 /* libPods-ReactNativeAMAPlayground.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,36 +53,26 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				C1F54301D624FC2DC935FC74 /* PrivacyInfo.xcprivacy */,
+				A4471D3948CAC16C67F8D303 /* PrivacyInfo.xcprivacy */,
 			);
 			name = ReactNativeAMAPlayground;
-			sourceTree = "<group>";
-		};
-		260FDF08B8613AC0AE414948 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				CE8DE218FF64B15EAF7FD99A /* Pods-ReactNativeAMAPlayground.debug.xcconfig */,
-				F2C1F3FD1FFA05A8B39823DC /* Pods-ReactNativeAMAPlayground.release.xcconfig */,
-			);
-			name = Pods;
-			path = Pods;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				D2FA29B4998381687B60AED3 /* libPods-ReactNativeAMAPlayground.a */,
+				A3E22C92495868FA0725B4B1 /* libPods-ReactNativeAMAPlayground.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		51D5EECC2801147BD0478476 /* ExpoModulesProviders */ = {
+		656AB42C736DC5758C21328A /* ReactNativeAMAPlayground */ = {
 			isa = PBXGroup;
 			children = (
-				B0A9E2C3D28966184CDD9674 /* ReactNativeAMAPlayground */,
+				666356D44867BD7E05C7F70C /* ExpoModulesProvider.swift */,
 			);
-			name = ExpoModulesProviders;
+			name = ReactNativeAMAPlayground;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -99,8 +89,8 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				260FDF08B8613AC0AE414948 /* Pods */,
-				51D5EECC2801147BD0478476 /* ExpoModulesProviders */,
+				ADCC18FF6D8C365E4691A343 /* Pods */,
+				C4E5C531F0F491E4C6D1468B /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -115,12 +105,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B0A9E2C3D28966184CDD9674 /* ReactNativeAMAPlayground */ = {
+		ADCC18FF6D8C365E4691A343 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				20B486666758AB0A6C9F8B3D /* ExpoModulesProvider.swift */,
+				40C0629656F10A59657E444C /* Pods-ReactNativeAMAPlayground.debug.xcconfig */,
+				4D10512C1059152EF2B0635D /* Pods-ReactNativeAMAPlayground.release.xcconfig */,
 			);
-			name = ReactNativeAMAPlayground;
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		BB2F792B24A3F905000567C9 /* Supporting */ = {
@@ -132,6 +124,14 @@
 			path = ReactNativeAMAPlayground/Supporting;
 			sourceTree = "<group>";
 		};
+		C4E5C531F0F491E4C6D1468B /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				656AB42C736DC5758C21328A /* ReactNativeAMAPlayground */,
+			);
+			name = ExpoModulesProviders;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -140,13 +140,13 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "ReactNativeAMAPlayground" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				ED691B0099E3E568721867D2 /* [Expo] Configure project */,
+				524CDC91C2ECCD614C3CEBD9 /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				E3E2ABB838C30D446D80F3B7 /* [CP] Embed Pods Frameworks */,
+				C542331BC7F3FAA57C5FEB8F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -196,7 +196,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				83D2F41DD20B78C5C25BD75F /* PrivacyInfo.xcprivacy in Resources */,
+				BF29F809D8E11E3E332D3EEB /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,6 +240,25 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		524CDC91C2ECCD614C3CEBD9 /* [Expo] Configure project */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-ReactNativeAMAPlayground/expo-configure-project.sh\"\n";
+		};
 		800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -274,7 +293,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ReactNativeAMAPlayground/Pods-ReactNativeAMAPlayground-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E3E2ABB838C30D446D80F3B7 /* [CP] Embed Pods Frameworks */ = {
+		C542331BC7F3FAA57C5FEB8F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -292,25 +311,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ReactNativeAMAPlayground/Pods-ReactNativeAMAPlayground-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		ED691B0099E3E568721867D2 /* [Expo] Configure project */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "[Expo] Configure project";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-ReactNativeAMAPlayground/expo-configure-project.sh\"\n";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -319,7 +319,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				5DBAA92C026F5789A497BF3C /* ExpoModulesProvider.swift in Sources */,
+				5C2858D2AC4F76083FBA25B3 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,7 +328,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CE8DE218FF64B15EAF7FD99A /* Pods-ReactNativeAMAPlayground.debug.xcconfig */;
+			baseConfigurationReference = 40C0629656F10A59657E444C /* Pods-ReactNativeAMAPlayground.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -364,7 +364,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F2C1F3FD1FFA05A8B39823DC /* Pods-ReactNativeAMAPlayground.release.xcconfig */;
+			baseConfigurationReference = 4D10512C1059152EF2B0635D /* Pods-ReactNativeAMAPlayground.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

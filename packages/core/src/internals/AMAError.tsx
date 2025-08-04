@@ -259,7 +259,7 @@ const AMAOverlay = ({ issue, position, closeOverlay }: AMAOverlayProps) => {
           },
         ]}
       >
-        <GetRuleError issue={issue} />
+        {GetRuleError && <GetRuleError issue={issue} />}
 
         <Pressable onPress={openHelp} role="button">
           <Text style={styles!.link}>Learn more</Text>
@@ -272,7 +272,7 @@ const AMAOverlay = ({ issue, position, closeOverlay }: AMAOverlayProps) => {
           {
             left: x + width / 2 - POINTER_SIZE,
             top: y + height + SPACER,
-            borderBottomColor: styles!.callout.borderColor,
+            borderBottomColor: COLORS[severity],
           },
         ]}
       />

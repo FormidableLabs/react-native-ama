@@ -6,13 +6,11 @@
   "types": "dist/src/index.d.ts",
   "main": "dist/src/index.js",
   "exports": {
-    ".": [
-      {
-        "imports": "./dist/src/index.js",
-        "types": "./dist/src/index.d.ts"
-      },
-      "./dist/src/index.js"
-    ]
+    ".": {
+      "react-native": "./src/index.ts",
+      "types": "./dist/src/index.d.ts",
+      "default": "./dist/src/index.js"
+    }
   },
   "files": [
     "src",

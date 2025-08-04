@@ -53,7 +53,7 @@ export const useAMADev = () => {
   useEffect(() => {
     startAMA();
 
-    ReactNativeAmaModule.addListener('onA11yIssues', (issues: A11yIssue[]) => {
+    ReactNativeAmaModule.addListener('onA11yIssues', (issues: {issues: A11yIssue[]}) => {
       setIssues(issues.issues);
     });
   }, []);
