@@ -4162,23 +4162,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-ama/animations@workspace:packages/animations, @react-native-ama/animations@~1.2.0":
+"@react-native-ama/animations@workspace:packages/animations, @react-native-ama/animations@~1.2.1":
   version: 0.0.0-use.local
   resolution: "@react-native-ama/animations@workspace:packages/animations"
   dependencies:
-    "@react-native-ama/core": ~1.2.0
-    "@react-native-ama/internal": ~1.2.0
+    "@react-native-ama/core": ~1.2.1
+    "@react-native-ama/internal": ~1.2.1
   peerDependencies:
     react: "*"
     react-native: "*"
   languageName: unknown
   linkType: soft
 
-"@react-native-ama/core@workspace:packages/core, @react-native-ama/core@~1.2.0":
+"@react-native-ama/core@workspace:packages/core, @react-native-ama/core@~1.2.1":
   version: 0.0.0-use.local
   resolution: "@react-native-ama/core@workspace:packages/core"
   dependencies:
-    "@react-native-ama/internal": ~1.2.0
+    "@react-native-ama/internal": ~1.2.1
     babel-jest: ^29.7.0
   peerDependencies:
     react: "*"
@@ -4190,9 +4190,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@react-native-ama/extras@workspace:packages/extras"
   dependencies:
-    "@react-native-ama/animations": ~1.2.0
-    "@react-native-ama/core": ~1.2.0
-    "@react-native-ama/internal": ~1.2.0
+    "@react-native-ama/animations": ~1.2.1
+    "@react-native-ama/core": ~1.2.1
+    "@react-native-ama/internal": ~1.2.1
   peerDependencies:
     react: "*"
     react-native: ">=0.62.0"
@@ -4205,9 +4205,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@react-native-ama/forms@workspace:packages/forms"
   dependencies:
-    "@react-native-ama/core": ~1.2.0
-    "@react-native-ama/internal": ~1.2.0
-    "@react-native-ama/react-native": ~1.2.0
+    "@react-native-ama/core": ~1.2.1
+    "@react-native-ama/internal": ~1.2.1
+    "@react-native-ama/react-native": ~1.2.1
     jest-expo: ^49.0.0
   peerDependencies:
     react: "*"
@@ -4215,7 +4215,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-ama/internal@workspace:packages/internal, @react-native-ama/internal@~1.2.0":
+"@react-native-ama/internal@workspace:packages/internal, @react-native-ama/internal@~1.2.1":
   version: 0.0.0-use.local
   resolution: "@react-native-ama/internal@workspace:packages/internal"
   dependencies:
@@ -4230,8 +4230,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@react-native-ama/lists@workspace:packages/lists"
   dependencies:
-    "@react-native-ama/core": ~1.2.0
-    "@react-native-ama/internal": ~1.2.0
+    "@react-native-ama/core": ~1.2.1
+    "@react-native-ama/internal": ~1.2.1
   peerDependencies:
     expo: ">=47.0.0"
     react: "*"
@@ -4263,12 +4263,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-ama/react-native@workspace:packages/react-native, @react-native-ama/react-native@~1.2.0":
+"@react-native-ama/react-native@workspace:packages/react-native, @react-native-ama/react-native@~1.2.1":
   version: 0.0.0-use.local
   resolution: "@react-native-ama/react-native@workspace:packages/react-native"
   dependencies:
-    "@react-native-ama/core": ~1.2.0
-    "@react-native-ama/internal": ~1.2.0
+    "@react-native-ama/core": ~1.2.1
+    "@react-native-ama/internal": ~1.2.1
   peerDependencies:
     react: "*"
     react-native: "*"
