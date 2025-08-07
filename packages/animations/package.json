@@ -1,6 +1,6 @@
 {
   "name": "@react-native-ama/animations",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "react-native": "src/index",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
@@ -22,8 +22,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@react-native-ama/core": "~1.2.0",
-    "@react-native-ama/internal": "~1.2.0"
+    "@react-native-ama/core": "~1.2.1",
+    "@react-native-ama/internal": "~1.2.1"
   },
   "peerDependencies": {
     "react": "*",

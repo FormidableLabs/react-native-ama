@@ -1,5 +1,16 @@
 # @react-native-ama/forms
 
+## 1.2.1
+
+### Patch Changes
+
+- Fixed babel transform warning on forms type import/exports (@babel/plugin-transform-typescript) ([#317](https://github.com/FormidableLabs/react-native-ama/pull/317))
+
+- Updated dependencies []:
+  - @react-native-ama/core@1.2.1
+  - @react-native-ama/internal@1.2.1
+  - @react-native-ama/react-native@1.2.1
+
 ## 1.2.0
 
 ### Patch Changes
