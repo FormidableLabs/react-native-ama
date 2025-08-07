@@ -53,8 +53,10 @@ const config: Config = {
           lastVersion: 'current',
           versions: {
             current: {
-              label: '1.2.x',
-              // path: '1.0.x',
+              label: 'Next',
+            },
+            '1.x.x': {
+              label: '1.2.0',
             },
           },
           // routeBasePath: 'docs',

@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useRef, useState } from 'react';
 import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
 import ReactNativeAmaModule from '../ReactNativeAmaModule';
@@ -49,7 +50,6 @@ const AMAErrorComponent = ({ issues }: { issues?: A11yIssue[] }) => {
       const position = await ReactNativeAmaModule.getPosition(
         issueToView.current.viewId,
       );
-      console.info({ position });
 
       setActiveIssueIndex({ id: newIndex, position });
     } else {
@@ -91,16 +91,8 @@ const AMAErrorComponent = ({ issues }: { issues?: A11yIssue[] }) => {
   useEffect(() => {
     if (issues?.length) {
       for (const issue of issues) {
-        // if (Platform.OS === 'android') {
-        //     ReactNativeAmaModule.inspectViewAttributes(issue.viewId).then(data => {
-        //         console.info('attrs', data)
-        //     })
-        // }
-
         logAMAError!(issue);
       }
-    } else {
-      console.info('[React Native AMA]: No issues found');
     }
   }, [issues]);
 
@@ -259,11 +251,37 @@ const AMAOverlay = ({ issue, position, closeOverlay }: AMAOverlayProps) => {
           },
         ]}
       >
-        <GetRuleError issue={issue} />
+        {GetRuleError ? (
+          <GetRuleError issue={issue} componentPosition={position} />
+        ) : null}
 
-        <Pressable onPress={openHelp} role="button">
-          <Text style={styles!.link}>Learn more</Text>
-        </Pressable>
+        <View style={styles!.actions}>
+          <Pressable
+            onPress={openHelp}
+            role="button"
+            hitSlop={{ left: 12, top: 12, bottom: 12, right: 12 }}
+            style={styles!.action}
+          >
+            <Text>↑ Previous</Text>
+          </Pressable>
+          <Pressable
+            onPress={openHelp}
+            role="button"
+            hitSlop={{ left: 12, top: 12, bottom: 12, right: 12 }}
+            style={{ paddingTop: 8 }}
+          >
+            <Text style={styles!.link}>Learn more</Text>
+          </Pressable>
+
+          <Pressable
+            onPress={openHelp}
+            role="button"
+            hitSlop={{ left: 12, top: 12, bottom: 12, right: 12 }}
+            style={styles!.action}
+          >
+            <Text>Next ↓</Text>
+          </Pressable>
+        </View>
       </View>
 
       <View
@@ -272,7 +290,7 @@ const AMAOverlay = ({ issue, position, closeOverlay }: AMAOverlayProps) => {
           {
             left: x + width / 2 - POINTER_SIZE,
             top: y + height + SPACER,
-            borderBottomColor: styles!.callout.borderColor,
+            borderBottomColor: COLORS[severity],
           },
         ]}
       />
@@ -294,10 +312,9 @@ const styles = __DEV__
         right: 24,
         backgroundColor: '#fff',
         padding: 12,
-        borderRadius: 4,
         justifyContent: 'center',
         alignItems: 'center',
-        zIndex: Z_INDEX,
+        zIndex: Z_INDEX + 1,
         shadowOffset: {
           width: 10,
           height: -10,
@@ -306,7 +323,8 @@ const styles = __DEV__
         shadowOpacity: 0.2,
         shadowRadius: 24,
         elevation: 4,
-        borderWidth: 1,
+        borderTopWidth: 2,
+        overflow: 'hidden',
       },
       calloutText: {
         color: '#000',
@@ -365,6 +383,16 @@ const styles = __DEV__
         bottom: 0,
         zIndex: Z_INDEX - 1,
         backgroundColor: 'transparent',
+      },
+      actions: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        flex: 1,
+        width: '100%',
+        alignItems: 'center',
+      },
+      action: {
+        paddingTop: 12,
       },
     })
   : null;

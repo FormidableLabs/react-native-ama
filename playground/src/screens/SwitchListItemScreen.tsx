@@ -4,10 +4,8 @@ import {
   useSwitch,
 } from '@react-native-ama/react-native';
 import React, { useState } from 'react';
-import { Linking, StyleSheet, TouchableOpacity } from 'react-native';
-import { View } from 'react-native';
+import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Path, Svg } from 'react-native-svg';
-
 import { CTAPressable } from '../components/CTAPressable';
 import { Spacer } from '../components/Spacer';
 import { theme } from '../theme';
@@ -89,7 +87,8 @@ export const SwitchListItemScreen = () => {
             Linking.openURL(
               'https://commerce.nearform.com/open-source/react-native-ama/react-native/SwitchListItem',
             )
-          }>
+          }
+        >
           SwitchListItem.
         </Text>
       </Text>
@@ -115,7 +114,8 @@ export const SwitchListItemScreen = () => {
           }
           style={styles.switchListItem}
           value={isCustomSwitchOn}
-          onValueChange={toggleCustomSwitch}>
+          onValueChange={toggleCustomSwitch}
+        >
           <CustomSwitch
             value={isCustomSwitchOn}
             onValueChange={toggleCustomSwitch}
@@ -124,7 +124,7 @@ export const SwitchListItemScreen = () => {
         <Spacer height="big" />
 
         <CTAPressable
-          title="Show error example "
+          title="Show error example"
           disabled={showTouchableAreaError}
           onPress={() => setShowTouchableAreaError(true)}
         />
@@ -142,7 +142,8 @@ export const SwitchListItemScreen = () => {
               }
               style={styles.switchListItem}
               value={isErrorCustomSwitchOn}
-              onValueChange={toggleErrorCustomSwitch}>
+              onValueChange={toggleErrorCustomSwitch}
+            >
               <CustomSwitch
                 value={isErrorCustomSwitchOn}
                 onValueChange={toggleErrorCustomSwitch}

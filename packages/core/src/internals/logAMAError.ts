@@ -11,7 +11,12 @@ export const logAMAError = __DEV__
       const { message, url } = getRuleErrorInfo!(issue);
 
       logger(
-        `[React Native AMA]: ${issue.label} >> ${message}\n\nLearn about: ${url}\n`,
+        `[React Native AMA]: ${issue.rule}
+        Component: ${issue.label || '--- NO LABEL FOUND ---'} (#${issue.viewId})
+
+        ${message}
+
+        Learn about: ${url}\n`,
       );
     }
   : null;

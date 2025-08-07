@@ -1,6 +1,7 @@
 package expo.modules.ama
 
 import android.graphics.Color
+import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,6 @@ import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import expo.modules.kotlin.AppContext
 import java.util.Collections
 import kotlin.collections.mutableListOf
-import kotlin.math.pow
 import kotlin.synchronized
 
 data class A11yIssue(
@@ -70,6 +70,8 @@ val LOGGER_RULES: Map<Rule, RuleAction> =
         )
 
 class A11yChecker(private val appContext: AppContext, private val config: AMAConfig) {
+    val activity = appContext.activityProvider?.currentActivity
+
     private val issues = Collections.synchronizedList(mutableListOf<A11yIssue>())
     private val highlighter = Highlight(appContext)
     private lateinit var rootView: View
@@ -109,6 +111,10 @@ class A11yChecker(private val appContext: AppContext, private val config: AMACon
         return emptyList()
     }
 
+    public fun clearAllIssues() {
+        issues.forEach { issue -> issue.viewId?.let { highlighter.clearHighlight(it) } }
+    }
+
     private fun clearFixedIssues(oldIssues: List<A11yIssue>) {
         val fixed = oldIssues.filter { it !in issues }
 
@@ -123,7 +129,7 @@ class A11yChecker(private val appContext: AppContext, private val config: AMACon
             return
         }
 
-        checkView(view, issues)
+        checkView(view)
 
         if (view is ViewGroup) {
             for (i in 0 until view.childCount) {
@@ -156,7 +162,7 @@ class A11yChecker(private val appContext: AppContext, private val config: AMACon
         }
     }
 
-    private fun checkView(view: View, issues: MutableList<A11yIssue>) {
+    private fun checkView(view: View) {
         val info = view.createAccessibilityNodeInfo()
         val a11yInfo = AccessibilityNodeInfoCompat.wrap(info)
 
@@ -166,11 +172,11 @@ class A11yChecker(private val appContext: AppContext, private val config: AMACon
             checkForMinimumTargetSize(view)
         }
 
-        if (view is TextView) {
-            Logger.debug("checkView", "Check for color contrast")
-
-            checkColorContrast(view, issues)
-        }
+        // if (view is TextView) {
+        //     Logger.debug("checkView", "Check for color contrast")
+        //
+        //     checkColorContrast(view)
+        // }
     }
 
     private fun checkForA11yLabel(view: View, a11yInfo: AccessibilityNodeInfoCompat) {
@@ -215,20 +221,42 @@ class A11yChecker(private val appContext: AppContext, private val config: AMACon
         }
     }
 
-    private fun checkForMinimumTargetSize(view: View) {
-        if (view.width < 48 || view.height < 48) {
-            Logger.info("checkView", "Small touch target")
+    private val density: Float
+        get() = activity?.resources?.displayMetrics?.density ?: 1f
 
+    /** dp → px */
+    private fun dpToPx(dp: Float): Int = (dp * density + 0.5f).toInt()
+
+    /** px → dp */
+    private fun pxToDp(px: Int): Float = px / density
+
+    private fun checkForMinimumTargetSize(view: View) {
+        val absBounds = Rect().also { view.createAccessibilityNodeInfo().getBoundsInScreen(it) }
+
+        getHitSlopRect(view)?.let { hitSlop ->
+            absBounds.left -= hitSlop.left
+            absBounds.top -= hitSlop.top
+            absBounds.right += hitSlop.right
+            absBounds.bottom += hitSlop.bottom
+        }
+
+        val widthPx = absBounds.width()
+        val heightPx = absBounds.height()
+        val widthDp = widthPx / view.resources.displayMetrics.density
+        val heightDp = heightPx / view.resources.displayMetrics.density
+
+        // 4) check vs 48dp
+        if (widthDp < 48 || heightDp < 48) {
             addIssue(
                     rule = Rule.MINIMUM_SIZE,
                     label = view.toString(),
-                    reason = "Touchable are found ${view.width}x${view.height}",
+                    reason = String.format("%.1f×%.1f dp (< 48 dp)", widthDp, heightDp),
                     view = view
             )
         }
     }
 
-    private fun checkColorContrast(textView: TextView, issues: MutableList<A11yIssue>) {
+    private fun checkColorContrast(textView: TextView) {
         try {
             // Get text color
             val textColor = textView.currentTextColor
@@ -363,4 +391,28 @@ fun View.getTextOrContent(): String {
     val a11yInfo = AccessibilityNodeInfoCompat.wrap(info)
 
     return a11yInfo.contentDescription?.toString().orEmpty()
+}
+
+fun getHitSlopRect(view: View): Rect? {
+    return try {
+        val rvClass = Class.forName("com.facebook.react.views.view.ReactViewGroup")
+
+        if (!rvClass.isInstance(view)) {
+            Logger.info("getHitSlopRect", "no class found")
+
+            return null
+        }
+
+        val getter = rvClass.getMethod("getHitSlopRect")
+
+        @Suppress("UNCHECKED_CAST") val rect = getter.invoke(view) as? Rect
+
+        rect
+    } catch (e: ClassNotFoundException) {
+        null
+    } catch (e: NoSuchMethodException) {
+        null
+    } catch (e: Exception) {
+        null
+    }
 }

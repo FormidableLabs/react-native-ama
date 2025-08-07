@@ -6,7 +6,7 @@ export type OnLoadEventPayload = {
 };
 
 export type ReactNativeAmaModuleEvents = {
-  onA11yIssues: (params: A11yIssue[]) => void;
+  onA11yIssues: (params: { issues: A11yIssue[] }) => void;
 };
 
 export type ChangeEventPayload = {
@@ -16,5 +16,5 @@ export type ChangeEventPayload = {
 export type ReactNativeAmaViewProps = {
   url: string;
   onLoad: (event: { nativeEvent: OnLoadEventPayload }) => void;
-  style?: StyleProp<ViewStyle>;
+  style?: StyleProp;
 };

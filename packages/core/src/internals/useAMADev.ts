@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { DevSettings } from 'react-native';
 import ReactNativeAmaModule from '../ReactNativeAmaModule';
 import { logAMAError } from './logAMAError';
@@ -43,34 +43,47 @@ try {
 }
 
 const startAMA = () => {
+  console.log('[React Native AMA]: ', '👀 Start Monitoring 👀');
+
   ReactNativeAmaModule.start(projectRules);
 };
 
+const stopAMA = () => {
+  console.log('[React Native AMA]: ', '🙈 Stop Monitoring 🙈');
+
+  ReactNativeAmaModule.stop();
+};
+
 export const useAMADev = () => {
-  const [isMonitoring, setIsMonitoring] = useState(true);
+  const isMonitoring = useRef(true);
   const [issues, setIssues] = useState<A11yIssue[]>();
 
   useEffect(() => {
     startAMA();
 
-    ReactNativeAmaModule.addListener('onA11yIssues', (issues: A11yIssue[]) => {
-      setIssues(issues.issues);
-    });
+    ReactNativeAmaModule.addListener(
+      'onA11yIssues',
+      (issues: { issues: A11yIssue[] }) => {
+        setIssues(issues.issues);
+      },
+    );
   }, []);
 
-  useEffect(() => {
-    const nextAction = isMonitoring ? 'Disable' : 'Enable';
-    DevSettings.addMenuItem(`${nextAction} React Native AMA`, () => {
-      if (isMonitoring) {
-        ReactNativeAmaModule.stop();
-        setIssues([]);
-      } else {
-        startAMA();
-      }
+  const toggleReactNativeAMA = () => {
+    if (isMonitoring.current) {
+      stopAMA();
+      setIssues([]);
+    } else {
+      startAMA();
+    }
 
-      setIsMonitoring(!isMonitoring);
-    });
-  }, [isMonitoring]);
+    isMonitoring.current = !isMonitoring.current;
+  };
+
+  useEffect(() => {
+    DevSettings.addMenuItem('Toggle React Native AMA', toggleReactNativeAMA);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return {
     issues,

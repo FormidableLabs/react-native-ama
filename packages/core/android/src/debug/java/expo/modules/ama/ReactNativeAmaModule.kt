@@ -66,6 +66,7 @@ class ReactNativeAmaModule : Module() {
 
         Function("stop") {
             if (isMonitoring) {
+                a11yChecker.clearAllIssues()
                 currentDecorView?.let { it.viewTreeObserver.removeOnDrawListener(drawListener) }
 
                 isMonitoring = false

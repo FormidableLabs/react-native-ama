@@ -50,6 +50,8 @@ public class ReactNativeAmaModule: Module {
 
             self.a11yChecker = A11yChecker(appContext: self.appContext!, config: config)
 
+            isMonitoring = true
+
             DispatchQueue.main.async {
                 guard let viewController = self.appContext?.utilities?.currentViewController(),
                     let decorView = viewController.view
@@ -59,15 +61,20 @@ public class ReactNativeAmaModule: Module {
 
                 self.currentDecorView = decorView
                 self.setupDisplayLink()
-                self.isMonitoring = true
             }
         }
 
         Function("stop") {
             guard isMonitoring else { return }
-            displayLink?.invalidate()
-            displayLink = nil
+
             isMonitoring = false
+
+            DispatchQueue.main.async {
+                self.displayLink?.invalidate()
+                self.displayLink = nil
+
+                self.a11yChecker?.clearAllHighlights()
+            }
         }
 
         AsyncFunction("getPosition") { (viewId: Int) async -> [Double]? in
@@ -105,7 +112,7 @@ public class ReactNativeAmaModule: Module {
     }
 
     @objc private func scheduleA11yCheck() {
-        guard !isCheckScheduled else { return }
+        guard isMonitoring, !isCheckScheduled else { return }
 
         isCheckScheduled = true
 
@@ -127,6 +134,7 @@ public class ReactNativeAmaModule: Module {
     }
 
     private func performA11yChecks() {
+        guard isMonitoring else { return }
         guard let result = a11yChecker?.performA11yChecks(on: currentDecorView) else { return }
 
         if let shouldSend = result["sendEvent"] as? Bool, shouldSend {

@@ -1,0 +1,254 @@
+{
+  "docs": [
+    {
+      "type": "link",
+      "label": "Overview",
+      "href": "/docs/",
+      "autoAddBaseUrl": true
+    },
+    {
+      "type": "link",
+      "label": "Getting Started",
+      "href": "getting-started",
+      "autoAddBaseUrl": true
+    },
+    {
+      "type": "link",
+      "label": "Config File",
+      "href": "config-file",
+      "autoAddBaseUrl": true
+    },
+    {
+      "type": "link",
+      "label": "Usage",
+      "href": "usage",
+      "autoAddBaseUrl": true
+    },
+    {
+      "type": "category",
+      "label": "Packages",
+      "collapsible": true,
+      "collapsed": false,
+      "items": [
+        {
+          "type": "link",
+          "label": "Core",
+          "href": "/core/",
+          "description": "Needed to create an app with accessibility in mind",
+          "autoAddBaseUrl": true
+        },
+        {
+          "type": "link",
+          "label": "Animations",
+          "href": "/animations/",
+          "description": "Used to handle accessibility within animations using react-native Animated or react-native-reanimated",
+          "autoAddBaseUrl": true
+        },
+        {
+          "type": "link",
+          "label": "Forms",
+          "href": "/forms/",
+          "description": "Used to create accessible forms",
+          "autoAddBaseUrl": true
+        },
+        {
+          "type": "link",
+          "label": "React Native",
+          "href": "/react-native/",
+          "description": "Extends react-native components with accessibility",
+          "autoAddBaseUrl": true
+        },
+        {
+          "type": "link",
+          "label": "Lists",
+          "href": "/lists/",
+          "description": "Used to create accessible lists",
+          "autoAddBaseUrl": true
+        },
+        {
+          "type": "link",
+          "label": "Extras",
+          "href": "/extras/",
+          "description": "Provides extra accessible components and hooks",
+          "autoAddBaseUrl": true
+        }
+      ]
+    }
+  ],
+  "guidelines": [
+    [
+      {
+        "type": "link",
+        "label": "Type of Accessibility Issues",
+        "href": "type-of-accessibility-issues",
+        "autoAddBaseUrl": true
+      },
+      {
+        "type": "link",
+        "label": "POUR - Accessibility Principles",
+        "href": "pour",
+        "autoAddBaseUrl": true
+      },
+      {
+        "type": "link",
+        "label": "Accessibility Hint",
+        "href": "accessibility-hint",
+        "autoAddBaseUrl": true
+      },
+      {
+        "type": "link",
+        "label": "Accessibility Label",
+        "href": "accessibility-label",
+        "autoAddBaseUrl": true
+      },
+      {
+        "type": "link",
+        "label": "Accessibility Role",
+        "href": "accessibility-role",
+        "autoAddBaseUrl": true
+      },
+      {
+        "type": "link",
+        "label": "Accessibility States",
+        "href": "accessibility-states",
+        "autoAddBaseUrl": true
+      },
+      {
+        "type": "link",
+        "label": "Animations",
+        "href": "animations",
+        "autoAddBaseUrl": true
+      },
+      {
+        "type": "link",
+        "label": "BottomSheet & Drawer",
+        "href": "bottomsheet",
+        "autoAddBaseUrl": true
+      },
+      {
+        "type": "link",
+        "label": "Carousel",
+        "href": "carousel",
+        "autoAddBaseUrl": true
+      },
+      {
+        "type": "link",
+        "label": "Contrast",
+        "href": "contrast",
+        "autoAddBaseUrl": true
+      },
+      {
+        "type": "link",
+        "label": "Focus",
+        "href": "focus",
+        "autoAddBaseUrl": true
+      },
+      {
+        "type": "link",
+        "label": "Forms",
+        "href": "forms",
+        "autoAddBaseUrl": true
+      },
+      {
+        "type": "link",
+        "label": "Grouping",
+        "href": "grouping",
+        "autoAddBaseUrl": true
+      },
+      {
+        "type": "link",
+        "label": "Headers",
+        "href": "headers",
+        "autoAddBaseUrl": true
+      },
+      {
+        "type": "link",
+        "label": "Lists & Grids",
+        "href": "lists-grids",
+        "autoAddBaseUrl": true
+      },
+      {
+        "type": "link",
+        "label": "Minimum Size",
+        "href": "minimum-size",
+        "autoAddBaseUrl": true
+      },
+      {
+        "type": "link",
+        "label": "Text",
+        "href": "text",
+        "autoAddBaseUrl": true
+      },
+      {
+        "type": "link",
+        "label": "Timed actions",
+        "href": "timed-actions",
+        "autoAddBaseUrl": true
+      }
+    ]
+  ],
+  "checklist": [
+    [
+      {
+        "type": "link",
+        "label": "BottomSheet & Drawers",
+        "href": "bottom-sheet-drawer",
+        "autoAddBaseUrl": true
+      },
+      {
+        "type": "link",
+        "label": "Bottom Tab Navigator",
+        "href": "bottom-tab-navigator",
+        "autoAddBaseUrl": true
+      },
+      {
+        "type": "link",
+        "label": "Button",
+        "href": "button",
+        "autoAddBaseUrl": true
+      },
+      {
+        "type": "link",
+        "label": "Carousel",
+        "href": "carousel",
+        "autoAddBaseUrl": true
+      },
+      {
+        "type": "link",
+        "label": "Focus",
+        "href": "focus",
+        "autoAddBaseUrl": true
+      },
+      {
+        "type": "link",
+        "label": "Forms",
+        "href": "forms",
+        "autoAddBaseUrl": true
+      },
+      {
+        "type": "link",
+        "label": "Headings",
+        "href": "headings",
+        "autoAddBaseUrl": true
+      },
+      {
+        "type": "link",
+        "label": "List & Grids",
+        "href": "list-grids",
+        "autoAddBaseUrl": true
+      },
+      {
+        "type": "link",
+        "label": "Text",
+        "href": "text",
+        "autoAddBaseUrl": true
+      },
+      {
+        "type": "link",
+        "label": "Timed Actions",
+        "href": "timed-actions",
+        "autoAddBaseUrl": true
+      }
+    ]
+  ]
+}

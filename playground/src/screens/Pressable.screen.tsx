@@ -35,10 +35,16 @@ export const PressableScreen = () => {
         </Text>
         <Spacer height="big" />
 
-        {/* No a11y role */}
+        {/*
+         *  Issue: NO_ACCESSIBILITY_ROLE
+         *  FIX: Set a role of "button"
+         */}
         <CTAPressable title="Missing role" role="" hasMaring />
 
-        {/* No a11y label */}
+        {/*
+         * Issue: NO_ACCESSIBILITY_LABEL
+         * FIX: Specify the propert of aria-label, e.g: aria-label="Expand"
+         */}
         <Pressable role="button">
           <Svg width={32} height={32} viewBox="0 0 24 24" fill="none">
             <Path
@@ -51,7 +57,10 @@ export const PressableScreen = () => {
         </Pressable>
         <Spacer height={'normal'} />
 
-        {/* Too small */}
+        {/*
+         * Issue: MINIMUM_SIZE
+         * FIX: Either increase the padding or increase the tappable area with `hitSlop`
+         */}
         <CTAPressable
           title="X"
           style={{

@@ -5,7 +5,7 @@ public struct A11yIssue: Equatable {
     public let type: RuleAction
     public let rule: Rule
     public let label: String?
-    public let issue: String?
+    public let reason: String?
     public let viewId: Int
     public var sent: Bool
 
@@ -99,7 +99,7 @@ public class A11yChecker {
                     [
                         "type": issue.type.rawValue,
                         "rule": issue.rule.rawValue,
-                        "issue": issue.issue ?? "",
+                        "reason": issue.reason ?? "",
                         "label": issue.label ?? "",
                         "viewId": issue.viewId,
                     ]
@@ -112,6 +112,14 @@ public class A11yChecker {
             "issues": [],
             "sendEvent": shouldSendEvent,
         ]
+    }
+
+    public func clearAllHighlights() {
+        issues.forEach { issue in
+            highlighter.clearHighlight(viewId: issue.viewId)
+        }
+
+        issues.removeAll()
     }
 
     private func clearFixedIssues(_ oldIssues: [A11yIssue]) -> Bool {
@@ -145,13 +153,9 @@ public class A11yChecker {
             checkForA11yLabel(view)
             checkForA11yRole(view)
             checkForMinimumTargetArea(view)
+            checkColorContrast(on: view)
         }
 
-        //
-        // // Minimum touch target
-
-        //
-        // // Contrast on text labels
         // if let label = view as? UILabel {
         //   Logger.debug("checkView", "Check for color contrast")
         //
@@ -164,7 +168,7 @@ public class A11yChecker {
             addIssue(
                 rule: .noAccessibilityLabel,
                 label: view.getTextOrContent(),
-                issue: "",
+                reason: "",
                 view: view
             )
         }
@@ -200,46 +204,59 @@ public class A11yChecker {
             addIssue(
                 rule: .noAccessibilityRole,
                 label: label,
-                issue: "",
+                reason: "",
                 view: view
             )
         }
     }
 
     private func checkForMinimumTargetArea(_ view: UIView) {
-        if view.isPressable && (view.bounds.width < 48 || view.bounds.height < 48) {
+        let baseSize: CGRect = view.frame
+        let insets = view.getHitSlopRect()
+        let pressableWidth = baseSize.width - insets.left - insets.right
+        let pressableHeight = baseSize.height - insets.top - insets.bottom
+
+        if view.isPressable && (pressableWidth < 44 || pressableHeight < 44) {
             addIssue(
                 rule: .minimumSize,
                 label: view.getTextOrContent(),
-                issue:
-                    "\(Int(view.bounds.width))x\(Int(view.bounds.height))",
+                reason:
+                    "\(Int(pressableWidth))x\(Int(pressableHeight))",
                 view: view
             )
         }
-
     }
 
-    private func checkColorContrast(_ label: UILabel) {
-        defer { /* swallow any extraction errors */  }
-        let textColor = label.textColor ?? .black
-        let backgroundColor = getBackgroundColor(for: label)
-        let contrastRatio = calculateContrastRatio(color1: textColor, color2: backgroundColor)
+    private func checkColorContrast(on view: UIView) {
+        guard
+            let fg = view.contentColor
+        else {
+            return
+        }
+        let bg = getBackgroundColor(for: view)
+        let contrastRatio = calculateContrastRatio(color1: fg, color2: bg)
+        var minContrast = 3.0
 
-        let textSize = label.font.pointSize
-        let isLargeText =
-            textSize >= 18
-            || (textSize >= 14 && label.font.fontDescriptor.symbolicTraits.contains(.traitBold))
-        let minContrast = isLargeText ? 3.0 : 4.5
+        if let font = view.contentFont {
+            let textSize = font.pointSize
+            let isBold = font.fontDescriptor.symbolicTraits.contains(.traitBold)
+            let isLargeText = textSize >= 18 || (textSize >= 14 && isBold)
+
+            minContrast = isLargeText ? 3.0 : 4.5
+        }
 
         if contrastRatio < minContrast {
             addIssue(
                 rule: .contrastFailed,
-                label: label.description,
-                issue: String(
-                    format: "Color contrast ratio %.2f is below minimum %.1f (WCAG AA)",
-                    contrastRatio, minContrast
+                label: view.getTextOrContent(),
+                reason: String(
+                    format:
+                        "Color contrast ratio %.2f is below minimum %.1f (WCAG AA).\nForeground %@ (%@) on background color %@ (%@)",
+                    contrastRatio, minContrast,
+                    fg.hexString, fg.rgbaString,
+                    bg.hexString, bg.rgbaString
                 ),
-                view: label
+                view: view
             )
         }
     }
@@ -290,7 +307,7 @@ public class A11yChecker {
         return loggerRules[rule]!
     }
 
-    private func addIssue(rule: Rule, label: String, issue: String, view: UIView) {
+    private func addIssue(rule: Rule, label: String, reason: String, view: UIView) {
         let action = getRuleAction(rule)
         let viewId = view.tag
         guard action != .ignore, viewId > 0 else { return }
@@ -305,7 +322,7 @@ public class A11yChecker {
                     type: action,
                     rule: rule,
                     label: label,
-                    issue: issue,
+                    reason: reason,
                     viewId: viewId,
                     sent: false
                 ))
@@ -325,6 +342,74 @@ extension UIView {
             return ph
         }
         return ""
+    }
+
+    var contentColor: UIColor? {
+        let className = String(describing: type(of: self))
+
+        if className.contains("RCTParagraphComponentView"),
+            let anyObj = self as AnyObject?,
+            let attrText = anyObj.value(forKey: "attributedText") as? NSAttributedString,
+            attrText.length > 0,
+            let fgColor = attrText.attribute(.foregroundColor, at: 0, effectiveRange: nil)
+                as? UIColor
+        {
+            return fgColor
+        }
+
+        if let label = self as? UILabel {
+            return label.textColor
+        }
+        if let button = self as? UIButton {
+            if let tc = button.titleColor(for: .normal) { return tc }
+            return button.tintColor
+        }
+        if let iv = self as? UIImageView {
+            return iv.tintColor
+        }
+
+        for sub in subviews {
+            if let cc = sub.contentColor {
+                return cc
+            }
+        }
+
+        return self.tintColor
+    }
+
+    var contentFont: UIFont? {
+        if let label = self as? UILabel {
+            return label.font
+        }
+        if let button = self as? UIButton,
+            let f = button.titleLabel?.font
+        {
+            return f
+        }
+        // Recurse into children
+        for sub in subviews {
+            if let f = sub.contentFont {
+                return f
+            }
+        }
+        return nil
+    }
+
+    fileprivate func getHitSlopRect() -> UIEdgeInsets {
+        let selector = NSSelectorFromString("hitTestEdgeInsets")
+
+        guard self.responds(to: selector) else {
+            return .zero
+        }
+
+        let anyObj = self as AnyObject
+        guard
+            let edgeValue = anyObj.value(forKey: "hitTestEdgeInsets") as? UIEdgeInsets
+        else {
+            return .zero
+        }
+
+        return edgeValue
     }
 
     /**
@@ -359,5 +444,32 @@ extension UIAccessibilityTraits {
         return all.compactMap { (trait, name) in
             (self.rawValue & trait.rawValue) != 0 ? name : nil
         }
+    }
+}
+
+extension UIColor {
+    var rgbaComponents: (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat)? {
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
+        guard self.getRed(&r, green: &g, blue: &b, alpha: &a) else { return nil }
+        return (r, g, b, a)
+    }
+
+    var rgbaString: String {
+        guard let c = rgbaComponents else { return self.description }
+        let R = Int(c.r * 255)
+        let G = Int(c.g * 255)
+        let B = Int(c.b * 255)
+        return String(format: "rgba(%d,%d,%d,%.2f)", R, G, B, c.a)
+    }
+
+    var hexString: String {
+        guard let c = rgbaComponents else { return self.description }
+        let R = Int(c.r * 255)
+        let G = Int(c.g * 255)
+        let B = Int(c.b * 255)
+        return String(format: "#%02X%02X%02X", R, G, B)
     }
 }
