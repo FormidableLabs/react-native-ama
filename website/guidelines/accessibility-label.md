@@ -178,21 +178,23 @@ Let's consider the following example:
 ### Example
 
 ```jsx
-<Pressable onPress={contactUs} accessibilityRole="button">
+<Pressable onPress={contactUs} role="button">
   <Text>Contact us</Text>
 </Pressable>
 ````
 
 | VoiceOver                                  | Talkback                                   |           |
 | ------------------------------------------ | ------------------------------------------ | --------- |
-| button, Contact us, double tap to activate | button, Contact us, double tap to activate | <Wrong /> |
+| Contact us, button, double tap to activate | Contact us, button, double tap to activate | <Good /> |
 
-#### Icon only buttons
+_The `label` is announced first, then the **role** and the action that can be performed at the end._
+
+### Icon only buttons
 
 <Critical label dot padding />
 
 ```jsx
-<Pressable onPress={goBack} accessibilityRole="button">
+<Pressable onPress={goBack} role="button" aria-label="Go back">
 <SVGIcon />
 </Pressable>
 ```
@@ -201,29 +203,9 @@ When testing the button with both VoiceOver and TalkBack, they both read:
 
 | VoiceOver                      | Talkback                       |           |
 | ------------------------------ | ------------------------------ | --------- |
-| button, double tap to activate | button, double tap to activate | <Wrong /> |
+| Go back, button, double tap to activate | Go back, button, double tap to activate | <Good /> |
 
-Here the assistive technology only reads the role and the action that can be performed with the component. So there is a complete lack of helpful information about what we're going to trigger.
-
-##### Let's fix it
-
-```jsx
-<Pressable onPress={goBack} role="button" aria-label="Go back">
-<SVGIcon />
-</Pressable>
-```
-
-When testing with the assistive technology, this happens:
-
-| VoiceOver                                  | Talkback                                  |          |
-| ------------------------------------------ | ----------------------------------------- | -------- |
-| Go back, button, double tap to activate    | Go back,button, double tap to activate    | <Good /> |
-
-The `accessibilityLabel` is announced first, then the **role** and the action that can be performed at the end.
-
-For this reason, AMA requires that tappable elements have the `accessibilityLabel` defined.
-
-The word `CONTACT` is read correctly, but both screen readers spell the word `US` as it is interpreted as `U.S.` for `United States.
+_The `accessibilityLabel` is announced first, then the **role** and the action that can be performed at the end._
 
 ## External resources
 
