@@ -42,7 +42,7 @@ export default function Home(): JSX.Element {
             title: 'Real-time Accessibility checks',
             html: {
               __html:
-                'AMA provides a comprehensive suite of pre-built components and functions designed to handle accessibility concerns out of the box. This allows developers to quickly and easily integrate accessible features into mobile apps without the need to implement complex accessibility logic.',
+                'AMA actively audits your application by performing runtime accessibility checks on its components. When an issue is detected, the library provides developers with actionable feedback, including a detailed explanation of the problem, guidance on how to fix it, and a direct link to the relevant accessibility guideline. This empowers developers to find and resolve accessibility violations quickly and efficiently during the development process.',
             },
           },
           {

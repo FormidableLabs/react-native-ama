@@ -49,3 +49,7 @@ coverage
 !.yarn/versions
 example/.yarn
 playground/.yarn/cache/
+playground/android
+playground/ios
+
+.java-version

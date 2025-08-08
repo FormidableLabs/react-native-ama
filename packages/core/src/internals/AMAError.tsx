@@ -10,50 +10,38 @@ import {
 import { logAMAError } from './logAMAError';
 import { A11yIssue, Position } from './types';
 
-type A11yCounts = {
-  must: number;
-  should: number;
-};
-
 const COLORS: { [key in A11ySeverity]: string } = {
   Critical: '#f00',
   Serious: '#FFFf00',
 };
-
-function countA11yIssues(issues: A11yIssue[]): A11yCounts {
-  return issues.reduce<A11yCounts>(
-    (acc, { type }) => {
-      if (type === 'MUST' || type === 'MUST_NOT') {
-        acc.must++;
-      } else if (type === 'SHOULD' || type === 'SHOULD_NOT') {
-        acc.should++;
-      }
-      return acc;
-    },
-    { must: 0, should: 0 },
-  );
-}
 
 const AMAErrorComponent = ({ issues }: { issues?: A11yIssue[] }) => {
   const [activeIssueIndex, setActiveIssueIndex] = useState<{
     id: number;
     position: Position;
   }>();
-  const { must, should } = countA11yIssues(issues ?? []);
-  const filteredIssues = useRef<A11yIssue[]>([]);
   const issueToView = useRef<A11yIssue>(null);
+  const previousViewId = useRef<number>(null);
 
   const setActiveIssue = async (newIndex: number) => {
-    issueToView.current = filteredIssues.current?.[newIndex];
+    issueToView.current = issues![newIndex];
+
+    if (previousViewId.current) {
+        console.info(previousViewId.current)
+       ReactNativeAmaModule.clearHighlight(previousViewId.current);
+    }
 
     if (issueToView.current) {
-      const position = await ReactNativeAmaModule.getPosition(
+      const position = await ReactNativeAmaModule.highlightComponent(
         issueToView.current.viewId,
       );
 
       setActiveIssueIndex({ id: newIndex, position });
+
+      previousViewId.current = issueToView.current.viewId
     } else {
       setActiveIssueIndex(undefined);
+      previousViewId.current = null
     }
   };
 
@@ -74,17 +62,6 @@ const AMAErrorComponent = ({ issues }: { issues?: A11yIssue[] }) => {
   };
 
   const showFirstError = () => {
-    filteredIssues.current =
-      issues?.filter(issue => ['MUST', 'MUST_NOT'].includes(issue.type)) ?? [];
-
-    showNextIssue();
-  };
-
-  const showFirstWarning = () => {
-    filteredIssues.current =
-      issues?.filter(issue => ['SHOULD', 'SHOULD_NOT'].includes(issue.type)) ??
-      [];
-
     showNextIssue();
   };
 
@@ -109,6 +86,8 @@ const AMAErrorComponent = ({ issues }: { issues?: A11yIssue[] }) => {
           issue={issueToView.current!}
           position={activeIssueIndex.position}
           closeOverlay={closeIssues}
+          showPrevIssue={showPrevIssue}
+          showNextIssue={showNextIssue}
         />
       ) : null}
       <View style={styles!.failedBar}>
@@ -128,9 +107,7 @@ const AMAErrorComponent = ({ issues }: { issues?: A11yIssue[] }) => {
               color="#fff"
               line="#969696"
               onPress={showNextIssue}
-              disabled={
-                activeIssueIndex.id + 1 >= filteredIssues.current.length
-              }
+              disabled={activeIssueIndex.id + 1 >= issues!.length}
             />
             <AMAButton
               singular="✘ close"
@@ -140,25 +117,12 @@ const AMAErrorComponent = ({ issues }: { issues?: A11yIssue[] }) => {
             />
           </>
         ) : (
-          <>
-            <AMAButton
-              count={must}
-              singular="error"
-              bg="#FF0000"
-              color="#fff"
-              line="#000"
-              onPress={showFirstError}
-              disabled={must === 0}
-            />
-            <AMAButton
-              count={should}
-              singular="warning"
-              bg="#FFFf00"
-              color="#000"
-              onPress={showFirstWarning}
-              disabled={should === 0}
-            />
-          </>
+          <AMAButton
+            onPress={showFirstError}
+            singular={`AMA: ${issues.length} accessibility issues found. Tap to inspect`}
+            bg="#A31420"
+            color="#fff"
+          />
         )}
       </View>
     </>
@@ -220,9 +184,17 @@ type AMAOverlayProps = {
   issue: A11yIssue;
   position: Position;
   closeOverlay: () => void;
+  showPrevIssue: () => void;
+  showNextIssue: () => void;
 };
 
-const AMAOverlay = ({ issue, position, closeOverlay }: AMAOverlayProps) => {
+const AMAOverlay = ({
+  issue,
+  position,
+  closeOverlay,
+  showNextIssue,
+  showPrevIssue,
+}: AMAOverlayProps) => {
   const { severity, url } = getRuleErrorInfo!(issue);
   const [x, y, width, height] = position;
 
@@ -257,7 +229,7 @@ const AMAOverlay = ({ issue, position, closeOverlay }: AMAOverlayProps) => {
 
         <View style={styles!.actions}>
           <Pressable
-            onPress={openHelp}
+            onPress={showPrevIssue}
             role="button"
             hitSlop={{ left: 12, top: 12, bottom: 12, right: 12 }}
             style={styles!.action}
@@ -274,7 +246,7 @@ const AMAOverlay = ({ issue, position, closeOverlay }: AMAOverlayProps) => {
           </Pressable>
 
           <Pressable
-            onPress={openHelp}
+            onPress={showNextIssue}
             role="button"
             hitSlop={{ left: 12, top: 12, bottom: 12, right: 12 }}
             style={styles!.action}

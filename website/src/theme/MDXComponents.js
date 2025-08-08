@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react';
 import MDXComponents from '@theme-original/MDXComponents';
-
 import {
+  AMASection,
   And,
   Android,
   AssistiveTechnology,
@@ -9,6 +9,7 @@ import {
   DevOnly,
   DevOnlyChecks,
   Good,
+  iOS,
   LowVisionGroup,
   Must,
   MustNot,
@@ -21,12 +22,11 @@ import {
   ShouldNot,
   Then,
   Tick,
+  VoiceControl,
   Warning,
   When,
   Wrong,
   Yes,
-  iOS,
-  AMASection,
 } from '../components';
 
 export default {
@@ -59,4 +59,5 @@ export default {
   Padding,
   Tick,
   AMASection,
+  VoiceControl,
 };

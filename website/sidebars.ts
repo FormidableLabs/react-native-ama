@@ -72,7 +72,7 @@ const sidebars: SidebarsConfig = {
       href: 'config-file',
       autoAddBaseUrl: true,
     },
-    { type: 'link', label: 'Usage', href: 'usage', autoAddBaseUrl: true },
+    { type: 'link', label: 'Accessibility Checks', href: 'checks', autoAddBaseUrl: true },
     {
       type: 'category',
       label: 'Packages',

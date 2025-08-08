@@ -77,7 +77,7 @@ public class ReactNativeAmaModule: Module {
             }
         }
 
-        AsyncFunction("getPosition") { (viewId: Int) async -> [Double]? in
+        AsyncFunction("highlightComponent") { (viewId: Int) async -> [Double]? in
             guard
                 let root = self.currentDecorView,
                 let target = root.viewWithTag(viewId)
@@ -90,6 +90,8 @@ public class ReactNativeAmaModule: Module {
 
                     frameInScroll.origin.y = max(0, frameInScroll.origin.y - m)
                     scroll.scrollRectToVisible(frameInScroll, animated: false)
+
+                    a11yChecker?.highlight(view: target)
                 }
             }
 
@@ -103,6 +105,17 @@ public class ReactNativeAmaModule: Module {
                 bounds.width,
                 bounds.height,
             ]
+        }
+
+        AsyncFunction("clearHighlight") { (viewId: Int) in
+            guard
+                let root = self.currentDecorView,
+                let target = root.viewWithTag(viewId)
+            else { return  }
+
+            await MainActor.run {
+                a11yChecker?.clearHighlight(view: target)
+            }
         }
     }
 

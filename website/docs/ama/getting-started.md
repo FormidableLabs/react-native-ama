@@ -26,6 +26,28 @@ Start off by installing `core` and then any other packages you wish to make use 
 npm install  @react-native-ama/core
 ```
 
+### Usage
+
+Wrap your app with the [AMAProvider](/core/components/AMAProvider) component to start accessibility checks.
+
+```jsx {1-4,8-9}
+import { AMAProvider } from '@react-native-ama/core';
+
+const App = () => {
+  return (
+    <AMAProvider>
+      <YourApp />
+    </AMAProvider>
+  );
+};
+```
+
+#### Toggle Accessibility Checks
+
+You can toggle the accessibility checks on and off via the [DevMenu](https://reactnative.dev/docs/debugging)
+
+![AMA Dev Menu](/img/dev-menu.png)
+
 ### Config File
 
 When you install the `@react-native-ama/core` package, `the ama.rules.json` file should be generated automatically in the root of your project. This file can be used to customize AMA Log Levels and Exceptions. If you are running a monorepo setup this file won't automatically generate and you will have two options customize AMA's config.

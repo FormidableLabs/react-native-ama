@@ -53,7 +53,7 @@ const config: Config = {
           lastVersion: 'current',
           versions: {
             current: {
-              label: 'Next',
+              label: '2.x',
             },
             '1.x.x': {
               label: '1.2.0',
@@ -280,6 +280,7 @@ const config: Config = {
     zoom: {
       selector: '.zoom-me',
     },
+    staticDirectories: ['static'],
   } satisfies ThemeConfig,
 };
 

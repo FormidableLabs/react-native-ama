@@ -315,8 +315,6 @@ public class A11yChecker {
         if !issues.contains(where: { $0.rule == rule && $0.viewId == viewId }) {
             self.newIssues = true
 
-            highlighter.highlight(view: view, mode: config.highlight, action: action)
-
             issues.append(
                 A11yIssue(
                     type: action,
@@ -326,6 +324,22 @@ public class A11yChecker {
                     viewId: viewId,
                     sent: false
                 ))
+        }
+    }
+
+    public func clearHighlight(view: UIView) {
+        let viewId = view.tag
+
+        highlighter.clearHighlight(viewId: viewId)
+    }
+
+    public func highlight(view: UIView) {
+        let viewId = view.tag
+        if let issue = issues.first(where: { $0.viewId == viewId }) {
+            let rule = issue.rule
+            let action = getRuleAction(rule)
+
+            highlighter.highlight(view: view, mode: config.highlight, action: action)
         }
     }
 }

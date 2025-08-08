@@ -188,6 +188,7 @@ export const GetRuleError = __DEV__
       const ruleHelp = RULES_HELP![issue.rule];
       const [, top] = componentPosition;
       const maxHeight = SCREEN_HEIGHT - top - 48;
+      console.info({maxHeight})
 
       return (
         <ScrollView style={{ maxHeight }}>
