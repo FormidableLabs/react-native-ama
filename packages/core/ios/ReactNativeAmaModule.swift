@@ -2,30 +2,7 @@ import ExpoModulesCore
 import UIKit
 
 struct Constants {
-    static let debounce: TimeInterval = 0.5
-}
-
-public struct AMAConfig: CustomDebugStringConvertible {
-    public let rules: [String: String]
-    public let accessibilityLabelExceptions: [String]
-    public let highlight: String
-
-    public init(from dictionary: [String: Any?]) {
-        self.rules = dictionary["rules"] as? [String: String] ?? [:]
-        self.accessibilityLabelExceptions =
-            dictionary["accessibilityLabelExceptions"] as? [String] ?? []
-        self.highlight = dictionary["highlight"] as? String ?? "both"
-    }
-
-    public var debugDescription: String {
-        return """
-            AMAConfig(
-                rules: \(rules),
-                accessibilityLabelExceptions: \(accessibilityLabelExceptions),
-                highlight: "\(highlight)"
-            )
-            """
-    }
+    static let debounce: TimeInterval = 2.0
 }
 
 public class ReactNativeAmaModule: Module {
@@ -33,22 +10,22 @@ public class ReactNativeAmaModule: Module {
     private var currentDecorView: UIView?
     private var displayLink: CADisplayLink?
 
-    private var a11yChecker: A11yChecker?
+    private var a11yChecker: NodesGrabber?
+    private var highlighter: Highlight?
     private var isCheckScheduled = false
 
     public func definition() -> ModuleDefinition {
         Name("ReactNativeAma")
 
-        Events("onA11yIssues")
+        Events("onAmaNodes")
 
-        Function("start") { (configMap: [String: Any?]) in
+        Function("start") {
             guard !isMonitoring else { return }
 
-            let config = AMAConfig(from: configMap)
+            Logger.info("start", "👀 Start Monitoring 👀")
 
-            Logger.info("start", "👀 Start Monitoring 👀", extra: config.debugDescription)
-
-            self.a11yChecker = A11yChecker(appContext: self.appContext!, config: config)
+            self.a11yChecker = NodesGrabber(appContext: self.appContext!)
+            self.highlighter = Highlight()
 
             isMonitoring = true
 
@@ -72,12 +49,11 @@ public class ReactNativeAmaModule: Module {
             DispatchQueue.main.async {
                 self.displayLink?.invalidate()
                 self.displayLink = nil
-
-                self.a11yChecker?.clearAllHighlights()
+                // self.a11yChecker?.clearAllHighlights()
             }
         }
 
-        AsyncFunction("highlightComponent") { (viewId: Int) async -> [Double]? in
+        AsyncFunction("highlight") { (viewId: Int, mode: String, hexColor: String) async -> [Double]? in
             guard
                 let root = self.currentDecorView,
                 let target = root.viewWithTag(viewId)
@@ -91,7 +67,7 @@ public class ReactNativeAmaModule: Module {
                     frameInScroll.origin.y = max(0, frameInScroll.origin.y - m)
                     scroll.scrollRectToVisible(frameInScroll, animated: false)
 
-                    a11yChecker?.highlight(view: target)
+                    self.highlighter?.highlight(view: target, mode: mode, hexColor: hexColor)
                 }
             }
 
@@ -106,15 +82,21 @@ public class ReactNativeAmaModule: Module {
                 bounds.height,
             ]
         }
+        //
+        // AsyncFunction("highlight") { (viewId: Int) in
+        //     guard
+        //         let root = self.currentDecorView,
+        //         let target = root.viewWithTag(viewId)
+        //     else { return }
+        //
+        //     await MainActor.run {
+        //         self.highlighter?.highlight(view: target, mode: "both", hexColor: "#f00")
+        //     }
+        // }
 
         AsyncFunction("clearHighlight") { (viewId: Int) in
-            guard
-                let root = self.currentDecorView,
-                let target = root.viewWithTag(viewId)
-            else { return  }
-
             await MainActor.run {
-                a11yChecker?.clearHighlight(view: target)
+                self.highlighter?.clearHighlight(viewId: viewId)
             }
         }
     }
@@ -137,7 +119,7 @@ public class ReactNativeAmaModule: Module {
             }
 
             self.displayLink?.isPaused = true
-            self.performA11yChecks()
+            self.getNodesToCheck()
 
             DispatchQueue.main.async {
                 self.displayLink?.isPaused = false
@@ -146,17 +128,24 @@ public class ReactNativeAmaModule: Module {
         }
     }
 
-    private func performA11yChecks() {
+    private func getNodesToCheck() {
         guard isMonitoring else { return }
-        guard let result = a11yChecker?.performA11yChecks(on: currentDecorView) else { return }
+        guard let result = a11yChecker?.getNodesToCheck(on: currentDecorView) else { return }
 
-        if let shouldSend = result["sendEvent"] as? Bool, shouldSend {
-            if let issueList = result["issues"] {
-                sendEvent(
-                    "onA11yIssues",
-                    ["timestamp": Date().timeIntervalSince1970 * 1000, "issues": issueList]
-                )
-            }
+        if let shouldSend = result.send as? Bool, shouldSend {
+            // Since result.nodes is not optional, we can access it directly here.
+            let nodes = result.nodes
+            let nodesWithStringKeys = Dictionary(
+                uniqueKeysWithValues: nodes.map { (key, value) in
+                    (String(key), value.toDictionary())
+                }
+            )
+
+
+            sendEvent(
+                "onAmaNodes",
+                nodesWithStringKeys
+            )
         }
     }
 }

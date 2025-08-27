@@ -1,15 +1,15 @@
 #!/bin/sh
-AMA_RULES_FILE="./../../ama.rules.json"
+AMA_CONFIG_FILE="./../../ama.config.json"
 
-if [[ ! -f "$AMA_RULES_FILE" ]]
+if [[ ! -f "$AMA_CONFIG_FILE" ]]
 then
-  echo "Generating {$AMA_RULES_FILE}..."
+  echo "Generating {$AMA_CONFIG_FILE}..."
 
-  touch $AMA_RULES_FILE
-  echo "{}" >> $AMA_RULES_FILE
+  touch $AMA_CONFIG_FILE
+  echo "{}" >> $AMA_CONFIG_FILE
 fi
 
-if [[ ! -f "ama.rules.json" ]]
+if [[ ! -f "ama.config.json" ]]
 then
-  cp "$AMA_RULES_FILE" .
+  cp "$AMA_CONFIG_FILE" .
 fi

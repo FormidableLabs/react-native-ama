@@ -1,10 +1,14 @@
 import { NativeModule, requireNativeModule } from 'expo';
 import { ReactNativeAmaModuleEvents } from './ReactNativeAma.types';
 
-declare class ReactNativeAmaModule extends NativeModule {
+declare class ReactNativeAmaModule extends NativeModule<ReactNativeAmaModuleEvents> {
   start(config?: any): void;
   stop(): void;
-  highlightComponent(viewId: number): Promise;
+  highlight(
+    viewId: number,
+    mode: 'background' | 'border' | 'both',
+    color: string,
+  ): Promise<void>;
   clearHighlight(viewId: number): void;
 }
 

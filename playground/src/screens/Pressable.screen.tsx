@@ -43,15 +43,20 @@ export const PressableScreen = () => {
 
         {/*
          * Issue: NO_ACCESSIBILITY_LABEL
-         * FIX: Specify the propert of aria-label, e.g: aria-label="Expand"
+         * FIX: Specify the propert of aria-label, e.g: aria-label="Go Back"
          */}
         <Pressable role="button">
-          <Svg width={32} height={32} viewBox="0 0 24 24" fill="none">
+          <Svg width={32} height={32} viewBox="0 0 8.467 8.467">
             <Path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M13.94 12L8.47 6.53l1.06-1.06L16.06 12l-6.53 6.53-1.06-1.06L13.94 12z"
-              fill="#080341"
+              d="M5.283 1.907l-2.251 2.25L5.434 6.56"
+              fill="none"
+              stroke={theme.color.black}
+              strokeWidth={0.79378125}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeMiterlimit={4}
+              strokeDasharray="none"
+              strokeOpacity={1}
             />
           </Svg>
         </Pressable>
@@ -75,7 +80,16 @@ export const PressableScreen = () => {
           hasMaring
         />
 
-        {/* Contrast failed */}
+        {/*
+         * Issue: NO_UPPERCASE_ACCESSIBILITY_LABEL
+         * FIX: Provide a cased accessibility label
+         */}
+        <CTAPressable title="ADD TO THE CART" hasMaring />
+
+        {/*
+         * Issue: CONTRAST_FAILED
+         * FIX: Increase the contrast ratio between the background and foreground color
+         */}
         <CTAPressable
           title="Contrast failed"
           style={{ backgroundColor: '#e0e0e0' }}

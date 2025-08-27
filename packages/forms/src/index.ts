@@ -1,7 +1,6 @@
 // Components
 
 import React from 'react';
-import { isFocused } from '@react-native-ama/internal';
 import {
   Form as FormProvider,
   type FormActions,
@@ -11,9 +10,9 @@ import { FormField, type FormFieldProps } from './components/FormField';
 import { FormSubmit, type FormSubmitProps } from './components/FormSubmit';
 import { FormSwitch, type FormSwitchProps } from './components/FormSwitch';
 
-type FormComponent = React.FunctionComponent<FormProps> & {
+type FormComponent = React.FunctionComponent & {
   Submit: (props: FormSubmitProps) => React.ReactElement;
-  Field: React.FunctionComponent<FormFieldProps>;
+  Field: React.FunctionComponent;
   Switch: (props: FormSwitchProps) => React.ReactElement;
 };
 
@@ -31,9 +30,6 @@ export { TextInput, type TextInputProps } from './components/TextInput';
 // Hooks
 export { useFormField, type UseFormField } from './hooks/useFormField';
 export { useTextInput, type UseTextInput } from './hooks/useTextInput';
-
-// utils
-export { isFocused };
 
 // Types
 export {

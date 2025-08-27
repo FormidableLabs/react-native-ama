@@ -1,12 +1,27 @@
 import type { StyleProp, ViewStyle } from 'react-native';
-import { A11yIssue } from './internals/types';
 
 export type OnLoadEventPayload = {
   url: string;
 };
 
+export type AmaNode = {
+  viewId: number;
+  bounds: [number, number, number, number];
+  hitSlop?: { top: number; left: number; bottom: number; right: number };
+
+  isPressable?: boolean;
+  ariaLabel?: string;
+  ariaRole?: string;
+  traits?: string[];
+
+  fg?: string;
+  bg?: string;
+  fontSize?: number; // pt
+  isBold?: boolean;
+};
+
 export type ReactNativeAmaModuleEvents = {
-  onA11yIssues: (params: { issues: A11yIssue[] }) => void;
+  onAmaNodes: (nodes: AmaNode[]) => void;
 };
 
 export type ChangeEventPayload = {

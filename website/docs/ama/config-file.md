@@ -28,7 +28,7 @@ The possible log levels are:
 - **error**: The **AMA** error overlay when a check fails
 - **warn**: A `console.warn` is performed when a check fails
 
-### AMA Rules
+### ama.config
 
 | Log key                                                             | Guideline   | Default | Can override |
 | ------------------------------------------------------------------- | ----------- | ------- | ------------ |
@@ -64,37 +64,37 @@ If you are running a monorepo setup this file won't automatically generate and y
 
 You have two options to add `userDefinedRules` to AMA's config:
 
-- You can create a symlink to the `ama.rules.json` file in the root of your project _(recommended)_
-- You can create a new `ama.rules.json` file in the root of your project and copy this file over the `ama.rules.json` file in `@react-native-ama/internal` package every time you make changes to it.
+- You can create a symlink to the `ama.config.json` file in the root of your project _(recommended)_
+- You can create a new `ama.config.json` file in the root of your project and copy this file over the `ama.config.json` file in `@react-native-ama/internal` package every time you make changes to it.
   (This will also need to be done every time you update or delete and reinstall AMA node_modules)
 
 **Option 1:** _(recommended)_
 
-To create a symlink to the `ama.rules.json` file in the root of your project, run the following command:
+To create a symlink to the `ama.config.json` file in the root of your project, run the following command:
 
 ```bash
 
-# In the root of your App or root of your project create a symlink to the ama.rules.json file
-# Adjust the file path as needed depending on where the ama.rules.json file is located in your monorepo relative to the root of your project
-ln -s node_modules/@react-native-ama/internal/ama.rules.json ./ama.rules.json
+# In the root of your App or root of your project create a symlink to the ama.config.json file
+# Adjust the file path as needed depending on where the ama.config.json file is located in your monorepo relative to the root of your project
+ln -s node_modules/@react-native-ama/internal/ama.config.json ./ama.config.json
 ```
 
 **Option 2:**
 
-To create a new `ama.rules.json` file in the root of your project, run the following command:
+To create a new `ama.config.json` file in the root of your project, run the following command:
 
 ```bash
 # In the root of your App or root of your project
-# Adjust the file path as needed depending on where the ama.rules.json file is located in your monorepo relative to the root of your project
-cp node_modules/@react-native-ama/internal/ama.rules.json ./ama.rules.json
+# Adjust the file path as needed depending on where the ama.config.json file is located in your monorepo relative to the root of your project
+cp node_modules/@react-native-ama/internal/ama.config.json ./ama.config.json
 ```
 
-Don't forget if you make changes to the `ama.rules.json` file in the root you will need to copy the changes over to the `ama.rules.json` file in the `@react-native-ama/internal` package of your project.
+Don't forget if you make changes to the `ama.config.json` file in the root you will need to copy the changes over to the `ama.config.json` file in the `@react-native-ama/internal` package of your project.
 
 ```bash
 # In the root of your App or root of your project
-# Adjust the file path as needed depending on where the ama.rules.json file is located in your monorepo relative to the root of your project
-cp ama.rules.json node_modules/@react-native-ama/internal/ama.rules.json
+# Adjust the file path as needed depending on where the ama.config.json file is located in your monorepo relative to the root of your project
+cp ama.config.json node_modules/@react-native-ama/internal/ama.config.json
 
 # Restart your application to see the changes
 ```
@@ -109,7 +109,7 @@ cp ama.rules.json node_modules/@react-native-ama/internal/ama.rules.json
 
 The JSON file does not need to contain all log keys. **AMA** uses the default rule if a key is not present:
 
-```json title="ama.rules.json"
+```json title="ama.config.json"
 {
   rules: {
     "CONTRAST_FAILED": "warn",
@@ -127,7 +127,7 @@ Elements that perform a contrast check do it on all the children up to the level
 | -------------------------- | ------------- |
 | CONTRAST_CHECKER_MAX_DEPTH | 5             |
 
-```json title="ama.rules.json"
+```json title="ama.config.json"
 {
   "rules": {
     "CONTRAST_CHECKER_MAX_DEPTH": 0
@@ -143,7 +143,7 @@ This can be turned off by specifying a level of **0**
 
 **AMA** performs various checks, including one for [uppercase](/guidelines/uppercase). This rule allows specifying a list of approved all-caps accessibility labels.
 
-```json title="ama.rules.json"
+```json title="ama.config.json"
 {
   "accessibilityLabelExceptions": ["FAQ"]
 }

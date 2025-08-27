@@ -29,7 +29,6 @@
     "packages/core",
     "packages/extras",
     "packages/forms",
-    "packages/internal",
     "packages/lists",
     "packages/react-native",
     "example"

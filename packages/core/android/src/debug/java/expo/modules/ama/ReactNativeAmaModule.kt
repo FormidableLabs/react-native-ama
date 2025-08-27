@@ -31,12 +31,12 @@ class ReactNativeAmaModule : Module() {
 
     private val checkHandler = Handler(Looper.getMainLooper())
     private var checkRunnable: Runnable? = null
-    private lateinit var a11yChecker: A11yChecker
+    private lateinit var a11yChecker: NodesGrabber
 
     override fun definition() = ModuleDefinition {
         Name("ReactNativeAma")
 
-        Events("onA11yIssues")
+        Events("onAmaNodes")
 
         Function("start") { configMap: Map<String, Any?> ->
             if (!isMonitoring) {
@@ -53,7 +53,7 @@ class ReactNativeAmaModule : Module() {
 
                 Logger.info("start", "👀 Start Monitoring 👀", config.toString())
 
-                a11yChecker = A11yChecker(appContext, config)
+                a11yChecker = NodesGrabber(appContext, config)
 
                 getCurrentActivity()?.window?.decorView?.let {
                     currentDecorView = it
@@ -160,7 +160,7 @@ class ReactNativeAmaModule : Module() {
             // until all thecks have been performed.
             decorView.viewTreeObserver.removeOnDrawListener(drawListener)
 
-            performA11yChecks()
+            getNodesToCheck()
 
             decorView.post {
                 // Check if the observer is still alive before re-attaching
@@ -172,12 +172,12 @@ class ReactNativeAmaModule : Module() {
         checkHandler.postDelayed(checkRunnable!!, Constants.DEBOUNCE)
     }
 
-    private fun performA11yChecks() {
-        Logger.info("performA11yChecks", "doing the job")
-        val issues = a11yChecker.performA11yChecks(currentDecorView!!)
+    private fun getNodesToCheck() {
+        Logger.info("getNodesToCheck", "doing the job")
+        val issues = a11yChecker.getNodesToCheck(currentDecorView!!)
 
         sendEvent(
-                "onA11yIssues",
+                "onAmaNodes",
                 mapOf("timestamp" to System.currentTimeMillis(), "issues" to issues)
         )
     }

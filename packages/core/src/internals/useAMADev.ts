@@ -1,51 +1,24 @@
-/* eslint-disable @typescript-eslint/no-shadow */
 import { useEffect, useRef, useState } from 'react';
 import { DevSettings } from 'react-native';
+import { AmaNode } from '../ReactNativeAma.types';
 import ReactNativeAmaModule from '../ReactNativeAmaModule';
-import { logAMAError } from './logAMAError';
-import { A11yIssue, Rule, RuleAction } from './types';
-
-export const NON_OVERRIDABLE_RULES: string[] | undefined = __DEV__
-  ? [
-      'NO_ACCESSIBILITY_ROLE',
-      'NO_ACCESSIBILITY_LABEL',
-      'NO_KEYBOARD_TRAP',
-      'NO_UNDEFINED',
-      'NO_FORM_LABEL',
-      'FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE',
-      'BOTTOM_SHEET_CLOSE_ACTION',
-      'INCOMPATIBLE_ACCESSIBILITY_STATE',
-      'INCOMPATIBLE_ACCESSIBILITY_ROLE',
-    ]
-  : undefined;
-
-// prettier-ignore
-type OverrideRule = {
-    rules: Record<
-        | Partial<Rule>
-        | 'CONTRAST_CHECKER_MAX_DEPTH'
-        | 'IGNORE_CONTRAST_FOR_DISABLED_ELEMENTS',
-        RuleAction
-    > | null;
-    accessibilityLabelExceptions: string[];
-};
-
-const defaultRules: OverrideRule = require('./../../ama.rules.json');
-let projectRules = defaultRules;
-try {
-  // look upwards to user's project root
-  // e.g we are here:
-  // root/node_modules/@react-native-ama/internal/dist/utils/logger.ts
-  const userDefinedRules: OverrideRule = require('./../../../../../ama.rules.json');
-  projectRules = Object.assign(projectRules, userDefinedRules);
-} catch (error) {
-  // noop
-}
+import { checkAriaLabel } from './checks/checkAriaLabel';
+import { checkAriaRole } from './checks/checkAriaRole';
+import { checkIsUppercase } from './checks/checkIsUppercase';
+import { checkMinimumSize } from './checks/checkMinimumSize';
+import projectRules from './config';
+import { AMAError } from './types';
+import logger from './utils/logger';
+import { amaClearHighlight } from './utils/amaClearHighlight';
+import { getErrorColor } from './utils/getErrorColor';
+import { isRuleDisabled } from './utils/isRuleDisabled';
+import { checkColorContrast } from './checks/contrastChecker';
+import { checkContrast } from './checks/checkContrast';
 
 const startAMA = () => {
-  console.log('[React Native AMA]: ', '👀 Start Monitoring 👀');
+  logger?.log('👀 Start Monitoring 👀');
 
-  ReactNativeAmaModule.start(projectRules);
+  ReactNativeAmaModule.start();
 };
 
 const stopAMA = () => {
@@ -54,19 +27,74 @@ const stopAMA = () => {
   ReactNativeAmaModule.stop();
 };
 
+const resetFixedIssues = (prevIssues: AMAError[], newIssues: AMAError[]) => {
+  const fixed = prevIssues.filter(
+    issue => newIssues.find(item => item.viewId === issue.viewId) === undefined,
+  );
+
+  for (const issue of fixed) {
+    amaClearHighlight?.(issue);
+  }
+};
+
 export const useAMADev = () => {
   const isMonitoring = useRef(true);
-  const [issues, setIssues] = useState<A11yIssue[]>();
+  const [issues, setIssues] = useState<AMAError[]>();
+  const previousIssues = useRef<AMAError[]>([]);
+
+  const checkNodes = (nodesToCheck: AmaNode[]) => {
+    let allIssues: AMAError[] = [];
+
+    for (const node of Object.values(nodesToCheck)) {
+      if (node.isPressable) {
+        allIssues.push.apply(allIssues, pressableChecks(node));
+      }
+    }
+
+    if (previousIssues.current.length) {
+      resetFixedIssues(previousIssues.current, allIssues);
+    }
+
+    if (allIssues.length) {
+      for (const issue of allIssues) {
+        ReactNativeAmaModule.highlight(
+          issue.viewId,
+          projectRules.highlight ?? 'both',
+          getErrorColor(issue.rule),
+        );
+      }
+
+      setIssues(allIssues);
+    } else if (previousIssues.current.length) {
+      setIssues([]);
+    }
+
+    previousIssues.current = allIssues;
+  };
+
+  const pressableChecks = (node: AmaNode): AMAError[] => {
+    // logger?.log(`Performing pressable checks on ${node.ariaLabel}`, node);
+
+    return [
+      checkAriaLabel(node),
+      checkAriaRole(node),
+      checkMinimumSize(node),
+      checkIsUppercase({ node, text: node.ariaLabel }),
+      checkContrast(node)
+    ].filter((item): item is AMAError => item !== null && !isRuleDisabled?.(item));
+  };
 
   useEffect(() => {
     startAMA();
 
-    ReactNativeAmaModule.addListener(
-      'onA11yIssues',
-      (issues: { issues: A11yIssue[] }) => {
-        setIssues(issues.issues);
-      },
-    );
+    const listener = ReactNativeAmaModule.addListener('onAmaNodes', checkNodes);
+
+    return () => {
+      stopAMA();
+
+      listener.remove();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const toggleReactNativeAMA = () => {
@@ -82,7 +110,6 @@ export const useAMADev = () => {
 
   useEffect(() => {
     DevSettings.addMenuItem('Toggle React Native AMA', toggleReactNativeAMA);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {

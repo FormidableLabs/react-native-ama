@@ -1,0 +1,268 @@
+import ExpoModulesCore
+import UIKit
+
+public struct NodePayload: Equatable {
+    let viewId: Int
+    let isPressable: Bool
+    let bounds: [Double]?
+    let ariaLabel: String?
+    let ariaRole: String?
+    let traits: [String]?
+    let fg: String?
+    let bg: String?
+    let fontSize: CGFloat?
+    let isBold: Bool?
+
+    func toDictionary() -> [String: Any?] {
+        return [
+            "viewId": self.viewId,
+            "isPressable": self.isPressable,
+            "bounds": self.bounds,
+            "ariaLabel": self.ariaLabel,
+            "ariaRole": self.ariaRole,
+            "traits": self.traits,
+            "fg": self.fg,
+            "bg": self.bg,
+            "fontSize": self.fontSize,
+            "isBold": self.isBold,
+        ]
+    }
+}
+
+public class NodesGrabber {
+    private let appContext: AppContext
+    private var nodesToCheck: [Int: NodePayload] = [:]
+
+    public init(appContext: AppContext) {
+        self.appContext = appContext
+    }
+
+    public func getNodesToCheck(on rootView: UIView?) -> (nodes: [Int: NodePayload], send: Bool) {
+        guard let root = rootView else { return (nodesToCheck, false) }
+
+        nodesToCheck.removeAll()
+
+        traverseAndCheck(view: root)
+
+        return (nodesToCheck, true)
+    }
+
+    private func traverseAndCheck(view: UIView) {
+        checkView(view)
+
+        for subview in view.subviews {
+            traverseAndCheck(view: subview)
+        }
+    }
+
+    private func checkView(_ view: UIView) {
+        if view.isPressable {
+            Logger.info("checkView", view.accessibilityLabel ?? "no label")
+
+            let font = view.contentFont
+
+            addNode(
+                node: NodePayload(
+                    viewId: view.tag,
+                    isPressable: true,
+                    bounds: getTargetArea(view),
+                    ariaLabel: view.accessibilityLabel,
+                    ariaRole: getDefaultAriaRole(view),
+                    traits: view.accessibilityTraits.names,
+                    fg: view.contentColor?.hexString,
+                    bg: getBackgroundColor(for: view).hexString,
+                    fontSize: font?.pointSize,
+                    isBold: font?.fontDescriptor.symbolicTraits.contains(.traitBold)
+                ))
+        }
+    }
+
+    private func getDefaultAriaRole(_ view: UIView) -> String? {
+        let defaultRole: String? = {
+            switch view {
+            case is UIButton:
+                return "button"
+            case is UISwitch:
+                return "switch"
+            case is UITextField:
+                return "text field"
+            case let iv as UIImageView where iv.isUserInteractionEnabled:
+                return "image button"
+            default:
+                return nil
+            }
+        }()
+
+        return defaultRole
+    }
+
+    private func getTargetArea(_ view: UIView) -> [Double] {
+        let baseSize: CGRect = view.frame
+        let insets = view.getHitSlopRect()
+        let pressableWidth = baseSize.width - insets.left - insets.right
+        let pressableHeight = baseSize.height - insets.top - insets.bottom
+
+        return [pressableWidth, pressableHeight]
+    }
+
+    private func getBackgroundColor(for view: UIView) -> UIColor {
+        if let bg = view.backgroundColor { return bg }
+        var parent = view.superview
+        while let p = parent {
+            if let bg = p.backgroundColor { return bg }
+            parent = p.superview
+        }
+        return .white
+    }
+
+    private func addNode(node: NodePayload) {
+        guard node.viewId > 0 else { return }
+
+        nodesToCheck[node.viewId] = node
+    }
+}
+
+extension UIView {
+    fileprivate func getTextOrContent() -> String {
+        if let label = accessibilityLabel, !label.isEmpty {
+            return label
+        }
+        if let lbl = self as? UILabel, let t = lbl.text, !t.isEmpty {
+            return t
+        }
+        if let tf = self as? UITextField, let ph = tf.placeholder, !ph.isEmpty {
+            return ph
+        }
+        return ""
+    }
+
+    var contentColor: UIColor? {
+        let className = String(describing: type(of: self))
+
+        if className.contains("RCTParagraphComponentView"),
+            let anyObj = self as AnyObject?,
+            let attrText = anyObj.value(forKey: "attributedText") as? NSAttributedString,
+            attrText.length > 0,
+            let fgColor = attrText.attribute(.foregroundColor, at: 0, effectiveRange: nil)
+                as? UIColor
+        {
+            return fgColor
+        }
+
+        if let label = self as? UILabel {
+            return label.textColor
+        }
+        if let button = self as? UIButton {
+            if let tc = button.titleColor(for: .normal) { return tc }
+            return button.tintColor
+        }
+        if let iv = self as? UIImageView {
+            return iv.tintColor
+        }
+
+        for sub in subviews {
+            if let cc = sub.contentColor {
+                return cc
+            }
+        }
+
+        return self.tintColor
+    }
+
+    var contentFont: UIFont? {
+        Logger.info("contentFont", "Checking view: \(type(of: self))")
+
+        if let label = self as? UILabel {
+            return label.font
+        }
+        if let button = self as? UIButton,
+            let f = button.titleLabel?.font
+        {
+            return f
+        }
+        for sub in subviews {
+            if let f = sub.contentFont {
+                return f
+            }
+        }
+
+        return nil
+    }
+
+    fileprivate func getHitSlopRect() -> UIEdgeInsets {
+        let selector = NSSelectorFromString("hitTestEdgeInsets")
+
+        guard self.responds(to: selector) else {
+            return .zero
+        }
+
+        let anyObj = self as AnyObject
+        guard
+            let edgeValue = anyObj.value(forKey: "hitTestEdgeInsets") as? UIEdgeInsets
+        else {
+            return .zero
+        }
+
+        return edgeValue
+    }
+
+    /**
+     * Returns true if the user can tap on the element
+     */
+    var isPressable: Bool {
+        return isUserInteractionEnabled && isAccessibilityElement
+    }
+}
+
+extension UIAccessibilityTraits {
+    fileprivate var names: [String] {
+        let all: [(UIAccessibilityTraits, String)] = [
+            (.button, "button"),
+            (.link, "link"),
+            (.header, "header"),
+            (.searchField, "searchField"),
+            (.image, "image"),
+            (.selected, "selected"),
+            (.playsSound, "playsSound"),
+            (.keyboardKey, "keyboardKey"),
+            (.staticText, "staticText"),
+            (.summaryElement, "summaryElement"),
+            (.notEnabled, "notEnabled"),
+            (.updatesFrequently, "updatesFrequently"),
+            (.startsMediaSession, "startsMediaSession"),
+            (.adjustable, "adjustable"),
+            (.allowsDirectInteraction, "allowsDirectInteraction"),
+            (.causesPageTurn, "causesPageTurn"),
+        ]
+        return all.compactMap { (trait, name) in
+            (self.rawValue & trait.rawValue) != 0 ? name : nil
+        }
+    }
+}
+
+extension UIColor {
+    var rgbaComponents: (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat)? {
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
+        guard self.getRed(&r, green: &g, blue: &b, alpha: &a) else { return nil }
+        return (r, g, b, a)
+    }
+
+    var rgbaString: String {
+        guard let c = rgbaComponents else { return self.description }
+        let R = Int(c.r * 255)
+        let G = Int(c.g * 255)
+        let B = Int(c.b * 255)
+        return String(format: "rgba(%d,%d,%d,%.2f)", R, G, B, c.a)
+    }
+
+    var hexString: String {
+        guard let c = rgbaComponents else { return self.description }
+        let R = Int(c.r * 255)
+        let G = Int(c.g * 255)
+        let B = Int(c.b * 255)
+        return String(format: "#%02X%02X%02X", R, G, B)
+    }
+}

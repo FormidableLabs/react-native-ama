@@ -50,7 +50,7 @@ You can toggle the accessibility checks on and off via the [DevMenu](https://rea
 
 ### Config File
 
-When you install the `@react-native-ama/core` package, `the ama.rules.json` file should be generated automatically in the root of your project. This file can be used to customize AMA Log Levels and Exceptions. If you are running a monorepo setup this file won't automatically generate and you will have two options customize AMA's config.
+When you install the `@react-native-ama/core` package, `the ama.config.json` file should be generated automatically in the root of your project. This file can be used to customize AMA Log Levels and Exceptions. If you are running a monorepo setup this file won't automatically generate and you will have two options customize AMA's config.
 
 See more on configuring **AMA** rules and severity [here](./config-file.md).
 
@@ -58,7 +58,7 @@ See more on configuring **AMA** rules and severity [here](./config-file.md).
 
 When running a test, if jest fails with the following error:
 
-> Cannot find module './../../ama.rules.json' from 'node_modules/@react-native-ama/internal/dist/utils/logger.js'
+> Cannot find module './../../ama.config.json' from 'node_modules/@react-native-ama/internal/dist/utils/logger.js'
 
 Add the following mock to your jest setup file which can be configured via the `.jest.config.js` or `.jest.config.ts` file (see [setupFilesAfterEnv](https://jestjs.io/docs/configuration#setupfilesafterenv-array)):
 

@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import { useAMADev } from '../internals/useAMADev';
-import { AMAError } from '../internals/AMAError';
+import { AMAErrorOverlay } from '../internals/components/AMAErrorOverlay';
 
 type AMAProviderProps = {
   children: React.ReactNode;
@@ -28,6 +28,7 @@ type SharedContextValue = {
     animation: 'default' | 'fade';
   };
 };
+
 export type AMADevContextValue = SharedContextValue & {
   trackError: (id: string) => void;
   removeError: (id: string) => void;
@@ -160,7 +161,7 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
         <View style={{ flex: 1 }}>
           <>
             {children}
-            {AMAError && <AMAError issues={issues} />}
+            {AMAErrorOverlay && <AMAErrorOverlay issues={issues} />}
           </>
         </View>
       </AMAContext.Provider>
@@ -172,6 +173,7 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
 
 export const useAMAContext = () => {
   const context = React.useContext(AMAContext);
+
   if (!context) {
     throw new Error('Please wrap your app with <AMAProvider />');
   }

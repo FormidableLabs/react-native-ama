@@ -1,4 +1,3 @@
-import { SHELL_COLORS } from '@react-native-ama/internal';
 import * as React from 'react';
 import {
   AccessibilityInfo,

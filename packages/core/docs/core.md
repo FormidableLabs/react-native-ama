@@ -24,9 +24,9 @@ npm install  @react-native-ama/core
 
 ### Config File
 
-When you install the `@react-native-ama/core` package, the `ama.rules.json` file should be generated automatically in your project's root folder. If it didn't generate automatically when you installed the package, you can create it manually with the default config:
+When you install the `@react-native-ama/core` package, the `ama.config.json` file should be generated automatically in your project's root folder. If it didn't generate automatically when you installed the package, you can create it manually with the default config:
 
-```json title="ama.rules.json"
+```json title="ama.config.json"
 {
   rules: {},
   accessibilityLabelExceptions: [],

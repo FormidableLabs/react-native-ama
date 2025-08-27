@@ -1,15 +1,6 @@
-export type A11yIssueType = 'MUST' | 'MUST_NOT' | 'SHOULD' | 'SHOULD_NOT';
-export type A11yIssue = {
-  rule: Rule;
-  label: string;
-  reason: string;
-  type: A11yIssueType;
-  viewId: number;
-};
-
 export type Position = [number, number, number, number];
 
-export type Rule =
+export type AMARule =
   | 'BOTTOM_SHEET_CLOSE_ACTION'
   | 'CONTRAST_FAILED'
   | 'CONTRAST_FAILED_AAA'
@@ -28,9 +19,16 @@ export type Rule =
   | 'NO_FORM_LABEL_ENDING_WITH_ASTERISK'
   | 'UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL';
 
-export type RuleAction =
+export type AMARuleAction =
   | 'SHOULD_NOT'
   | 'MUST_NOT'
   | 'MUST'
   | 'SHOULD'
   | 'PLEASE_FORGIVE_ME';
+
+export type AMAError = {
+  rule: AMARule;
+  extra?: any;
+  label?: string;
+  viewId: number;
+};

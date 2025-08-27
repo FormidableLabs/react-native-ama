@@ -69,15 +69,15 @@ val LOGGER_RULES: Map<Rule, RuleAction> =
                 Rule.INCOMPATIBLE_ACCESSIBILITY_ROLE to RuleAction.MUST_NOT
         )
 
-class A11yChecker(private val appContext: AppContext, private val config: AMAConfig) {
+class NodesGrabber(private val appContext: AppContext, private val config: AMAConfig) {
     val activity = appContext.activityProvider?.currentActivity
 
     private val issues = Collections.synchronizedList(mutableListOf<A11yIssue>())
     private val highlighter = Highlight(appContext)
     private lateinit var rootView: View
 
-    public fun performA11yChecks(rootView: View): List<Map<String, Any?>> {
-        Logger.info("performA11yChecks", "Performing a11y checks")
+    public fun getNodesToCheck(rootView: View): List<Map<String, Any?>> {
+        Logger.info("getNodesToCheck", "Performing a11y checks")
 
         this.rootView = rootView
 
@@ -91,7 +91,7 @@ class A11yChecker(private val appContext: AppContext, private val config: AMACon
             clearFixedIssues(oldIssues)
 
             if (issues.isNotEmpty()) {
-                Logger.debug("performA11yChecks", issues.toString())
+                Logger.debug("getNodesToCheck", issues.toString())
 
                 val issuesPayload =
                         issues.map { issue ->
