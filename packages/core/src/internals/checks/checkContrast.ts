@@ -46,6 +46,11 @@ function getContrastRatio(fgHex: string, bgHex: string) {
 export const checkContrast = (node: AmaNode): AMAError | null => {
   const { fg, bg, fontSize, isBold } = node;
 
+  /**
+   * We need to skip node without content as it might be an icon only Button.
+   * In this case we can't perform a contrast check as is hard to perform
+   * a contrast check on SVGs
+   */
   if (!fg || !bg || !node.content) {
     return null;
   }
