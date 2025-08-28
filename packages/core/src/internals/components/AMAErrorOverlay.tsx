@@ -84,39 +84,12 @@ const AMAErrorComponent = ({ issues }: { issues?: AMAError[] }) => {
         />
       ) : null}
       <View style={styles!.failedBar}>
-        {showActiveIssue ? (
-          <>
-            <AMAButton
-              singular="↑ prev"
-              bg="#000"
-              color="#fff"
-              line="#969696"
-              onPress={showPrevIssue}
-              disabled={activeIssueIndex.id <= 0}
-            />
-            <AMAButton
-              singular="next ↓"
-              bg="#000"
-              color="#fff"
-              line="#969696"
-              onPress={showNextIssue}
-              disabled={activeIssueIndex.id + 1 > issues!.length}
-            />
-            <AMAButton
-              singular="✘ close"
-              bg="#000"
-              color="#fff"
-              onPress={closeIssues}
-            />
-          </>
-        ) : (
-          <AMAButton
-            onPress={showFirstError}
-            singular={`AMA: ${issues.length} accessibility issue${issues.length !== 1 ? 's' : ''} found. Tap to inspect`}
-            bg="#A31420"
-            color="#fff"
-          />
-        )}
+        <AMAButton
+          onPress={showFirstError}
+          singular={`AMA: ${issues.length} accessibility issue${issues.length !== 1 ? 's' : ''} found. Tap to inspect`}
+          bg="#A31420"
+          color="#fff"
+        />
       </View>
     </>
   );

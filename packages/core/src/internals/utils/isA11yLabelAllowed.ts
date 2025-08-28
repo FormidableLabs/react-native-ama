@@ -1,5 +1,4 @@
-import projectRules from "../config";
-
+import projectRules from '../config';
 
 export const isAccessibilityLabelAllowed = __DEV__
   ? (accessibilityLabel: string) => {
@@ -9,4 +8,3 @@ export const isAccessibilityLabelAllowed = __DEV__
       );
     }
   : null;
-

@@ -18,7 +18,7 @@ const baseTheme = {
     checked: '#820085',
     mixed: '#006602',
     selected: '#660000',
-    header: '#17387e',
+    header: '#17387E',
   },
   lineHeight: {
     normal: 16,

@@ -19,7 +19,6 @@ const getAMARuleErrorInfo = __DEV__
     }
   : null;
 
-
 export const logError = __DEV__
   ? (issue: AMAError) => {
       const action = getRuleAction?.(issue.rule);

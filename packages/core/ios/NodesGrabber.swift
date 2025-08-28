@@ -6,6 +6,7 @@ public struct NodePayload: Equatable {
     let isPressable: Bool
     let bounds: [Double]?
     let ariaLabel: String?
+    let content: String?
     let ariaRole: String?
     let traits: [String]?
     let fg: String?
@@ -19,6 +20,7 @@ public struct NodePayload: Equatable {
             "isPressable": self.isPressable,
             "bounds": self.bounds,
             "ariaLabel": self.ariaLabel,
+            "content": self.content,
             "ariaRole": self.ariaRole,
             "traits": self.traits,
             "fg": self.fg,
@@ -57,8 +59,6 @@ public class NodesGrabber {
 
     private func checkView(_ view: UIView) {
         if view.isPressable {
-            Logger.info("checkView", view.accessibilityLabel ?? "no label")
-
             let font = view.contentFont
 
             addNode(
@@ -67,10 +67,11 @@ public class NodesGrabber {
                     isPressable: true,
                     bounds: getTargetArea(view),
                     ariaLabel: view.accessibilityLabel,
+                    content: view.content,
                     ariaRole: getDefaultAriaRole(view),
                     traits: view.accessibilityTraits.names,
                     fg: view.contentColor?.hexString,
-                    bg: getBackgroundColor(for: view).hexString,
+                    bg: view.contentBackgroundColor.hexString,
                     fontSize: font?.pointSize,
                     isBold: font?.fontDescriptor.symbolicTraits.contains(.traitBold)
                 ))
@@ -105,16 +106,6 @@ public class NodesGrabber {
         return [pressableWidth, pressableHeight]
     }
 
-    private func getBackgroundColor(for view: UIView) -> UIColor {
-        if let bg = view.backgroundColor { return bg }
-        var parent = view.superview
-        while let p = parent {
-            if let bg = p.backgroundColor { return bg }
-            parent = p.superview
-        }
-        return .white
-    }
-
     private func addNode(node: NodePayload) {
         guard node.viewId > 0 else { return }
 
@@ -123,21 +114,70 @@ public class NodesGrabber {
 }
 
 extension UIView {
-    fileprivate func getTextOrContent() -> String {
-        if let label = accessibilityLabel, !label.isEmpty {
-            return label
+
+    private func findColorIn(view: UIView) -> UIColor? {
+        if let imageView = view as? UIImageView, let bgColor = imageView.backgroundColor {
+            return bgColor
         }
-        if let lbl = self as? UILabel, let t = lbl.text, !t.isEmpty {
-            return t
+
+        if let bgColor = view.backgroundColor, bgColor.cgColor.alpha > 0 {
+            return bgColor
         }
-        if let tf = self as? UITextField, let ph = tf.placeholder, !ph.isEmpty {
-            return ph
+
+        for subview in view.subviews {
+            if let color = findColorIn(view: subview) {
+                return color
+            }
         }
-        return ""
+
+        return nil
+    }
+
+    var content: String? {
+        let className = String(describing: type(of: self))
+
+        if className.contains("RCTParagraphComponentView") {
+            if let attrText = self.value(forKey: "attributedText") as? NSAttributedString {
+                return attrText.string
+            }
+        }
+
+        return subviews.compactMap { $0.content }.first
+    }
+
+    var contentBackgroundColor: UIColor {
+        var current: UIView? = self
+        while let superview = current?.superview {
+            for subview in superview.subviews {
+                let className = String(describing: type(of: subview))
+                if className.contains("_UIBarBackground") {
+                    if let color = findColorIn(view: subview) {
+                        return color
+                    }
+                }
+            }
+            current = superview
+        }
+
+        if let bg = self.backgroundColor { return bg }
+
+        var parent = self.superview
+        while let p = parent {
+            if let bg = p.backgroundColor, bg.cgColor.alpha > 0 {
+                return bg
+            }
+            parent = p.superview
+        }
+
+        return .white
     }
 
     var contentColor: UIColor? {
         let className = String(describing: type(of: self))
+
+        if className.contains("SVG") {
+            return nil
+        }
 
         if className.contains("RCTParagraphComponentView"),
             let anyObj = self as AnyObject?,
@@ -170,16 +210,27 @@ extension UIView {
     }
 
     var contentFont: UIFont? {
-        Logger.info("contentFont", "Checking view: \(type(of: self))")
-
         if let label = self as? UILabel {
             return label.font
         }
+
         if let button = self as? UIButton,
             let f = button.titleLabel?.font
         {
             return f
         }
+
+        let className = String(describing: type(of: self))
+
+        if className.contains("RCTParagraphComponentView"),
+            let anyObj = self as AnyObject?,
+            let attrText = anyObj.value(forKey: "attributedText") as? NSAttributedString,
+            attrText.length > 0,
+            let font = attrText.attribute(.font, at: 0, effectiveRange: nil) as? UIFont
+        {
+            return font
+        }
+
         for sub in subviews {
             if let f = sub.contentFont {
                 return f

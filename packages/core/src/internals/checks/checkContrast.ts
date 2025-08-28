@@ -46,7 +46,7 @@ function getContrastRatio(fgHex: string, bgHex: string) {
 export const checkContrast = (node: AmaNode): AMAError | null => {
   const { fg, bg, fontSize, isBold } = node;
 
-  if (!fg || !bg || !fontSize) {
+  if (!fg || !bg || !node.content) {
     return null;
   }
 
@@ -54,7 +54,8 @@ export const checkContrast = (node: AmaNode): AMAError | null => {
 
   // Determine if the text is "large" according to WCAG standards.
   // 18pt is considered large, or 14pt if bold.
-  const isLargeText = fontSize >= 18 || (fontSize >= 14 && isBold);
+  const isLargeText =
+    fontSize && (fontSize >= 18 || (fontSize >= 14 && isBold));
 
   const requiredRatio = isLargeText ? 3.0 : 4.5;
 

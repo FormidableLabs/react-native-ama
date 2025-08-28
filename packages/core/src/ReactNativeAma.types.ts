@@ -13,6 +13,7 @@ export type AmaNode = {
   ariaLabel?: string;
   ariaRole?: string;
   traits?: string[];
+  content?: string;
 
   fg?: string;
   bg?: string;

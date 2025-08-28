@@ -4,16 +4,15 @@ import { AmaNode } from '../ReactNativeAma.types';
 import ReactNativeAmaModule from '../ReactNativeAmaModule';
 import { checkAriaLabel } from './checks/checkAriaLabel';
 import { checkAriaRole } from './checks/checkAriaRole';
+import { checkContrast } from './checks/checkContrast';
 import { checkIsUppercase } from './checks/checkIsUppercase';
 import { checkMinimumSize } from './checks/checkMinimumSize';
 import projectRules from './config';
 import { AMAError } from './types';
-import logger from './utils/logger';
 import { amaClearHighlight } from './utils/amaClearHighlight';
 import { getErrorColor } from './utils/getErrorColor';
 import { isRuleDisabled } from './utils/isRuleDisabled';
-import { checkColorContrast } from './checks/contrastChecker';
-import { checkContrast } from './checks/checkContrast';
+import logger from './utils/logger';
 
 const startAMA = () => {
   logger?.log('👀 Start Monitoring 👀');
@@ -39,7 +38,7 @@ const resetFixedIssues = (prevIssues: AMAError[], newIssues: AMAError[]) => {
 
 export const useAMADev = () => {
   const isMonitoring = useRef(true);
-  const [issues, setIssues] = useState<AMAError[]>();
+  const [issues, setIssues] = useState<AMAError[]>([]);
   const previousIssues = useRef<AMAError[]>([]);
 
   const checkNodes = (nodesToCheck: AmaNode[]) => {
@@ -80,8 +79,10 @@ export const useAMADev = () => {
       checkAriaRole(node),
       checkMinimumSize(node),
       checkIsUppercase({ node, text: node.ariaLabel }),
-      checkContrast(node)
-    ].filter((item): item is AMAError => item !== null && !isRuleDisabled?.(item));
+      checkContrast(node),
+    ].filter(
+      (item): item is AMAError => item !== null && !isRuleDisabled?.(item),
+    );
   };
 
   useEffect(() => {
@@ -90,6 +91,10 @@ export const useAMADev = () => {
     const listener = ReactNativeAmaModule.addListener('onAmaNodes', checkNodes);
 
     return () => {
+      for (const issue of issues) {
+        amaClearHighlight?.(issue);
+      }
+
       stopAMA();
 
       listener.remove();
