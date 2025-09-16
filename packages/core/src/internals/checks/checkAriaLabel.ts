@@ -4,7 +4,7 @@ import { AMAError } from '../types';
 export const checkAriaLabel = (node: AmaNode): AMAError | null => {
   const { ariaLabel } = node;
 
-  if (!Boolean(ariaLabel)) {
+  if (node.type === 'Pressable' && !Boolean(ariaLabel)) {
     return {
       rule: 'NO_ACCESSIBILITY_LABEL',
       label: node.ariaLabel,

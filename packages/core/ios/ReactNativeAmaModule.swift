@@ -49,7 +49,6 @@ public class ReactNativeAmaModule: Module {
             DispatchQueue.main.async {
                 self.displayLink?.invalidate()
                 self.displayLink = nil
-                // self.a11yChecker?.clearAllHighlights()
             }
         }
 
@@ -82,17 +81,6 @@ public class ReactNativeAmaModule: Module {
                 bounds.height,
             ]
         }
-        //
-        // AsyncFunction("highlight") { (viewId: Int) in
-        //     guard
-        //         let root = self.currentDecorView,
-        //         let target = root.viewWithTag(viewId)
-        //     else { return }
-        //
-        //     await MainActor.run {
-        //         self.highlighter?.highlight(view: target, mode: "both", hexColor: "#f00")
-        //     }
-        // }
 
         AsyncFunction("clearHighlight") { (viewId: Int) in
             await MainActor.run {

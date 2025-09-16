@@ -45,9 +45,7 @@ export const useAMADev = () => {
     let allIssues: AMAError[] = [];
 
     for (const node of Object.values(nodesToCheck)) {
-      if (node.isPressable) {
-        allIssues.push.apply(allIssues, pressableChecks(node));
-      }
+      allIssues.push.apply(allIssues, performChecks(node));
     }
 
     if (previousIssues.current.length) {
@@ -71,14 +69,12 @@ export const useAMADev = () => {
     previousIssues.current = allIssues;
   };
 
-  const pressableChecks = (node: AmaNode): AMAError[] => {
-    // logger?.log(`Performing pressable checks on ${node.ariaLabel}`, node);
-
+  const performChecks = (node: AmaNode): AMAError[] => {
     return [
       checkAriaLabel(node),
       checkAriaRole(node),
       checkMinimumSize(node),
-      checkIsUppercase({ node, text: node.ariaLabel }),
+      checkIsUppercase({ node }),
       checkContrast(node),
     ].filter(
       (item): item is AMAError => item !== null && !isRuleDisabled?.(item),

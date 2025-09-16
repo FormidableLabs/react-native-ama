@@ -6,6 +6,10 @@ export const checkAriaRole = (node: AmaNode): AMAError | null => {
   const { ariaRole, traits } = node;
   const a11yRole = ariaRole ?? traits?.join('');
 
+  if (node.type !== 'Pressable') {
+    return null;
+  }
+
   if (!Boolean(a11yRole)) {
     return {
       rule: 'NO_ACCESSIBILITY_ROLE',
@@ -14,7 +18,12 @@ export const checkAriaRole = (node: AmaNode): AMAError | null => {
     };
   }
 
-  if (!checkPlatformSupportsRole(a11yRole?.replace('notEnabled', '') ?? '', Platform.OS as any)) {
+  if (
+    !checkPlatformSupportsRole(
+      a11yRole?.replace('notEnabled', '') ?? '',
+      Platform.OS as any,
+    )
+  ) {
     return {
       label: node.ariaLabel,
       viewId: node.viewId,

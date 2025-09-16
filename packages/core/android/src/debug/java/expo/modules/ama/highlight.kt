@@ -10,13 +10,6 @@ import android.view.View
 import expo.modules.kotlin.AppContext
 import java.util.concurrent.ConcurrentHashMap
 
-val ruleColors: Map<RuleAction, Int> =
-        mapOf(
-                RuleAction.MUST to Color.RED,
-                RuleAction.MUST_NOT to Color.RED,
-                RuleAction.SHOULD to Color.YELLOW
-        )
-
 class Highlight(private val appContext: AppContext) {
     private val originalBackgrounds = ConcurrentHashMap<Int, Drawable?>()
 
@@ -25,9 +18,9 @@ class Highlight(private val appContext: AppContext) {
      * @param viewId the Android view ID
      * @param mode "background" | "border" | "both"
      */
-    fun highlight(viewId: Int, mode: String, action: RuleAction) {
+    fun highlight(viewId: Int, mode: String, hexColor: String) {
         val activity: Activity = appContext.currentActivity ?: return
-        val color = ruleColors[action]
+        val color = hexColor.toColor()
 
         activity.runOnUiThread {
             val target = activity.findViewById<View>(viewId) ?: return@runOnUiThread
@@ -40,9 +33,7 @@ class Highlight(private val appContext: AppContext) {
                 "background" -> applyStripyBackground(target, color)
                 "border" -> applyRedBorderOverlay(target, color)
                 else -> {
-                    Logger.info("highlight", "3")
                     applyRedBorderOverlay(target, color)
-                    Logger.info("highlight", "4")
                     applyStripyBackground(target, color)
                 }
             }
@@ -51,6 +42,7 @@ class Highlight(private val appContext: AppContext) {
 
     fun clearHighlight(viewId: Int) {
         val activity: Activity = appContext.currentActivity ?: return
+
         activity.runOnUiThread {
             val view = activity.findViewById<View>(viewId) ?: return@runOnUiThread
 
@@ -139,4 +131,12 @@ class Highlight(private val appContext: AppContext) {
         shape.setBounds(0, 0, view.width - half, view.height - half)
         view.overlay.add(shape)
     }
+}
+
+fun String.toColor(): Int {
+    if (this.length == 4 && this.startsWith("#")) {
+        val expandedHex = "#" + this[1] + this[1] + this[2] + this[2] + this[3] + this[3]
+        return Color.parseColor(expandedHex)
+    }
+    return Color.parseColor(this)
 }

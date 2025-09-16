@@ -4,17 +4,16 @@ import { isAccessibilityLabelAllowed } from '../utils/isA11yLabelAllowed';
 
 export type UppercaseStringChecker = {
   node: AmaNode;
-  text?: string;
   canBeEmpty?: boolean;
   rule?: AMARule;
 };
 
 export const checkIsUppercase = ({
   node,
-  text,
   canBeEmpty = true,
   rule = 'NO_UPPERCASE_TEXT',
 }: UppercaseStringChecker): AMAError | null => {
+  const text = node.ariaLabel ?? node.content
   const isEmpty = !text || text?.trim()?.length === 0;
 
   if (isEmpty && canBeEmpty) {

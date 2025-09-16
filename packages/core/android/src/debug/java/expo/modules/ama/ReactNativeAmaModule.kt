@@ -9,20 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.ScrollView
-import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 import kotlin.math.max
 
 object Constants {
-    const val DEBOUNCE: Long = 100
+    const val DEBOUNCE: Long = 2000
 }
-
-data class AMAConfig(
-        val rules: Map<String, String> = emptyMap(),
-        val accessibilityLabelExceptions: List<String> = emptyList(),
-        val highlight: String = "both"
-)
 
 class ReactNativeAmaModule : Module() {
     private var isMonitoring = false
@@ -32,28 +25,23 @@ class ReactNativeAmaModule : Module() {
     private val checkHandler = Handler(Looper.getMainLooper())
     private var checkRunnable: Runnable? = null
     private lateinit var a11yChecker: NodesGrabber
+    private var highlighter: Highlight? = null
+    private var isHighlighting = false
 
     override fun definition() = ModuleDefinition {
         Name("ReactNativeAma")
 
         Events("onAmaNodes")
 
-        Function("start") { configMap: Map<String, Any?> ->
+        Function("start") { ->
+            if (highlighter == null) {
+                highlighter = Highlight(appContext)
+            }
+
             if (!isMonitoring) {
+                Logger.info("start", "👀 Start Monitoring 👀")
 
-                val config =
-                        AMAConfig(
-                                // Use safe casting and provide default values
-                                rules = configMap["rules"] as? Map<String, String> ?: emptyMap(),
-                                accessibilityLabelExceptions =
-                                        configMap["accessibilityLabelExceptions"] as? List<String>
-                                                ?: emptyList(),
-                                highlight = configMap["highlight"] as? String ?: "both"
-                        )
-
-                Logger.info("start", "👀 Start Monitoring 👀", config.toString())
-
-                a11yChecker = NodesGrabber(appContext, config)
+                a11yChecker = NodesGrabber(appContext)
 
                 getCurrentActivity()?.window?.decorView?.let {
                     currentDecorView = it
@@ -66,14 +54,13 @@ class ReactNativeAmaModule : Module() {
 
         Function("stop") {
             if (isMonitoring) {
-                a11yChecker.clearAllIssues()
                 currentDecorView?.let { it.viewTreeObserver.removeOnDrawListener(drawListener) }
 
                 isMonitoring = false
             }
         }
 
-        AsyncFunction("getPosition") { viewId: Int ->
+        AsyncFunction("highlight") { viewId: Int, mode: String, hexColor: String ->
             val activity = appContext.activityProvider?.currentActivity ?: return@AsyncFunction null
             val root = activity.window.decorView as? ViewGroup ?: return@AsyncFunction null
             val target = root.findViewById<View>(viewId) ?: return@AsyncFunction null
@@ -101,46 +88,14 @@ class ReactNativeAmaModule : Module() {
                 }
             }
 
+            highlighter?.highlight(viewId, mode, hexColor)
+
             target.getGlobalDpBounds(root)
         }
 
-        AsyncFunction("inspectViewAttributes") { viewId: Int ->
-            val activity: Activity =
-                    appContext.activityProvider?.currentActivity ?: return@AsyncFunction null
+        AsyncFunction("clearHighlight") { viewId: Int -> highlighter?.clearHighlight(viewId) }
 
-            val root = activity.window.decorView as? ViewGroup ?: return@AsyncFunction null
-
-            // find the view
-            val view = root.findViewById<View>(viewId) ?: return@AsyncFunction null
-
-            // wrap its AccessibilityNodeInfo for compat APIs
-            val info = AccessibilityNodeInfoCompat.wrap(view.createAccessibilityNodeInfo())
-
-            // get raw screen bounds
-            val loc = IntArray(2)
-            view.getLocationOnScreen(loc)
-            val bounds =
-                    mapOf(
-                            "left" to loc[0],
-                            "top" to loc[1],
-                            "right" to loc[0] + view.width,
-                            "bottom" to loc[1] + view.height
-                    )
-
-            mapOf<String, Any?>(
-                    "id" to view.id,
-                    "className" to view.javaClass.name,
-                    "visibility" to view.visibility, // 0=VISIBLE,4=INVISIBLE,8=GONE
-                    "importantForAccessibility" to view.importantForAccessibility,
-                    "clickable" to view.isClickable,
-                    "focusable" to view.isFocusable,
-                    "contentDescription" to view.contentDescription?.toString(),
-                    "a11yText" to info.text?.toString(),
-                    "a11yRoleDescription" to info.roleDescription?.toString(),
-                    "isVisibleToUser" to info.isVisibleToUser,
-                    "bounds" to bounds
-            )
-        }
+        Function("highlightCompleted") { isHighlighting = false }
     }
 
     private fun getCurrentActivity(): Activity? {
@@ -150,36 +105,19 @@ class ReactNativeAmaModule : Module() {
     private fun scheduleA11yCheck() {
         checkRunnable?.let { checkHandler.removeCallbacks(it) }
         checkRunnable = Runnable {
-            Logger.info2("scheduleA11yCheck", "💨 Running a11y scheduler")
-
             val decorView = currentDecorView ?: return@Runnable
 
-            // When a component fails an a11y check, we highlight that.
-            // This causes the drawListener to being fired again, causing
-            // an infinite loop. To avoid that we temporarily detach the listener
-            // until all thecks have been performed.
-            decorView.viewTreeObserver.removeOnDrawListener(drawListener)
-
             getNodesToCheck()
-
-            decorView.post {
-                // Check if the observer is still alive before re-attaching
-                if (decorView.viewTreeObserver.isAlive) {
-                    decorView.viewTreeObserver.addOnDrawListener(drawListener)
-                }
-            }
         }
+
         checkHandler.postDelayed(checkRunnable!!, Constants.DEBOUNCE)
     }
 
     private fun getNodesToCheck() {
-        Logger.info("getNodesToCheck", "doing the job")
         val issues = a11yChecker.getNodesToCheck(currentDecorView!!)
+        val nodesWithStringKeys = issues.mapKeys { it.key.toString() }.mapValues { it.value }
 
-        sendEvent(
-                "onAmaNodes",
-                mapOf("timestamp" to System.currentTimeMillis(), "issues" to issues)
-        )
+        sendEvent("onAmaNodes", nodesWithStringKeys)
     }
 }
 

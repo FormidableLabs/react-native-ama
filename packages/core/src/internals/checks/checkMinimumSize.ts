@@ -3,8 +3,12 @@ import { AMAError } from '../types';
 import { MINIMUM_TOUCHABLE_SIZE } from '../utils/minimumTouchableSize';
 
 export const checkMinimumSize = (node: AmaNode): AMAError | null => {
-  const width = node.bounds[0];
-  const height = node.bounds[1];
+  const width = node.bounds?.[0];
+  const height = node.bounds?.[1];
+
+  if (node.type !== 'Pressable') {
+    return null;
+  }
 
   if (width < MINIMUM_TOUCHABLE_SIZE || height < MINIMUM_TOUCHABLE_SIZE) {
     return {

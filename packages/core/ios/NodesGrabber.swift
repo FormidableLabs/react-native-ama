@@ -2,8 +2,8 @@ import ExpoModulesCore
 import UIKit
 
 public struct NodePayload: Equatable {
+    let type: String
     let viewId: Int
-    let isPressable: Bool
     let bounds: [Double]?
     let ariaLabel: String?
     let content: String?
@@ -16,8 +16,8 @@ public struct NodePayload: Equatable {
 
     func toDictionary() -> [String: Any?] {
         return [
+            "type": self.type,
             "viewId": self.viewId,
-            "isPressable": self.isPressable,
             "bounds": self.bounds,
             "ariaLabel": self.ariaLabel,
             "content": self.content,
@@ -63,8 +63,8 @@ public class NodesGrabber {
 
             addNode(
                 node: NodePayload(
+                    type: "Pressable",
                     viewId: view.tag,
-                    isPressable: true,
                     bounds: getTargetArea(view),
                     ariaLabel: view.accessibilityLabel,
                     content: view.content,

@@ -5,11 +5,11 @@ export type OnLoadEventPayload = {
 };
 
 export type AmaNode = {
+  type: 'Pressable' | 'Text';
   viewId: number;
   bounds: [number, number, number, number];
   hitSlop?: { top: number; left: number; bottom: number; right: number };
 
-  isPressable?: boolean;
   ariaLabel?: string;
   ariaRole?: string;
   traits?: string[];
@@ -32,5 +32,5 @@ export type ChangeEventPayload = {
 export type ReactNativeAmaViewProps = {
   url: string;
   onLoad: (event: { nativeEvent: OnLoadEventPayload }) => void;
-  style?: StyleProp;
+  style?: StyleProp<ViewStyle>;
 };
