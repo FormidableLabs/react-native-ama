@@ -20,12 +20,6 @@ const startAMA = () => {
   ReactNativeAmaModule.start();
 };
 
-const stopAMA = () => {
-  console.log('[React Native AMA]: ', '🙈 Stop Monitoring 🙈');
-
-  ReactNativeAmaModule.stop();
-};
-
 const resetFixedIssues = (prevIssues: AMAError[], newIssues: AMAError[]) => {
   const fixed = prevIssues.filter(
     issue => newIssues.find(item => item.viewId === issue.viewId) === undefined,
@@ -81,16 +75,22 @@ export const useAMADev = () => {
     );
   };
 
+  const stopAMA = () => {
+    console.log('[React Native AMA]: ', '🙈 Stop Monitoring 🙈');
+
+    for (const issue of issues) {
+      amaClearHighlight?.(issue);
+    }
+
+    ReactNativeAmaModule.stop();
+  };
+
   useEffect(() => {
     startAMA();
 
     const listener = ReactNativeAmaModule.addListener('onAmaNodes', checkNodes);
 
     return () => {
-      for (const issue of issues) {
-        amaClearHighlight?.(issue);
-      }
-
       stopAMA();
 
       listener.remove();
@@ -111,6 +111,7 @@ export const useAMADev = () => {
 
   useEffect(() => {
     DevSettings.addMenuItem('Toggle React Native AMA', toggleReactNativeAMA);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {
