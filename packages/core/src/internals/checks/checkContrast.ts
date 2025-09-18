@@ -1,5 +1,6 @@
 import { AmaNode } from '../../ReactNativeAma.types';
 import { AMAError } from '../types';
+import { shouldIgnoreContrastCheckForDisabledElement } from '../utils/ignoreContrastCheck';
 
 function hexToRgb(hex: string) {
   if (!hex || typeof hex !== 'string') {
@@ -44,7 +45,11 @@ function getContrastRatio(fgHex: string, bgHex: string) {
 }
 
 export const checkContrast = (node: AmaNode): AMAError | null => {
-  const { fg, bg, fontSize, isBold } = node;
+  const { fg, bg, fontSize, isBold, isEnabled } = node;
+
+  if (!isEnabled && shouldIgnoreContrastCheckForDisabledElement?.()) {
+    return null;
+  }
 
   /**
    * We need to skip node without content as it might be an icon only Button.
@@ -62,18 +67,31 @@ export const checkContrast = (node: AmaNode): AMAError | null => {
   const isLargeText =
     fontSize && (fontSize >= 18 || (fontSize >= 14 && isBold));
 
-  const requiredRatio = isLargeText ? 3.0 : 4.5;
+  const requiredRatioAA = isLargeText ? 3.0 : 4.5;
+  const requiredRatioAAA = isLargeText ? 4.5 : 7.0;
 
-  const passes = contrastRatio >= requiredRatio;
+  const passesAA = contrastRatio >= requiredRatioAA;
+  const passesAAA = contrastRatio >= requiredRatioAAA;
 
-  if (!passes) {
+  if (!passesAAA) {
+    return {
+      label: node.ariaLabel,
+      viewId: node.viewId,
+      rule: 'CONTRAST_FAILED_AAA',
+      extra: `The color contrast between the foreground (${fg}) and background (${bg}) is ${contrastRatio.toFixed(
+        2,
+      )}, which is below the required minimum of ${requiredRatioAAA}.`,
+    };
+  }
+
+  if (!passesAA) {
     return {
       label: node.ariaLabel,
       viewId: node.viewId,
       rule: 'CONTRAST_FAILED',
       extra: `The color contrast between the foreground (${fg}) and background (${bg}) is ${contrastRatio.toFixed(
         2,
-      )}, which is below the required minimum of ${requiredRatio}.`,
+      )}, which is below the required minimum of ${requiredRatioAA}.`,
     };
   }
 

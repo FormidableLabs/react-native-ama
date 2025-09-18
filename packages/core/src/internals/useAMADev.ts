@@ -14,6 +14,8 @@ import { getErrorColor } from './utils/getErrorColor';
 import { isRuleDisabled } from './utils/isRuleDisabled';
 import logger from './utils/logger';
 
+let issueHighlighted: Array<number> = [];
+
 const startAMA = () => {
   logger?.log('👀 Start Monitoring 👀');
 
@@ -27,6 +29,11 @@ const resetFixedIssues = (prevIssues: AMAError[], newIssues: AMAError[]) => {
 
   for (const issue of fixed) {
     amaClearHighlight?.(issue);
+    const index = issueHighlighted.find(item => item === issue.viewId);
+
+    if (index) {
+      issueHighlighted.splice(index, 1);
+    }
   }
 };
 
@@ -48,11 +55,15 @@ export const useAMADev = () => {
 
     if (allIssues.length) {
       for (const issue of allIssues) {
-        ReactNativeAmaModule.highlight(
-          issue.viewId,
-          projectRules.highlight ?? 'both',
-          getErrorColor(issue.rule),
-        );
+        if (!issueHighlighted.includes(issue.viewId)) {
+          ReactNativeAmaModule.highlight(
+            issue.viewId,
+            projectRules.highlight ?? 'both',
+            getErrorColor(issue.rule),
+          );
+
+          issueHighlighted.push(issue.viewId);
+        }
       }
 
       setIssues(allIssues);
@@ -111,7 +122,7 @@ export const useAMADev = () => {
 
   useEffect(() => {
     DevSettings.addMenuItem('Toggle React Native AMA', toggleReactNativeAMA);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {

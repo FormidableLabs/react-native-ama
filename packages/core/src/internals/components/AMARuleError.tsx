@@ -8,7 +8,8 @@ import {
   View,
 } from 'react-native';
 import { AMAError, Position } from '../types';
-import { A11ySeverity, RULES_HELP } from '../utils/getRuleErrorInfo';
+import { A11ySeverity } from '../utils/getRuleErrorInfo';
+import { RULES_HELP } from '../utils/rules';
 
 const WINDOW_HEIGHT = Dimensions.get('window').height;
 
@@ -70,7 +71,7 @@ export const AMARuleError = __DEV__
             How to fix:
           </Text>
           <View style={styles!.row}>
-            <Text style={styles?.text}>{ruleHelp.expectation}</Text>
+            <Text style={styles?.text}>{ruleHelp.howToFix}</Text>
           </View>
         </ScrollView>
       );

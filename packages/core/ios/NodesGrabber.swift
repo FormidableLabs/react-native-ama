@@ -13,6 +13,7 @@ public struct NodePayload: Equatable {
     let bg: String?
     let fontSize: CGFloat?
     let isBold: Bool?
+    let isEnabled: Bool
 
     func toDictionary() -> [String: Any?] {
         return [
@@ -27,6 +28,7 @@ public struct NodePayload: Equatable {
             "bg": self.bg,
             "fontSize": self.fontSize,
             "isBold": self.isBold,
+            "isEnabled": self.isEnabled,
         ]
     }
 }
@@ -73,7 +75,8 @@ public class NodesGrabber {
                     fg: view.contentColor?.hexString,
                     bg: view.contentBackgroundColor.hexString,
                     fontSize: font?.pointSize,
-                    isBold: font?.fontDescriptor.symbolicTraits.contains(.traitBold)
+                    isBold: font?.fontDescriptor.symbolicTraits.contains(.traitBold),
+                    isEnabled: !view.isDisabled()
                 ))
         }
     }
@@ -262,6 +265,27 @@ extension UIView {
      */
     var isPressable: Bool {
         return isUserInteractionEnabled && isAccessibilityElement
+    }
+
+    func isDisabled() -> Bool {
+        if accessibilityTraits.contains(.notEnabled) { return true }
+
+        if let control = self as? UIControl, control.isEnabled == false { return true }
+
+        if hasActivationRole && (isHidden || alpha <= 0.01 || isUserInteractionEnabled == false) {
+            return true
+        }
+
+        return false
+    }
+
+    private var hasActivationRole: Bool {
+        let t = accessibilityTraits
+        if t.contains(.button) || t.contains(.link) { return true }
+        if responds(to: NSSelectorFromString("accessibilityActivate")) { return true }
+        if let actions = accessibilityCustomActions, !actions.isEmpty { return true }
+
+        return false
     }
 }
 

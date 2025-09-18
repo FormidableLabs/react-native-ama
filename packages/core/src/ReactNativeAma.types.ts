@@ -19,6 +19,7 @@ export type AmaNode = {
   bg?: string;
   fontSize?: number; // pt
   isBold?: boolean;
+  isEnabled?: boolean;
 };
 
 export type ReactNativeAmaModuleEvents = {
@@ -32,5 +33,5 @@ export type ChangeEventPayload = {
 export type ReactNativeAmaViewProps = {
   url: string;
   onLoad: (event: { nativeEvent: OnLoadEventPayload }) => void;
-  style?: StyleProp<ViewStyle>;
+  style?: StyleProp;
 };

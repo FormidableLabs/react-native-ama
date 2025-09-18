@@ -1,7 +1,7 @@
 import { AMAError } from '../types';
 import { getRuleAction } from './getRuleAction';
-import { RULES_HELP } from './getRuleErrorInfo';
 import logger from './logger';
+import { RULES_HELP } from './rules';
 
 const getAMARuleErrorInfo = __DEV__
   ? ({ rule, extra }: AMAError) => {

@@ -14,7 +14,7 @@ import expo.modules.kotlin.modules.ModuleDefinition
 import kotlin.math.max
 
 object Constants {
-    const val DEBOUNCE: Long = 2000
+    const val DEBOUNCE: Long = 100
 }
 
 class ReactNativeAmaModule : Module() {

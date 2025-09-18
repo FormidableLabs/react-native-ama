@@ -93,6 +93,7 @@ export const PressableScreen = () => {
         <CTAPressable
           title="Contrast failed"
           style={{ backgroundColor: '#e0e0e0' }}
+          disabled
           hasMaring
         />
 

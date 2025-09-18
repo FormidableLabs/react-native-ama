@@ -27,7 +27,6 @@ export const checkIsUppercase = ({
       rule,
       label: node.ariaLabel,
       viewId: node.viewId,
-      extra: text,
     };
   }
 

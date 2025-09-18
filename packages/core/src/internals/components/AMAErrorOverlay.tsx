@@ -164,7 +164,7 @@ const AMAOverlay = ({
   onClose,
 }: AMAOverlayProps) => {
   const { severity, url } = getAMARuleErrorInfo!(issue);
-  const [x, y, width, height] = position;
+  const [x, y, width, height] = position ?? [];
 
   const openHelp = () => {
     Linking.openURL(url);
@@ -173,6 +173,10 @@ const AMAOverlay = ({
   useEffect(() => {
     logError?.(issue);
   }, [issue]);
+
+  if (!position) {
+      return
+  }
 
   return (
     <>
