@@ -43,7 +43,7 @@ export const PressableScreen = () => {
 
         {/*
          * Issue: NO_ACCESSIBILITY_LABEL
-         * FIX: Specify the propert of aria-label, e.g: aria-label="Go Back"
+         * FIX: Specify the aria-label property, e.g: aria-label="Go Back"
          */}
         <Pressable role="button">
           <Svg width={32} height={32} viewBox="0 0 8.467 8.467">
@@ -65,6 +65,7 @@ export const PressableScreen = () => {
         {/*
          * Issue: MINIMUM_SIZE
          * FIX: Either increase the padding or increase the tappable area with `hitSlop`
+         *           hitSlop={{ left: 10, right: 10, top: 10, bottom: 10 }}
          */}
         <CTAPressable
           title="X"
@@ -82,7 +83,8 @@ export const PressableScreen = () => {
 
         {/*
          * Issue: NO_UPPERCASE_ACCESSIBILITY_LABEL
-         * FIX: Provide a cased accessibility label
+         * FIX: Provide a normal cased  label, i.e:
+         *           aria-label="add to the cart"
          */}
         <CTAPressable title="ADD TO THE CART" hasMaring />
 
