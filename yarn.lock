@@ -4070,6 +4070,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@react-native-ama/core@npm:~1.2.1":
+  version: 1.2.1
+  resolution: "@react-native-ama/core@npm:1.2.1"
+  dependencies:
+    "@react-native-ama/internal": ~1.2.1
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 066217ef4537e43a777195fb52d05c63cd4909743ef5e689a43cc3bc79bf1e2cf43c639db33771f98cff53cc2e8cce4dcfe2fbf1d27eab8909bea7273ebee131
+  languageName: node
+  linkType: hard
+
 "@react-native-ama/core@workspace:packages/core, @react-native-ama/core@~1.2.0":
   version: 0.0.0-use.local
   resolution: "@react-native-ama/core@workspace:packages/core"
@@ -4111,16 +4123,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-ama/internal@workspace:packages/internal, @react-native-ama/internal@~1.2.0":
-  version: 0.0.0-use.local
-  resolution: "@react-native-ama/internal@workspace:packages/internal"
+"@react-native-ama/internal@npm:~1.2.0, @react-native-ama/internal@npm:~1.2.1":
+  version: 1.2.1
+  resolution: "@react-native-ama/internal@npm:1.2.1"
   dependencies:
     wcag-color: ^1.1.1
   peerDependencies:
     react: "*"
     react-native: "*"
-  languageName: unknown
-  linkType: soft
+  checksum: 52ec262376758f5c27c2c6a467642d6fbdc8f3a4ffead7e4a091532da52943be6be3cc114f85907212bc7187aa03d21f900cefae3b5c79a73f2e1c50c55bbf59
+  languageName: node
+  linkType: hard
 
 "@react-native-ama/lists@workspace:packages/lists":
   version: 0.0.0-use.local
@@ -4167,17 +4180,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-ama/react-native@workspace:packages/react-native, @react-native-ama/react-native@~1.2.0":
-  version: 0.0.0-use.local
-  resolution: "@react-native-ama/react-native@workspace:packages/react-native"
+"@react-native-ama/react-native@npm:~1.2.0":
+  version: 1.2.1
+  resolution: "@react-native-ama/react-native@npm:1.2.1"
   dependencies:
-    "@react-native-ama/core": ~1.2.0
-    "@react-native-ama/internal": ~1.2.0
+    "@react-native-ama/core": ~1.2.1
+    "@react-native-ama/internal": ~1.2.1
   peerDependencies:
     react: "*"
     react-native: "*"
-  languageName: unknown
-  linkType: soft
+  checksum: e4c4b714510126ece45263093fcf4e653ee2584c6e8cd9def94f6f5af5273b7e00d731ef22a3e173db6ef246bb135498a35ae5c2f94d54d6929844e3a58b4f96
+  languageName: node
+  linkType: hard
 
 "@react-native/assets-registry@npm:0.79.1":
   version: 0.79.1

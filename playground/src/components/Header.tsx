@@ -8,10 +8,11 @@ type HeaderProps = {
   autofocus?: boolean;
   noMargin?: boolean;
   white?: boolean;
+  noHeader?: boolean;
 };
 
 export const Header = (
-  { title, autofocus, noMargin = false, white }: HeaderProps,
+  { title, autofocus, noMargin = false, white, noHeader }: HeaderProps,
 ) => {
   return (
     <Text
@@ -19,7 +20,7 @@ export const Header = (
         ...styles.title,
         color: white ? theme.color.white : undefined,
       }}
-      accessibilityRole="header"
+      accessibilityRole={noHeader ? undefined : 'header'}
       autofocus={autofocus}
       mb={noMargin ? undefined : 12}
       mt={noMargin ? undefined : 24}

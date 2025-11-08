@@ -12,6 +12,13 @@ This page details the complete set of accessibility checks that AMA automaticall
 - [x] Missing accessibility label
 - [x] Contrast ratio too low
 - [x] Tappable area too small
-- [ ] Accessibility label in all caps
-- [ ] Accessibility label too long
+- [x] Accessibility label in all caps
+- [x] All caps text
+
+## Text element checks
+
+- [ ] Contrast ratio too low
+- [ ] All caps text
+- [ ] No headings used
+
 

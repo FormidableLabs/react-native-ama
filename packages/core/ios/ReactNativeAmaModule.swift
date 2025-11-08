@@ -56,18 +56,20 @@ public class ReactNativeAmaModule: Module {
             guard
                 let root = self.currentDecorView,
                 let target = root.viewWithTag(viewId)
-            else { return nil }
+            else {
+                return nil
+            }
 
             await MainActor.run {
                 if let scroll = target.enclosingScrollView {
                     var frameInScroll = target.convert(target.bounds, to: scroll)
                     let m = CGFloat(10)
-
+                    
                     frameInScroll.origin.y = max(0, frameInScroll.origin.y - m)
                     scroll.scrollRectToVisible(frameInScroll, animated: false)
-
-                    self.highlighter?.highlight(view: target, mode: mode, hexColor: hexColor)
                 }
+                
+                self.highlighter?.highlight(view: target, mode: mode, hexColor: hexColor)
             }
 
             let bounds: CGRect = await MainActor.run {

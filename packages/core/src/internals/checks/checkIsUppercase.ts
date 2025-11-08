@@ -34,4 +34,4 @@ export const checkIsUppercase = ({
 };
 
 const isUpperCase = (string: string) =>
-  string.replace(/\d/, '').toUpperCase() === string;
+  string.toUpperCase() === string;

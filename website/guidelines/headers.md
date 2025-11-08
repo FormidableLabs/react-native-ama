@@ -7,13 +7,17 @@ displayed_sidebar: guidelines
 ---
 
 import AndroidListFeature from './android-list-feature.gif';
+import IosRotor from './ios-rotor.gif';
 
 # Headers
 
 <AMASection />
 
-Headers are crucial in organizing and structuring content in a mobile app. They provide a clear hierarchy, guiding users through the content and making it more accessible and understandable.
-In React Native, any text element can be designated as a header by assigning the [accessibilityRole](/guidelines/accessibility-role) property to "header".
+Headers play a vital accessibility role by helping screen reader users navigate content efficiently.
+When a text element is marked as a header, assistive technologies can recognise its level and provide quick navigation shortcuts (e.g., jumping between headings). This allows non-visual users to understand the screen's structure and navigate sections without having to read everything sequentially.
+
+
+In React Native, any text element can be designated as a header by assigning the [aria-role](/guidelines/accessibility-role) property to "header".
 
 :::note
 
@@ -36,6 +40,8 @@ Using the Rotor feature on iOS or the List feature on Android, users can easily 
 By selecting the headers navigation option, they can quickly skim the screen's content and gain an understanding of its layout and information.
 
 ##### VoiceOver
+
+<img src={IosRotor} />
 
 ##### Talkback
 

@@ -1,37 +1,44 @@
 import type { StyleProp, ViewStyle } from 'react-native';
 
 export type OnLoadEventPayload = {
-  url: string;
+	url: string;
 };
 
 export type AmaNode = {
-  type: 'Pressable' | 'Text';
-  viewId: number;
-  bounds: [number, number, number, number];
-  hitSlop?: { top: number; left: number; bottom: number; right: number };
+	type: 'Pressable' | 'Text';
+	viewId: number;
+	bounds: [number, number, number, number];
+	hitSlop?: { top: number; left: number; bottom: number; right: number };
 
-  ariaLabel?: string;
-  ariaRole?: string;
-  traits?: string[];
-  content?: string;
+	ariaLabel?: string;
+	ariaRole?: string;
+	traits?: string[];
+	content?: string;
 
-  fg?: string;
-  bg?: string;
-  fontSize?: number; // pt
-  isBold?: boolean;
-  isEnabled?: boolean;
+	fg?: string;
+	bg?: string;
+	fontSize?: number; // pt
+	isBold?: boolean;
+	isEnabled?: boolean;
+};
+
+export type AmaUIInteraction = {
+	fg?: number;
+	bg?: number;
+	position?: [number, number, number, number];
 };
 
 export type ReactNativeAmaModuleEvents = {
-  onAmaNodes: (nodes: AmaNode[]) => void;
+	onAmaNodes: (nodes: AmaNode[]) => void;
+	onUIInteraction: (nodes: AmaUIInteraction[]) => void;
 };
 
 export type ChangeEventPayload = {
-  value: string;
+	value: string;
 };
 
 export type ReactNativeAmaViewProps = {
-  url: string;
-  onLoad: (event: { nativeEvent: OnLoadEventPayload }) => void;
-  style?: StyleProp;
+	url: string;
+	onLoad: (event: { nativeEvent: OnLoadEventPayload }) => void;
+	style?: StyleProp<ViewStyle>;
 };

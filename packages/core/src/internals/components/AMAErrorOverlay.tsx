@@ -1,5 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
+import {
+  Dimensions,
+  Linking,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { AMAError, Position } from '../types';
 import { amaClearHighlight } from '../utils/amaClearHighlight';
 import { amaHighlightComponent } from '../utils/amaHighlightComponent';
@@ -8,10 +15,12 @@ import { logError } from '../utils/logError';
 import { AMA_COLORS } from '../utils/rules';
 import { AMARuleError } from './AMARuleError';
 
+const WINDOW_WIDTH = Dimensions.get('window').width;
+
 const AMAErrorComponent = ({ issues }: { issues?: AMAError[] }) => {
   const [activeIssueIndex, setActiveIssueIndex] = useState<{
     id: number;
-    position: Position;
+    position?: Position;
   }>();
   const issueToView = useRef<AMAError>(null);
   const previousViewId = useRef<AMAError>(null);
@@ -35,7 +44,7 @@ const AMAErrorComponent = ({ issues }: { issues?: AMAError[] }) => {
         'both',
       );
 
-      setActiveIssueIndex({ id: newIndex, position: position! });
+      setActiveIssueIndex({ id: newIndex, position: position });
 
       previousViewId.current = issueToView.current;
     } else {
@@ -78,8 +87,8 @@ const AMAErrorComponent = ({ issues }: { issues?: AMAError[] }) => {
           issue={issueToView.current!}
           position={activeIssueIndex.position}
           closeOverlay={closeIssues}
-          showPrevIssue={showPrevIssue}
-          showNextIssue={showNextIssue}
+          onPrevIssue={showPrevIssue}
+          onNextIssue={showNextIssue}
           onClose={closeIssues}
         />
       ) : null}
@@ -148,10 +157,10 @@ const AMAButton = ({
 
 type AMAOverlayProps = {
   issue: AMAError;
-  position: Position;
+  position?: Position;
   closeOverlay: () => void;
-  showPrevIssue: () => void;
-  showNextIssue: () => void;
+  onPrevIssue: () => void;
+  onNextIssue: () => void;
   onClose: () => void;
 };
 
@@ -159,12 +168,13 @@ const AMAOverlay = ({
   issue,
   position,
   closeOverlay,
-  showNextIssue,
-  showPrevIssue,
+  onNextIssue,
+  onPrevIssue,
   onClose,
 }: AMAOverlayProps) => {
+  position = position || [24, 100, WINDOW_WIDTH - 48, 0];
   const { severity, url } = getAMARuleErrorInfo!(issue);
-  const [x, y, width, height] = position ?? [];
+  const [x, y, width, height] = position;
 
   const openHelp = () => {
     Linking.openURL(url);
@@ -173,10 +183,6 @@ const AMAOverlay = ({
   useEffect(() => {
     logError?.(issue);
   }, [issue]);
-
-  if (!position) {
-      return
-  }
 
   return (
     <>
@@ -205,7 +211,7 @@ const AMAOverlay = ({
 
         <View style={styles!.actions}>
           <Pressable
-            onPress={showPrevIssue}
+            onPress={onPrevIssue}
             role="button"
             hitSlop={{ left: 12, top: 12, bottom: 12, right: 12 }}
             style={styles!.action}
@@ -221,14 +227,14 @@ const AMAOverlay = ({
             <Text style={styles!.link}>Learn more</Text>
           </Pressable>
 
-          <Pressable
-            onPress={showNextIssue}
-            role="button"
-            hitSlop={{ left: 12, top: 12, bottom: 12, right: 12 }}
-            style={styles!.action}
-          >
-            <Text>Next ↓</Text>
-          </Pressable>
+            <Pressable
+              onPress={onNextIssue}
+              role="button"
+              hitSlop={{ left: 12, top: 12, bottom: 12, right: 12 }}
+              style={styles!.action}
+            >
+              <Text>Next ↓</Text>
+            </Pressable>
         </View>
       </View>
 

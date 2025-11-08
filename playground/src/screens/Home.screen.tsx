@@ -33,6 +33,14 @@ export const HomeScreen = () => {
             <ListItem title="Pressable components" navigateTo="Pressable" />
             <ListItem title="Text" border={false} navigateTo="Text" />
           </View>
+          <Spacer height="normal" />
+          <View style={styles.group}>
+            <ListItem
+              title="Interactions"
+              border={false}
+              navigateTo="Interactions"
+            />
+          </View>
           {/*
         <Spacer height={'normal'} />
         <CTAPressable title="Pressable" onPress={() => navigate('Pressable')} />

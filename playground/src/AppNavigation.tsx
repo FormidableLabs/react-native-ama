@@ -7,21 +7,10 @@ import {
 import React from 'react';
 import { BackButton } from './components/BackButton';
 import { Header } from './components/Header';
-import { BottomSheetScreen } from './screens/BottomSheet.screen';
-import { CarouselScreen } from './screens/Carousel.screen';
-import { ExpandablePressableScreen } from './screens/ExpandablePressableScreen';
-import { FlatListScreen } from './screens/FlatList.screen';
-import { FlatListDynamicScreen } from './screens/FlatListDynamic.screen';
-import { FlatListStaticScreen } from './screens/FlatListStatic.screen';
-import { FormScreen } from './screens/Form.screen';
 import { HomeScreen } from './screens/Home.screen';
-import { LoadingScreen } from './screens/Loading.screen';
+import { InteractionsScreen } from './screens/Interactions.screen';
 import { PressableScreen } from './screens/Pressable.screen';
-import { UseAnimationDurationScreen } from './screens/UseAnimationDurationScreen';
-import { UseAnimationScreen } from './screens/UseAnimationScreen';
-import { UseReanimatedAnimationBuilderScreen } from './screens/UseReanimatedAnimationBuilderScreen';
-import { UseReanimatedTimingScreen } from './screens/UseReanimatedTimingScreen';
-import { UseTimedActionScreen } from './screens/UseTimedAction.screen';
+import { TextScreen } from './screens/Text.screen';
 import { theme } from './theme';
 
 export const AppNavigator = () => {
@@ -56,6 +45,30 @@ export const AppNavigator = () => {
             ),
           }}
         />
+        <Stack.Screen
+          name="Text"
+          component={TextScreen}
+          options={{
+            headerTitle: () => (
+              <Header
+                noMargin
+                title={'Text elements'}
+                autofocus
+                white
+                noHeader
+              />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="Interactions"
+          component={InteractionsScreen}
+          options={{
+            headerTitle: () => (
+              <Header noMargin title={'Interactions'} autofocus white />
+            ),
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -73,6 +86,7 @@ export type RootStackParamList = {
   Pressable: undefined;
   TouchableOpacity: undefined;
   TouchableWithoutFeedback: undefined;
+  Interactions: undefined;
   Text: undefined;
   UseAnimation: undefined;
   UseAnimationDuration: undefined;

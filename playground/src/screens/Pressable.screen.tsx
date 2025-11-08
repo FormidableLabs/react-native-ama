@@ -10,6 +10,7 @@ import {
 import Svg, { Path } from 'react-native-svg';
 import { CTAPressable } from '../components/CTAPressable';
 import { Header } from '../components/Header';
+import { Intro } from '../components/Intro';
 import { Pressable } from '../components/Pressable';
 import { Spacer } from '../components/Spacer';
 import { Text } from '../components/Text';
@@ -21,18 +22,7 @@ export const PressableScreen = () => {
       <StatusBar style="light" />
       <ScrollView style={styles.list}>
         <Spacer height="big" />
-        <Text mt={8} mb={8}>
-          This screen displays the accessibility checks AMA can perform on
-          pressable elements.
-        </Text>
-        <Text>
-          Tap the error or warning icon in AMA’s bottom bar to learn why an
-          issue is failing.
-        </Text>
-        <Text>
-          You can also try fixing it by updating the code to see the checker
-          respond in real time.
-        </Text>
+        <Intro element="Pressable" />
         <Spacer height="big" />
 
         {/*
@@ -102,160 +92,6 @@ export const PressableScreen = () => {
         <Spacer height={'big'} />
       </ScrollView>
     </SafeAreaView>
-  );
-};
-
-const checkedStates: AccessibilityState['checked'][] = [true, false, 'mixed'];
-
-const CheckedButton = () => {
-  const [state, setState] = React.useState(checkedStates[0]);
-
-  const nextState = () => {
-    const stateIndex = checkedStates.indexOf(state);
-    const nextIndex =
-      stateIndex === checkedStates.length - 1 ? 0 : stateIndex + 1;
-
-    setState(checkedStates[nextIndex]);
-  };
-
-  return (
-    <View style={styles.checkButton}>
-      <CTAPressable
-        title="Checked status"
-        checked={state}
-        onPress={nextState}
-      />
-      <Text
-        style={styles.checkLabel}
-        accessibilityElementsHidden
-        importantForAccessibility={'no'}
-      >{`${state}`}</Text>
-    </View>
-  );
-};
-
-const SelectedButton = () => {
-  const [state, setState] = React.useState(true);
-
-  const nextState = () => {
-    setState(isSelected => !isSelected);
-  };
-
-  return (
-    <View style={styles.checkButton}>
-      <CTAPressable
-        title="Selected status"
-        selected={state}
-        onPress={nextState}
-      />
-      <Text
-        style={styles.checkLabel}
-        accessibilityElementsHidden
-        importantForAccessibility={'no'}
-      >{`${state}`}</Text>
-    </View>
-  );
-};
-
-const ExpandedButton = () => {
-  const [state, setState] = React.useState(true);
-
-  const nextState = () => {
-    setState(isExpanded => !isExpanded);
-  };
-
-  return (
-    <View style={styles.checkButton}>
-      <CTAPressable
-        title="Expanded status"
-        expanded={state}
-        onPress={nextState}
-      />
-      <Text
-        style={styles.checkLabel}
-        accessibilityElementsHidden
-        importantForAccessibility={'no'}
-      >{`${state}`}</Text>
-    </View>
-  );
-};
-
-const ContrastCheckerFailing = () => {
-  const [activeButton, setActiveButton] = React.useState<
-    null | 'all' | 'aa' | 'aaa'
-  >(null);
-
-  // @ts-ignore
-  const failingStyle = styles[`failingText_${activeButton || ''}`];
-
-  return (
-    <>
-      <Spacer height={'big'} />
-      <Header title="Test 'Contrast checker failing'" />
-      <View style={styles.testButtons}>
-        <CTAPressable
-          title="ALL"
-          accessibilityLabel="All"
-          onPress={() => setActiveButton('all')}
-          checked={activeButton === 'all'}
-        />
-        <CTAPressable
-          title="AA"
-          accessibilityLabel="A A"
-          marginLeft={theme.padding.small}
-          marginRight={theme.padding.small}
-          onPress={() => setActiveButton('aa')}
-          checked={activeButton === 'aa'}
-        />
-        <CTAPressable
-          title="AAA"
-          accessibilityLabel="A A A"
-          onPress={() => setActiveButton('aaa')}
-          checked={activeButton === 'aaa'}
-        />
-      </View>
-      {activeButton === null ? null : (
-        <Pressable
-          style={styles.failingButtonStyle}
-          accessibilityRole="button"
-          accessibilityLabel="This fails"
-        >
-          <>
-            <Text style={failingStyle}>
-              `This fails {activeButton.toUpperCase()} level`
-            </Text>
-          </>
-        </Pressable>
-      )}
-    </>
-  );
-};
-
-const MinimumSizeFailing = () => {
-  const [isButtonVisible, setIsButtonVisible] = React.useState(false);
-
-  return (
-    <>
-      <Spacer height={'big'} />
-      <Header title="Test Minimum size failing" />
-      <Spacer height="normal" />
-      <CTAPressable
-        title="Make it fail"
-        onPress={() => setIsButtonVisible(true)}
-      />
-      {isButtonVisible ? (
-        <>
-          <Spacer height="normal" />
-          <Pressable
-            style={styles.minSizeFailing}
-            accessibilityRole="button"
-            accessibilityLabel="This fails"
-          >
-            <Text style={{ color: theme.color.white }}>This fails</Text>
-          </Pressable>
-        </>
-      ) : null}
-    </>
   );
 };
 

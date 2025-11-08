@@ -18,7 +18,8 @@ export type Rule =
   | 'INCOMPATIBLE_ACCESSIBILITY_ROLE'
   | 'NO_FORM_LABEL_ENDING_WITH_ASTERISK'
   | 'UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL'
-  | 'NO_UPPERCASE_ACCESSIBILITY_LABEL';
+  | 'NO_UPPERCASE_ACCESSIBILITY_LABEL'
+  | 'NO_HEADER_FOUND';
 
 export type RuleAction =
   | 'SHOULD_NOT'
@@ -38,10 +39,11 @@ export const NON_OVERRIDABLE_RULES: string[] | undefined = __DEV__
       'BOTTOM_SHEET_CLOSE_ACTION',
       'INCOMPATIBLE_ACCESSIBILITY_STATE',
       'INCOMPATIBLE_ACCESSIBILITY_ROLE',
+      'NO_HEADER_FOUND',
     ]
   : undefined;
 
-export const LOGGER_RULES: Record<Rule, RuleAction> | null = __DEV__
+export const LOGGER_RULES: Record | null = __DEV__
   ? {
       CONTRAST_FAILED: 'MUST',
       CONTRAST_FAILED_AAA: 'SHOULD',
@@ -61,6 +63,7 @@ export const LOGGER_RULES: Record<Rule, RuleAction> | null = __DEV__
       NO_FORM_LABEL_ENDING_WITH_ASTERISK: 'MUST_NOT',
       INCOMPATIBLE_ACCESSIBILITY_ROLE: 'MUST_NOT',
       NO_UPPERCASE_ACCESSIBILITY_LABEL: 'SHOULD_NOT',
+      NO_HEADER_FOUND: 'MUST',
     }
   : null;
 
@@ -228,6 +231,15 @@ export const RULES_HELP: RuleHelp | null = __DEV__
           'The accessibility role is not compatible with the element type.',
         howToFix:
           'Use accessibility roles that are appropriate for the element type.',
+      },
+      NO_HEADER_FOUND: {
+        url: '/guidelines/headers',
+        issue: 'No header found',
+        severity: 'Serious',
+        message:
+          'Screen readers rely on accessibility headers to navigate the content efficiently',
+        howToFix:
+          'Ensure that texts fields that are visually headers have the attribute aria-role="header"',
       },
     }
   : null;

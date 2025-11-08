@@ -28,7 +28,7 @@ public struct NodePayload: Equatable {
             "bg": self.bg,
             "fontSize": self.fontSize,
             "isBold": self.isBold,
-            "isEnabled": self.isEnabled,
+            "isEnabled": self.isEnabled
         ]
     }
 }
@@ -54,6 +54,10 @@ public class NodesGrabber {
     private func traverseAndCheck(view: UIView) {
         checkView(view)
 
+        if (view.isAccessibilityElement) {
+            return
+        }
+
         for subview in view.subviews {
             traverseAndCheck(view: subview)
         }
@@ -73,11 +77,28 @@ public class NodesGrabber {
                     ariaRole: getDefaultAriaRole(view),
                     traits: view.accessibilityTraits.names,
                     fg: view.contentColor?.hexString,
-                    bg: view.contentBackgroundColor.hexString,
+                    bg: view.contentBackgroundColor?.hexString,
                     fontSize: font?.pointSize,
                     isBold: font?.fontDescriptor.symbolicTraits.contains(.traitBold),
                     isEnabled: !view.isDisabled()
                 ))
+        } else if view.isText(), let info = view.extractRNTextInfo() {
+            addNode(
+                node: NodePayload(
+                    type: "Text",
+                    viewId: view.tag,
+                    bounds: nil,
+                    ariaLabel: view.accessibilityLabel,
+                    content: info.text,
+                    ariaRole: getDefaultAriaRole(view),
+                    traits: view.accessibilityTraits.names,
+                    fg: info.fg?.hexString ?? view.contentColor?.hexString,
+                    bg: view.textBackgroundColor?.hexString ?? info.bg?.hexString,
+                    fontSize: info.font.map { CGFloat($0.pointSize) },
+                    isBold: info.font?.fontDescriptor.symbolicTraits.contains(.traitBold),
+                    isEnabled: !view.isDisabled()
+                )
+            )
         }
     }
 
@@ -116,8 +137,47 @@ public class NodesGrabber {
     }
 }
 
-extension UIView {
+private struct RNTextInfo {
+    let text: String?
+    let fg: UIColor?
+    let bg: UIColor?
+    let font: UIFont?
+}
 
+private func previousSiblingsBackground(
+    in parent: UIView, before view: UIView, covering rect: CGRect
+) -> UIColor? {
+    guard let idx = parent.subviews.firstIndex(of: view) else { return nil }
+    if idx == 0 { return nil }
+
+    for i in stride(from: idx - 1, through: 0, by: -1) {
+        let sib = parent.subviews[i]
+        if sib.isHidden || sib.alpha <= 0.01 { continue }
+
+        // intersect with our area?
+        let sibRect = sib.convert(sib.bounds, to: parent)
+        if !sibRect.intersects(rect) { continue }
+
+        // direct background on the sibling?
+        if let c = ownBackground(of: sib, resolveFor: view) {
+            return c
+        }
+    }
+    return nil
+}
+
+/// Non-transparent background for a single view (either UIView.backgroundColor or layer.backgroundColor)
+private func ownBackground(of v: UIView, resolveFor resolver: UITraitEnvironment) -> UIColor? {
+    if let c = v.backgroundColor, c.cgColor.alpha > 0.01 {
+        return c.resolvedColor(with: resolver.traitCollection)
+    }
+    if let cg = v.layer.backgroundColor, cg.alpha > 0.01 {
+        return UIColor(cgColor: cg).resolvedColor(with: resolver.traitCollection)
+    }
+    return nil
+}
+
+extension UIView {
     private func findColorIn(view: UIView) -> UIColor? {
         if let imageView = view as? UIImageView, let bgColor = imageView.backgroundColor {
             return bgColor
@@ -148,8 +208,37 @@ extension UIView {
         return subviews.compactMap { $0.content }.first
     }
 
-    var contentBackgroundColor: UIColor {
+    var textBackgroundColor: UIColor? {
         var current: UIView? = self
+
+        while let superview = current?.superview {
+            for subview in superview.subviews {
+                let className = String(describing: type(of: subview))
+                if className.contains("_UIBarBackground") {
+                    if let color = findColorIn(view: subview) {
+                        return color
+                    }
+                }
+            }
+            current = superview
+        }
+
+        if let parent = self.superview {
+            let rectInParent = self.convert(self.bounds, to: parent)
+            if let c = previousSiblingsBackground(in: parent, before: self, covering: rectInParent)
+            {
+                return c
+            }
+            if let c = ownBackground(of: parent, resolveFor: self) { return c }
+
+            return parent.textBackgroundColor
+        }
+        return nil
+    }
+
+    var contentBackgroundColor: UIColor? {
+        var current: UIView? = self
+
         while let superview = current?.superview {
             for subview in superview.subviews {
                 let className = String(describing: type(of: subview))
@@ -172,7 +261,7 @@ extension UIView {
             parent = p.superview
         }
 
-        return .white
+        return nil
     }
 
     var contentColor: UIColor? {
@@ -286,6 +375,40 @@ extension UIView {
         if let actions = accessibilityCustomActions, !actions.isEmpty { return true }
 
         return false
+    }
+
+    func isText() -> Bool {
+        let names = [
+            "RCTParagraphComponentView",
+            "RCTParagraphTextView",
+            "RCTTextView",
+            "RCTText",
+        ]
+        for name in names {
+            if let cls = NSClassFromString(name), self.isKind(of: cls) { return true }
+        }
+
+        return self.responds(to: NSSelectorFromString("attributedText"))
+    }
+
+    fileprivate func extractRNTextInfo() -> RNTextInfo? {
+        let sel = NSSelectorFromString("attributedText")
+
+        guard self.responds(to: sel),
+            let obj = self as AnyObject?,
+            let attr = obj.value(forKey: "attributedText") as? NSAttributedString,
+            attr.length > 0
+        else { return nil }
+
+        let fg = attr.attribute(.foregroundColor, at: 0, effectiveRange: nil) as? UIColor
+        let bg =
+            (attr.attribute(.backgroundColor, at: 0, effectiveRange: nil) as? UIColor)
+            ?? (attr.attribute(
+                NSAttributedString.Key("NSBackgroundColor"), at: 0, effectiveRange: nil) as? UIColor)
+
+        let font = attr.attribute(.font, at: 0, effectiveRange: nil) as? UIFont
+
+        return RNTextInfo(text: attr.string, fg: fg, bg: bg, font: font)
     }
 }
 

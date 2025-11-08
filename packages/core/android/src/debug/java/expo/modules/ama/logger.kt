@@ -16,7 +16,7 @@ object Logger {
     }
 
     public fun debug(fn: String, message: String) {
-        // Log.d("[ReactNative AMA]: ", fn + " " + message)
+        Log.d("[ReactNative AMA]: ", fn + " " + message)
     }
 
     public fun error(fn: String, message: String) {

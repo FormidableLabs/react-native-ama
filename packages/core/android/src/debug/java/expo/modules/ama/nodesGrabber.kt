@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.*
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.text.Spanned
 import android.text.TextPaint
 import android.text.style.CharacterStyle
@@ -57,8 +58,10 @@ class NodesGrabber(private val appContext: AppContext) {
     private var nodesToCheck = mutableMapOf<Int, NodePayload>()
     private lateinit var rootView: View
 
-    public fun getNodesToCheck(rootView: View): Map<Int, Any?> {
+    fun getNodesToCheck(rootView: View): Map<Int, Any?> {
         this.rootView = rootView
+
+        nodesToCheck.clear()
 
         rootView.let { root -> traverseAndCheck(root) }
 
@@ -73,7 +76,14 @@ class NodesGrabber(private val appContext: AppContext) {
             return
         }
 
-        checkView(view)
+        val info = view.createAccessibilityNodeInfo()
+        val a11yInfo = AccessibilityNodeInfoCompat.wrap(info)
+
+        checkView(view, a11yInfo)
+
+        if (view.isPressable(a11yInfo)) {
+            return
+        }
 
         if (view is ViewGroup) {
             for (i in 0 until view.childCount) {
@@ -83,8 +93,6 @@ class NodesGrabber(private val appContext: AppContext) {
     }
 
     private fun addNode(node: NodePayload) {
-        // Kotlin doesn't have 'guard let'. An 'if' statement with an
-        // early return is the common equivalent.
         if (node.viewId <= 0) {
             return
         }
@@ -92,10 +100,7 @@ class NodesGrabber(private val appContext: AppContext) {
         nodesToCheck[node.viewId] = node
     }
 
-    private fun checkView(view: View) {
-        val info = view.createAccessibilityNodeInfo()
-        val a11yInfo = AccessibilityNodeInfoCompat.wrap(info)
-
+    private fun checkView(view: View, a11yInfo: AccessibilityNodeInfoCompat) {
         if (view.isPressable(a11yInfo)) {
             addNode(
                     node =
@@ -106,12 +111,30 @@ class NodesGrabber(private val appContext: AppContext) {
                                     ariaLabel = a11yInfo.contentDescription?.toString(),
                                     content = view.getTextOrContent(),
                                     ariaRole = view.getAriaRole(a11yInfo),
-                                    fg = view.getTextColor(),
-                                    bg = view.getBackgroundColor(),
+                                    fg = view.getTextColorHex(),
+                                    bg = view.getBackgroundColorHex(),
                                     fontSize = view.getFontSize(),
                                     isBold = view.isTextBold(),
                                     isEnabled = !view.isDisabled(),
                             )
+            )
+        } else if (view.isTextLike()) {
+            val textInfo = view.extractRNTextInfo()
+
+            addNode(
+                    NodePayload(
+                            type = "Text",
+                            viewId = view.id,
+                            bounds = getTargetArea(view),
+                            ariaLabel = a11yInfo.contentDescription?.toString(),
+                            content = textInfo?.text.orEmpty(),
+                            ariaRole = view.getAriaRole(a11yInfo),
+                            fg = textInfo?.fg,
+                            bg = textInfo?.bg,
+                            fontSize = textInfo?.fontSizeSp, // note: this is in sp
+                            isBold = textInfo?.isBold == true,
+                            isEnabled = view.isEnabled
+                    )
             )
         }
     }
@@ -183,14 +206,14 @@ fun Int.toHex(): String {
     return String.format("#%06X", 0xFFFFFF and this)
 }
 
-fun View.getTextColor(): String? = getEffectiveTextColorInt()?.toHex()
+fun View.getTextColorHex(): String? = getTextColor()?.toHex()
 
-fun View.getEffectiveTextColorInt(): Int? {
+fun View.getTextColor(): Int? {
     return when (this) {
         is TextView -> extractColorFromTextView(this)
         is ViewGroup -> {
             for (i in 0 until childCount) {
-                getChildAt(i).getEffectiveTextColorInt()?.let {
+                getChildAt(i).getTextColor()?.let {
                     return it
                 }
             }
@@ -247,16 +270,39 @@ private fun extractColorFromTextView(tv: TextView): Int {
             ?: tv.currentTextColor
 }
 
-fun View.getBackgroundColor(): String? {
+fun View.getBackgroundColorHex(): String? = getBackgroundColor()?.toHex()
+
+fun View.getBackgroundColor(): Int? {
     extractSolidColor(background)?.let {
-        return it.toHex()
+        return it
     }
 
+    /**
+     * <View bgcolor="xxx">
+     *     <Text>Text goes here</Text>
+     * </View>
+     *
+     * Becomes:
+     *
+     * Container:
+     *    ReactViewGroup <-- This has the bg colour
+     *    ReactTextView
+     */
     var p = parent
+    val vg = (parent as? ViewGroup)
+    vg?.let {
+        if (it.childCount > 0 && it.getChildAt(0) is ViewGroup) {
+            extractSolidColor(it.getChildAt(0).background)?.let {
+                return it
+            }
+        }
+    }
+
     while (p is View) {
         extractSolidColor(p.background)?.let {
-            return it.toHex()
+            return it
         }
+
         p = p.parent
     }
 
@@ -353,16 +399,20 @@ fun View.getHitSlopRect(): Rect? {
 }
 
 fun View.getAriaRole(a11yInfo: AccessibilityNodeInfoCompat): String? {
-    val className = a11yInfo.className?.toString() ?: this.javaClass.simpleName
+    if (a11yInfo.isHeading) return "header"
+    if (a11yInfo.collectionItemInfo?.isHeading == true) return "header"
+    if (Build.VERSION.SDK_INT >= 28 && this is TextView && this.isAccessibilityHeading) return "header"
+
     val roleDescription: String? = a11yInfo.roleDescription?.toString()
-    val defaultRole =
-            when {
-                className.endsWith(".Button") -> "button"
-                className.endsWith(".CheckBox") -> "checkbox"
-                className.endsWith(".EditText") -> "text field"
-                className.endsWith(".ImageView") && this.isClickable -> "image button"
-                else -> null
-            }
+    val className = a11yInfo.className?.toString() ?: this.javaClass.name
+    val defaultRole = when {
+        className.endsWith(".Button") -> "button"
+        className.endsWith(".CheckBox") -> "checkbox"
+        className.endsWith(".Switch") -> "switch"
+        className.endsWith(".EditText") -> "text field"
+        className.endsWith(".ImageView") && isClickable -> "image button"
+        else -> null
+    }
 
     return roleDescription ?: defaultRole
 }
@@ -392,6 +442,78 @@ fun View.isDisabled(): Boolean {
     return disabledByA11y || disabledByView || interactionBlocked
 }
 
+data class TextInfo(
+        val text: String,
+        val fg: String?,
+        val bg: String?,
+        val fontSizeSp: Float?,
+        val isBold: Boolean
+)
+
+fun View.isTextLike(): Boolean {
+    // Common Android + RN text classes
+    val candidateClassNames =
+            listOf(
+                    "android.widget.TextView",
+                    "androidx.appcompat.widget.AppCompatTextView",
+                    "com.google.android.material.textview.MaterialTextView",
+                    "com.facebook.react.views.text.ReactTextView",
+                    "com.facebook.react.views.text.ReactVirtualTextView",
+                    "com.facebook.react.views.textinput.ReactEditText"
+            )
+    // 1) class match
+    for (name in candidateClassNames) {
+        runCatching { Class.forName(name) }.getOrNull()?.let { cls ->
+            if (cls.isInstance(this)) return true
+        }
+    }
+    // 2) “duck typing”: has a getText(): CharSequence?
+    return this.javaClass.methods.any { m ->
+        m.name == "getText" &&
+                m.parameterCount == 0 &&
+                (m.returnType == CharSequence::class.java ||
+                        CharSequence::class.java.isAssignableFrom(m.returnType))
+    }
+}
+
+fun View.extractRNTextInfo(): TextInfo? {
+    if (this is android.widget.TextView) {
+        val density = resources.displayMetrics.scaledDensity
+        val fg = getTextColorHex()
+        val bg = getBackgroundColorHex()
+        val isBold = typeface?.isBold == true
+        val sp = textSize / density // textSize is px
+
+        return TextInfo(
+                text = text?.toString().orEmpty(),
+                fg = fg,
+                bg = bg,
+                fontSizeSp = sp,
+                isBold = isBold
+        )
+    }
+
+    if (this is ViewGroup) {
+        for (i in 0 until childCount) {
+            val t = getChildAt(i).extractRNTextInfo()
+            if (t != null) return t
+        }
+    }
+
+    val txt =
+            runCatching { this.javaClass.getMethod("getText").invoke(this) as? CharSequence }
+                    .getOrNull()
+    return txt?.let {
+        TextInfo(
+                text = it.toString(),
+                fg = getTextColorHex(),
+                bg = getBackgroundColorHex(),
+                fontSizeSp = null,
+                isBold = false
+        )
+    }
+}
+
 private fun getRNPointerEvents(view: View): String? {
     try {
         val cls = Class.forName("com.facebook.react.views.view.ReactViewGroup")
@@ -404,4 +526,3 @@ private fun getRNPointerEvents(view: View): String? {
 
     return null
 }
-

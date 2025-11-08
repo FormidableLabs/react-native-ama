@@ -48,7 +48,7 @@ export const AMARuleError = __DEV__
               aria-label="Close Error information"
               onPress={onClose}
             >
-              <Text>✖</Text>
+              <Text> ✖ </Text>
             </Pressable>
           </View>
 

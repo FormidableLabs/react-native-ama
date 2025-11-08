@@ -1,5 +1,6 @@
 import { NativeModule, requireNativeModule } from 'expo';
 import { ReactNativeAmaModuleEvents } from './ReactNativeAma.types';
+import { Position } from './internals/types';
 
 declare class ReactNativeAmaModule extends NativeModule<ReactNativeAmaModuleEvents> {
   start(config?: any): void;
@@ -8,7 +9,7 @@ declare class ReactNativeAmaModule extends NativeModule<ReactNativeAmaModuleEven
     viewId: number,
     mode: 'background' | 'border' | 'both',
     color: string,
-  ): Promise<void>;
+  ): Promise<Position>;
   clearHighlight(viewId: number): void;
 }
 

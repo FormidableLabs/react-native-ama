@@ -132,16 +132,6 @@ const config: Config = {
     [
       '@docusaurus/plugin-content-docs',
       {
-        id: 'react-native',
-        path: '../packages/react-native/docs',
-        routeBasePath: '/react-native/',
-        sidebarPath: './sidebarsPackages.ts',
-        ...defaultPresets,
-      },
-    ],
-    [
-      '@docusaurus/plugin-content-docs',
-      {
         id: 'lists',
         path: '../packages/lists/docs',
         routeBasePath: '/lists/',

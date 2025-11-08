@@ -1,5 +1,4 @@
 # AMAProvider
-import { useChecks } from './useChecks';
 
 You must include the provider in your app because it stores information about various accessibility services. This information is essential for the internal functioning of the library's packages and hooks.
 The provider manages the failure message that appears when AMA accessibility fails[^1].
