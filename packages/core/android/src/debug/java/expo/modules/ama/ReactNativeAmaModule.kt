@@ -254,11 +254,11 @@ class ReactNativeAmaModule : Module() {
                 putBundle("after", convertMapToBundle(afterSnapshot))
             }
 
-            Logger.info("onUIInteraction", event.toString())
+            // Logger.info("onUIInteraction", event.toString())
 
             sendEvent("onUIInteraction", event)
 
-        }, 550) // 250ms is a starting point. Tune this delay.
+        }, 1000) // 250ms is a starting point. Tune this delay.
     }
 }
 

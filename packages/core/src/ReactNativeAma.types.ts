@@ -22,15 +22,20 @@ export type AmaNode = {
 	isEnabled?: boolean;
 };
 
-export type AmaUIInteraction = {
+type UiInteraction = {
 	fg?: number;
 	bg?: number;
 	position?: [number, number, number, number];
 };
 
+export type AmaUIInteraction = {
+	before: UiInteraction[];
+	after: UiInteraction[]
+}
+
 export type ReactNativeAmaModuleEvents = {
 	onAmaNodes: (nodes: AmaNode[]) => void;
-	onUIInteraction: (nodes: AmaUIInteraction[]) => void;
+	onUIInteraction: (nodes: AmaUIInteraction) => void;
 };
 
 export type ChangeEventPayload = {
