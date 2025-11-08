@@ -143,8 +143,6 @@ class ReactNativeAmaModule : Module() {
                                     findViewAt(rootView, event.rawX.toInt(), event.rawY.toInt())
 
                                 if (tappedView != null && tappedView.isClickable) {
-                                    // This is the "hijack" point.
-                                    // We found a tap on a clickable view.
                                     runMyChecks(tappedView, rootView)
                                 }
                             }
@@ -196,7 +194,6 @@ class ReactNativeAmaModule : Module() {
         while (i < viewsToVisit.size) {
             val child = viewsToVisit[i++]
 
-            // Get view's location on screen
             child.getGlobalVisibleRect(hitRect)
 
             if (hitRect.contains(x, y)) {
@@ -222,43 +219,22 @@ class ReactNativeAmaModule : Module() {
     }
 
     private fun runMyChecks(tappedView: View, rootView: View) {
-        val beforeFocus = rootView.findFocus()
         val beforeSnapshot = takeSnapshot(tappedView, rootView)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            val afterFocus = rootView.findFocus()
-            val afterSnapshot = takeSnapshot(tappedView, rootView)
-//        val afterState = ViewState(
-//            fgColor = tappedView.getTextColor(),
-//            bgColor = tappedView.getBackgroundColor()
-//        )
-//
-//        val focusMoved = (beforeFocus != afterFocus)
-//
-//        // "Does the original button have new state...?"
-//        val stateChanged = !(beforeStates.bgColor?.equals(afterState.bgColor) ?: true) || !(beforeStates.fgColor?.equals(afterState.fgColor) ?: true)
-//        Logger.info("state", beforeStates.toString(), afterState.toString())
-////
-////        // ... Your logic here ...
-////
-////        if (focusMoved) {
-////            Logger.info("focus moved", afterFocus.toString())
-////        }
-//
-//        if (stateChanged) {
-//            Logger.info("state changed", beforeStates.fgColor?.toString() ?: "", afterState.fgColor?.toString() ?: "")
-//        }
+            Logger.info("post delay", tappedView.id.toString())
+            if (tappedView.isAttachedToWindow && rootView.isAttachedToWindow) {
+                val afterSnapshot = takeSnapshot(tappedView, rootView)
 
-            val event = Bundle().apply {
-                putBundle("before", convertMapToBundle(beforeSnapshot))
-                putBundle("after", convertMapToBundle(afterSnapshot))
+                val event = Bundle().apply {
+                    putInt("rootTag", tappedView.id)
+                    putBundle("before", convertMapToBundle(beforeSnapshot))
+                    putBundle("after", convertMapToBundle(afterSnapshot))
+                }
+
+                sendEvent("onUIInteraction", event)
             }
-
-            // Logger.info("onUIInteraction", event.toString())
-
-            sendEvent("onUIInteraction", event)
-
-        }, 1000) // 250ms is a starting point. Tune this delay.
+        }, 500)
     }
 }
 
@@ -268,16 +244,16 @@ data class UiChanged (
 )
 
 data class Snapshot(
-    val fgColor: Int?,
-    val bgColor: Int?,
+    val fgColor: String?,
+    val bgColor: String?,
     val position: List<Int>,
     val isEnabled: Boolean
 )
 
 private fun takeSnapshot(view: View, root: View, snapshots: MutableMap<Int, Snapshot> = mutableMapOf()): MutableMap<Int, Snapshot> {
     snapshots[view.id] = Snapshot(
-        fgColor = view.getTextColor(),
-        bgColor = view.getBackgroundColor(),
+        fgColor = view.getTextColorHex(),
+        bgColor = view.getBackgroundColorHex(),
         position = view.getGlobalDpBounds(root),
         isEnabled = view.isEnabled
     )
@@ -329,8 +305,8 @@ private fun convertMapToBundle(snapshotMap: Map<Int, Snapshot>): Bundle {
 private fun convertSnapshotToBundle(snapshot: Snapshot): Bundle {
     return Bundle().apply {
         // Only put colors if they are not null
-        snapshot.fgColor?.let { putInt("fgColor", it) }
-        snapshot.bgColor?.let { putInt("bgColor", it) }
+        snapshot.fgColor?.let { putString("fgColor", it) }
+        snapshot.bgColor?.let { putString("bgColor", it) }
 
         // Convert List<Int> to ArrayList<Int> for the Bundle
         putIntegerArrayList("position", ArrayList(snapshot.position))

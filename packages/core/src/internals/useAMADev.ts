@@ -22,6 +22,14 @@ const startAMA = () => {
 	ReactNativeAmaModule.start();
 };
 
+const highlightComponent = (issue: AMAError) => {
+	ReactNativeAmaModule.highlight(
+		issue.viewId,
+		projectRules.highlight ?? 'both',
+		getErrorColor(issue.rule),
+	);
+}
+
 const resetFixedIssues = (prevIssues: AMAError[], newIssues: AMAError[]) => {
 	const fixed = prevIssues.filter(
 		issue => newIssues.find(item => item.viewId === issue.viewId) === undefined,
@@ -67,11 +75,7 @@ export const useAMADev = () => {
 		if (allIssues.length) {
 			for (const issue of allIssues) {
 				if (issue.viewId >= 0 && !issueHighlighted.includes(issue.viewId)) {
-					ReactNativeAmaModule.highlight(
-						issue.viewId,
-						projectRules.highlight ?? 'both',
-						getErrorColor(issue.rule),
-					);
+					highlightComponent(issue)
 
 					issueHighlighted.push(issue.viewId);
 				}
@@ -85,10 +89,29 @@ export const useAMADev = () => {
 		previousIssues.current = allIssues;
 	};
 
-	const checkResultUiInteraction = (data: AmaUIInteraction) => {
+	const checkResultUiInteraction = (data?: AmaUIInteraction) => {
+		if (!data) {
+			return
+		}
+
 		const hasChanged = hasUiChanged(data);
 
-		console.log({ hasChanged });
+		console.log(hasChanged)
+		if (!hasChanged) {
+			// const newIssues = issues.filter(issue => issue.rule !== 'INCOMPATIBLE_ACCESSIBILITY_STATE')
+			// setIssues(newIssues)
+
+			return
+		}
+
+		const rule: AMAError = {
+			rule: 'NO_ACCESSIBILITY_STATE_SET',
+			viewId: data.rootTag
+		}
+
+		setIssues(issues => ([...issues, rule]))
+
+		highlightComponent(rule)
 	};
 
 	const performChecks = (node: AmaNode): AMAError[] => {
@@ -161,12 +184,6 @@ function hasUiChanged(data: AmaUIInteraction) {
 
 	const afterKeys = Object.keys(after);
 
-	// 1. Fast check: Did the number of items change?
-	//    (This catches any added or removed items)
-	if (Object.keys(before).length !== afterKeys.length) {
-		return true;
-	}
-
 	// 2. Slow check: Iterate and compare items one by one
 	for (const key of afterKeys) {
 		const snapBefore = before[key];
@@ -181,13 +198,13 @@ function hasUiChanged(data: AmaUIInteraction) {
 		}
 
 		// 2b. Compare properties
-		if (snapBefore.isEnabled !== snapAfter.isEnabled ||
-			snapBefore.bgColor !== snapAfter.bgColor ||
-			snapBefore.fgColor !== snapAfter.fgColor) {
-
-			console.error('before != after', key, snapBefore.bgColor != snapAfter.bgColor, snapBefore.bgColor, snapAfter.bgColor, snapBefore.fgColor != snapAfter.fgColor)
-			return true;
-		}
+		// if (snapBefore.isEnabled !== snapAfter.isEnabled ||
+		// 	snapBefore.bgColor !== snapAfter.bgColor ||
+		// 	snapBefore.fgColor !== snapAfter.fgColor) {
+		//
+		// 	console.error('before != after', key, snapBefore.bgColor != snapAfter.bgColor, snapBefore.bgColor, snapAfter.bgColor, snapBefore.fgColor != snapAfter.fgColor)
+		// 	return true;
+		// }
 
 		// 2c. Compare the position array
 		const posBefore = snapBefore.position;
@@ -200,7 +217,7 @@ function hasUiChanged(data: AmaUIInteraction) {
 
 		for (let i = 0; i < posBefore.length; i++) {
 			if (posBefore[i] !== posAfter[i]) {
-				console.error('position differs', i)
+				console.error('position differs', i, posBefore[i], posAfter[i])
 				return true;
 			}
 		}

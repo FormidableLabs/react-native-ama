@@ -1,35 +1,10 @@
+import { Rule } from "./utils/rules";
+
 export type Position = [number, number, number, number];
 
-export type AMARule =
-  | 'BOTTOM_SHEET_CLOSE_ACTION'
-  | 'CONTRAST_FAILED'
-  | 'CONTRAST_FAILED_AAA'
-  | 'FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE'
-  | 'FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE'
-  | 'MINIMUM_SIZE'
-  | 'NO_ACCESSIBILITY_LABEL'
-  | 'NO_ACCESSIBILITY_ROLE'
-  | 'NO_FORM_ERROR'
-  | 'NO_FORM_LABEL'
-  | 'NO_KEYBOARD_TRAP'
-  | 'NO_UNDEFINED'
-  | 'NO_UPPERCASE_TEXT'
-  | 'INCOMPATIBLE_ACCESSIBILITY_STATE'
-  | 'INCOMPATIBLE_ACCESSIBILITY_ROLE'
-  | 'NO_FORM_LABEL_ENDING_WITH_ASTERISK'
-  | 'UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL'
-  | 'NO_HEADER_FOUND';
-
-export type AMARuleAction =
-  | 'SHOULD_NOT'
-  | 'MUST_NOT'
-  | 'MUST'
-  | 'SHOULD'
-  | 'PLEASE_FORGIVE_ME';
-
 export type AMAError = {
-  rule: AMARule;
-  extra?: any;
-  label?: string;
-  viewId: number;
+	rule: Rule;
+	extra?: any;
+	label?: string;
+	viewId: number;
 };

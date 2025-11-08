@@ -23,12 +23,13 @@ export type AmaNode = {
 };
 
 type UiInteraction = {
-	fg?: number;
-	bg?: number;
+	fg?: string;
+	bg?: string;
 	position?: [number, number, number, number];
 };
 
 export type AmaUIInteraction = {
+	rootTag: number;
 	before: UiInteraction[];
 	after: UiInteraction[]
 }
