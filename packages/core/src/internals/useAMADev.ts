@@ -1,228 +1,326 @@
-import { useEffect, useRef, useState } from 'react';
-import { DevSettings } from 'react-native';
-import { AmaNode, AmaUIInteraction } from '../ReactNativeAma.types';
-import ReactNativeAmaModule from '../ReactNativeAmaModule';
-import { checkAriaLabel } from './checks/checkAriaLabel';
-import { checkAriaRole } from './checks/checkAriaRole';
-import { checkContrast } from './checks/checkContrast';
-import { checkIsUppercase } from './checks/checkIsUppercase';
-import { checkMinimumSize } from './checks/checkMinimumSize';
-import projectRules from './config';
-import { AMAError } from './types';
-import { amaClearHighlight } from './utils/amaClearHighlight';
-import { getErrorColor } from './utils/getErrorColor';
-import { isRuleDisabled } from './utils/isRuleDisabled';
-import logger from './utils/logger';
+import { useEffect, useRef, useState } from "react";
+import { DevSettings } from "react-native";
+import {
+  AmaNode,
+  AmaUiSnapshot,
+  AmaUiSnapshotKeys,
+  AmaUiSnapshotsData,
+} from "../ReactNativeAma.types";
+import ReactNativeAmaModule from "../ReactNativeAmaModule";
+import { checkAriaLabel } from "./checks/checkAriaLabel";
+import { checkAriaRole } from "./checks/checkAriaRole";
+import { checkContrast } from "./checks/checkContrast";
+import { checkIsUppercase } from "./checks/checkIsUppercase";
+import { checkMinimumSize } from "./checks/checkMinimumSize";
+import projectRules from "./config";
+import { AMAError } from "./types";
+import { amaClearHighlight } from "./utils/amaClearHighlight";
+import { getErrorColor } from "./utils/getErrorColor";
+import { isRuleDisabled } from "./utils/isRuleDisabled";
+import logger from "./utils/logger";
 
 let issueHighlighted: Array<number> = [];
 
 const startAMA = () => {
-	logger?.log('👀 Start Monitoring 👀');
+  logger?.log("👀 Start Monitoring 👀: " + JSON.stringify(projectRules.checks));
 
-	ReactNativeAmaModule.start();
+  ReactNativeAmaModule.start(projectRules.checks);
 };
 
 const highlightComponent = (issue: AMAError) => {
-	ReactNativeAmaModule.highlight(
-		issue.viewId,
-		projectRules.highlight ?? 'both',
-		getErrorColor(issue.rule),
-	);
-}
+  ReactNativeAmaModule.highlight(
+    issue.viewId,
+    projectRules.highlight ?? "both",
+    getErrorColor(issue.rule)
+  );
+};
 
 const resetFixedIssues = (prevIssues: AMAError[], newIssues: AMAError[]) => {
-	const fixed = prevIssues.filter(
-		issue => newIssues.find(item => item.viewId === issue.viewId) === undefined,
-	);
+  const fixed = prevIssues.filter(
+    (issue) =>
+      newIssues.find((item) => item.viewId === issue.viewId) === undefined &&
+      issue.rule !== "NO_ACCESSIBILITY_STATE_SET"
+  );
 
-	for (const issue of fixed) {
-		amaClearHighlight?.(issue);
-		const index = issueHighlighted.find(item => item === issue.viewId);
+  for (const issue of fixed) {
+    amaClearHighlight?.(issue);
+    const index = issueHighlighted.find((item) => item === issue.viewId);
 
-		if (index) {
-			issueHighlighted.splice(index, 1);
-		}
-	}
+    if (index) {
+      issueHighlighted.splice(index, 1);
+    }
+  }
 };
 
 export const useAMADev = () => {
-	const isMonitoring = useRef(true);
-	const [issues, setIssues] = useState<AMAError[]>([]);
-	const previousIssues = useRef<AMAError[]>([]);
+  const isMonitoring = useRef(true);
+  const [issues, setIssues] = useState<AMAError[]>([]);
+  const previousIssues = useRef<AMAError[]>([]);
 
-	const checkNodes = (nodesToCheck: AmaNode[]) => {
-		let allIssues: AMAError[] = [];
-		let hasAtLeastOneHeader = false;
+  const checkNodes = (nodesToCheck: Record<number, AmaNode>) => {
+    let allIssues: AMAError[] = [];
+    let hasAtLeastOneHeader = false;
 
-		for (const node of Object.values(nodesToCheck)) {
-			if (!hasAtLeastOneHeader && node.type === 'Text') {
-				if (node.traits?.includes('header') || node.ariaRole === 'header') {
-					hasAtLeastOneHeader = true;
-				}
-			}
+    for (const node of Object.values(nodesToCheck)) {
+      if (!hasAtLeastOneHeader && node.type === "Text") {
+        if (node.traits?.includes("header") || node.ariaRole === "header") {
+          hasAtLeastOneHeader = true;
+        }
+      }
 
-			allIssues.push.apply(allIssues, performChecks(node));
-		}
+      allIssues.push.apply(allIssues, performChecks(node));
+    }
 
-		if (!hasAtLeastOneHeader) {
-			allIssues.push({ rule: 'NO_HEADER_FOUND', viewId: -1 });
-		}
+    if (!hasAtLeastOneHeader) {
+      allIssues.push({ rule: "NO_HEADER_FOUND", viewId: -1 });
+    }
 
-		if (previousIssues.current.length) {
-			resetFixedIssues(previousIssues.current, allIssues);
-		}
+    if (previousIssues.current.length) {
+      resetFixedIssues(previousIssues.current, allIssues);
+    }
 
-		if (allIssues.length) {
-			for (const issue of allIssues) {
-				if (issue.viewId >= 0 && !issueHighlighted.includes(issue.viewId)) {
-					highlightComponent(issue)
+    if (allIssues.length) {
+      for (const issue of allIssues) {
+        if (issue.viewId >= 0 && !issueHighlighted.includes(issue.viewId)) {
+          highlightComponent(issue);
 
-					issueHighlighted.push(issue.viewId);
-				}
-			}
+          issueHighlighted.push(issue.viewId);
+        }
+      }
 
-			setIssues(allIssues);
-		} else if (previousIssues.current.length) {
-			setIssues([]);
-		}
+      setIssues((issues) => {
+        const a11yStateIssues = keepNoStateHandledIssuesStillInView(
+          issues,
+          nodesToCheck
+        );
 
-		previousIssues.current = allIssues;
-	};
+        return [...a11yStateIssues, ...allIssues];
+      });
+    } else {
+      setIssues((issues) => {
+        const a11yStateIssues = keepNoStateHandledIssuesStillInView(
+          issues,
+          nodesToCheck
+        );
 
-	const checkResultUiInteraction = (data?: AmaUIInteraction) => {
-		if (!data) {
-			return
-		}
+        return [...a11yStateIssues];
+      });
+    }
 
-		const hasChanged = hasUiChanged(data);
+    previousIssues.current = allIssues;
+  };
 
-		console.log(hasChanged)
-		if (!hasChanged) {
-			// const newIssues = issues.filter(issue => issue.rule !== 'INCOMPATIBLE_ACCESSIBILITY_STATE')
-			// setIssues(newIssues)
+  const checkResultUiInteraction = (data?: AmaUiSnapshotsData) => {
+    if (!data) {
+      return;
+    }
 
-			return
-		}
+    const itemsToFlag = Array.from(itemsWithNoStateUpdated(data));
 
-		const rule: AMAError = {
-			rule: 'NO_ACCESSIBILITY_STATE_SET',
-			viewId: data.rootTag
-		}
+    setIssues((currentIssues) => {
+      if (itemsToFlag.length === 0) {
+        const issueIndex = currentIssues.findIndex(
+          (item) =>
+            item.viewId === data.rootTag &&
+            item.rule === "NO_ACCESSIBILITY_STATE_SET"
+        );
 
-		setIssues(issues => ([...issues, rule]))
+        if (issueIndex >= 0) {
+          amaClearHighlight?.(currentIssues[issueIndex]);
 
-		highlightComponent(rule)
-	};
+          currentIssues.splice(issueIndex, 1);
 
-	const performChecks = (node: AmaNode): AMAError[] => {
-		return [
-			checkAriaLabel(node),
-			checkAriaRole(node),
-			checkMinimumSize(node),
-			checkIsUppercase({ node }),
-			checkContrast(node),
-		].filter(
-			(item): item is AMAError => item !== null && !isRuleDisabled?.(item),
-		);
-	};
+          return [...currentIssues];
+        }
 
-	const stopAMA = () => {
-		console.log('[React Native AMA]: ', '🙈 Stop Monitoring 🙈');
+        return currentIssues;
+      }
 
-		for (const issue of issues) {
-			amaClearHighlight?.(issue);
-		}
+      const newIssues = itemsToFlag
+        .map((viewId) => {
+          const found = currentIssues.find(
+            (item) =>
+              item.viewId === viewId &&
+              item.rule === "NO_ACCESSIBILITY_STATE_SET"
+          );
 
-		ReactNativeAmaModule.stop();
-	};
+          if (found) {
+            return null;
+          }
 
-	useEffect(() => {
-		startAMA();
+          const rule: AMAError = {
+            rule: "NO_ACCESSIBILITY_STATE_SET",
+            viewId,
+          };
 
-		const amaOnNodesListener = ReactNativeAmaModule.addListener(
-			'onAmaNodes',
-			checkNodes,
-		);
-		const amaOnUiInteraction = ReactNativeAmaModule.addListener(
-			'onUIInteraction',
-			checkResultUiInteraction,
-		);
+          highlightComponent(rule);
+          return rule;
+        })
+        .filter(nonNullable);
 
-		return () => {
-			stopAMA();
+      if (newIssues.length === 0) {
+        return currentIssues;
+      }
 
-			amaOnNodesListener.remove();
-			amaOnUiInteraction.remove();
-		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+      return [...currentIssues, ...newIssues];
+    });
+  };
 
-	const toggleReactNativeAMA = () => {
-		if (isMonitoring.current) {
-			stopAMA();
-			setIssues([]);
-		} else {
-			startAMA();
-		}
+  const performChecks = (node: AmaNode): AMAError[] => {
+    return [
+      checkAriaLabel(node),
+      checkAriaRole(node),
+      checkMinimumSize(node),
+      checkIsUppercase({ node }),
+      checkContrast(node),
+    ].filter(
+      (item): item is AMAError => item !== null && !isRuleDisabled?.(item)
+    );
+  };
 
-		isMonitoring.current = !isMonitoring.current;
-	};
+  const stopAMA = () => {
+    console.log("[React Native AMA]: ", "🙈 Stop Monitoring 🙈");
 
-	useEffect(() => {
-		DevSettings.addMenuItem('Toggle React Native AMA', toggleReactNativeAMA);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+    for (const issue of issues) {
+      amaClearHighlight?.(issue);
+    }
 
-	return {
-		issues,
-	};
+    ReactNativeAmaModule.stop();
+  };
+
+  useEffect(() => {
+    startAMA();
+
+    const amaOnNodesListener = ReactNativeAmaModule.addListener(
+      "onAmaNodes",
+      checkNodes
+    );
+    const amaOnUiInteraction = ReactNativeAmaModule.addListener(
+      "onUIInteraction",
+      checkResultUiInteraction
+    );
+
+    return () => {
+      stopAMA();
+
+      amaOnNodesListener.remove();
+      amaOnUiInteraction.remove();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const toggleReactNativeAMA = () => {
+    if (isMonitoring.current) {
+      stopAMA();
+      setIssues([]);
+    } else {
+      startAMA();
+    }
+
+    isMonitoring.current = !isMonitoring.current;
+  };
+
+  useEffect(() => {
+    DevSettings.addMenuItem("Toggle React Native AMA", toggleReactNativeAMA);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return {
+    issues,
+  };
 };
 
-function hasUiChanged(data: AmaUIInteraction) {
-	const before = data.before;
-	const after = data.after;
+function findPressableParentId(
+  snapshot: Record<number, AmaUiSnapshot>,
+  startKey: number
+) {
+  let currentElement = snapshot[startKey];
 
-	const afterKeys = Object.keys(after);
+  // Loop as long as we have a valid element to check
+  while (currentElement) {
+    const parentId = currentElement.parentId;
 
-	// 2. Slow check: Iterate and compare items one by one
-	for (const key of afterKeys) {
-		const snapBefore = before[key];
-		const snapAfter = after[key];
+    if (!parentId) {
+      return null;
+    }
 
-		// 2a. Check if item is new (key exists in 'after' but not 'before')
-		//     This is a secondary check in case keys were swapped
-		//     but the total count remained the same.
-		if (!snapBefore) {
-			console.error('snap before not exists')
-			return true;
-		}
+    const parentElement = snapshot[parentId];
 
-		// 2b. Compare properties
-		// if (snapBefore.isEnabled !== snapAfter.isEnabled ||
-		// 	snapBefore.bgColor !== snapAfter.bgColor ||
-		// 	snapBefore.fgColor !== snapAfter.fgColor) {
-		//
-		// 	console.error('before != after', key, snapBefore.bgColor != snapAfter.bgColor, snapBefore.bgColor, snapAfter.bgColor, snapBefore.fgColor != snapAfter.fgColor)
-		// 	return true;
-		// }
+    if (parentElement) {
+      if (parentElement.isPressable) {
+        return parentId;
+      }
 
-		// 2c. Compare the position array
-		const posBefore = snapBefore.position;
-		const posAfter = snapAfter.position;
+      currentElement = parentElement;
+    } else {
+      return null;
+    }
+  }
 
-		if (posBefore.length !== posAfter.length) {
-			console.error('length differ')
-			return true;
-		}
+  return null;
+}
 
-		for (let i = 0; i < posBefore.length; i++) {
-			if (posBefore[i] !== posAfter[i]) {
-				console.error('position differs', i, posBefore[i], posAfter[i])
-				return true;
-			}
-		}
-	}
+const IGNORE_KEYS: AmaUiSnapshotKeys[] = [
+  "parentId",
+  "fgColor",
+  "bgColor",
+  "isChecked",
+];
+function itemsWithNoStateUpdated(data: AmaUiSnapshotsData) {
+  const before = data.before;
+  const after = data.after;
+  const issues: Set<number> = new Set();
 
-	// 3. If the loop finishes, no changes were found
-	return false;
+  const afterKeys = Object.keys(after).map(Number);
+
+  if (!afterKeys.includes(data.rootTag)) {
+    return [];
+  }
+
+  for (const tagId of afterKeys) {
+    const snapBefore = before[tagId];
+    const snapAfter = after[tagId];
+
+    if (!snapBefore) {
+      issues.add(data.rootTag);
+
+      continue;
+    }
+
+    const subKeys = Object.keys(snapAfter) as Array<keyof AmaUiSnapshot>;
+
+    for (const subKey of subKeys) {
+      const hasSomethingChanged =
+        !IGNORE_KEYS.includes(subKey) &&
+        snapBefore[subKey] !== snapAfter[subKey];
+
+      if (hasSomethingChanged) {
+        const parentId = data.rootTag; //findPressableParentId(after, snapAfter.parentId);
+
+        const isChecked = after[parentId].isChecked;
+        const wasChecked = before[parentId].isChecked;
+        const hasCheckedChanged = isChecked !== wasChecked;
+
+        if (parentId && !hasCheckedChanged) {
+          issues.add(parentId);
+        }
+      }
+    }
+  }
+
+  return issues;
+}
+
+const keepNoStateHandledIssuesStillInView = (
+  issues: AMAError[],
+  nodesInView: Record<number, AmaNode>
+) => {
+  return issues.filter(
+    (item) =>
+      item.rule === "NO_ACCESSIBILITY_STATE_SET" && nodesInView[item.viewId]
+  );
+};
+
+function nonNullable<T>(value: T): value is NonNullable<T> {
+  return value !== null && value !== undefined;
 }

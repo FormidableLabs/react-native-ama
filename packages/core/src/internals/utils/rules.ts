@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
 
-export type Rule =
+export type AmaRule =
 	| 'BOTTOM_SHEET_CLOSE_ACTION'
 	| 'CONTRAST_FAILED'
 	| 'CONTRAST_FAILED_AAA'
@@ -22,14 +22,14 @@ export type Rule =
 	| 'NO_HEADER_FOUND'
 	| 'NO_ACCESSIBILITY_STATE_SET'
 
-export type RuleAction =
+export type AmaRuleAction =
 	| 'SHOULD_NOT'
 	| 'MUST_NOT'
 	| 'MUST'
 	| 'SHOULD'
 	| 'PLEASE_FORGIVE_ME';
 
-export const NON_OVERRIDABLE_RULES: Array<Rule> | undefined = __DEV__
+export const NON_OVERRIDABLE_RULES: Array<AmaRule> | undefined = __DEV__
 	? [
 		'NO_ACCESSIBILITY_ROLE',
 		'NO_ACCESSIBILITY_LABEL',
@@ -44,7 +44,7 @@ export const NON_OVERRIDABLE_RULES: Array<Rule> | undefined = __DEV__
 	]
 	: undefined;
 
-export const LOGGER_RULES: Record<Rule, RuleAction> | null = __DEV__
+export const LOGGER_RULES: Record<AmaRule, AmaRuleAction> | null = __DEV__
 	? {
 		CONTRAST_FAILED: 'MUST',
 		CONTRAST_FAILED_AAA: 'SHOULD',
@@ -75,7 +75,7 @@ export const IGNORE_CONTRAST_FOR_DISABLED_ELEMENTS = false;
 export type A11ySeverity = 'Serious' | 'Critical' | 'Warning';
 
 export type RuleHelp = {
-	[key in Rule]: {
+	[key in AmaRule]: {
 		url: string;
 		issue: string;
 		severity: A11ySeverity;
@@ -248,24 +248,24 @@ export const RULES_HELP: RuleHelp | null = __DEV__
 			issue: 'No accessibility state handled',
 			severity: 'Critical',
 			message:
-				'The UI changed, but no accessibility state was updated. Screen reader users won’t know what changed after interacting with this component.',
+				'The UI changed, but its accessibility state wasn’t updated. Screen reader users won’t know what changed after interacting with this component.',
 			howToFix:
-				'Update properties like accessibilityState (e.g. aria-selected, aria-expanded, aria-checked)',
+				'Update the element’s accessibilityState to reflect the new state, for example: aria-selected, aria-expanded, aria-checked',
 		},
 
 	}
 	: null;
 
 const canRuleBeOverridden = __DEV__
-	? (rule: Rule) => {
+	? (rule: AmaRule) => {
 		return !NON_OVERRIDABLE_RULES!.includes(rule);
 	}
 	: null;
 
 export const AMA_COLORS: { [key in A11ySeverity]: string } = {
 	Critical: '#f00',
-	Serious: '#FFFf00',
-	Warning: '#FFFf00',
+	Serious: '#7A7A00',
+	Warning: '#7A7A00',
 };
 
 export default canRuleBeOverridden;

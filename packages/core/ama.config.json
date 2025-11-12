@@ -2,5 +2,9 @@
   "rules": {},
   "accessibilityLabelExceptions": [],
   "highlight": "both",
-  "uppercaseMinLength": 4
+  "uppercaseMinLength": 4,
+  "checks": {
+    "ui": true,
+    "delay": 250
+  }
 }

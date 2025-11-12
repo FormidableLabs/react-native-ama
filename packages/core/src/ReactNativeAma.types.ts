@@ -22,21 +22,29 @@ export type AmaNode = {
 	isEnabled?: boolean;
 };
 
-type UiInteraction = {
-	fg?: string;
-	bg?: string;
-	position?: [number, number, number, number];
+export type AmaUiSnapshot = {
+	fgColor?: string;
+	bgColor?: string;
+	x: number
+	y: number;
+	width: number;
+	height: number;
+	parentId: number;
+	isPressable: boolean;
+	isChecked: boolean
 };
 
-export type AmaUIInteraction = {
+export type AmaUiSnapshotsData = {
 	rootTag: number;
-	before: UiInteraction[];
-	after: UiInteraction[]
+	before: Record<number, AmaUiSnapshot>
+	after: Record<number, AmaUiSnapshot>
 }
+
+export type AmaUiSnapshotKeys = keyof AmaUiSnapshot;
 
 export type ReactNativeAmaModuleEvents = {
 	onAmaNodes: (nodes: AmaNode[]) => void;
-	onUIInteraction: (nodes: AmaUIInteraction) => void;
+	onUIInteraction: (nodes: AmaUiSnapshotsData) => void;
 };
 
 export type ChangeEventPayload = {

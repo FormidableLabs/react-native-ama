@@ -21,6 +21,8 @@ object Constants {
     const val DEBOUNCE: Long = 100
 }
 
+var uiCheckDelay: Long = 500
+
 class ReactNativeAmaModule : Module() {
     private var isMonitoring = false
     private var currentDecorView: View? = null
@@ -30,25 +32,31 @@ class ReactNativeAmaModule : Module() {
     private var checkRunnable: Runnable? = null
     private lateinit var a11yChecker: NodesGrabber
     private var highlighter: Highlight? = null
-    private var isHighlighting = false
 
     override fun definition() = ModuleDefinition {
         Name("ReactNativeAma")
 
         Events("onAmaNodes", "onUIInteraction")
 
-        Function("start") { ->
+        Function("start") { args: Map<String, Any?>? ->
+            val uiCheck = args?.get("ui") as? Boolean ?: false
+            uiCheckDelay = args?.get("delay") as? Long ?: uiCheckDelay
+//            val groupingCheck = checks?.get("grouping") as? Boolean ?: false
+
             if (highlighter == null) {
                 highlighter = Highlight(appContext)
             }
 
             if (!isMonitoring) {
-                Logger.info("start", "👀 Start Monitoring 👀")
+                Logger.info("start", "👀 Start Monitoring 👀" + args.toString())
 
                 a11yChecker = NodesGrabber(appContext)
 
                 val activity = getCurrentActivity()
-                attachWindowTapProbe(activity)
+
+                if (uiCheck) {
+                    attachWindowTapProbe(activity)
+                }
 
                 activity?.window?.decorView?.let {
                     currentDecorView = it
@@ -101,8 +109,6 @@ class ReactNativeAmaModule : Module() {
         }
 
         AsyncFunction("clearHighlight") { viewId: Int -> highlighter?.clearHighlight(viewId) }
-
-        Function("highlightCompleted") { isHighlighting = false }
     }
 
     private fun attachWindowTapProbe(activity: Activity?) {
@@ -134,15 +140,17 @@ class ReactNativeAmaModule : Module() {
                             val isTap = (Math.abs(event.x - downX) < TAP_THRESHOLD) &&
                                     (Math.abs(event.y - downY) < TAP_THRESHOLD)
 
-                            Logger.info("isTap", isTap.toString())
-
                             if (isTap) {
                                 // We detected a tap!
                                 // Now, find the view that was tapped
                                 val tappedView =
                                     findViewAt(rootView, event.rawX.toInt(), event.rawY.toInt())
 
-                                if (tappedView != null && tappedView.isClickable) {
+                                val info = tappedView?.createAccessibilityNodeInfo()
+                                val a11yInfo = info?.let { AccessibilityNodeInfoCompat.wrap(it) }
+                                val isAccessible = a11yInfo?.let { tappedView.isAccessible(it) }
+
+                                if (tappedView != null && tappedView.isClickable && isAccessible == true) {
                                     runMyChecks(tappedView, rootView)
                                 }
                             }
@@ -207,7 +215,7 @@ class ReactNativeAmaModule : Module() {
                     break
                 }
 
-                if (child is android.view.ViewGroup) {
+                if (child is ViewGroup) {
                     for (j in 0 until child.childCount) {
                         viewsToVisit.add(child.getChildAt(j))
                     }
@@ -222,7 +230,6 @@ class ReactNativeAmaModule : Module() {
         val beforeSnapshot = takeSnapshot(tappedView, rootView)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            Logger.info("post delay", tappedView.id.toString())
             if (tappedView.isAttachedToWindow && rootView.isAttachedToWindow) {
                 val afterSnapshot = takeSnapshot(tappedView, rootView)
 
@@ -234,33 +241,51 @@ class ReactNativeAmaModule : Module() {
 
                 sendEvent("onUIInteraction", event)
             }
-        }, 500)
+        }, uiCheckDelay)
     }
 }
-
-data class UiChanged (
-    val before: Map<Int, Snapshot>,
-    val after: Map<Int, Snapshot>,
-)
 
 data class Snapshot(
     val fgColor: String?,
     val bgColor: String?,
-    val position: List<Int>,
-    val isEnabled: Boolean
+    val x: Int,
+    val y: Int,
+    val width: Int,
+    val height: Int,
+    val parentId: Int,
+    val isPressable: Boolean,
+    val isChecked: Boolean
 )
 
-private fun takeSnapshot(view: View, root: View, snapshots: MutableMap<Int, Snapshot> = mutableMapOf()): MutableMap<Int, Snapshot> {
-    snapshots[view.id] = Snapshot(
-        fgColor = view.getTextColorHex(),
-        bgColor = view.getBackgroundColorHex(),
-        position = view.getGlobalDpBounds(root),
-        isEnabled = view.isEnabled
-    )
+private fun takeSnapshot(view: View, root: View): MutableMap<Int, Snapshot> {
+    val snapshots: MutableMap<Int, Snapshot> = mutableMapOf()
+
+     return _takeSnapshot(view, root, snapshots, true)
+}
+
+private fun _takeSnapshot(view: View, root: View, snapshots: MutableMap<Int, Snapshot> = mutableMapOf(), include_children: Boolean): MutableMap<Int, Snapshot> {
+    val info = view.createAccessibilityNodeInfo()
+    val a11yInfo = AccessibilityNodeInfoCompat.wrap(info)
+
+    if (view.isPressable(a11yInfo) || view.isTextLike() || include_children) {
+        val position = view.getGlobalDpBounds(root)
+
+        snapshots[view.id] = Snapshot(
+            fgColor = view.getTextColorHex(),
+            bgColor = view.getBackgroundColorHex(),
+            x = position[0],
+            y = position[1],
+            width = position[2],
+            height = position[3],
+            parentId = (view.parent as? View)?.id ?: View.NO_ID,
+            isPressable = view.isPressable(a11yInfo),
+            isChecked = a11yInfo.isChecked
+        )
+    }
 
     if (view is ViewGroup) {
         for (i in 0 until view.childCount) {
-            takeSnapshot(view.getChildAt(i), root, snapshots)
+            _takeSnapshot(view.getChildAt(i), root, snapshots, include_children)
         }
     }
 
@@ -293,7 +318,6 @@ fun View.getGlobalDpBounds(rootView: View): List<Int> {
 private fun convertMapToBundle(snapshotMap: Map<Int, Snapshot>): Bundle {
     return Bundle().apply {
         snapshotMap.forEach { (key, snapshot) ->
-            // Convert Int key to String and Snapshot to Bundle
             putBundle(key.toString(), convertSnapshotToBundle(snapshot))
         }
     }
@@ -304,13 +328,16 @@ private fun convertMapToBundle(snapshotMap: Map<Int, Snapshot>): Bundle {
  */
 private fun convertSnapshotToBundle(snapshot: Snapshot): Bundle {
     return Bundle().apply {
-        // Only put colors if they are not null
         snapshot.fgColor?.let { putString("fgColor", it) }
         snapshot.bgColor?.let { putString("bgColor", it) }
 
-        // Convert List<Int> to ArrayList<Int> for the Bundle
-        putIntegerArrayList("position", ArrayList(snapshot.position))
+        putInt("x", snapshot.x)
+        putInt("y", snapshot.y)
+        putInt("width", snapshot.width)
+        putInt("height", snapshot.height)
+        putInt("parentId", snapshot.parentId)
 
-        putBoolean("isEnabled", snapshot.isEnabled)
+        putBoolean("isPressable", snapshot.isPressable)
+        putBoolean("isChecked", snapshot.isChecked)
     }
 }

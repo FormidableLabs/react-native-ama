@@ -1,9 +1,9 @@
-import { Rule } from "./utils/rules";
+import { AmaRule } from "./utils/rules";
 
 export type Position = [number, number, number, number];
 
 export type AMAError = {
-	rule: Rule;
+	rule: AmaRule;
 	extra?: any;
 	label?: string;
 	viewId: number;

@@ -1,5 +1,5 @@
-import ReactNativeAmaModule from '../../ReactNativeAmaModule';
-import { AMAError } from '../types';
+import ReactNativeAmaModule from "../../ReactNativeAmaModule";
+import { AMAError } from "../types";
 
 export const amaClearHighlight = __DEV__
   ? (issue: AMAError) => {
