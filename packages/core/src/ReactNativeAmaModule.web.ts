@@ -1,15 +1,14 @@
-import { NativeModule, registerWebModule } from 'expo';
-import { ReactNativeAmaModuleEvents } from './ReactNativeAma.types';
-import type { A11yIssue } from './internals/types';
+import { NativeModule, registerWebModule } from "expo";
+import { ReactNativeAmaModuleEvents } from "./ReactNativeAma.types";
 
 class ReactNativeAmaModule extends NativeModule<ReactNativeAmaModuleEvents> {
   PI = Math.PI;
   async setValueAsync(issues: A11yIssue[]): Promise<void> {
-    this.emit('onAmaNodes', issues);
+    this.emit("onAmaNodes", issues);
   }
   hello() {
-    return 'Hello world! 👋';
+    return "Hello world! 👋";
   }
 }
 
-export default registerWebModule(ReactNativeAmaModule, 'ReactNativeAmaModule');
+export default registerWebModule(ReactNativeAmaModule, "ReactNativeAmaModule");

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { DevSettings } from "react-native";
 import {
   AmaNode,
+  AmaNodes,
   AmaUiSnapshot,
   AmaUiSnapshotKeys,
   AmaUiSnapshotsData,
@@ -13,7 +14,7 @@ import { checkContrast } from "./checks/checkContrast";
 import { checkIsUppercase } from "./checks/checkIsUppercase";
 import { checkMinimumSize } from "./checks/checkMinimumSize";
 import projectRules from "./config";
-import { AMAError } from "./types";
+import { AmaError } from "./types";
 import { amaClearHighlight } from "./utils/amaClearHighlight";
 import { getErrorColor } from "./utils/getErrorColor";
 import { isRuleDisabled } from "./utils/isRuleDisabled";
@@ -27,7 +28,7 @@ const startAMA = () => {
   ReactNativeAmaModule.start(projectRules.checks);
 };
 
-const highlightComponent = (issue: AMAError) => {
+const highlightComponent = (issue: AmaError) => {
   ReactNativeAmaModule.highlight(
     issue.viewId,
     projectRules.highlight ?? "both",
@@ -35,7 +36,7 @@ const highlightComponent = (issue: AMAError) => {
   );
 };
 
-const resetFixedIssues = (prevIssues: AMAError[], newIssues: AMAError[]) => {
+const resetFixedIssues = (prevIssues: AmaError[], newIssues: AmaError[]) => {
   const fixed = prevIssues.filter(
     (issue) =>
       newIssues.find((item) => item.viewId === issue.viewId) === undefined &&
@@ -52,13 +53,15 @@ const resetFixedIssues = (prevIssues: AMAError[], newIssues: AMAError[]) => {
   }
 };
 
+let lastNodesChecked: AmaNodes = {};
+
 export const useAMADev = () => {
   const isMonitoring = useRef(true);
-  const [issues, setIssues] = useState<AMAError[]>([]);
-  const previousIssues = useRef<AMAError[]>([]);
+  const [issues, setIssues] = useState<AmaError[]>([]);
+  const previousIssues = useRef<AmaError[]>([]);
 
-  const checkNodes = (nodesToCheck: Record<number, AmaNode>) => {
-    let allIssues: AMAError[] = [];
+  const checkNodes = (nodesToCheck: AmaNodes) => {
+    let allIssues: AmaError[] = [];
     let hasAtLeastOneHeader = false;
 
     for (const node of Object.values(nodesToCheck)) {
@@ -108,6 +111,7 @@ export const useAMADev = () => {
     }
 
     previousIssues.current = allIssues;
+    lastNodesChecked = nodesToCheck;
   };
 
   const checkResultUiInteraction = (data?: AmaUiSnapshotsData) => {
@@ -148,7 +152,7 @@ export const useAMADev = () => {
             return null;
           }
 
-          const rule: AMAError = {
+          const rule: AmaError = {
             rule: "NO_ACCESSIBILITY_STATE_SET",
             viewId,
           };
@@ -166,7 +170,7 @@ export const useAMADev = () => {
     });
   };
 
-  const performChecks = (node: AmaNode): AMAError[] => {
+  const performChecks = (node: AmaNode): AmaError[] => {
     return [
       checkAriaLabel(node),
       checkAriaRole(node),
@@ -174,7 +178,7 @@ export const useAMADev = () => {
       checkIsUppercase({ node }),
       checkContrast(node),
     ].filter(
-      (item): item is AMAError => item !== null && !isRuleDisabled?.(item)
+      (item): item is AmaError => item !== null && !isRuleDisabled?.(item)
     );
   };
 
@@ -260,26 +264,26 @@ function findPressableParentId(
   return null;
 }
 
-const IGNORE_KEYS: AmaUiSnapshotKeys[] = [
-  "parentId",
-  "fgColor",
-  "bgColor",
-  "isChecked",
-];
+const IGNORE_KEYS: AmaUiSnapshotKeys[] = ["parentId", "isChecked", "isBusy"];
 function itemsWithNoStateUpdated(data: AmaUiSnapshotsData) {
-  const before = data.before;
-  const after = data.after;
+  const tappedViewBefore = data.before;
+  const tappedViewAfter = data.after;
   const issues: Set<number> = new Set();
 
-  const afterKeys = Object.keys(after).map(Number);
+  const afterKeys = Object.keys(tappedViewAfter).map(Number);
 
   if (!afterKeys.includes(data.rootTag)) {
     return [];
   }
 
+  // The tapped element is no longer in the UI (probably the action did navigate the user to a different screen)
+  if (!lastNodesChecked[data.rootTag]) {
+    return [];
+  }
+
   for (const tagId of afterKeys) {
-    const snapBefore = before[tagId];
-    const snapAfter = after[tagId];
+    const snapBefore = tappedViewBefore[tagId];
+    const snapAfter = tappedViewAfter[tagId];
 
     if (!snapBefore) {
       issues.add(data.rootTag);
@@ -288,22 +292,31 @@ function itemsWithNoStateUpdated(data: AmaUiSnapshotsData) {
     }
 
     const subKeys = Object.keys(snapAfter) as Array<keyof AmaUiSnapshot>;
+    let hasSomethingChanged = false;
 
     for (const subKey of subKeys) {
-      const hasSomethingChanged =
+      const hasPropertyChanged =
         !IGNORE_KEYS.includes(subKey) &&
         snapBefore[subKey] !== snapAfter[subKey];
 
-      if (hasSomethingChanged) {
-        const parentId = data.rootTag; //findPressableParentId(after, snapAfter.parentId);
+      if (hasPropertyChanged) {
+        hasSomethingChanged = true;
 
-        const isChecked = after[parentId].isChecked;
-        const wasChecked = before[parentId].isChecked;
-        const hasCheckedChanged = isChecked !== wasChecked;
+        break;
+      }
+    }
 
-        if (parentId && !hasCheckedChanged) {
-          issues.add(parentId);
-        }
+    if (hasSomethingChanged) {
+      const parentId = data.rootTag; //findPressableParentId(after, snapAfter.parentId);
+
+      const { isChecked, isBusy } = tappedViewAfter[parentId];
+      const { isChecked: wasChecked, isBusy: wasBusy } =
+        tappedViewBefore[parentId];
+
+      const hasStateChanged = isChecked !== wasChecked || isBusy !== wasBusy;
+
+      if (parentId && !hasStateChanged) {
+        issues.add(parentId);
       }
     }
   }
@@ -312,7 +325,7 @@ function itemsWithNoStateUpdated(data: AmaUiSnapshotsData) {
 }
 
 const keepNoStateHandledIssuesStillInView = (
-  issues: AMAError[],
+  issues: AmaError[],
   nodesInView: Record<number, AmaNode>
 ) => {
   return issues.filter(

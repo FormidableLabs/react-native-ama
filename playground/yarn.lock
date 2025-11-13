@@ -3271,6 +3271,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-checkbox@npm:~4.1.4":
+  version: 4.1.4
+  resolution: "expo-checkbox@npm:4.1.4"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-web: "*"
+  peerDependenciesMeta:
+    react-native-web:
+      optional: true
+  checksum: 28e473b1572eab4ead38622fb10e2d0badd2c41dfb5780885fb1b74c8807c490e6336607f8f3264346b190c518dc195e9b881a587b92628e4471b84e28351c6f
+  languageName: node
+  linkType: hard
+
 "expo-constants@npm:~17.1.6":
   version: 17.1.6
   resolution: "expo-constants@npm:17.1.6"
@@ -5426,6 +5440,7 @@ __metadata:
     "@react-navigation/native-stack": ^7.3.21
     "@types/react": ~19.0.10
     expo: ~53.0.16
+    expo-checkbox: ~4.1.4
     expo-status-bar: ~2.2.3
     react: 19.0.0
     react-native: 0.79.5

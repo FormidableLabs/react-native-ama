@@ -7,7 +7,7 @@ import {
   Text,
   View,
 } from "react-native";
-import { AMAError, Position } from "../types";
+import { AmaError, Position } from "../types";
 import { amaClearHighlight } from "../utils/amaClearHighlight";
 import { amaHighlightComponent } from "../utils/amaHighlightComponent";
 import { getAMARuleErrorInfo } from "../utils/getRuleErrorInfo";
@@ -17,13 +17,13 @@ import { AMARuleError } from "./AMARuleError";
 
 const WINDOW_WIDTH = Dimensions.get("window").width;
 
-const AMAErrorComponent = ({ issues }: { issues?: AMAError[] }) => {
+const AMAErrorComponent = ({ issues }: { issues?: AmaError[] }) => {
   const [activeIssueIndex, setActiveIssueIndex] = useState<{
     id: number;
     position?: Position;
   }>();
-  const issueToView = useRef<AMAError>(null);
-  const previousViewId = useRef<AMAError>(null);
+  const issueToView = useRef<AmaError>(null);
+  const previousViewId = useRef<AmaError>(null);
 
   const clearPreviousHighlight = () => {
     if (!previousViewId.current) {
@@ -149,6 +149,8 @@ const AMAButton = ({
       role="button"
       aria-label={`Show ${plural}`}
       aria-disabled={disabled}
+      importantForAccessibility="no"
+      accessibilityElementsHidden
     >
       <Text style={[styles!.buttonText, { color }]}>
         {count} {plural}
@@ -158,7 +160,7 @@ const AMAButton = ({
 };
 
 type AMAOverlayProps = {
-  issue: AMAError;
+  issue: AmaError;
   position?: Position;
   closeOverlay: () => void;
   onPrevIssue: () => void;

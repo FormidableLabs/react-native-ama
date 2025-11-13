@@ -2,26 +2,30 @@ package expo.modules.ama
 
 import android.app.Activity
 import android.graphics.Rect
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.view.Window
+import android.widget.ProgressBar
 import android.widget.ScrollView
+import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 import kotlin.math.max
+import androidx.core.view.isVisible
 
 object Constants {
     const val DEBOUNCE: Long = 100
+    var uiCheckDelay: Long = 500
 }
-
-var uiCheckDelay: Long = 500
 
 class ReactNativeAmaModule : Module() {
     private var isMonitoring = false
@@ -40,7 +44,7 @@ class ReactNativeAmaModule : Module() {
 
         Function("start") { args: Map<String, Any?>? ->
             val uiCheck = args?.get("ui") as? Boolean ?: false
-            uiCheckDelay = args?.get("delay") as? Long ?: uiCheckDelay
+            Constants.uiCheckDelay = args?.get("delay") as? Long ?: Constants.uiCheckDelay
 //            val groupingCheck = checks?.get("grouping") as? Boolean ?: false
 
             if (highlighter == null) {
@@ -141,8 +145,6 @@ class ReactNativeAmaModule : Module() {
                                     (Math.abs(event.y - downY) < TAP_THRESHOLD)
 
                             if (isTap) {
-                                // We detected a tap!
-                                // Now, find the view that was tapped
                                 val tappedView =
                                     findViewAt(rootView, event.rawX.toInt(), event.rawY.toInt())
 
@@ -172,19 +174,21 @@ class ReactNativeAmaModule : Module() {
     private fun scheduleA11yCheck() {
         checkRunnable?.let { checkHandler.removeCallbacks(it) }
         checkRunnable = Runnable {
-            val decorView = currentDecorView ?: return@Runnable
-
             getNodesToCheck()
         }
 
         checkHandler.postDelayed(checkRunnable!!, Constants.DEBOUNCE)
     }
 
-    private fun getNodesToCheck() {
+    private fun getNodesToCheck(send: Boolean = true): Map<String, Any?> {
         val issues = a11yChecker.getNodesToCheck(currentDecorView!!)
         val nodesWithStringKeys = issues.mapKeys { it.key.toString() }.mapValues { it.value }
 
-        sendEvent("onAmaNodes", nodesWithStringKeys)
+        if (send) {
+            sendEvent("onAmaNodes", nodesWithStringKeys)
+        }
+
+        return nodesWithStringKeys
     }
 
 
@@ -227,21 +231,24 @@ class ReactNativeAmaModule : Module() {
     }
 
     private fun runMyChecks(tappedView: View, rootView: View) {
-        val beforeSnapshot = takeSnapshot(tappedView, rootView)
+        val beforeSnapshot = takeSnapshotOfTappedView(tappedView, rootView)
 
         Handler(Looper.getMainLooper()).postDelayed({
             if (tappedView.isAttachedToWindow && rootView.isAttachedToWindow) {
-                val afterSnapshot = takeSnapshot(tappedView, rootView)
+                val afterSnapshot = takeSnapshotOfTappedView(tappedView, rootView)
+//                val updatedNodes = getNodesToCheck(false)
 
                 val event = Bundle().apply {
                     putInt("rootTag", tappedView.id)
-                    putBundle("before", convertMapToBundle(beforeSnapshot))
-                    putBundle("after", convertMapToBundle(afterSnapshot))
+//                    putBundle("updatedNodes", convertStringMapToBundle(updatedNodes))
+                    putBundle("before", convertSnapshotMapToBundle(beforeSnapshot))
+                    putBundle("after", convertSnapshotMapToBundle(afterSnapshot))
                 }
 
+                getNodesToCheck()
                 sendEvent("onUIInteraction", event)
             }
-        }, uiCheckDelay)
+        }, Constants.uiCheckDelay)
     }
 }
 
@@ -254,38 +261,33 @@ data class Snapshot(
     val height: Int,
     val parentId: Int,
     val isPressable: Boolean,
-    val isChecked: Boolean
+    val isChecked: Boolean,
+    val isBusy: Boolean
 )
 
-private fun takeSnapshot(view: View, root: View): MutableMap<Int, Snapshot> {
-    val snapshots: MutableMap<Int, Snapshot> = mutableMapOf()
-
-     return _takeSnapshot(view, root, snapshots, true)
-}
-
-private fun _takeSnapshot(view: View, root: View, snapshots: MutableMap<Int, Snapshot> = mutableMapOf(), include_children: Boolean): MutableMap<Int, Snapshot> {
+private fun takeSnapshotOfTappedView(view: View, root: View, snapshots: MutableMap<Int, Snapshot> = mutableMapOf()): MutableMap<Int, Snapshot> {
     val info = view.createAccessibilityNodeInfo()
     val a11yInfo = AccessibilityNodeInfoCompat.wrap(info)
 
-    if (view.isPressable(a11yInfo) || view.isTextLike() || include_children) {
-        val position = view.getGlobalDpBounds(root)
+    val position = view.getGlobalDpBounds(root)
 
-        snapshots[view.id] = Snapshot(
-            fgColor = view.getTextColorHex(),
-            bgColor = view.getBackgroundColorHex(),
-            x = position[0],
-            y = position[1],
-            width = position[2],
-            height = position[3],
-            parentId = (view.parent as? View)?.id ?: View.NO_ID,
-            isPressable = view.isPressable(a11yInfo),
-            isChecked = a11yInfo.isChecked
-        )
-    }
+    snapshots[view.id] = Snapshot(
+        fgColor = view.getTextColorHex(),
+        bgColor = view.getBackgroundColorHex(),
+        x = position[0],
+        y = position[1],
+        width = position[2],
+        height = position[3],
+        parentId = (view.parent as? View)?.id ?: View.NO_ID,
+        isPressable = view.isPressable(a11yInfo),
+        isChecked = a11yInfo.isChecked,
+        isBusy = view.isBusy()
+    )
+
 
     if (view is ViewGroup) {
         for (i in 0 until view.childCount) {
-            _takeSnapshot(view.getChildAt(i), root, snapshots, include_children)
+            takeSnapshotOfTappedView(view.getChildAt(i), root, snapshots)
         }
     }
 
@@ -311,11 +313,18 @@ fun View.getGlobalDpBounds(rootView: View): List<Int> {
     return listOf(leftDp, topDp, widthDp, heightDp)
 }
 
-/**
- * Helper 1: Converts a Map<Int, Snapshot> to a Bundle.
- * JS objects must have String keys, so we convert the Int key to a String.
- */
-private fun convertMapToBundle(snapshotMap: Map<Int, Snapshot>): Bundle {
+
+private fun convertStringMapToBundle(items: Map<String, Any?>): Bundle {
+    return Bundle().apply {
+        items.forEach { (key, value) ->
+            putBundle(key, Bundle().apply {
+                putString(key, value.toString())
+            })
+        }
+    }
+}
+
+private fun convertSnapshotMapToBundle(snapshotMap: Map<Int, Snapshot>): Bundle {
     return Bundle().apply {
         snapshotMap.forEach { (key, snapshot) ->
             putBundle(key.toString(), convertSnapshotToBundle(snapshot))
@@ -323,9 +332,6 @@ private fun convertMapToBundle(snapshotMap: Map<Int, Snapshot>): Bundle {
     }
 }
 
-/**
- * Helper 2: Converts a single Snapshot data class to a Bundle.
- */
 private fun convertSnapshotToBundle(snapshot: Snapshot): Bundle {
     return Bundle().apply {
         snapshot.fgColor?.let { putString("fgColor", it) }
@@ -339,5 +345,20 @@ private fun convertSnapshotToBundle(snapshot: Snapshot): Bundle {
 
         putBoolean("isPressable", snapshot.isPressable)
         putBoolean("isChecked", snapshot.isChecked)
+        putBoolean("isBusy", snapshot.isBusy)
     }
+}
+
+/** True if RN set accessibilityState.busy or the view is clearly busy-like. */
+fun View.isBusy(): Boolean {
+    val info = AccessibilityNodeInfoCompat.wrap(this.createAccessibilityNodeInfo())
+
+    val state = info.stateDescription?.toString()
+        ?: ViewCompat.getStateDescription(this)?.toString()
+    if (state?.contains("in progress", ignoreCase = true) == true) return true
+
+    if (this is ProgressBar && this.isVisible) return true
+    if (!this.isEnabled && (state?.contains("loading", true) == true)) return true
+
+    return false
 }

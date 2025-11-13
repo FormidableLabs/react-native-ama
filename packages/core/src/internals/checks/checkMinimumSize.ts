@@ -1,12 +1,12 @@
-import { AmaNode } from '../../ReactNativeAma.types';
-import { AMAError } from '../types';
-import { MINIMUM_TOUCHABLE_SIZE } from '../utils/minimumTouchableSize';
+import { AmaNode } from "../../ReactNativeAma.types";
+import { AmaError } from "../types";
+import { MINIMUM_TOUCHABLE_SIZE } from "../utils/minimumTouchableSize";
 
-export const checkMinimumSize = (node: AmaNode): AMAError | null => {
-  const width = node.bounds?.[0];
-  const height = node.bounds?.[1];
+export const checkMinimumSize = (node: AmaNode): AmaError | null => {
+  const width = Math.ceil(node.bounds?.[0]);
+  const height = Math.ceil(node.bounds?.[1]);
 
-  if (node.type !== 'Pressable') {
+  if (node.type !== "Pressable") {
     return null;
   }
 
@@ -14,9 +14,9 @@ export const checkMinimumSize = (node: AmaNode): AMAError | null => {
     return {
       label: node.ariaLabel,
       viewId: node.viewId,
-      rule: 'MINIMUM_SIZE',
+      rule: "MINIMUM_SIZE",
       extra: `The touchable area must have a minimum size of ${MINIMUM_TOUCHABLE_SIZE}x${MINIMUM_TOUCHABLE_SIZE} found instead: ${width.toFixed(
-        0,
+        0
       )}x${height.toFixed(0)}`,
     };
   }
