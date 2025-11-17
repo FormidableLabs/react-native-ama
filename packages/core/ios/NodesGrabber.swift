@@ -28,7 +28,7 @@ public struct NodePayload: Equatable {
             "bg": self.bg,
             "fontSize": self.fontSize,
             "isBold": self.isBold,
-            "isEnabled": self.isEnabled
+            "isEnabled": self.isEnabled,
         ]
     }
 }
@@ -41,7 +41,9 @@ public class NodesGrabber {
         self.appContext = appContext
     }
 
-    public func getNodesToCheck(on rootView: UIView?) -> (nodes: [Int: NodePayload], send: Bool) {
+    public func getNodesToCheck(on rootView: UIView?) -> (
+        nodes: [Int: NodePayload], send: Bool
+    ) {
         guard let root = rootView else { return (nodesToCheck, false) }
 
         nodesToCheck.removeAll()
@@ -54,7 +56,7 @@ public class NodesGrabber {
     private func traverseAndCheck(view: UIView) {
         checkView(view)
 
-        if (view.isAccessibilityElement) {
+        if view.isAccessibilityElement {
             return
         }
 
@@ -71,7 +73,7 @@ public class NodesGrabber {
                 node: NodePayload(
                     type: "Pressable",
                     viewId: view.tag,
-                    bounds: getTargetArea(view),
+                    bounds: view.getTargetArea(),
                     ariaLabel: view.accessibilityLabel,
                     content: view.content,
                     ariaRole: getDefaultAriaRole(view),
@@ -79,9 +81,12 @@ public class NodesGrabber {
                     fg: view.contentColor?.hexString,
                     bg: view.contentBackgroundColor?.hexString,
                     fontSize: font?.pointSize,
-                    isBold: font?.fontDescriptor.symbolicTraits.contains(.traitBold),
+                    isBold: font?.fontDescriptor.symbolicTraits.contains(
+                        .traitBold
+                    ),
                     isEnabled: !view.isDisabled()
-                ))
+                )
+            )
         } else if view.isText(), let info = view.extractRNTextInfo() {
             addNode(
                 node: NodePayload(
@@ -93,9 +98,12 @@ public class NodesGrabber {
                     ariaRole: getDefaultAriaRole(view),
                     traits: view.accessibilityTraits.names,
                     fg: info.fg?.hexString ?? view.contentColor?.hexString,
-                    bg: view.textBackgroundColor?.hexString ?? info.bg?.hexString,
+                    bg: view.textBackgroundColor?.hexString
+                        ?? info.bg?.hexString,
                     fontSize: info.font.map { CGFloat($0.pointSize) },
-                    isBold: info.font?.fontDescriptor.symbolicTraits.contains(.traitBold),
+                    isBold: info.font?.fontDescriptor.symbolicTraits.contains(
+                        .traitBold
+                    ),
                     isEnabled: !view.isDisabled()
                 )
             )
@@ -121,15 +129,6 @@ public class NodesGrabber {
         return defaultRole
     }
 
-    private func getTargetArea(_ view: UIView) -> [Double] {
-        let baseSize: CGRect = view.frame
-        let insets = view.getHitSlopRect()
-        let pressableWidth = baseSize.width - insets.left - insets.right
-        let pressableHeight = baseSize.height - insets.top - insets.bottom
-
-        return [pressableWidth, pressableHeight]
-    }
-
     private func addNode(node: NodePayload) {
         guard node.viewId > 0 else { return }
 
@@ -145,7 +144,9 @@ private struct RNTextInfo {
 }
 
 private func previousSiblingsBackground(
-    in parent: UIView, before view: UIView, covering rect: CGRect
+    in parent: UIView,
+    before view: UIView,
+    covering rect: CGRect
 ) -> UIColor? {
     guard let idx = parent.subviews.firstIndex(of: view) else { return nil }
     if idx == 0 { return nil }
@@ -167,19 +168,35 @@ private func previousSiblingsBackground(
 }
 
 /// Non-transparent background for a single view (either UIView.backgroundColor or layer.backgroundColor)
-private func ownBackground(of v: UIView, resolveFor resolver: UITraitEnvironment) -> UIColor? {
+private func ownBackground(
+    of v: UIView,
+    resolveFor resolver: UITraitEnvironment
+) -> UIColor? {
     if let c = v.backgroundColor, c.cgColor.alpha > 0.01 {
         return c.resolvedColor(with: resolver.traitCollection)
     }
     if let cg = v.layer.backgroundColor, cg.alpha > 0.01 {
-        return UIColor(cgColor: cg).resolvedColor(with: resolver.traitCollection)
+        return UIColor(cgColor: cg).resolvedColor(
+            with: resolver.traitCollection
+        )
     }
     return nil
 }
 
 extension UIView {
+    func getTargetArea() -> [Double] {
+        let baseSize: CGRect = self.frame
+        let insets = self.getHitSlopRect()
+        let pressableWidth = baseSize.width - insets.left - insets.right
+        let pressableHeight = baseSize.height - insets.top - insets.bottom
+
+        return [pressableWidth, pressableHeight]
+    }
+
     private func findColorIn(view: UIView) -> UIColor? {
-        if let imageView = view as? UIImageView, let bgColor = imageView.backgroundColor {
+        if let imageView = view as? UIImageView,
+            let bgColor = imageView.backgroundColor
+        {
             return bgColor
         }
 
@@ -200,7 +217,9 @@ extension UIView {
         let className = String(describing: type(of: self))
 
         if className.contains("RCTParagraphComponentView") {
-            if let attrText = self.value(forKey: "attributedText") as? NSAttributedString {
+            if let attrText = self.value(forKey: "attributedText")
+                as? NSAttributedString
+            {
                 return attrText.string
             }
         }
@@ -225,8 +244,11 @@ extension UIView {
 
         if let parent = self.superview {
             let rectInParent = self.convert(self.bounds, to: parent)
-            if let c = previousSiblingsBackground(in: parent, before: self, covering: rectInParent)
-            {
+            if let c = previousSiblingsBackground(
+                in: parent,
+                before: self,
+                covering: rectInParent
+            ) {
                 return c
             }
             if let c = ownBackground(of: parent, resolveFor: self) { return c }
@@ -273,9 +295,14 @@ extension UIView {
 
         if className.contains("RCTParagraphComponentView"),
             let anyObj = self as AnyObject?,
-            let attrText = anyObj.value(forKey: "attributedText") as? NSAttributedString,
+            let attrText = anyObj.value(forKey: "attributedText")
+                as? NSAttributedString,
             attrText.length > 0,
-            let fgColor = attrText.attribute(.foregroundColor, at: 0, effectiveRange: nil)
+            let fgColor = attrText.attribute(
+                .foregroundColor,
+                at: 0,
+                effectiveRange: nil
+            )
                 as? UIColor
         {
             return fgColor
@@ -316,9 +343,11 @@ extension UIView {
 
         if className.contains("RCTParagraphComponentView"),
             let anyObj = self as AnyObject?,
-            let attrText = anyObj.value(forKey: "attributedText") as? NSAttributedString,
+            let attrText = anyObj.value(forKey: "attributedText")
+                as? NSAttributedString,
             attrText.length > 0,
-            let font = attrText.attribute(.font, at: 0, effectiveRange: nil) as? UIFont
+            let font = attrText.attribute(.font, at: 0, effectiveRange: nil)
+                as? UIFont
         {
             return font
         }
@@ -341,7 +370,8 @@ extension UIView {
 
         let anyObj = self as AnyObject
         guard
-            let edgeValue = anyObj.value(forKey: "hitTestEdgeInsets") as? UIEdgeInsets
+            let edgeValue = anyObj.value(forKey: "hitTestEdgeInsets")
+                as? UIEdgeInsets
         else {
             return .zero
         }
@@ -359,9 +389,13 @@ extension UIView {
     func isDisabled() -> Bool {
         if accessibilityTraits.contains(.notEnabled) { return true }
 
-        if let control = self as? UIControl, control.isEnabled == false { return true }
+        if let control = self as? UIControl, control.isEnabled == false {
+            return true
+        }
 
-        if hasActivationRole && (isHidden || alpha <= 0.01 || isUserInteractionEnabled == false) {
+        if hasActivationRole
+            && (isHidden || alpha <= 0.01 || isUserInteractionEnabled == false)
+        {
             return true
         }
 
@@ -371,8 +405,12 @@ extension UIView {
     private var hasActivationRole: Bool {
         let t = accessibilityTraits
         if t.contains(.button) || t.contains(.link) { return true }
-        if responds(to: NSSelectorFromString("accessibilityActivate")) { return true }
-        if let actions = accessibilityCustomActions, !actions.isEmpty { return true }
+        if responds(to: NSSelectorFromString("accessibilityActivate")) {
+            return true
+        }
+        if let actions = accessibilityCustomActions, !actions.isEmpty {
+            return true
+        }
 
         return false
     }
@@ -385,7 +423,9 @@ extension UIView {
             "RCTText",
         ]
         for name in names {
-            if let cls = NSClassFromString(name), self.isKind(of: cls) { return true }
+            if let cls = NSClassFromString(name), self.isKind(of: cls) {
+                return true
+            }
         }
 
         return self.responds(to: NSSelectorFromString("attributedText"))
@@ -396,19 +436,87 @@ extension UIView {
 
         guard self.responds(to: sel),
             let obj = self as AnyObject?,
-            let attr = obj.value(forKey: "attributedText") as? NSAttributedString,
+            let attr = obj.value(forKey: "attributedText")
+                as? NSAttributedString,
             attr.length > 0
         else { return nil }
 
-        let fg = attr.attribute(.foregroundColor, at: 0, effectiveRange: nil) as? UIColor
+        let fg =
+            attr.attribute(.foregroundColor, at: 0, effectiveRange: nil)
+            as? UIColor
         let bg =
-            (attr.attribute(.backgroundColor, at: 0, effectiveRange: nil) as? UIColor)
+            (attr.attribute(.backgroundColor, at: 0, effectiveRange: nil)
+                as? UIColor)
             ?? (attr.attribute(
-                NSAttributedString.Key("NSBackgroundColor"), at: 0, effectiveRange: nil) as? UIColor)
+                NSAttributedString.Key("NSBackgroundColor"),
+                at: 0,
+                effectiveRange: nil
+            ) as? UIColor)
 
         let font = attr.attribute(.font, at: 0, effectiveRange: nil) as? UIFont
 
         return RNTextInfo(text: attr.string, fg: fg, bg: bg, font: font)
+    }
+
+    func isBusy() -> Bool {
+        if matchesBusyToken(accessibilityValue) { return true }
+        if matchesBusyToken(accessibilityLabel) { return true }
+        if matchesBusyToken(accessibilityHint) { return true }
+
+        if let spinner = self as? UIActivityIndicatorView,
+            !isHidden, alpha > 0.01, spinner.isAnimating
+        {
+            return true
+        }
+
+        return false
+    }
+
+    private func matchesBusyToken(_ s: String?) -> Bool {
+        guard let s = s, !s.isEmpty else { return false }
+
+        if let rnBusy = localizedStringIfExists(key: "state_busy_description") {
+            if s.range(
+                of: rnBusy,
+                options: [.caseInsensitive, .diacriticInsensitive]
+            ) != nil {
+                return true
+            }
+        }
+
+        let fallbacks = ["busy", "loading", "in progress"]
+        return fallbacks.contains { token in
+            s.range(
+                of: token,
+                options: [.caseInsensitive, .diacriticInsensitive]
+            ) != nil
+        }
+    }
+
+    private func localizedStringIfExists(key: String, table: String? = nil)
+        -> String?
+    {
+        // Check main bundle first (RN often merges strings here)
+        let main = NSLocalizedString(
+            key,
+            tableName: table,
+            bundle: .main,
+            value: key,
+            comment: ""
+        )
+        if main != key { return main }
+
+        for b in Bundle.allBundles where b != .main {
+            let v = NSLocalizedString(
+                key,
+                tableName: table,
+                bundle: b,
+                value: key,
+                comment: ""
+            )
+            if v != key { return v }
+        }
+        return nil
     }
 }
 
@@ -444,7 +552,9 @@ extension UIColor {
         var g: CGFloat = 0
         var b: CGFloat = 0
         var a: CGFloat = 0
-        guard self.getRed(&r, green: &g, blue: &b, alpha: &a) else { return nil }
+        guard self.getRed(&r, green: &g, blue: &b, alpha: &a) else {
+            return nil
+        }
         return (r, g, b, a)
     }
 

@@ -17,8 +17,18 @@ This page details the complete set of accessibility checks that AMA automaticall
 
 ## Text element checks
 
-- [ ] Contrast ratio too low
-- [ ] All caps text
-- [ ] No headings used
+- [x] Contrast ratio too low
+- [x] All caps text
+- [x] No headings used
 
+## UI Interactions
+
+- [x] No accessibility state handling
+
+## Forms
+
+- [ ] Not handling return key on keyboard
+- [ ] Focus trapped in form fields
+- [ ] Missing accessible name for form fields
+- [ ] Duplicate accessible names for form fields
 

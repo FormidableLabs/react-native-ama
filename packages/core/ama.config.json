@@ -5,6 +5,6 @@
   "uppercaseMinLength": 4,
   "checks": {
     "ui": true,
-    "delay": 250
+    "delay": "1000"
   }
 }

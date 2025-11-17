@@ -1,16 +1,16 @@
 // https://peerlist.io/blog/engineering/creating-custom-switch-component-in-react-native
-import React, { FC, useEffect, useState } from 'react';
-import { Animated, Pressable, StyleSheet, View } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import React, { FC, useEffect, useState } from "react";
+import { Animated, Pressable, StyleSheet, View } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
 
 const defaultStyles = {
-  bgGradientColors: ['#f7f7f7', '#d2d2d2'],
-  headGradientColors: ['#000', '#000'],
+  bgGradientColors: ["#f7f7f7", "#d2d2d2"],
+  headGradientColors: ["#000", "#000"],
 };
 
 const activeStyles = {
-  bgGradientColors: ['#11893d', '#21e067'],
-  headGradientColors: ['#fff', '#e0e0e0'],
+  bgGradientColors: ["#11893d", "#21e067"],
+  headGradientColors: ["#fff", "#e0e0e0"],
 };
 
 type SwitchProps = {
@@ -50,6 +50,7 @@ export const Switch: FC<SwitchProps> = ({ value, onValueChange, label }) => {
       style={styles.pressable}
       hitSlop={{ left: 12, top: 12, right: 12, bottom: 12 }}
       aria-label={label}
+      aria-checked={value}
     >
       <LinearGradient
         colors={currentStyles.bgGradientColors}
@@ -86,17 +87,17 @@ const styles = StyleSheet.create({
     height: 32,
     borderRadius: 16,
     borderWidth: 2,
-    borderColor: '#c0c0c0',
+    borderColor: "#c0c0c0",
   },
   backgroundGradient: {
     borderRadius: 16,
     flex: 1,
   },
   innerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     flex: 1,
-    position: 'relative',
+    position: "relative",
   },
   headGradient: {
     width: 24,

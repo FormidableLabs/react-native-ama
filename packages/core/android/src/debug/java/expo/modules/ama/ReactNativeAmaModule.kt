@@ -24,7 +24,7 @@ import androidx.core.view.isVisible
 
 object Constants {
     const val DEBOUNCE: Long = 100
-    var uiCheckDelay: Long = 500
+    var uiCheckDelay: Long = 1000
 }
 
 class ReactNativeAmaModule : Module() {
@@ -140,7 +140,6 @@ class ReactNativeAmaModule : Module() {
                         }
 
                         MotionEvent.ACTION_UP -> {
-                            // Check if it was a tap (not a scroll)
                             val isTap = (Math.abs(event.x - downX) < TAP_THRESHOLD) &&
                                     (Math.abs(event.y - downY) < TAP_THRESHOLD)
 
@@ -160,8 +159,6 @@ class ReactNativeAmaModule : Module() {
                     }
                 }
 
-                // **CRITICAL:** Always call the original callback
-                // This passes the event to React Native so the app works.
                 return originalCallback.dispatchTouchEvent(event)
             }
         }
@@ -236,11 +233,9 @@ class ReactNativeAmaModule : Module() {
         Handler(Looper.getMainLooper()).postDelayed({
             if (tappedView.isAttachedToWindow && rootView.isAttachedToWindow) {
                 val afterSnapshot = takeSnapshotOfTappedView(tappedView, rootView)
-//                val updatedNodes = getNodesToCheck(false)
 
                 val event = Bundle().apply {
                     putInt("rootTag", tappedView.id)
-//                    putBundle("updatedNodes", convertStringMapToBundle(updatedNodes))
                     putBundle("before", convertSnapshotMapToBundle(beforeSnapshot))
                     putBundle("after", convertSnapshotMapToBundle(afterSnapshot))
                 }
@@ -313,17 +308,6 @@ fun View.getGlobalDpBounds(rootView: View): List<Int> {
     return listOf(leftDp, topDp, widthDp, heightDp)
 }
 
-
-private fun convertStringMapToBundle(items: Map<String, Any?>): Bundle {
-    return Bundle().apply {
-        items.forEach { (key, value) ->
-            putBundle(key, Bundle().apply {
-                putString(key, value.toString())
-            })
-        }
-    }
-}
-
 private fun convertSnapshotMapToBundle(snapshotMap: Map<Int, Snapshot>): Bundle {
     return Bundle().apply {
         snapshotMap.forEach { (key, snapshot) ->
@@ -349,16 +333,34 @@ private fun convertSnapshotToBundle(snapshot: Snapshot): Bundle {
     }
 }
 
-/** True if RN set accessibilityState.busy or the view is clearly busy-like. */
 fun View.isBusy(): Boolean {
     val info = AccessibilityNodeInfoCompat.wrap(this.createAccessibilityNodeInfo())
 
-    val state = info.stateDescription?.toString()
-        ?: ViewCompat.getStateDescription(this)?.toString()
-    if (state?.contains("in progress", ignoreCase = true) == true) return true
+    val combined = buildString {
+        info.contentDescription?.let { append(it).append(' ') }
+        info.text?.let { append(it) }
+    }
 
-    if (this is ProgressBar && this.isVisible) return true
-    if (!this.isEnabled && (state?.contains("loading", true) == true)) return true
+    if (matchesBusyToken(this, combined)) {
+        return true
+    }
 
     return false
+}
+
+private fun matchesBusyToken(view: View, s: String): Boolean {
+    busyStrings(view).forEach { token ->
+        if (token.isNotEmpty() && s.contains(token, ignoreCase = true)) return true
+    }
+
+    return s.contains("busy", ignoreCase = true) || s.contains("loading", ignoreCase = true)
+}
+
+private fun busyStrings(view: View): List<String> {
+    val res = view.resources
+    val pkg = view.context.packageName
+    return listOfNotNull(
+        res.getIdentifier("state_busy_description", "string", pkg).takeIf { it != 0 }?.let(res::getString),
+        res.getIdentifier("state_busy_description", "string", "com.facebook.react").takeIf { it != 0 }?.let(res::getString)
+    )
 }

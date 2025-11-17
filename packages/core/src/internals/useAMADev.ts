@@ -64,6 +64,8 @@ export const useAMADev = () => {
     let allIssues: AmaError[] = [];
     let hasAtLeastOneHeader = false;
 
+    lastNodesChecked = nodesToCheck;
+
     for (const node of Object.values(nodesToCheck)) {
       if (!hasAtLeastOneHeader && node.type === "Text") {
         if (node.traits?.includes("header") || node.ariaRole === "header") {
@@ -111,7 +113,6 @@ export const useAMADev = () => {
     }
 
     previousIssues.current = allIssues;
-    lastNodesChecked = nodesToCheck;
   };
 
   const checkResultUiInteraction = (data?: AmaUiSnapshotsData) => {
@@ -281,6 +282,7 @@ function itemsWithNoStateUpdated(data: AmaUiSnapshotsData) {
     return [];
   }
 
+  let hasSomethingChanged = false;
   for (const tagId of afterKeys) {
     const snapBefore = tappedViewBefore[tagId];
     const snapAfter = tappedViewAfter[tagId];
@@ -292,7 +294,6 @@ function itemsWithNoStateUpdated(data: AmaUiSnapshotsData) {
     }
 
     const subKeys = Object.keys(snapAfter) as Array<keyof AmaUiSnapshot>;
-    let hasSomethingChanged = false;
 
     for (const subKey of subKeys) {
       const hasPropertyChanged =
@@ -305,19 +306,21 @@ function itemsWithNoStateUpdated(data: AmaUiSnapshotsData) {
         break;
       }
     }
+  }
 
-    if (hasSomethingChanged) {
-      const parentId = data.rootTag; //findPressableParentId(after, snapAfter.parentId);
+  if (hasSomethingChanged) {
+    const parentId = data.rootTag;
 
-      const { isChecked, isBusy } = tappedViewAfter[parentId];
-      const { isChecked: wasChecked, isBusy: wasBusy } =
-        tappedViewBefore[parentId];
+    const { isChecked, isBusy } = tappedViewAfter[parentId];
+    const { isChecked: wasChecked, isBusy: wasBusy } =
+      tappedViewBefore[parentId];
 
-      const hasStateChanged = isChecked !== wasChecked || isBusy !== wasBusy;
+    const hasStateChanged = isChecked !== wasChecked || isBusy !== wasBusy;
 
-      if (parentId && !hasStateChanged) {
-        issues.add(parentId);
-      }
+    if (parentId && !hasStateChanged) {
+      issues.add(parentId);
+    } else if (isBusy) {
+      issues.delete(parentId);
     }
   }
 

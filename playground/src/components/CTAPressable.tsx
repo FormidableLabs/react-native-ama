@@ -64,7 +64,6 @@ export const CTAPressable = ({
       }}
       onPress={onPress}
       aria-label={title}
-      aria-busy={isLoading}
       {...rest}
     >
       {isLoading ? (
