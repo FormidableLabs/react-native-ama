@@ -1,8 +1,8 @@
 import ReactNativeAmaModule from "../../ReactNativeAmaModule";
-import { AMAError } from "../types";
+import { AmaError } from "../types";
 
 export const amaClearHighlight = __DEV__
-  ? (issue: AMAError) => {
+  ? (issue: AmaError) => {
       ReactNativeAmaModule.clearHighlight(issue.viewId);
     }
   : null;

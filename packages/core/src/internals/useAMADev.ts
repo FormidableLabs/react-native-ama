@@ -235,37 +235,14 @@ export const useAMADev = () => {
   };
 };
 
-function findPressableParentId(
-  snapshot: Record<number, AmaUiSnapshot>,
-  startKey: number
-) {
-  let currentElement = snapshot[startKey];
-
-  // Loop as long as we have a valid element to check
-  while (currentElement) {
-    const parentId = currentElement.parentId;
-
-    if (!parentId) {
-      return null;
-    }
-
-    const parentElement = snapshot[parentId];
-
-    if (parentElement) {
-      if (parentElement.isPressable) {
-        return parentId;
-      }
-
-      currentElement = parentElement;
-    } else {
-      return null;
-    }
-  }
-
-  return null;
-}
-
-const IGNORE_KEYS: AmaUiSnapshotKeys[] = ["parentId", "isChecked", "isBusy"];
+const A11Y_STATE_KEY: AmaUiSnapshotKeys[] = [
+  "parentId",
+  "isChecked",
+  "isBusy",
+  "isSelected",
+  "isDisabled",
+  "isExpanded",
+];
 function itemsWithNoStateUpdated(data: AmaUiSnapshotsData) {
   const tappedViewBefore = data.before;
   const tappedViewAfter = data.after;
@@ -288,16 +265,18 @@ function itemsWithNoStateUpdated(data: AmaUiSnapshotsData) {
     const snapAfter = tappedViewAfter[tagId];
 
     if (!snapBefore) {
-      issues.add(data.rootTag);
+      hasSomethingChanged = true;
 
       continue;
     }
 
-    const subKeys = Object.keys(snapAfter) as Array<keyof AmaUiSnapshot>;
+    const subKeys = (
+      Object.keys(snapAfter) as Array<keyof AmaUiSnapshot>
+    ).filter((key) => key !== "parentId");
 
     for (const subKey of subKeys) {
       const hasPropertyChanged =
-        !IGNORE_KEYS.includes(subKey) &&
+        !A11Y_STATE_KEY.includes(subKey) &&
         snapBefore[subKey] !== snapAfter[subKey];
 
       if (hasPropertyChanged) {
@@ -311,16 +290,16 @@ function itemsWithNoStateUpdated(data: AmaUiSnapshotsData) {
   if (hasSomethingChanged) {
     const parentId = data.rootTag;
 
-    const { isChecked, isBusy } = tappedViewAfter[parentId];
-    const { isChecked: wasChecked, isBusy: wasBusy } =
-      tappedViewBefore[parentId];
+    const after = tappedViewAfter[parentId];
+    const before = tappedViewBefore[parentId];
 
-    const hasStateChanged = isChecked !== wasChecked || isBusy !== wasBusy;
+    console.log(after.isDisabled, after.isExpanded, after.isSelected);
+    const hasStateChanged = A11Y_STATE_KEY.some(
+      (key) => before[key] !== after[key]
+    );
 
     if (parentId && !hasStateChanged) {
       issues.add(parentId);
-    } else if (isBusy) {
-      issues.delete(parentId);
     }
   }
 

@@ -48,7 +48,7 @@ export const InteractionsScreen = () => {
         </Pressable>
         <Spacer height="normal" />
         {/*
-         * To fix this handle the aria-checked attribute inside the Accordion component
+         * To fix this handle the aria-expanded attribute inside the Accordion component
          */}
         <Accordion title="This is an accordion">
           <Text>This is the content of the accordion</Text>

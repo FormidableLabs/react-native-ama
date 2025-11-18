@@ -184,6 +184,12 @@ private func ownBackground(
 }
 
 extension UIView {
+    struct A11yStates {
+        let isExpanded: Bool
+        let isDisabled: Bool
+        let isSelected: Bool
+    }
+
     func getTargetArea() -> [Double] {
         let baseSize: CGRect = self.frame
         let insets = self.getHitSlopRect()
@@ -517,6 +523,86 @@ extension UIView {
             if v != key { return v }
         }
         return nil
+    }
+
+    func a11yStates() -> A11yStates {
+        let disabledByTrait = accessibilityTraits.contains(.notEnabled)
+        let disabledByControl = (self as? UIControl)?.isEnabled == false
+        let interactionBlocked =
+            isHidden || alpha <= 0.01 || isUserInteractionEnabled == false
+        let isDisabled =
+            disabledByTrait || disabledByControl || interactionBlocked
+
+        let selectedByTrait = accessibilityTraits.contains(.selected)
+        let selectedByControl = (self as? UIControl)?.isSelected == true
+        let isSelected = selectedByTrait || selectedByControl
+
+        let haystacks = [
+            accessibilityValue?.lowercased(),
+            accessibilityLabel?.lowercased(),
+            accessibilityHint?.lowercased(),
+        ].compactMap { $0 }
+
+        let expandedTokens = rnLocalizedTokens(
+            key: "state_expanded_description",
+            fallbacks: ["expanded"]
+        )
+        let collapsedTokens = rnLocalizedTokens(
+            key: "state_collapsed_description",
+            fallbacks: ["collapsed"]
+        )
+
+        let isExpanded: Bool? = {
+            if haystacks.contains(where: { s in
+                expandedTokens.contains(where: { s.contains($0) })
+            }) {
+                return true
+            }
+            if haystacks.contains(where: { s in
+                collapsedTokens.contains(where: { s.contains($0) })
+            }) {
+                return false
+            }
+            return nil  // unknown
+        }()
+
+        return A11yStates(
+            isExpanded: isExpanded ?? false,
+            isDisabled: isDisabled,
+            isSelected: isSelected
+        )
+    }
+
+    private func rnLocalizedTokens(key: String, fallbacks: [String]) -> [String]
+    {
+        var out = [String]()
+        let vMain = NSLocalizedString(
+            key,
+            tableName: nil,
+            bundle: .main,
+            value: key,
+            comment: ""
+        )
+        if vMain != key { out.append(vMain.lowercased()) }
+
+        for b in Bundle.allBundles where b != .main {
+            let v = NSLocalizedString(
+                key,
+                tableName: nil,
+                bundle: b,
+                value: key,
+                comment: ""
+            )
+            if v != key { out.append(v.lowercased()) }
+        }
+        return (out + fallbacks.map { $0.lowercased() }).uniqued()
+    }
+}
+
+extension Array where Element: Hashable {
+    fileprivate func uniqued() -> [Element] {
+        var seen = Set<Element>()
+        return filter { seen.insert($0).inserted }
     }
 }
 

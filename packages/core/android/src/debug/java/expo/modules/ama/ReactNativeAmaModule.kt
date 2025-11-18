@@ -1,26 +1,26 @@
 package expo.modules.ama
 
+import android.R
 import android.app.Activity
+import android.content.Context
+import android.content.res.Resources
 import android.graphics.Rect
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.view.Window
-import android.widget.ProgressBar
+import android.widget.Checkable
 import android.widget.ScrollView
 import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 import kotlin.math.max
-import androidx.core.view.isVisible
 
 object Constants {
     const val DEBOUNCE: Long = 100
@@ -257,7 +257,10 @@ data class Snapshot(
     val parentId: Int,
     val isPressable: Boolean,
     val isChecked: Boolean,
-    val isBusy: Boolean
+    val isBusy: Boolean,
+    val isSelected: Boolean,
+    val isDisabled: Boolean,
+    val isExpanded: Boolean
 )
 
 private fun takeSnapshotOfTappedView(view: View, root: View, snapshots: MutableMap<Int, Snapshot> = mutableMapOf()): MutableMap<Int, Snapshot> {
@@ -265,6 +268,7 @@ private fun takeSnapshotOfTappedView(view: View, root: View, snapshots: MutableM
     val a11yInfo = AccessibilityNodeInfoCompat.wrap(info)
 
     val position = view.getGlobalDpBounds(root)
+    val a11yStates = view.a11yStates()
 
     snapshots[view.id] = Snapshot(
         fgColor = view.getTextColorHex(),
@@ -276,7 +280,10 @@ private fun takeSnapshotOfTappedView(view: View, root: View, snapshots: MutableM
         parentId = (view.parent as? View)?.id ?: View.NO_ID,
         isPressable = view.isPressable(a11yInfo),
         isChecked = a11yInfo.isChecked,
-        isBusy = view.isBusy()
+        isBusy = view.isBusy(),
+        isDisabled = a11yStates.isDisabled,
+        isExpanded = a11yStates.isExpanded,
+        isSelected = a11yStates.isSelected,
     )
 
 
@@ -330,6 +337,9 @@ private fun convertSnapshotToBundle(snapshot: Snapshot): Bundle {
         putBoolean("isPressable", snapshot.isPressable)
         putBoolean("isChecked", snapshot.isChecked)
         putBoolean("isBusy", snapshot.isBusy)
+        putBoolean("isExpanded", snapshot.isExpanded)
+        putBoolean("isDisabled", snapshot.isDisabled)
+        putBoolean("isSelected", snapshot.isSelected)
     }
 }
 
@@ -346,6 +356,77 @@ fun View.isBusy(): Boolean {
     }
 
     return false
+}
+
+data class A11yStates(
+    val isExpanded: Boolean,
+    val isDisabled: Boolean,
+    val isSelected: Boolean
+)
+
+fun View.a11yStates(): A11yStates {
+    val info = AccessibilityNodeInfoCompat.wrap(createAccessibilityNodeInfo())
+
+    val isDisabled = !info.isEnabled || !isEnabled || !isActuallyInteractable()
+    val isSelected = info.isSelected || isSelected || (this as? Checkable)?.isChecked == true
+
+    val isExpanded: Boolean? = when {
+        hasAction(info, AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_COLLAPSE) &&
+                !hasAction(info, AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_EXPAND) -> true
+        hasAction(info, AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_EXPAND) &&
+                !hasAction(info, AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_COLLAPSE) -> false
+        else -> {
+            val haystack = buildString {
+                info.contentDescription?.let { append(it).append(' ') }
+                info.text?.let { append(it).append(' ') }
+                info.stateDescription?.let { append(it) }
+                ViewCompat.getStateDescription(this@a11yStates)?.let { append(' ').append(it) }
+            }.trim()
+            parseExpandedFromText(haystack, context)
+        }
+    }
+
+    return A11yStates(isExpanded ?: false, isDisabled, isSelected)
+}
+
+private fun hasAction(
+    info: AccessibilityNodeInfoCompat,
+    action: AccessibilityNodeInfoCompat.AccessibilityActionCompat
+): Boolean = info.actionList.any { it.id == action.id }
+
+/** Treat hidden/transparent/non-interactive as effectively disabled for interaction checks. */
+private fun View.isActuallyInteractable(): Boolean =
+    visibility == View.VISIBLE && alpha > 0.01f && isClickableOrFocusable()
+
+private fun View.isClickableOrFocusable(): Boolean =
+    isClickable || isLongClickable || isFocusable
+
+private fun parseExpandedFromText(s: String, ctx: Context): Boolean? {
+    if (s.isBlank()) return null
+    val expandedTokens = rnTokens(ctx, "state_expanded_description", listOf("expanded"))
+    val collapsedTokens = rnTokens(ctx, "state_collapsed_description", listOf("collapsed"))
+    val low = s.lowercase()
+    return when {
+        expandedTokens.any { low.contains(it) } -> true
+        collapsedTokens.any { low.contains(it) } -> false
+        else -> null
+    }
+}
+
+private fun rnTokens(ctx: Context, key: String, fallbacks: List<String>): List<String> {
+    val res = ctx.resources
+    val out = mutableListOf<String>()
+
+    fun addIfExists(pkg: String) {
+        val id = res.getIdentifier(key, "string", pkg)
+        if (id != 0) out += res.getString(id).lowercase()
+    }
+
+    addIfExists(ctx.packageName)       // app bundle
+    addIfExists("com.facebook.react")  // RN bundle (older merges)
+    out += fallbacks.map { it.lowercase() }
+
+    return out.distinct()
 }
 
 private fun matchesBusyToken(view: View, s: String): Boolean {

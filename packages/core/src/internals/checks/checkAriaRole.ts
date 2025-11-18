@@ -1,34 +1,32 @@
-import { Platform } from 'react-native';
-import { AmaNode } from '../../ReactNativeAma.types';
-import { AMAError } from '../types';
+import { Platform } from "react-native";
+import { AmaNode } from "../../ReactNativeAma.types";
+import { AmaError } from "../types";
 
-export const checkAriaRole = (node: AmaNode): AMAError | null => {
+export const checkAriaRole = (node: AmaNode): AmaError | null => {
   const { ariaRole, traits } = node;
-  const a11yRole = ariaRole ?? traits?.join('');
+  const filteredTraits = traits?.filter(
+    (trait) => trait !== "notEnabled" && trait !== "selected"
+  );
+  const a11yRole = ariaRole ?? filteredTraits?.join("") ?? "";
 
-  if (node.type !== 'Pressable') {
+  if (node.type !== "Pressable") {
     return null;
   }
 
   if (!Boolean(a11yRole)) {
     return {
-      rule: 'NO_ACCESSIBILITY_ROLE',
+      rule: "NO_ACCESSIBILITY_ROLE",
       label: node.ariaLabel,
       viewId: node.viewId,
     };
   }
 
-  if (
-    !checkPlatformSupportsRole(
-      a11yRole?.replace('notEnabled', '') ?? '',
-      Platform.OS as any,
-    )
-  ) {
+  if (!checkPlatformSupportsRole(a11yRole, Platform.OS)) {
     return {
       label: node.ariaLabel,
       viewId: node.viewId,
       extra: `"${a11yRole}" is not a native role for "${Platform.OS}"`,
-      rule: 'INCOMPATIBLE_ACCESSIBILITY_ROLE',
+      rule: "INCOMPATIBLE_ACCESSIBILITY_ROLE",
     };
   }
 
@@ -37,7 +35,7 @@ export const checkAriaRole = (node: AmaNode): AMAError | null => {
 
 const checkPlatformSupportsRole = (
   role: string,
-  platform: 'android' | 'ios',
+  platform: Partial<typeof Platform.OS>
 ) => {
   const supportedPlatforms = MAPPED_ROLE_CHECKS[role] || [];
 
@@ -45,17 +43,17 @@ const checkPlatformSupportsRole = (
 };
 
 const MAPPED_ROLE_CHECKS: {
-  [key: string]: ('android' | 'ios')[];
+  [key: string]: Partial<typeof Platform.OS>[];
 } = {
-  none: ['ios', 'android'],
-  button: ['ios', 'android'],
-  switch: ['ios', 'android'],
-  checkbox: ['android'],
-  tab: ['android', 'ios'],
-  togglebutton: ['android'],
-  radio: ['android'],
-  adjustable: ['ios'],
-  link: ['ios', 'android'],
-  search: ['ios', 'android'],
-  header: ['ios', 'android'],
+  none: ["ios", "android"],
+  button: ["ios", "android"],
+  switch: ["ios", "android"],
+  checkbox: ["android"],
+  tab: ["android", "ios"],
+  togglebutton: ["android"],
+  radio: ["android"],
+  adjustable: ["ios"],
+  link: ["ios", "android"],
+  search: ["ios", "android"],
+  header: ["ios", "android"],
 };

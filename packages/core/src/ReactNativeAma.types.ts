@@ -35,6 +35,9 @@ export type AmaUiSnapshot = {
   isPressable: boolean;
   isChecked: boolean;
   isBusy: boolean;
+  isSelected: boolean;
+  isDisabled: boolean;
+  isExpanded: boolean;
 };
 
 export type AmaUiSnapshotsData = {

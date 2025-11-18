@@ -13,7 +13,7 @@ public class ReactNativeAmaModule: Module {
     private var a11yChecker: NodesGrabber?
     private var highlighter: Highlight?
     private var isCheckScheduled = false
-    
+
     /**
      * We need to wait for the navigation transition to complete!
      */
@@ -376,6 +376,9 @@ struct Snapshot {
     let isPressable: Bool
     let isChecked: Bool
     let isBusy: Bool
+    let isExpanded: Bool
+    let isDisabled: Bool
+    let isSelected: Bool
 }
 
 extension ReactNativeAmaModule {
@@ -394,6 +397,7 @@ extension ReactNativeAmaModule {
         let a11yIsPressable = view.isPressable
         let isChecked = view.accessibilityTraits.contains(.selected)
         let isBusy = view.isBusy()
+        let a11yStates = view.a11yStates()
 
         let parentId = (view.superview?.tag).map { $0 } ?? -1
 
@@ -407,7 +411,10 @@ extension ReactNativeAmaModule {
             parentId: parentId,
             isPressable: a11yIsPressable,
             isChecked: isChecked,
-            isBusy: isBusy
+            isBusy: isBusy,
+            isExpanded: a11yStates.isExpanded,
+            isDisabled: a11yStates.isDisabled,
+            isSelected: a11yStates.isSelected,
         )
 
         if let group = view as? UIStackView {
@@ -470,6 +477,9 @@ extension ReactNativeAmaModule {
         result["isPressable"] = snapshot.isPressable
         result["isChecked"] = snapshot.isChecked
         result["isBusy"] = snapshot.isBusy
+        result["isDisabled"] = snapshot.isDisabled
+        result["isExpanded"] = snapshot.isExpanded
+        result["isSelected"] = snapshot.isSelected
 
         return result
     }
