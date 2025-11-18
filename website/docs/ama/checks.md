@@ -25,9 +25,9 @@ This page details the complete set of accessibility checks that AMA automaticall
 
 - [x] No accessibility state handling
     - [x] No aria-checked handling
-    - [ ] No aria-expanded handling
-    - [ ] No aria-selected handling
-    - [ ] No aria-disabled handling
+    - [x] No aria-expanded handling
+    - [x] No aria-selected handling
+    - [x] No aria-disabled handling
     - [x] No aria-busy handling
 
 ## Forms

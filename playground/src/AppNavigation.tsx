@@ -1,17 +1,17 @@
-import { useAMAContext } from '@react-native-ama/core';
-import { NavigationContainer } from '@react-navigation/native';
+import { useAMAContext } from "@react-native-ama/core";
+import { NavigationContainer } from "@react-navigation/native";
 import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
-} from '@react-navigation/native-stack';
-import React from 'react';
-import { BackButton } from './components/BackButton';
-import { Header } from './components/Header';
-import { HomeScreen } from './screens/Home.screen';
-import { InteractionsScreen } from './screens/Interactions.screen';
-import { PressableScreen } from './screens/Pressable.screen';
-import { TextScreen } from './screens/Text.screen';
-import { theme } from './theme';
+} from "@react-navigation/native-stack";
+import React from "react";
+import { BackButton } from "./components/BackButton";
+import { Header } from "./components/Header";
+import { HomeScreen } from "./screens/Home.screen";
+import { InteractionsScreen } from "./screens/Interactions.screen";
+import { PressableScreen } from "./screens/Pressable.screen";
+import { TextScreen } from "./screens/Text.screen";
+import { theme } from "./theme";
 
 export const AppNavigator = () => {
   const { reactNavigationScreenOptions: amaAnimationScreenOptions } =
@@ -41,7 +41,7 @@ export const AppNavigator = () => {
           component={PressableScreen}
           options={{
             headerTitle: () => (
-              <Header noMargin title={'Pressable elements'} autofocus white />
+              <Header noMargin title={"Pressable elements"} autofocus white />
             ),
           }}
         />
@@ -52,7 +52,7 @@ export const AppNavigator = () => {
             headerTitle: () => (
               <Header
                 noMargin
-                title={'Text elements'}
+                title={"Text elements"}
                 autofocus
                 white
                 noHeader
@@ -65,7 +65,16 @@ export const AppNavigator = () => {
           component={InteractionsScreen}
           options={{
             headerTitle: () => (
-              <Header noMargin title={'Interactions'} autofocus white />
+              <Header noMargin title={"Interactions"} autofocus white />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="Forms"
+          component={InteractionsScreen}
+          options={{
+            headerTitle: () => (
+              <Header noMargin title={"Interactions"} autofocus white />
             ),
           }}
         />
@@ -77,7 +86,7 @@ export const AppNavigator = () => {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const BaseNavigatorOptions: NativeStackNavigationOptions = {
-  headerTitleAlign: 'center',
+  headerTitleAlign: "center",
   headerBackVisible: false,
 };
 
