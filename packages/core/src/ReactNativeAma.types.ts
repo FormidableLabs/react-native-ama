@@ -5,7 +5,7 @@ export type OnLoadEventPayload = {
 };
 
 export type AmaNode = {
-  type: "Pressable" | "Text";
+  type: "Pressable" | "Text" | "TextInput";
   viewId: number;
   bounds: [number, number, number, number];
   hitSlop?: { top: number; left: number; bottom: number; right: number };
@@ -20,6 +20,8 @@ export type AmaNode = {
   fontSize?: number; // pt
   isBold?: boolean;
   isEnabled?: boolean;
+	returnType?: number;
+	hasOnSubmitEditing: boolean;
 };
 
 export type AmaNodes = Record<number, AmaNode>;

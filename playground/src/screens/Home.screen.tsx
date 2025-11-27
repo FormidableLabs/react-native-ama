@@ -36,7 +36,7 @@ export const HomeScreen = () => {
           <Spacer height="normal" />
           <View style={styles.group}>
             <ListItem title="Interactions" navigateTo="Interactions" />
-            <ListItem title="Forms" border={false} navigateTo="Forms" />
+            <ListItem title="Forms" border={false} navigateTo="Form" />
           </View>
           {/*
         <Spacer height={'normal'} />

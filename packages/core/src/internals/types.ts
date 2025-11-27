@@ -1,4 +1,5 @@
-import { AmaRule } from "./utils/rules";
+import { AmaRule, AmaRuleAction } from "./utils/rules";
+export type { AmaRule, AmaRuleAction };
 
 export type Position = [number, number, number, number];
 

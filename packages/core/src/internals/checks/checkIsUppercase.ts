@@ -1,18 +1,18 @@
 import { AmaNode } from '../../ReactNativeAma.types';
-import { AMAError, AMARule } from '../types';
+import { AmaError, AmaRule } from '../types';
 import { isAccessibilityLabelAllowed } from '../utils/isA11yLabelAllowed';
 
 export type UppercaseStringChecker = {
   node: AmaNode;
   canBeEmpty?: boolean;
-  rule?: AMARule;
+  rule?: AmaRule;
 };
 
 export const checkIsUppercase = ({
   node,
   canBeEmpty = true,
   rule = 'NO_UPPERCASE_TEXT',
-}: UppercaseStringChecker): AMAError | null => {
+}: UppercaseStringChecker): AmaError | null => {
   const text = node.ariaLabel ?? node.content
   const isEmpty = !text || text?.trim()?.length === 0;
 

@@ -1,16 +1,16 @@
 import { AmaNode } from '../../ReactNativeAma.types';
-import { AMAError } from '../types';
+import { AmaError } from '../types';
 
-export const checkAriaLabel = (node: AmaNode): AMAError | null => {
-  const { ariaLabel } = node;
+export const checkAriaLabel = (node: AmaNode): AmaError | null => {
+	const { ariaLabel } = node;
 
-  if (node.type === 'Pressable' && !Boolean(ariaLabel)) {
-    return {
-      rule: 'NO_ACCESSIBILITY_LABEL',
-      label: node.ariaLabel,
-      viewId: node.viewId,
-    };
-  }
+	if (['Pressable', 'TextInput'].includes(node.type) && !Boolean(ariaLabel)) {
+		return {
+			rule: 'NO_ACCESSIBILITY_LABEL',
+			label: node.ariaLabel,
+			viewId: node.viewId,
+		};
+	}
 
-  return null;
+	return null;
 };

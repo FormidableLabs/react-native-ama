@@ -14,6 +14,7 @@ public struct NodePayload: Equatable {
     let fontSize: CGFloat?
     let isBold: Bool?
     let isEnabled: Bool
+    let returnType: Int?
 
     func toDictionary() -> [String: Any?] {
         return [
@@ -29,6 +30,7 @@ public struct NodePayload: Equatable {
             "fontSize": self.fontSize,
             "isBold": self.isBold,
             "isEnabled": self.isEnabled,
+            "returnType": self.returnType
         ]
     }
 }
@@ -46,11 +48,15 @@ public class NodesGrabber {
     ) {
         guard let root = rootView else { return (nodesToCheck, false) }
 
+        let previous = nodesToCheck
+
         nodesToCheck.removeAll()
 
         traverseAndCheck(view: root)
 
-        return (nodesToCheck, true)
+        let changed = previous != nodesToCheck
+
+        return (nodesToCheck, changed)
     }
 
     private func traverseAndCheck(view: UIView) {
@@ -66,48 +72,43 @@ public class NodesGrabber {
     }
 
     private func checkView(_ view: UIView) {
-        if view.isPressable {
-            let font = view.contentFont
+        let supported = view.isPressable || view.isText() || view.isTextInput()
 
-            addNode(
-                node: NodePayload(
-                    type: "Pressable",
-                    viewId: view.tag,
-                    bounds: view.getTargetArea(),
-                    ariaLabel: view.accessibilityLabel,
-                    content: view.content,
-                    ariaRole: getDefaultAriaRole(view),
-                    traits: view.accessibilityTraits.names,
-                    fg: view.contentColor?.hexString,
-                    bg: view.contentBackgroundColor?.hexString,
-                    fontSize: font?.pointSize,
-                    isBold: font?.fontDescriptor.symbolicTraits.contains(
-                        .traitBold
-                    ),
-                    isEnabled: !view.isDisabled()
-                )
-            )
-        } else if view.isText(), let info = view.extractRNTextInfo() {
-            addNode(
-                node: NodePayload(
-                    type: "Text",
-                    viewId: view.tag,
-                    bounds: nil,
-                    ariaLabel: view.accessibilityLabel,
-                    content: info.text,
-                    ariaRole: getDefaultAriaRole(view),
-                    traits: view.accessibilityTraits.names,
-                    fg: info.fg?.hexString ?? view.contentColor?.hexString,
-                    bg: view.textBackgroundColor?.hexString
-                        ?? info.bg?.hexString,
-                    fontSize: info.font.map { CGFloat($0.pointSize) },
-                    isBold: info.font?.fontDescriptor.symbolicTraits.contains(
-                        .traitBold
-                    ),
-                    isEnabled: !view.isDisabled()
-                )
-            )
+        if !supported {
+            return
         }
+
+        var font = view.contentFont
+        var tag = view.tag
+        let info = view.extractRNTextInfo()
+
+        if info?.font != nil {
+            font = info?.font
+        }
+
+        if view.isTextInput() {
+            tag = view.superview?.tag ?? 0
+        }
+
+        addNode(
+            node: NodePayload(
+                type: view.getType(),
+                viewId: tag,
+                bounds: view.getTargetArea(),
+                ariaLabel: view.accessibilityLabel,
+                content: info?.text ?? view.content,
+                ariaRole: getDefaultAriaRole(view),
+                traits: view.accessibilityTraits.names,
+                fg: info?.fg?.hexString ?? view.contentColor?.hexString,
+                bg: view.getBackground(info),
+                fontSize: font?.pointSize,
+                isBold: font?.fontDescriptor.symbolicTraits.contains(
+                    .traitBold
+                ),
+                isEnabled: !view.isDisabled(),
+                returnType: view.getReturnKeyType()
+            )
+        )
     }
 
     private func getDefaultAriaRole(_ view: UIView) -> String? {
@@ -190,7 +191,27 @@ extension UIView {
         let isSelected: Bool
     }
 
-    func getTargetArea() -> [Double] {
+    func getType() -> String {
+        if isTextInput() {
+            return "TextInput"
+        }
+
+        if isPressable {
+            return "Pressable"
+        }
+
+        if isText() {
+            return "Text"
+        }
+
+        return ""
+    }
+
+    func getTargetArea() -> [Double]? {
+        if !isPressable {
+            return nil
+        }
+
         let baseSize: CGRect = self.frame
         let insets = self.getHitSlopRect()
         let pressableWidth = baseSize.width - insets.left - insets.right
@@ -437,7 +458,19 @@ extension UIView {
         return self.responds(to: NSSelectorFromString("attributedText"))
     }
 
+    func isTextInput() -> Bool {
+        if self is UITextField || self is UITextView {
+            return true
+        }
+
+        return false
+    }
+
     fileprivate func extractRNTextInfo() -> RNTextInfo? {
+        if !isText() {
+            return nil
+        }
+
         let sel = NSSelectorFromString("attributedText")
 
         guard self.responds(to: sel),
@@ -596,6 +629,30 @@ extension UIView {
             if v != key { out.append(v.lowercased()) }
         }
         return (out + fallbacks.map { $0.lowercased() }).uniqued()
+    }
+
+    func getReturnKeyType() -> Int? {
+        if !isTextInput() {
+            return nil
+        }
+
+        if let field = self as? UITextField {
+            return field.returnKeyType.rawValue
+        }
+
+        if let view = self as? UITextView {
+            return view.returnKeyType.rawValue
+        }
+
+        return nil
+    }
+
+    fileprivate func getBackground(_ info: RNTextInfo?) -> String? {
+        if isText() {
+            return self.textBackgroundColor?.hexString ?? info?.bg?.hexString
+        }
+
+        return self.contentBackgroundColor?.hexString
     }
 }
 

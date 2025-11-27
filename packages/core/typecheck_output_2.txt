@@ -1,0 +1,41 @@
+
+> @react-native-ama/core@1.2.0 typecheck
+> tsc --noEmit
+
+src/hooks/useTimedAction.android.test.ts(22,40): error TS2304: Cannot find name 'global'.
+src/hooks/useTimedAction.ios.test.ts(16,38): error TS2304: Cannot find name 'global'.
+src/hooks/useTimedAction.ios.test.ts(32,38): error TS2304: Cannot find name 'global'.
+src/internals/checks/performChecks.ts(6,19): error TS6133: 'AmaNodes' is declared but its value is never read.
+src/internals/components/AMAErrorOverlay.tsx(96,10): error TS2741: Property 'singular' is missing in type '{ children: Element; onPress: () => void; bg: string; color: string; }' but required in type '{ count?: number | undefined; singular: string; color: string; bg: string; line?: string | undefined; onPress: () => void; disabled?: boolean | undefined; }'.
+src/internals/components/AMAErrorOverlay.tsx(125,3): error TS6133: 'color' is declared but its value is never read.
+src/internals/useAMADev.ts(16,10): error TS6133: 'checkTextInputs' is declared but its value is never read.
+src/internals/utils/getRuleErrorInfo.ts(1,1): error TS6133: 'Platform' is declared but its value is never read.
+src/internals/utils/interpolateAnimation.test.ts(88,29): error TS2314: Generic type 'Record' requires 2 type argument(s).
+src/internals/utils/interpolateAnimation.test.ts(89,27): error TS2314: Generic type 'Record' requires 2 type argument(s).
+src/internals/utils/interpolateAnimation.test.ts(117,31): error TS2314: Generic type 'Record' requires 2 type argument(s).
+src/internals/utils/interpolateAnimationStates.ts(5,9): error TS2314: Generic type 'Record' requires 2 type argument(s).
+src/internals/utils/interpolateAnimationStates.ts(6,7): error TS2314: Generic type 'Record' requires 2 type argument(s).
+src/internals/utils/interpolateAnimationStates.ts(10,4): error TS2314: Generic type 'Record' requires 2 type argument(s).
+src/internals/utils/interpolateAnimationStates.ts(23,29): error TS2314: Generic type 'Record' requires 2 type argument(s).
+src/internals/utils/interpolateAnimationStates.ts(53,43): error TS2314: Generic type 'Record' requires 2 type argument(s).
+src/internals/utils/logger.test.ts(1,10): error TS2614: Module '"./logger"' has no exported member 'getRuleAction'. Did you mean to use 'import getRuleAction from "./logger"' instead?
+src/internals/utils/logger.test.ts(1,25): error TS2614: Module '"./logger"' has no exported member 'logFailure'. Did you mean to use 'import logFailure from "./logger"' instead?
+src/internals/utils/logger.test.ts(7,8): error TS2307: Cannot find module './logger.rules' or its corresponding type declarations.
+src/internals/utils/logger.test.ts(46,5): error TS2345: Argument of type '(rule: any) => void' is not assignable to parameter of type '(...args: any[] | [any]) => any'.
+  Types of parameters 'rule' and 'args' are incompatible.
+    Type 'any[] | [any]' is not assignable to type '[rule: any]'.
+      Type 'any[]' is not assignable to type '[rule: any]'.
+        Target requires 1 element(s) but source may have fewer.
+src/internals/utils/rules.ts(48,14): error TS2322: Type '{ CONTRAST_FAILED: "MUST"; CONTRAST_FAILED_AAA: "SHOULD"; FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE: "SHOULD"; FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE: "MUST"; MINIMUM_SIZE: "MUST"; NO_ACCESSIBILITY_LABEL: "MUST"; ... 13 more ...; NO_ACCESSIBILITY_STATE_SET: "MUST"; } | null' is not assignable to type 'Record<AmaRule, AmaRuleAction> | null'.
+  Property 'INPUT_INVALID_RETURN_KEY' is missing in type '{ CONTRAST_FAILED: "MUST"; CONTRAST_FAILED_AAA: "SHOULD"; FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE: "SHOULD"; FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE: "MUST"; MINIMUM_SIZE: "MUST"; NO_ACCESSIBILITY_LABEL: "MUST"; ... 13 more ...; NO_ACCESSIBILITY_STATE_SET: "MUST"; }' but required in type 'Record<AmaRule, AmaRuleAction>'.
+src/internals/utils/rules.ts(88,14): error TS2322: Type '{ CONTRAST_FAILED: { url: string; issue: string; severity: "Serious"; message: string; howToFix: string; }; CONTRAST_FAILED_AAA: { url: string; issue: string; severity: "Serious"; message: string; howToFix: string; }; ... 17 more ...; INPUT_INVALID_RETURN_KEY: { ...; }; } | null' is not assignable to type 'RuleHelp | null'.
+  Property 'NO_UNDEFINED' is missing in type '{ CONTRAST_FAILED: { url: string; issue: string; severity: "Serious"; message: string; howToFix: string; }; CONTRAST_FAILED_AAA: { url: string; issue: string; severity: "Serious"; message: string; howToFix: string; }; ... 17 more ...; INPUT_INVALID_RETURN_KEY: { ...; }; }' but required in type 'RuleHelp'.
+src/ReactNativeAmaModule.web.ts(6,31): error TS2304: Cannot find name 'A11yIssue'.
+src/ReactNativeAmaView.tsx(8,11): error TS2559: Type '{ url: string; onLoad: (event: { nativeEvent: OnLoadEventPayload; }) => void; style?: StyleProp<ViewStyle>; }' has no properties in common with type 'IntrinsicAttributes'.
+npm error Lifecycle script `typecheck` failed with error:
+npm error code 2
+npm error path /Users/asenese/Projects/react-native-ama/packages/core
+npm error workspace @react-native-ama/core@1.2.0
+npm error location /Users/asenese/Projects/react-native-ama/packages/core
+npm error command failed
+npm error command sh -c tsc --noEmit

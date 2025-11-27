@@ -21,6 +21,7 @@ public class ReactNativeAmaModule: Module {
 
     private var windowTapRecognizer: UITapGestureRecognizer?
     private var tapDelegate: AmaTapGestureDelegate?
+    private var gap: CGFloat = 0
 
     public func definition() -> ModuleDefinition {
         Name("ReactNativeAma")
@@ -31,6 +32,7 @@ public class ReactNativeAmaModule: Module {
             let options = arguments.first as? [String: Any]
             let uiCheck = options?["ui"] as? Bool ?? false
             uiCheckDelay = options?["delay"] as? Int ?? uiCheckDelay
+            gap = options?["gap"] as? CGFloat ?? gap
 
             guard !isMonitoring else { return }
 
@@ -103,7 +105,8 @@ public class ReactNativeAmaModule: Module {
                 self.highlighter?.highlight(
                     view: target,
                     mode: mode,
-                    hexColor: hexColor
+                    hexColor: hexColor,
+                    gap: gap ?? 0
                 )
             }
 

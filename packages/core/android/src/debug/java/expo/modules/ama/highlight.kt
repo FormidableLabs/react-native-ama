@@ -18,7 +18,7 @@ class Highlight(private val appContext: AppContext) {
      * @param viewId the Android view ID
      * @param mode "background" | "border" | "both"
      */
-    fun highlight(viewId: Int, mode: String, hexColor: String) {
+    fun highlight(viewId: Int, mode: String, hexColor: String, gap: Int = 0) {
         val activity: Activity = appContext.currentActivity ?: return
         val color = hexColor.toColor()
 
@@ -31,9 +31,9 @@ class Highlight(private val appContext: AppContext) {
 
             when (mode) {
                 "background" -> applyStripyBackground(target, color)
-                "border" -> applyRedBorderOverlay(target, color)
+                "border" -> applyRedBorderOverlay(target, color, gap)
                 else -> {
-                    applyRedBorderOverlay(target, color)
+                    applyRedBorderOverlay(target, color, gap)
                     applyStripyBackground(target, color)
                 }
             }
@@ -114,7 +114,7 @@ class Highlight(private val appContext: AppContext) {
         }
     }
 
-    private fun applyRedBorderOverlay(view: View, color: Int?) {
+    private fun applyRedBorderOverlay(view: View, color: Int?, gap: Int) {
         view.overlay.clear()
 
         val stroke = 6f
@@ -128,8 +128,39 @@ class Highlight(private val appContext: AppContext) {
                     }
                 }
 
-        shape.setBounds(0, 0, view.width - half, view.height - half)
+        val left = -gap
+        val top = -gap
+        val right = view.width - half + gap
+        val bottom = view.height - half + gap
+
+        shape.setBounds(left, top, right, bottom)
         view.overlay.add(shape)
+
+        val textDrawable = object : Drawable() {
+            val textPaint = Paint().apply {
+                this.color = Color.BLACK // Emoji color might be handled by text rendering, but let's set a base
+                textSize = 40f
+                isAntiAlias = true
+                textAlign = Paint.Align.CENTER
+            }
+            val text = "⚠️"
+
+            override fun draw(canvas: Canvas) {
+                // Position at top right
+                // The bounds of this drawable will be the same as the view's overlay bounds (which are the view's bounds)
+                // But we want to position relative to the border we just drew.
+                // The border top-right is at (right, top)
+                canvas.drawText(text, right.toFloat(), top.toFloat(), textPaint)
+            }
+
+            override fun setAlpha(alpha: Int) {}
+            override fun setColorFilter(colorFilter: ColorFilter?) {}
+            override fun getOpacity(): Int = PixelFormat.TRANSLUCENT
+        }
+        
+        // We need to set bounds for the text drawable too, usually view bounds is fine as we draw relative to coordinates
+        textDrawable.setBounds(0, 0, view.width, view.height)
+        view.overlay.add(textDrawable)
     }
 }
 

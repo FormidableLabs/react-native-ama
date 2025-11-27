@@ -8,7 +8,7 @@ public class Highlight {
 
     public init() {}
 
-    public func highlight(view: UIView, mode: String, hexColor: String) {
+    public func highlight(view: UIView, mode: String, hexColor: String, gap: CGFloat = 0) {
         let color = UIColor(hex: hexColor) ?? .red
 
         DispatchQueue.main.async {
@@ -16,9 +16,9 @@ public class Highlight {
             case "background":
                 self.applyStripyBackground(to: view, color: color)
             case "border":
-                self.applyBorderOverlay(to: view, color: color)
+                self.applyBorderOverlay(to: view, color: color, gap: gap)
             default:
-                self.applyBorderOverlay(to: view, color: color)
+                self.applyBorderOverlay(to: view, color: color, gap: gap)
                 self.applyStripyBackground(to: view, color: color)
             }
         }
@@ -75,7 +75,7 @@ public class Highlight {
         stripeOverlays[view.tag] = overlay
     }
 
-    private func applyBorderOverlay(to view: UIView, color: UIColor) {
+    private func applyBorderOverlay(to view: UIView, color: UIColor, gap: CGFloat) {
         view.layer.sublayers?
             .filter { $0.name == borderLayerName }
             .forEach { $0.removeFromSuperlayer() }
@@ -87,9 +87,25 @@ public class Highlight {
         border.lineWidth = stroke
         border.strokeColor = color.cgColor
         border.fillColor = UIColor.clear.cgColor
-        let inset = stroke / 2
-        let rect = view.bounds.insetBy(dx: inset, dy: inset)
+        let inset = (stroke / 2) + gap
+        let rect = view.bounds.insetBy(dx: -inset, dy: -inset)
         border.path = UIBezierPath(rect: rect).cgPath
+        
+        let textLayer = CATextLayer()
+        textLayer.string = "⚠️"
+        textLayer.fontSize = 20
+        textLayer.alignmentMode = .center
+        textLayer.contentsScale = UIScreen.main.scale
+
+        let iconSize: CGFloat = 32
+        textLayer.frame = CGRect(
+            x: rect.maxX - iconSize / 2,
+            y: rect.minY - iconSize / 2,
+            width: iconSize,
+            height: iconSize
+        )
+        
+        border.addSublayer(textLayer)
         view.layer.addSublayer(border)
 
         borderLayers[view.tag] = border

@@ -12,6 +12,7 @@ import { InteractionsScreen } from "./screens/Interactions.screen";
 import { PressableScreen } from "./screens/Pressable.screen";
 import { TextScreen } from "./screens/Text.screen";
 import { theme } from "./theme";
+import { FormScreen } from "./screens/Form.screen";
 
 export const AppNavigator = () => {
   const { reactNavigationScreenOptions: amaAnimationScreenOptions } =
@@ -70,11 +71,11 @@ export const AppNavigator = () => {
           }}
         />
         <Stack.Screen
-          name="Forms"
-          component={InteractionsScreen}
+          name="Form"
+          component={FormScreen}
           options={{
             headerTitle: () => (
-              <Header noMargin title={"Interactions"} autofocus white />
+              <Header noMargin title={"Forms"} autofocus white />
             ),
           }}
         />

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { PropsWithChildren, useEffect, useRef, useState } from "react";
 import {
   Dimensions,
   Linking,
@@ -93,20 +93,22 @@ const AMAErrorComponent = ({ issues }: { issues?: AmaError[] }) => {
         />
       ) : null}
       <View style={styles!.failedBar}>
-        <AMAButton
-          onPress={showFirstError}
-          singular={`AMA: ${issues.length} accessibility issue${
-            issues.length !== 1 ? "s" : ""
-          } found. Tap to inspect`}
-          bg="#A31420"
-          color="#fff"
-        />
+        <AMAButton onPress={showFirstError} bg="transparent" color="#fff">
+          <Text style={styles!.buttonText}>
+            <Text style={{ color: "yellow" }}>
+              ⚠️ AMA: {issues.length} issue{issues.length !== 1 ? "s" : ""}{" "}
+              detected
+            </Text>
+            <Text style={{ color: "#fafafa" }}>{" ┆ "}</Text>
+            <Text style={{ fontWeight: "bold" }}>Inspect ›</Text>
+          </Text>
+        </AMAButton>
       </View>
     </>
   );
 };
 
-type AMAButtonProps = {
+type AMAButtonProps = PropsWithChildren<{
   count?: number;
   singular: string;
   color: string;
@@ -114,9 +116,10 @@ type AMAButtonProps = {
   line?: string;
   onPress: () => void;
   disabled?: boolean;
-};
+}>;
 
 const AMAButton = ({
+  children,
   count,
   singular,
   color,
@@ -152,9 +155,7 @@ const AMAButton = ({
       importantForAccessibility="no"
       accessibilityElementsHidden
     >
-      <Text style={[styles!.buttonText, { color }]}>
-        {count} {plural}
-      </Text>
+      {children}
     </Pressable>
   );
 };
@@ -312,32 +313,35 @@ const styles = __DEV__
         zIndex: Z_INDEX + 10,
       },
       failedBar: {
+        backgroundColor: "#A31420",
+        position: "absolute",
+        bottom: 40,
         flexDirection: "row",
         alignItems: "center",
-        borderTopColor: "black",
-        borderTopWidth: 2,
         shadowOffset: {
           width: 10,
-          height: -10,
+          height: 10,
         },
-        boxShadow: "0px 2px 20px #000",
-        shadowOpacity: 0.1,
-        shadowRadius: 24,
+        boxShadow: "0px 2px 6px #000",
+        shadowOpacity: 0.05,
+        shadowRadius: 12,
         zIndex: Z_INDEX,
+        borderRadius: 20,
+        maxWidth: "90%",
+        left: "5%",
       },
       button: {
         flexDirection: "row",
         alignItems: "center",
         flex: 1,
         padding: 12,
-        paddingTop: 24,
-        paddingBottom: 32,
       },
       buttonText: {
         flex: 1,
         fontSize: 16,
         lineHeight: 24,
         textAlign: "center",
+        color: "#fff",
       },
       transparentOverlay: {
         position: "absolute",

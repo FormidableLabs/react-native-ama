@@ -7,7 +7,7 @@ import {
 	Text,
 	View,
 } from 'react-native';
-import { AMAError, Position } from '../types';
+import { AmaError, Position } from '../types';
 import { A11ySeverity } from '../utils/getRuleErrorInfo';
 import { RULES_HELP } from '../utils/rules';
 
@@ -27,7 +27,7 @@ export const AMARuleError = __DEV__
 		componentPosition,
 		onClose,
 	}: {
-		issue: AMAError;
+		issue: AmaError;
 		componentPosition: Position;
 		onClose: () => void;
 	}) => {

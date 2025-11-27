@@ -107,7 +107,7 @@ class ReactNativeAmaModule : Module() {
                 }
             }
 
-            highlighter?.highlight(viewId, mode, hexColor)
+            highlighter?.highlight(viewId, mode, hexColor, gap ?: 0)
 
             target.getGlobalDpBounds(root)
         }

@@ -21,6 +21,7 @@ export type AmaRule =
 	| 'NO_UPPERCASE_ACCESSIBILITY_LABEL'
 	| 'NO_HEADER_FOUND'
 	| 'NO_ACCESSIBILITY_STATE_SET'
+	| 'INPUT_INVALID_RETURN_KEY'
 
 export type AmaRuleAction =
 	| 'SHOULD_NOT'
@@ -252,7 +253,15 @@ export const RULES_HELP: RuleHelp | null = __DEV__
 			howToFix:
 				'Update the element’s accessibilityState to reflect the new state, for example: aria-selected, aria-expanded, aria-checked',
 		},
-
+		INPUT_INVALID_RETURN_KEY: {
+			url: '/guidelines/forms#focus-on-the-next-field',
+			issue: 'Invalid return type',
+			severity: 'Serious',
+			message:
+				'When on TextInput, the user should be able to access the next field using the specific keyboard button',
+			howToFix:
+				"Handle the returnType attribute so that the user can focus the next form's field",
+		}
 	}
 	: null;
 
