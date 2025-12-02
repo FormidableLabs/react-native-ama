@@ -91,21 +91,47 @@ public class Highlight {
         let rect = view.bounds.insetBy(dx: -inset, dy: -inset)
         border.path = UIBezierPath(rect: rect).cgPath
         
-        let textLayer = CATextLayer()
-        textLayer.string = "⚠️"
-        textLayer.fontSize = 20
-        textLayer.alignmentMode = .center
-        textLayer.contentsScale = UIScreen.main.scale
-
-        let iconSize: CGFloat = 32
-        textLayer.frame = CGRect(
+        // Create warning triangle icon
+        let iconSize: CGFloat = 24
+        let iconLayer = CAShapeLayer()
+        iconLayer.frame = CGRect(
             x: rect.maxX - iconSize / 2,
             y: rect.minY - iconSize / 2,
             width: iconSize,
             height: iconSize
         )
         
-        border.addSublayer(textLayer)
+        // Draw warning triangle path
+        let trianglePath = UIBezierPath()
+        trianglePath.move(to: CGPoint(x: iconSize / 2, y: 2))
+        trianglePath.addLine(to: CGPoint(x: iconSize - 2, y: iconSize - 2))
+        trianglePath.addLine(to: CGPoint(x: 2, y: iconSize - 2))
+        trianglePath.close()
+        
+        iconLayer.path = trianglePath.cgPath
+        iconLayer.fillColor = color.cgColor
+        iconLayer.strokeColor = UIColor.white.cgColor
+        iconLayer.lineWidth = 1.5
+        
+        // Add exclamation mark
+        let exclamationLayer = CAShapeLayer()
+        exclamationLayer.frame = iconLayer.bounds
+        
+        let exclamationPath = UIBezierPath()
+        // Exclamation line
+        exclamationPath.move(to: CGPoint(x: iconSize / 2, y: iconSize * 0.35))
+        exclamationPath.addLine(to: CGPoint(x: iconSize / 2, y: iconSize * 0.6))
+        // Exclamation dot
+        exclamationPath.move(to: CGPoint(x: iconSize / 2, y: iconSize * 0.7))
+        exclamationPath.addLine(to: CGPoint(x: iconSize / 2, y: iconSize * 0.71))
+        
+        exclamationLayer.path = exclamationPath.cgPath
+        exclamationLayer.strokeColor = UIColor.white.cgColor
+        exclamationLayer.lineWidth = 2
+        exclamationLayer.lineCap = .round
+        
+        iconLayer.addSublayer(exclamationLayer)
+        border.addSublayer(iconLayer)
         view.layer.addSublayer(border)
 
         borderLayers[view.tag] = border

@@ -23,6 +23,7 @@ export const TestCase: FC<PropsWithChildren<{ title: string }>> = ({
 const styles = StyleSheet.create({
   wrapper: {
     padding: 12,
+    paddingHorizontal: 24,
     shadowOffset: {
       width: 0,
       height: 5,

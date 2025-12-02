@@ -136,21 +136,53 @@ class Highlight(private val appContext: AppContext) {
         shape.setBounds(left, top, right, bottom)
         view.overlay.add(shape)
 
-        val textDrawable = object : Drawable() {
-            val textPaint = Paint().apply {
-                this.color = Color.BLACK // Emoji color might be handled by text rendering, but let's set a base
-                textSize = 40f
+        val iconDrawable = object : Drawable() {
+            val fillPaint = Paint().apply {
+                this.color = color ?: Color.RED
+                style = Paint.Style.FILL
                 isAntiAlias = true
-                textAlign = Paint.Align.CENTER
             }
-            val text = "⚠️"
+            val strokePaint = Paint().apply {
+                this.color = Color.WHITE
+                style = Paint.Style.STROKE
+                strokeWidth = 3f
+                isAntiAlias = true
+            }
+            val exclamationPaint = Paint().apply {
+                this.color = Color.WHITE
+                style = Paint.Style.STROKE
+                strokeWidth = 4f
+                strokeCap = Paint.Cap.ROUND
+                isAntiAlias = true
+            }
 
             override fun draw(canvas: Canvas) {
-                // Position at top right
-                // The bounds of this drawable will be the same as the view's overlay bounds (which are the view's bounds)
-                // But we want to position relative to the border we just drew.
-                // The border top-right is at (right, top)
-                canvas.drawText(text, right.toFloat(), top.toFloat(), textPaint)
+                val iconSize = 48f
+                val centerX = right.toFloat()
+                val centerY = top.toFloat()
+                
+                // Draw warning triangle
+                val trianglePath = Path().apply {
+                    moveTo(centerX, centerY - iconSize / 2 + 4)
+                    lineTo(centerX + iconSize / 2 - 4, centerY + iconSize / 2 - 4)
+                    lineTo(centerX - iconSize / 2 + 4, centerY + iconSize / 2 - 4)
+                    close()
+                }
+                
+                canvas.drawPath(trianglePath, fillPaint)
+                canvas.drawPath(trianglePath, strokePaint)
+                
+                // Draw exclamation mark
+                // Line
+                canvas.drawLine(
+                    centerX, 
+                    centerY - iconSize * 0.15f,
+                    centerX,
+                    centerY + iconSize * 0.1f,
+                    exclamationPaint
+                )
+                // Dot
+                canvas.drawCircle(centerX, centerY + iconSize * 0.25f, 2f, exclamationPaint)
             }
 
             override fun setAlpha(alpha: Int) {}
@@ -158,9 +190,9 @@ class Highlight(private val appContext: AppContext) {
             override fun getOpacity(): Int = PixelFormat.TRANSLUCENT
         }
         
-        // We need to set bounds for the text drawable too, usually view bounds is fine as we draw relative to coordinates
-        textDrawable.setBounds(0, 0, view.width, view.height)
-        view.overlay.add(textDrawable)
+        // We need to set bounds for the icon drawable too, usually view bounds is fine as we draw relative to coordinates
+        iconDrawable.setBounds(0, 0, view.width, view.height)
+        view.overlay.add(iconDrawable)
     }
 }
 

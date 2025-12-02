@@ -219,17 +219,17 @@ const AMAOverlay = ({
             onPress={onPrevIssue}
             role="button"
             hitSlop={{ left: 12, top: 12, bottom: 12, right: 12 }}
-            style={styles!.action}
+            style={[styles!.action, styles!.previous]}
             accessible={false}
             importantForAccessibility="no"
           >
-            <Text>↑ Previous</Text>
+            <Text>‹ Previous</Text>
           </Pressable>
           <Pressable
             onPress={openHelp}
             role="button"
             hitSlop={{ left: 12, top: 12, bottom: 12, right: 12 }}
-            style={{ paddingTop: 8 }}
+            style={[styles!.action, styles!.learnMore]}
             accessible={false}
             importantForAccessibility="no"
           >
@@ -240,11 +240,11 @@ const AMAOverlay = ({
             onPress={onNextIssue}
             role="button"
             hitSlop={{ left: 12, top: 12, bottom: 12, right: 12 }}
-            style={styles!.action}
+            style={[styles!.action, styles!.next]}
             accessible={false}
             importantForAccessibility="no"
           >
-            <Text>Next ↓</Text>
+            <Text>Next ›</Text>
           </Pressable>
         </View>
       </View>
@@ -276,7 +276,7 @@ const styles = __DEV__
         left: 24,
         right: 24,
         backgroundColor: "#fff",
-        padding: 12,
+        padding: 0,
         justifyContent: "center",
         alignItems: "center",
         zIndex: Z_INDEX + 1,
@@ -296,11 +296,7 @@ const styles = __DEV__
         fontSize: 14,
         marginBottom: 12,
       },
-      link: {
-        color: "blue",
-        marginTop: 4,
-        textDecorationLine: "underline",
-      },
+
       triangle: {
         position: "absolute",
         width: 0,
@@ -356,11 +352,41 @@ const styles = __DEV__
         flexDirection: "row",
         justifyContent: "space-between",
         flex: 1,
-        width: "100%",
         alignItems: "center",
+        alignContent: "center",
       },
       action: {
-        paddingTop: 12,
+        paddingVertical: 8,
+        marginBottom: 12,
+        width: "27%",
+        borderWidth: 1,
+      },
+      previous: {
+        borderLeftWidth: 0,
+        borderTopEndRadius: 18,
+        borderBottomEndRadius: 18,
+        paddingRight: 12,
+        paddingLeft: 12,
+      },
+      next: {
+        borderRightWidth: 0,
+        borderTopLeftRadius: 18,
+        borderBottomLeftRadius: 18,
+        paddingRight: 12,
+        paddingLeft: 12,
+      },
+      learnMore: {
+        flex: 1,
+        alignItems: "center",
+        borderRadius: 24,
+        borderWidth: 1,
+        marginHorizontal: 24,
+        paddingVertical: 8,
+        backgroundColor: "#07549C",
+        borderColor: "#07549C",
+      },
+      link: {
+        color: "#fff",
       },
     })
   : null;

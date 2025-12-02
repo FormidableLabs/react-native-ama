@@ -9,11 +9,9 @@ import {
 } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { CTAPressable } from "../components/CTAPressable";
-import { Header } from "../components/Header";
 import { Intro } from "../components/Intro";
 import { Pressable } from "../components/Pressable";
 import { Spacer } from "../components/Spacer";
-import { Text } from "../components/Text";
 import { theme } from "../theme";
 import { TestCase } from "../components/TestCase";
 
