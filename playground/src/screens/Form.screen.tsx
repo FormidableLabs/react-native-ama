@@ -1,77 +1,77 @@
-import * as React from 'react';
-import { ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import * as React from "react";
+import { ScrollView, StyleSheet, TextInput, View } from "react-native";
 
-import { CTAPressable } from '../components/CTAPressable';
-import { Spacer } from '../components/Spacer';
-import { theme } from '../theme';
-import { Text } from '../components/Text';
+import { CTAPressable } from "../components/CTAPressable";
+import { Spacer } from "../components/Spacer";
+import { theme } from "../theme";
+import { Text } from "../components/Text";
 
 export const FormScreen = () => {
-	const [emailAddress, setEmailAddress] = React.useState('');
-	const [firstName, setFirstName] = React.useState('');
-	const [lastName, setLastName] = React.useState('');
+  const [emailAddress, setEmailAddress] = React.useState("");
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
 
-	return (
-		<ScrollView style={styles.view}>
-			<View>
-				<Text style={styles.labelComponent}>First name:</Text>
-				<TextInput
-					style={styles.input}
-					onChangeText={newText => setFirstName(newText)}
-					defaultValue={firstName}
-				/>
-			</View>
+  return (
+    <ScrollView style={styles.view}>
+      <View>
+        <Text style={styles.labelComponent}>First name:</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={(newText) => setFirstName(newText)}
+          defaultValue={firstName}
+          aria-label="First name"
+        />
+      </View>
 
-			<Spacer height='small' />
+      <Spacer height="small" />
 
-			<View>
-				<Text style={styles.labelComponent}>Last name:</Text>
-				<TextInput
-					style={styles.input}
-					onChangeText={newText => setLastName(newText)}
-					defaultValue={lastName}
-				/>
-			</View>
+      <View>
+        <Text style={styles.labelComponent}>Last name:</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={(newText) => setLastName(newText)}
+          defaultValue={lastName}
+        />
+      </View>
 
-			<Spacer height='small' />
-			<View>
-				<Text style={styles.labelComponent}>Email address:</Text>
-				<TextInput
-					style={styles.input}
-					onChangeText={newText => setEmailAddress(newText)}
-					defaultValue={emailAddress}
-				/>
-			</View>
+      <Spacer height="small" />
+      <View>
+        <Text style={styles.labelComponent}>Email address:</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={(newText) => setEmailAddress(newText)}
+          defaultValue={emailAddress}
+        />
+      </View>
 
-			<Spacer height='big' />
+      <Spacer height="big" />
 
-			<CTAPressable title='Submit' />
-		</ScrollView>
-	);
+      <CTAPressable title="Submit" />
+    </ScrollView>
+  );
 };
 
 const styles = StyleSheet.create({
-	view: {
-		paddingHorizontal: theme.padding.big,
-		paddingVertical: theme.padding.big,
-	},
-	input: {
-		height: 40,
-		borderWidth: 1,
-		padding: 10,
-	},
-	labelComponent: {
-		paddingBottom: theme.padding.small,
-	},
-	switchText: {
-		paddingRight: theme.padding.normal,
-		flex: 1,
-	},
-	switchListItem: {
-		marginVertical: theme.padding.normal,
-	},
-	error: {
-		color: '#f00',
-	},
+  view: {
+    paddingHorizontal: theme.padding.big,
+    paddingVertical: theme.padding.big,
+  },
+  input: {
+    height: 40,
+    borderWidth: 1,
+    padding: 10,
+  },
+  labelComponent: {
+    paddingBottom: theme.padding.small,
+  },
+  switchText: {
+    paddingRight: theme.padding.normal,
+    flex: 1,
+  },
+  switchListItem: {
+    marginVertical: theme.padding.normal,
+  },
+  error: {
+    color: "#f00",
+  },
 });
-
