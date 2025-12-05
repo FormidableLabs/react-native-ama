@@ -10,7 +10,7 @@ export type AmaRule =
 	| 'NO_ACCESSIBILITY_LABEL'
 	| 'NO_ACCESSIBILITY_ROLE'
 	| 'NO_FORM_ERROR'
-	| 'NO_FORM_LABEL'
+	| 'INPUT_HAS_NO_VISIBLE_LABEL'
 	| 'NO_KEYBOARD_TRAP'
 	| 'NO_UNDEFINED'
 	| 'NO_UPPERCASE_TEXT'
@@ -22,6 +22,7 @@ export type AmaRule =
 	| 'NO_HEADER_FOUND'
 	| 'NO_ACCESSIBILITY_STATE_SET'
 	| 'INPUT_INVALID_RETURN_KEY'
+	| 'INPUT_HAS_FOCUSABLE_LABEL';
 
 export type AmaRuleAction =
 	| 'SHOULD_NOT'
@@ -36,7 +37,7 @@ export const NON_OVERRIDABLE_RULES: Array<AmaRule> | undefined = __DEV__
 		'NO_ACCESSIBILITY_LABEL',
 		'NO_KEYBOARD_TRAP',
 		'NO_UNDEFINED',
-		'NO_FORM_LABEL',
+		'INPUT_HAS_NO_VISIBLE_LABEL',
 		'FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE',
 		'BOTTOM_SHEET_CLOSE_ACTION',
 		'INCOMPATIBLE_ACCESSIBILITY_STATE',
@@ -54,7 +55,7 @@ export const LOGGER_RULES: Record<AmaRule, AmaRuleAction> | null = __DEV__
 		MINIMUM_SIZE: 'MUST',
 		NO_ACCESSIBILITY_LABEL: 'MUST',
 		NO_ACCESSIBILITY_ROLE: 'MUST',
-		NO_FORM_LABEL: 'MUST',
+		INPUT_HAS_NO_VISIBLE_LABEL: 'MUST',
 		NO_FORM_ERROR: 'MUST',
 		NO_KEYBOARD_TRAP: 'MUST_NOT',
 		NO_UNDEFINED: 'MUST_NOT',
@@ -66,7 +67,7 @@ export const LOGGER_RULES: Record<AmaRule, AmaRuleAction> | null = __DEV__
 		INCOMPATIBLE_ACCESSIBILITY_ROLE: 'MUST_NOT',
 		NO_UPPERCASE_ACCESSIBILITY_LABEL: 'SHOULD_NOT',
 		NO_HEADER_FOUND: 'MUST',
-		NO_ACCESSIBILITY_STATE_SET: 'MUST'
+		NO_ACCESSIBILITY_STATE_SET: 'MUST',
 	}
 	: null;
 
@@ -147,7 +148,11 @@ export const RULES_HELP: RuleHelp | null = __DEV__
 			message:
 				"Screen readers rely on accessibility labels to announce the purpose of elements. Without labels, visually impaired users can't understand the functionality.",
 			howToFix:
-				'Add a descriptive aria-label prop clearly explaining the element\'s action (e.g., "Add to cart", "Go back").',
+				[
+				"Add a descriptive `aria-label` prop clearly explaining the element's action, i.e:",
+					'`aria-role="Add to the cart"',
+					'`aria-role="Go back"',
+			]
 		},
 		NO_ACCESSIBILITY_ROLE: {
 			url: '/guidelines/accessibility-role',
@@ -155,8 +160,11 @@ export const RULES_HELP: RuleHelp | null = __DEV__
 			issue: 'Missing accessibility role',
 			message:
 				'Accessibility roles help users understand how to interact with an element, indicating what action can be performed and what outcome to expect.',
-			howToFix:
-				'Specify an appropriate aria-role prop (e.g., "button", "link") for the component.',
+			howToFix: [
+				'Specify an appropriate aria-role prop, i.e:',
+				'Button: `aria-role="button"`',
+				'Switch: `aria-role="switch"`',
+			],
 		},
 		NO_KEYBOARD_TRAP: {
 			url: '/guidelines/forms',
@@ -167,8 +175,8 @@ export const RULES_HELP: RuleHelp | null = __DEV__
 			howToFix:
 				'Ensure keyboard navigation allows users to exit form fields.',
 		},
-		NO_FORM_LABEL: {
-			url: '/guidelines/forms',
+		INPUT_HAS_NO_VISIBLE_LABEL: {
+			url: '/guidelines/forms#labels',
 			issue: 'Missing form label',
 			severity: 'Critical',
 			message:
@@ -261,7 +269,15 @@ export const RULES_HELP: RuleHelp | null = __DEV__
 				'When on TextInput, the user should be able to access the next field using the specific keyboard button',
 			howToFix:
 				"Handle the returnType attribute so that the user can focus the next form's field",
-		}
+		},
+		INPUT_HAS_FOCUSABLE_LABEL: {
+			url: '/guidelines/forms#grouping',
+			issue: 'Duplicate label',
+			severity: 'Serious',
+			message:
+				'The label should not be focusable individually, as it would provide redundant information, but the Text field must provide an accessibilityLabel instead.',
+			howToFix: 'TBD',
+		},
 	}
 	: null;
 
@@ -273,8 +289,8 @@ const canRuleBeOverridden = __DEV__
 
 export const AMA_COLORS: { [key in A11ySeverity]: string } = {
 	Critical: '#f00',
-	Serious: '#7A7A00',
-	Warning: '#7A7A00',
+	Serious: '#2563EB',
+	Warning: '#2563EB',
 };
 
 export default canRuleBeOverridden;

@@ -28,7 +28,8 @@ data class NodePayload(
         val bg: String?,
         val fontSize: Float?,
         val isBold: Boolean?,
-        val isEnabled: Boolean?
+        val isEnabled: Boolean?,
+        val isAccessible: Boolean? = null
 ) {
     fun toMap(): Map<String, Any?> {
         return mapOf(
@@ -42,7 +43,8 @@ data class NodePayload(
                 "bg" to this.bg,
                 "fontSize" to this.fontSize,
                 "isBold" to this.isBold,
-                "isEnabled" to this.isEnabled
+                "isEnabled" to this.isEnabled,
+                "isAccessible" to this.isAccessible
         )
     }
 }
@@ -120,6 +122,7 @@ class NodesGrabber(private val appContext: AppContext) {
             )
         } else if (view.isTextLike()) {
             val textInfo = view.extractRNTextInfo()
+            val isAccessible = view.importantForAccessibility != View.IMPORTANT_FOR_ACCESSIBILITY_NO
 
             addNode(
                     NodePayload(
@@ -133,7 +136,8 @@ class NodesGrabber(private val appContext: AppContext) {
                             bg = textInfo?.bg,
                             fontSize = textInfo?.fontSizeSp, // note: this is in sp
                             isBold = textInfo?.isBold == true,
-                            isEnabled = view.isEnabled
+                            isEnabled = view.isEnabled,
+                            isAccessible = isAccessible
                     )
             )
         }

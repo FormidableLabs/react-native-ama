@@ -22,6 +22,7 @@ public class ReactNativeAmaModule: Module {
     private var windowTapRecognizer: UITapGestureRecognizer?
     private var tapDelegate: AmaTapGestureDelegate?
     private var gap: CGFloat = 0
+    private var borderWidth: CGFloat = 3
 
     public func definition() -> ModuleDefinition {
         Name("ReactNativeAma")
@@ -33,6 +34,7 @@ public class ReactNativeAmaModule: Module {
             let uiCheck = options?["ui"] as? Bool ?? false
             uiCheckDelay = options?["delay"] as? Int ?? uiCheckDelay
             gap = options?["gap"] as? CGFloat ?? gap
+            borderWidth = options?["borderWidth"] as? CGFloat ?? borderWidth
 
             guard !isMonitoring else { return }
 
@@ -82,7 +84,7 @@ public class ReactNativeAmaModule: Module {
         }
 
         AsyncFunction("highlight") {
-            (viewId: Int, mode: String, hexColor: String) async -> [Double]? in
+            (viewId: Int, mode: String, hexColor: String, issueCount: Int) async -> [Double]? in
             guard
                 let root = self.currentDecorView,
                 let target = await root.viewWithTag(viewId)
@@ -106,7 +108,9 @@ public class ReactNativeAmaModule: Module {
                     view: target,
                     mode: mode,
                     hexColor: hexColor,
-                    gap: gap ?? 0
+                    gap: gap ?? 0,
+                    lineWidth: borderWidth ?? 3,
+                    issueCount: issueCount
                 )
             }
 

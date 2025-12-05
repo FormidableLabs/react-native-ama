@@ -6,6 +6,7 @@
   "checks": {
     "ui": true,
     "delay": "1000",
-    "gap": 5
+    "gap": 4,
+    "borderWidth": 3
   }
 }

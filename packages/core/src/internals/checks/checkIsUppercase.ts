@@ -13,7 +13,7 @@ export const checkIsUppercase = ({
   canBeEmpty = true,
   rule = 'NO_UPPERCASE_TEXT',
 }: UppercaseStringChecker): AmaError | null => {
-  const text = node.ariaLabel ?? node.content
+  const text = node.ariaLabel ?? node.content;
   const isEmpty = !text || text?.trim()?.length === 0;
 
   if (isEmpty && canBeEmpty) {
@@ -33,5 +33,14 @@ export const checkIsUppercase = ({
   return null;
 };
 
-const isUpperCase = (string: string) =>
-  string.toUpperCase() === string;
+const NO_LETTERS = /(\W|\d)/g;
+
+const isUpperCase = (string: string) => {
+  const cleanString = string.replaceAll(NO_LETTERS, '');
+
+  if (cleanString.trim().length === 0) {
+    return false;
+  }
+
+  return cleanString.toUpperCase() === cleanString;
+};

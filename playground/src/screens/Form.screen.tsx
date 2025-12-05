@@ -19,11 +19,11 @@ export const FormScreen = () => {
           style={styles.input}
           onChangeText={(newText) => setFirstName(newText)}
           defaultValue={firstName}
-          aria-label="First name"
+          accessibilityLabel="First Name"
         />
       </View>
 
-      <Spacer height="small" />
+      <Spacer height="normal" />
 
       <View>
         <Text style={styles.labelComponent}>Last name:</Text>
@@ -34,13 +34,15 @@ export const FormScreen = () => {
         />
       </View>
 
-      <Spacer height="small" />
+      <Spacer height="normal" />
+
       <View>
-        <Text style={styles.labelComponent}>Email address:</Text>
         <TextInput
           style={styles.input}
           onChangeText={(newText) => setEmailAddress(newText)}
           defaultValue={emailAddress}
+          placeholder="Email address"
+          accessibilityLabel="Email address"
         />
       </View>
 

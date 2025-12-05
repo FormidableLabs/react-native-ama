@@ -13,10 +13,10 @@ function hexToRgb(hex: string) {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result
     ? {
-      r: parseInt(result[1], 16),
-      g: parseInt(result[2], 16),
-      b: parseInt(result[3], 16),
-    }
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16),
+      }
     : null;
 }
 
@@ -26,7 +26,7 @@ function getLuminance(hex: string) {
     return 0;
   }
 
-  const [r, g, b] = [rgb.r, rgb.g, rgb.b].map(v => {
+  const [r, g, b] = [rgb.r, rgb.g, rgb.b].map((v) => {
     v /= 255; // Normalize to 0-1 range
     return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
   });
@@ -56,7 +56,7 @@ export const checkContrast = (node: AmaNode): AmaError | null => {
    * In this case we can't perform a contrast check as is hard to perform
    * a contrast check on SVGs
    */
-  if (!fg || !bg || !node.content) {
+  if (!fg || !bg || !node.content || node.type === 'TextInput') {
     return null;
   }
 
@@ -79,7 +79,7 @@ export const checkContrast = (node: AmaNode): AmaError | null => {
       viewId: node.viewId,
       rule: 'CONTRAST_FAILED_AAA',
       extra: `The color contrast between the foreground (${fg}) and background (${bg}) is ${contrastRatio.toFixed(
-        2,
+        2
       )}, which is below the required minimum of ${requiredRatioAAA}.`,
     };
   }
@@ -90,7 +90,7 @@ export const checkContrast = (node: AmaNode): AmaError | null => {
       viewId: node.viewId,
       rule: 'CONTRAST_FAILED',
       extra: `The color contrast between the foreground (${fg}) and background (${bg}) is ${contrastRatio.toFixed(
-        2,
+        2
       )}, which is below the required minimum of ${requiredRatioAA}.`,
     };
   }

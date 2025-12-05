@@ -1,12 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
-import {
-  AccessibilityState,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  View,
-} from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { CTAPressable } from "../components/CTAPressable";
 import { Intro } from "../components/Intro";

@@ -36,6 +36,8 @@ class ReactNativeAmaModule : Module() {
     private var checkRunnable: Runnable? = null
     private lateinit var a11yChecker: NodesGrabber
     private var highlighter: Highlight? = null
+    private var gap: Int = 0
+    private var borderWidth: Float = 6f
 
     override fun definition() = ModuleDefinition {
         Name("ReactNativeAma")
@@ -45,6 +47,8 @@ class ReactNativeAmaModule : Module() {
         Function("start") { args: Map<String, Any?>? ->
             val uiCheck = args?.get("ui") as? Boolean ?: false
             Constants.uiCheckDelay = args?.get("delay") as? Long ?: Constants.uiCheckDelay
+            gap = (args?.get("gap") as? Number)?.toInt() ?: gap
+            borderWidth = (args?.get("borderWidth") as? Number)?.toFloat() ?: borderWidth
 //            val groupingCheck = checks?.get("grouping") as? Boolean ?: false
 
             if (highlighter == null) {
@@ -79,7 +83,7 @@ class ReactNativeAmaModule : Module() {
             }
         }
 
-        AsyncFunction("highlight") { viewId: Int, mode: String, hexColor: String ->
+        AsyncFunction("highlight") { viewId: Int, mode: String, hexColor: String, issueCount: Int ->
             val activity = appContext.activityProvider?.currentActivity ?: return@AsyncFunction null
             val root = activity.window.decorView as? ViewGroup ?: return@AsyncFunction null
             val target = root.findViewById<View>(viewId) ?: return@AsyncFunction null
@@ -107,7 +111,7 @@ class ReactNativeAmaModule : Module() {
                 }
             }
 
-            highlighter?.highlight(viewId, mode, hexColor, gap ?: 0)
+            highlighter?.highlight(viewId, mode, hexColor, gap, borderWidth, issueCount)
 
             target.getGlobalDpBounds(root)
         }

@@ -8,7 +8,7 @@ public class Highlight {
 
     public init() {}
 
-    public func highlight(view: UIView, mode: String, hexColor: String, gap: CGFloat = 0) {
+    public func highlight(view: UIView, mode: String, hexColor: String, gap: CGFloat = 0, lineWidth: CGFloat = 3, issueCount: Int = 1) {
         let color = UIColor(hex: hexColor) ?? .red
 
         DispatchQueue.main.async {
@@ -16,9 +16,9 @@ public class Highlight {
             case "background":
                 self.applyStripyBackground(to: view, color: color)
             case "border":
-                self.applyBorderOverlay(to: view, color: color, gap: gap)
+                self.applyBorderOverlay(to: view, color: color, gap: gap, lineWidth: lineWidth, issueCount: issueCount)
             default:
-                self.applyBorderOverlay(to: view, color: color, gap: gap)
+                self.applyBorderOverlay(to: view, color: color, gap: gap, lineWidth: lineWidth, issueCount: issueCount)
                 self.applyStripyBackground(to: view, color: color)
             }
         }
@@ -75,63 +75,64 @@ public class Highlight {
         stripeOverlays[view.tag] = overlay
     }
 
-    private func applyBorderOverlay(to view: UIView, color: UIColor, gap: CGFloat) {
+    private func applyBorderOverlay(to view: UIView, color: UIColor, gap: CGFloat, lineWidth: CGFloat = 3, issueCount: Int = 1) {
         view.layer.sublayers?
             .filter { $0.name == borderLayerName }
             .forEach { $0.removeFromSuperlayer() }
 
-        let stroke: CGFloat = 3
+        let stroke: CGFloat = lineWidth
         let border = CAShapeLayer()
         border.name = borderLayerName
         border.frame = view.bounds
         border.lineWidth = stroke
         border.strokeColor = color.cgColor
         border.fillColor = UIColor.clear.cgColor
+        
+        // Make the border dotted
+        let dashLength: NSNumber = NSNumber(value: Double(stroke * 2))
+        let gapLength: NSNumber = NSNumber(value: Double(stroke * 2))
+        border.lineDashPattern = [dashLength, gapLength]
+        
         let inset = (stroke / 2) + gap
         let rect = view.bounds.insetBy(dx: -inset, dy: -inset)
         border.path = UIBezierPath(rect: rect).cgPath
         
-        // Create warning triangle icon
-        let iconSize: CGFloat = 24
-        let iconLayer = CAShapeLayer()
-        iconLayer.frame = CGRect(
-            x: rect.maxX - iconSize / 2,
-            y: rect.minY - iconSize / 2,
-            width: iconSize,
-            height: iconSize
+        // Create circle badge with issue count
+        let badgeSize: CGFloat = 24
+        let badgeLayer = CAShapeLayer()
+        badgeLayer.frame = CGRect(
+            x: rect.maxX - badgeSize / 2,
+            y: rect.minY - badgeSize / 2,
+            width: badgeSize,
+            height: badgeSize
         )
         
-        // Draw warning triangle path
-        let trianglePath = UIBezierPath()
-        trianglePath.move(to: CGPoint(x: iconSize / 2, y: 2))
-        trianglePath.addLine(to: CGPoint(x: iconSize - 2, y: iconSize - 2))
-        trianglePath.addLine(to: CGPoint(x: 2, y: iconSize - 2))
-        trianglePath.close()
+        // Draw circle
+        let circlePath = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: badgeSize, height: badgeSize))
+        badgeLayer.path = circlePath.cgPath
+        badgeLayer.fillColor = color.cgColor
         
-        iconLayer.path = trianglePath.cgPath
-        iconLayer.fillColor = color.cgColor
-        iconLayer.strokeColor = UIColor.white.cgColor
-        iconLayer.lineWidth = 1.5
+        // Add issue count text
+        let textLayer = CATextLayer()
+        textLayer.frame = badgeLayer.bounds
+        textLayer.string = "\(issueCount)"
+        textLayer.fontSize = badgeSize * 0.55
+        textLayer.foregroundColor = UIColor.white.cgColor
+        textLayer.alignmentMode = .center
+        textLayer.contentsScale = UIScreen.main.scale
         
-        // Add exclamation mark
-        let exclamationLayer = CAShapeLayer()
-        exclamationLayer.frame = iconLayer.bounds
+        // Center text vertically
+        let font = UIFont.boldSystemFont(ofSize: badgeSize * 0.55)
+        let textHeight = font.lineHeight
+        textLayer.frame = CGRect(
+            x: 0,
+            y: (badgeSize - textHeight) / 2,
+            width: badgeSize,
+            height: textHeight
+        )
         
-        let exclamationPath = UIBezierPath()
-        // Exclamation line
-        exclamationPath.move(to: CGPoint(x: iconSize / 2, y: iconSize * 0.35))
-        exclamationPath.addLine(to: CGPoint(x: iconSize / 2, y: iconSize * 0.6))
-        // Exclamation dot
-        exclamationPath.move(to: CGPoint(x: iconSize / 2, y: iconSize * 0.7))
-        exclamationPath.addLine(to: CGPoint(x: iconSize / 2, y: iconSize * 0.71))
-        
-        exclamationLayer.path = exclamationPath.cgPath
-        exclamationLayer.strokeColor = UIColor.white.cgColor
-        exclamationLayer.lineWidth = 2
-        exclamationLayer.lineCap = .round
-        
-        iconLayer.addSublayer(exclamationLayer)
-        border.addSublayer(iconLayer)
+        badgeLayer.addSublayer(textLayer)
+        border.addSublayer(badgeLayer)
         view.layer.addSublayer(border)
 
         borderLayers[view.tag] = border

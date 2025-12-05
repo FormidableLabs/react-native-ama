@@ -15,6 +15,7 @@ public struct NodePayload: Equatable {
     let isBold: Bool?
     let isEnabled: Bool
     let returnType: Int?
+    let isAccessible: Bool?
 
     func toDictionary() -> [String: Any?] {
         return [
@@ -30,7 +31,8 @@ public struct NodePayload: Equatable {
             "fontSize": self.fontSize,
             "isBold": self.isBold,
             "isEnabled": self.isEnabled,
-            "returnType": self.returnType
+            "returnType": self.returnType,
+            "isAccessible": self.isAccessible
         ]
     }
 }
@@ -80,6 +82,7 @@ public class NodesGrabber {
 
         var font = view.contentFont
         var tag = view.tag
+        var accessibilityLabel = view.accessibilityLabel
         let info = view.extractRNTextInfo()
 
         if info?.font != nil {
@@ -88,6 +91,7 @@ public class NodesGrabber {
 
         if view.isTextInput() {
             tag = view.superview?.tag ?? 0
+            accessibilityLabel = view.superview?.accessibilityLabel
         }
 
         addNode(
@@ -95,7 +99,7 @@ public class NodesGrabber {
                 type: view.getType(),
                 viewId: tag,
                 bounds: view.getTargetArea(),
-                ariaLabel: view.accessibilityLabel,
+                ariaLabel: accessibilityLabel,
                 content: info?.text ?? view.content,
                 ariaRole: getDefaultAriaRole(view),
                 traits: view.accessibilityTraits.names,
@@ -106,7 +110,8 @@ public class NodesGrabber {
                     .traitBold
                 ),
                 isEnabled: !view.isDisabled(),
-                returnType: view.getReturnKeyType()
+                returnType: view.getReturnKeyType(),
+                isAccessible: view.isText() ? !view.accessibilityElementsHidden : nil
             )
         )
     }

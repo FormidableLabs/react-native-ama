@@ -1,11 +1,11 @@
-import type { StyleProp, ViewStyle } from "react-native";
+import type { StyleProp, ViewStyle } from 'react-native';
 
 export type OnLoadEventPayload = {
   url: string;
 };
 
 export type AmaNode = {
-  type: "Pressable" | "Text" | "TextInput";
+  type: 'Pressable' | 'Text' | 'TextInput';
   viewId: number;
   bounds: [number, number, number, number];
   hitSlop?: { top: number; left: number; bottom: number; right: number };
@@ -20,8 +20,9 @@ export type AmaNode = {
   fontSize?: number; // pt
   isBold?: boolean;
   isEnabled?: boolean;
-	returnType?: number;
-	hasOnSubmitEditing: boolean;
+  returnType?: number;
+  hasOnSubmitEditing: boolean;
+  isAccessible?: boolean; // For Text components: false if accessibilityElementsHidden (iOS) or importantForAccessibility="no" (Android)
 };
 
 export type AmaNodes = Record<number, AmaNode>;

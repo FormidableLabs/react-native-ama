@@ -3,7 +3,7 @@ import { FlatListProps } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { useCarousel } from '../hooks/useCarousel';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 function fixedForwardRef<T, P = {}>(
   render: any,
 ): (props: P & React.RefAttributes<T>) => React.ReactNode {

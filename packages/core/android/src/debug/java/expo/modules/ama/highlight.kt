@@ -18,7 +18,7 @@ class Highlight(private val appContext: AppContext) {
      * @param viewId the Android view ID
      * @param mode "background" | "border" | "both"
      */
-    fun highlight(viewId: Int, mode: String, hexColor: String, gap: Int = 0) {
+    fun highlight(viewId: Int, mode: String, hexColor: String, gap: Int = 0, lineWidth: Float = 6f, issueCount: Int = 1) {
         val activity: Activity = appContext.currentActivity ?: return
         val color = hexColor.toColor()
 
@@ -31,9 +31,9 @@ class Highlight(private val appContext: AppContext) {
 
             when (mode) {
                 "background" -> applyStripyBackground(target, color)
-                "border" -> applyRedBorderOverlay(target, color, gap)
+                "border" -> applyRedBorderOverlay(target, color, gap, lineWidth, issueCount)
                 else -> {
-                    applyRedBorderOverlay(target, color, gap)
+                    applyRedBorderOverlay(target, color, gap, lineWidth, issueCount)
                     applyStripyBackground(target, color)
                 }
             }
@@ -114,10 +114,10 @@ class Highlight(private val appContext: AppContext) {
         }
     }
 
-    private fun applyRedBorderOverlay(view: View, color: Int?, gap: Int) {
+    private fun applyRedBorderOverlay(view: View, color: Int?, gap: Int, lineWidth: Float = 6f, issueCount: Int = 1) {
         view.overlay.clear()
 
-        val stroke = 6f
+        val stroke = lineWidth
         val half = (stroke / 2).toInt()
         val shape =
                 ShapeDrawable(RectShape()).apply {
@@ -125,6 +125,8 @@ class Highlight(private val appContext: AppContext) {
                         this.color = color ?: Color.RED
                         style = Paint.Style.STROKE
                         strokeWidth = stroke
+                        // Make the border dotted
+                        pathEffect = DashPathEffect(floatArrayOf(stroke * 2, stroke * 2), 0f)
                     }
                 }
 
@@ -142,47 +144,29 @@ class Highlight(private val appContext: AppContext) {
                 style = Paint.Style.FILL
                 isAntiAlias = true
             }
-            val strokePaint = Paint().apply {
+            val textPaint = Paint().apply {
                 this.color = Color.WHITE
-                style = Paint.Style.STROKE
-                strokeWidth = 3f
+                style = Paint.Style.FILL
+                textSize = 28f
+                textAlign = Paint.Align.CENTER
                 isAntiAlias = true
-            }
-            val exclamationPaint = Paint().apply {
-                this.color = Color.WHITE
-                style = Paint.Style.STROKE
-                strokeWidth = 4f
-                strokeCap = Paint.Cap.ROUND
-                isAntiAlias = true
+                typeface = android.graphics.Typeface.DEFAULT_BOLD
             }
 
             override fun draw(canvas: Canvas) {
-                val iconSize = 48f
+                val badgeSize = 48f
                 val centerX = right.toFloat()
                 val centerY = top.toFloat()
                 
-                // Draw warning triangle
-                val trianglePath = Path().apply {
-                    moveTo(centerX, centerY - iconSize / 2 + 4)
-                    lineTo(centerX + iconSize / 2 - 4, centerY + iconSize / 2 - 4)
-                    lineTo(centerX - iconSize / 2 + 4, centerY + iconSize / 2 - 4)
-                    close()
-                }
+                // Draw circle badge
+                canvas.drawCircle(centerX, centerY, badgeSize / 2, fillPaint)
                 
-                canvas.drawPath(trianglePath, fillPaint)
-                canvas.drawPath(trianglePath, strokePaint)
-                
-                // Draw exclamation mark
-                // Line
-                canvas.drawLine(
-                    centerX, 
-                    centerY - iconSize * 0.15f,
-                    centerX,
-                    centerY + iconSize * 0.1f,
-                    exclamationPaint
-                )
-                // Dot
-                canvas.drawCircle(centerX, centerY + iconSize * 0.25f, 2f, exclamationPaint)
+                // Draw issue count text centered in circle
+                val textBounds = android.graphics.Rect()
+                val countText = issueCount.toString()
+                textPaint.getTextBounds(countText, 0, countText.length, textBounds)
+                val textY = centerY + textBounds.height() / 2f
+                canvas.drawText(countText, centerX, textY, textPaint)
             }
 
             override fun setAlpha(alpha: Int) {}

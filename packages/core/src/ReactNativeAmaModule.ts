@@ -9,6 +9,7 @@ declare class ReactNativeAmaModule extends NativeModule<ReactNativeAmaModuleEven
     viewId: number,
     mode: 'background' | 'border' | 'both',
     color: string,
+    issueCount: number,
   ): Promise<Position>;
   clearHighlight(viewId: number): void;
 }
