@@ -1,14 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
-import * as React from 'react';
+import * as React from "react";
 import {
   AccessibilityChangeEventName,
   AccessibilityInfo,
   LogBox,
   NativeEventSubscription,
   View,
-} from 'react-native';
-import { useAMADev } from '../internals/useAMADev';
-import { AMAErrorOverlay } from '../internals/components/AMAErrorOverlay';
+} from "react-native";
+import { AMAErrorOverlay } from "../internals/components/AMAErrorOverlay";
+import { useAMADev } from "../internals/useAMADev";
 
 type AMAProviderProps = {
   children: React.ReactNode;
@@ -25,7 +25,7 @@ type SharedContextValue = {
   isDarkerSystemColorsEnabled: boolean;
   reactNavigationScreenOptions: {
     animationEnabled: boolean;
-    animation: 'default' | 'fade';
+    animation: "default" | "fade";
   };
 };
 
@@ -38,11 +38,11 @@ export type AMAProdContextValue = SharedContextValue & {};
 
 export type AMAContextValue = AMADevContextValue | AMAProdContextValue;
 
-type AccessibilityEvents = Exclude<AccessibilityChangeEventName, 'change'>;
+type AccessibilityEvents = Exclude<AccessibilityChangeEventName, "change">;
 
 type AccessibilityInfoKey = Exclude<
   keyof AMAContextValue,
-  'reactNavigationScreenOptions' | 'trackError' | 'removeError'
+  "reactNavigationScreenOptions" | "trackError" | "removeError"
 >;
 
 type Extractor<S extends AccessibilityEvents> = S extends `${infer R}Changed`
@@ -54,18 +54,18 @@ type AccessibilityInfoEvents = {
 };
 
 const eventsMapping: AccessibilityInfoEvents = {
-  reduceTransparencyChanged: 'isReduceTransparencyEnabled',
-  reduceMotionChanged: 'isReduceMotionEnabled',
-  grayscaleChanged: 'isGrayscaleEnabled',
-  boldTextChanged: 'isBoldTextEnabled',
-  invertColorsChanged: 'isInvertColorsEnabled',
-  screenReaderChanged: 'isScreenReaderEnabled',
-  highTextContrastChanged: 'isHighTextContrastEnabled',
-  darkerSystemColorsChanged: 'isDarkerSystemColorsEnabled',
+  reduceTransparencyChanged: "isReduceTransparencyEnabled",
+  reduceMotionChanged: "isReduceMotionEnabled",
+  grayscaleChanged: "isGrayscaleEnabled",
+  boldTextChanged: "isBoldTextEnabled",
+  invertColorsChanged: "isInvertColorsEnabled",
+  screenReaderChanged: "isScreenReaderEnabled",
+  highTextContrastChanged: "isHighTextContrastEnabled",
+  darkerSystemColorsChanged: "isDarkerSystemColorsEnabled",
 };
 
 export const isDevContextValue = (
-  value: AMAContextValue,
+  value: AMAContextValue
 ): value is AMADevContextValue =>
   (value as AMADevContextValue).trackError !== undefined;
 
@@ -80,7 +80,7 @@ const DEFAULT_VALUES = {
   isDarkerSystemColorsEnabled: false,
   reactNavigationScreenOptions: {
     animationEnabled: true,
-    animation: 'default',
+    animation: "default",
   },
 } satisfies AMAContextValue;
 
@@ -95,15 +95,15 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
 
   const handleAccessibilityInfoChanged = (key: AccessibilityInfoKey) => {
     return (newValue: boolean) => {
-      setValues(oldValues => {
+      setValues((oldValues) => {
         const newValues = { ...oldValues };
         newValues[key] = newValue;
 
-        if (key === 'isReduceMotionEnabled') {
+        if (key === "isReduceMotionEnabled") {
           newValues.reactNavigationScreenOptions.animationEnabled = !newValue;
           newValues.reactNavigationScreenOptions.animation = newValue
-            ? 'fade'
-            : 'default';
+            ? "fade"
+            : "default";
         }
 
         return {
@@ -118,27 +118,27 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
     const allInitPromises: Promise<boolean>[] = [];
 
     const subscriptions: NativeEventSubscription[] = Object.entries(
-      eventsMapping,
+      eventsMapping
     ).map(([eventName, contextKey]) => {
       allInitPromises.push(AccessibilityInfo[contextKey]());
 
       return AccessibilityInfo.addEventListener(
         eventName as AccessibilityEvents,
-        handleAccessibilityInfoChanged(contextKey),
+        handleAccessibilityInfoChanged(contextKey)
       );
     });
 
-    Promise.all(allInitPromises).then(promisesValues => {
+    Promise.all(allInitPromises).then((promisesValues) => {
       const newValues = Object.values(eventsMapping).reduce(
         (list, key, index) => {
           list[key] = promisesValues[index] as boolean;
 
           return list;
         },
-        {} as AMAContextValue,
+        {} as AMAContextValue
       );
 
-      setValues(oldValues => {
+      setValues((oldValues) => {
         return {
           ...oldValues,
           ...newValues,
@@ -147,7 +147,7 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
     });
 
     return () => {
-      subscriptions.forEach(subscription => subscription?.remove());
+      subscriptions.forEach((subscription) => subscription?.remove());
     };
   }, []);
 
@@ -175,7 +175,7 @@ export const useAMAContext = () => {
   const context = React.useContext(AMAContext);
 
   if (!context) {
-    throw new Error('Please wrap your app with <AMAProvider />');
+    throw new Error("Please wrap your app with <AMAProvider />");
   }
 
   return context;
