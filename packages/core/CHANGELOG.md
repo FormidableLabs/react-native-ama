@@ -1,5 +1,14 @@
 # @react-native-ama/core
 
+## 1.2.2
+
+### Patch Changes
+
+- fix: export for repack ([#328](https://github.com/FormidableLabs/react-native-ama/pull/328))
+
+- Updated dependencies []:
+  - @react-native-ama/internal@1.2.2
+
 ## 1.2.1
 
 ### Patch Changes

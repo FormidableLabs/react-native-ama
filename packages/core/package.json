@@ -1,6 +1,6 @@
 {
   "name": "@react-native-ama/core",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Accessible Mobile App Library for React Native",
   "react-native": "src/index",
   "types": "dist/src/index.d.ts",
@@ -15,8 +15,8 @@
     ],
     "./src/*": [
       {
-      "import": "./dist/src/*.js",
-      "types": "./dist/src/*.d.ts"
+        "import": "./dist/src/*.js",
+        "types": "./dist/src/*.d.ts"
       },
       "./dist/src/*.js"
     ]
@@ -33,7 +33,7 @@
     "postinstall": "node ./src/postinstall.js"
   },
   "dependencies": {
-    "@react-native-ama/internal": "~1.2.1"
+    "@react-native-ama/internal": "~1.2.2"
   },
   "peerDependencies": {
     "react": "*",

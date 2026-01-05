@@ -1,5 +1,14 @@
 # @react-native-ama/forms
 
+## 1.2.2
+
+### Patch Changes
+
+- Updated dependencies [[`4f544c1aab79c0ecdb93c5b744fdf99834ca0503`](https://github.com/FormidableLabs/react-native-ama/commit/4f544c1aab79c0ecdb93c5b744fdf99834ca0503)]:
+  - @react-native-ama/core@1.2.2
+  - @react-native-ama/internal@1.2.2
+  - @react-native-ama/react-native@1.2.2
+
 ## 1.2.1
 
 ### Patch Changes
