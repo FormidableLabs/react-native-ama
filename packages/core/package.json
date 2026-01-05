@@ -12,6 +12,13 @@
         "types": "./dist/src/index.d.ts"
       },
       "./dist/src/index.js"
+    ],
+    "./src/*": [
+      {
+      "import": "./dist/src/*.js",
+      "types": "./dist/src/*.d.ts"
+      },
+      "./dist/src/*.js"
     ]
   },
   "files": [
