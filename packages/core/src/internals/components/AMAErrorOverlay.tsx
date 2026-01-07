@@ -107,7 +107,12 @@ const AMAErrorComponent = ({ issues }: { issues?: AmaError[] }) => {
           issueIndex={activeIssueIndex.id}
         />
       ) : null}
-      <View style={styles!.failedBar}>
+      <View
+        style={styles!.failedBar}
+        accessible={false}
+        accessibilityElementsHidden
+        importantForAccessibility="no-hide-descendants"
+      >
         <AMAButton onPress={showFirstError} bg="transparent" color="#fff">
           <Text style={styles!.buttonText}>
             <Text style={{ color: "yellow" }}>

@@ -90,192 +90,219 @@ export const RULES_HELP: RuleHelp | null = __DEV__
   ? {
       CONTRAST_FAILED: {
         url: "/guidelines/contrast",
-        issue: "Contrast ratio failed",
+        issue: "Insufficient color contrast",
         severity: "Serious",
         message:
-          "Clear contrast between text and its background is essential for readability, especially for people with low vision. When the contrast is too low, the text becomes illegible, leading to eye strain and preventing users from accessing information effectively.",
+          "Text does not have enough contrast against its background. Low contrast makes content hard or impossible to read for users with low vision or when viewing the screen in poor lighting.",
         howToFix:
-          "Ensure text has sufficient contrast against its background for AA compliance.",
+          "Increase the contrast between text and background to meet WCAG AA requirements.",
       },
+
       CONTRAST_FAILED_AAA: {
         url: "/guidelines/contrast",
-        issue: "Contrast ratio failed AAA",
+        issue: "Insufficient color contrast (AAA)",
         severity: "Serious",
         message:
-          "Clear contrast between text and its background is essential for readability, especially for people with low vision. When the contrast is too low, the text becomes illegible, leading to eye strain and preventing users from accessing information effectively.",
+          "Text does not meet enhanced contrast requirements. This affects users with more severe visual impairments and reduces overall readability.",
         howToFix:
-          "Ensure text has sufficient contrast against its background for AAA compliance.",
+          "Increase the contrast between text and background to meet WCAG AAA requirements.",
       },
+
       MINIMUM_SIZE: {
         url: "/guidelines/minimum-size",
-        issue: "Element too small",
+        issue: "Touch target too small",
         severity: "Serious",
         message:
-          "Adequately sized touch targets are essential for all users to interact with an interface accurately, especially those with motor disabilities. If an element is too small, it becomes difficult to tap without error, preventing users from completing their task.",
-        howToFix: `Define a minimum size of at least ${Platform.select({
+          "The element is too small to be tapped reliably. Small touch targets increase error rates, especially for users with motor impairments or larger fingers.",
+        howToFix: `Ensure the element is at least ${Platform.select({
           ios: "44x44",
           default: "48x48",
-        })} points. Or increase the tappable area using the hitSlop property`,
+        })} points, or increase the tappable area using hitSlop.`,
       },
+
       UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL: {
         url: "/guidelines/text",
         issue: "Uppercase text without accessibility label",
         severity: "Serious",
         message:
-          "Screen readers use capitalization as a cue to pronounce text correctly, distinguishing between words and acronyms. Using all-caps can cause words to be spelled out individually, making the information difficult for users to understand and follow.",
-        howToFix: "Provide an accessibility label with proper capitalization.",
+          "All caps text can be read letter by letter by screen readers, making it hard to understand. It can also make voice commands less predictable.",
+        howToFix: "Provide an accessibility label with normal capitalization.",
       },
+
       NO_UPPERCASE_TEXT: {
         url: "/guidelines/text",
         issue: "Avoid uppercase text",
         severity: "Serious",
         message:
-          "Screen readers use capitalization as a cue to pronounce text correctly, distinguishing between words and acronyms. Using all-caps can cause words to be spelled out individually, making the information difficult for users to understand and follow.",
-        howToFix: "Provide an accessibility label with normal capitalization.",
+          "Uppercase text can reduce readability for both screen reader users and sighted users.",
+        howToFix:
+          "Use normal capitalization or provide a properly capitalized accessibility label.",
       },
+
       NO_UPPERCASE_ACCESSIBILITY_LABEL: {
         url: "/guidelines/accessibility-label#avoid-all-caps-accessibility-label",
-        issue: "Avoid ALL CAPS Accessibility Label",
+        issue: "Uppercase accessibility label",
         severity: "Warning",
         message:
-          "Screen readers use capitalization as a cue to pronounce text correctly, distinguishing between words and acronyms. Using all-caps can cause words to be spelled out individually, making the information difficult for users to understand and follow.",
-        howToFix: "Provide an accessibility label with normal capitalization.",
+          "Accessibility labels in all caps may be read incorrectly by screen readers.",
+        howToFix: "Use normal capitalization in accessibility labels.",
       },
+
       NO_ACCESSIBILITY_LABEL: {
         url: "/guidelines/accessibility-label",
         issue: "Missing accessibility label",
         severity: "Critical",
         message:
-          "Screen readers rely on accessibility labels to announce the purpose of elements. Without labels, visually impaired users can't understand the functionality.",
+          "This element has no accessible name. Screen reader users will not know what this control does, and Voice Control users will not be able to target it with voice commands.",
         howToFix: [
-          "Add a descriptive `aria-label` prop clearly explaining the element's action, i.e:",
-          ' • `aria-role="Add to the cart"',
-          ' • `aria-role="Go back"',
+          "Add a descriptive accessibility label that explains the action or purpose, for example:",
+          ' • `aria-label="Add to cart"`',
+          ' • `aria-label="Go back"`',
         ],
       },
+
       NO_ACCESSIBILITY_ROLE: {
         url: "/guidelines/accessibility-role",
-        severity: "Critical",
         issue: "Missing accessibility role",
+        severity: "Critical",
         message:
-          "Accessibility roles help users understand how to interact with an element, indicating what action can be performed and what outcome to expect.",
+          "Without a role, assistive technologies cannot determine how this element should be used. Voice Control may also misinterpret how to interact with it.",
         howToFix: [
-          "Specify an appropriate aria-role prop, i.e:",
+          "Assign the correct accessibility role, for example:",
           ' • Button: `aria-role="button"`',
           ' • Switch: `aria-role="switch"`',
         ],
       },
+
       NO_KEYBOARD_TRAP: {
         url: "/guidelines/forms",
         issue: "Keyboard trap detected",
         severity: "Critical",
         message:
-          "A user must always be able to navigate away from an input field, even when validation fails. Trapping focus on an invalid field creates a frustrating loop, leaving the user stuck without a clear way to understand or resolve the error.",
+          "Focus cannot escape this input. Users navigating with a keyboard or assistive technology may get stuck.",
         howToFix:
-          "Ensure keyboard navigation allows users to exit form fields.",
+          "Ensure users can move focus away from the field even when validation fails.",
       },
+
       INPUT_HAS_NO_VISIBLE_LABEL: {
         url: "/guidelines/forms#labels",
         issue: "Missing form label",
         severity: "Critical",
         message:
-          "Screen reader users navigate forms by listening for the labels associated with each input field. If a label is missing, the input's purpose is unknown, making it impossible for the user to proceed correctly.",
-        howToFix: "Add a label element or aria-label to form inputs.",
+          "This input has no label. Screen reader users rely on labels to understand what information is required, and Voice Control users rely on them to focus fields by name.",
+        howToFix: "Add a visible label or an accessibility label to the input.",
       },
+
       NO_FORM_ERROR: {
         url: "/guidelines/forms",
         issue: "Missing form error handling",
         severity: "Serious",
         message:
-          "After a failed form submission, focus should be programmatically moved to the first error to alert users of assistive technologies. Otherwise, the user receives no feedback and is left confused, unable to find and fix the validation errors.",
-        howToFix: "Provide clear error messages for form validation failures.",
+          "After submission fails, users are not informed where the error occurred. Screen reader users receive no feedback.",
+        howToFix:
+          "Provide clear error messages and move focus to the first invalid field.",
       },
 
       NO_FORM_LABEL_ENDING_WITH_ASTERISK: {
         url: "/guidelines/forms#labels",
-        issue: "Form label ends with asterisk",
+        issue: "Asterisk used to indicate required field",
         severity: "Serious",
         message:
-          "Required fields should be marked programmatically so that screen readers can clearly announce their state to the user. Relying on a visual asterisk for this purpose creates auditory noise and fails to explicitly convey that the field is mandatory.",
+          "Asterisks are visual only. Screen readers do not reliably convey that the field is required.",
         howToFix:
-          "Use proper required field indicators instead of asterisks in labels.",
+          "Mark required fields programmatically instead of relying on an asterisk.",
       },
+
       FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE: {
         url: "/guidelines/lists-grids#number-of-results",
-        issue: "Missing count in singular message",
+        issue: "Missing item count in list announcement",
         severity: "Serious",
         message:
-          "List announcements should include item counts for better context.",
-        howToFix: "Include the number of items in singular list announcements.",
+          "List announcements without item counts provide poor context for screen reader users.",
+        howToFix:
+          "Include the number of items in the announcement, even for a single result.",
       },
+
       FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE: {
         url: "/guidelines/lists-grids#number-of-results",
-        issue: "Missing count in plural message",
+        issue: "Missing item count in list announcement",
         severity: "Serious",
         message:
-          "List announcements should include item counts for better context.",
-        howToFix: "Include the number of items in plural list announcements.",
+          "List announcements without item counts provide poor context for screen reader users.",
+        howToFix: "Include the total number of items in the announcement.",
       },
+
       BOTTOM_SHEET_CLOSE_ACTION: {
         url: "/guidelines/bottomsheet",
-        issue: "Missing bottom sheet close action",
+        issue: "No accessible close action",
         severity: "Critical",
-        message: "Bottom sheets must provide an accessible way to close them.",
+        message:
+          "Users must have a clear and accessible way to dismiss a bottom sheet. Without it, Voice Control users may be unable to close the view.",
         howToFix:
-          "Add a close button or gesture that is accessible to screen readers.",
+          "Provide a close button or gesture that is accessible to screen readers.",
       },
+
       INCOMPATIBLE_ACCESSIBILITY_STATE: {
         url: "/guidelines/accessibility-role",
         issue: "Incompatible accessibility state",
         severity: "Serious",
         message:
-          "The accessibility state is not compatible with the element type.",
+          "The accessibility state does not match the element’s behavior.",
         howToFix:
-          "Use accessibility states that are appropriate for the element type.",
+          "Use accessibility states that are valid for the given element type.",
       },
+
       INCOMPATIBLE_ACCESSIBILITY_ROLE: {
         url: "/guidelines/accessibility-role",
         issue: "Incompatible accessibility role",
         severity: "Serious",
-        message:
-          "The accessibility role is not compatible with the element type.",
+        message: "The assigned role does not match how this element behaves.",
         howToFix:
-          "Use accessibility roles that are appropriate for the element type.",
+          "Update the role to reflect the element’s actual interaction pattern.",
       },
+
       NO_HEADER_FOUND: {
         url: "/guidelines/headers",
-        issue: "No header found",
+        issue: "Missing header semantics",
         severity: "Serious",
         message:
-          "Screen readers rely on accessibility headers to navigate the content efficiently",
-        howToFix:
-          'Ensure that texts fields that are visually headers have the attribute aria-role="header"',
+          "Screen reader users rely on headers to navigate content efficiently. Headers also help Voice Control users jump to sections by name.",
+        howToFix: 'Mark visual headers with `aria-role="header"`.',
       },
+
       NO_ACCESSIBILITY_STATE_SET: {
         url: "/guidelines/accessibility-states",
-        issue: "No accessibility state handled",
+        issue: "Accessibility state not updated",
         severity: "Critical",
         message:
-          "The UI changed, but its accessibility state wasn’t updated. Screen reader users won’t know what changed after interacting with this component.",
-        howToFix:
-          "Update the element’s accessibilityState to reflect the new state, for example: aria-selected, aria-expanded, aria-checked",
+          "The UI state changed, but assistive technologies were not informed.",
+        howToFix: [
+          "Update accessibilityState to reflect the new state, for example:",
+          " • `aria-expanded={expanded}`",
+          " • `aria-checked={checked}`",
+          " • `aria-selected={selected}`",
+          " • `aria-busy={busy}`",
+        ],
       },
+
       INPUT_INVALID_RETURN_KEY: {
         url: "/guidelines/forms#focus-on-the-next-field",
-        issue: "Invalid return type",
+        issue: "Invalid return key behavior",
         severity: "Serious",
         message:
-          "When on TextInput, the user should be able to access the next field using the specific keyboard button",
+          "The keyboard action does not move focus as expected when navigating forms.",
         howToFix:
-          "Handle the returnType attribute so that the user can focus the next form's field",
+          "Handle the returnType and onSubmitEditing so focus moves to the next field.",
       },
+
       INPUT_HAS_FOCUSABLE_LABEL: {
         url: "/guidelines/forms#grouping",
-        issue: "Duplicate label",
+        issue: "Label is focusable",
         severity: "Serious",
         message:
-          "The label should not be focusable individually, as it would provide redundant information, but the Text field must provide an accessibilityLabel instead.",
-        howToFix: "TBD",
+          "The label receives focus separately, resulting in duplicate announcements.",
+        howToFix:
+          "Make the label non-focusable and provide the label via accessibilityLabel on the input.",
       },
     }
   : null;
