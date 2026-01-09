@@ -5,8 +5,10 @@
   "uppercaseMinLength": 4,
   "checks": {
     "ui": true,
+    "forms": true,
     "delay": "1000",
     "gap": 4,
     "borderWidth": 3
   }
 }
+

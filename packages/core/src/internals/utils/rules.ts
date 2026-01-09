@@ -189,8 +189,9 @@ export const RULES_HELP: RuleHelp | null = __DEV__
         issue: "Missing form label",
         severity: "Critical",
         message:
-          "This input has no label. Screen reader users rely on labels to understand what information is required, and Voice Control users rely on them to focus fields by name.",
-        howToFix: "Add a visible label or an accessibility label to the input.",
+          "This input has no visible label. Without a persistent label, users can forget what the field is for once they start typing, increasing errors and frustration. Placeholders are not a replacement for labels, as they disappear once text is entered.",
+        howToFix:
+          "Add a visible, persistent label that clearly explains the field's purpose.",
       },
 
       NO_FORM_ERROR: {
@@ -290,9 +291,9 @@ export const RULES_HELP: RuleHelp | null = __DEV__
         issue: "Invalid return key behavior",
         severity: "Serious",
         message:
-          "The keyboard action does not move focus as expected when navigating forms.",
+          "By default, React Native shows the `Return` keyboard action that dismisses the keyboard.  This interrupts form completion and forces users to manually navigate to the next field.",
         howToFix:
-          "Handle the returnType and onSubmitEditing so focus moves to the next field.",
+          "Explicitly set the appropriate `returnType` (for example `next`) and handle `onSubmitEditing` to move focus to the next input instead of dismissing the keyboard.",
       },
 
       INPUT_HAS_FOCUSABLE_LABEL: {
@@ -302,7 +303,7 @@ export const RULES_HELP: RuleHelp | null = __DEV__
         message:
           "The label receives focus separately, resulting in duplicate announcements.",
         howToFix:
-          "Make the label non-focusable and provide the label via accessibilityLabel on the input.",
+          "Make the label non-focusable and provide the label via `aria-label` on the input.",
       },
     }
   : null;

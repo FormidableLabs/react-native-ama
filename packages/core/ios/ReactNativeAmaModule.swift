@@ -155,6 +155,10 @@ public class ReactNativeAmaModule: Module {
             }
 
             self.displayLink?.isPaused = true
+            
+            // Clean up any orphaned highlights (for unmounted views)
+            self.highlighter?.cleanupOrphanedHighlights()
+            
             self.getNodesToCheck()
 
             DispatchQueue.main.async {

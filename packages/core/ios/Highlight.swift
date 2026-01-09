@@ -1,10 +1,40 @@
 import UIKit
 
+/// Helper class to observe when a view is deallocated and trigger cleanup
+private class ViewLifecycleObserver {
+    weak var view: UIView?
+    let viewTag: Int
+    weak var highlight: Highlight?
+    
+    init(view: UIView, highlight: Highlight) {
+        self.view = view
+        self.viewTag = view.tag
+        self.highlight = highlight
+    }
+    
+    deinit {
+        // View is being deallocated, clean up the highlight
+        highlight?.clearHighlight(viewId: viewTag)
+    }
+}
+
+/// Simple wrapper that holds a weak reference to a view
+private class WeakViewBox {
+    weak var view: UIView?
+    
+    init(_ view: UIView) {
+        self.view = view
+    }
+}
+
 public class Highlight {
     private let stripeOverlayTag = 0xA11
     private let borderLayerName = "ama_border"
     private var stripeOverlays = [Int: UIView]()
     private var borderLayers = [Int: CAShapeLayer]()
+    
+    /// Maps view tag to a weak reference of the actual view for orphan detection
+    private var trackedViews = [Int: WeakViewBox]()
 
     public init() {}
 
@@ -12,6 +42,12 @@ public class Highlight {
         let color = UIColor(hex: hexColor) ?? .red
 
         DispatchQueue.main.async {
+            // Clean up any orphaned highlights before adding new ones
+            self.cleanupOrphanedHighlights()
+            
+            // Track this view
+            self.trackedViews[view.tag] = WeakViewBox(view)
+            
             switch mode {
             case "background":
                 self.applyStripyBackground(to: view, color: color)
@@ -25,8 +61,32 @@ public class Highlight {
     }
 
     public func clearHighlight(viewId: Int) {
-        clearStripeOverlay(viewId: viewId)
-        clearBorderOverlay(viewId: viewId)
+        DispatchQueue.main.async {
+            self.trackedViews.removeValue(forKey: viewId)
+            self.clearStripeOverlay(viewId: viewId)
+            self.clearBorderOverlay(viewId: viewId)
+            self.cleanupOrphanedHighlights()
+        }
+    }
+    
+    /// Cleans up highlights for views that are no longer in the view hierarchy
+    /// This handles the case where a component/screen is unmounted
+    public func cleanupOrphanedHighlights() {
+        // Find all viewIds where the tracked view is nil (deallocated) or has no window (removed from hierarchy)
+        let orphanedViewIds = trackedViews.compactMap { (viewId, box) -> Int? in
+            // View is nil (deallocated) or not in any window (removed from hierarchy)
+            if box.view == nil || box.view?.window == nil {
+                return viewId
+            }
+            return nil
+        }
+        
+        // Clear highlights for orphaned views
+        for viewId in orphanedViewIds {
+            trackedViews.removeValue(forKey: viewId)
+            clearStripeOverlay(viewId: viewId)
+            clearBorderOverlay(viewId: viewId)
+        }
     }
 
     private func clearStripeOverlay(viewId: Int) {
@@ -47,6 +107,7 @@ public class Highlight {
         borderLayers.values.forEach { $0.removeFromSuperlayer() }
         stripeOverlays.removeAll()
         borderLayers.removeAll()
+        trackedViews.removeAll()
     }
 
     public func clearHighlight2(viewId: Int) {
