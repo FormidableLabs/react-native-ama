@@ -19,7 +19,8 @@
     "pods": "cd examples/bare && pod-install --quiet",
     "doc": "cd website && yarn start",
     "ts:check": "tsc --noEmit",
-    "lint": "eslint --ext .js,.ts,.tsx ./packages",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./packages",
+    "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx ./packages --fix",
     "version": "yarn changeset version && yarn install --no-frozen-lockfile",
     "build": "yarn build:internal && yarn build:core && yarn build:animations && yarn build:react-native && yarn build:extras && yarn build:forms && yarn build:lists",
     "prettier": "yarn prettier --write 'packages/**/*.{js,jsx,ts,tsx}'"

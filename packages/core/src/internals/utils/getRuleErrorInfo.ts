@@ -1,7 +1,7 @@
-import { AmaError } from "../types";
-import { RULES_HELP } from "./rules";
+import { AmaError } from '../types';
+import { RULES_HELP } from './rules';
 
-export type A11ySeverity = "Serious" | "Critical" | "Warning";
+export type A11ySeverity = 'Serious' | 'Critical' | 'Warning';
 
 export const getAMARuleErrorInfo = __DEV__
   ? (issue: AmaError) => {
@@ -16,7 +16,7 @@ export const getAMARuleErrorInfo = __DEV__
       let message = ruleHelp.message;
 
       if (issue.extra) {
-        message += ": " + issue.extra;
+        message += ': ' + issue.extra;
       }
 
       const url = `https://nearform.com/open-source/react-native-ama/${ruleHelp.url}`;

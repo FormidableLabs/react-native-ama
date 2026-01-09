@@ -1,6 +1,6 @@
 {
-  "name": "@react-native-ama/extras",
-  "version": "1.2.0",
+  "name": "@react-native-ama/bottom-sheet",
+  "version": "2.0.0",
   "react-native": "src/index",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
@@ -21,16 +21,12 @@
     "build": "rm -rf dist && tsc -p ./tsconfig.build.json",
     "typecheck": "tsc --noEmit"
   },
-  "dependencies": {
-    "@react-native-ama/animations": "~1.2.0",
-    "@react-native-ama/core": "~1.2.0",
-    "@react-native-ama/internal": "~1.2.0"
-  },
   "peerDependencies": {
     "react": "*",
     "react-native": ">=0.62.0",
     "react-native-gesture-handler": ">=2.0.0",
-    "react-native-reanimated": ">=2.0.0"
+    "react-native-reanimated": ">=2.0.0",
+    "@react-native-ama/core": "~2.0.0"
   },
   "keywords": [
     "react-native",
@@ -39,7 +35,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/FormidableLabs/react-native-ama",
-    "directory": "packages/extra"
+    "directory": "packages/bottom-sheet"
   },
   "bugs": {
     "url": "https://github.com/FormidableLabs/react-native-ama/issues"

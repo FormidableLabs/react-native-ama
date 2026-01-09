@@ -1,7 +1,4 @@
 /* eslint-disable react-native/no-inline-styles */
-
-import { AnimatedContainer } from '@react-native-ama/animations';
-import { useChecks, useTimedAction } from '@react-native-ama/core';
 import * as React from 'react';
 import type { PropsWithChildren } from 'react';
 import {
@@ -19,8 +16,8 @@ import {
 } from 'react-native';
 import {
   GestureHandlerRootView,
-  PanGestureHandler,
   ScrollView,
+  GestureDetector,
 } from 'react-native-gesture-handler';
 import Animated, {
   runOnJS,
@@ -31,6 +28,8 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useBottomSheetGestureHandler } from '../hooks/useBottomSheetGestureHandler';
 import { useKeyboard } from '../hooks/useKeyboard';
+
+const AnimaCore = require('@react-native-ama/core');
 
 export type BottomSheetProps = {
   animationDuration?: number;
@@ -62,6 +61,7 @@ export type BottomSheetProps = {
   ref?: React.RefObject<BottomSheetActions>;
   shouldHandleKeyboardEvents?: boolean;
   supportedOrientations?: ModalProps['supportedOrientations'];
+  isOverlayAccessible?: boolean;
 };
 
 export type BottomSheetActions = {
@@ -104,16 +104,17 @@ export const BottomSheet = React.forwardRef<
       onBottomSheetHidden,
       shouldHandleKeyboardEvents = true,
       supportedOrientations,
+      isOverlayAccessible = true,
     },
     ref,
   ) => {
     // This is used to let Reanimated animate the view out, before removing it from the tree.
-    const [renderContent, setRenderContent] = React.useState(visible);
+    const [shouldRenderContent, setShouldRenderContent] = React.useState(visible);
     const [isModalVisible, setIsModalVisible] = React.useState(false);
     const translateY = useSharedValue(0);
     const contentHeight = useSharedValue(0);
     const dragOpacity = useSharedValue(0);
-    const { onTimeout } = useTimedAction();
+    const onTimeout = AnimaCore?.useTimedAction()?.onTimeout || setTimeout;
     const isMounted = React.useRef(false);
     const [headerHeight, setHeaderHeight] = React.useState(-1);
     const [footerHeight, setFooterHeight] = React.useState(-1);
@@ -124,23 +125,9 @@ export const BottomSheet = React.forwardRef<
       shouldHandleKeyboardEvents,
     );
 
-    const checks = __DEV__ ? useChecks?.() : null;
-    const debugStyle = __DEV__ ? checks?.debugStyle : {};
-
-    __DEV__ &&
-      checks?.noUndefinedProperty({
-        properties: { closeActionAccessibilityLabel, children },
-        property: 'closeActionAccessibilityLabel',
-        rule: 'BOTTOM_SHEET_CLOSE_ACTION',
-      });
-    __DEV__ &&
-      checks?.noUppercaseStringChecker({
-        text: closeActionAccessibilityLabel,
-      });
-
     React.useImperativeHandle(ref, () => ({
       close: async () => {
-        if (!renderContent) {
+        if (!shouldRenderContent) {
           return Promise.resolve();
         }
 
@@ -151,7 +138,7 @@ export const BottomSheet = React.forwardRef<
         });
       },
       isVisible: () => {
-        return renderContent;
+        return shouldRenderContent;
       },
     }));
 
@@ -160,7 +147,7 @@ export const BottomSheet = React.forwardRef<
         translateY.value = 0;
 
         setIsModalVisible(true);
-        setRenderContent(true);
+        setShouldRenderContent(true);
 
         if (autoCloseDelay) {
           onTimeout(() => {
@@ -170,7 +157,7 @@ export const BottomSheet = React.forwardRef<
           }, autoCloseDelay);
         }
       } else if (isModalVisible) {
-        setRenderContent(false);
+        setShouldRenderContent(false);
 
         /**
          * We need to give Reanimated the time to finish animating the view out.
@@ -224,11 +211,11 @@ export const BottomSheet = React.forwardRef<
     useDerivedValue(() => {
       const maxScrollHeight = Math.ceil(
         maxHeight -
-          keyboardFinalHeight.value -
-          footerHeight -
-          headerHeight -
-          handleHeight -
-          topInset,
+        keyboardFinalHeight.value -
+        footerHeight -
+        headerHeight -
+        handleHeight -
+        topInset,
       );
 
       if (
@@ -274,18 +261,15 @@ export const BottomSheet = React.forwardRef<
         visible={isModalVisible}
         onRequestClose={() => onClose()}
         ref={ref as any}
-        supportedOrientations={supportedOrientations}
         testID={testID}
+        supportedOrientations={supportedOrientations}
       >
         <Wrapper>
-          {renderContent ? (
+          {shouldRenderContent ? (
             <GestureHandlerRootView style={{ flex: 1, opacity }}>
-              <AnimatedContainer
-                style={[styles.overlay, overlayStyle, debugStyle, dragStyle]}
-                from={{ opacity: 0 }}
-                to={{ opacity: overlayOpacity }}
+              <Animated.View
+                style={[styles.overlay, overlayStyle, dragStyle]}
                 testID={`${testID}-overlay-wrapper`}
-                duration={animationDuration}
               >
                 <Pressable
                   style={styles.closeButton}
@@ -293,83 +277,77 @@ export const BottomSheet = React.forwardRef<
                   accessibilityLabel={closeActionAccessibilityLabel}
                   onPress={maybeCloseBottomSheet}
                   testID={`${testID}-overlay-button`}
-                  accessible={!persistent}
+                  accessible={isOverlayAccessible && !persistent}
                   importantForAccessibility={
                     persistent ? 'no-hide-descendants' : 'yes'
                   }
                   accessibilityElementsHidden={persistent}
                   onAccessibilityTap={maybeCloseBottomSheet}
                 />
-              </AnimatedContainer>
+              </Animated.View>
               <Animated.View
-                style={[styles.contentWrapper, animatedStyle]}
+                style={[
+                  styles.contentWrapper,
+                  styles.content,
+                  bottomSheetStyle,
+                  animatedStyle,
+                ]}
                 testID={`${testID}-wrapper`}
+                onLayout={handleOnLayout}
               >
-                <AnimatedContainer
-                  from={{ transform: [{ translateY: 'targetHeight' }] }}
-                  to={{ transform: [{ translateY: 0 }] }}
-                  exitFrom={{
-                    transform: [{ translateY: 'currentHeight' }],
-                  }}
-                  duration={animationDuration}
-                  style={[styles.content, bottomSheetStyle, debugStyle]}
-                  onLayout={handleOnLayout}
-                  testID={`${testID}-panel`}
+                <GestureHandler
+                  translateY={translateY}
+                  closeDistance={closeDistance}
+                  contentHeight={contentHeight}
+                  onClose={onClose}
+                  testID={`${testID}-gesture-handler`}
+                  overlayOpacity={overlayOpacity}
+                  dragOpacity={dragOpacity}
+                  minVelocityToClose={minVelocityToClose}
+                  panGestureEnabled={panGestureEnabled}
                 >
-                  <GestureHandler
-                    translateY={translateY}
-                    closeDistance={closeDistance}
-                    contentHeight={contentHeight}
-                    onClose={onClose}
-                    testID={`${testID}-gesture-handler`}
-                    overlayOpacity={overlayOpacity}
-                    dragOpacity={dragOpacity}
-                    minVelocityToClose={minVelocityToClose}
-                    panGestureEnabled={panGestureEnabled}
+                  <View
+                    onLayout={event => {
+                      setHandleHeight(event.nativeEvent.layout.height);
+                    }}
                   >
-                    <View
-                      onLayout={event => {
-                        setHandleHeight(event.nativeEvent.layout.height);
-                      }}
-                    >
-                      {handleComponent === 'none'
-                        ? null
-                        : handleComponent || (
-                            <View
-                              style={[styles.line, handleStyle]}
-                              testID={`${testID}-line`}
-                            />
-                          )}
-                    </View>
-                    <View
-                      onLayout={event => {
-                        setHeaderHeight(event.nativeEvent.layout.height);
-                      }}
-                    >
-                      {headerComponent}
-                    </View>
-                    <ContentWrapper
-                      {...scrollViewProps}
-                      testID={`${testID}-scrollview`}
-                      maxScrollViewHeight={maxScrollViewHeight}
-                    >
-                      {children}
-                    </ContentWrapper>
-                    <View
-                      onLayout={event => {
-                        setFooterHeight(event.nativeEvent.layout.height);
-                      }}
-                    >
-                      {footerComponent}
-                    </View>
-                  </GestureHandler>
-                </AnimatedContainer>
+                    {handleComponent === 'none'
+                      ? null
+                      : handleComponent ?? (
+                        <View
+                          style={[styles.line, handleStyle]}
+                          testID={`${testID}-line`}
+                        />
+                      )}
+                  </View>
+                  <View
+                    onLayout={event => {
+                      setHeaderHeight(event.nativeEvent.layout.height);
+                    }}
+                  >
+                    {headerComponent}
+                  </View>
+                  <ContentWrapper
+                    {...scrollViewProps}
+                    testID={`${testID}-scrollview`}
+                    maxScrollViewHeight={maxScrollViewHeight}>
+                    {children}
+                  </ContentWrapper>
+                  <View
+                    onLayout={event => {
+                      setFooterHeight(event.nativeEvent.layout.height);
+                    }}
+                  >
+                    {footerComponent}
+                  </View>
+                </GestureHandler>
               </Animated.View>
             </GestureHandlerRootView>
           ) : null}
         </Wrapper>
       </Modal>
     );
+
   },
 );
 
@@ -421,13 +399,18 @@ const GestureHandler = ({
     minVelocityToClose,
   });
 
-  return (
-    <PanGestureHandler
-      onGestureEvent={panGestureEnabled ? gestureHandler : undefined}
-      testID={testID}
+  return panGestureEnabled ? (
+    <GestureDetector
+      gesture={gestureHandler}
     >
-      <Animated.View>{children}</Animated.View>
-    </PanGestureHandler>
+      <Animated.View
+        testID={testID}
+      >{children}</Animated.View>
+    </GestureDetector>
+  ) : (
+    <Animated.View
+      testID={testID}
+    >{children}</Animated.View>
   );
 };
 

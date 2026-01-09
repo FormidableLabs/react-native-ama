@@ -1,9 +1,9 @@
 import { useAMAContext } from '@react-native-ama/core';
-import type { PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
+import { Gesture } from 'react-native-gesture-handler';
 import {
   runOnJS,
   SharedValue,
-  useAnimatedGestureHandler,
+  useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
 
@@ -27,23 +27,21 @@ export const useBottomSheetGestureHandler = ({
   minVelocityToClose,
 }: UseBottomSheetGestureHandler) => {
   const { isReduceMotionEnabled } = useAMAContext();
+  const startY = useSharedValue(0);
 
-  const gestureHandler = useAnimatedGestureHandler<
-    PanGestureHandlerGestureEvent,
-    { y: number }
-  >({
-    onStart: (_, context) => {
-      context.y = translateY.value;
-    },
-    onActive: (event, context) => {
-      translateY.value = Math.max(0, context.y + event.translationY);
+  const gestureHandler = Gesture.Pan()
+    .onStart(() => {
+      startY.value = translateY.value;
+    })
+    .onUpdate(event => {
+      translateY.value = Math.max(0, startY.value + event.translationY);
 
       const distance = contentHeight.value - translateY.value;
       const opacity = Math.min(distance / contentHeight.value, overlayOpacity);
 
       dragOpacity.value = opacity;
-    },
-    onEnd: event => {
+    })
+    .onEnd(event => {
       const minimumDistanceToClose = contentHeight.value * closeDistance;
       const shouldCloseBottomSheet =
         translateY.value >= minimumDistanceToClose ||
@@ -56,8 +54,7 @@ export const useBottomSheetGestureHandler = ({
           duration: isReduceMotionEnabled ? 0 : 300,
         });
       }
-    },
-  });
+    });
 
   return {
     gestureHandler,

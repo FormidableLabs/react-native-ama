@@ -1,4 +1,4 @@
-import * as UseChecks from '@react-native-ama/core/src/hooks/useChecks';
+
 import * as UseTimedAction from '@react-native-ama/core/src/hooks/useTimedAction';
 import { act, render } from '@testing-library/react-native';
 import * as React from 'react';
@@ -17,136 +17,13 @@ beforeEach(() => {
 jest.useFakeTimers();
 
 describe('BottomSheet', () => {
-  describe('When __DEV__ is true', () => {
-    it('perform a checks on closeActionAccessibilityLabel', () => {
-      const noUndefinedProperty = jest.fn();
-      const accessibilityLabelChecker = jest.fn();
-
-      // @ts-ignore
-      jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
-        noUndefinedProperty,
-        noUppercaseStringChecker: accessibilityLabelChecker,
-      } as any);
-
-      render(
-        <BottomSheet
-          topInset={0}
-          visible={true}
-          onClose={() => {}}
-          closeActionAccessibilityLabel={'close me'}
-          headerComponent={<Text>Header</Text>}
-        />,
-      );
-
-      expect(noUndefinedProperty).toHaveBeenCalledWith({
-        properties: { closeActionAccessibilityLabel: 'close me' },
-        property: 'closeActionAccessibilityLabel',
-        rule: 'BOTTOM_SHEET_CLOSE_ACTION',
-      });
-      expect(accessibilityLabelChecker).toHaveBeenCalledWith({
-        text: 'close me',
-      });
-    });
-
-    it('applies the style from useChecks', () => {
-      const noUndefinedProperty = jest.fn();
-      const accessibilityLabelChecker = jest.fn();
-
-      // @ts-ignore
-      jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
-        debugStyle: { backgroundColor: 'cyan' },
-        noUndefinedProperty,
-        noUppercaseStringChecker: accessibilityLabelChecker,
-      } as any);
-
-      const { getByTestId } = render(
-        <BottomSheet
-          topInset={0}
-          visible={true}
-          onClose={() => {}}
-          closeActionAccessibilityLabel={'close me'}
-          headerComponent={<Text>Header</Text>}
-          testID="bottom-sheet"
-        />,
-      );
-
-      expect(getByTestId('bottom-sheet-overlay-wrapper').props.style).toEqual({
-        backgroundColor: 'cyan',
-        flex: 1,
-        opacity: 0,
-      });
-    });
-  });
-
-  describe('When __DEV__ is false', () => {
-    beforeEach(() => {
-      // @ts-ignore
-      global.__DEV__ = false;
-    });
-
-    it('perform a checks on closeActionAccessibilityLabel', () => {
-      const { BottomSheet: OriginalBottomSheet } = require('./BottomSheet');
-      const noUndefinedProperty = jest.fn();
-      const accessibilityLabelChecker = jest.fn();
-
-      // @ts-ignore
-      jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
-        noUndefinedProperty,
-        noUppercaseStringChecker: accessibilityLabelChecker,
-      } as any);
-
-      render(
-        <OriginalBottomSheet
-          topInset={0}
-          visible={true}
-          onClose={() => {}}
-          closeActionAccessibilityLabel={'close me'}
-          headerComponent={<Text>Header</Text>}
-        />,
-      );
-
-      expect(noUndefinedProperty).not.toHaveBeenCalledWith();
-      expect(accessibilityLabelChecker).not.toHaveBeenCalledWith();
-    });
-
-    it('does not apply the style from useChecks', () => {
-      const noUndefinedProperty = jest.fn();
-      const accessibilityLabelChecker = jest.fn();
-
-      // @ts-ignore
-      jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
-        debugStyle: { backgroundColor: 'cyan' },
-        noUndefinedProperty,
-        noUppercaseStringChecker: accessibilityLabelChecker,
-      } as any);
-
-      const { BottomSheet: OriginalBottomSheet } = require('./BottomSheet');
-
-      const { getByTestId } = render(
-        <OriginalBottomSheet
-          topInset={0}
-          visible={true}
-          onClose={() => {}}
-          closeActionAccessibilityLabel={'close me'}
-          headerComponent={<Text>Header</Text>}
-          testID="bottom-sheet"
-        />,
-      );
-
-      expect(getByTestId('bottom-sheet-overlay-wrapper').props.style).toEqual({
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        flex: 1,
-        opacity: 0,
-      });
-    });
-  });
 
   it('does not render the content when not visible', () => {
     const { toJSON } = render(
       <BottomSheet
         topInset={0}
         visible={false}
-        onClose={() => {}}
+        onClose={() => { }}
         closeActionAccessibilityLabel={'close me'}
         headerComponent={<Text>Header</Text>}
         testID="bottom-sheet"
@@ -171,7 +48,7 @@ describe('BottomSheet', () => {
         <BottomSheet
           topInset={0}
           visible={true}
-          onClose={() => {}}
+          onClose={() => { }}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text>Header</Text>}
           overlayStyle={{ backgroundColor: 'yellow', width: 42 }}
@@ -192,7 +69,7 @@ describe('BottomSheet', () => {
         <BottomSheet
           topInset={0}
           visible={true}
-          onClose={() => {}}
+          onClose={() => { }}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text>Header</Text>}
           bottomSheetStyle={{ borderRadius: 42 }}
@@ -213,7 +90,7 @@ describe('BottomSheet', () => {
         <BottomSheet
           topInset={0}
           visible={true}
-          onClose={() => {}}
+          onClose={() => { }}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text>Header</Text>}
           handleStyle={{ width: '100%' }}
@@ -240,7 +117,7 @@ describe('BottomSheet', () => {
         <BottomSheet
           topInset={0}
           visible={true}
-          onClose={() => {}}
+          onClose={() => { }}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text>Header</Text>}
           handleComponent="none"
@@ -255,7 +132,7 @@ describe('BottomSheet', () => {
       const { getByTestId } = render(
         <BottomSheet
           visible={true}
-          onClose={() => {}}
+          onClose={() => { }}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text>Header</Text>}
           scrollViewProps={{
@@ -279,7 +156,7 @@ describe('BottomSheet', () => {
         <BottomSheet
           topInset={0}
           visible={true}
-          onClose={() => {}}
+          onClose={() => { }}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text testID="Header">Header</Text>}
         />,
@@ -295,7 +172,7 @@ describe('BottomSheet', () => {
       <BottomSheet
         topInset={0}
         visible={true}
-        onClose={() => {}}
+        onClose={() => { }}
         closeActionAccessibilityLabel={'close me'}
         animationDuration={100}
         headerComponent={<Text testID="Header">Header</Text>}
@@ -307,7 +184,7 @@ describe('BottomSheet', () => {
         <BottomSheet
           topInset={0}
           visible={false}
-          onClose={() => {}}
+          onClose={() => { }}
           closeActionAccessibilityLabel={'close me'}
           headerComponent={<Text testID="Header">Header</Text>}
           animationDuration={100}
@@ -334,7 +211,7 @@ describe('BottomSheet', () => {
       <BottomSheet
         topInset={0}
         visible={true}
-        onClose={() => {}}
+        onClose={() => { }}
         closeActionAccessibilityLabel={'close me'}
         animationDuration={100}
         headerComponent={<Text testID="Header">Header</Text>}
@@ -406,7 +283,7 @@ describe('BottomSheet', () => {
         visible={true}
         autoCloseDelay={100}
         closeDistance={0.1}
-        onClose={() => {}}
+        onClose={() => { }}
         closeActionAccessibilityLabel={'close me'}
         animationDuration={100}
         headerComponent={<Text testID="Header">Header</Text>}
@@ -424,7 +301,7 @@ describe('BottomSheet', () => {
         visible={true}
         autoCloseDelay={100}
         closeDistance={0.1}
-        onClose={() => {}}
+        onClose={() => { }}
         closeActionAccessibilityLabel={'close me'}
         animationDuration={100}
         headerComponent={<Text testID="Header">Header</Text>}
@@ -444,7 +321,7 @@ describe('BottomSheet', () => {
         visible={true}
         autoCloseDelay={100}
         closeDistance={0.1}
-        onClose={() => {}}
+        onClose={() => { }}
         closeActionAccessibilityLabel={'close me'}
         animationDuration={100}
         headerComponent={<Text testID="Header">Header</Text>}
@@ -465,7 +342,7 @@ describe('BottomSheet', () => {
           visible={true}
           autoCloseDelay={100}
           closeDistance={0.1}
-          onClose={() => {}}
+          onClose={() => { }}
           closeActionAccessibilityLabel={'close me'}
           animationDuration={100}
           headerComponent={<Text testID="Header">Header</Text>}
@@ -508,4 +385,3 @@ describe('BottomSheet', () => {
 });
 
 jest.mock('../hooks/useBottomSheetGestureHandler');
-jest.mock('../internal/useChecks');
