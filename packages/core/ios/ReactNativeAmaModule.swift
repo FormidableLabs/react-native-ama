@@ -498,9 +498,10 @@ extension ReactNativeAmaModule {
 }
 #else
 import ExpoModulesCore
+
 public class ReactNativeAmaModule: Module {
   public func definition() -> ModuleDefinition {
-    Name("ReactNativeAmaModule")
+    Name("ReactNativeAma")
   }
 }
 #endif
