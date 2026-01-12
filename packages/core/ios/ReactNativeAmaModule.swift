@@ -1,3 +1,4 @@
+#if DEBUG
 import ExpoModulesCore
 import UIKit
 
@@ -495,3 +496,11 @@ extension ReactNativeAmaModule {
         return result
     }
 }
+#else
+import ExpoModulesCore
+public class ReactNativeAmaModule: Module {
+  public func definition() -> ModuleDefinition {
+    Name("ReactNativeAmaModule")
+  }
+}
+#endif
