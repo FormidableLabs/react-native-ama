@@ -2,13 +2,11 @@
 displayed_sidebar: checklist
 ---
 
-import Text from './text.gif';
-
 # Text
 
 **Guideline**: [Text](/guidelines/text)
 
-<img src={Text} className="zoom-me" />
+<img src={require('@site/static/gif/text.gif').default} width="300" />
 
 | Accessibility Setting | I see                                                              |
 | --------------------- | ------------------------------------------------------------------ |
