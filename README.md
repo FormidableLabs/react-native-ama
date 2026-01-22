@@ -49,7 +49,7 @@ AMA is made of the following packages:
 - `@react-native-ama/react-native`: for accessibility-first React Native replacement components
 - `@react-native-ama/forms`: to create accessible forms
 - `@react-native-ama/lists`: to create accessible lists
-- `@react-native-ama/extras`: extra compound components and hooks beyond the scope of the base React Native components for building accessible react native apps
+- `@react-native-ama/bottom-sheet`: to create accessible bottom sheets
 
 The `core` package, is the minimum installable setup for AMA to function. This package contains the AMA context provider and consumer as well various other hooks and utilities for focusing, WCAG checks, accessibility tree management, etc.
 

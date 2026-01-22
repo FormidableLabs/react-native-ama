@@ -1,8 +1,8 @@
-import { useAMAContext } from '@react-native-ama/core';
 import { Gesture } from 'react-native-gesture-handler';
 import {
   runOnJS,
   SharedValue,
+  useReducedMotion,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
@@ -26,7 +26,7 @@ export const useBottomSheetGestureHandler = ({
   overlayOpacity,
   minVelocityToClose,
 }: UseBottomSheetGestureHandler) => {
-  const { isReduceMotionEnabled } = useAMAContext();
+const shouldReduceMotion = useReducedMotion();
   const startY = useSharedValue(0);
 
   const gestureHandler = Gesture.Pan()
@@ -51,7 +51,7 @@ export const useBottomSheetGestureHandler = ({
         runOnJS(onClose)();
       } else {
         translateY.value = withTiming(0, {
-          duration: isReduceMotionEnabled ? 0 : 300,
+          duration: shouldReduceMotion ? 0 : 300,
         });
       }
     });

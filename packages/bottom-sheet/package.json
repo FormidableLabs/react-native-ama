@@ -22,11 +22,11 @@
     "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
+    "@react-native-ama/core": "~2.0.0",
     "react": "*",
     "react-native": ">=0.62.0",
     "react-native-gesture-handler": ">=2.0.0",
-    "react-native-reanimated": ">=2.0.0",
-    "@react-native-ama/core": "~2.0.0"
+    "react-native-reanimated": ">=2.0.0"
   },
   "keywords": [
     "react-native",

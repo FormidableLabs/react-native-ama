@@ -1,4 +1,4 @@
-import { BottomSheet } from '@react-native-ama/extras';
+import { BottomSheet } from '@react-native-ama/bottom-sheet';
 import React, { useState } from 'react';
 import { Platform, SafeAreaView, StyleSheet, View } from 'react-native';
 
@@ -21,7 +21,7 @@ export const BottomSheetScreen: React.FC<TimedActionProps> = () => {
           setModalVisible(!modalVisible);
         }}
         avoidKeyboard={Platform.OS === 'ios'}
-        closeActionAccessibilityLabel="close bottomsheet"
+        closeActionAccessibilityLabel=""
         bottomSheetStyle={styles.modalView}
         headerComponent={
           <View style={{ paddingHorizontal: theme.padding.big }}>

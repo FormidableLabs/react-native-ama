@@ -11,7 +11,7 @@
     "playground:android": "cd playground && yarn android",
     "build:animations": "yarn workspace @react-native-ama/animations build",
     "build:core": "yarn workspace @react-native-ama/core build",
-    "build:extras": "yarn workspace @react-native-ama/extras build",
+    "build:bottom-sheet": "yarn workspace @react-native-ama/bottom-sheet build",
     "build:forms": "yarn workspace @react-native-ama/forms build",
     "build:internal": "yarn workspace @react-native-ama/internal build",
     "build:lists": "yarn workspace @react-native-ama/lists build",
@@ -28,7 +28,7 @@
   "workspaces": [
     "packages/animations",
     "packages/core",
-    "packages/extras",
+    "packages/bottom-sheet",
     "packages/forms",
     "packages/lists",
     "packages/react-native",

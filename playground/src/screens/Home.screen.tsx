@@ -38,84 +38,13 @@ export const HomeScreen = () => {
             <ListItem title="Interactions" navigateTo="Interactions" />
             <ListItem title="Forms" border={false} navigateTo="Form" />
           </View>
-          {/*
-        <Spacer height={'normal'} />
-        <CTAPressable title="Pressable" onPress={() => navigate('Pressable')} />
-        <CTAPressable
-          title="TouchableOpacity"
-          onPress={() => navigate('TouchableOpacity')}
-        />
-        <Spacer height={'normal'} />
-        <CTAPressable
-          title="TouchableWithoutFeedback"
-          onPress={() => navigate('TouchableWithoutFeedback')}
-        />
-        <Spacer height={'normal'} />
-        <CTAPressable
-          title="SwitchListItem"
-          onPress={() => navigate('SwitchListItem')}
-        />
-        <Spacer height={'normal'} />
-        <CTAPressable
-          title="ExpandablePressable"
-          onPress={() => navigate('ExpandablePressable')}
-        />
-        <Spacer height={'normal'} />
-        <CTAPressable title="Text" onPress={() => navigate('Text')} />
-        <Spacer height={'normal'} />
+					
+					<Header title="Packages" />
+          <View style={styles.group}>
+            <ListItem title="@react-native-ama/bottom-sheet" navigateTo="BottomSheet" />
+            <ListItem title="Forms" border={false} navigateTo="Form" />
+          </View>
 
-        <CTAPressable title="Form" onPress={() => navigate('Form')} />
-
-        <Spacer height={'normal'} />
-        <CTAPressable title="FlatList" onPress={() => navigate('FlatList')} />
-
-        <Spacer height={'normal'} />
-
-        <CTAPressable
-          title="BottomSheet"
-          onPress={() => navigate('BottomSheet')}
-        />
-
-        <Spacer height={'normal'} />
-
-        <CTAPressable title="Carousel" onPress={() => navigate('Carousel')} />
-        <Spacer height={'normal'} />
-        <CTAPressable title="Loading" onPress={() => navigate('Loading')} />
-
-        <Spacer height={'big'} />
-        <Header title="Hooks" />
-        <Spacer height={'normal'} />
-        <CTAPressable
-          title="useAnimation"
-          onPress={() => navigate('UseAnimation')}
-        />
-        <Spacer height={'normal'} />
-        <CTAPressable
-          title="useAnimationDuration"
-          onPress={() => navigate('UseAnimationDuration')}
-        />
-        <Spacer height={'normal'} />
-        <CTAPressable
-          title="useReanimatedAnimationBuilder"
-          onPress={() => navigate('UseReanimatedAnimationBuilder')}
-        />
-        <Spacer height={'normal'} />
-        <CTAPressable
-          title="useReanimatedTiming"
-          onPress={() => navigate('UseReanimatedTiming')}
-        />
-        <Spacer height={'normal'} />
-        <CTAPressable
-          title="useTimedAction"
-          onPress={() => navigate('UseTimedAction')}
-        />
-        <Spacer height={'normal'} />
-        <CTAPressable
-          title="useAMAContext"
-          onPress={() => navigate('UseAMAContext')}
-        />
-
-        {*/}
           <Spacer height={"big"} />
         </ScrollView>
       </SafeAreaView>

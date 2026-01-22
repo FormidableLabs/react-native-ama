@@ -13,6 +13,7 @@ import { PressableScreen } from "./screens/Pressable.screen";
 import { TextScreen } from "./screens/Text.screen";
 import { theme } from "./theme";
 import { FormScreen } from "./screens/Form.screen";
+import { BottomSheetScreen } from "./screens/BottomSheet.screen";
 
 export const AppNavigator = () => {
   const { reactNavigationScreenOptions: amaAnimationScreenOptions } =
@@ -76,6 +77,15 @@ export const AppNavigator = () => {
           options={{
             headerTitle: () => (
               <Header noMargin title={"Forms"} autofocus white />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="BottomSheet"
+          component={BottomSheetScreen}
+          options={{
+            headerTitle: () => (
+              <Header noMargin title={"BottomSheet"} autofocus white />
             ),
           }}
         />

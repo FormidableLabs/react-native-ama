@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import * as React from 'react';
 import type { PropsWithChildren } from 'react';
 import {
@@ -24,7 +23,9 @@ import Animated, {
   SharedValue,
   useAnimatedStyle,
   useDerivedValue,
+  useReducedMotion,
   useSharedValue,
+  withTiming,
 } from 'react-native-reanimated';
 import { useBottomSheetGestureHandler } from '../hooks/useBottomSheetGestureHandler';
 import { useKeyboard } from '../hooks/useKeyboard';
@@ -124,6 +125,9 @@ export const BottomSheet = React.forwardRef<
     const { keyboardHeight, keyboardFinalHeight } = useKeyboard(
       shouldHandleKeyboardEvents,
     );
+const shouldReduceMotion = useReducedMotion();
+
+const duration = shouldReduceMotion ? 0 : animationDuration;
 
     React.useImperativeHandle(ref, () => ({
       close: async () => {
@@ -144,7 +148,9 @@ export const BottomSheet = React.forwardRef<
 
     React.useEffect(() => {
       if (visible) {
-        translateY.value = 0;
+        dragOpacity.value = withTiming(overlayOpacity, {
+          duration,
+        });
 
         setIsModalVisible(true);
         setShouldRenderContent(true);
@@ -157,21 +163,30 @@ export const BottomSheet = React.forwardRef<
           }, autoCloseDelay);
         }
       } else if (isModalVisible) {
-        setShouldRenderContent(false);
-
-        /**
-         * We need to give Reanimated the time to finish animating the view out.
-         * Otherwise, the content will suddenly disappear.
-         */
-        setTimeout(() => {
+        const finished = () => {
+          setShouldRenderContent(false);
           setIsModalVisible(false);
 
           onBottomSheetHidden?.();
           promiseResolver.current?.();
-        }, animationDuration);
+        };
+
+        dragOpacity.value = withTiming(0, {
+          duration,
+        });
+
+        translateY.value = withTiming(
+          contentHeight.value,
+          {
+            duration,
+          },
+          () => {
+            runOnJS(finished)();
+          },
+        );
       }
     }, [
-      animationDuration,
+      duration,
       autoCloseDelay,
       isModalVisible,
       onBottomSheetHidden,
@@ -235,6 +250,13 @@ export const BottomSheet = React.forwardRef<
 
     const handleOnLayout = (event: LayoutChangeEvent) => {
       contentHeight.value = event.nativeEvent.layout.height;
+
+      if (translateY.value === 0) {
+        return;
+      }
+
+      translateY.value = event.nativeEvent.layout.height;
+      translateY.value = withTiming(0, { duration});
     };
 
     const maybeCloseBottomSheet = persistent ? undefined : onClose;
@@ -259,10 +281,11 @@ export const BottomSheet = React.forwardRef<
         animationType="none"
         transparent={true}
         visible={isModalVisible}
-        onRequestClose={() => onClose()}
+        onRequestClose={onClose}
         ref={ref as any}
         testID={testID}
         supportedOrientations={supportedOrientations}
+        statusBarTranslucent={true}
       >
         <Wrapper>
           {shouldRenderContent ? (
