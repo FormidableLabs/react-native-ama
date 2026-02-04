@@ -13,7 +13,8 @@ import { PressableScreen } from "./screens/Pressable.screen";
 import { TextScreen } from "./screens/Text.screen";
 import { theme } from "./theme";
 import { FormScreen } from "./screens/Form.screen";
-import { BottomSheetScreen } from "./screens/BottomSheet.screen";
+import { AmaBottomSheetScreen } from "./screens/AmaBottomSheet.screen";
+import { AmaFormScreen } from "./screens/AmaForm.screen";
 
 export const AppNavigator = () => {
   const { reactNavigationScreenOptions: amaAnimationScreenOptions } =
@@ -81,11 +82,30 @@ export const AppNavigator = () => {
           }}
         />
         <Stack.Screen
-          name="BottomSheet"
-          component={BottomSheetScreen}
+          name="AmaBottomSheet"
+          component={AmaBottomSheetScreen}
           options={{
             headerTitle: () => (
-              <Header noMargin title={"BottomSheet"} autofocus white />
+              <Header
+                noMargin
+                title={"@react-native-ama/bottom-sheet"}
+                autofocus
+                white
+              />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="AmaForms"
+          component={AmaFormScreen}
+          options={{
+            headerTitle: () => (
+              <Header
+                noMargin
+                title={"@react-native-ama/forms"}
+                autofocus
+                white
+              />
             ),
           }}
         />
@@ -108,21 +128,9 @@ export type RootStackParamList = {
   TouchableWithoutFeedback: undefined;
   Interactions: undefined;
   Text: undefined;
-  UseAnimation: undefined;
-  UseAnimationDuration: undefined;
-  UseReanimatedTiming: undefined;
-  UseReanimatedAnimationBuilder: undefined;
   Form: undefined;
-  FlatList: undefined;
-  SwitchListItem: undefined;
-  ExpandablePressable: undefined;
-  FlatListDynamic: undefined;
-  FlatListStatic: undefined;
-  BottomSheet: undefined;
-  Carousel: undefined;
-  Loading: undefined;
-  UseTimedAction: undefined;
-  UseAMAContext: undefined;
+  AmaBottomSheet: undefined;
+  AmaForms: undefined;
 };
 
 declare global {

@@ -38,11 +38,18 @@ export const HomeScreen = () => {
             <ListItem title="Interactions" navigateTo="Interactions" />
             <ListItem title="Forms" border={false} navigateTo="Form" />
           </View>
-					
-					<Header title="Packages" />
+
+          <Header title="Packages" />
           <View style={styles.group}>
-            <ListItem title="@react-native-ama/bottom-sheet" navigateTo="BottomSheet" />
-            <ListItem title="@react-native-ama/forms" border={false} navigateTo="Form" />
+            <ListItem
+              title="@react-native-ama/bottom-sheet"
+              navigateTo="AmaBottomSheet"
+            />
+            <ListItem
+              title="@react-native-ama/forms"
+              border={false}
+              navigateTo="AmaForms"
+            />
           </View>
 
           <Spacer height={"big"} />

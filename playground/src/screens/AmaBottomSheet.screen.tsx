@@ -1,15 +1,15 @@
-import { BottomSheet } from '@react-native-ama/bottom-sheet';
-import React, { useState } from 'react';
-import { Platform, SafeAreaView, StyleSheet, View } from 'react-native';
+import { BottomSheet } from "@react-native-ama/bottom-sheet";
+import React, { useState } from "react";
+import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
 
-import { CTAPressable } from '../components/CTAPressable';
-import { Header } from '../components/Header';
-import { theme } from '../theme';
-import { FormScreen } from './Form.screen';
+import { CTAPressable } from "../components/CTAPressable";
+import { Header } from "../components/Header";
+import { theme } from "../theme";
+import { FormScreen } from "./Form.screen";
 
 type TimedActionProps = {};
 
-export const BottomSheetScreen: React.FC<TimedActionProps> = () => {
+export const AmaBottomSheetScreen: React.FC<TimedActionProps> = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
@@ -20,7 +20,7 @@ export const BottomSheetScreen: React.FC<TimedActionProps> = () => {
         onClose={() => {
           setModalVisible(!modalVisible);
         }}
-        avoidKeyboard={Platform.OS === 'ios'}
+        avoidKeyboard={Platform.OS === "ios"}
         closeActionAccessibilityLabel=""
         bottomSheetStyle={styles.modalView}
         headerComponent={
@@ -31,7 +31,8 @@ export const BottomSheetScreen: React.FC<TimedActionProps> = () => {
         scrollViewProps={{
           style: styles.modalViewContent,
           scrollEnabled: true,
-        }}>
+        }}
+      >
         <FormScreen />
       </BottomSheet>
       <CTAPressable
@@ -45,11 +46,11 @@ export const BottomSheetScreen: React.FC<TimedActionProps> = () => {
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   modalView: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
   },

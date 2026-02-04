@@ -1,5 +1,5 @@
-import * as React from 'react';
-import type { PropsWithChildren } from 'react';
+import * as React from "react";
+import type { PropsWithChildren } from "react";
 import {
   Dimensions,
   KeyboardAvoidingView,
@@ -12,12 +12,12 @@ import {
   StyleSheet,
   View,
   ViewStyle,
-} from 'react-native';
+} from "react-native";
 import {
+  GestureDetector,
   GestureHandlerRootView,
   ScrollView,
-  GestureDetector,
-} from 'react-native-gesture-handler';
+} from "react-native-gesture-handler";
 import Animated, {
   runOnJS,
   SharedValue,
@@ -26,11 +26,11 @@ import Animated, {
   useReducedMotion,
   useSharedValue,
   withTiming,
-} from 'react-native-reanimated';
-import { useBottomSheetGestureHandler } from '../hooks/useBottomSheetGestureHandler';
-import { useKeyboard } from '../hooks/useKeyboard';
+} from "react-native-reanimated";
+import { useBottomSheetGestureHandler } from "../hooks/useBottomSheetGestureHandler";
+import { useKeyboard } from "../hooks/useKeyboard";
 
-const AnimaCore = require('@react-native-ama/core');
+const AnimaCore = require("@react-native-ama/core");
 
 export type BottomSheetProps = {
   animationDuration?: number;
@@ -40,7 +40,7 @@ export type BottomSheetProps = {
   closeActionAccessibilityLabel: string;
   closeDistance?: number;
   footerComponent?: React.ReactElement;
-  handleComponent?: React.ReactElement | 'none';
+  handleComponent?: React.ReactElement | "none";
   handleStyle?: ViewStyle | ViewStyle[];
   headerComponent?: React.ReactElement;
   maxHeight?: number;
@@ -54,14 +54,14 @@ export type BottomSheetProps = {
   hasScrollableContent?: boolean;
   scrollViewProps?: Omit<
     ScrollViewWrapperProps,
-    'testID' | 'maxScrollViewHeight'
+    "testID" | "maxScrollViewHeight"
   >;
   testID?: string;
   topInset: number;
   visible: boolean;
   ref?: React.RefObject<BottomSheetActions>;
   shouldHandleKeyboardEvents?: boolean;
-  supportedOrientations?: ModalProps['supportedOrientations'];
+  supportedOrientations?: ModalProps["supportedOrientations"];
   isOverlayAccessible?: boolean;
 };
 
@@ -70,9 +70,9 @@ export type BottomSheetActions = {
   isVisible: () => boolean;
 };
 
-const DEFAULT_MAX_HEIGHT = Dimensions.get('window').height * 0.9;
-const isIOS = Platform.OS === 'ios';
- const SCREEN_HEIGHT = Dimensions.get('screen').height
+const DEFAULT_MAX_HEIGHT = Dimensions.get("window").height * 0.9;
+const isIOS = Platform.OS === "ios";
+const SCREEN_HEIGHT = Dimensions.get("screen").height;
 
 export const BottomSheet = React.forwardRef<
   BottomSheetActions,
@@ -108,10 +108,11 @@ export const BottomSheet = React.forwardRef<
       supportedOrientations,
       isOverlayAccessible = true,
     },
-    ref,
+    ref
   ) => {
     // This is used to let Reanimated animate the view out, before removing it from the tree.
-    const [shouldRenderContent, setShouldRenderContent] = React.useState(visible);
+    const [shouldRenderContent, setShouldRenderContent] =
+      React.useState(visible);
     const [isModalVisible, setIsModalVisible] = React.useState(false);
     const translateY = useSharedValue(SCREEN_HEIGHT * 1.5);
     const contentHeight = useSharedValue(0);
@@ -124,11 +125,11 @@ export const BottomSheet = React.forwardRef<
     const promiseResolver = React.useRef<(() => void) | null>(null);
     const [maxScrollViewHeight, setMaxScrollViewHeight] = React.useState(0);
     const { keyboardHeight, keyboardFinalHeight } = useKeyboard(
-      shouldHandleKeyboardEvents,
+      shouldHandleKeyboardEvents
     );
-const shouldReduceMotion = useReducedMotion();
+    const shouldReduceMotion = useReducedMotion();
 
-const duration = shouldReduceMotion ? 0 : animationDuration;
+    const duration = shouldReduceMotion ? 0 : animationDuration;
 
     React.useImperativeHandle(ref, () => ({
       close: async () => {
@@ -136,7 +137,7 @@ const duration = shouldReduceMotion ? 0 : animationDuration;
           return Promise.resolve();
         }
 
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
           promiseResolver.current = resolve;
 
           onClose();
@@ -183,7 +184,7 @@ const duration = shouldReduceMotion ? 0 : animationDuration;
           },
           () => {
             runOnJS(finished)();
-          },
+          }
         );
       }
     }, [
@@ -227,11 +228,11 @@ const duration = shouldReduceMotion ? 0 : animationDuration;
     useDerivedValue(() => {
       const maxScrollHeight = Math.ceil(
         maxHeight -
-        keyboardFinalHeight.value -
-        footerHeight -
-        headerHeight -
-        handleHeight -
-        topInset,
+          keyboardFinalHeight.value -
+          footerHeight -
+          headerHeight -
+          handleHeight -
+          topInset
       );
 
       if (
@@ -268,7 +269,7 @@ const duration = shouldReduceMotion ? 0 : animationDuration;
         : React.Fragment;
 
     const opacity = [footerHeight, headerHeight, handleHeight].every(
-      h => h >= 0,
+      (h) => h >= 0
     )
       ? 1
       : 0;
@@ -302,10 +303,11 @@ const duration = shouldReduceMotion ? 0 : animationDuration;
                   testID={`${testID}-overlay-button`}
                   accessible={isOverlayAccessible && !persistent}
                   importantForAccessibility={
-                    persistent ? 'no-hide-descendants' : 'yes'
+                    persistent ? "no-hide-descendants" : "yes"
                   }
                   accessibilityElementsHidden={persistent}
                   onAccessibilityTap={maybeCloseBottomSheet}
+                  accessibilityLabel={closeActionAccessibilityLabel}
                 />
               </Animated.View>
               <Animated.View
@@ -330,21 +332,21 @@ const duration = shouldReduceMotion ? 0 : animationDuration;
                   panGestureEnabled={panGestureEnabled}
                 >
                   <View
-                    onLayout={event => {
+                    onLayout={(event) => {
                       setHandleHeight(event.nativeEvent.layout.height);
                     }}
                   >
-                    {handleComponent === 'none'
+                    {handleComponent === "none"
                       ? null
                       : handleComponent ?? (
-                        <View
-                          style={[styles.line, handleStyle]}
-                          testID={`${testID}-line`}
-                        />
-                      )}
+                          <View
+                            style={[styles.line, handleStyle]}
+                            testID={`${testID}-line`}
+                          />
+                        )}
                   </View>
                   <View
-                    onLayout={event => {
+                    onLayout={(event) => {
                       setHeaderHeight(event.nativeEvent.layout.height);
                     }}
                   >
@@ -353,11 +355,12 @@ const duration = shouldReduceMotion ? 0 : animationDuration;
                   <ContentWrapper
                     {...scrollViewProps}
                     testID={testID}
-                    maxScrollViewHeight={maxScrollViewHeight}>
+                    maxScrollViewHeight={maxScrollViewHeight}
+                  >
                     {children}
                   </ContentWrapper>
                   <View
-                    onLayout={event => {
+                    onLayout={(event) => {
                       setFooterHeight(event.nativeEvent.layout.height);
                     }}
                   >
@@ -370,8 +373,7 @@ const duration = shouldReduceMotion ? 0 : animationDuration;
         </Wrapper>
       </Modal>
     );
-
-  },
+  }
 );
 
 const BottomSheetKeyboardAvoidingView = ({
@@ -379,7 +381,7 @@ const BottomSheetKeyboardAvoidingView = ({
 }: React.PropsWithChildren<{}>) => {
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
       pointerEvents="box-none"
       style={{ flex: 1 }}
     >
@@ -423,17 +425,11 @@ const GestureHandler = ({
   });
 
   return panGestureEnabled ? (
-    <GestureDetector
-      gesture={gestureHandler}
-    >
-      <Animated.View
-        testID={testID}
-      >{children}</Animated.View>
+    <GestureDetector gesture={gestureHandler}>
+      <Animated.View testID={testID}>{children}</Animated.View>
     </GestureDetector>
   ) : (
-    <Animated.View
-      testID={testID}
-    >{children}</Animated.View>
+    <Animated.View testID={testID}>{children}</Animated.View>
   );
 };
 
@@ -470,30 +466,30 @@ const FragmentWrapper: React.FC<React.PropsWithChildren<any>> = ({
 
 const styles = StyleSheet.create({
   overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
     flex: 1,
   },
   closeButton: {
     flex: 1,
   },
   contentWrapper: {
-    flexDirection: 'column',
+    flexDirection: "column",
     flex: 1,
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
-    alignSelf: 'flex-end',
-    width: '100%',
+    alignSelf: "flex-end",
+    width: "100%",
   },
   content: {
-    width: '100%',
-    backgroundColor: '#fff',
+    width: "100%",
+    backgroundColor: "#fff",
     flex: 1,
   },
   line: {
     width: 48,
     height: 4,
-    backgroundColor: 'grey',
-    alignSelf: 'center',
+    backgroundColor: "grey",
+    alignSelf: "center",
     marginBottom: 24,
     borderRadius: 2,
     marginTop: 12,

@@ -1,8 +1,6 @@
-import { useChecks } from '@react-native-ama/core';
-import { applyStyle } from '@react-native-ama/internal';
-import React from 'react';
-import { Keyboard, ViewStyle } from 'react-native';
-import { useForm } from '../components/Form';
+import React from "react";
+import { Keyboard, ViewStyle } from "react-native";
+import { useForm } from "../components/Form";
 
 export type UseFormField = {
   ref?: React.RefObject<any> | React.ForwardedRef<any> | null;
@@ -31,16 +29,13 @@ export const useFormField = ({
   errorMessage,
   editable = true,
   suppressError,
-  style = {},
 }: UseFormField) => {
   const { refs, submitForm, focusField } = useForm({ suppressError });
   const fieldRef = React.useRef(ref);
 
-  const checks = __DEV__ ? useChecks?.() : undefined;
-
   const getMyIndex = () => {
     const allRefs = refs!;
-    const item = allRefs.find(r => r.ref === fieldRef);
+    const item = allRefs.find((r) => r.ref === fieldRef);
 
     return item ? allRefs.indexOf(item) : -1;
   };
@@ -56,16 +51,7 @@ export const useFormField = ({
       return;
     }
 
-    const currentField = refs![getMyIndex()];
-
     focusField?.(getNextFieldRef());
-
-    __DEV__ &&
-      currentField?.hasFocusCallback &&
-      checks?.checkFocusTrap({
-        ref: currentField?.ref?.current,
-        shouldHaveFocus: false,
-      });
   };
 
   const getNextFieldRef = () => {
@@ -76,7 +62,7 @@ export const useFormField = ({
         ref: nextFormFieldRef,
       };
     } else if (nextFieldId) {
-      return allRefs.find(item => item.id === nextFieldId);
+      return allRefs.find((item) => item.id === nextFieldId);
     }
 
     return allRefs[getMyIndex() + 1];
@@ -107,7 +93,7 @@ export const useFormField = ({
   }, []);
 
   React.useEffect(() => {
-    const myRefIndex = refs?.findIndex(item => item.ref === fieldRef);
+    const myRefIndex = refs?.findIndex((item) => item.ref === fieldRef);
 
     // @ts-ignore
     refs[myRefIndex].hasError = hasError;
@@ -117,18 +103,11 @@ export const useFormField = ({
 
   const fullAccessibilityHint = [accessibilityHint, errorMessage]
     .filter(Boolean)
-    .join(',');
+    .join(",");
 
-  return __DEV__
-    ? {
-        focusNextFormField,
-        isLastField,
-        style: applyStyle?.({ style, debugStyle: checks?.debugStyle }),
-        accessibilityHint: fullAccessibilityHint,
-      }
-    : {
-        focusNextFormField,
-        accessibilityHint: fullAccessibilityHint,
-        isLastField,
-      };
+  return {
+    focusNextFormField,
+    accessibilityHint: fullAccessibilityHint,
+    isLastField,
+  };
 };

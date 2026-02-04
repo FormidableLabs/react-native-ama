@@ -1,17 +1,17 @@
-import * as React from 'react';
+import * as React from "react";
 import {
   TextInput as RNTextInput,
   TextInputProps as RNTextInputProps,
-} from 'react-native';
-import { UseTextInput, useTextInput } from '../hooks/useTextInput';
+} from "react-native";
+import { UseTextInput, useTextInput } from "../hooks/useTextInput";
 
 export type TextInputProps = RNTextInputProps &
-  Omit<UseTextInput, 'required' | 'accessibilityLabel'> & {
-    labelPosition?: 'beforeInput' | 'afterInput';
+  Omit<UseTextInput, "required" | "accessibilityLabel"> & {
+    labelPosition?: "beforeInput" | "afterInput";
     nextFormField?: React.RefObject<RNTextInput>;
     id?: string;
     nextFieldId?: string;
-    errorPosition?: 'belowLabel' | 'afterInput';
+    errorPosition?: "belowLabel" | "afterInput";
   };
 
 export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
@@ -24,13 +24,13 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       hasError,
       hasValidation,
       errorMessage,
-			accessibilityLabel,
+      accessibilityLabel,
       ...rest
     },
-    forwardedRef,
+    forwardedRef
   ) => {
     const inputRef = React.useRef<React.ElementRef<typeof TextInput> | null>(
-      null,
+      null
     );
 
     React.useImperativeHandle(forwardedRef, () => inputRef.current!);
@@ -45,22 +45,22 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       hasValidation,
       errorMessage,
       required: false,
-				accessibilityLabel: accessibilityLabel || rest?.['aria-label'],
+      accessibilityLabel: accessibilityLabel || rest?.["aria-label"],
     });
 
     const fullAccessibilityHint = [accessibilityHint, errorMessage]
       .filter(Boolean)
-      ?.join(', ');
+      ?.join(", ");
 
     return (
-        <RNTextInput
-          // @ts-ignore
-          ref={inputRef}
-          {...rest}
-          {...textInputProps}
-          accessibilityLabel={accessibilityLabel}
-          accessibilityHint={fullAccessibilityHint}
-        />
+      <RNTextInput
+        // @ts-ignore
+        ref={inputRef}
+        {...rest}
+        {...textInputProps}
+        accessibilityLabel={accessibilityLabel}
+        accessibilityHint={fullAccessibilityHint}
+      />
     );
-  },
+  }
 );

@@ -1,16 +1,16 @@
-import { Form, type FormActions, TextInput } from '@react-native-ama/forms';
-import { Text } from '@react-native-ama/react-native';
-import * as React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { Form, type FormActions, TextInput } from "@react-native-ama/forms";
+import * as React from "react";
+import { ScrollView, StyleSheet } from "react-native";
 
-import { CTAPressable } from '../components/CTAPressable';
-import { Spacer } from '../components/Spacer';
-import { theme } from '../theme';
+import { CTAPressable } from "../components/CTAPressable";
+import { Spacer } from "../components/Spacer";
+import { theme } from "../theme";
+import { Text } from "../components/Text";
 
-export const FormScreen = () => {
-  const [emailAddress, setEmailAddress] = React.useState('');
-  const [firstName, setFirstName] = React.useState('');
-  const [lastName, setLastName] = React.useState('');
+export const AmaFormScreen = () => {
+  const [emailAddress, setEmailAddress] = React.useState("");
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
   const [testKeyboardTrap, setTestKeyboardTrap] = React.useState(false);
   const formRef = React.useRef<FormActions>(null);
   const [invalidFields, setInvalidFields] = React.useState<{
@@ -19,12 +19,12 @@ export const FormScreen = () => {
   }>({ firstName: false, lastName: false });
 
   const toggleSwitch = () =>
-    setTestKeyboardTrap(previousState => !previousState);
+    setTestKeyboardTrap((previousState) => !previousState);
 
   const lastNameRef = React.useRef(null);
 
   const handleOnSubmit = () => {
-    console.log('handleOnSubmit');
+    console.log("handleOnSubmit");
     const hasErrors = firstName.length === 0 || lastName.length === 0;
 
     setInvalidFields({
@@ -38,30 +38,19 @@ export const FormScreen = () => {
   return (
     <ScrollView style={styles.view}>
       <Form onSubmit={handleOnSubmit} ref={formRef}>
+        <Text style={styles.labelComponent}>First name:</Text>
         <TextInput
           style={styles.input}
           placeholder=""
-          onChangeText={newText => setFirstName(newText)}
+          onChangeText={(newText) => setFirstName(newText)}
           defaultValue={firstName}
-          labelComponent={
-            <>
-              <Text style={styles.labelComponent}>First name:</Text>
-            </>
-          }
           hasValidation={true}
-          errorComponent={
-            <Text style={styles.error}>The first name cannot be blank</Text>
-          }
           hasError={invalidFields.firstName}
         />
 
         <Spacer height="normal" />
+        <Text style={styles.switchText}>Test keyboard trap on next field</Text>
         <Form.Switch
-          labelComponent={
-            <Text style={styles.switchText}>
-              Test keyboard trap on next field
-            </Text>
-          }
           style={styles.switchListItem}
           value={testKeyboardTrap}
           onValueChange={toggleSwitch}
@@ -76,12 +65,12 @@ export const FormScreen = () => {
           </>
         ) : null}
 
+        <Text style={styles.labelComponent}>Last name:</Text>
         <TextInput
           style={styles.input}
           placeholder=""
           defaultValue={lastName}
-          labelComponent={<Text style={styles.labelComponent}>Last name:</Text>}
-          onChangeText={newText => setLastName(newText)}
+          onChangeText={(newText) => setLastName(newText)}
           hasValidation={true}
           errorComponent={
             <Text style={styles.error}>The thing cannot be null</Text>
@@ -103,7 +92,7 @@ export const FormScreen = () => {
           labelComponent={
             <Text style={styles.labelComponent}>Email address:</Text>
           }
-          onChangeText={newText => setEmailAddress(newText)}
+          onChangeText={(newText) => setEmailAddress(newText)}
           hasValidation={false}
         />
         <Spacer height="big" />
@@ -136,6 +125,6 @@ const styles = StyleSheet.create({
     marginVertical: theme.padding.normal,
   },
   error: {
-    color: '#f00',
+    color: "#f00",
   },
 });
