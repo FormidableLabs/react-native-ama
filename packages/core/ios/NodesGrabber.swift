@@ -74,7 +74,7 @@ public class NodesGrabber {
     }
 
     private func checkView(_ view: UIView) {
-        let supported = view.isPressable || view.isText() || view.isTextInput()
+        let supported = view.isPressable || view.isText() || view.isTextInput() || view.isModal()
 
         if !supported {
             return

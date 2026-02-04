@@ -25,7 +25,7 @@ export const BottomSheetScreen: React.FC<TimedActionProps> = () => {
         bottomSheetStyle={styles.modalView}
         headerComponent={
           <View style={{ paddingHorizontal: theme.padding.big }}>
-            <Header title="This is the bottom sheet" />
+            <Header title="This is the bottom sheet" noMargin />
           </View>
         }
         scrollViewProps={{

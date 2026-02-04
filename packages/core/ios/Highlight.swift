@@ -80,7 +80,7 @@ public class Highlight {
             }
             return nil
         }
-        
+
         // Clear highlights for orphaned views
         for viewId in orphanedViewIds {
             trackedViews.removeValue(forKey: viewId)

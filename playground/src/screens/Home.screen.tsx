@@ -42,7 +42,7 @@ export const HomeScreen = () => {
 					<Header title="Packages" />
           <View style={styles.group}>
             <ListItem title="@react-native-ama/bottom-sheet" navigateTo="BottomSheet" />
-            <ListItem title="Forms" border={false} navigateTo="Form" />
+            <ListItem title="@react-native-ama/forms" border={false} navigateTo="Form" />
           </View>
 
           <Spacer height={"big"} />

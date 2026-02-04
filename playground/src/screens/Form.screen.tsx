@@ -1,10 +1,11 @@
 import * as React from "react";
-import { ScrollView, StyleSheet, TextInput, View } from "react-native";
+import { ScrollView, StyleSheet,  View } from "react-native";
 
 import { CTAPressable } from "../components/CTAPressable";
 import { Spacer } from "../components/Spacer";
 import { theme } from "../theme";
 import { Text } from "../components/Text";
+import { Form, TextInput } from "@react-native-ama/forms";
 
 export const FormScreen = () => {
   const [emailAddress, setEmailAddress] = React.useState("");
@@ -13,13 +14,15 @@ export const FormScreen = () => {
 
   return (
     <ScrollView style={styles.view}>
+		<Form>
       <View>
-        <Text style={styles.labelComponent}>First name:</Text>
         <TextInput
           style={styles.input}
           onChangeText={(newText) => setFirstName(newText)}
           defaultValue={firstName}
           accessibilityLabel="First Name"
+					hasValidation={false}
+					labelComponent={<Text style={styles.labelComponent}>First name:</Text>}
         />
       </View>
 
@@ -49,6 +52,7 @@ export const FormScreen = () => {
       <Spacer height="big" />
 
       <CTAPressable title="Submit" />
+			</Form>
     </ScrollView>
   );
 };

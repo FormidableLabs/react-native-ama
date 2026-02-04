@@ -118,6 +118,10 @@ export const useAMADev = __DEV__
           resetFixedIssues(previousIssues.current, allIssues);
         }
 
+				if (allIssues.length > 0) {
+logger?.log(`Issues found: ${allIssues.length}`)
+				}
+
         if (allIssues.length) {
           const issuesByViewId = allIssues.reduce((acc, issue) => {
             if (issue.viewId >= 0) {
@@ -285,13 +289,13 @@ const A11Y_STATE_KEY: AmaUiSnapshotKeys[] = [
   'isExpanded',
 ];
 function itemsWithNoStateUpdated(data: AmaUiSnapshotsData) {
-  const tappedViewBefore = data.before;
-  const tappedViewAfter = data.after;
+  const viewsBefore = data.before;
+  const viewsAfter = data.after;
   const issues: Set<number> = new Set();
 
-  const afterKeys = Object.keys(tappedViewAfter).map(Number);
+  const afterKeys = Object.keys(viewsAfter).map(Number);
 
-  if (!afterKeys.includes(data.rootTag)) {
+  if (!afterKeys.includes(data.rootTag) || data.beforeModalVisible != data.afterModalVisible) {
     return [];
   }
 
@@ -302,8 +306,8 @@ function itemsWithNoStateUpdated(data: AmaUiSnapshotsData) {
 
   let hasSomethingChanged = false;
   for (const tagId of afterKeys) {
-    const snapBefore = tappedViewBefore[tagId];
-    const snapAfter = tappedViewAfter[tagId];
+    const snapBefore = viewsBefore[tagId];
+    const snapAfter = viewsAfter[tagId];
 
     if (!snapBefore) {
       hasSomethingChanged = true;
@@ -331,8 +335,8 @@ function itemsWithNoStateUpdated(data: AmaUiSnapshotsData) {
   if (hasSomethingChanged) {
     const parentId = data.rootTag;
 
-    const after = tappedViewAfter[parentId];
-    const before = tappedViewBefore[parentId];
+    const after = viewsAfter[parentId];
+    const before = viewsBefore[parentId];
 
     const hasStateChanged = A11Y_STATE_KEY.some(
       (key) => before[key] !== after[key]

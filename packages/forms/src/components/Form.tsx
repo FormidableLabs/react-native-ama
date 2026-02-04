@@ -1,4 +1,4 @@
-import { useChecks, useFocus } from '@react-native-ama/core';
+import { useFocus } from '@react-native-ama/core';
 import { isFocused } from '@react-native-ama/internal';
 import * as React from 'react';
 import { InteractionManager } from 'react-native';
@@ -17,8 +17,6 @@ export const Form = React.forwardRef<FormActions, FormProps>(
   ({ children, onSubmit }, ref) => {
     const refs = React.useRef<FormRef[]>([]);
     const { setFocus } = useFocus();
-
-    const checks = __DEV__ ? useChecks?.() : undefined;
 
     const focusField = React.useCallback(
       (nextField?: Partial<FormRef> | undefined) => {

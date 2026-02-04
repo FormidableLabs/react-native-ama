@@ -72,6 +72,7 @@ export type BottomSheetActions = {
 
 const DEFAULT_MAX_HEIGHT = Dimensions.get('window').height * 0.9;
 const isIOS = Platform.OS === 'ios';
+ const SCREEN_HEIGHT = Dimensions.get('screen').height
 
 export const BottomSheet = React.forwardRef<
   BottomSheetActions,
@@ -112,7 +113,7 @@ export const BottomSheet = React.forwardRef<
     // This is used to let Reanimated animate the view out, before removing it from the tree.
     const [shouldRenderContent, setShouldRenderContent] = React.useState(visible);
     const [isModalVisible, setIsModalVisible] = React.useState(false);
-    const translateY = useSharedValue(0);
+    const translateY = useSharedValue(SCREEN_HEIGHT * 1.5);
     const contentHeight = useSharedValue(0);
     const dragOpacity = useSharedValue(0);
     const onTimeout = AnimaCore?.useTimedAction()?.onTimeout || setTimeout;
@@ -256,7 +257,7 @@ const duration = shouldReduceMotion ? 0 : animationDuration;
       }
 
       translateY.value = event.nativeEvent.layout.height;
-      translateY.value = withTiming(0, { duration});
+      translateY.value = withTiming(0, { duration });
     };
 
     const maybeCloseBottomSheet = persistent ? undefined : onClose;
@@ -297,7 +298,6 @@ const duration = shouldReduceMotion ? 0 : animationDuration;
                 <Pressable
                   style={styles.closeButton}
                   accessibilityRole="button"
-                  accessibilityLabel={closeActionAccessibilityLabel}
                   onPress={maybeCloseBottomSheet}
                   testID={`${testID}-overlay-button`}
                   accessible={isOverlayAccessible && !persistent}
@@ -352,7 +352,7 @@ const duration = shouldReduceMotion ? 0 : animationDuration;
                   </View>
                   <ContentWrapper
                     {...scrollViewProps}
-                    testID={`${testID}-scrollview`}
+                    testID={testID}
                     maxScrollViewHeight={maxScrollViewHeight}>
                     {children}
                   </ContentWrapper>
@@ -443,7 +443,7 @@ type ScrollViewWrapperProps = {
 } & ScrollViewProps;
 
 const ScrollViewWrapper: React.FC<ScrollViewWrapperProps> = ({
-  scrollEnabled = false,
+  scrollEnabled = true,
   testID,
   maxScrollViewHeight,
   children,

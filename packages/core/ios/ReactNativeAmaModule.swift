@@ -218,6 +218,20 @@ extension UIView {
 
         return self.accessibilityTraits.contains(.selected)
     }
+
+    func isModal() -> Bool {
+        let names = [
+            "RCTModalHostView",
+            "RCTModalHostViewComponentView",
+        ]
+        for name in names {
+            if let cls = NSClassFromString(name), self.isKind(of: cls) {
+                return true
+            }
+        }
+
+        return false
+    }
 }
 
 extension UIApplication {
@@ -336,6 +350,7 @@ extension ReactNativeAmaModule {
             view: tappedView,
             root: rootView
         )
+        let beforeModalVisible = isModalVisible(in: rootView)
 
         let delay = DispatchTime.now() + .milliseconds(Int(uiCheckDelay))
         DispatchQueue.main.asyncAfter(deadline: delay) {
@@ -353,6 +368,7 @@ extension ReactNativeAmaModule {
                 view: tappedView,
                 root: rootView
             )
+            let afterModalVisible = self.isModalVisible(in: rootView)
 
             let payload: [String: Any] = [
                 "rootTag": tappedView.tag,
@@ -362,6 +378,8 @@ extension ReactNativeAmaModule {
                 "after": self.convertSnapshotMapToDict(
                     snapshotMap: afterSnapshot
                 ),
+                "beforeModalVisible": beforeModalVisible,
+                "afterModalVisible": afterModalVisible,
             ]
 
             isCheckScheduled = true
@@ -374,6 +392,24 @@ extension ReactNativeAmaModule {
                 self.sendEvent("onUIInteraction", payload)
             }
         }
+    }
+
+    private func isModalVisible(in rootView: UIView) -> Bool {
+        return findModalView(in: rootView) != nil
+    }
+
+    private func findModalView(in view: UIView) -> UIView? {
+        if view.isModal() {
+            return view
+        }
+
+        for subview in view.subviews {
+            if let modal = findModalView(in: subview) {
+                return modal
+            }
+        }
+
+        return nil
     }
 }
 
