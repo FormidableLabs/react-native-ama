@@ -5,14 +5,32 @@ import {
 } from "react-native";
 import { UseTextInput, useTextInput } from "../hooks/useTextInput";
 
-export type TextInputProps = RNTextInputProps &
+export type A11yProps = {
+  importantForAccessibility: "no-hide-descendants";
+  accessibilityElementsHidden: true;
+};
+
+type TextInputBaseProps = Omit<RNTextInputProps, 'accessibilityLabel' | 'aria-label'> &
   Omit<UseTextInput, "required" | "accessibilityLabel"> & {
     labelPosition?: "beforeInput" | "afterInput";
     nextFormField?: React.RefObject<RNTextInput>;
     id?: string;
     nextFieldId?: string;
     errorPosition?: "belowLabel" | "afterInput";
+    renderLabel?: (a11yProps: A11yProps) => React.ReactNode;
+    renderError?: (a11yProps: A11yProps) => React.ReactNode;
   };
+
+// Require either `accessibilityLabel` or `aria-label` (but at least one)
+export type TextInputProps =
+  | (TextInputBaseProps & { accessibilityLabel: string; 'aria-label'?: never })
+  | (TextInputBaseProps & { 'aria-label': string; accessibilityLabel?: never });
+
+
+const labelA11yProps: A11yProps = {
+  importantForAccessibility: "no-hide-descendants",
+  accessibilityElementsHidden: true,
+};
 
 export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
   (
@@ -25,11 +43,15 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       hasValidation,
       errorMessage,
       accessibilityLabel,
+      labelPosition = "beforeInput",
+      errorPosition = "belowLabel",
+      renderLabel,
+      renderError,
       ...rest
     },
     forwardedRef
   ) => {
-    const inputRef = React.useRef<React.ElementRef<typeof TextInput> | null>(
+    const inputRef = React.useRef<RNTextInput | null>(
       null
     );
 
@@ -52,15 +74,21 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       .filter(Boolean)
       ?.join(", ");
 
+
     return (
-      <RNTextInput
-        // @ts-ignore
-        ref={inputRef}
-        {...rest}
-        {...textInputProps}
-        accessibilityLabel={accessibilityLabel}
-        accessibilityHint={fullAccessibilityHint}
-      />
+      <>
+        {labelPosition === "beforeInput" ? renderLabel?.(labelA11yProps) : null}
+        {errorPosition === "belowLabel" ? renderError?.(labelA11yProps) : null}
+        <RNTextInput
+          ref={inputRef}
+          {...rest}
+          {...textInputProps}
+          accessibilityLabel={accessibilityLabel ?? rest['aria-label']}
+          accessibilityHint={fullAccessibilityHint}
+        />
+        {labelPosition === "afterInput" ? renderLabel?.(labelA11yProps) : null}
+        {errorPosition === "afterInput" ? renderError?.(labelA11yProps) : null}
+      </>
     );
   }
 );

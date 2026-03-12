@@ -38,23 +38,21 @@ export const AmaFormScreen = () => {
   return (
     <ScrollView style={styles.view}>
       <Form onSubmit={handleOnSubmit} ref={formRef}>
-        <Text style={styles.labelComponent}>First name:</Text>
         <TextInput
           style={styles.input}
           placeholder=""
+          accessibilityLabel="First name"
           onChangeText={(newText) => setFirstName(newText)}
           defaultValue={firstName}
           hasValidation={true}
           hasError={invalidFields.firstName}
+          renderLabel={(a11yProps) =>
+            <Text style={styles.labelComponent} {...a11yProps} >First name:</Text>
+          }
         />
 
         <Spacer height="normal" />
         <Text style={styles.switchText}>Test keyboard trap on next field</Text>
-        <Form.Switch
-          style={styles.switchListItem}
-          value={testKeyboardTrap}
-          onValueChange={toggleSwitch}
-        />
         {testKeyboardTrap ? (
           <>
             <Text>
@@ -65,15 +63,18 @@ export const AmaFormScreen = () => {
           </>
         ) : null}
 
-        <Text style={styles.labelComponent}>Last name:</Text>
         <TextInput
           style={styles.input}
           placeholder=""
+          aria-label="Last name"
           defaultValue={lastName}
           onChangeText={(newText) => setLastName(newText)}
           hasValidation={true}
-          errorComponent={
-            <Text style={styles.error}>The thing cannot be null</Text>
+          renderLabel={(a11yProps) =>
+            <Text style={styles.labelComponent} {...a11yProps}>Last name:</Text>
+          }
+          renderError={(a11yProps) =>
+            <Text style={styles.error} {...a11yProps}>The thing cannot be null</Text>
           }
           hasError={invalidFields.lastName}
           ref={lastNameRef}
@@ -88,9 +89,10 @@ export const AmaFormScreen = () => {
         <TextInput
           style={styles.input}
           placeholder=""
+          accessibilityLabel="Email address"
           defaultValue={emailAddress}
-          labelComponent={
-            <Text style={styles.labelComponent}>Email address:</Text>
+          renderLabel={(a11yProps) =>
+            <Text style={styles.labelComponent} {...a11yProps}>Email address:</Text>
           }
           onChangeText={(newText) => setEmailAddress(newText)}
           hasValidation={false}

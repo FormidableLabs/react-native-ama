@@ -1,10 +1,9 @@
 import * as React from "react";
-import { InteractionManager } from "react-native";
+import { InteractionManager, TextInput } from "react-native";
 import { useFocus } from "../hooks/useFocus";
 
 export type FormProps = React.PropsWithChildren<{
   onSubmit: () => boolean | Promise<boolean>;
-  ref?: React.RefObject<FormActions>; // need to explicitly type for inference in <Form /> component
 }>;
 
 export type FormActions = {
@@ -112,7 +111,7 @@ export const FormContext = React.createContext<FormContextValue | null>(null);
 const DEFAULT_CONTEXT_VALUE: FormContextValue = {
   refs: [],
   submitForm: () => Promise.resolve(),
-  focusField: () => {},
+  focusField: () => { },
 };
 
 export const useForm = (
@@ -135,4 +134,9 @@ export const useForm = (
   }
 
   return context;
+};
+
+
+const isFocused = (input: TextInput | undefined | null) => {
+  return input?.isFocused();
 };

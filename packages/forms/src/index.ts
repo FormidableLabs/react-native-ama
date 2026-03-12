@@ -7,13 +7,12 @@ import {
 import { FormField, type FormFieldProps } from "./components/FormField";
 import { FormSubmit, type FormSubmitProps } from "./components/FormSubmit";
 
-type FormComponent = React.FunctionComponent & {
+type FormComponent = typeof FormProvider & {
   Submit: (props: FormSubmitProps) => React.ReactElement;
-  Field: React.FunctionComponent;
+  Field: typeof FormField;
 };
 
-// @ts-ignore
-const Form: FormComponent = FormProvider;
+const Form = FormProvider as unknown as FormComponent;
 Form.Submit = FormSubmit;
 Form.Field = FormField;
 
