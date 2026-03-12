@@ -3,6 +3,7 @@
 import React, { PropsWithChildren, useEffect, useRef, useState } from 'react';
 import {
   Dimensions,
+  Platform,
   Pressable,
   Share,
   StyleSheet,
@@ -94,6 +95,7 @@ const AMAErrorComponent = ({ issues }: { issues?: AmaError[] }) => {
   }
 
   const showActiveIssue = activeIssueIndex !== undefined && issueToView.current;
+  const failedBarBottom = getFailedBarBottomOffset();
 
   return (
     <>
@@ -110,7 +112,7 @@ const AMAErrorComponent = ({ issues }: { issues?: AmaError[] }) => {
         />
       ) : null}
       <View
-        style={styles!.failedBar}
+        style={[styles!.failedBar, { bottom: failedBarBottom }]}
         accessible={false}
         accessibilityElementsHidden
         importantForAccessibility="no-hide-descendants"
@@ -318,6 +320,14 @@ const SPACER = 4;
 const POINTER_SIZE = 8;
 const Z_INDEX = 9999;
 
+const getFailedBarBottomOffset = () => {
+  if (Platform.OS !== 'android') {
+    return 40;
+  }
+
+  return 60
+};
+
 const styles = __DEV__
   ? StyleSheet.create({
     callout: {
@@ -348,7 +358,6 @@ const styles = __DEV__
     failedBar: {
       backgroundColor: '#A31420',
       position: 'absolute',
-      bottom: 40,
       flexDirection: 'row',
       alignItems: 'center',
       shadowOffset: {

@@ -233,21 +233,63 @@ class ReactNativeAmaModule : Module() {
 
     private fun runMyChecks(tappedView: View, rootView: View) {
         val beforeSnapshot = takeSnapshotOfTappedView(tappedView, rootView)
+        val beforeModalVisible = isModalVisible(rootView)
 
         Handler(Looper.getMainLooper()).postDelayed({
             if (tappedView.isAttachedToWindow && rootView.isAttachedToWindow) {
                 val afterSnapshot = takeSnapshotOfTappedView(tappedView, rootView)
-
-                val event = Bundle().apply {
-                    putInt("rootTag", tappedView.id)
-                    putBundle("before", convertSnapshotMapToBundle(beforeSnapshot))
-                    putBundle("after", convertSnapshotMapToBundle(afterSnapshot))
-                }
+                val afterModalVisible = isModalVisible(rootView)
 
                 getNodesToCheck()
-                sendEvent("onUIInteraction", event)
+
+                val settleDelay = 120L
+                Handler(Looper.getMainLooper()).postDelayed({
+                    if (tappedView.isAttachedToWindow && rootView.isAttachedToWindow) {
+                        val afterSettledSnapshot =
+                            takeSnapshotOfTappedView(tappedView, rootView)
+
+                        val event = Bundle().apply {
+                            putInt("rootTag", tappedView.id)
+                            putBundle("before", convertSnapshotMapToBundle(beforeSnapshot))
+                            putBundle("after", convertSnapshotMapToBundle(afterSnapshot))
+                            putBundle(
+                                "afterSettled",
+                                convertSnapshotMapToBundle(afterSettledSnapshot)
+                            )
+                            putBoolean("beforeModalVisible", beforeModalVisible)
+                            putBoolean("afterModalVisible", afterModalVisible)
+                        }
+
+                        sendEvent("onUIInteraction", event)
+                    }
+                }, settleDelay)
             }
         }, Constants.uiCheckDelay)
+    }
+
+    private fun isModalVisible(rootView: View): Boolean {
+        return findModalView(rootView) != null
+    }
+
+    private fun findModalView(view: View): View? {
+        val className = view.javaClass.name
+        if (
+            className.contains("ReactModalHostView") ||
+                className.contains("Dialog")
+        ) {
+            return view
+        }
+
+        if (view is ViewGroup) {
+            for (i in 0 until view.childCount) {
+                val modal = findModalView(view.getChildAt(i))
+                if (modal != null) {
+                    return modal
+                }
+            }
+        }
+
+        return null
     }
 }
 

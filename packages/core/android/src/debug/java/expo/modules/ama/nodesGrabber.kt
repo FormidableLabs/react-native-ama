@@ -51,7 +51,8 @@ data class NodePayload(
 
 enum class NodeType {
     Pressable,
-    Text
+    Text,
+    TextInput
 }
 
 class NodesGrabber(private val appContext: AppContext) {
@@ -103,44 +104,59 @@ class NodesGrabber(private val appContext: AppContext) {
     }
 
     private fun checkView(view: View, a11yInfo: AccessibilityNodeInfoCompat) {
-        if (view.isPressable(a11yInfo)) {
-            addNode(
-                    node =
-                            NodePayload(
-                                    type = "Pressable",
-                                    viewId = view.id,
-                                    bounds = getTargetArea(view),
-                                    ariaLabel = a11yInfo.contentDescription?.toString(),
-                                    content = view.getTextOrContent(),
-                                    ariaRole = view.getAriaRole(a11yInfo),
-                                    fg = view.getTextColorHex(),
-                                    bg = view.getBackgroundColorHex(),
-                                    fontSize = view.getFontSize(),
-                                    isBold = view.isTextBold(),
-                                    isEnabled = !view.isDisabled(),
-                            )
-            )
-        } else if (view.isTextLike()) {
-            val textInfo = view.extractRNTextInfo()
-            val isAccessible = view.importantForAccessibility != View.IMPORTANT_FOR_ACCESSIBILITY_NO
+        val isPressable = view.isPressable(a11yInfo)
+        val isTextLike = view.isTextLike()
 
-            addNode(
-                    NodePayload(
-                            type = "Text",
-                            viewId = view.id,
-                            bounds = getTargetArea(view),
-                            ariaLabel = a11yInfo.contentDescription?.toString(),
-                            content = textInfo?.text.orEmpty(),
-                            ariaRole = view.getAriaRole(a11yInfo),
-                            fg = textInfo?.fg,
-                            bg = textInfo?.bg,
-                            fontSize = textInfo?.fontSizeSp, // note: this is in sp
-                            isBold = textInfo?.isBold == true,
-                            isEnabled = view.isEnabled,
-                            isAccessible = isAccessible
-                    )
-            )
+        if (!isPressable && !isTextLike) {
+            return
         }
+
+        val ariaRole = view.getAriaRole(a11yInfo)
+        val nodeType = view.getNodeType(
+                a11yInfo = a11yInfo,
+                ariaRole = ariaRole,
+                isPressable = isPressable,
+                isTextLike = isTextLike
+        )
+        val textInfo = if (nodeType != NodeType.Pressable) view.extractRNTextInfo() else null
+        val isAccessible =
+                if (nodeType == NodeType.Pressable) {
+                    null
+                } else {
+                    view.importantForAccessibility != View.IMPORTANT_FOR_ACCESSIBILITY_NO
+                }
+
+        addNode(
+                NodePayload(
+                        type = nodeType.name,
+                        viewId = view.id,
+                        bounds = getTargetArea(view),
+                        ariaLabel = a11yInfo.contentDescription?.toString(),
+                        content =
+                                if (nodeType == NodeType.Pressable) {
+                                    view.getTextOrContent()
+                                } else {
+                                    textInfo?.text.orEmpty()
+                                },
+                        ariaRole = ariaRole,
+                        fg = if (nodeType == NodeType.Pressable) view.getTextColorHex() else textInfo?.fg,
+                        bg = if (nodeType == NodeType.Pressable) view.getBackgroundColorHex() else textInfo?.bg,
+                        fontSize =
+                                if (nodeType == NodeType.Pressable) {
+                                    view.getFontSize()
+                                } else {
+                                    textInfo?.fontSizeSp
+                                },
+                        isBold =
+                                if (nodeType == NodeType.Pressable) {
+                                    view.isTextBold()
+                                } else {
+                                    textInfo?.isBold == true
+                                },
+                        isEnabled = if (nodeType == NodeType.Pressable) !view.isDisabled() else view.isEnabled,
+                        isAccessible = isAccessible
+                )
+        )
     }
 
     private val density: Float
@@ -169,6 +185,41 @@ class NodesGrabber(private val appContext: AppContext) {
 
         return arrayOf(widthDp, heightDp)
     }
+}
+
+private fun View.getNodeType(
+        a11yInfo: AccessibilityNodeInfoCompat,
+        ariaRole: String?,
+        isPressable: Boolean,
+        isTextLike: Boolean
+): NodeType {
+    if (isTextInput(a11yInfo, ariaRole)) {
+        return NodeType.TextInput
+    }
+
+    if (isPressable) {
+        return NodeType.Pressable
+    }
+
+    if (isTextLike) {
+        return NodeType.Text
+    }
+
+    throw IllegalStateException("Unsupported node type for viewId=$id")
+}
+
+private fun View.isTextInput(
+        a11yInfo: AccessibilityNodeInfoCompat,
+        ariaRole: String?
+): Boolean {
+    val normalizedRole = ariaRole?.trim()?.lowercase()
+    val className = a11yInfo.className?.toString() ?: javaClass.name
+
+    return normalizedRole == "text input" ||
+            normalizedRole == "text field" ||
+            this is android.widget.EditText ||
+            className.endsWith(".EditText") ||
+            className.endsWith("ReactEditText")
 }
 
 fun View.isPressable(a11yInfo: AccessibilityNodeInfoCompat): Boolean {

@@ -196,7 +196,7 @@ export const BottomSheet = React.forwardRef<
       onTimeout,
       translateY,
       visible,
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+
     ]);
 
     React.useEffect(() => {
