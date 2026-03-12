@@ -1,22 +1,22 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   TextInput as RNTextInput,
   TextInputProps as RNTextInputProps,
-} from "react-native";
-import { UseTextInput, useTextInput } from "../hooks/useTextInput";
+} from 'react-native';
+import { UseTextInput, useTextInput } from '../hooks/useTextInput';
 
 export type A11yProps = {
-  importantForAccessibility: "no-hide-descendants";
+  importantForAccessibility: 'no-hide-descendants';
   accessibilityElementsHidden: true;
 };
 
 type TextInputBaseProps = Omit<RNTextInputProps, 'accessibilityLabel' | 'aria-label'> &
-  Omit<UseTextInput, "required" | "accessibilityLabel"> & {
-    labelPosition?: "beforeInput" | "afterInput";
+  Omit<UseTextInput, 'required' | 'accessibilityLabel'> & {
+    labelPosition?: 'beforeInput' | 'afterInput';
     nextFormField?: React.RefObject<RNTextInput>;
     id?: string;
     nextFieldId?: string;
-    errorPosition?: "belowLabel" | "afterInput";
+    errorPosition?: 'belowLabel' | 'afterInput';
     renderLabel?: (a11yProps: A11yProps) => React.ReactNode;
     renderError?: (a11yProps: A11yProps) => React.ReactNode;
   };
@@ -28,7 +28,7 @@ export type TextInputProps =
 
 
 const labelA11yProps: A11yProps = {
-  importantForAccessibility: "no-hide-descendants",
+  importantForAccessibility: 'no-hide-descendants',
   accessibilityElementsHidden: true,
 };
 
@@ -43,8 +43,8 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       hasValidation,
       errorMessage,
       accessibilityLabel,
-      labelPosition = "beforeInput",
-      errorPosition = "afterInput",
+      labelPosition = 'beforeInput',
+      errorPosition = 'afterInput',
       renderLabel,
       renderError,
       ...rest
@@ -67,19 +67,19 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       hasValidation,
       errorMessage,
       required: false,
-      accessibilityLabel: accessibilityLabel || rest?.["aria-label"],
+      accessibilityLabel: accessibilityLabel || rest?.['aria-label'],
     });
 
     const fullAccessibilityHint = [accessibilityHint, errorMessage]
       .filter(Boolean)
-      ?.join(", ");
+      ?.join(', ');
 
     const showError = hasError && renderError;
 
     return (
       <>
-        {labelPosition === "beforeInput" ? renderLabel?.(labelA11yProps) : null}
-        {errorPosition === "belowLabel" && showError ? renderError?.(labelA11yProps) : null}
+        {labelPosition === 'beforeInput' ? renderLabel?.(labelA11yProps) : null}
+        {errorPosition === 'belowLabel' && showError ? renderError?.(labelA11yProps) : null}
         <RNTextInput
           ref={inputRef}
           {...rest}
@@ -87,8 +87,8 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
           accessibilityLabel={accessibilityLabel ?? rest['aria-label']}
           accessibilityHint={fullAccessibilityHint}
         />
-        {labelPosition === "afterInput" ? renderLabel?.(labelA11yProps) : null}
-        {errorPosition === "afterInput" && showError ? renderError?.(labelA11yProps) : null}
+        {labelPosition === 'afterInput' ? renderLabel?.(labelA11yProps) : null}
+        {errorPosition === 'afterInput' && showError ? renderError?.(labelA11yProps) : null}
       </>
     );
   }

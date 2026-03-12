@@ -1,6 +1,6 @@
-import * as React from "react";
-import { InteractionManager, TextInput } from "react-native";
-import { useFocus } from "../hooks/useFocus";
+import * as React from 'react';
+import { InteractionManager, TextInput } from 'react-native';
+import { useFocus } from '../hooks/useFocus';
 
 export type FormProps = React.PropsWithChildren<{
   onSubmit: () => boolean | Promise<boolean>;
@@ -126,10 +126,10 @@ export const useForm = (
   if (!context) {
     __DEV__ &&
       console.error(
-        "Please wrap your form field inside the <Form /> component"
+        'Please wrap your form field inside the <Form /> component'
       );
     throw new Error(
-      "useForm must be used within a FormContextProvider, please wrap your form field inside the <Form /> component"
+      'useForm must be used within a FormContextProvider, please wrap your form field inside the <Form /> component'
     );
   }
 

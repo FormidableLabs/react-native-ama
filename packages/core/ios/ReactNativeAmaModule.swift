@@ -370,24 +370,42 @@ extension ReactNativeAmaModule {
             )
             let afterModalVisible = self.isModalVisible(in: rootView)
 
-            let payload: [String: Any] = [
-                "rootTag": tappedView.tag,
-                "before": self.convertSnapshotMapToDict(
-                    snapshotMap: beforeSnapshot
-                ),
-                "after": self.convertSnapshotMapToDict(
-                    snapshotMap: afterSnapshot
-                ),
-                "beforeModalVisible": beforeModalVisible,
-                "afterModalVisible": afterModalVisible,
-            ]
-
             isCheckScheduled = true
             self.getNodesToCheck()
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                [weak self] in
+            let settleDelay: TimeInterval = 0.12
+            DispatchQueue.main.asyncAfter(deadline: .now() + settleDelay) {
+                [weak self, weak tappedView, weak rootView] in
                 guard let self = self else { return }
+                guard let tappedView = tappedView,
+                    let rootView = rootView,
+                    tappedView.window != nil,
+                    rootView.window != nil
+                else {
+                    isCheckScheduled = false
+                    return
+                }
+
+                let settledSnapshot = self.takeSnapshotOfTappedView(
+                    view: tappedView,
+                    root: rootView
+                )
+
+                let payload: [String: Any] = [
+                    "rootTag": tappedView.tag,
+                    "before": self.convertSnapshotMapToDict(
+                        snapshotMap: beforeSnapshot
+                    ),
+                    "after": self.convertSnapshotMapToDict(
+                        snapshotMap: afterSnapshot
+                    ),
+                    "afterSettled": self.convertSnapshotMapToDict(
+                        snapshotMap: settledSnapshot
+                    ),
+                    "beforeModalVisible": beforeModalVisible,
+                    "afterModalVisible": afterModalVisible,
+                ]
+
                 isCheckScheduled = false
                 self.sendEvent("onUIInteraction", payload)
             }

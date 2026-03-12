@@ -1,5 +1,5 @@
-import React from "react";
-import { useForm } from "../components/Form";
+import React from 'react';
+import { useForm } from '../components/Form';
 
 export type FormSubmitRenderProps = {
   onPress: () => Promise<void>;

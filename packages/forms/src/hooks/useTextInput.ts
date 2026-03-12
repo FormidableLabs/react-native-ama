@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import type {
   LayoutChangeEvent,
   NativeSyntheticEvent,
@@ -7,11 +7,11 @@ import type {
   TextInputSubmitEditingEventData,
   TextStyle,
   ViewStyle,
-} from "react-native";
-import { TextInputProps } from "../components/TextInput";
-import { UseFormField, useFormField } from "./useFormField";
+} from 'react-native';
+import { TextInputProps } from '../components/TextInput';
+import { UseFormField, useFormField } from './useFormField';
 
-export type UseTextInput = Omit<UseFormField, "hasFocusCallback"> & {
+export type UseTextInput = Omit<UseFormField, 'hasFocusCallback'> & {
   onLayout?: (event: LayoutChangeEvent) => void;
   returnKeyType?: ReturnKeyTypeOptions;
   onSubmitEditing?: (
@@ -37,7 +37,7 @@ export const useTextInput = ({
   ...rest
 }: UseTextInput) => {
   const [theReturnKeyType, setTheReturnKeyType] = React.useState(
-    returnKeyType || "next"
+    returnKeyType || 'next'
   );
   const formField = useFormField({
     hasFocusCallback: true,
@@ -57,7 +57,7 @@ export const useTextInput = ({
       formField.isLastField() && returnKeyType == null;
 
     if (setReturnKeyTypeAsDone) {
-      setTheReturnKeyType("done");
+      setTheReturnKeyType('done');
     }
 
     onLayout?.(event);
@@ -72,7 +72,7 @@ export const useTextInput = ({
     returnKeyType: theReturnKeyType,
     onSubmitEditing: handleOnSubmitEditing,
     onLayout: checkReturnKeyType,
-    blurOnSubmit: theReturnKeyType === "done",
+    blurOnSubmit: theReturnKeyType === 'done',
   };
 
   return {

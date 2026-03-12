@@ -1,4 +1,4 @@
-import { useForm } from "../components/Form";
+import { useForm } from '../components/Form';
 
 export type UseFormSubmit = {
   submitForm: () => Promise<void>;

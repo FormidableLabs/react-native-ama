@@ -1,6 +1,6 @@
-import React from "react";
-import { Keyboard, ViewStyle } from "react-native";
-import { useForm } from "../components/Form";
+import React from 'react';
+import { Keyboard, ViewStyle } from 'react-native';
+import { useForm } from '../components/Form';
 
 export type UseFormField = {
   ref?: React.RefObject<any> | React.ForwardedRef<any> | null;
@@ -103,7 +103,7 @@ export const useFormField = ({
 
   const fullAccessibilityHint = [accessibilityHint, errorMessage]
     .filter(Boolean)
-    .join(",");
+    .join(',');
 
   return {
     focusNextFormField,

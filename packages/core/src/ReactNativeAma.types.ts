@@ -47,6 +47,7 @@ export type AmaUiSnapshotsData = {
   rootTag: number;
   before: Record<number, AmaUiSnapshot>;
   after: Record<number, AmaUiSnapshot>;
+  afterSettled?: Record<number, AmaUiSnapshot>;
 	beforeModalVisible: boolean;
 	afterModalVisible: boolean
 };
