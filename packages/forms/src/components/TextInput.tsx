@@ -44,7 +44,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       errorMessage,
       accessibilityLabel,
       labelPosition = "beforeInput",
-      errorPosition = "belowLabel",
+      errorPosition = "afterInput",
       renderLabel,
       renderError,
       ...rest
@@ -74,11 +74,12 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       .filter(Boolean)
       ?.join(", ");
 
+    const showError = hasError && renderError;
 
     return (
       <>
         {labelPosition === "beforeInput" ? renderLabel?.(labelA11yProps) : null}
-        {errorPosition === "belowLabel" ? renderError?.(labelA11yProps) : null}
+        {errorPosition === "belowLabel" && showError ? renderError?.(labelA11yProps) : null}
         <RNTextInput
           ref={inputRef}
           {...rest}
@@ -87,7 +88,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
           accessibilityHint={fullAccessibilityHint}
         />
         {labelPosition === "afterInput" ? renderLabel?.(labelA11yProps) : null}
-        {errorPosition === "afterInput" ? renderError?.(labelA11yProps) : null}
+        {errorPosition === "afterInput" && showError ? renderError?.(labelA11yProps) : null}
       </>
     );
   }

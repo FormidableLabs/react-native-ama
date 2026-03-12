@@ -46,8 +46,8 @@ const ExampleForm = () => {
         defaultValue={text}
         label={<Text>Email address:</Text>}
       />
-      <FormSubmit accessibilityLabel="Submit">
-        <CustomSubmitButton />
+      <FormSubmit>
+        {({ onPress }) => <CustomSubmitButton onPress={onPress} />}
       </FormSubmit>
     </Form>
   );

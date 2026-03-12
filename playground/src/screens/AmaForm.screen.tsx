@@ -13,6 +13,7 @@ export const AmaFormScreen = () => {
   const [lastName, setLastName] = React.useState("");
   const [testKeyboardTrap, setTestKeyboardTrap] = React.useState(false);
   const formRef = React.useRef<FormActions>(null);
+  const [isValidating, setIsValidating] = React.useState(false);
   const [invalidFields, setInvalidFields] = React.useState<{
     lastName: boolean;
     firstName: boolean;
@@ -24,13 +25,18 @@ export const AmaFormScreen = () => {
   const lastNameRef = React.useRef(null);
 
   const handleOnSubmit = () => {
-    console.log("handleOnSubmit");
+    setIsValidating(true);
+
     const hasErrors = firstName.length === 0 || lastName.length === 0;
 
     setInvalidFields({
       firstName: firstName.length === 0,
       lastName: lastName.length === 0,
     });
+
+    setTimeout(() => {
+      setIsValidating(false);
+    }, 100);
 
     return !hasErrors;
   };
@@ -48,6 +54,9 @@ export const AmaFormScreen = () => {
           hasError={invalidFields.firstName}
           renderLabel={(a11yProps) =>
             <Text style={styles.labelComponent} {...a11yProps} >First name:</Text>
+          }
+          renderError={(a11yProps) =>
+            <Text style={styles.error} {...a11yProps}>Please enter a valid first name</Text>
           }
         />
 
@@ -74,7 +83,7 @@ export const AmaFormScreen = () => {
             <Text style={styles.labelComponent} {...a11yProps}>Last name:</Text>
           }
           renderError={(a11yProps) =>
-            <Text style={styles.error} {...a11yProps}>The thing cannot be null</Text>
+            <Text style={styles.error} {...a11yProps}>Please enter a valid last name</Text>
           }
           hasError={invalidFields.lastName}
           ref={lastNameRef}
@@ -98,8 +107,8 @@ export const AmaFormScreen = () => {
           hasValidation={false}
         />
         <Spacer height="big" />
-        <Form.Submit accessibilityLabel="Submit" busy={false}>
-          <CTAPressable title="Submit" />
+        <Form.Submit>
+          {({ onPress }) => <CTAPressable onPress={onPress} title="Submit" aria-busy={isValidating} />}
         </Form.Submit>
       </Form>
     </ScrollView>
@@ -127,6 +136,6 @@ const styles = StyleSheet.create({
     marginVertical: theme.padding.normal,
   },
   error: {
-    color: "#f00",
+    color: "#A80000",
   },
 });
