@@ -79,10 +79,6 @@ class NodesGrabber(private val appContext: AppContext) {
             return
         }
 
-        if (view.hidesAccessibilityDescendants()) {
-            return
-        }
-
         val info = view.createAccessibilityNodeInfo()
         val a11yInfo = AccessibilityNodeInfoCompat.wrap(info)
 

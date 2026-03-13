@@ -32,9 +32,9 @@ export const checkTextInputs = (nodesToCheck: AmaNode[]): AmaError[] => {
     const ariaLabel = removeEndingSymbol(inputText.ariaLabel);
     const textInputLabel = ariaLabel
       ? nodesToCheck.find(
-          // Ignores symbols like ":"
-          (node) => removeEndingSymbol(node.content) === ariaLabel
-        )
+        // Ignores symbols like ":"
+        (node) => node.type === "Text" && removeEndingSymbol(node.content) === ariaLabel
+      )
       : false;
 
     const isLabelAlsoAccessible =
