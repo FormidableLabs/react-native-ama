@@ -8,6 +8,7 @@ const configFilePath = path.join(projectRoot, configFileName);
 const defaultConfig = {
   rules: {},
   accessibilityLabelExceptions: [],
+  log: 'inspect',
 };
 
 if (!fs.existsSync(configFilePath)) {

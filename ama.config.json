@@ -1,6 +1,7 @@
 {
   "rules": {},
   "accessibilityLabelExceptions": [],
-  "highlight": "border"
+  "highlight": "border",
+  "log": "always"
 }
 

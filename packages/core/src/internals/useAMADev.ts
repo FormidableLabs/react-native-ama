@@ -13,6 +13,7 @@ import projectRules from './config';
 import { AmaError } from './types';
 import { amaClearHighlight } from './utils/amaClearHighlight';
 import logger from './utils/logger';
+import { logFoundIssues } from './utils/logFoundIssues';
 import { A11ySeverity, AMA_COLORS, RULES_HELP } from './utils/rules';
 
 let issueHighlighted: Array<number> = [];
@@ -118,9 +119,7 @@ export const useAMADev = __DEV__
         resetFixedIssues(previousIssues.current, allIssues);
       }
 
-      if (allIssues.length > 0) {
-        logger?.log(`Issues found: ${allIssues.length}`);
-      }
+      logFoundIssues?.(allIssues);
 
       if (allIssues.length) {
         const issuesByViewId = allIssues.reduce((acc, issue) => {

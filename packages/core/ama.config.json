@@ -2,6 +2,7 @@
   "rules": {},
   "accessibilityLabelExceptions": [],
   "highlight": "both",
+  "log": "inspect",
   "uppercaseMinLength": 4,
   "checks": {
     "ui": true,

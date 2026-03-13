@@ -16,8 +16,9 @@ export const NON_OVERRIDABLE_RULES: string[] | undefined = __DEV__
   : undefined;
 
 export type HighlightMode = 'border' | 'background' | 'both';
+export type LogMode = 'always' | 'inspect';
 
-type OverrideRule = {
+export type AmaProjectConfig = {
   rules: Record<
     | Partial<AmaRule>
     | 'CONTRAST_CHECKER_MAX_DEPTH'
@@ -26,6 +27,7 @@ type OverrideRule = {
   > | null;
   accessibilityLabelExceptions: string[];
   highlight: HighlightMode;
+  log: LogMode;
   uppercaseMinLength: number;
   checks: {
     ui: boolean;
@@ -37,14 +39,14 @@ type OverrideRule = {
   };
 };
 
-const defaultRules: OverrideRule = require('./../../ama.config.json');
+const defaultRules: AmaProjectConfig = require('./../../ama.config.json');
 let projectRules = defaultRules;
 
 try {
   // look upwards to user's project root
   // e.g we are here:
   // root/node_modules/@react-native-ama/internal/dist/utils/logger.ts
-  const userDefinedRules: OverrideRule = require('./../../../../ama.config.json');
+  const userDefinedRules: Partial<AmaProjectConfig> = require('./../../../../ama.config.json');
   projectRules = Object.assign(projectRules, userDefinedRules);
 
   logger?.log("Using project's config file");
