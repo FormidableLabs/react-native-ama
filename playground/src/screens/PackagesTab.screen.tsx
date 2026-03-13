@@ -6,6 +6,7 @@ import { Header } from "../components/Header";
 import { ListItem } from "../components/ListItem";
 import { Spacer } from "../components/Spacer";
 import { theme } from "../theme";
+import { Text } from "../components/Text";
 
 export const PackagesTabScreen = () => {
   return (
@@ -16,8 +17,18 @@ export const PackagesTabScreen = () => {
         style={theme.safeAreaView}
         edges={["left", "right", "bottom"]}
       >
+        <View style={styles.header}>
+          <Header title="Packages" white />
+
+          <Text white>
+           This section showcases packages developed by the React Native AMA team.
+          </Text>
+          <Text white>
+           Each package includes a demo screen and documentation to help you get started.
+          </Text>
+        </View>
+
         <ScrollView style={styles.list}>
-          <Header title="Packages" />
           <View style={styles.group}>
             <ListItem
               title="@react-native-ama/bottom-sheet"
@@ -38,9 +49,15 @@ export const PackagesTabScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  header: {
+    backgroundColor: theme.color.header,
+    paddingHorizontal: theme.padding.big,
+    paddingBottom: theme.padding.big,
+  },
   list: {
     paddingHorizontal: theme.padding.big,
     backgroundColor: theme.color.white,
+    paddingTop: theme.padding.big,
   },
   group: {
     borderWidth: 1,

@@ -111,7 +111,6 @@ const AMAErrorComponent = ({ issues }: { issues?: AmaError[] }) => {
           issueIndex={activeIssueIndex.id}
         />
       ) : null}
-      <View style={{height: 150, paddingTop: 20}}>
       <View
         style={[styles!.failedBar]}
         accessible={false}
@@ -128,7 +127,6 @@ const AMAErrorComponent = ({ issues }: { issues?: AmaError[] }) => {
             <Text style={{ fontWeight: 'bold' }}>Inspect ›</Text>
           </Text>
         </AMAButton>
-      </View>
       </View>
     </>
   );
@@ -360,6 +358,8 @@ const styles = __DEV__
     failedBar: {
       backgroundColor: '#A31420',
       alignSelf: 'center',
+      position: 'absolute',
+      bottom: getFailedBarBottomOffset(),
       flexDirection: 'row',
       alignItems: 'center',
       shadowOffset: {

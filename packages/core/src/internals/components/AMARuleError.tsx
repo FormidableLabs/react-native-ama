@@ -85,19 +85,12 @@ export const AMARuleError = __DEV__
 
           return (
             <React.Fragment key={index}>
-              <Text>(</Text>
-              <Text
-                style={[
-                  styles!.swatch,
-                  {
-                    backgroundColor: color,
-                  },
-                ]}
-              >
-                {'  '}
+              <Text style={styles?.text}>(</Text>
+              <Text style={styles!.swatchFrame} importantForAccessibility='no-hide-descendants' accessibilityElementsHidden>
+                <Text style={[styles!.swatchGlyph, { color }]}>■</Text>
               </Text>
-              <Text style={styles?.text}> {color}</Text>
-              <Text>)</Text>
+              <Text style={styles?.text} importantForAccessibility='no-hide-descendants' accessibilityElementsHidden> {color}</Text>
+              <Text style={styles?.text}>)</Text>
             </React.Fragment>
           );
         }
@@ -133,9 +126,9 @@ export const AMARuleError = __DEV__
         <View style={[styles!.row, styles?.column]}>
           <Text style={styles?.text}>{ruleHelp.message}</Text>
           {issue.extra ? (
-            <Text style={styles?.text}>
+            <View style={styles!.extraInline}>
               {renderTextWithColorSwatches(String(issue.extra))}
-            </Text>
+            </View>
           ) : null}
         </View>
         <Text style={[styles!.bold, styles?.full]} aria-role="header">
@@ -190,13 +183,20 @@ const styles = __DEV__
       backgroundColor: '#333',
       color: '#fff',
     },
-    swatch: {
-      borderWidth: 1,
-      borderColor: '#000',
+    extraInline: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      alignItems: 'center',
+    },
+    swatchFrame: {
+      backgroundColor: '#000',
+      paddingHorizontal: 2,
       marginHorizontal: 2,
       lineHeight: 14,
-      width: 14,
-      height: 14,
+    },
+    swatchGlyph: {
+      fontSize: 11,
+      lineHeight: 14,
     },
   })
   : null;
