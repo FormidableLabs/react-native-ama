@@ -5,10 +5,12 @@ import {
 } from 'react-native';
 import { UseTextInput, useTextInput } from '../hooks/useTextInput';
 
-export type A11yProps = {
-  importantForAccessibility: 'no-hide-descendants';
-  accessibilityElementsHidden: true;
+export const a11yProps: Pick<TextInputProps, 'accessibilityElementsHidden' | 'importantForAccessibility'> = {
+  importantForAccessibility: 'no-hide-descendants',
+  accessibilityElementsHidden: true, 
 };
+
+type A11yProps = typeof a11yProps;
 
 type TextInputBaseProps = Omit<RNTextInputProps, 'accessibilityLabel' | 'aria-label'> &
   Omit<UseTextInput, 'required' | 'accessibilityLabel'> & {

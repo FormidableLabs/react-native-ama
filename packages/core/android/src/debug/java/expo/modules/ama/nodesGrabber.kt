@@ -79,6 +79,10 @@ class NodesGrabber(private val appContext: AppContext) {
             return
         }
 
+        if (view.hidesAccessibilityDescendants()) {
+            return
+        }
+
         val info = view.createAccessibilityNodeInfo()
         val a11yInfo = AccessibilityNodeInfoCompat.wrap(info)
 
@@ -123,7 +127,7 @@ class NodesGrabber(private val appContext: AppContext) {
                 if (nodeType == NodeType.Pressable) {
                     null
                 } else {
-                    view.importantForAccessibility != View.IMPORTANT_FOR_ACCESSIBILITY_NO
+                    !view.hidesAccessibilityDescendants() && a11yInfo.isVisibleToUser
                 }
 
         addNode(
@@ -222,14 +226,17 @@ private fun View.isTextInput(
             className.endsWith("ReactEditText")
 }
 
+private fun View.hidesAccessibilityDescendants(): Boolean {
+    return importantForAccessibility == View.IMPORTANT_FOR_ACCESSIBILITY_NO ||
+            importantForAccessibility == View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
+}
+
 fun View.isPressable(a11yInfo: AccessibilityNodeInfoCompat): Boolean {
     return this.isClickable && this.isAccessible(a11yInfo)
 }
 
 fun View.isAccessible(a11yInfo: AccessibilityNodeInfoCompat): Boolean {
-    if (this.importantForAccessibility == View.IMPORTANT_FOR_ACCESSIBILITY_NO ||
-                    !a11yInfo.isVisibleToUser
-    ) {
+    if (this.hidesAccessibilityDescendants() || !a11yInfo.isVisibleToUser) {
         return false
     }
 
