@@ -111,9 +111,8 @@ const AMAErrorComponent = ({ issues }: { issues?: AmaError[] }) => {
           issueIndex={activeIssueIndex.id}
         />
       ) : null}
-      <View style={{height: 150, paddingTop: 20}}>
       <View
-        style={[styles!.failedBar]}
+        style={[styles!.failedBar, { bottom: failedBarBottom }]}
         accessible={false}
         accessibilityElementsHidden
         importantForAccessibility="no-hide-descendants"
@@ -128,7 +127,6 @@ const AMAErrorComponent = ({ issues }: { issues?: AmaError[] }) => {
             <Text style={{ fontWeight: 'bold' }}>Inspect ›</Text>
           </Text>
         </AMAButton>
-      </View>
       </View>
     </>
   );
