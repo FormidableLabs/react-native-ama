@@ -1,5 +1,6 @@
 import { useAMAContext } from "@react-native-ama/core";
 import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
@@ -7,7 +8,6 @@ import {
 import React from "react";
 import { BackButton } from "./components/BackButton";
 import { Header } from "./components/Header";
-import { HomeScreen } from "./screens/Home.screen";
 import { InteractionsScreen } from "./screens/Interactions.screen";
 import { PressableScreen } from "./screens/Pressable.screen";
 import { TextScreen } from "./screens/Text.screen";
@@ -15,6 +15,25 @@ import { theme } from "./theme";
 import { FormScreen } from "./screens/Form.screen";
 import { AmaBottomSheetScreen } from "./screens/AmaBottomSheet.screen";
 import { AmaFormScreen } from "./screens/AmaForm.screen";
+import { PlaygroundTabScreen } from "./screens/PlaygroundTab.screen";
+import { PackagesTabScreen } from "./screens/PackagesTab.screen";
+
+const HomeTabs = () => {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen
+        name="PlaygroundTab"
+        component={PlaygroundTabScreen}
+        options={{ title: "Playground", headerShown: false }}
+      />
+      <Tab.Screen
+        name="PackagesTab"
+        component={PackagesTabScreen}
+        options={{ title: "Packages", headerShown: false }}
+      />
+    </Tab.Navigator>
+  );
+};
 
 export const AppNavigator = () => {
   const { reactNavigationScreenOptions: amaAnimationScreenOptions } =
@@ -33,8 +52,8 @@ export const AppNavigator = () => {
         }}
       >
         <Stack.Screen
-          name="Home"
-          component={HomeScreen}
+          name="HomeTabs"
+          component={HomeTabs}
           options={{
             headerShown: false,
           }}
@@ -115,6 +134,7 @@ export const AppNavigator = () => {
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
+const Tab = createBottomTabNavigator<HomeTabsParamList>();
 
 const BaseNavigatorOptions: NativeStackNavigationOptions = {
   headerTitleAlign: "center",
@@ -122,7 +142,7 @@ const BaseNavigatorOptions: NativeStackNavigationOptions = {
 };
 
 export type RootStackParamList = {
-  Home: undefined;
+  HomeTabs: undefined;
   Pressable: undefined;
   TouchableOpacity: undefined;
   TouchableWithoutFeedback: undefined;
@@ -131,6 +151,11 @@ export type RootStackParamList = {
   Form: undefined;
   AmaBottomSheet: undefined;
   AmaForms: undefined;
+};
+
+type HomeTabsParamList = {
+  PlaygroundTab: undefined;
+  PackagesTab: undefined;
 };
 
 declare global {

@@ -37,7 +37,7 @@ const checkPlatformSupportsRole = (
   role: string,
   platform: Partial<typeof Platform.OS>
 ) => {
-  const supportedPlatforms = MAPPED_ROLE_CHECKS[role] || [];
+  const supportedPlatforms = MAPPED_ROLE_CHECKS[role.toLocaleLowerCase()] || [];
 
   return supportedPlatforms.includes(platform);
 };

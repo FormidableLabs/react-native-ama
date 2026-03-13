@@ -32,6 +32,7 @@ export const AMARuleError = __DEV__
     maxHeight: number;
   }) => {
     const ruleHelp = RULES_HELP![issue.rule];
+    const COLOR_TOKEN_REGEX = /(\(#[0-9A-Fa-f]{3,8}\))/g;
 
     const renderMarkdown = (text: string) => {
       const parts = text.split(REGEX_MARKDOWN);
@@ -75,6 +76,40 @@ export const AMARuleError = __DEV__
       );
     };
 
+    const renderTextWithColorSwatches = (text: string) => {
+      const parts = text.split(COLOR_TOKEN_REGEX);
+
+      return parts.map((part, index) => {
+        if (part.startsWith('(#') && part.endsWith(')')) {
+          const color = part.slice(1, -1);
+
+          return (
+            <React.Fragment key={index}>
+              <Text>(</Text>
+              <Text
+                style={[
+                  styles!.swatch,
+                  {
+                    backgroundColor: color,
+                  },
+                ]}
+              >
+                {'  '}
+              </Text>
+              <Text style={styles?.text}> {color}</Text>
+              <Text>)</Text>
+            </React.Fragment>
+          );
+        }
+
+        return (
+          <Text key={index} style={styles?.text}>
+            {part}
+          </Text>
+        );
+      });
+    };
+
     return (
       <ScrollView style={{ maxHeight, flex: 1, width: '100%', padding: 12 }}>
         <View style={styles!.row}>
@@ -98,7 +133,9 @@ export const AMARuleError = __DEV__
         <View style={[styles!.row, styles?.column]}>
           <Text style={styles?.text}>{ruleHelp.message}</Text>
           {issue.extra ? (
-            <Text style={styles?.text}>{issue.extra}</Text>
+            <Text style={styles?.text}>
+              {renderTextWithColorSwatches(String(issue.extra))}
+            </Text>
           ) : null}
         </View>
         <Text style={[styles!.bold, styles?.full]} aria-role="header">
@@ -152,6 +189,14 @@ const styles = __DEV__
     code: {
       backgroundColor: '#333',
       color: '#fff',
+    },
+    swatch: {
+      borderWidth: 1,
+      borderColor: '#000',
+      marginHorizontal: 2,
+      lineHeight: 14,
+      width: 14,
+      height: 14,
     },
   })
   : null;
