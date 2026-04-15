@@ -45,3 +45,11 @@
   Update peer dependency ranges and inter-package references to the 2.0 line.
   Keep deferred-for-deletion package out of active migration targets.
 - **Status:** backlog
+
+
+### Check contrast should check if AAA check is turned off
+- **Type:** defect
+- **Source:** User idea
+- **Context:**
+  At the moment [checkContrast.ts](../packages/core/src/internals/checks/checkContrast.ts) does not check if it should perform an AA or AAA contrast check. I've disabled on the short term if (!passesAAA && false) {
+- **Status:** backlog

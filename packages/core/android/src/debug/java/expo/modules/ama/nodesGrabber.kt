@@ -52,7 +52,8 @@ data class NodePayload(
 enum class NodeType {
     Pressable,
     Text,
-    TextInput
+    TextInput,
+    Image
 }
 
 class NodesGrabber(private val appContext: AppContext) {
@@ -106,19 +107,25 @@ class NodesGrabber(private val appContext: AppContext) {
     private fun checkView(view: View, a11yInfo: AccessibilityNodeInfoCompat) {
         val isPressable = view.isPressable(a11yInfo)
         val isTextLike = view.isTextLike()
+        val isImage = view.isImage()
 
-        if (!isPressable && !isTextLike) {
+        if (!isPressable && !isTextLike && !isImage) {
             return
         }
 
         val ariaRole = view.getAriaRole(a11yInfo)
-        val nodeType = view.getNodeType(
-                a11yInfo = a11yInfo,
-                ariaRole = ariaRole,
-                isPressable = isPressable,
-                isTextLike = isTextLike
-        )
-        val textInfo = if (nodeType != NodeType.Pressable) view.extractRNTextInfo() else null
+        val nodeType =
+                view.getNodeType(
+                        a11yInfo = a11yInfo,
+                        ariaRole = ariaRole,
+                        isPressable = isPressable,
+                        isTextLike = isTextLike,
+                        isImage = isImage
+                )
+        val textInfo =
+                if (nodeType != NodeType.Pressable && nodeType != NodeType.Image)
+                        view.extractRNTextInfo()
+                else null
         val isAccessible =
                 if (nodeType == NodeType.Pressable) {
                     null
@@ -130,17 +137,22 @@ class NodesGrabber(private val appContext: AppContext) {
                 NodePayload(
                         type = nodeType.name,
                         viewId = view.id,
-                        bounds = getTargetArea(view),
+                        bounds = getTargetArea(view, nodeType),
                         ariaLabel = a11yInfo.contentDescription?.toString(),
                         content =
-                                if (nodeType == NodeType.Pressable) {
-                                    view.getTextOrContent()
-                                } else {
-                                    textInfo?.text.orEmpty()
+                                when (nodeType) {
+                                    NodeType.Pressable -> view.getTextOrContent()
+                                    NodeType.Image -> view.getImageContent()
+                                    else -> textInfo?.text.orEmpty()
                                 },
                         ariaRole = ariaRole,
-                        fg = if (nodeType == NodeType.Pressable) view.getTextColorHex() else textInfo?.fg,
-                        bg = if (nodeType == NodeType.Pressable) view.getBackgroundColorHex() else textInfo?.bg,
+                        fg =
+                                when (nodeType) {
+                                    NodeType.Pressable -> view.getTextColorHex()
+                                    NodeType.Image -> null
+                                    else -> textInfo?.fg
+                                },
+                        bg = view.getBackgroundColorHex(),
                         fontSize =
                                 if (nodeType == NodeType.Pressable) {
                                     view.getFontSize()
@@ -153,7 +165,9 @@ class NodesGrabber(private val appContext: AppContext) {
                                 } else {
                                     textInfo?.isBold == true
                                 },
-                        isEnabled = if (nodeType == NodeType.Pressable) !view.isDisabled() else view.isEnabled,
+                        isEnabled =
+                                if (nodeType == NodeType.Pressable) !view.isDisabled()
+                                else view.isEnabled,
                         isAccessible = isAccessible
                 )
         )
@@ -168,14 +182,18 @@ class NodesGrabber(private val appContext: AppContext) {
     /** px → dp */
     private fun pxToDp(px: Int): Float = px / density
 
-    private fun getTargetArea(view: View): Array<Float> {
+    private fun getTargetArea(view: View, nodeType: NodeType): Array<Float> {
+        // Images always need bounds
         val absBounds = Rect().also { view.createAccessibilityNodeInfo().getBoundsInScreen(it) }
 
-        view.getHitSlopRect()?.let { hitSlop ->
-            absBounds.left -= hitSlop.left
-            absBounds.top -= hitSlop.top
-            absBounds.right += hitSlop.right
-            absBounds.bottom += hitSlop.bottom
+        // Only apply hit slop to pressable views
+        if (nodeType == NodeType.Pressable) {
+            view.getHitSlopRect()?.let { hitSlop ->
+                absBounds.left -= hitSlop.left
+                absBounds.top -= hitSlop.top
+                absBounds.right += hitSlop.right
+                absBounds.bottom += hitSlop.bottom
+            }
         }
 
         val widthPx = absBounds.width()
@@ -191,7 +209,8 @@ private fun View.getNodeType(
         a11yInfo: AccessibilityNodeInfoCompat,
         ariaRole: String?,
         isPressable: Boolean,
-        isTextLike: Boolean
+        isTextLike: Boolean,
+        isImage: Boolean
 ): NodeType {
     if (isTextInput(a11yInfo, ariaRole)) {
         return NodeType.TextInput
@@ -201,6 +220,10 @@ private fun View.getNodeType(
         return NodeType.Pressable
     }
 
+    if (isImage) {
+        return NodeType.Image
+    }
+
     if (isTextLike) {
         return NodeType.Text
     }
@@ -208,10 +231,7 @@ private fun View.getNodeType(
     throw IllegalStateException("Unsupported node type for viewId=$id")
 }
 
-private fun View.isTextInput(
-        a11yInfo: AccessibilityNodeInfoCompat,
-        ariaRole: String?
-): Boolean {
+private fun View.isTextInput(a11yInfo: AccessibilityNodeInfoCompat, ariaRole: String?): Boolean {
     val normalizedRole = ariaRole?.trim()?.lowercase()
     val className = a11yInfo.className?.toString() ?: javaClass.name
 
@@ -337,14 +357,18 @@ fun View.getBackgroundColor(): Int? {
 
     /**
      * <View bgcolor="xxx">
+     * ```
      *     <Text>Text goes here</Text>
+     * ```
      * </View>
      *
      * Becomes:
      *
      * Container:
+     * ```
      *    ReactViewGroup <-- This has the bg colour
      *    ReactTextView
+     * ```
      */
     var p = parent
     val vg = (parent as? ViewGroup)
@@ -459,18 +483,20 @@ fun View.getHitSlopRect(): Rect? {
 fun View.getAriaRole(a11yInfo: AccessibilityNodeInfoCompat): String? {
     if (a11yInfo.isHeading) return "header"
     if (a11yInfo.collectionItemInfo?.isHeading == true) return "header"
-    if (Build.VERSION.SDK_INT >= 28 && this is TextView && this.isAccessibilityHeading) return "header"
+    if (Build.VERSION.SDK_INT >= 28 && this is TextView && this.isAccessibilityHeading)
+            return "header"
 
     val roleDescription: String? = a11yInfo.roleDescription?.toString()
     val className = a11yInfo.className?.toString() ?: this.javaClass.name
-    val defaultRole = when {
-        className.endsWith(".Button") -> "button"
-        className.endsWith(".CheckBox") -> "checkbox"
-        className.endsWith(".Switch") -> "switch"
-        className.endsWith(".EditText") -> "text field"
-        className.endsWith(".ImageView") && isClickable -> "image button"
-        else -> null
-    }
+    val defaultRole =
+            when {
+                className.endsWith(".Button") -> "button"
+                className.endsWith(".CheckBox") -> "checkbox"
+                className.endsWith(".Switch") -> "switch"
+                className.endsWith(".EditText") -> "text field"
+                className.endsWith(".ImageView") && isClickable -> "image button"
+                else -> null
+            }
 
     return roleDescription ?: defaultRole
 }
@@ -532,6 +558,45 @@ fun View.isTextLike(): Boolean {
                 (m.returnType == CharSequence::class.java ||
                         CharSequence::class.java.isAssignableFrom(m.returnType))
     }
+}
+
+fun View.isImage(): Boolean {
+    // Common Android + RN image classes
+    val candidateClassNames =
+            listOf(
+                    "android.widget.ImageView",
+                    "androidx.appcompat.widget.AppCompatImageView",
+                    "com.facebook.react.views.image.ReactImageView"
+            )
+    // 1) class match
+    for (name in candidateClassNames) {
+        runCatching { Class.forName(name) }.getOrNull()?.let { cls ->
+            if (cls.isInstance(this)) return true
+        }
+    }
+    return false
+}
+
+fun View.getImageContent(): String {
+    // Try content description first (primary accessibility text on Android)
+    if (!contentDescription.isNullOrEmpty()) {
+        return contentDescription.toString()
+    }
+
+    // Try to extract text from child views (some React Native images have text overlays)
+    if (this is ViewGroup) {
+        for (i in 0 until childCount) {
+            val child = getChildAt(i)
+            if (child is TextView) {
+                val text = child.text?.toString()
+                if (!text.isNullOrEmpty()) {
+                    return text
+                }
+            }
+        }
+    }
+
+    return ""
 }
 
 fun View.extractRNTextInfo(): TextInfo? {

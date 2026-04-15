@@ -9,8 +9,6 @@
 - [ ] Images marked non-accessible or hidden from accessibility are emitted in a way that lets the JS layer skip the alt-text rule instead of treating them as violations.
 - [ ] The new native `Image` node type is reflected in `packages/core/src/ReactNativeAma.types.ts` so the shared `AmaNode` contract stays aligned with the Android payload.
 - [ ] The Android payload change remains inside `android/src/debug/java` and does not expand AMA monitoring into release builds.
-- [ ] Test: Android native mapping coverage proves an accessible image with no label reaches JS as an image candidate for rule evaluation.
-- [ ] Test: Android native mapping coverage proves labeled images and non-accessible images preserve the metadata the JS layer needs to avoid false positives.
 
 #### Out of Scope
 - Changing iOS payload behavior.

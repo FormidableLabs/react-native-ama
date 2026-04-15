@@ -74,7 +74,7 @@ public class NodesGrabber {
     }
 
     private func checkView(_ view: UIView) {
-        let supported = view.isPressable || view.isText() || view.isTextInput() || view.isModal()
+        let supported = view.isPressable || view.isText() || view.isTextInput() || view.isImage()
 
         if !supported {
             return
@@ -111,7 +111,7 @@ public class NodesGrabber {
                 ),
                 isEnabled: !view.isDisabled(),
                 returnType: view.getReturnKeyType(),
-                isAccessible: view.isText() ? !view.accessibilityElementsHidden : nil
+                isAccessible: (view.isText() || view.isImage()) ? !view.accessibilityElementsHidden : nil
             )
         )
     }
@@ -209,20 +209,24 @@ extension UIView {
             return "Text"
         }
 
+        if isImage() {
+            return "Image"
+        }
+
         return ""
     }
 
     func getTargetArea() -> [Double]? {
-        if !isPressable {
+        if !isPressable && !isImage() {
             return nil
         }
 
         let baseSize: CGRect = self.frame
-        let insets = self.getHitSlopRect()
-        let pressableWidth = baseSize.width - insets.left - insets.right
-        let pressableHeight = baseSize.height - insets.top - insets.bottom
+        let insets = isPressable ? self.getHitSlopRect() : .zero
+        let width = baseSize.width - insets.left - insets.right
+        let height = baseSize.height - insets.top - insets.bottom
 
-        return [pressableWidth, pressableHeight]
+        return [width, height]
     }
 
     private func findColorIn(view: UIView) -> UIColor? {
@@ -469,6 +473,10 @@ extension UIView {
         }
 
         return false
+    }
+
+    func isImage() -> Bool {
+        return self is UIImageView
     }
 
     fileprivate func extractRNTextInfo() -> RNTextInfo? {

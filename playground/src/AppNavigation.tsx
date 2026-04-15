@@ -201,6 +201,7 @@ export type RootStackParamList = {
   Form: undefined;
   AmaBottomSheet: undefined;
   AmaForms: undefined;
+  AmaCore: undefined
 };
 
 type HomeTabsParamList = {
@@ -210,6 +211,6 @@ type HomeTabsParamList = {
 
 declare global {
   namespace ReactNavigation {
-    interface RootParamList extends RootStackParamList {}
+    interface RootParamList extends RootStackParamList { }
   }
 }

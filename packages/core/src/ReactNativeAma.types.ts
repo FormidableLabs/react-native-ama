@@ -5,7 +5,7 @@ export type OnLoadEventPayload = {
 };
 
 export type AmaNode = {
-  type: 'Pressable' | 'Text' | 'TextInput';
+  type: 'Pressable' | 'Text' | 'TextInput' | 'Image';
   viewId: number;
   bounds: [number, number, number, number];
   hitSlop?: { top: number; left: number; bottom: number; right: number };

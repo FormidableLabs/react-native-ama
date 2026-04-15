@@ -322,7 +322,7 @@ const Z_INDEX = 9999;
 
 const getFailedBarBottomOffset = () => {
   if (Platform.OS !== 'android') {
-    return 40;
+    return 140;
   }
 
   return 60
