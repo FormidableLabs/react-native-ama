@@ -5,7 +5,7 @@
 | 1 | iOS image payload | Extend the iOS debug node payload so accessible images reach JS with enough metadata for alt-text validation. | done |
 | 2 | Android image payload | Extend the Android debug node payload so accessible images reach JS with the same validation contract as iOS. | done |
 | 3 | Image alt rule | Add JS image-node typing and missing-alt-text evaluation without regressing the existing AMA rule flow. | done |
-| 4 | Images playground | Add a focused playground screen for manual verification of labeled, unlabeled, and decorative image cases. | pending |
+| 4 | Images playground | Add a focused playground screen for manual verification of labeled, unlabeled, and decorative image cases. | done |
 
 ## Suggested Order
 

@@ -77,6 +77,70 @@ internal → core → animations → react-native → forms → lists
 | `log` | When to log violations (`always`, `dev`, `never`) |
 | `accessibilityLabelExceptions` | Labels exempt from validation rules |
 
+## Native event payload contracts
+
+Source of truth for event payload shapes: `packages/core/src/ReactNativeAma.types.ts`.
+
+### Event: `onAmaNodes`
+
+Payload type: `AmaNodes = Record<number, AmaNode>`.
+
+`AmaNode` fields:
+
+| Field | Type | Required | Notes |
+|------|------|----------|-------|
+| `type` | `'Pressable' \| 'Text' \| 'TextInput' \| 'Image'` | Yes | Node category used by checkers. |
+| `viewId` | `number` | Yes | Native view identifier. |
+| `bounds` | `[number, number, number, number]` | Yes | Tuple for node bounds. |
+| `hitSlop` | `{ top: number; left: number; bottom: number; right: number }` | No | Press target expansion values. |
+| `ariaLabel` | `string` | No | Accessibility label. |
+| `ariaRole` | `string` | No | Accessibility role. |
+| `traits` | `string[]` | No | Platform traits/flags. |
+| `content` | `string` | No | Text content snapshot. |
+| `fg` | `string` | No | Foreground color value. |
+| `bg` | `string` | No | Background color value. |
+| `fontSize` | `number` | No | Font size in pt. |
+| `isBold` | `boolean` | No | Whether text is bold. |
+| `isEnabled` | `boolean` | No | Enabled/disabled state. |
+| `returnType` | `number` | No | Return key type for inputs. |
+| `hasOnSubmitEditing` | `boolean` | Yes | Whether submit handler exists. |
+| `isAccessible` | `boolean` | No | Text accessibility visibility/status indicator. |
+
+### Event: `onUIInteraction`
+
+Payload type: `AmaUiSnapshotsData`.
+
+`AmaUiSnapshotsData` fields:
+
+| Field | Type | Required | Notes |
+|------|------|----------|-------|
+| `rootTag` | `number` | Yes | Root surface identifier for snapshot pair. |
+| `before` | `Record<number, AmaUiSnapshot>` | Yes | Snapshot map before interaction. |
+| `after` | `Record<number, AmaUiSnapshot>` | Yes | Snapshot map immediately after interaction. |
+| `afterSettled` | `Record<number, AmaUiSnapshot>` | No | Optional post-settle snapshot map. |
+| `beforeModalVisible` | `boolean` | Yes | Modal visibility before interaction. |
+| `afterModalVisible` | `boolean` | Yes | Modal visibility after interaction. |
+
+`AmaUiSnapshot` fields used inside `before`/`after`/`afterSettled` maps:
+
+| Field | Type | Required |
+|------|------|----------|
+| `fgColor` | `string` | No |
+| `bgColor` | `string` | No |
+| `x` | `number` | Yes |
+| `y` | `number` | Yes |
+| `width` | `number` | Yes |
+| `height` | `number` | Yes |
+| `parentId` | `number` | Yes |
+| `isPressable` | `boolean` | Yes |
+| `isChecked` | `boolean` | Yes |
+| `isBusy` | `boolean` | Yes |
+| `isSelected` | `boolean` | Yes |
+| `isDisabled` | `boolean` | Yes |
+| `isExpanded` | `boolean` | Yes |
+
+Contract requirement: any field addition, rename, removal, or semantic change for these payloads must be updated together in iOS emitters, Android emitters, and `packages/core/src/ReactNativeAma.types.ts`.
+
 ## Key technical decisions
 
 - **No bundler** — packages ship source + `dist/` compiled by tsc. Consumers compile through Metro.

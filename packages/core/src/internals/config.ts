@@ -3,16 +3,16 @@ import { AmaRule, AmaRuleAction } from './utils/rules';
 
 export const NON_OVERRIDABLE_RULES: string[] | undefined = __DEV__
   ? [
-      'NO_ACCESSIBILITY_ROLE',
-      'NO_ACCESSIBILITY_LABEL',
-      'NO_KEYBOARD_TRAP',
-      'NO_UNDEFINED',
-      'NO_FORM_LABEL',
-      'FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE',
-      'BOTTOM_SHEET_CLOSE_ACTION',
-      'INCOMPATIBLE_ACCESSIBILITY_STATE',
-      'INCOMPATIBLE_ACCESSIBILITY_ROLE',
-    ]
+    'NO_ACCESSIBILITY_ROLE',
+    'NO_ACCESSIBILITY_LABEL',
+    'NO_KEYBOARD_TRAP',
+    'NO_UNDEFINED',
+    'NO_FORM_LABEL',
+    'FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE',
+    'BOTTOM_SHEET_CLOSE_ACTION',
+    'INCOMPATIBLE_ACCESSIBILITY_STATE',
+    'INCOMPATIBLE_ACCESSIBILITY_ROLE',
+  ]
   : undefined;
 
 export type HighlightMode = 'border' | 'background' | 'both';
@@ -54,4 +54,5 @@ try {
   logger?.log('Project config not found, using default one!');
 }
 
+logger?.log(JSON.stringify(projectRules, null, 2))
 export default projectRules;

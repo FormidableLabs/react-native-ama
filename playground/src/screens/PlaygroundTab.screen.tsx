@@ -31,15 +31,17 @@ export const PlaygroundTabScreen = () => {
         <ScrollView style={styles.list}>
           <Header title="Playground" />
           <View style={styles.group}>
+            <ListItem title="Forms" navigateTo="Form" />
+            <ListItem title="Images" navigateTo="Images" />
             <ListItem title="Pressable components" navigateTo="Pressable" />
             <ListItem title="Text" border={false} navigateTo="Text" />
           </View>
 
           <Spacer height="normal" />
+          <Header title="Advanced" />
 
           <View style={styles.group}>
             <ListItem title="Interactions" navigateTo="Interactions" />
-            <ListItem title="Forms" border={false} navigateTo="Form" />
           </View>
 
           <Spacer height="big" />

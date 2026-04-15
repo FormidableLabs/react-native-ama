@@ -9,6 +9,7 @@ import React from "react";
 import Svg, { Path, Rect } from "react-native-svg";
 import { BackButton } from "./components/BackButton";
 import { Header } from "./components/Header";
+import { ImagesScreen } from "./screens/Images.screen";
 import { InteractionsScreen } from "./screens/Interactions.screen";
 import { PressableScreen } from "./screens/Pressable.screen";
 import { TextScreen } from "./screens/Text.screen";
@@ -151,6 +152,15 @@ export const AppNavigator = () => {
           }}
         />
         <Stack.Screen
+          name="Images"
+          component={ImagesScreen}
+          options={{
+            headerTitle: () => (
+              <Header noMargin title={"Images"} autofocus white />
+            ),
+          }}
+        />
+        <Stack.Screen
           name="AmaBottomSheet"
           component={AmaBottomSheetScreen}
           options={{
@@ -199,6 +209,7 @@ export type RootStackParamList = {
   Interactions: undefined;
   Text: undefined;
   Form: undefined;
+  Images: undefined;
   AmaBottomSheet: undefined;
   AmaForms: undefined;
   AmaCore: undefined
