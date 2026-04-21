@@ -1,6 +1,6 @@
-import { AmaNode } from '../../ReactNativeAma.types';
-import { AmaError, AmaRule } from '../types';
-import { isAccessibilityLabelAllowed } from '../utils/isA11yLabelAllowed';
+import { AmaNode } from "../../ReactNativeAma.types";
+import { AmaError, AmaRule } from "../types";
+import { isAccessibilityLabelAllowed } from "../utils/isA11yLabelAllowed";
 
 export type UppercaseStringChecker = {
   node: AmaNode;
@@ -11,12 +11,12 @@ export type UppercaseStringChecker = {
 export const checkIsUppercase = ({
   node,
   canBeEmpty = true,
-  rule = 'NO_UPPERCASE_TEXT',
+  rule = "NO_UPPERCASE_TEXT",
 }: UppercaseStringChecker): AmaError | null => {
   const text = node.ariaLabel ?? node.content;
   const isEmpty = !text || text?.trim()?.length === 0;
 
-  if (isEmpty && canBeEmpty) {
+  if ((isEmpty && canBeEmpty) || !node.isAccessible) {
     return null;
   }
 
@@ -36,7 +36,7 @@ export const checkIsUppercase = ({
 const NO_LETTERS = /(\W|\d)/g;
 
 const isUpperCase = (string: string) => {
-  const cleanString = string.replaceAll(NO_LETTERS, '');
+  const cleanString = string.replaceAll(NO_LETTERS, "");
 
   if (cleanString.trim().length === 0) {
     return false;

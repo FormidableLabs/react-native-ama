@@ -1,9 +1,9 @@
-import { AmaNode } from '../../ReactNativeAma.types';
-import { AmaError } from '../types';
-import { shouldIgnoreContrastCheckForDisabledElement } from '../utils/ignoreContrastCheck';
+import { AmaNode } from "../../ReactNativeAma.types";
+import { AmaError } from "../types";
+import { shouldIgnoreContrastCheckForDisabledElement } from "../utils/ignoreContrastCheck";
 
 function hexToRgb(hex: string) {
-  if (!hex || typeof hex !== 'string') {
+  if (!hex || typeof hex !== "string") {
     return null;
   }
 
@@ -13,10 +13,10 @@ function hexToRgb(hex: string) {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result
     ? {
-      r: parseInt(result[1], 16),
-      g: parseInt(result[2], 16),
-      b: parseInt(result[3], 16),
-    }
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16),
+      }
     : null;
 }
 
@@ -56,7 +56,13 @@ export const checkContrast = (node: AmaNode): AmaError | null => {
    * In this case we can't perform a contrast check as is hard to perform
    * a contrast check on SVGs
    */
-  if (!fg || !bg || !node.content || node.type === 'TextInput') {
+  if (
+    !fg ||
+    !bg ||
+    !node.content ||
+    node.type === "TextInput" ||
+    !node.isAccessible
+  ) {
     return null;
   }
 
@@ -77,7 +83,7 @@ export const checkContrast = (node: AmaNode): AmaError | null => {
     return {
       label: node.ariaLabel,
       viewId: node.viewId,
-      rule: 'CONTRAST_FAILED_AAA',
+      rule: "CONTRAST_FAILED_AAA",
       extra: `The color contrast between the foreground (${fg}) and background (${bg}) is ${contrastRatio.toFixed(
         2
       )}, which is below the required minimum of ${requiredRatioAAA}.`,
@@ -88,7 +94,7 @@ export const checkContrast = (node: AmaNode): AmaError | null => {
     return {
       label: node.ariaLabel,
       viewId: node.viewId,
-      rule: 'CONTRAST_FAILED',
+      rule: "CONTRAST_FAILED",
       extra: `The color contrast between the foreground (${fg}) and background (${bg}) is ${contrastRatio.toFixed(
         2
       )}, which is below the required minimum of ${requiredRatioAA}.`,

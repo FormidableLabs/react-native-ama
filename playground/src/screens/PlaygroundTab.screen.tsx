@@ -41,7 +41,11 @@ export const PlaygroundTabScreen = () => {
           <Header title="Advanced" />
 
           <View style={styles.group}>
-            <ListItem title="Interactions" navigateTo="Interactions" />
+            <ListItem
+              title="Interactions"
+              navigateTo="Interactions"
+              border={false}
+            />
           </View>
 
           <Spacer height="big" />

@@ -13,23 +13,24 @@
     "@react-navigation/core": "^7.12.1",
     "@react-navigation/native": "^7.1.14",
     "@react-navigation/native-stack": "^7.3.21",
-    "expo": "~53.0.16",
-    "expo-checkbox": "~4.1.4",
-    "expo-status-bar": "~2.2.3",
-    "react": "19.0.0",
-    "react-native": "0.79.5",
-    "react-native-gesture-handler": "~2.24.0",
+    "expo": "^55.0.15",
+    "expo-checkbox": "~55.0.4",
+    "expo-status-bar": "~55.0.5",
+    "react": "19.2.0",
+    "react-native": "0.83.4",
+    "react-native-gesture-handler": "~2.30.0",
     "react-native-linear-gradient": "^2.8.3",
-    "react-native-reanimated": "~3.17.4",
-    "react-native-safe-area-context": "5.4.0",
-    "react-native-screens": "~4.11.1",
-    "react-native-svg": "15.11.2"
+    "react-native-reanimated": "4.2.1",
+    "react-native-safe-area-context": "~5.6.2",
+    "react-native-screens": "~4.23.0",
+    "react-native-svg": "15.15.3",
+    "react-native-worklets": "0.7.2"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
-    "@types/react": "~19.0.10",
+    "@types/react": "~19.2.10",
     "prettier": "2.8.8",
-    "typescript": "~5.8.3"
+    "typescript": "~5.9.2"
   },
   "private": true,
   "expo": {
