@@ -41,15 +41,13 @@ export const ImagesScreen = () => {
                 <TestCase title="Test case 2: Labeled accessible image">
                     <View
                         style={styles.imageContainer}
-                        accessible={true}
-                        accessibilityRole="image"
-                        accessibilityLabel="Product photo showing a blue widget"
                     >
                         <Image
                             source={{
                                 uri: 'https://reactnative.dev/img/tiny_logo.png'
                             }}
                             style={styles.image}
+                            accessibilityLabel="Product photo showing a blue widget"
                         />
                     </View>
                 </TestCase>
@@ -61,13 +59,15 @@ export const ImagesScreen = () => {
                 <TestCase title="Test case 3: Decorative (non-accessible) image">
                     <View
                         style={styles.imageContainer}
-                        accessible={false}
                     >
                         <Image
                             source={{
                                 uri: 'https://reactnative.dev/img/tiny_logo.png'
                             }}
                             style={styles.image}
+                            accessible={false}
+                            accessibilityElementsHidden
+                            importantForAccessibility="no-hide-descendants"
                         />
                     </View>
                 </TestCase>
