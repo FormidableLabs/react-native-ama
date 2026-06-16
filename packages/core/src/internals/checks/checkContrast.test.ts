@@ -419,7 +419,7 @@ describe('checkContrast', () => {
         it('reports CONTRAST_FAILED when contrast fails AA but AAA is disabled', () => {
             const { getRuleAction } = require('../utils/getRuleAction');
             getRuleAction.mockImplementation((rule: string) => {
-                if (rule === 'CONTRAST_FAILED_AAA') return 'PLEASE_FORGIVE_ME';
+                if (rule === 'CONTRAST_FAILED_AAA') {return 'PLEASE_FORGIVE_ME';}
                 return undefined;
             });
 

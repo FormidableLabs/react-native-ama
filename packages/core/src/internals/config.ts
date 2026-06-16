@@ -54,5 +54,5 @@ try {
   logger?.log('Project config not found, using default one!');
 }
 
-logger?.log(JSON.stringify(projectRules, null, 2))
+logger?.log(JSON.stringify(projectRules, null, 2));
 export default projectRules;

@@ -1,10 +1,10 @@
-import { AmaNode } from "../../ReactNativeAma.types";
-import { AmaError } from "../types";
-import { shouldIgnoreContrastCheckForDisabledElement } from "../utils/ignoreContrastCheck";
+import { AmaNode } from '../../ReactNativeAma.types';
+import { AmaError } from '../types';
+import { shouldIgnoreContrastCheckForDisabledElement } from '../utils/ignoreContrastCheck';
 import { getRuleAction } from '../utils/getRuleAction';
 
 function hexToRgb(hex: string) {
-  if (!hex || typeof hex !== "string") {
+  if (!hex || typeof hex !== 'string') {
     return null;
   }
 
@@ -61,7 +61,7 @@ export const checkContrast = (node: AmaNode): AmaError | null => {
     !fg ||
     !bg ||
     !node.content ||
-    node.type === "TextInput" ||
+    node.type === 'TextInput' ||
     !node.isAccessible
   ) {
     return null;
@@ -80,14 +80,14 @@ export const checkContrast = (node: AmaNode): AmaError | null => {
   const passesAA = contrastRatio >= requiredRatioAA;
   const passesAAA = contrastRatio >= requiredRatioAAA;
 
-  const aaaAction = getRuleAction?.("CONTRAST_FAILED_AAA");
-  const shouldCheckAAA = aaaAction && aaaAction !== "PLEASE_FORGIVE_ME";
+  const aaaAction = getRuleAction?.('CONTRAST_FAILED_AAA');
+  const shouldCheckAAA = aaaAction && aaaAction !== 'PLEASE_FORGIVE_ME';
 
   if (!passesAAA && shouldCheckAAA) {
     return {
       label: node.ariaLabel,
       viewId: node.viewId,
-      rule: "CONTRAST_FAILED_AAA",
+      rule: 'CONTRAST_FAILED_AAA',
       extra: `The color contrast between the foreground (${fg}) and background (${bg}) is ${contrastRatio.toFixed(
         2
       )}, which is below the required minimum of ${requiredRatioAAA}.`,
@@ -98,7 +98,7 @@ export const checkContrast = (node: AmaNode): AmaError | null => {
     return {
       label: node.ariaLabel,
       viewId: node.viewId,
-      rule: "CONTRAST_FAILED",
+      rule: 'CONTRAST_FAILED',
       extra: `The color contrast between the foreground (${fg}) and background (${bg}) is ${contrastRatio.toFixed(
         2
       )}, which is below the required minimum of ${requiredRatioAA}.`,

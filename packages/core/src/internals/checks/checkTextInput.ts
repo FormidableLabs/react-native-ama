@@ -1,7 +1,7 @@
-import { Platform } from "react-native";
-import { AmaNode } from "../../ReactNativeAma.types";
-import { AmaError } from "../types";
-import { isRuleDisabled } from "../utils/isRuleDisabled";
+import { Platform } from 'react-native';
+import { AmaNode } from '../../ReactNativeAma.types';
+import { AmaError } from '../types';
+import { isRuleDisabled } from '../utils/isRuleDisabled';
 
 const RETURN_DONE = Platform.select({ ios: 0, default: 6 });
 
@@ -12,13 +12,13 @@ const removeEndingSymbol = (text?: string) => {
         return null;
     }
 
-    const result = text.replace(REMOVE_ENDING_REGEXT, "").trim().toLowerCase();
+    const result = text.replace(REMOVE_ENDING_REGEXT, '').trim().toLowerCase();
 
     return result;
 };
 
 export const checkTextInputs = (nodesToCheck: AmaNode[]): AmaError[] => {
-    const inputs = nodesToCheck.filter((node) => node.type === "TextInput");
+    const inputs = nodesToCheck.filter((node) => node.type === 'TextInput');
     const errors: AmaError[] = [];
 
     for (const key in inputs) {
@@ -29,7 +29,7 @@ export const checkTextInputs = (nodesToCheck: AmaNode[]): AmaError[] => {
         const textInputLabel = ariaLabel
             ? nodesToCheck.find(
                 // Ignores symbols like ":"
-                (node) => node.type === "Text" && removeEndingSymbol(node.content) === ariaLabel
+                (node) => node.type === 'Text' && removeEndingSymbol(node.content) === ariaLabel
             )
             : false;
 
@@ -37,24 +37,24 @@ export const checkTextInputs = (nodesToCheck: AmaNode[]): AmaError[] => {
             textInputLabel && textInputLabel?.isAccessible;
         const hasLabel = Boolean(textInputLabel);
 
-        console.log(inputText.returnType)
+        console.log(inputText.returnType);
         if (inputText.returnType === RETURN_DONE && !canHaveReturnTypeDone) {
             errors.push({
-                rule: "INPUT_INVALID_RETURN_KEY",
+                rule: 'INPUT_INVALID_RETURN_KEY',
                 viewId: inputText.viewId,
             });
         }
 
         if (isLabelAlsoAccessible) {
             errors.push({
-                rule: "INPUT_HAS_FOCUSABLE_LABEL",
+                rule: 'INPUT_HAS_FOCUSABLE_LABEL',
                 viewId: textInputLabel.viewId,
             });
         }
 
         if (ariaLabel && !hasLabel) {
             errors.push({
-                rule: "INPUT_HAS_NO_VISIBLE_LABEL",
+                rule: 'INPUT_HAS_NO_VISIBLE_LABEL',
                 viewId: inputText.viewId,
             });
         }

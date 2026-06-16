@@ -1,26 +1,26 @@
-import { useEffect, useRef, useState } from "react";
-import { DevSettings } from "react-native";
+import { useEffect, useRef, useState } from 'react';
+import { DevSettings } from 'react-native';
 import {
   AmaNode,
   AmaNodes,
   AmaUiSnapshot,
   AmaUiSnapshotKeys,
   AmaUiSnapshotsData,
-} from "../ReactNativeAma.types";
-import ReactNativeAmaModule from "../ReactNativeAmaModule";
-import { performChecks } from "./checks/performChecks";
-import projectRules from "./config";
-import { AmaError } from "./types";
-import { amaClearHighlight } from "./utils/amaClearHighlight";
-import { logFoundIssues } from "./utils/logFoundIssues";
-import logger from "./utils/logger";
-import { A11ySeverity, AMA_COLORS, RULES_HELP } from "./utils/rules";
-import { checkTextInputs } from "./checks/checkTextInput";
+} from '../ReactNativeAma.types';
+import ReactNativeAmaModule from '../ReactNativeAmaModule';
+import { performChecks } from './checks/performChecks';
+import projectRules from './config';
+import { AmaError } from './types';
+import { amaClearHighlight } from './utils/amaClearHighlight';
+import { logFoundIssues } from './utils/logFoundIssues';
+import logger from './utils/logger';
+import { A11ySeverity, AMA_COLORS, RULES_HELP } from './utils/rules';
+import { checkTextInputs } from './checks/checkTextInput';
 
 let issueHighlighted: Array<number> = [];
 
 const startAMA = () => {
-  logger?.log("👀 Start Monitoring 👀: " + JSON.stringify(projectRules.checks));
+  logger?.log('👀 Start Monitoring 👀: ' + JSON.stringify(projectRules.checks));
 
   ReactNativeAmaModule.start(projectRules.checks);
 };
@@ -32,7 +32,7 @@ const highlightComponent = (
 ) => {
   ReactNativeAmaModule.highlight(
     viewId,
-    projectRules.highlight ?? "both",
+    projectRules.highlight ?? 'both',
     color,
     issueCount
   );
@@ -47,10 +47,10 @@ const SEVERITY_PRIORITY: Record<A11ySeverity, number> = {
 
 const getHighestSeverityColor = (issues: AmaError[]): string => {
   let highestPriority = 0;
-  let highestSeverity: A11ySeverity = "Warning";
+  let highestSeverity: A11ySeverity = 'Warning';
 
   for (const issue of issues) {
-    const severity = RULES_HELP?.[issue.rule]?.severity ?? "Critical";
+    const severity = RULES_HELP?.[issue.rule]?.severity ?? 'Critical';
     const priority = SEVERITY_PRIORITY[severity];
     if (priority > highestPriority) {
       highestPriority = priority;
@@ -65,7 +65,7 @@ const resetFixedIssues = (prevIssues: AmaError[], newIssues: AmaError[]) => {
   const fixed = prevIssues.filter(
     (issue) =>
       newIssues.find((item) => item.viewId === issue.viewId) === undefined &&
-      issue.rule !== "NO_ACCESSIBILITY_STATE_SET"
+      issue.rule !== 'NO_ACCESSIBILITY_STATE_SET'
   );
 
   for (const issue of fixed) {
@@ -95,12 +95,12 @@ export const useAMADev = __DEV__
       const nodes = Object.values(nodesToCheck);
 
       for (const node of nodes) {
-        if (node.type === "TextInput") {
+        if (node.type === 'TextInput') {
           hasTextInput = true;
         }
 
-        if (!hasAtLeastOneHeader && node.type === "Text") {
-          if (node.traits?.includes("header") || node.ariaRole === "header") {
+        if (!hasAtLeastOneHeader && node.type === 'Text') {
+          if (node.traits?.includes('header') || node.ariaRole === 'header') {
             hasAtLeastOneHeader = true;
           }
         }
@@ -113,7 +113,7 @@ export const useAMADev = __DEV__
       }
 
       if (!hasAtLeastOneHeader) {
-        allIssues.push({ rule: "NO_HEADER_FOUND", viewId: -1 });
+        allIssues.push({ rule: 'NO_HEADER_FOUND', viewId: -1 });
       }
 
       if (previousIssues.current.length) {
@@ -180,7 +180,7 @@ export const useAMADev = __DEV__
           const issueIndex = currentIssues.findIndex(
             (item) =>
               item.viewId === data.rootTag &&
-              item.rule === "NO_ACCESSIBILITY_STATE_SET"
+              item.rule === 'NO_ACCESSIBILITY_STATE_SET'
           );
 
           if (issueIndex >= 0) {
@@ -199,7 +199,7 @@ export const useAMADev = __DEV__
             const found = currentIssues.find(
               (item) =>
                 item.viewId === viewId &&
-                item.rule === "NO_ACCESSIBILITY_STATE_SET"
+                item.rule === 'NO_ACCESSIBILITY_STATE_SET'
             );
 
             if (found) {
@@ -207,7 +207,7 @@ export const useAMADev = __DEV__
             }
 
             const rule: AmaError = {
-              rule: "NO_ACCESSIBILITY_STATE_SET",
+              rule: 'NO_ACCESSIBILITY_STATE_SET',
               viewId,
             };
 
@@ -225,7 +225,7 @@ export const useAMADev = __DEV__
     };
 
     const stopAMA = () => {
-      logger?.log("[React Native AMA]: 🙈 Stop Monitoring 🙈");
+      logger?.log('[React Native AMA]: 🙈 Stop Monitoring 🙈');
 
       for (const issue of issues) {
         amaClearHighlight?.(issue);
@@ -238,11 +238,11 @@ export const useAMADev = __DEV__
       startAMA();
 
       const amaOnNodesListener = ReactNativeAmaModule.addListener(
-        "onAmaNodes",
+        'onAmaNodes',
         checkNodes
       );
       const amaOnUiInteraction = ReactNativeAmaModule.addListener(
-        "onUIInteraction",
+        'onUIInteraction',
         checkResultUiInteraction
       );
 
@@ -268,7 +268,7 @@ export const useAMADev = __DEV__
 
     useEffect(() => {
       DevSettings.addMenuItem(
-        "Toggle React Native AMA",
+        'Toggle React Native AMA',
         toggleReactNativeAMA
       );
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -281,12 +281,12 @@ export const useAMADev = __DEV__
   : null;
 
 const A11Y_STATE_KEY: AmaUiSnapshotKeys[] = [
-  "parentId",
-  "isChecked",
-  "isBusy",
-  "isSelected",
-  "isDisabled",
-  "isExpanded",
+  'parentId',
+  'isChecked',
+  'isBusy',
+  'isSelected',
+  'isDisabled',
+  'isExpanded',
 ];
 function itemsWithNoStateUpdated(data: AmaUiSnapshotsData) {
   const viewsBefore = data.before;
@@ -297,7 +297,7 @@ function itemsWithNoStateUpdated(data: AmaUiSnapshotsData) {
 
   if (
     !afterKeys.includes(data.rootTag) ||
-    data.beforeModalVisible != data.afterModalVisible
+    data.beforeModalVisible !== data.afterModalVisible
   ) {
     return [];
   }
@@ -320,7 +320,7 @@ function itemsWithNoStateUpdated(data: AmaUiSnapshotsData) {
 
     const subKeys = (
       Object.keys(snapAfter) as Array<keyof AmaUiSnapshot>
-    ).filter((key) => key !== "parentId");
+    ).filter((key) => key !== 'parentId');
 
     for (const subKey of subKeys) {
       const hasPropertyChanged =
@@ -359,7 +359,7 @@ const keepNoStateHandledIssuesStillInView = (
 ) => {
   return issues.filter(
     (item) =>
-      item.rule === "NO_ACCESSIBILITY_STATE_SET" && nodesInView[item.viewId]
+      item.rule === 'NO_ACCESSIBILITY_STATE_SET' && nodesInView[item.viewId]
   );
 };
 

@@ -1,15 +1,15 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { ReactNode } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import { AmaError } from "../types";
-import { A11ySeverity } from "../utils/getRuleErrorInfo";
-import { RULES_HELP } from "../utils/rules";
+import React, { ReactNode } from 'react';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { AmaError } from '../types';
+import { A11ySeverity } from '../utils/getRuleErrorInfo';
+import { RULES_HELP } from '../utils/rules';
 
 const SEVERITIES: { [key in A11ySeverity]: string } | null = __DEV__
   ? {
-      Serious: "Serious",
-      Critical: "Critical",
-      Warning: "Warning",
+      Serious: 'Serious',
+      Critical: 'Critical',
+      Warning: 'Warning',
     }
   : null;
 
@@ -32,11 +32,11 @@ export const AMARuleError = __DEV__
         const parts = text.split(REGEX_MARKDOWN);
 
         return parts.map((part, index) => {
-          if (part.startsWith("`") && part.endsWith("`") && Code) {
+          if (part.startsWith('`') && part.endsWith('`') && Code) {
             return <Code key={index}>{part.slice(1, -1)}</Code>;
           }
 
-          if (part.startsWith("**") && part.endsWith("**")) {
+          if (part.startsWith('**') && part.endsWith('**')) {
             return (
               <Text key={index} style={[styles?.text, styles?.bold]}>
                 {part.slice(2, -2)}
@@ -53,7 +53,7 @@ export const AMARuleError = __DEV__
       };
 
       const renderHowToFix = (text: string | string[]) => {
-        if (typeof text === "string") {
+        if (typeof text === 'string') {
           return <Text style={styles?.text}>{renderMarkdown(text)}</Text>;
         }
 
@@ -74,7 +74,7 @@ export const AMARuleError = __DEV__
         const parts = text.split(COLOR_TOKEN_REGEX);
 
         return parts.map((part, index) => {
-          if (part.startsWith("(#") && part.endsWith(")")) {
+          if (part.startsWith('(#') && part.endsWith(')')) {
             const color = part.slice(1, -1);
 
             return (
@@ -127,7 +127,7 @@ export const AMARuleError = __DEV__
       };
 
       return (
-        <ScrollView style={{ maxHeight, flex: 1, width: "100%", padding: 12 }}>
+        <ScrollView style={{ maxHeight, flex: 1, width: '100%', padding: 12 }}>
           <View style={styles!.row}>
             <Text style={styles!.bold} aria-role="header">
               {SEVERITIES![ruleHelp.severity]}:
@@ -166,7 +166,7 @@ export const AMARuleError = __DEV__
 const Code = __DEV__
   ? ({ children }: { children: ReactNode }) => {
       const code =
-        typeof children === "string" ? children.replaceAll("`", "") : children;
+        typeof children === 'string' ? children.replaceAll('`', '') : children;
 
       return <Text style={styles!.code}> {code} </Text>;
     }
@@ -175,11 +175,11 @@ const Code = __DEV__
 const styles = __DEV__
   ? StyleSheet.create({
       row: {
-        flexDirection: "row",
-        alignContent: "center",
-        alignItems: "center",
+        flexDirection: 'row',
+        alignContent: 'center',
+        alignItems: 'center',
         fontSize: 14,
-        width: "100%",
+        width: '100%',
         marginBottom: 12,
         flex: 1,
       },
@@ -189,7 +189,7 @@ const styles = __DEV__
         paddingRight: 12,
       },
       full: {
-        width: "100%",
+        width: '100%',
         marginBottom: 4,
       },
       text: {
@@ -197,22 +197,22 @@ const styles = __DEV__
         paddingBottom: 4,
       },
       column: {
-        flexDirection: "column",
+        flexDirection: 'column',
       },
       flex: {
         flex: 1,
       },
       code: {
-        backgroundColor: "#333",
-        color: "#fff",
+        backgroundColor: '#333',
+        color: '#fff',
       },
       extraInline: {
-        flexDirection: "row",
-        flexWrap: "wrap",
-        alignItems: "center",
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        alignItems: 'center',
       },
       swatchFrame: {
-        backgroundColor: "#000",
+        backgroundColor: '#000',
         paddingHorizontal: 2,
         marginHorizontal: 2,
         lineHeight: 14,

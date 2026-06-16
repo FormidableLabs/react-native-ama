@@ -7,7 +7,7 @@ import { UseTextInput, useTextInput } from '../hooks/useTextInput';
 
 export const a11yProps: Pick<TextInputProps, 'accessibilityElementsHidden' | 'importantForAccessibility'> = {
   importantForAccessibility: 'no-hide-descendants',
-  accessibilityElementsHidden: true, 
+  accessibilityElementsHidden: true,
 };
 
 type A11yProps = typeof a11yProps;

@@ -187,17 +187,7 @@ export const BottomSheet = React.forwardRef<
           }
         );
       }
-    }, [
-      duration,
-      autoCloseDelay,
-      isModalVisible,
-      onBottomSheetHidden,
-      onClose,
-      onTimeout,
-      translateY,
-      visible,
-
-    ]);
+    }, [duration, autoCloseDelay, isModalVisible, onBottomSheetHidden, onClose, onTimeout, translateY, visible, dragOpacity, overlayOpacity, contentHeight.value]);
 
     React.useEffect(() => {
       isMounted.current = true;
