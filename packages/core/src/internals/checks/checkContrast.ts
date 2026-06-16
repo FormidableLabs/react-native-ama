@@ -1,6 +1,7 @@
 import { AmaNode } from "../../ReactNativeAma.types";
 import { AmaError } from "../types";
 import { shouldIgnoreContrastCheckForDisabledElement } from "../utils/ignoreContrastCheck";
+import { getRuleAction } from '../utils/getRuleAction';
 
 function hexToRgb(hex: string) {
   if (!hex || typeof hex !== "string") {
@@ -13,10 +14,10 @@ function hexToRgb(hex: string) {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result
     ? {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16),
-      }
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16),
+    }
     : null;
 }
 
@@ -79,7 +80,10 @@ export const checkContrast = (node: AmaNode): AmaError | null => {
   const passesAA = contrastRatio >= requiredRatioAA;
   const passesAAA = contrastRatio >= requiredRatioAAA;
 
-  if (!passesAAA && false) {
+  const aaaAction = getRuleAction?.("CONTRAST_FAILED_AAA");
+  const shouldCheckAAA = aaaAction && aaaAction !== "PLEASE_FORGIVE_ME";
+
+  if (!passesAAA && shouldCheckAAA) {
     return {
       label: node.ariaLabel,
       viewId: node.viewId,

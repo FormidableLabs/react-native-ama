@@ -5,6 +5,14 @@ jest.mock('../utils/ignoreContrastCheck', () => ({
     shouldIgnoreContrastCheckForDisabledElement: jest.fn(() => false),
 }));
 
+jest.mock('../utils/getRuleAction', () => ({
+    getRuleAction: jest.fn((rule: string) => {
+        // Default: AAA is enabled (returns 'SHOULD')
+        if (rule === 'CONTRAST_FAILED_AAA') { return 'SHOULD'; }
+        return undefined;
+    }),
+}));
+
 describe('checkContrast', () => {
     const createNode = (overrides: Partial<AmaNode> = {}): AmaNode => ({
         type: 'Text',
@@ -350,6 +358,80 @@ describe('checkContrast', () => {
 
             const result = checkContrast(node);
             expect(result?.viewId).toBe(12345);
+        });
+    });
+
+    describe('AAA config-driven behavior', () => {
+        beforeEach(() => {
+            jest.resetModules();
+            jest.clearAllMocks();
+        });
+
+        it('reports AAA failure when AAA check is enabled', () => {
+            const { getRuleAction } = require('../utils/getRuleAction');
+            getRuleAction.mockReturnValue('SHOULD');
+
+            const node = createNode({
+                fg: '#595959',
+                bg: '#FFFFFF',
+                fontSize: 16,
+                isBold: false,
+            });
+
+            const result = checkContrast(node);
+            expect(result).toMatchObject({
+                rule: 'CONTRAST_FAILED_AAA',
+            });
+        });
+
+        it('does not report AAA failure when AAA check is disabled', () => {
+            const { getRuleAction } = require('../utils/getRuleAction');
+            getRuleAction.mockReturnValue('PLEASE_FORGIVE_ME');
+
+            const node = createNode({
+                fg: '#595959',
+                bg: '#FFFFFF',
+                fontSize: 16,
+                isBold: false,
+            });
+
+            const result = checkContrast(node);
+            expect(result).toBeNull();
+        });
+
+        it('reports AA failure regardless of AAA config', () => {
+            const { getRuleAction } = require('../utils/getRuleAction');
+            getRuleAction.mockReturnValue('PLEASE_FORGIVE_ME');
+
+            const node = createNode({
+                fg: '#767676',
+                bg: '#FFFFFF',
+                fontSize: 16,
+                isBold: false,
+            });
+
+            const result = checkContrast(node);
+            expect(result).toMatchObject({
+                rule: 'CONTRAST_FAILED',
+            });
+        });
+
+        it('reports CONTRAST_FAILED when contrast fails AA but AAA is disabled', () => {
+            const { getRuleAction } = require('../utils/getRuleAction');
+            getRuleAction.mockImplementation((rule: string) => {
+                if (rule === 'CONTRAST_FAILED_AAA') return 'PLEASE_FORGIVE_ME';
+                return undefined;
+            });
+
+            const node = createNode({
+                fg: '#757575',
+                bg: '#FFFFFF',
+                fontSize: 16,
+                isBold: false,
+            });
+
+            const result = checkContrast(node);
+            expect(result).toBeNull();
         });
     });
 });
