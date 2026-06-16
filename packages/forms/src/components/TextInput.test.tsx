@@ -1,10 +1,11 @@
 import * as UseChecks from '@react-native-ama/core/src/hooks/useChecks';
-import { ERROR_STYLE } from '@react-native-ama/internal';
 import { fireEvent, render } from '@testing-library/react-native';
 import * as React from 'react';
 import { Text } from 'react-native';
 import * as UseFormField from '../hooks/useFormField';
 import { TextInput } from './TextInput';
+
+const testStyle = { borderColor: 'red' };
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -440,7 +441,7 @@ describe('TextInput', () => {
 
     jest.spyOn(UseFormField, 'useFormField').mockReturnValue({
       focusNextFormField,
-      style: ERROR_STYLE,
+      style: testStyle,
     } as any);
 
     const renderAPI = render(
@@ -454,7 +455,7 @@ describe('TextInput', () => {
     );
 
     expect(renderAPI.getByTestId('text-input').props.style).toEqual(
-      ERROR_STYLE,
+      testStyle,
     );
   });
 
@@ -501,7 +502,7 @@ describe('TextInput', () => {
 
     it('does not apply the debug style', () => {
       jest.spyOn(UseFormField, 'useFormField').mockReturnValue({
-        style: ERROR_STYLE,
+        style: testStyle,
       } as any);
 
       const { getByTestId } = render(

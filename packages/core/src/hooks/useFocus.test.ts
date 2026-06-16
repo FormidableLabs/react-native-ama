@@ -1,6 +1,12 @@
-import { SHELL_COLORS } from '@react-native-ama/internal';
 import { renderHook } from '@testing-library/react-native';
 import { useFocus } from './useFocus';
+
+const SHELL_COLORS = {
+  BG_RED: '\x1b[41m',
+  RESET: '\x1b[0m',
+  BLUE: '\x1b[34m',
+  YELLOW: '\x1b[33m',
+};
 
 beforeEach(() => {
   jest.clearAllMocks();

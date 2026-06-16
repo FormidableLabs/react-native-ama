@@ -148,7 +148,6 @@ describe('useFormField', () => {
 });
 
 let setFocus: jest.Mock;
-let checkFocusTrap: jest.Mock;
 
 function mockAMACore() {
   const original = jest.requireActual('@react-native-ama/core');
@@ -165,17 +164,8 @@ function mockAMACore() {
   };
 }
 
-function mockAMAInternal() {
-  const original = jest.requireActual('@react-native-ama/internal');
-
-  checkFocusTrap = jest.fn().mockResolvedValue(null);
-
-  return { ...original, checkFocusTrap };
-}
-
 const renderHookWrapper = ({ children }) => (
   <AMAProvider.AMAProvider>{children}</AMAProvider.AMAProvider>
 );
 
 jest.mock('@react-native-ama/core', () => mockAMACore());
-jest.mock('@react-native-ama/internal', () => mockAMAInternal());

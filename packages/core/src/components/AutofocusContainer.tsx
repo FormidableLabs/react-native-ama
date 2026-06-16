@@ -1,4 +1,3 @@
-import { PickAccessibleProps } from '@react-native-ama/internal';
 import * as React from 'react';
 import {
   TouchableWithoutFeedback,
@@ -7,6 +6,20 @@ import {
   ViewProps,
 } from 'react-native';
 import { useFocus } from '../hooks/useFocus';
+
+type PickAccessibleProps<T> = Pick<
+  T,
+  | 'accessibilityActions'
+  | 'accessibilityElementsHidden'
+  | 'accessibilityHint'
+  | 'accessibilityLabel'
+  | 'accessibilityLiveRegion'
+  | 'accessibilityRole'
+  | 'accessibilityState'
+  | 'accessibilityViewIsModal'
+  | 'onAccessibilityAction'
+  | 'testID'
+>;
 
 type TouchableAccessibleProps =
   PickAccessibleProps<TouchableWithoutFeedbackProps>;

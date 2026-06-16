@@ -24,7 +24,6 @@
   },
   "dependencies": {
     "@react-native-ama/core": "~1.2.0",
-    "@react-native-ama/internal": "~1.2.0",
     "@react-native-ama/react-native": "~1.2.0"
   },
   "peerDependencies": {

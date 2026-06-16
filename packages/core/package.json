@@ -25,9 +25,7 @@
     "test": "jest",
     "postinstall": "node ./src/postinstall.js"
   },
-  "dependencies": {
-    "@react-native-ama/internal": "~1.2.0"
-  },
+  "dependencies": {},
   "peerDependencies": {
     "react": "*",
     "react-native": "*"
