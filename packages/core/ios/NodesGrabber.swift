@@ -91,7 +91,8 @@ public class NodesGrabber {
 
         if view.isTextInput() {
             tag = view.superview?.tag ?? 0
-            accessibilityLabel = view.superview?.accessibilityLabel
+            // Use the TextInput's own accessibilityLabel first, fall back to superview's label
+            accessibilityLabel = view.accessibilityLabel ?? view.superview?.accessibilityLabel
         }
 
         addNode(
