@@ -29,7 +29,8 @@ data class NodePayload(
         val fontSize: Float?,
         val isBold: Boolean?,
         val isEnabled: Boolean?,
-        val isAccessible: Boolean? = null
+        val isAccessible: Boolean? = null,
+        val returnType: Int? = null
 ) {
     fun toMap(): Map<String, Any?> {
         return mapOf(
@@ -44,7 +45,8 @@ data class NodePayload(
                 "fontSize" to this.fontSize,
                 "isBold" to this.isBold,
                 "isEnabled" to this.isEnabled,
-                "isAccessible" to this.isAccessible
+                "isAccessible" to this.isAccessible,
+                "returnType" to this.returnType
         )
     }
 }
@@ -168,7 +170,11 @@ class NodesGrabber(private val appContext: AppContext) {
                         isEnabled =
                                 if (nodeType == NodeType.Pressable) !view.isDisabled()
                                 else view.isEnabled,
-                        isAccessible = isAccessible
+                        isAccessible = isAccessible,
+                        returnType =
+                                if (nodeType == NodeType.TextInput) {
+                                    view.getReturnType()
+                                } else null
                 )
         )
     }
@@ -240,6 +246,13 @@ private fun View.isTextInput(a11yInfo: AccessibilityNodeInfoCompat, ariaRole: St
             this is android.widget.EditText ||
             className.endsWith(".EditText") ||
             className.endsWith("ReactEditText")
+}
+
+private fun View.getReturnType(): Int? {
+    if (this !is android.widget.EditText) {
+        return null
+    }
+    return this.imeOptions and android.view.inputmethod.EditorInfo.IME_MASK_ACTION
 }
 
 private fun View.hidesAccessibilityDescendants(): Boolean {
