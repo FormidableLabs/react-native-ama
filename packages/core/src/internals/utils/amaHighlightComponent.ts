@@ -37,7 +37,7 @@ export const amaHighlightComponent = __DEV__
 
     return ReactNativeAmaModule.highlight(
       viewId,
-      mode ?? projectRules.highlight ?? 'both',
+      mode ?? projectRules.highlight?.mode ?? 'both',
       color,
       issueCount,
     );

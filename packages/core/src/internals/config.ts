@@ -26,7 +26,11 @@ export type AmaProjectConfig = {
     AmaRuleAction
   > | null;
   accessibilityLabelExceptions: string[];
-  highlight: HighlightMode;
+  highlight: {
+    mode: HighlightMode;
+    borderWidth?: number;
+    gap?: number;
+  };
   log: LogMode;
   uppercaseMinLength: number;
   checks: {
@@ -34,8 +38,6 @@ export type AmaProjectConfig = {
     forms: boolean;
     delay: number;
     grouping: boolean;
-    gap?: number;
-    borderWidth?: number;
   };
 };
 

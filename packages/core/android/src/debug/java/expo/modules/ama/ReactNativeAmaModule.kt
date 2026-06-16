@@ -1,9 +1,7 @@
 package expo.modules.ama
 
-import android.R
 import android.app.Activity
 import android.content.Context
-import android.content.res.Resources
 import android.graphics.Rect
 import android.os.Bundle
 import android.os.Handler
@@ -49,7 +47,6 @@ class ReactNativeAmaModule : Module() {
             Constants.uiCheckDelay = args?.get("delay") as? Long ?: Constants.uiCheckDelay
             gap = (args?.get("gap") as? Number)?.toInt() ?: gap
             borderWidth = (args?.get("borderWidth") as? Number)?.toFloat() ?: borderWidth
-//            val groupingCheck = checks?.get("grouping") as? Boolean ?: false
 
             if (highlighter == null) {
                 highlighter = Highlight(appContext)
@@ -127,45 +124,55 @@ class ReactNativeAmaModule : Module() {
         val originalCallback = activity.window.callback
         val rootView = activity.window.decorView.rootView
 
-        activity.window.callback = object : Window.Callback by originalCallback {
+        activity.window.callback =
+                object : Window.Callback by originalCallback {
 
-            // Simple tap detection state
-            private var downX = 0f
-            private var downY = 0f
-            private val TAP_THRESHOLD = 20f // Max movement (in pixels) for a "tap"
+                    // Simple tap detection state
+                    private var downX = 0f
+                    private var downY = 0f
+                    private val TAP_THRESHOLD = 20f // Max movement (in pixels) for a "tap"
 
-            override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
-                if (event != null) {
-                    when (event.action) {
-                        MotionEvent.ACTION_DOWN -> {
-                            // Store tap start location
-                            downX = event.x
-                            downY = event.y
-                        }
+                    override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
+                        if (event != null) {
+                            when (event.action) {
+                                MotionEvent.ACTION_DOWN -> {
+                                    // Store tap start location
+                                    downX = event.x
+                                    downY = event.y
+                                }
+                                MotionEvent.ACTION_UP -> {
+                                    val isTap =
+                                            (Math.abs(event.x - downX) < TAP_THRESHOLD) &&
+                                                    (Math.abs(event.y - downY) < TAP_THRESHOLD)
 
-                        MotionEvent.ACTION_UP -> {
-                            val isTap = (Math.abs(event.x - downX) < TAP_THRESHOLD) &&
-                                    (Math.abs(event.y - downY) < TAP_THRESHOLD)
+                                    if (isTap) {
+                                        val tappedView =
+                                                findViewAt(
+                                                        rootView,
+                                                        event.rawX.toInt(),
+                                                        event.rawY.toInt()
+                                                )
 
-                            if (isTap) {
-                                val tappedView =
-                                    findViewAt(rootView, event.rawX.toInt(), event.rawY.toInt())
+                                        val info = tappedView?.createAccessibilityNodeInfo()
+                                        val a11yInfo =
+                                                info?.let { AccessibilityNodeInfoCompat.wrap(it) }
+                                        val isAccessible =
+                                                a11yInfo?.let { tappedView.isAccessible(it) }
 
-                                val info = tappedView?.createAccessibilityNodeInfo()
-                                val a11yInfo = info?.let { AccessibilityNodeInfoCompat.wrap(it) }
-                                val isAccessible = a11yInfo?.let { tappedView.isAccessible(it) }
-
-                                if (tappedView != null && tappedView.isClickable && isAccessible == true) {
-                                    runMyChecks(tappedView, rootView)
+                                        if (tappedView != null &&
+                                                        tappedView.isClickable &&
+                                                        isAccessible == true
+                                        ) {
+                                            runMyChecks(tappedView, rootView)
+                                        }
+                                    }
                                 }
                             }
                         }
+
+                        return originalCallback.dispatchTouchEvent(event)
                     }
                 }
-
-                return originalCallback.dispatchTouchEvent(event)
-            }
-        }
     }
 
     private fun getCurrentActivity(): Activity? {
@@ -174,9 +181,7 @@ class ReactNativeAmaModule : Module() {
 
     private fun scheduleA11yCheck() {
         checkRunnable?.let { checkHandler.removeCallbacks(it) }
-        checkRunnable = Runnable {
-            getNodesToCheck()
-        }
+        checkRunnable = Runnable { getNodesToCheck() }
 
         checkHandler.postDelayed(checkRunnable!!, Constants.DEBOUNCE)
     }
@@ -192,10 +197,7 @@ class ReactNativeAmaModule : Module() {
         return nodesWithStringKeys
     }
 
-
-    /**
-     * Finds the deepest child view at a given screen coordinate.
-     */
+    /** Finds the deepest child view at a given screen coordinate. */
     private fun findViewAt(root: View, x: Int, y: Int): View? {
         val viewsToVisit = arrayListOf<View>()
         viewsToVisit.add(root)
@@ -235,36 +237,68 @@ class ReactNativeAmaModule : Module() {
         val beforeSnapshot = takeSnapshotOfTappedView(tappedView, rootView)
         val beforeModalVisible = isModalVisible(rootView)
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            if (tappedView.isAttachedToWindow && rootView.isAttachedToWindow) {
-                val afterSnapshot = takeSnapshotOfTappedView(tappedView, rootView)
-                val afterModalVisible = isModalVisible(rootView)
+        Handler(Looper.getMainLooper())
+                .postDelayed(
+                        {
+                            if (tappedView.isAttachedToWindow && rootView.isAttachedToWindow) {
+                                val afterSnapshot = takeSnapshotOfTappedView(tappedView, rootView)
+                                val afterModalVisible = isModalVisible(rootView)
 
-                getNodesToCheck()
+                                getNodesToCheck()
 
-                val settleDelay = 120L
-                Handler(Looper.getMainLooper()).postDelayed({
-                    if (tappedView.isAttachedToWindow && rootView.isAttachedToWindow) {
-                        val afterSettledSnapshot =
-                            takeSnapshotOfTappedView(tappedView, rootView)
+                                val settleDelay = 120L
+                                Handler(Looper.getMainLooper())
+                                        .postDelayed(
+                                                {
+                                                    if (tappedView.isAttachedToWindow &&
+                                                                    rootView.isAttachedToWindow
+                                                    ) {
+                                                        val afterSettledSnapshot =
+                                                                takeSnapshotOfTappedView(
+                                                                        tappedView,
+                                                                        rootView
+                                                                )
 
-                        val event = Bundle().apply {
-                            putInt("rootTag", tappedView.id)
-                            putBundle("before", convertSnapshotMapToBundle(beforeSnapshot))
-                            putBundle("after", convertSnapshotMapToBundle(afterSnapshot))
-                            putBundle(
-                                "afterSettled",
-                                convertSnapshotMapToBundle(afterSettledSnapshot)
-                            )
-                            putBoolean("beforeModalVisible", beforeModalVisible)
-                            putBoolean("afterModalVisible", afterModalVisible)
-                        }
+                                                        val event =
+                                                                Bundle().apply {
+                                                                    putInt("rootTag", tappedView.id)
+                                                                    putBundle(
+                                                                            "before",
+                                                                            convertSnapshotMapToBundle(
+                                                                                    beforeSnapshot
+                                                                            )
+                                                                    )
+                                                                    putBundle(
+                                                                            "after",
+                                                                            convertSnapshotMapToBundle(
+                                                                                    afterSnapshot
+                                                                            )
+                                                                    )
+                                                                    putBundle(
+                                                                            "afterSettled",
+                                                                            convertSnapshotMapToBundle(
+                                                                                    afterSettledSnapshot
+                                                                            )
+                                                                    )
+                                                                    putBoolean(
+                                                                            "beforeModalVisible",
+                                                                            beforeModalVisible
+                                                                    )
+                                                                    putBoolean(
+                                                                            "afterModalVisible",
+                                                                            afterModalVisible
+                                                                    )
+                                                                }
 
-                        sendEvent("onUIInteraction", event)
-                    }
-                }, settleDelay)
-            }
-        }, Constants.uiCheckDelay)
+                                                        sendEvent("onUIInteraction", event)
+                                                    }
+                                                },
+                                                settleDelay
+                                        )
+                            }
+                        },
+                        Constants.uiCheckDelay
+                )
     }
 
     private fun isModalVisible(rootView: View): Boolean {
@@ -273,10 +307,7 @@ class ReactNativeAmaModule : Module() {
 
     private fun findModalView(view: View): View? {
         val className = view.javaClass.name
-        if (
-            className.contains("ReactModalHostView") ||
-                className.contains("Dialog")
-        ) {
+        if (className.contains("ReactModalHostView") || className.contains("Dialog")) {
             return view
         }
 
@@ -294,44 +325,48 @@ class ReactNativeAmaModule : Module() {
 }
 
 data class Snapshot(
-    val fgColor: String?,
-    val bgColor: String?,
-    val x: Int,
-    val y: Int,
-    val width: Int,
-    val height: Int,
-    val parentId: Int,
-    val isPressable: Boolean,
-    val isChecked: Boolean,
-    val isBusy: Boolean,
-    val isSelected: Boolean,
-    val isDisabled: Boolean,
-    val isExpanded: Boolean
+        val fgColor: String?,
+        val bgColor: String?,
+        val x: Int,
+        val y: Int,
+        val width: Int,
+        val height: Int,
+        val parentId: Int,
+        val isPressable: Boolean,
+        val isChecked: Boolean,
+        val isBusy: Boolean,
+        val isSelected: Boolean,
+        val isDisabled: Boolean,
+        val isExpanded: Boolean
 )
 
-private fun takeSnapshotOfTappedView(view: View, root: View, snapshots: MutableMap<Int, Snapshot> = mutableMapOf()): MutableMap<Int, Snapshot> {
+private fun takeSnapshotOfTappedView(
+        view: View,
+        root: View,
+        snapshots: MutableMap<Int, Snapshot> = mutableMapOf()
+): MutableMap<Int, Snapshot> {
     val info = view.createAccessibilityNodeInfo()
     val a11yInfo = AccessibilityNodeInfoCompat.wrap(info)
 
     val position = view.getGlobalDpBounds(root)
     val a11yStates = view.a11yStates()
 
-    snapshots[view.id] = Snapshot(
-        fgColor = view.getTextColorHex(),
-        bgColor = view.getBackgroundColorHex(),
-        x = position[0],
-        y = position[1],
-        width = position[2],
-        height = position[3],
-        parentId = (view.parent as? View)?.id ?: View.NO_ID,
-        isPressable = view.isPressable(a11yInfo),
-        isChecked = a11yInfo.isChecked,
-        isBusy = view.isBusy(),
-        isDisabled = a11yStates.isDisabled,
-        isExpanded = a11yStates.isExpanded,
-        isSelected = a11yStates.isSelected,
-    )
-
+    snapshots[view.id] =
+            Snapshot(
+                    fgColor = view.getTextColorHex(),
+                    bgColor = view.getBackgroundColorHex(),
+                    x = position[0],
+                    y = position[1],
+                    width = position[2],
+                    height = position[3],
+                    parentId = (view.parent as? View)?.id ?: View.NO_ID,
+                    isPressable = view.isPressable(a11yInfo),
+                    isChecked = a11yInfo.isChecked,
+                    isBusy = view.isBusy(),
+                    isDisabled = a11yStates.isDisabled,
+                    isExpanded = a11yStates.isExpanded,
+                    isSelected = a11yStates.isSelected,
+            )
 
     if (view is ViewGroup) {
         for (i in 0 until view.childCount) {
@@ -404,11 +439,7 @@ fun View.isBusy(): Boolean {
     return false
 }
 
-data class A11yStates(
-    val isExpanded: Boolean,
-    val isDisabled: Boolean,
-    val isSelected: Boolean
-)
+data class A11yStates(val isExpanded: Boolean, val isDisabled: Boolean, val isSelected: Boolean)
 
 fun View.a11yStates(): A11yStates {
     val info = AccessibilityNodeInfoCompat.wrap(createAccessibilityNodeInfo())
@@ -416,36 +447,53 @@ fun View.a11yStates(): A11yStates {
     val isDisabled = !info.isEnabled || !isEnabled || !isActuallyInteractable()
     val isSelected = info.isSelected || isSelected || (this as? Checkable)?.isChecked == true
 
-    val isExpanded: Boolean? = when {
-        hasAction(info, AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_COLLAPSE) &&
-                !hasAction(info, AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_EXPAND) -> true
-        hasAction(info, AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_EXPAND) &&
-                !hasAction(info, AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_COLLAPSE) -> false
-        else -> {
-            val haystack = buildString {
-                info.contentDescription?.let { append(it).append(' ') }
-                info.text?.let { append(it).append(' ') }
-                info.stateDescription?.let { append(it) }
-                ViewCompat.getStateDescription(this@a11yStates)?.let { append(' ').append(it) }
-            }.trim()
-            parseExpandedFromText(haystack, context)
-        }
-    }
+    val isExpanded: Boolean? =
+            when {
+                hasAction(
+                        info,
+                        AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_COLLAPSE
+                ) &&
+                        !hasAction(
+                                info,
+                                AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_EXPAND
+                        ) -> true
+                hasAction(
+                        info,
+                        AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_EXPAND
+                ) &&
+                        !hasAction(
+                                info,
+                                AccessibilityNodeInfoCompat.AccessibilityActionCompat
+                                        .ACTION_COLLAPSE
+                        ) -> false
+                else -> {
+                    val haystack =
+                            buildString {
+                                        info.contentDescription?.let { append(it).append(' ') }
+                                        info.text?.let { append(it).append(' ') }
+                                        info.stateDescription?.let { append(it) }
+                                        ViewCompat.getStateDescription(this@a11yStates)?.let {
+                                            append(' ').append(it)
+                                        }
+                                    }
+                                    .trim()
+                    parseExpandedFromText(haystack, context)
+                }
+            }
 
     return A11yStates(isExpanded ?: false, isDisabled, isSelected)
 }
 
 private fun hasAction(
-    info: AccessibilityNodeInfoCompat,
-    action: AccessibilityNodeInfoCompat.AccessibilityActionCompat
+        info: AccessibilityNodeInfoCompat,
+        action: AccessibilityNodeInfoCompat.AccessibilityActionCompat
 ): Boolean = info.actionList.any { it.id == action.id }
 
 /** Treat hidden/transparent/non-interactive as effectively disabled for interaction checks. */
 private fun View.isActuallyInteractable(): Boolean =
-    visibility == View.VISIBLE && alpha > 0.01f && isClickableOrFocusable()
+        visibility == View.VISIBLE && alpha > 0.01f && isClickableOrFocusable()
 
-private fun View.isClickableOrFocusable(): Boolean =
-    isClickable || isLongClickable || isFocusable
+private fun View.isClickableOrFocusable(): Boolean = isClickable || isLongClickable || isFocusable
 
 private fun parseExpandedFromText(s: String, ctx: Context): Boolean? {
     if (s.isBlank()) return null
@@ -468,8 +516,8 @@ private fun rnTokens(ctx: Context, key: String, fallbacks: List<String>): List<S
         if (id != 0) out += res.getString(id).lowercase()
     }
 
-    addIfExists(ctx.packageName)       // app bundle
-    addIfExists("com.facebook.react")  // RN bundle (older merges)
+    addIfExists(ctx.packageName) // app bundle
+    addIfExists("com.facebook.react") // RN bundle (older merges)
     out += fallbacks.map { it.lowercase() }
 
     return out.distinct()
@@ -487,7 +535,11 @@ private fun busyStrings(view: View): List<String> {
     val res = view.resources
     val pkg = view.context.packageName
     return listOfNotNull(
-        res.getIdentifier("state_busy_description", "string", pkg).takeIf { it != 0 }?.let(res::getString),
-        res.getIdentifier("state_busy_description", "string", "com.facebook.react").takeIf { it != 0 }?.let(res::getString)
+            res.getIdentifier("state_busy_description", "string", pkg)
+                    .takeIf { it != 0 }
+                    ?.let(res::getString),
+            res.getIdentifier("state_busy_description", "string", "com.facebook.react")
+                    .takeIf { it != 0 }
+                    ?.let(res::getString)
     )
 }

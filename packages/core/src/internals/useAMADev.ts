@@ -22,7 +22,11 @@ let issueHighlighted: Array<number> = [];
 const startAMA = () => {
   logger?.log('👀 Start Monitoring 👀: ' + JSON.stringify(projectRules.checks));
 
-  ReactNativeAmaModule.start(projectRules.checks);
+  ReactNativeAmaModule.start({
+    ...projectRules.checks,
+    borderWidth: projectRules.highlight?.borderWidth,
+    gap: projectRules.highlight?.gap,
+  });
 };
 
 const highlightComponent = (
@@ -32,7 +36,7 @@ const highlightComponent = (
 ) => {
   ReactNativeAmaModule.highlight(
     viewId,
-    projectRules.highlight ?? 'both',
+    projectRules.highlight?.mode ?? 'both',
     color,
     issueCount
   );
