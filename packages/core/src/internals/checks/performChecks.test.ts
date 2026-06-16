@@ -1,5 +1,12 @@
 import type { AmaNode } from '../../ReactNativeAma.types';
-import { checkTextInputs } from './performChecks';
+import { checkTextInputs, performChecks } from './performChecks';
+
+jest.mock('../utils/isRuleDisabled', () => ({
+    isRuleDisabled: jest.fn((error) => {
+        // Default: no rules disabled
+        return false;
+    }),
+}));
 
 describe('checkTextInputs', () => {
     const createNode = (overrides: Partial<AmaNode> = {}): AmaNode => ({
@@ -207,6 +214,64 @@ describe('checkTextInputs', () => {
 
             const result = checkTextInputs(nodes);
             expect(result.find(e => e.rule === 'INPUT_INVALID_RETURN_KEY')).toBeUndefined();
+        });
+    });
+
+    describe('Rule disable via config', () => {
+        beforeEach(() => {
+            jest.resetModules();
+            jest.clearAllMocks();
+        });
+
+        it('filters out disabled rules from checkTextInputs results', () => {
+            const { isRuleDisabled } = require('../utils/isRuleDisabled');
+            isRuleDisabled.mockImplementation((error) => {
+                // Disable INPUT_HAS_NO_VISIBLE_LABEL
+                return error.rule === 'INPUT_HAS_NO_VISIBLE_LABEL';
+            });
+
+            const nodes: AmaNode[] = [
+                createNode({
+                    type: 'TextInput',
+                    viewId: 1,
+                    ariaLabel: 'Email:',
+                    isAccessible: undefined,
+                }),
+            ];
+
+            const result = checkTextInputs(nodes);
+            expect(result.find(e => e.rule === 'INPUT_HAS_NO_VISIBLE_LABEL')).toBeUndefined();
+        });
+
+        it('filters out disabled rules from performChecks results', () => {
+            const { isRuleDisabled } = require('../utils/isRuleDisabled');
+            isRuleDisabled.mockImplementation((error) => {
+                // Disable NO_ACCESSIBILITY_LABEL
+                return error.rule === 'NO_ACCESSIBILITY_LABEL';
+            });
+
+            const node = createNode({
+                type: 'Pressable',
+                ariaLabel: undefined,
+                isAccessible: true,
+            });
+
+            const result = performChecks(node);
+            expect(result.find(e => e.rule === 'NO_ACCESSIBILITY_LABEL')).toBeUndefined();
+        });
+
+        it('includes enabled rules in performChecks results', () => {
+            const { isRuleDisabled } = require('../utils/isRuleDisabled');
+            isRuleDisabled.mockReturnValue(false);
+
+            const node = createNode({
+                type: 'Pressable',
+                ariaLabel: undefined,
+                isAccessible: true,
+            });
+
+            const result = performChecks(node);
+            expect(result.find(e => e.rule === 'NO_ACCESSIBILITY_LABEL')).toBeDefined();
         });
     });
 });

@@ -65,7 +65,9 @@ export const checkTextInputs = (nodesToCheck: AmaNode[]): AmaError[] => {
     }
   }
 
-  return errors;
+  return errors.filter(
+    (item): item is AmaError => !isRuleDisabled?.(item)
+  );
 };
 
 const REMOVE_ENDING_REGEXT = /\W$/;
