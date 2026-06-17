@@ -22,13 +22,16 @@
     "typecheck": "tsc --noEmit",
     "test": "jest"
   },
-  "dependencies": {
-    "@react-native-ama/core": "~2.0.0-beta.1"
-  },
   "peerDependencies": {
+    "@react-native-ama/core": "~2.0.0",
     "react": "*",
     "react-native": "*",
     "react-native-reanimated": ">=2.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@react-native-ama/core": {
+      "optional": true
+    }
   },
   "keywords": [
     "react-native",

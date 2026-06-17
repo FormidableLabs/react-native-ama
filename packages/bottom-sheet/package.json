@@ -29,6 +29,11 @@
     "react-native-gesture-handler": ">=2.0.0",
     "react-native-reanimated": ">=2.0.0"
   },
+  "peerDependenciesMeta": {
+    "@react-native-ama/core": {
+      "optional": true
+    }
+  },
   "keywords": [
     "react-native",
     "accessibility"

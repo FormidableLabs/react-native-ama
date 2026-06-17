@@ -1,4 +1,4 @@
-import { useAMAContext } from '@react-native-ama/core';
+import { useAMAContextSafe } from '../internals/useAMAContextSafe';
 import { MOTION_ANIMATIONS } from '../internals/animationConstants';
 import type { ViewProps, ViewStyle } from 'react-native';
 import {
@@ -26,7 +26,7 @@ export const useReanimatedAnimationBuilder = ({
   exitTo,
   duration,
 }: UseReanimatedAnimationBuilder) => {
-  const { isReduceMotionEnabled } = useAMAContext();
+  const { isReduceMotionEnabled } = useAMAContextSafe();
 
   const animationBuilder = <InitialValues, FinalValues>(
     initial: InitialValues,
