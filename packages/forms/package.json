@@ -1,18 +1,8 @@
 {
   "name": "@react-native-ama/forms",
   "version": "2.0.0-beta.1",
-  "react-native": "src/index",
-  "types": "dist/index.d.ts",
-  "main": "dist/index.js",
   "sideEffects": false,
   "exports": {
-    ".": [
-      {
-        "imports": "./dist/index.js",
-        "types": "./dist/index.d.ts"
-      },
-      "./dist/index.js"
-    ],
     "./Form": {
       "types": "./dist/components/Form.d.ts",
       "default": "./dist/components/Form.js"

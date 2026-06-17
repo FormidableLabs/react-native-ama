@@ -5,6 +5,7 @@ import { CTAPressable } from "../components/CTAPressable";
 import { Spacer } from "../components/Spacer";
 import { theme } from "../theme";
 import { Text } from "../components/Text";
+import { Form } from "@react-native-ama/forms";
 
 export const FormScreen = () => {
   const [emailAddress, setEmailAddress] = React.useState("");
@@ -13,42 +14,44 @@ export const FormScreen = () => {
 
   return (
     <ScrollView style={styles.view}>
-      <View>
-        <Text style={styles.labelComponent}>First name:</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={(newText) => setFirstName(newText)}
-          defaultValue={firstName}
-          accessibilityLabel="First Name"
-        />
-      </View>
+      <Form>
+        <View>
+          <Text style={styles.labelComponent}>First name:</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={(newText) => setFirstName(newText)}
+            defaultValue={firstName}
+            accessibilityLabel="First Name"
+          />
+        </View>
 
-      <Spacer height="normal" />
+        <Spacer height="normal" />
 
-      <View>
-        <Text style={styles.labelComponent}>Last name:</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={(newText) => setLastName(newText)}
-          defaultValue={lastName}
-        />
-      </View>
+        <View>
+          <Text style={styles.labelComponent}>Last name:</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={(newText) => setLastName(newText)}
+            defaultValue={lastName}
+          />
+        </View>
 
-      <Spacer height="normal" />
+        <Spacer height="normal" />
 
-      <View>
-        <TextInput
-          style={styles.input}
-          onChangeText={(newText) => setEmailAddress(newText)}
-          defaultValue={emailAddress}
-          placeholder="Email address"
-          accessibilityLabel="Email address"
-        />
-      </View>
+        <View>
+          <TextInput
+            style={styles.input}
+            onChangeText={(newText) => setEmailAddress(newText)}
+            defaultValue={emailAddress}
+            placeholder="Email address"
+            accessibilityLabel="Email address"
+          />
+        </View>
 
-      <Spacer height="big" />
+        <Spacer height="big" />
 
-      <CTAPressable title="Submit" />
+        <CTAPressable title="Submit" />
+      </Form>
     </ScrollView>
   );
 };

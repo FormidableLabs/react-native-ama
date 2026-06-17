@@ -1,18 +1,8 @@
 {
   "name": "@react-native-ama/animations",
   "version": "2.0.0-beta.1",
-  "react-native": "src/index",
-  "types": "dist/index.d.ts",
-  "main": "dist/index.js",
   "sideEffects": false,
   "exports": {
-    ".": [
-      {
-        "imports": "./dist/index.js",
-        "types": "./dist/index.d.ts"
-      },
-      "./dist/index.js"
-    ],
     "./AnimatedContainer": {
       "types": "./dist/components/AnimatedContainer.d.ts",
       "default": "./dist/components/AnimatedContainer.js"
