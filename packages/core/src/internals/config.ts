@@ -46,8 +46,6 @@ let projectRules = defaultRules;
 
 try {
   // look upwards to user's project root
-  // e.g we are here:
-  // root/node_modules/@react-native-ama/internal/dist/utils/logger.ts
   const userDefinedRules: Partial<AmaProjectConfig> = require('./../../../../ama.config.json');
   projectRules = Object.assign(projectRules, userDefinedRules);
 

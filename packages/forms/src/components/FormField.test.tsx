@@ -29,6 +29,18 @@ describe('FormField', () => {
     });
   });
 
+  it('renders children without accessible View when wrapInsideAccessibleView is false', () => {
+    const { toJSON } = render(
+      <FormField hasValidation={false} wrapInsideAccessibleView={false}>
+        <Text>Test</Text>
+      </FormField>,
+    );
+
+    const json = toJSON() as any;
+    expect(json.type).toBe('TouchableWithoutFeedback');
+    expect(json.children[0].type).not.toBe('View');
+  });
+
   it('wraps the children in a focusable View', () => {
     const { toJSON } = render(
       <FormField hasValidation={false}>

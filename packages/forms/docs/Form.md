@@ -18,7 +18,6 @@ The provider hosts the `ref` values used by the [TextInput](./TextInput.mdx) to 
 
 ```jsx
 import { Form, TextInput } from '@react-native-ama/forms';
-import { SwitchListItem } from '@react-native-ama/react-native';
 
 const ExampleForm = () => {
   return (

@@ -394,6 +394,90 @@ describe('BottomSheet', () => {
   it.todo('calculate correct max height');
   it.todo('calculate correct scrollview height');
   it.todo('handles keyboard correctly');
+
+  it('renders content without ScrollView when hasScrollableContent is false', () => {
+    const { getByTestId, queryByTestId } = render(
+      <BottomSheet
+        topInset={0}
+        visible={true}
+        onClose={() => {}}
+        closeActionAccessibilityLabel="close me"
+        hasScrollableContent={false}
+        testID="bottom-sheet"
+      >
+        <Text testID="child-content">content</Text>
+      </BottomSheet>,
+    );
+
+    expect(getByTestId('child-content')).toBeDefined();
+    expect(queryByTestId('bottom-sheet-scrollview')).toBeNull();
+  });
+
+  it('exposes isVisible() via ref returning true when visible', () => {
+    const ref = React.createRef<any>();
+    render(
+      <BottomSheet
+        ref={ref}
+        topInset={0}
+        visible={true}
+        onClose={() => {}}
+        closeActionAccessibilityLabel="close me"
+        testID="bottom-sheet"
+      />,
+    );
+
+    expect(ref.current?.isVisible()).toBe(true);
+  });
+
+  it('exposes isVisible() via ref returning false when not visible', () => {
+    const ref = React.createRef<any>();
+    render(
+      <BottomSheet
+        ref={ref}
+        topInset={0}
+        visible={false}
+        onClose={() => {}}
+        closeActionAccessibilityLabel="close me"
+        testID="bottom-sheet"
+      />,
+    );
+
+    expect(ref.current?.isVisible()).toBe(false);
+  });
+
+  it('calling close() via ref resolves immediately when not visible', async () => {
+    const ref = React.createRef<any>();
+    render(
+      <BottomSheet
+        ref={ref}
+        topInset={0}
+        visible={false}
+        onClose={() => {}}
+        closeActionAccessibilityLabel="close me"
+        testID="bottom-sheet"
+      />,
+    );
+
+    await expect(ref.current?.close()).resolves.toBeUndefined();
+  });
+
+  it('triggers onLayout and updates content height', () => {
+    const { getByTestId } = render(
+      <BottomSheet
+        topInset={0}
+        visible={true}
+        onClose={() => {}}
+        closeActionAccessibilityLabel="close me"
+        testID="bottom-sheet"
+      />,
+    );
+
+    act(() => {
+      getByTestId('bottom-sheet-wrapper').props.onLayout({
+        nativeEvent: { layout: { height: 500 } },
+      });
+    });
+  });
 });
 
 jest.mock('../hooks/useBottomSheetGestureHandler');

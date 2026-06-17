@@ -173,6 +173,20 @@ describe('TextInput', () => {
     );
   });
 
+  it('uses aria-label when accessibilityLabel is not provided', () => {
+    const renderAPI = render(
+      <TextInput
+        aria-label="aria label value"
+        testID="text-input"
+        hasValidation={false}
+      />,
+    );
+
+    expect(renderAPI.getByTestId('text-input').props.accessibilityLabel).toBe(
+      'aria label value',
+    );
+  });
+
   it('calls focusNextFormField onSubmitEditing event', () => {
     const focusNextFormField = jest.fn();
 

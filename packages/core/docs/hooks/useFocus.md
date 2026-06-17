@@ -46,7 +46,6 @@ const MyFancyScreen = () => {
 
 ```tsx
 import { useFocus } from '@react-native-ama/core';
-import { Pressable } from '@react-native-ama/react-native';
 import * as React from 'react';
 import { Text } from 'react-native';
 

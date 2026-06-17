@@ -29,9 +29,6 @@
     "typecheck": "tsc --noEmit",
     "test": "jest"
   },
-  "dependencies": {
-    "@react-native-ama/internal": "~1.2.0"
-  },
   "peerDependencies": {
     "@react-native-ama/core": "~2.0.0",
     "expo": ">=47.0.0",
@@ -75,8 +72,17 @@
       "<rootDir>/dist/"
     ],
     "collectCoverageFrom": [
-      "src/**/*.{ts,tsx}"
+      "src/**/*.{ts,tsx}",
+      "!src/index.ts"
     ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 100,
+        "branches": 85,
+        "functions": 100,
+        "lines": 100
+      }
+    },
     "transformIgnorePatterns": [
       "node_modules/(?!(react-native-reanimated|expo|@expo)/)"
     ],

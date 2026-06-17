@@ -95,6 +95,116 @@ describe('useFormField', () => {
         expect(submitForm).toHaveBeenCalledWith();
       });
     });
+
+    it('calls focusField with the next ref when not the last field', async () => {
+      const focusField = jest.fn();
+      jest.spyOn(Form, 'useForm').mockImplementation(() => ({
+        refs: localRef,
+        submitForm,
+        focusField,
+      }));
+
+      const { result } = renderHook(
+        () => {
+          // first field
+          const first = useFormField({
+            ref: { current: 'first' },
+            hasFocusCallback: false,
+            hasValidation: false,
+          });
+
+          // second field
+          useFormField({
+            ref: { current: 'second' },
+            hasFocusCallback: false,
+            hasValidation: false,
+          });
+
+          return first;
+        },
+        { wrapper: renderHookWrapper },
+      );
+
+      await waitFor(() => {
+        result.current.focusNextFormField();
+        expect(focusField).toHaveBeenCalled();
+      });
+    });
+
+    it('uses nextFormFieldRef when provided', async () => {
+      const focusField = jest.fn();
+      jest.spyOn(Form, 'useForm').mockImplementation(() => ({
+        refs: localRef,
+        submitForm,
+        focusField,
+      }));
+
+      const nextFormFieldRef = { current: 'explicit-next' };
+
+      const { result } = renderHook(
+        () => {
+          const first = useFormField({
+            ref: { current: 'first' },
+            hasFocusCallback: false,
+            hasValidation: false,
+            nextFormFieldRef,
+          });
+
+          useFormField({
+            ref: { current: 'second' },
+            hasFocusCallback: false,
+            hasValidation: false,
+          });
+
+          return first;
+        },
+        { wrapper: renderHookWrapper },
+      );
+
+      await waitFor(() => {
+        result.current.focusNextFormField();
+        expect(focusField).toHaveBeenCalledWith(
+          expect.objectContaining({ ref: nextFormFieldRef }),
+        );
+      });
+    });
+
+    it('uses nextFieldId to find the next ref when provided', async () => {
+      const focusField = jest.fn();
+      jest.spyOn(Form, 'useForm').mockImplementation(() => ({
+        refs: localRef,
+        submitForm,
+        focusField,
+      }));
+
+      const { result } = renderHook(
+        () => {
+          const first = useFormField({
+            ref: { current: 'first' },
+            hasFocusCallback: false,
+            hasValidation: false,
+            nextFieldId: 'second-field',
+          });
+
+          useFormField({
+            ref: { current: 'second' },
+            hasFocusCallback: false,
+            hasValidation: false,
+            id: 'second-field',
+          });
+
+          return first;
+        },
+        { wrapper: renderHookWrapper },
+      );
+
+      await waitFor(() => {
+        result.current.focusNextFormField();
+        expect(focusField).toHaveBeenCalledWith(
+          expect.objectContaining({ id: 'second-field' }),
+        );
+      });
+    });
   });
 });
 

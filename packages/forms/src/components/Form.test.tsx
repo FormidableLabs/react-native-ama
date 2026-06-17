@@ -125,6 +125,35 @@ describe('Form', () => {
     expect(setFocus).toHaveBeenCalledWith(ref.current);
   });
 
+  it('focusFieldAt focuses the field at the given index', async () => {
+    const focus = jest.fn();
+    const ref = React.createRef<any>();
+    (ref as any).current = { focus, isFocused: jest.fn().mockReturnValue(false) };
+
+    let formRef = React.createRef<any>();
+
+    render(
+      <Form ref={formRef} onSubmit={jest.fn()}>
+        <FormContext.Consumer>
+          {value => {
+            value?.refs?.push({
+              ref: { current: ref } as any,
+              hasFocusCallback: true,
+              hasValidation: false,
+              isEditable: true,
+              id: 'field0',
+            });
+            return null;
+          }}
+        </FormContext.Consumer>
+      </Form>,
+    );
+
+    formRef.current?.focusFieldAt(0);
+
+    await waitFor(() => expect(focus).toHaveBeenCalled());
+  });
+
   it('focuses the first failed component when submitForm fails', async () => {
     const onSubmit = jest.fn().mockReturnValue(false);
 
@@ -190,3 +219,37 @@ function customRender(onSubmit = jest.fn()) {
 }
 
 jest.mock('../hooks/useFocus', () => mockUseFocus());
+
+describe('useForm', () => {
+  it('returns default context value when suppressError is true and no Form wrapper', () => {
+    const { useForm } = require('./Form');
+    const { renderHook } = require('@testing-library/react-native');
+
+    const { result } = renderHook(() => useForm({ suppressError: true }));
+    expect(result.current.refs).toEqual([]);
+    expect(typeof result.current.submitForm).toBe('function');
+  });
+
+  it('throws when called outside Form and suppressError is false', () => {
+    const { useForm } = require('./Form');
+    const { renderHook } = require('@testing-library/react-native');
+
+    expect(() => renderHook(() => useForm())).toThrow(
+      'useForm must be used within a FormContextProvider',
+    );
+  });
+
+  it('logs a console.error in __DEV__ when called outside Form', () => {
+    const { useForm } = require('./Form');
+    const { renderHook } = require('@testing-library/react-native');
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    // @ts-ignore
+    global.__DEV__ = true;
+
+    expect(() => renderHook(() => useForm())).toThrow();
+    expect(errorSpy).toHaveBeenCalled();
+    errorSpy.mockRestore();
+    // @ts-ignore
+    global.__DEV__ = true;
+  });
+});

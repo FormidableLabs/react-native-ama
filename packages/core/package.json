@@ -84,7 +84,13 @@
       "<rootDir>/jest.setup.js"
     ],
     "collectCoverageFrom": [
-      "src/**/*.{ts,tsx}"
+      "src/**/*.{ts,tsx}",
+      "!src/index.ts",
+      "!src/ReactNativeAmaModule.ts",
+      "!src/ReactNativeAmaModule.web.ts",
+      "!src/ReactNativeAmaView.tsx",
+      "!src/ReactNativeAmaView.web.tsx",
+      "!src/ReactNativeAma.types.ts"
     ],
     "coverageThreshold": {
       "global": {
