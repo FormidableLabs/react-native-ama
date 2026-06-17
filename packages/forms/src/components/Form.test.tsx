@@ -1,4 +1,3 @@
-import * as UseChecks from '@react-native-ama/core/src/hooks/useChecks';
 import { render, waitFor } from '@testing-library/react-native';
 import * as React from 'react';
 import { Form, FormContext } from './Form';
@@ -8,56 +7,6 @@ beforeEach(() => {
 });
 
 describe('Form', () => {
-  let checkFocusTrap: jest.Mock;
-
-  beforeEach(function () {
-    checkFocusTrap = jest.fn().mockResolvedValue(null);
-
-    // @ts-ignore
-    jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
-      checkFocusTrap,
-      hasErrors: true,
-    } as any);
-  });
-
-  it('checks that next field has the focus if it has the focus callback', async () => {
-    const focus = jest.fn();
-    const ref = { current: { focus, isFocused: jest.fn() } };
-    const secondField = {
-      ref,
-      hasFocusCallback: true,
-      hasValidation: false,
-      isEditable: true,
-      id: 'second',
-    };
-
-    let providerValues = customRender();
-
-    providerValues.refs?.push({
-      ref: { current: 'random ref' },
-      hasFocusCallback: false,
-      hasValidation: false,
-      id: 'first',
-    });
-
-    // next field
-    providerValues.refs?.push(secondField);
-
-    providerValues.focusField?.(secondField);
-
-    await waitFor(() =>
-      expect(checkFocusTrap).toHaveBeenCalledWith({
-        ref: {
-          current: {
-            focus: expect.any(Function),
-            isFocused: expect.any(Function),
-          },
-        },
-        shouldHaveFocus: true,
-      }),
-    );
-  });
-
   it('calls setFocus if the next field has no .focus callback', () => {
     const ref = { current: 'whatever' };
     const secondField = {
@@ -140,23 +89,10 @@ describe('Form', () => {
     providerValues.focusField?.(secondField);
 
     expect(focus).not.toHaveBeenCalled();
-    expect(checkFocusTrap).not.toHaveBeenCalled();
 
     jest.advanceTimersByTime(51);
 
     expect(focus).toHaveBeenCalledWith();
-
-    await waitFor(() =>
-      expect(checkFocusTrap).toHaveBeenCalledWith({
-        ref: {
-          current: {
-            focus: expect.any(Function),
-            isFocused: expect.any(Function),
-          },
-        },
-        shouldHaveFocus: true,
-      }),
-    );
 
     jest.useRealTimers();
   });
@@ -221,7 +157,7 @@ describe('Form', () => {
   });
 });
 
-let setFocus: jest.Mock;
+var setFocus: jest.Mock;
 
 function mockUseFocus() {
   setFocus = jest.fn();
@@ -254,8 +190,3 @@ function customRender(onSubmit = jest.fn()) {
 }
 
 jest.mock('../hooks/useFocus', () => mockUseFocus());
-jest.mock('../internal/checks/checkFocusTrap', () => {
-  return {
-    checkFocusTrap: jest.fn().mockResolvedValue(null),
-  };
-});

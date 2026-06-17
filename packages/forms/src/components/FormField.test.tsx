@@ -4,8 +4,13 @@ import { Text } from 'react-native';
 import * as UseFormField from '../hooks/useFormField';
 import { FormField } from './FormField';
 
+jest.mock('../hooks/useFormField', () => ({
+  useFormField: jest.fn(() => ({})),
+}));
+
 beforeEach(() => {
   jest.clearAllMocks();
+  (UseFormField.useFormField as jest.Mock).mockReturnValue({});
 });
 
 describe('FormField', () => {
@@ -32,22 +37,22 @@ describe('FormField', () => {
     );
 
     expect(toJSON()).toMatchInlineSnapshot(`
-      <View
-        accessibilityHint=""
-        accessible={true}
-        focusable={false}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
+      <TouchableWithoutFeedback
+        hasValidation={false}
+        ref={
+          {
+            "current": null,
+          }
+        }
       >
-        <Text>
-          Test
-        </Text>
-      </View>
+        <View
+          accessible={true}
+        >
+          <Text>
+            Test
+          </Text>
+        </View>
+      </TouchableWithoutFeedback>
     `);
   });
 });

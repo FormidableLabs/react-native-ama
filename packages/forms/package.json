@@ -50,7 +50,8 @@
   "author": "",
   "license": "MIT",
   "jest": {
-    "preset": "jest-expo",
+    "preset": "react-native",
+    "setupFilesAfterEnv": ["<rootDir>/jest.setup.js"],
     "modulePathIgnorePatterns": [
       "<rootDir>/node_modules",
       "<rootDir>/dist/"
@@ -67,10 +68,18 @@
       }
     },
     "transformIgnorePatterns": [
-      "node_modules/(?!(@react-native|react-native|react-native-reanimated/))"
+      "node_modules/(?!(react-native-reanimated|expo|@expo)/)"
     ],
     "transform": {
       "\\.[jt]sx?$": "babel-jest"
+    },
+    "moduleDirectories": ["node_modules", "../../playground/node_modules"],
+    "moduleNameMapper": {
+      "@react-native/js-polyfills/error-guard": "<rootDir>/../../jest-mocks/error-guard.js",
+      "^(\\.{1,2}/)*ama\\.config\\.json$": "<rootDir>/../../jest-mocks/ama-config.js",
+      "^(\\.{1,2}/)*ReactNativeAmaModule$": "<rootDir>/../../jest-mocks/ReactNativeAmaModule.js",
+      "^@react-native-ama/core$": "<rootDir>/../../packages/core/src/index.ts",
+      "^@react-native-ama/core/(.*)$": "<rootDir>/../../packages/core/$1"
     },
     "verbose": true
   },

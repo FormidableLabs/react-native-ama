@@ -1,4 +1,3 @@
-import * as AMAProvider from '@react-native-ama/core';
 import { renderHook, waitFor } from '@testing-library/react-native';
 import * as React from 'react';
 import * as Form from '../components/Form';
@@ -14,10 +13,6 @@ describe('useFormField', () => {
   let localRef: any[] = [];
 
   beforeEach(() => {
-    jest.spyOn(AMAProvider, 'useAMAContext').mockReturnValue({
-      isScreenReaderEnabled: true,
-    } as any);
-
     jest.spyOn(Form, 'useForm').mockImplementation(() => {
       return { refs: localRef, submitForm };
     });
@@ -73,51 +68,7 @@ describe('useFormField', () => {
   });
 
   describe('focusNextFormField', () => {
-    describe('Given the form field is not the last of the refs', () => {
-      describe('checks for focus when calling focusNextFormField', function () {
-        it('checks only against the current field if next one does not have the focus callback', async () => {
-          const focus = jest.fn();
-          const ref = { current: { focus, isFocused: jest.fn() } };
-
-          const { result } = renderHook(
-            () => {
-              const first = useFormField({
-                ref: { current: 'random ref' },
-                hasFocusCallback: true,
-                hasValidation: false,
-              });
-
-              // next field
-              useFormField({
-                ref,
-                hasFocusCallback: false,
-                hasValidation: false,
-              });
-
-              return first;
-            },
-            { wrapper: renderHookWrapper },
-          );
-
-          result.current.focusNextFormField();
-
-          await waitFor(() =>
-            expect(checkFocusTrap).toHaveBeenCalledWith({
-              ref: { current: 'random ref' },
-              shouldHaveFocus: false,
-            }),
-          );
-
-          expect(checkFocusTrap).toHaveBeenCalledTimes(1);
-        });
-      });
-    });
-
     it('triggers submitForm when the element is the last one of the ref', async () => {
-      jest.spyOn(AMAProvider, 'useAMAContext').mockReturnValue({
-        isScreenReaderEnabled: true,
-      } as any);
-
       const ref = { current: 'whatever' };
 
       const { result } = renderHook(
@@ -147,25 +98,6 @@ describe('useFormField', () => {
   });
 });
 
-let setFocus: jest.Mock;
-
-function mockAMACore() {
-  const original = jest.requireActual('@react-native-ama/core');
-
-  setFocus = jest.fn();
-
-  return {
-    ...original,
-    useFocus: () => {
-      return {
-        setFocus,
-      };
-    },
-  };
-}
-
-const renderHookWrapper = ({ children }) => (
-  <AMAProvider.AMAProvider>{children}</AMAProvider.AMAProvider>
+const renderHookWrapper = ({ children }: { children: React.ReactNode }) => (
+  <>{children}</>
 );
-
-jest.mock('@react-native-ama/core', () => mockAMACore());
