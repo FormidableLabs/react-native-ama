@@ -1,6 +1,6 @@
 {
   "name": "@react-native-ama/animations",
-  "version": "1.2.0",
+  "version": "2.0.0-beta.1",
   "react-native": "src/index",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
@@ -19,10 +19,11 @@
   ],
   "scripts": {
     "build": "rm -rf dist && tsc -p ./tsconfig.build.json",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "jest"
   },
   "dependencies": {
-    "@react-native-ama/core": "~1.2.0"
+    "@react-native-ama/core": "~2.0.0-beta.1"
   },
   "peerDependencies": {
     "react": "*",
@@ -47,5 +48,36 @@
     "provenance": true
   },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "jest": {
+    "preset": "react-native",
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.js"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/node_modules",
+      "<rootDir>/dist/"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(react-native-reanimated|expo|@expo)/)"
+    ],
+    "transform": {
+      "\\.[jt]sx?$": "babel-jest"
+    },
+    "moduleDirectories": [
+      "node_modules",
+      "../../playground/node_modules"
+    ],
+    "moduleNameMapper": {
+      "@react-native/js-polyfills/error-guard": "<rootDir>/../../jest-mocks/error-guard.js",
+      "^(\\.{1,2}/)*ama\\.config\\.json$": "<rootDir>/../../jest-mocks/ama-config.js",
+      "^(\\.{1,2}/)*ReactNativeAmaModule$": "<rootDir>/../../jest-mocks/ReactNativeAmaModule.js",
+      "^(\\.{1,2}/)*ReactNativeAmaView(\\.web)?$": "<rootDir>/../../jest-mocks/ReactNativeAmaModule.js",
+      "^@react-native-ama/core$": "<rootDir>/../../jest-mocks/ama-core.js"
+    },
+    "verbose": true
+  }
 }

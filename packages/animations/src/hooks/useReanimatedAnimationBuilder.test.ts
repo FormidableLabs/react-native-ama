@@ -6,7 +6,7 @@ beforeEach(() => {
   jest.clearAllMocks();
 });
 
-let withTiming: jest.Mock;
+var withTiming: jest.Mock;
 
 describe('useReanimatedAnimationBuilder', () => {
   describe('entering animation', () => {

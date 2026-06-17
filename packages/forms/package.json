@@ -1,6 +1,6 @@
 {
   "name": "@react-native-ama/forms",
-  "version": "1.2.0",
+  "version": "2.0.0-beta.1",
   "react-native": "src/index",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
@@ -23,7 +23,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@react-native-ama/core": "~1.2.0",
+    "@react-native-ama/core": "~2.0.0-beta.1",
     "@react-native-ama/react-native": "~1.2.0"
   },
   "peerDependencies": {
@@ -51,7 +51,9 @@
   "license": "MIT",
   "jest": {
     "preset": "react-native",
-    "setupFilesAfterEnv": ["<rootDir>/jest.setup.js"],
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.js"
+    ],
     "modulePathIgnorePatterns": [
       "<rootDir>/node_modules",
       "<rootDir>/dist/"
@@ -73,7 +75,10 @@
     "transform": {
       "\\.[jt]sx?$": "babel-jest"
     },
-    "moduleDirectories": ["node_modules", "../../playground/node_modules"],
+    "moduleDirectories": [
+      "node_modules",
+      "../../playground/node_modules"
+    ],
     "moduleNameMapper": {
       "@react-native/js-polyfills/error-guard": "<rootDir>/../../jest-mocks/error-guard.js",
       "^(\\.{1,2}/)*ama\\.config\\.json$": "<rootDir>/../../jest-mocks/ama-config.js",

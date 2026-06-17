@@ -1,6 +1,6 @@
 {
   "name": "@react-native-ama/core",
-  "version": "1.2.0",
+  "version": "2.0.0-beta.1",
   "description": "Accessible Mobile App Library for React Native",
   "react-native": "src/index",
   "types": "dist/src/index.d.ts",
@@ -57,7 +57,9 @@
       "<rootDir>/node_modules",
       "<rootDir>/dist/"
     ],
-    "setupFilesAfterEnv": ["<rootDir>/jest.setup.js"],
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.js"
+    ],
     "collectCoverageFrom": [
       "src/**/*.{ts,tsx}"
     ],
@@ -72,7 +74,10 @@
     "transformIgnorePatterns": [
       "node_modules/(?!(react-native-reanimated|expo|@expo)/)"
     ],
-    "moduleDirectories": ["node_modules", "../../playground/node_modules"],
+    "moduleDirectories": [
+      "node_modules",
+      "../../playground/node_modules"
+    ],
     "moduleNameMapper": {
       "@react-native/js-polyfills/error-guard": "<rootDir>/../../jest-mocks/error-guard.js",
       "^(\\.{1,2}/)*ama\\.config\\.json$": "<rootDir>/../../jest-mocks/ama-config.js",

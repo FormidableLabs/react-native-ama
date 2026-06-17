@@ -2,12 +2,49 @@ import { renderHook } from '@testing-library/react-native';
 import { SharedValue } from 'react-native-reanimated';
 import { useBottomSheetGestureHandler } from './useBottomSheetGestureHandler';
 
+var mockWithTiming: jest.Mock;
+var mockRunOnJS: jest.Mock;
+var mockStartY: { value: number };
+
+jest.mock('react-native-reanimated', () => {
+  mockWithTiming = jest.fn(value => value);
+  mockRunOnJS = jest.fn(callback => callback);
+  mockStartY = { value: 0 };
+
+  return {
+    SharedValue: undefined,
+    runOnJS: mockRunOnJS,
+    useReducedMotion: jest.fn(() => false),
+    useAnimatedStyle: jest.fn(),
+    useSharedValue: jest.fn(() => mockStartY),
+    withTiming: mockWithTiming,
+  };
+});
+
+jest.mock('react-native-gesture-handler', () => {
+  return {
+    Gesture: {
+      Pan: jest.fn(() => {
+        const handler: any = {};
+        handler.onStart = (cb: any) => { handler._onStart = cb; return handler; };
+        handler.onUpdate = (cb: any) => { handler._onUpdate = cb; return handler; };
+        handler.onEnd = (cb: any) => { handler._onEnd = cb; return handler; };
+        return handler;
+      }),
+    },
+    GestureDetector: ({ children }: any) => children,
+    GestureHandlerRootView: ({ children }: any) => children,
+    ScrollView: 'ScrollView',
+  };
+});
+
 beforeEach(() => {
   jest.clearAllMocks();
+  mockStartY = { value: 0 };
 });
 
 describe('useBottomSheetGestureHandler', () => {
-  it('onStarts stores the current translateY position', () => {
+  it('onStart stores the current translateY position', () => {
     const translateY = { value: 42 } as SharedValue<number>;
     const { result } = renderHook(() =>
       useBottomSheetGestureHandler({
@@ -21,14 +58,12 @@ describe('useBottomSheetGestureHandler', () => {
       }),
     );
 
-    const context = { y: 0 };
-    // @ts-ignore
-    result.current.gestureHandler.onStart(null, context);
+    result.current.gestureHandler._onStart(null);
 
-    expect(context.y).toBe(42);
+    expect(mockStartY.value).toBe(42);
   });
 
-  it('onActive updates the translateY limiting it to be >= 0', () => {
+  it('onUpdate updates the translateY limiting it to be >= 0', () => {
     const translateY = { value: 42 } as SharedValue<number>;
     const { result } = renderHook(() =>
       useBottomSheetGestureHandler({
@@ -42,16 +77,12 @@ describe('useBottomSheetGestureHandler', () => {
       }),
     );
 
-    const context = { y: 0 };
-    // @ts-ignore
-    result.current.gestureHandler.onStart(null, context);
-    // @ts-ignore
-    result.current.gestureHandler.onActive({ translationY: 100 }, context);
+    result.current.gestureHandler._onStart(null);
+    result.current.gestureHandler._onUpdate({ translationY: 100 });
 
     expect(translateY.value).toBe(142);
 
-    // @ts-ignore
-    result.current.gestureHandler.onActive({ translationY: -500 }, context);
+    result.current.gestureHandler._onUpdate({ translationY: -500 });
 
     expect(translateY.value).toBe(0);
   });
@@ -70,15 +101,11 @@ describe('useBottomSheetGestureHandler', () => {
         } as any),
       );
 
-      const context = { y: 0 };
-
-      // @ts-ignore
-      result.current.gestureHandler.onActive({ translationY: 249 }, context);
-      // @ts-ignore
-      result.current.gestureHandler.onEnd({ velocityY: 100 });
+      result.current.gestureHandler._onUpdate({ translationY: 249 });
+      result.current.gestureHandler._onEnd({ velocityY: 100 });
 
       expect(translateY.value).toBe(0);
-      expect(withTiming).toHaveBeenCalledWith(0, { duration: 300 });
+      expect(mockWithTiming).toHaveBeenCalledWith(0, { duration: 300 });
     });
 
     it('calls the onClose event when the distance is at least the requested one', () => {
@@ -97,19 +124,15 @@ describe('useBottomSheetGestureHandler', () => {
         }),
       );
 
-      const context = { y: 0 };
+      result.current.gestureHandler._onUpdate({ translationY: 250 });
+      result.current.gestureHandler._onEnd(null);
 
-      // @ts-ignore
-      result.current.gestureHandler.onActive({ translationY: 250 }, context);
-      // @ts-ignore
-      result.current.gestureHandler.onEnd(null);
-
-      expect(runOnJS).toHaveBeenCalledWith(onClose);
+      expect(mockRunOnJS).toHaveBeenCalledWith(onClose);
       expect(onClose).toHaveBeenCalledWith();
-      expect(withTiming).not.toHaveBeenCalled();
+      expect(mockWithTiming).not.toHaveBeenCalled();
     });
 
-    it('call onClose when the velocity is bigger than minVelocityToClose', () => {
+    it('calls onClose when the velocity is bigger than minVelocityToClose', () => {
       const onClose = jest.fn();
 
       const translateY = { value: 0 };
@@ -124,42 +147,12 @@ describe('useBottomSheetGestureHandler', () => {
         } as any),
       );
 
-      const context = { y: 0 };
+      result.current.gestureHandler._onUpdate({ translationY: 42 });
+      result.current.gestureHandler._onEnd({ velocityY: 1001 });
 
-      // @ts-ignore
-      result.current.gestureHandler.onActive({ translationY: 42 }, context);
-      // @ts-ignore
-      result.current.gestureHandler.onEnd({ velocityY: 1001 });
-
-      expect(runOnJS).toHaveBeenCalledWith(onClose);
+      expect(mockRunOnJS).toHaveBeenCalledWith(onClose);
       expect(onClose).toHaveBeenCalledWith();
-      expect(withTiming).not.toHaveBeenCalled();
+      expect(mockWithTiming).not.toHaveBeenCalled();
     });
   });
 });
-
-let useAnimatedGestureHandler: jest.Mock;
-let withTiming: jest.Mock;
-let runOnJS: jest.Mock;
-
-function mockReanimated() {
-  useAnimatedGestureHandler = jest.fn(p => {
-    return p;
-  });
-
-  withTiming = jest.fn(value => value);
-  runOnJS = jest.fn(callback => callback);
-
-  return {
-    SharedValue: undefined,
-    runOnJS,
-    useAnimatedGestureHandler,
-    useAnimatedStyle: jest.fn(),
-    useSharedValue: jest.fn(() => {
-      return { value: 0 };
-    }),
-    withTiming,
-  };
-}
-
-jest.mock('react-native-reanimated', () => mockReanimated());

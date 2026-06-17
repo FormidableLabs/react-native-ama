@@ -78,8 +78,8 @@ const amaContextValues = {
   isScreenReaderEnabled: false,
 };
 
-let withSpring: jest.Mock;
-let withTiming: jest.Mock;
+var withSpring: jest.Mock;
+var withTiming: jest.Mock;
 
 function mockReanimated() {
   withSpring = jest.fn();

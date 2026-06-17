@@ -4061,7 +4061,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@react-native-ama/animations@workspace:packages/animations"
   dependencies:
-    "@react-native-ama/core": ~1.2.0
+    "@react-native-ama/core": ~2.0.0-beta.1
   peerDependencies:
     react: "*"
     react-native: "*"
@@ -4093,7 +4093,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-ama/core@workspace:packages/core, @react-native-ama/core@~1.2.0":
+"@react-native-ama/core@workspace:packages/core, @react-native-ama/core@~2.0.0-beta.1":
   version: 0.0.0-use.local
   resolution: "@react-native-ama/core@workspace:packages/core"
   dependencies:
@@ -4108,7 +4108,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@react-native-ama/forms@workspace:packages/forms"
   dependencies:
-    "@react-native-ama/core": ~1.2.0
+    "@react-native-ama/core": ~2.0.0-beta.1
     "@react-native-ama/react-native": ~1.2.0
     jest-expo: ^49.0.0
   peerDependencies:
@@ -4133,7 +4133,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@react-native-ama/lists@workspace:packages/lists"
   dependencies:
-    "@react-native-ama/core": ~1.2.0
+    "@react-native-ama/core": ~2.0.0-beta.1
     "@react-native-ama/internal": ~1.2.0
   peerDependencies:
     expo: ">=47.0.0"

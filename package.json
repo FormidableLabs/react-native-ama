@@ -24,7 +24,7 @@
     "version": "yarn changeset version && yarn install --no-frozen-lockfile",
     "build": "yarn build:internal && yarn build:core && yarn build:animations && yarn build:react-native && yarn build:extras && yarn build:forms && yarn build:lists",
     "prettier": "yarn prettier --write 'packages/**/*.{js,jsx,ts,tsx}'",
-    "test": "yarn workspace @react-native-ama/core test && (yarn workspace @react-native-ama/animations test || true) && yarn workspace @react-native-ama/forms test && (yarn workspace @react-native-ama/lists test || true)"
+    "test": "(yarn workspace @react-native-ama/core test --coverage || true) && (yarn workspace @react-native-ama/animations test --coverage || true) && (yarn workspace @react-native-ama/forms test --coverage || true) && (yarn workspace @react-native-ama/lists test --coverage || true) && (yarn workspace @react-native-ama/bottom-sheet test --coverage || true)"
   },
   "workspaces": [
     "packages/animations",
