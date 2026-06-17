@@ -4,6 +4,7 @@
   "react-native": "src/index",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
+  "sideEffects": false,
   "exports": {
     ".": [
       {
@@ -11,7 +12,35 @@
         "types": "./dist/index.d.ts"
       },
       "./dist/index.js"
-    ]
+    ],
+    "./Form": {
+      "types": "./dist/components/Form.d.ts",
+      "default": "./dist/components/Form.js"
+    },
+    "./FormField": {
+      "types": "./dist/components/FormField.d.ts",
+      "default": "./dist/components/FormField.js"
+    },
+    "./FormSubmit": {
+      "types": "./dist/components/FormSubmit.d.ts",
+      "default": "./dist/components/FormSubmit.js"
+    },
+    "./TextInput": {
+      "types": "./dist/components/TextInput.d.ts",
+      "default": "./dist/components/TextInput.js"
+    },
+    "./useFormField": {
+      "types": "./dist/hooks/useFormField.d.ts",
+      "default": "./dist/hooks/useFormField.js"
+    },
+    "./useFormSubmit": {
+      "types": "./dist/hooks/useFormSubmit.d.ts",
+      "default": "./dist/hooks/useFormSubmit.js"
+    },
+    "./useTextInput": {
+      "types": "./dist/hooks/useTextInput.d.ts",
+      "default": "./dist/hooks/useTextInput.js"
+    }
   },
   "files": [
     "src",

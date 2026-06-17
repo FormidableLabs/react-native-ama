@@ -4,6 +4,7 @@
   "react-native": "src/index",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
+  "sideEffects": false,
   "exports": {
     ".": [
       {
@@ -11,7 +12,23 @@
         "types": "./dist/index.d.ts"
       },
       "./dist/index.js"
-    ]
+    ],
+    "./DynamicFlatList": {
+      "types": "./dist/components/DynamicFlatList.d.ts",
+      "default": "./dist/components/DynamicFlatList.js"
+    },
+    "./FlatList": {
+      "types": "./dist/components/FlatList.d.ts",
+      "default": "./dist/components/FlatList.js"
+    },
+    "./StaticFlatList": {
+      "types": "./dist/components/StaticFlatList.d.ts",
+      "default": "./dist/components/StaticFlatList.js"
+    },
+    "./useDynamicList": {
+      "types": "./dist/hooks/useDynamicList.d.ts",
+      "default": "./dist/hooks/useDynamicList.js"
+    }
   },
   "files": [
     "src",

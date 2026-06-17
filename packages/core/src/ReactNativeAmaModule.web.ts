@@ -1,10 +1,10 @@
 import { NativeModule, registerWebModule } from 'expo';
-import { ReactNativeAmaModuleEvents } from './ReactNativeAma.types';
+import { AmaNodes, ReactNativeAmaModuleEvents } from './ReactNativeAma.types';
 
 class ReactNativeAmaModule extends NativeModule<ReactNativeAmaModuleEvents> {
   PI = Math.PI;
-  async setValueAsync(issues: A11yIssue[]): Promise<void> {
-    this.emit('onAmaNodes', issues);
+  async setValueAsync(nodes: AmaNodes): Promise<void> {
+    this.emit('onAmaNodes', nodes);
   }
   hello() {
     return 'Hello world! 👋';

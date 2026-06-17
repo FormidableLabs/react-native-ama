@@ -1,4 +1,4 @@
-import { useChecks } from '@react-native-ama/core';
+const AMACore = require('@react-native-ama/core');
 import React from 'react';
 import { AccessibilityInfo } from 'react-native';
 
@@ -21,7 +21,7 @@ export const useDynamicList = ({
   const initialCount = React.useRef(data?.length);
   const lastItemsCount = React.useRef<null | number>(null);
 
-  const checks = __DEV__ ? useChecks?.() : null;
+  const checks = __DEV__ ? AMACore?.useChecks?.() : null;
 
   __DEV__ &&
     React.useEffect(() => {

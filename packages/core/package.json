@@ -3,16 +3,49 @@
   "version": "2.0.0-beta.1",
   "description": "Accessible Mobile App Library for React Native",
   "react-native": "src/index",
-  "types": "dist/src/index.d.ts",
-  "main": "dist/src/index.js",
+  "types": "dist/index.d.ts",
+  "main": "dist/index.js",
+  "sideEffects": false,
   "exports": {
     ".": [
       {
-        "imports": "./dist/src/index.js",
-        "types": "./dist/src/index.d.ts"
+        "imports": "./dist/index.js",
+        "types": "./dist/index.d.ts"
       },
-      "./dist/src/index.js"
-    ]
+      "./dist/index.js"
+    ],
+    "./AMAProvider": {
+      "types": "./dist/components/AMAProvider.d.ts",
+      "default": "./dist/components/AMAProvider.js"
+    },
+    "./AutofocusContainer": {
+      "types": "./dist/components/AutofocusContainer.d.ts",
+      "default": "./dist/components/AutofocusContainer.js"
+    },
+    "./HideChildrenFromAccessibilityTree": {
+      "types": "./dist/components/HideChildrenFromAccessibilityTree.d.ts",
+      "default": "./dist/components/HideChildrenFromAccessibilityTree.js"
+    },
+    "./useFocus": {
+      "types": "./dist/hooks/useFocus.d.ts",
+      "default": "./dist/hooks/useFocus.js"
+    },
+    "./useTimedAction": {
+      "types": "./dist/hooks/useTimedAction.d.ts",
+      "default": "./dist/hooks/useTimedAction.js"
+    },
+    "./ReactNativeAmaModule": {
+      "types": "./dist/ReactNativeAmaModule.d.ts",
+      "default": "./dist/ReactNativeAmaModule.js"
+    },
+    "./ReactNativeAmaView": {
+      "types": "./dist/ReactNativeAmaView.d.ts",
+      "default": "./dist/ReactNativeAmaView.js"
+    },
+    "./ReactNativeAma.types": {
+      "types": "./dist/ReactNativeAma.types.d.ts",
+      "default": "./dist/ReactNativeAma.types.js"
+    }
   },
   "files": [
     "src",
@@ -20,8 +53,8 @@
     "dist/scripts"
   ],
   "scripts": {
-    "build": "rm -rf dist && tsc -p ./tsconfig.build.json",
-    "typecheck": "tsc --noEmit",
+    "build": "rm -rf dist && ../../node_modules/.bin/tsc -p ./tsconfig.build.json",
+    "typecheck": "../../node_modules/.bin/tsc --noEmit",
     "test": "jest",
     "postinstall": "node ./src/postinstall.js"
   },

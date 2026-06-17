@@ -4060,12 +4060,14 @@ __metadata:
 "@react-native-ama/animations@workspace:packages/animations":
   version: 0.0.0-use.local
   resolution: "@react-native-ama/animations@workspace:packages/animations"
-  dependencies:
-    "@react-native-ama/core": ~2.0.0-beta.1
   peerDependencies:
+    "@react-native-ama/core": ~2.0.0
     react: "*"
     react-native: "*"
     react-native-reanimated: ">=2.0.0"
+  peerDependenciesMeta:
+    "@react-native-ama/core":
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -4078,25 +4080,17 @@ __metadata:
     react-native: ">=0.62.0"
     react-native-gesture-handler: ">=2.0.0"
     react-native-reanimated: ">=2.0.0"
+  peerDependenciesMeta:
+    "@react-native-ama/core":
+      optional: true
   languageName: unknown
   linkType: soft
 
-"@react-native-ama/core@npm:~1.2.1":
-  version: 1.2.1
-  resolution: "@react-native-ama/core@npm:1.2.1"
-  dependencies:
-    "@react-native-ama/internal": ~1.2.1
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 066217ef4537e43a777195fb52d05c63cd4909743ef5e689a43cc3bc79bf1e2cf43c639db33771f98cff53cc2e8cce4dcfe2fbf1d27eab8909bea7273ebee131
-  languageName: node
-  linkType: hard
-
-"@react-native-ama/core@workspace:packages/core, @react-native-ama/core@~2.0.0-beta.1":
+"@react-native-ama/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@react-native-ama/core@workspace:packages/core"
   dependencies:
+    "@types/node": ^25.9.3
     babel-jest: ^29.7.0
   peerDependencies:
     react: "*"
@@ -4108,16 +4102,18 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@react-native-ama/forms@workspace:packages/forms"
   dependencies:
-    "@react-native-ama/core": ~2.0.0-beta.1
-    "@react-native-ama/react-native": ~1.2.0
     jest-expo: ^49.0.0
   peerDependencies:
+    "@react-native-ama/core": ~2.0.0
     react: "*"
     react-native: "*"
+  peerDependenciesMeta:
+    "@react-native-ama/core":
+      optional: true
   languageName: unknown
   linkType: soft
 
-"@react-native-ama/internal@npm:~1.2.0, @react-native-ama/internal@npm:~1.2.1":
+"@react-native-ama/internal@npm:~1.2.0":
   version: 1.2.1
   resolution: "@react-native-ama/internal@npm:1.2.1"
   dependencies:
@@ -4133,13 +4129,15 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@react-native-ama/lists@workspace:packages/lists"
   dependencies:
-    "@react-native-ama/core": ~2.0.0-beta.1
     "@react-native-ama/internal": ~1.2.0
   peerDependencies:
+    "@react-native-ama/core": ~2.0.0
     expo: ">=47.0.0"
     react: "*"
     react-native: "*"
   peerDependenciesMeta:
+    "@react-native-ama/core":
+      optional: true
     expo:
       optional: true
   languageName: unknown
@@ -4173,19 +4171,6 @@ __metadata:
     typescript: ^5.1.3
   languageName: unknown
   linkType: soft
-
-"@react-native-ama/react-native@npm:~1.2.0":
-  version: 1.2.1
-  resolution: "@react-native-ama/react-native@npm:1.2.1"
-  dependencies:
-    "@react-native-ama/core": ~1.2.1
-    "@react-native-ama/internal": ~1.2.1
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: e4c4b714510126ece45263093fcf4e653ee2584c6e8cd9def94f6f5af5273b7e00d731ef22a3e173db6ef246bb135498a35ae5c2f94d54d6929844e3a58b4f96
-  languageName: node
-  linkType: hard
 
 "@react-native/assets-registry@npm:0.79.1":
   version: 0.79.1
@@ -4687,6 +4672,15 @@ __metadata:
   dependencies:
     undici-types: ~7.8.0
   checksum: 27f31e6976587efdfd13c0024703d7e11e6a27a6af48d488c6e5662733c9e8d47ac059e38cd9d491425f68f0c5e8e2bc060859b0b66afe79af0697acb0c25e4d
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^25.9.3":
+  version: 25.9.3
+  resolution: "@types/node@npm:25.9.3"
+  dependencies:
+    undici-types: ">=7.24.0 <7.24.7"
+  checksum: 78b30ba6812d330062ddff63e3f0b20ec4cadfc6f96380dc87988b5d67efc99a6ffbf117e638574bba5397527279c8f6b754784fae907a5b76bd69e315631f00
   languageName: node
   linkType: hard
 
@@ -14510,6 +14504,13 @@ __metadata:
     has-symbols: ^1.1.0
     which-boxed-primitive: ^1.1.1
   checksum: 729f13b84a5bfa3fead1d8139cee5c38514e63a8d6a437819a473e241ba87eeb593646568621c7fc7f133db300ef18d65d1a5a60dc9c7beb9000364d93c581df
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:>=7.24.0 <7.24.7":
+  version: 7.24.6
+  resolution: "undici-types@npm:7.24.6"
+  checksum: e79802e37dc472c6324850d938b5df6b9e796f6a1bb5f8ccd24f3a6d17eae94a9cc125506c8b339a3293ffbad81daeba30b843e564c1d237b3c8deafd98b6267
   languageName: node
   linkType: hard
 

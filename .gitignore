@@ -1,4 +1,5 @@
-dist
+dist/
+**/dist/
 .DS_Store
 
 # CocoaPods

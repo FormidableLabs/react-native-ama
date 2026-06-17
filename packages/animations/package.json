@@ -4,6 +4,7 @@
   "react-native": "src/index",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
+  "sideEffects": false,
   "exports": {
     ".": [
       {
@@ -11,15 +12,35 @@
         "types": "./dist/index.d.ts"
       },
       "./dist/index.js"
-    ]
+    ],
+    "./AnimatedContainer": {
+      "types": "./dist/components/AnimatedContainer.d.ts",
+      "default": "./dist/components/AnimatedContainer.js"
+    },
+    "./useAnimation": {
+      "types": "./dist/hooks/useAnimation.d.ts",
+      "default": "./dist/hooks/useAnimation.js"
+    },
+    "./useAnimationDuration": {
+      "types": "./dist/hooks/useAnimationDuration.d.ts",
+      "default": "./dist/hooks/useAnimationDuration.js"
+    },
+    "./useReanimatedAnimationBuilder": {
+      "types": "./dist/hooks/useReanimatedAnimationBuilder.d.ts",
+      "default": "./dist/hooks/useReanimatedAnimationBuilder.js"
+    },
+    "./useReanimatedTiming": {
+      "types": "./dist/hooks/useReanimatedTiming.d.ts",
+      "default": "./dist/hooks/useReanimatedTiming.js"
+    }
   },
   "files": [
     "src",
     "dist"
   ],
   "scripts": {
-    "build": "rm -rf dist && tsc -p ./tsconfig.build.json",
-    "typecheck": "tsc --noEmit",
+    "build": "rm -rf dist && ../../node_modules/.bin/tsc -p ./tsconfig.build.json",
+    "typecheck": "../../node_modules/.bin/tsc --noEmit",
     "test": "jest"
   },
   "peerDependencies": {

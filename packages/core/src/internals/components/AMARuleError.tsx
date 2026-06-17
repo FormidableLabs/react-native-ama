@@ -166,7 +166,7 @@ export const AMARuleError = __DEV__
 const Code = __DEV__
   ? ({ children }: { children: ReactNode }) => {
       const code =
-        typeof children === 'string' ? children.replaceAll('`', '') : children;
+        typeof children === 'string' ? children.replace(/`/g, '') : children;
 
       return <Text style={styles!.code}> {code} </Text>;
     }

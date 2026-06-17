@@ -36,7 +36,7 @@ export const checkIsUppercase = ({
 const NO_LETTERS = /[^\p{L}]/gu;
 
 const isUpperCase = (string: string) => {
-  const cleanString = string.replaceAll(NO_LETTERS, '');
+  const cleanString = string.replace(NO_LETTERS, '');
 
   if (cleanString.trim().length === 0) {
     return false;

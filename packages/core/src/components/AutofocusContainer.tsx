@@ -7,8 +7,7 @@ import {
 } from 'react-native';
 import { useFocus } from '../hooks/useFocus';
 
-type PickAccessibleProps<T> = Pick<
-  T,
+type AccessibilityPropKeys =
   | 'accessibilityActions'
   | 'accessibilityElementsHidden'
   | 'accessibilityHint'
@@ -18,8 +17,9 @@ type PickAccessibleProps<T> = Pick<
   | 'accessibilityState'
   | 'accessibilityViewIsModal'
   | 'onAccessibilityAction'
-  | 'testID'
->;
+  | 'testID';
+
+type PickAccessibleProps<T> = Pick<T, Extract<keyof T, AccessibilityPropKeys>>;
 
 type TouchableAccessibleProps =
   PickAccessibleProps<TouchableWithoutFeedbackProps>;

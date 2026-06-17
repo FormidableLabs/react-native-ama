@@ -70,6 +70,8 @@ export const LOGGER_RULES: Record<AmaRule, AmaRuleAction> | null = __DEV__
     NO_UPPERCASE_ACCESSIBILITY_LABEL: 'SHOULD_NOT',
     NO_HEADER_FOUND: 'MUST',
     NO_ACCESSIBILITY_STATE_SET: 'MUST',
+    INPUT_INVALID_RETURN_KEY: 'MUST',
+    INPUT_HAS_FOCUSABLE_LABEL: 'MUST',
   }
   : null;
 
@@ -84,7 +86,7 @@ export type RuleHelp = {
     issue: string;
     severity: A11ySeverity;
     message: string;
-    howToFix: string;
+    howToFix: string | string[];
   };
 };
 
@@ -320,6 +322,16 @@ export const RULES_HELP: RuleHelp | null = __DEV__
         ' • `aria-label="Icon for settings"`',
         'For decorative images, mark them as non-accessible with `accessible={false}`.',
       ],
+    },
+
+    NO_UNDEFINED: {
+      url: '/guidelines/accessibility-label',
+      issue: 'Undefined accessibility value',
+      severity: 'Critical',
+      message:
+        'An accessibility property has an undefined value. This can cause screen readers to announce unexpected content.',
+      howToFix:
+        'Ensure all accessibility props are explicitly set to a defined value or omitted entirely.',
     },
   }
   : null;
