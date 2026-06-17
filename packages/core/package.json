@@ -25,7 +25,6 @@
     "test": "jest",
     "postinstall": "node ./src/postinstall.js"
   },
-  "dependencies": {},
   "peerDependencies": {
     "react": "*",
     "react-native": "*"
@@ -58,6 +57,7 @@
       "<rootDir>/node_modules",
       "<rootDir>/dist/"
     ],
+    "setupFilesAfterEnv": ["<rootDir>/jest.setup.js"],
     "collectCoverageFrom": [
       "src/**/*.{ts,tsx}"
     ],
@@ -70,8 +70,14 @@
       }
     },
     "transformIgnorePatterns": [
-      "node_modules/(?!(@react-native|react-native|react-native-reanimated/))"
+      "node_modules/(?!(react-native-reanimated|expo|@expo)/)"
     ],
+    "moduleDirectories": ["node_modules", "../../playground/node_modules"],
+    "moduleNameMapper": {
+      "@react-native/js-polyfills/error-guard": "<rootDir>/../../jest-mocks/error-guard.js",
+      "^(\\.{1,2}/)*ama\\.config\\.json$": "<rootDir>/../../jest-mocks/ama-config.js",
+      "^(\\.{1,2}/)*ReactNativeAmaModule$": "<rootDir>/../../jest-mocks/ReactNativeAmaModule.js"
+    },
     "verbose": true
   }
 }

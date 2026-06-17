@@ -1,6 +1,8 @@
-beforeEach(() => {
-  jest.resetModules();
-});
+jest.mock('react-native', () => ({
+  Platform: {
+    OS: 'ios',
+  },
+}));
 
 describe('minimumTouchableSize', () => {
   it.each`
@@ -10,15 +12,17 @@ describe('minimumTouchableSize', () => {
   `(
     'returns the correct minimum touchable area size for $os',
     ({ os, minimumSize }) => {
-      const Platform = jest.requireActual(
-        'react-native/Libraries/Utilities/Platform',
-      );
+      jest.resetModules();
 
-      Platform.OS = os;
+      jest.doMock('react-native', () => ({
+        Platform: { OS: os },
+      }));
 
       const { MINIMUM_TOUCHABLE_SIZE } = require('./minimumTouchableSize');
 
       expect(MINIMUM_TOUCHABLE_SIZE).toEqual(minimumSize);
+
+      jest.dontMock('react-native');
     },
   );
 });

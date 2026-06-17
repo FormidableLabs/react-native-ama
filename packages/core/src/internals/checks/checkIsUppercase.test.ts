@@ -11,6 +11,7 @@ describe('checkIsUppercase', () => {
         viewId: 1,
         bounds: [0, 0, 100, 100],
         hasOnSubmitEditing: false,
+        isAccessible: true,
         ...overrides,
     });
 
@@ -304,12 +305,12 @@ describe('checkIsUppercase', () => {
             isAccessibilityLabelAllowed.mockReturnValue(false);
 
             const node = createNode({
-                content: 'UPPERCASE',
-                ariaLabel: 'Button label',
+                content: 'lowercase',
+                ariaLabel: 'BUTTON LABEL',
             });
 
             const result = checkIsUppercase({ node });
-            expect(result?.label).toBe('Button label');
+            expect(result?.label).toBe('BUTTON LABEL');
         });
 
         it('includes viewId in error', () => {

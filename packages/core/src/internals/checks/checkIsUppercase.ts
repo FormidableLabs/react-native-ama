@@ -33,7 +33,7 @@ export const checkIsUppercase = ({
   return null;
 };
 
-const NO_LETTERS = /(\W|\d)/g;
+const NO_LETTERS = /[^\p{L}]/gu;
 
 const isUpperCase = (string: string) => {
   const cleanString = string.replaceAll(NO_LETTERS, '');

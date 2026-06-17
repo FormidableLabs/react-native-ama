@@ -8,6 +8,9 @@ var mockProvider: jest.Mock;
 
 beforeEach(() => {
   jest.clearAllMocks();
+  if (mockProvider) {
+    mockProvider.mockReturnValue(null);
+  }
 });
 
 describe('AMAProvider', () => {
@@ -102,8 +105,9 @@ describe('AMAProvider', () => {
         expect.objectContaining({
           value: expect.objectContaining(state),
         }),
-        {},
+        undefined,
       );
+
 
       jest.clearAllMocks();
 
@@ -116,8 +120,9 @@ describe('AMAProvider', () => {
         expect.objectContaining({
           value: expect.objectContaining(state),
         }),
-        {},
+        undefined,
       );
+
 
       jest.clearAllMocks();
 
@@ -130,8 +135,9 @@ describe('AMAProvider', () => {
         expect.objectContaining({
           value: expect.objectContaining(state),
         }),
-        {},
+        undefined,
       );
+
     },
   );
 

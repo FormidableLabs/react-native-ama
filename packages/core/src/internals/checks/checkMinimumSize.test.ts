@@ -1,11 +1,18 @@
-import type { LayoutChangeEvent } from 'react-native';
-import { Platform } from 'react-native';
+import { AmaNode } from '../../ReactNativeAma.types';
+
+jest.mock('react-native', () => ({ Platform: { OS: 'ios' } }));
 
 beforeEach(() => {
-  jest.resetAllMocks();
-  jest.resetModules();
+  jest.clearAllMocks();
+});
 
-  jest.spyOn(console, 'warn').mockImplementation(() => {});
+const createNode = (overrides: Partial<AmaNode> = {}): AmaNode => ({
+  type: 'Pressable',
+  viewId: 1,
+  bounds: [44, 44, 0, 0],
+  hasOnSubmitEditing: false,
+  isAccessible: true,
+  ...overrides,
 });
 
 describe('checkMinimumSize', () => {
@@ -14,45 +21,47 @@ describe('checkMinimumSize', () => {
     ${'android'} | ${48}       | ${45}
     ${'ios'}     | ${44}       | ${43}
   `(
-    '$platform: logs the MINIMUM_SIZE error if the touchable area size is less than the recommended one',
+    '$platform: returns MINIMUM_SIZE error if touchable area is smaller than required',
     ({ platform, minimumSize, layoutSize }) => {
-      Platform.OS = platform;
+      jest.resetModules();
+      jest.doMock('react-native', () => ({ Platform: { OS: platform } }));
 
       const { checkMinimumSize } = require('./checkMinimumSize');
 
-      const result = checkMinimumSize({
-        nativeEvent: {
-          layout: {
-            width: layoutSize,
-            height: layoutSize,
-          },
-        },
-      } as LayoutChangeEvent);
+      const result = checkMinimumSize(
+        createNode({ bounds: [layoutSize, layoutSize, 0, 0] }),
+      );
 
       expect(result).toMatchObject({
         rule: 'MINIMUM_SIZE',
-        message: `The touchable area must have a minimum size of ${minimumSize}x${minimumSize} found instead: ${layoutSize}x${layoutSize}`,
+        extra: expect.stringContaining(
+          `${minimumSize}x${minimumSize} found instead: ${layoutSize}x${layoutSize}`,
+        ),
       });
     },
   );
 
-  it('warns the developer if the touchable area size is less than the recommended Android one if Platform is "ios"', () => {
-    Platform.OS = 'ios';
+  it('returns null if touchable area meets minimum size', () => {
+    jest.resetModules();
+    jest.doMock('react-native', () => ({ Platform: { OS: 'ios' } }));
 
-    const consoleWarn = jest.spyOn(console, 'warn');
     const { checkMinimumSize } = require('./checkMinimumSize');
 
-    checkMinimumSize({
-      nativeEvent: {
-        layout: {
-          width: 45,
-          height: 45,
-        },
-      },
-    } as LayoutChangeEvent);
+    const result = checkMinimumSize(createNode({ bounds: [44, 44, 0, 0] }));
 
-    expect(consoleWarn).toHaveBeenCalledWith(
-      'The minimum size might be too small for Android',
+    expect(result).toBeNull();
+  });
+
+  it('returns null for non-Pressable nodes', () => {
+    jest.resetModules();
+    jest.doMock('react-native', () => ({ Platform: { OS: 'ios' } }));
+
+    const { checkMinimumSize } = require('./checkMinimumSize');
+
+    const result = checkMinimumSize(
+      createNode({ type: 'Text', bounds: [10, 10, 0, 0] }),
     );
+
+    expect(result).toBeNull();
   });
 });
