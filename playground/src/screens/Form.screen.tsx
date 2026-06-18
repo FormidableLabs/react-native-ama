@@ -50,7 +50,9 @@ export const FormScreen = () => {
 
         <Spacer height="big" />
 
-        <CTAPressable title="Submit" />
+        <Form.Submit>
+          {({ onPress }) => <CTAPressable onPress={onPress} title="Submit" />}
+        </Form.Submit>
       </Form>
     </ScrollView>
   );

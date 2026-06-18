@@ -72,6 +72,18 @@ const sidebars: SidebarsConfig = {
       href: 'config-file',
       autoAddBaseUrl: true,
     },
+    {
+      type: 'link',
+      label: 'Migration — @react-native-ama/react-native',
+      href: 'migration-react-native',
+      autoAddBaseUrl: true,
+    },
+    {
+      type: 'link',
+      label: 'Migration — @react-native-ama/internal',
+      href: 'migration-internal',
+      autoAddBaseUrl: true,
+    },
     { type: 'link', label: 'Accessibility Checks', href: 'checks', autoAddBaseUrl: true },
     {
       type: 'category',

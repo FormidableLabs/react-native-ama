@@ -37,7 +37,6 @@ export const checkTextInputs = (nodesToCheck: AmaNode[]): AmaError[] => {
             textInputLabel && textInputLabel?.isAccessible;
         const hasLabel = Boolean(textInputLabel);
 
-        console.log(inputText.returnType);
         if (inputText.returnType === RETURN_DONE && !canHaveReturnTypeDone) {
             errors.push({
                 rule: 'INPUT_INVALID_RETURN_KEY',

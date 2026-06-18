@@ -11,10 +11,9 @@ pagination_prev: 'index'
 
 - `@react-native-ama/core`: the core components and hooks, providers and consumers used by AMA packages
 - `@react-native-ama/animations`: to create accessible animations with support for user motion preferences
-- `@react-native-ama/react-native`: for accessibility-first replacement for core React Native components
 - `@react-native-ama/forms`: to create accessible forms
 - `@react-native-ama/lists`: to create accessible lists
-- `@react-native-ama/extras`: extra compound components and hooks beyond the scope of the base React Native components for building accessible react native apps
+- `@react-native-ama/bottom-sheet`: accessible bottom sheet component
 
 ## Setup
 
@@ -54,19 +53,3 @@ When you install the `@react-native-ama/core` package, `the ama.config.json` fil
 
 See more on configuring **AMA** rules and severity [here](./config-file.md).
 
-### Jest
-
-When running a test, if jest fails with the following error:
-
-> Cannot find module './../../ama.config.json' from 'node_modules/@react-native-ama/internal/dist/utils/logger.js'
-
-Add the following mock to your jest setup file which can be configured via the `.jest.config.js` or `.jest.config.ts` file (see [setupFilesAfterEnv](https://jestjs.io/docs/configuration#setupfilesafterenv-array)):
-
-```js title="setup-jest.js"
-jest.mock('@react-native-ama/internal/dist/utils/logger.js', () => {
-  return {
-    getContrastCheckerMaxDepth: () => 5,
-    shouldIgnoreContrastCheckForDisabledElement: () => true,
-  };
-});
-```

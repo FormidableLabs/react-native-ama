@@ -40,8 +40,12 @@ export const PackagesTabScreen = () => {
             />
             <ListItem
               title="@react-native-ama/forms"
-              border={false}
               navigateTo="AmaForms"
+            />
+            <ListItem
+              title="@react-native-ama/lists"
+              border={false}
+              navigateTo="AmaLists"
             />
           </View>
 

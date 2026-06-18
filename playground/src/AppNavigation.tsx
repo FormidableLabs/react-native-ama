@@ -19,6 +19,8 @@ import { AmaBottomSheetScreen } from "./screens/AmaBottomSheet.screen";
 import { AmaFormScreen } from "./screens/AmaForm.screen";
 import { PlaygroundTabScreen } from "./screens/PlaygroundTab.screen";
 import { PackagesTabScreen } from "./screens/PackagesTab.screen";
+import { UseAMAContextScreen } from "./screens/UseAMAContext.screen";
+import { AmaListsScreen } from "./screens/AmaLists.screen";
 
 const PlaygroundIcon = ({ color }: { color: string }) => {
   return (
@@ -188,6 +190,34 @@ export const AppNavigator = () => {
             ),
           }}
         />
+        <Stack.Screen
+          name="AmaCore"
+          component={UseAMAContextScreen}
+          options={{
+            headerTitle: () => (
+              <Header
+                noMargin
+                title={"@react-native-ama/core"}
+                autofocus
+                white
+              />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="AmaLists"
+          component={AmaListsScreen}
+          options={{
+            headerTitle: () => (
+              <Header
+                noMargin
+                title={"@react-native-ama/lists"}
+                autofocus
+                white
+              />
+            ),
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -204,15 +234,14 @@ const BaseNavigatorOptions: NativeStackNavigationOptions = {
 export type RootStackParamList = {
   HomeTabs: undefined;
   Pressable: undefined;
-  TouchableOpacity: undefined;
-  TouchableWithoutFeedback: undefined;
   Interactions: undefined;
   Text: undefined;
   Form: undefined;
   Images: undefined;
   AmaBottomSheet: undefined;
   AmaForms: undefined;
-  AmaCore: undefined
+  AmaCore: undefined;
+  AmaLists: undefined;
 };
 
 type HomeTabsParamList = {

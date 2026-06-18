@@ -142,16 +142,6 @@ const config: Config = {
     [
       '@docusaurus/plugin-content-docs',
       {
-        id: 'extras',
-        path: '../packages/extras/docs',
-        routeBasePath: '/extras/',
-        sidebarPath: './sidebarsPackages.ts',
-        ...defaultPresets,
-      },
-    ],
-    [
-      '@docusaurus/plugin-content-docs',
-      {
         id: 'guidelines',
         path: 'guidelines',
         routeBasePath: 'guidelines',
