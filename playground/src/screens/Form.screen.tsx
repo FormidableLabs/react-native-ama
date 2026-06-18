@@ -1,19 +1,21 @@
 import * as React from "react";
-import { ScrollView, StyleSheet, TextInput, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 
 import { CTAPressable } from "../components/CTAPressable";
 import { Spacer } from "../components/Spacer";
 import { theme } from "../theme";
 import { Text } from "../components/Text";
-import { Form } from "@react-native-ama/forms";
+import { Form, TextInput } from "@react-native-ama/forms";
 
 export const FormScreen = () => {
   const [emailAddress, setEmailAddress] = React.useState("");
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
+  const lastNameRef = React.useRef(null);
 
   return (
     <ScrollView style={styles.view}>
+      {/* @ts-ignore */}
       <Form>
         <View>
           <Text style={styles.labelComponent}>First name:</Text>
@@ -22,6 +24,7 @@ export const FormScreen = () => {
             onChangeText={(newText) => setFirstName(newText)}
             defaultValue={firstName}
             accessibilityLabel="First Name"
+            hasValidation={false}
           />
         </View>
 
@@ -29,10 +32,17 @@ export const FormScreen = () => {
 
         <View>
           <Text style={styles.labelComponent}>Last name:</Text>
+          {/* @ts-ignore */}
           <TextInput
             style={styles.input}
             onChangeText={(newText) => setLastName(newText)}
             defaultValue={lastName}
+            hasValidation={false}
+            ref={lastNameRef}
+            onBlur={() => {
+              // @ts-ignore
+              lastNameRef.current?.focus();
+            }}
           />
         </View>
 
@@ -45,6 +55,7 @@ export const FormScreen = () => {
             defaultValue={emailAddress}
             placeholder="Email address"
             accessibilityLabel="Email address"
+            hasValidation={false}
           />
         </View>
 

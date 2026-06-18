@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { AMAErrorOverlay } from '../internals/components/AMAErrorOverlay';
 import { useAMADev } from '../internals/useAMADev';
+import type { AmaRule } from '../internals/types';
 
 type AMAProviderProps = {
   children: React.ReactNode;
@@ -30,8 +31,7 @@ type SharedContextValue = {
 };
 
 export type AMADevContextValue = SharedContextValue & {
-  trackError: (id: string) => void;
-  removeError: (id: string) => void;
+  trackError: (rule: AmaRule, ref?: React.RefObject<any>) => void;
 };
 
 export type AMAProdContextValue = SharedContextValue & {};
@@ -42,7 +42,7 @@ type AccessibilityEvents = Exclude<AccessibilityChangeEventName, 'change'>;
 
 type AccessibilityInfoKey = Exclude<
   keyof AMAContextValue,
-  'reactNavigationScreenOptions' | 'trackError' | 'removeError'
+  'reactNavigationScreenOptions' | 'trackError'
 >;
 
 type Extractor<S extends AccessibilityEvents> = S extends `${infer R}Changed`
@@ -91,7 +91,7 @@ LogBox.ignoreAllLogs();
 export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
   const [values, setValues] = React.useState<AMAContextValue>(DEFAULT_VALUES);
 
-  const { issues } = (__DEV__ && useAMADev?.()) || {};
+  const { issues, trackError } = (__DEV__ && useAMADev?.()) || {};
 
   const handleAccessibilityInfoChanged = (key: AccessibilityInfoKey) => {
     return (newValue: boolean) => {

@@ -16,6 +16,8 @@ import { logFoundIssues } from './utils/logFoundIssues';
 import logger from './utils/logger';
 import { A11ySeverity, AMA_COLORS, RULES_HELP } from './utils/rules';
 import { checkTextInputs } from './checks/checkTextInput';
+import { getRuleAction } from './utils/getRuleAction';
+import type { AmaRule } from './types';
 
 let issueHighlighted: Array<number> = [];
 

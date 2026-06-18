@@ -6,6 +6,7 @@ import { CTAPressable } from "../components/CTAPressable";
 import { Spacer } from "../components/Spacer";
 import { theme } from "../theme";
 import { Text } from "../components/Text";
+import { Switch } from "../components/Switch";
 
 export const AmaFormScreen = () => {
   const [emailAddress, setEmailAddress] = React.useState("");
@@ -61,7 +62,7 @@ export const AmaFormScreen = () => {
         />
 
         <Spacer height="normal" />
-        <Text style={styles.switchText}>Test keyboard trap on next field</Text>
+        <Switch value={testKeyboardTrap} label="Test keyboard trap on next field" onValueChange={toggleSwitch} />
         {testKeyboardTrap ? (
           <>
             <Text>
