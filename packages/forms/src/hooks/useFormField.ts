@@ -1,6 +1,14 @@
 import React from 'react';
 import { Keyboard, ViewStyle } from 'react-native';
 import { useForm } from '../components/Form';
+import { checkFocusTrap } from '../utils/checkFocusTrap';
+
+let useAMAContext: (() => { trackError?: (rule: string, ref?: React.RefObject<any>) => void } | null) | null = null;
+try {
+  useAMAContext = require('@react-native-ama/core/AMAProvider').useAMAContext;
+} catch {
+  // core is an optional peer — fall back to null
+}
 
 export type UseFormField = {
   ref?: React.RefObject<any> | React.ForwardedRef<any> | null;
@@ -32,6 +40,7 @@ export const useFormField = ({
 }: UseFormField) => {
   const { refs, submitForm, focusField } = useForm({ suppressError });
   const fieldRef = React.useRef(ref);
+  const amaContext = __DEV__ ? useAMAContext?.() : null;
 
   const getMyIndex = () => {
     const allRefs = refs!;
@@ -50,6 +59,14 @@ export const useFormField = ({
 
       return;
     }
+
+    __DEV__ &&
+      hasFocusCallback &&
+      checkFocusTrap?.({
+        ref: fieldRef.current as React.RefObject<any>,
+        shouldHaveFocus: false,
+        trackError: amaContext?.trackError ?? null,
+      });
 
     focusField?.(getNextFieldRef());
   };

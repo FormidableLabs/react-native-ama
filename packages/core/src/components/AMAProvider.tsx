@@ -156,6 +156,7 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
       <AMAContext.Provider
         value={{
           ...values,
+          trackError: trackError || (() => { }),
         }}
       >
         <View style={{ flex: 1 }}>

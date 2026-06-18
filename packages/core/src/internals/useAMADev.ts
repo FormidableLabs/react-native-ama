@@ -16,8 +16,9 @@ import { logFoundIssues } from './utils/logFoundIssues';
 import logger from './utils/logger';
 import { A11ySeverity, AMA_COLORS, RULES_HELP } from './utils/rules';
 import { checkTextInputs } from './checks/checkTextInput';
-import { getRuleAction } from './utils/getRuleAction';
+import { logError } from './utils/logError';
 import type { AmaRule } from './types';
+import { isRuleDisabled } from './utils/isRuleDisabled';
 
 let issueHighlighted: Array<number> = [];
 
@@ -272,6 +273,21 @@ export const useAMADev = __DEV__
       isMonitoring.current = !isMonitoring.current;
     };
 
+    const trackError = (rule: AmaRule, ref?: React.RefObject<any>) => {
+      const viewId = ref?.current?._nativeTag ?? -1;
+      const issue: AmaError = { rule, viewId };
+      const color = getHighestSeverityColor([issue]);
+
+      logError?.(issue);
+
+      if (viewId >= 0 && !issueHighlighted.includes(viewId) && !isRuleDisabled?.(issue)) {
+        highlightComponent(viewId, color, 1);
+        issueHighlighted.push(viewId);
+      }
+
+      setIssues((currentIssues) => [...currentIssues, issue]);
+    };
+
     useEffect(() => {
       DevSettings.addMenuItem(
         'Toggle React Native AMA',
@@ -282,6 +298,7 @@ export const useAMADev = __DEV__
 
     return {
       issues,
+      trackError,
     };
   }
   : null;

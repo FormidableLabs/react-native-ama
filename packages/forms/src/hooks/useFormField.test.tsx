@@ -2,6 +2,7 @@ import { renderHook, waitFor } from '@testing-library/react-native';
 import * as React from 'react';
 import * as Form from '../components/Form';
 import { useFormField } from './useFormField';
+import * as CheckFocusTrapModule from '../utils/checkFocusTrap';
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -167,6 +168,80 @@ describe('useFormField', () => {
           expect.objectContaining({ ref: nextFormFieldRef }),
         );
       });
+    });
+
+    it('calls checkFocusTrap when hasFocusCallback is true and not the last field', async () => {
+      const focusField = jest.fn();
+      const checkFocusTrapSpy = jest.spyOn(CheckFocusTrapModule, 'checkFocusTrap').mockResolvedValue(undefined);
+      jest.spyOn(Form, 'useForm').mockImplementation(() => ({
+        refs: localRef,
+        submitForm,
+        focusField,
+      }));
+
+      const { result } = renderHook(
+        () => {
+          const first = useFormField({
+            ref: { current: 'first' },
+            hasFocusCallback: true,
+            hasValidation: false,
+          });
+
+          useFormField({
+            ref: { current: 'second' },
+            hasFocusCallback: false,
+            hasValidation: false,
+          });
+
+          return first;
+        },
+        { wrapper: renderHookWrapper },
+      );
+
+      await waitFor(() => {
+        result.current.focusNextFormField();
+        expect(checkFocusTrapSpy).toHaveBeenCalledWith(
+          expect.objectContaining({ shouldHaveFocus: false }),
+        );
+      });
+
+      checkFocusTrapSpy.mockRestore();
+    });
+
+    it('does not call checkFocusTrap when hasFocusCallback is false', async () => {
+      const focusField = jest.fn();
+      const checkFocusTrapSpy = jest.spyOn(CheckFocusTrapModule, 'checkFocusTrap').mockResolvedValue(undefined);
+      jest.spyOn(Form, 'useForm').mockImplementation(() => ({
+        refs: localRef,
+        submitForm,
+        focusField,
+      }));
+
+      const { result } = renderHook(
+        () => {
+          const first = useFormField({
+            ref: { current: 'first' },
+            hasFocusCallback: false,
+            hasValidation: false,
+          });
+
+          useFormField({
+            ref: { current: 'second' },
+            hasFocusCallback: false,
+            hasValidation: false,
+          });
+
+          return first;
+        },
+        { wrapper: renderHookWrapper },
+      );
+
+      await waitFor(() => {
+        result.current.focusNextFormField();
+        expect(checkFocusTrapSpy).not.toHaveBeenCalled();
+      });
+
+      checkFocusTrapSpy.mockRestore();
     });
 
     it('uses nextFieldId to find the next ref when provided', async () => {
