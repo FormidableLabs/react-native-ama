@@ -246,7 +246,6 @@ class ReactNativeAmaModule : Module() {
 
                                 getNodesToCheck()
 
-                                val settleDelay = 120L
                                 Handler(Looper.getMainLooper())
                                         .postDelayed(
                                                 {
@@ -293,11 +292,11 @@ class ReactNativeAmaModule : Module() {
                                                         sendEvent("onUIInteraction", event)
                                                     }
                                                 },
-                                                settleDelay
+                                                Constants.uiCheckDelay
                                         )
                             }
                         },
-                        Constants.uiCheckDelay
+                        60
                 )
     }
 

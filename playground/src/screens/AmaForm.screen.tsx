@@ -6,22 +6,17 @@ import { CTAPressable } from "../components/CTAPressable";
 import { Spacer } from "../components/Spacer";
 import { theme } from "../theme";
 import { Text } from "../components/Text";
-import { Switch } from "../components/Switch";
 
 export const AmaFormScreen = () => {
   const [emailAddress, setEmailAddress] = React.useState("");
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
-  const [testKeyboardTrap, setTestKeyboardTrap] = React.useState(false);
   const formRef = React.useRef<FormActions>(null);
   const [isValidating, setIsValidating] = React.useState(false);
   const [invalidFields, setInvalidFields] = React.useState<{
     lastName: boolean;
     firstName: boolean;
   }>({ firstName: false, lastName: false });
-
-  const toggleSwitch = () =>
-    setTestKeyboardTrap((previousState) => !previousState);
 
   const lastNameRef = React.useRef(null);
 
@@ -62,16 +57,6 @@ export const AmaFormScreen = () => {
         />
 
         <Spacer height="normal" />
-        <Switch value={testKeyboardTrap} label="Test keyboard trap on next field" onValueChange={toggleSwitch} />
-        {testKeyboardTrap ? (
-          <>
-            <Text>
-              Note: The following field causes the app to crash when pressing
-              the "next" button on the keyboard
-            </Text>
-            <Spacer height="normal" />
-          </>
-        ) : null}
 
         <TextInput
           style={styles.input}
@@ -88,10 +73,6 @@ export const AmaFormScreen = () => {
           }
           hasError={invalidFields.lastName}
           ref={lastNameRef}
-          onBlur={() => {
-            // @ts-ignore
-            testKeyboardTrap && lastNameRef.current?.focus();
-          }}
         />
 
         <Spacer height="normal" />
@@ -109,7 +90,7 @@ export const AmaFormScreen = () => {
         />
         <Spacer height="big" />
         <Form.Submit>
-          {({ onPress }) => <CTAPressable onPress={onPress} title="Submit" aria-busy={isValidating} />}
+          {({ onPress }) => <CTAPressable onPress={onPress} title="Submit" aria-busy={isValidating} disabled={isValidating} />}
         </Form.Submit>
       </Form>
     </ScrollView>

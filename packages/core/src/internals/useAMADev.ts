@@ -380,11 +380,14 @@ function itemsWithNoStateUpdated(data: AmaUiSnapshotsData) {
   if (hasSomethingChanged) {
     const parentId = data.rootTag;
 
-    const after = viewsAfter[parentId];
-    const before = viewsBefore[parentId];
+    const after = data.after[parentId];
+    const settled = data.afterSettled?.[parentId];
+    const before = data.before[parentId];
 
     const hasStateChanged = A11Y_STATE_KEY.some(
-      (key) => before[key] !== after[key]
+      (key) =>
+        data.before[parentId][key] !== after[key] ||
+        (settled && before[parentId] !== settled[parentId])
     );
 
     if (parentId && !hasStateChanged) {

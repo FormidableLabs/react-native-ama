@@ -352,7 +352,7 @@ extension ReactNativeAmaModule {
         )
         let beforeModalVisible = isModalVisible(in: rootView)
 
-        let delay = DispatchTime.now() + .milliseconds(Int(uiCheckDelay))
+        let delay = DispatchTime.now() + .milliseconds(60)
         DispatchQueue.main.asyncAfter(deadline: delay) {
             [weak self, weak tappedView, weak rootView] in
             guard let self = self,
@@ -373,8 +373,8 @@ extension ReactNativeAmaModule {
             isCheckScheduled = true
             self.getNodesToCheck()
 
-            let settleDelay: TimeInterval = 0.12
-            DispatchQueue.main.asyncAfter(deadline: .now() + settleDelay) {
+            let settleDelay = DispatchTime.now() + .milliseconds(Int(uiCheckDelay))
+            DispatchQueue.main.asyncAfter(deadline: settleDelay) {
                 [weak self, weak tappedView, weak rootView] in
                 guard let self = self else { return }
                 guard let tappedView = tappedView,
