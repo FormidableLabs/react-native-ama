@@ -1,14 +1,27 @@
-import React from 'react';
-import { Keyboard, ViewStyle } from 'react-native';
-import { useForm } from '../components/Form';
-import { checkFocusTrap } from '../utils/checkFocusTrap';
+import React from "react";
+import { Keyboard, ViewStyle } from "react-native";
+import { useForm } from "../components/Form";
+import { checkFocusTrap } from "../utils/checkFocusTrap";
 
-let useAMAContext: (() => { trackError?: (rule: string, ref?: React.RefObject<any>) => void } | null) | null = null;
+let _useAMAContext:
+  | (() => {
+      trackError?: (rule: string, ref?: React.RefObject<any>) => void;
+    } | null)
+  | null = null;
 try {
-  useAMAContext = require('@react-native-ama/core/AMAProvider').useAMAContext;
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  _useAMAContext = require("@react-native-ama/core").useAMAContext;
 } catch {
   // core is an optional peer — fall back to null
 }
+
+const getTrackError = () => {
+  try {
+    return _useAMAContext?.()?.trackError ?? null;
+  } catch {
+    return null;
+  }
+};
 
 export type UseFormField = {
   ref?: React.RefObject<any> | React.ForwardedRef<any> | null;
@@ -40,7 +53,7 @@ export const useFormField = ({
 }: UseFormField) => {
   const { refs, submitForm, focusField } = useForm({ suppressError });
   const fieldRef = React.useRef(ref);
-  const amaContext = __DEV__ ? useAMAContext?.() : null;
+  const trackError = __DEV__ ? getTrackError() : null;
 
   const getMyIndex = () => {
     const allRefs = refs!;
@@ -65,7 +78,7 @@ export const useFormField = ({
       checkFocusTrap?.({
         ref: fieldRef.current as React.RefObject<any>,
         shouldHaveFocus: false,
-        trackError: amaContext?.trackError ?? null,
+        trackError: trackError ?? null,
       });
 
     focusField?.(getNextFieldRef());
@@ -120,7 +133,7 @@ export const useFormField = ({
 
   const fullAccessibilityHint = [accessibilityHint, errorMessage]
     .filter(Boolean)
-    .join(',');
+    .join(",");
 
   return {
     focusNextFormField,
