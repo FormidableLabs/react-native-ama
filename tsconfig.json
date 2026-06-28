@@ -3,15 +3,27 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@react-native-ama/animations": ["packages/animations/src/index"],
-      "@react-native-ama/core": ["packages/core/src/index"],
-      "@react-native-ama/bottom-sheet": ["packages/bottom-sheet/src/index"],
-      "@react-native-ama/forms": ["packages/forms/src/index"],
-      "@react-native-ama/lists": ["packages/lists/src/index"],
-      "@react-native-ama/react-native": ["packages/react-native/src/index"]
+      "@react-native-ama/animations": [
+        "packages/animations/src/index"
+      ],
+      "@react-native-ama/core": [
+        "packages/core/src/index"
+      ],
+      "@react-native-ama/bottom-sheet": [
+        "packages/bottom-sheet/src/index"
+      ],
+      "@react-native-ama/forms": [
+        "packages/forms/src/index"
+      ],
+      "@react-native-ama/lists": [
+        "packages/lists/src/index"
+      ]
     },
     "jsx": "react",
-    "lib": ["esnext", "dom"],
+    "lib": [
+      "esnext",
+      "dom"
+    ],
     "module": "esnext",
     "moduleResolution": "node",
     "target": "esnext",

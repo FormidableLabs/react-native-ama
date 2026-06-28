@@ -122,6 +122,16 @@ const config: Config = {
     [
       '@docusaurus/plugin-content-docs',
       {
+        id: 'bottom-sheet',
+        path: '../packages/bottom-sheet/docs',
+        routeBasePath: '/bottom-sheet/',
+        sidebarPath: './sidebarsPackages.ts',
+        ...defaultPresets,
+      },
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
         id: 'forms',
         path: '../packages/forms/docs',
         routeBasePath: '/forms/',
@@ -200,20 +210,16 @@ const config: Config = {
               to: '/animations/',
             },
             {
+              label: 'BottomSheet',
+              to: '/bottom-sheet/',
+            },
+            {
               label: 'Forms',
               to: '/forms/',
             },
             {
-              label: 'React Native',
-              to: '/react-native/',
-            },
-            {
               label: 'Lists',
               to: '/lists/',
-            },
-            {
-              label: 'Extras',
-              to: '/extras/',
             },
           ],
         },

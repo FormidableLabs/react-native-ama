@@ -108,6 +108,13 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: 'link',
+          label: 'BottomSheet',
+          href: '/bottom-sheet/',
+          description: 'Accessible bottom sheet with gesture and focus management',
+          autoAddBaseUrl: true,
+        },
+        {
+          type: 'link',
           label: 'Forms',
           href: '/forms/',
           description: 'Used to create accessible forms',
@@ -115,23 +122,9 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: 'link',
-          label: 'React Native',
-          href: '/react-native/',
-          description: 'Extends react-native components with accessibility',
-          autoAddBaseUrl: true,
-        },
-        {
-          type: 'link',
           label: 'Lists',
           href: '/lists/',
           description: 'Used to create accessible lists',
-          autoAddBaseUrl: true,
-        },
-        {
-          type: 'link',
-          label: 'Extras',
-          href: '/extras/',
-          description: 'Provides extra accessible components and hooks',
           autoAddBaseUrl: true,
         },
       ],
