@@ -17,7 +17,7 @@ export type AmaRule =
   | 'NO_UPPERCASE_TEXT'
   | 'INCOMPATIBLE_ACCESSIBILITY_STATE'
   | 'INCOMPATIBLE_ACCESSIBILITY_ROLE'
-  | 'NO_FORM_LABEL_ENDING_WITH_ASTERISK'
+  | 'INPUT_HAS_NO_VISIBLE_LABEL_ENDING_WITH_ASTERISK'
   | 'UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL'
   | 'NO_UPPERCASE_ACCESSIBILITY_LABEL'
   | 'NO_HEADER_FOUND'
@@ -65,7 +65,7 @@ export const LOGGER_RULES: Record<AmaRule, AmaRuleAction> | null = __DEV__
     NO_UPPERCASE_TEXT: 'MUST_NOT',
     BOTTOM_SHEET_CLOSE_ACTION: 'MUST',
     INCOMPATIBLE_ACCESSIBILITY_STATE: 'MUST',
-    NO_FORM_LABEL_ENDING_WITH_ASTERISK: 'MUST_NOT',
+    INPUT_HAS_NO_VISIBLE_LABEL_ENDING_WITH_ASTERISK: 'MUST_NOT',
     INCOMPATIBLE_ACCESSIBILITY_ROLE: 'MUST_NOT',
     NO_UPPERCASE_ACCESSIBILITY_LABEL: 'SHOULD_NOT',
     NO_HEADER_FOUND: 'MUST',
@@ -208,7 +208,7 @@ export const RULES_HELP: RuleHelp | null = __DEV__
         'Provide clear error messages and move focus to the first invalid field.',
     },
 
-    NO_FORM_LABEL_ENDING_WITH_ASTERISK: {
+    INPUT_HAS_NO_VISIBLE_LABEL_ENDING_WITH_ASTERISK: {
       url: '/guidelines/forms#labels',
       issue: 'Asterisk used to indicate required field',
       severity: 'Serious',

@@ -13,7 +13,7 @@ This hook is provided for convenience, however it is not necessary for accessibi
 ## Usage
 
 ```tsx {2-5,12-24}
-import { useKeyboard } from '@react-native-ama/extras';
+import { useKeyboard } from '@react-native-ama/bottom-sheet';
 import Animated, {
   useAnimatedStyle,
   useDerivedValue,
@@ -45,7 +45,7 @@ const Example = props => {
 
 ### `shouldHandleKeyboardEvents` _(optional)_
 
-The data passed to the Scrollable component, used to calculate the number of items in the carousel.
+When `true`, the hook listens to keyboard show/hide events and updates the shared values accordingly. Set to `false` to opt out of keyboard handling.
 
 | Type    | Default |
 | ------- | ------- |

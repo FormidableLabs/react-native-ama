@@ -9,7 +9,7 @@ and [react-native-gesture-handler](https://github.com/software-mansion/react-nat
 ## Example
 
 ```jsx
-import { BottomSheet } from '@react-native-ama/extras
+import { BottomSheet } from '@react-native-ama/bottom-sheet';
 
 const Component = () => (
   <BottomSheet
@@ -250,6 +250,42 @@ iOS only. An array of strings that specify the orientations supported by the bot
 | Type                                                                                     |
 | ---------------------------------------------------------------------------------------- |
 | `['portrait', 'portrait-upside-down', 'landscape', 'landscape-left', 'landscape-right']` |
+
+### `avoidKeyboard`
+
+When `true` and `shouldHandleKeyboardEvents` is `false`, wraps the bottom sheet in a `KeyboardAvoidingView`.
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | false   |
+
+### `isOverlayAccessible`
+
+When `false`, the overlay backdrop is hidden from the accessibility tree (useful when `persistent` is also `false` but you want to suppress overlay focus).
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | true    |
+
+## Methods
+
+The following methods are available via the `ref` prop.
+
+### `close`
+
+```ts
+close(): Promise<void>
+```
+
+Programmatically closes the bottom sheet. Resolves after the close animation completes.
+
+### `isVisible`
+
+```ts
+isVisible(): boolean
+```
+
+Returns `true` if the bottom sheet is currently visible.
 
 ## Known issues
 

@@ -3,8 +3,7 @@ import { Required } from '@site/src/components';
 # Form.Submit (FormSubmit)
 
 This component provides the submit action for your button via render props.
-It triggers the [Form onSubmit](./Form#-onsubmit) callback and therefore focuses on the first invalid field
-if the submission fails.
+It triggers the [Form onSubmit](./Form#-onsubmit) callback and, if the submission fails, automatically focuses the first invalid field.
 
 ## Usage
 
@@ -26,6 +25,26 @@ const { submitForm } = useFormSubmit();
 ```
 
 `useFormSubmit` is useful when you want full control over layout and rendering with no wrapper component.
+
+## Props
+
+### <Required /> `children`
+
+A render prop that receives `FormSubmitRenderProps` and returns a React node.
+
+| Type |
+| ---- |
+| `(props: FormSubmitRenderProps) => React.ReactNode` |
+
+#### `FormSubmitRenderProps`
+
+| Property | Type | Description |
+| -------- | ---- | ----------- |
+| `onPress` | `() => Promise<void>` | Call this to submit the form. Triggers `onSubmit` and focuses the first invalid field on failure. |
+
+## Methods
+
+None — this component exposes no imperative methods.
 
 ## Related guidelines
 

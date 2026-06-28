@@ -40,7 +40,7 @@ The possible log levels are:
 | [MINIMUM_SIZE](/guidelines/minimum-size)                            | <Must />    | error   | <Yes />      |
 | [NO_ACCESSIBILITY_LABEL](/guidelines/accessibility-label)[^1]       | <Must />    | error   | <No />       |
 | [NO_ACCESSIBILITY_ROLE](/guidelines/accessibility-rol) [^1]         | <Must />    | error   | <No />       |
-| [NO_FORM_LABEL](/guidelines/forms)                                  | <Must />    | error   | <Yes />      |
+| [INPUT_HAS_NO_VISIBLE_LABEL](/guidelines/forms)                                  | <Must />    | error   | <Yes />      |
 | [NO_FORM_ERROR](/guidelines/forms)                                  | <Must />    | error   | <Yes />      |
 | [NO_KEYBOARD_TRAP](/guidelines/keyboard-trap) [^1]                  | <MustNot /> | error   | <No />       |
 | [UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL](/guidelines/uppercase-text) | <MustNot /> | error   | <Yes />      |

@@ -167,6 +167,21 @@ The error message to be announced by the screen reader.
 
 The required message to be announced by the screen reader as part of the accessibility hint.
 
+## Returns
+
+The hook returns all passed-in props merged with the following overrides:
+
+| Property | Type | Description |
+| -------- | ---- | ----------- |
+| `accessibilityLabel` | string | The label text, optionally suffixed with `requiredMessage` when `required` is `true` |
+| `returnKeyType` | `ReturnKeyTypeOptions` | `"done"` for the last field in the form, `"next"` for all others |
+| `onSubmitEditing` | function | Calls the original `onSubmitEditing` then moves focus to the next field or submits the form |
+| `onLayout` | function | Calls the original `onLayout` then re-evaluates whether this is the last field |
+| `blurOnSubmit` | boolean | `true` when `returnKeyType` is `"done"` |
+| `accessibilityHint` | string | Combined accessibility hint including any error message |
+| `focusNextFormField` | `() => void` | From `useFormField` — focuses the next field or submits the form |
+| `isLastField` | `() => boolean` | From `useFormField` — returns `true` if this is the last registered field |
+
 ## Related guidelines
 
 - [Forms](/guidelines/forms)

@@ -130,7 +130,7 @@ Alternatively, the first failed field should be autofocused if no message is ava
 
 ## AMA dev runtime errors
 
-### NO_FORM_LABEL
+### INPUT_HAS_NO_VISIBLE_LABEL
 
 This error is used when no label has been provided for the [TextInput](/forms/components/TextInput) component.
 

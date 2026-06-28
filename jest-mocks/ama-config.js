@@ -8,6 +8,5 @@ module.exports = {
     ui: true,
     forms: true,
     delay: 1000,
-    grouping: true,
   },
 };

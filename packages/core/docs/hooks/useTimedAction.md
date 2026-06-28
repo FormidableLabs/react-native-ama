@@ -10,19 +10,24 @@ import { useTimedAction } from '@react-native-ama/core';
 const { onTimeout } = useTimedAction();
 ```
 
-### onTimeout
+## Parameters
 
-This function is similar to the JavaScript `setTimeout` one. The main difference is that it might execute or not the given callback.
+None — the hook reads `isScreenReaderEnabled` from the AMA context automatically.
 
-On Android, if the user specified a custom value for the [Time to take action](https://support.google.com/accessibility/android/answer/9426889?hl=en-GB), this is used instead of the one provided.
+## Returns
 
-While, on iOS, the callback is never executed if the screen reader is on.
+### `onTimeout`
 
-### Syntax
+Similar to `setTimeout`, but respects the user's accessibility timing preferences before executing the callback.
 
-```jsx
-async onTimeout(callback, timeInMilliseconds)
+- **Android:** uses the system's recommended timeout via `AccessibilityInfo.getRecommendedTimeoutMillis` if the user has set a custom "Time to take action" value.
+- **iOS:** skips the callback entirely when the screen reader is active.
+
+```ts
+onTimeout(callback: () => void, milliseconds: number): Promise<ReturnType<typeof setTimeout> | null>
 ```
+
+Returns a `Promise` that resolves to the timer handle (so you can cancel it with `clearTimeout`), or `null` on iOS when the screen reader is active and the callback was skipped.
 
 #### Example
 

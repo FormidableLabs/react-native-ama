@@ -12,7 +12,7 @@ This hook uses the react-native built-in [Animated API](https://reactnative.dev/
 ## Usage
 
 ```ts
-import { useAnimation } from 'react-native-ama';
+import { useAnimation } from '@react-native-ama/animations';
 
 const { animatedStyle, progress, play } = useAnimation({
   duration,
@@ -105,7 +105,7 @@ This is the result when we play the animation with Reduce Motion off and on:
 | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | <ReactPlayer url="/open-source/react-native-ama/videos/reduce-motion-off.mov" playing={false} loop={false} controls width={300} height={700} /> | <ReactPlayer url="/open-source/react-native-ama/videos/reduce-motion-on.mov" playing={false} loop={false} width={300} height={700} /> | <ReactPlayer url="/open-source/react-native-ama/videos/reduce-motion-on.mov" playing={false} loop={false} controls width={300} height={700} /> |
 
-When reduce Motion is off, the animation is played as specified; while when is **on** any [motion](../utils/isMotionAnimation.md) animation is played instantaneity (using a duration of 0), while other properties, like opacity, are played as specified.
+When reduce Motion is off, the animation is played as specified; while when is **on** any motion animation is played instantaneously (using a duration of 0), while other properties, like opacity, are played as specified.
 
 ## Sequential animation
 

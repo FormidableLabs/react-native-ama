@@ -7,7 +7,7 @@ export const NON_OVERRIDABLE_RULES: string[] | undefined = __DEV__
     'NO_ACCESSIBILITY_LABEL',
     'NO_KEYBOARD_TRAP',
     'NO_UNDEFINED',
-    'NO_FORM_LABEL',
+    'INPUT_HAS_NO_VISIBLE_LABEL',
     'FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE',
     'BOTTOM_SHEET_CLOSE_ACTION',
     'INCOMPATIBLE_ACCESSIBILITY_STATE',
@@ -37,7 +37,6 @@ export type AmaProjectConfig = {
     ui: boolean;
     forms: boolean;
     delay: number;
-    grouping: boolean;
   };
 };
 

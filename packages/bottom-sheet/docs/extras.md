@@ -1,25 +1,24 @@
 ---
 slug: /
-title: The Extras Package
+title: The Bottom Sheet Package
 sidebar_position: 1
 ---
 
 # Intro
 
-The `@react-native-ama/extras` package offers extra accessible hooks and components which are often used when building react-native apps, such as BottomSheets and Carousels.
+The `@react-native-ama/bottom-sheet` package provides an accessible bottom sheet component and supporting hooks for React Native apps.
 
 ## Installation
 
-Install the `@react-native-ama/extras` package with your favourite package manager:
+Install the `@react-native-ama/bottom-sheet` package with your favourite package manager:
 
 ```bash npm2yarn
-npm install @react-native-ama/extras
+npm install @react-native-ama/bottom-sheet
 ```
 
 ### Dependencies
 
-Some components rely on [react-native-reanimated](https://github.com/software-mansion/react-native-reanimated) and/or [react-native-gesture-handler](https://github.com/software-mansion/react-native-gesture-handler),
-so these dependencies are required for the extras package to function and should also be installed.
+The package relies on [react-native-reanimated](https://github.com/software-mansion/react-native-reanimated) and [react-native-gesture-handler](https://github.com/software-mansion/react-native-gesture-handler), so these must also be installed.
 
 ```bash npm2yarn
 npm install react-native-reanimated

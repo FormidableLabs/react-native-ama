@@ -11,8 +11,6 @@
   "checks": {
     "ui": true,
     "forms": true,
-    "delay": "1000",
-    "grouping": true
+    "delay": "1000"
   }
 }
-

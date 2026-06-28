@@ -1,36 +1,41 @@
 # useAnimationDuration
 
-When passing a motion property, returns 0 if [Reduce Motion](../hooks/useAMAContext#isreducemotionenabled) is enabled otherwise the given value.
+Returns `0` for a given motion property when [Reduce Motion](/core/hooks/useAMAContext#isreducemotionenabled) is enabled, otherwise returns the given duration. Use this when building Reanimated animations to ensure they respect the user's reduce-motion preference.
 
 ## Usage
 
 ```js
-import { useAnimationDuration } from 'react-native-ama/animations';
+import { useAnimationDuration } from '@react-native-ama/animations';
 
 const { getAnimationDuration } = useAnimationDuration();
 ```
 
-## getAnimationDuration
+## Parameters
 
-### Syntax
+None — the hook reads `isReduceMotionEnabled` from the AMA context automatically.
 
-```js
-function getAnimationDuration(
-  property: ViewStyle,
-  durationMS: number,
-): WithTimingConfig {}
-```
+## Returns
 
-| Property   | Description                                  |
-| ---------- | -------------------------------------------- |
-| property   | The property to animate                      |
-| durationMS | The duration to use if reduced motion is off |
-
-### Example
-
-We can create more accessible animations when using Reanimated:
+### `getAnimationDuration`
 
 ```ts
+getAnimationDuration(property: keyof ViewStyle, durationMS: number): number
+```
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| `property` | `keyof ViewStyle` | The style property being animated (e.g. `'translateX'`). Motion properties return `0` when reduce motion is enabled. |
+| `durationMS` | `number` | The duration to use when reduce motion is off. |
+
+Returns `0` if `property` is a motion animation and reduce motion is enabled; otherwise returns `durationMS`.
+
+## Example
+
+```ts
+import { useAnimationDuration } from '@react-native-ama/animations';
+import { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
+
+const { getAnimationDuration } = useAnimationDuration();
 const value = useSharedValue(0);
 
 const animatedStyles = useAnimatedStyle(() => {
@@ -46,7 +51,7 @@ const playAnimation = () => {
 };
 ```
 
-Because we specified `translateX` as the property we're going to use for the animation, and considering that that property is a [motion animation](../utils/isMotionAnimation.md); `playAnimation` will use a duration of **300ms** when reduce motion is _off_, and duration of **0s** when is on
+Because `translateX` is a motion property, `getAnimationDuration` returns `300` when reduce motion is off, and `0` when it is on.
 
 ## Related guidelines
 
