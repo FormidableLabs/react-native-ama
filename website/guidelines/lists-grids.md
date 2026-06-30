@@ -69,6 +69,23 @@ AccessibilityInfo.announceForAccessibility(`${results.length} results found`);
 
 If multiple items share the same label (e.g., multiple "Delete" buttons), screen reader users cannot distinguish them and voice control users cannot target them individually. Add context to make each label unique.
 
+## AMA dev runtime errors <DevOnly />
+
+---
+
+### FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE <Must />
+
+This error is raised when the plural result-count message passed to a list component does not include the `%count%` placeholder. Without it, the screen reader cannot announce how many items are shown after filtering.
+
+:::note
+
+This rule cannot be turned off!
+:::
+
+### FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE <Should />
+
+This error is raised when the singular result-count message passed to a list component does not include the `%count%` placeholder, preventing the item count from being announced when only one result is shown.
+
 ## Related AMA components
 
 - [DynamicFlatList](../components/DynamicFlatList)

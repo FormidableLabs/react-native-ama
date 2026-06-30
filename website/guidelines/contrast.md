@@ -76,7 +76,7 @@ WCAG exempts inactive UI components from the contrast requirement, but very low 
 
 AMA automatically checks the contrast ratio between a component's background and its children at development time. It is a safety net — it catches regressions, but it does not replace a thorough design-time audit.
 
-## AMA dev runtime errors
+## AMA dev runtime errors <DevOnly />
 
 AMA performs a contrast check on native components at development time.
 

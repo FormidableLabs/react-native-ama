@@ -117,6 +117,14 @@ If your design requires uppercase text, keep the source string in sentence case 
 
 This is used when a component uses the `textTransform: uppercase` style without providing an accessible label.
 
+### NO_UPPERCASE_TEXT <MustNot />
+
+This error is raised when a text element contains all-caps content directly — uppercase text reduces readability and causes screen readers to mispronounce or spell out words.
+
+### NO_UPPERCASE_ACCESSIBILITY_LABEL <ShouldNot />
+
+This error is raised when an `accessibilityLabel` is written in all caps. Screen readers may read uppercase labels with flat intonation or spell them out rather than pronouncing them naturally.
+
 ## Known issues
 
 - Nested Text components with onPress property are not accessible [https://github.com/facebook/react-native/issues/24515](https://github.com/facebook/react-native/issues/24515)

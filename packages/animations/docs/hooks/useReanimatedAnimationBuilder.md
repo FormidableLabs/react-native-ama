@@ -101,12 +101,12 @@ In additional to `ViewStyle` this property also allows to access to special [val
 | currentGlobalOriginX | X coordinate of top left corner in global coordinate system   |
 | currentGlobalOriginY | Y coordinate of top left corner in global coordinate system   |
 
-Because in the [from](#from) animation, we did specify the special value **targetHeight** we need to provide a "different" value for the exiting animation
+Because in the `from` animation, we did specify the special value **targetHeight** we need to provide a "different" value for the exiting animation
 as that special name does not exist for the exitFrom animation.
 
 :::note
 
-If not specified, the [from](#from) value is used as the final one for the unmounting animation.
+If not specified, the `from` value is used as the final one for the unmounting animation.
 
 :::
 

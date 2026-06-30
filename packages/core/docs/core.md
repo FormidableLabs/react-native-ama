@@ -33,7 +33,7 @@ When you install the `@react-native-ama/core` package, the `ama.config.json` fil
 };
 ```
 
-If you are running a monorepo setup your config file may not be configured correctly, be sure to check the [options for customizing AMA's config](/docs/config-file#monorepo-options).
+If you are running a monorepo setup your config file may not be configured correctly, be sure to check the [options for customizing AMA's config](/docs/config-file).
 
 For more detailed information about the config file, please refer to [this documentation](/docs/config-file).
 

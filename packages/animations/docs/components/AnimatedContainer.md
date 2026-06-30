@@ -139,7 +139,7 @@ Because in the `from` animation we used the special value **targetHeight**, we n
 
 :::note
 
-If not specified, the [from](#from) value is used as the final state for the unmounting animation.
+If not specified, the `from` value is used as the final state for the unmounting animation.
 
 :::
 

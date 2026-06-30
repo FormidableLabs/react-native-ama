@@ -116,9 +116,13 @@ If the screen design has no visible heading, add a `<Text>` element that is visu
 
 Headings are navigation landmarks — users hear them rapidly while scanning. A heading like "Settings" is better than "Here you can manage all your application settings".
 
-## Related AMA components
+## AMA dev runtime errors <DevOnly />
 
-- [Text](../components/text)
+---
+
+### NO_HEADER_FOUND <Must />
+
+This error is raised when a screen contains no element with `accessibilityRole="header"`. Screen reader users rely on headers to orient themselves and navigate efficiently — without one, they must read the entire screen linearly.
 
 ## External Resources
 

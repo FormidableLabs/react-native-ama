@@ -37,10 +37,10 @@ const Component = () => (
 ## Accessibility
 
 - Checks that the `closeActionAccessibilityLabel` is a valid [accessibilityLabel](/guidelines/accessibility-label)
-- Provides a way [to close the bottom sheet](/guidelines/bottomsheet#2-can-be-dismissed) when the user taps on the overlay
+- Provides a way [to close the bottom sheet](/guidelines/bottomsheet#3-can-be-dismissed) when the user taps on the overlay
 - Makes sure that the overlay is announced as "button"
 - Uses slide-in and slide-out animation **only** if the [Reduce Motion] (https://reactnative.dev/docs/accessibilityinfo) preference is turned off
-- Prevents the focus from [escaping the bottom sheet](/guidelines/bottomsheet#3-the-focus-stays-inside-it)
+- Prevents the focus from [escaping the bottom sheet](/guidelines/bottomsheet#4-the-focus-stays-inside-it)
 - Provides a draggable area respecting the [minimum size](/guidelines/minimum-size)
 
 ## Props

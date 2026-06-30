@@ -68,7 +68,7 @@ AMA's pressable components enforce the minimum size requirement at development t
 The Log level type can be customised, [here for more info](../introduction/config-file#customising-the-log-levels)
 :::
 
-## AMA dev runtime errors
+## AMA dev runtime errors <DevOnly />
 
 ### MINIMUM_SIZE <Must />
 
