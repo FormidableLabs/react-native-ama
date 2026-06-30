@@ -347,6 +347,19 @@ const TestScreen = () => {
 | true                       |           | _accessibility label_, selected | <Good /> |
 | false                      |           |                                 | <Good /> |
 
+## AMA dev runtime errors <DevOnly />
+
+---
+
+### NO_ACCESSIBILITY_STATE_SET <Must />
+
+This error is raised when the UI state changes but assistive technologies are not informed — for example, a component's visual state updates without a corresponding accessibility state attribute.
+
+:::note
+
+This rule can be disabled by turning off the UI check in the [ama.config.json](/docs/config-file#checks) file.
+:::
+
 ## Best Practices
 
 ### Use the right state for the right meaning

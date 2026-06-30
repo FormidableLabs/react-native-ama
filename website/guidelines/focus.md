@@ -80,6 +80,19 @@ Users navigating with a keyboard or switch device should not be required to swip
 
 `AutofocusContainer` moves focus to its first child when it mounts, removing the need for manual `ref`-based focus calls on screen entry.
 
+## AMA dev runtime errors <DevOnly />
+
+---
+
+### NO_KEYBOARD_TRAP <MustNot />
+
+This error is raised when focus becomes trapped inside a component and the user cannot navigate away — a critical failure for users relying on keyboard navigation or assistive technologies.
+
+:::note
+
+This rule cannot be turned off!
+:::
+
 ## Related AMA components
 
 - [AutofocusContainer](/core/components/AutofocusContainer)

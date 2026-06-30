@@ -177,7 +177,7 @@ If the user wants to leave an input — even one with invalid data — let them.
 
 When form submission fails, move focus to the error summary or the first failed field so screen reader users are immediately informed of what needs fixing.
 
-## AMA dev runtime errors
+## AMA dev runtime errors <DevOnly />
 
 ### INPUT_HAS_NO_VISIBLE_LABEL
 
@@ -186,6 +186,33 @@ This error is used when no label has been provided for the [TextInput](/forms/co
 ### NO_FORM_ERROR
 
 This error is used when no error has been provided for the [TextInput](/forms/components/TextInput) component.
+
+### INPUT_HAS_FOCUSABLE_LABEL <Must />
+
+This error is raised when the visible label for a [TextInput](/forms/components/TextInput) is focusable separately from the field, causing screen readers to announce it twice.
+
+:::note
+
+This rule can be disabled by turning off the forms check in the [ama.config.json](/docs/config-file#checks) file.
+:::
+
+### INPUT_HAS_NO_VISIBLE_LABEL_ENDING_WITH_ASTERISK <MustNot />
+
+This error is raised when the accessibility label for a [TextInput](/forms/components/TextInput) ends with an asterisk. Asterisks are a visual convention that screen readers do not reliably convey — mark required fields with "required" in the label text instead.
+
+:::note
+
+This rule can be disabled by turning off the forms check in the [ama.config.json](/docs/config-file#checks) file.
+:::
+
+### INPUT_INVALID_RETURN_KEY <Must />
+
+This error is raised when a [TextInput](/forms/components/TextInput) uses the default `Return` key, which dismisses the keyboard instead of advancing to the next field or submitting the form.
+
+:::note
+
+This rule can be disabled by turning off the forms check in the [ama.config.json](/docs/config-file#checks) file.
+:::
 
 ### NO_KEYBOARD_TRAP <MustNot />
 

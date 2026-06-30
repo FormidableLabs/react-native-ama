@@ -29,8 +29,8 @@ const config: Config = {
     process.env.VERCEL_ENV === 'preview'
       ? '/'
       : '/open-source/react-native-ama/',
-  // TODO: change in throw
-  onBrokenLinks: 'ignore',
+  onBrokenLinks: 'throw',
+  onBrokenAnchors: 'throw',
   onBrokenMarkdownLinks: 'warn',
   organizationName: 'NearForm',
   customFields: {

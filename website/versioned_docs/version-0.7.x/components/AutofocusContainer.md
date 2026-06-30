@@ -32,7 +32,7 @@ In this example, we want to move the focus to the view rendered once the user ta
 :::warning
 
 The autofocus works only if the container contains accessible elements, like Text, Buttons, etc.
-Alternatively, bypassing the [accessibilityLabel](#accessibility-label) property, the child will be wrapped in an accessible View.
+Alternatively, bypassing the `accessibilityLabel` property, the child will be wrapped in an accessible View.
 :::
 
 ## Accessibility

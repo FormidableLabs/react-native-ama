@@ -104,10 +104,6 @@ We can do this by using an empty &gt;Text&lt; component with an accessible label
 
 Without a heading, screen reader users navigating by header have no entry point and must read the entire screen linearly. Mark the primary screen title as `accessibilityRole="header"`.
 
-### Don't skip heading levels
-
-Use heading hierarchy to reflect the actual structure of the content. Jumping from a top-level heading straight to a third-level sub-heading confuses users who rely on heading order to build a mental map of the page.
-
 ### Add a screen-reader-only header when the design has no visible title
 
 If the screen design has no visible heading, add a `<Text>` element that is visually hidden but accessible:
