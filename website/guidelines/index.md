@@ -4,28 +4,27 @@ displayed_sidebar: guidelines
 
 # Mobile Accessibility Guidelines
 
-This section contains accessibility best practices for native mobile apps.
+This section contains accessibility best practices for native mobile apps built with React Native.
 
-The guidelines are based on the w3c recommendations [Accessibility Guideline](https://www.w3.org/TR/WCAG21/) and are intended for use
-by anyone building an accessible app with React Native and are not limited to being used with AMA.
+The guidelines follow the [W3C Web Content Accessibility Guidelines (WCAG) 2.1](https://www.w3.org/TR/WCAG21/) — the internationally recognised standard for digital accessibility. They apply to any React Native app, not just those using AMA.
 
 ## Severities
 
-While the AMA guidelines categorize issues based on varying levels of severity, it's crucial to address each one to ensure complete accessibility of the app. Overlooking even the less severe guidelines can lead to an app that's challenging to navigate and use, potentially alienating a portion of the user base. Every user deserves an inclusive and seamless experience; adhering to all accessibility guidelines is the key to achieving that.
+Each guideline is rated by severity. Address all of them — even lower-severity issues can make an app frustrating or unusable for people who rely on assistive technologies such as screen readers, voice control software, or switch access devices.
 
 ### <span class="ama-critical">Critical</span>
 
-These best practices are mandatory and must be enforced. Failing to implement them will result in an inaccessible mobile app.
+These practices are mandatory. Failing to implement them results in an app that is completely inaccessible to some users.
 
 ### <span class="ama-serious">Serious</span>
 
-While these issues don't entirely prevent users with assistive technology from accessing the content, they pose significant challenges.
+These issues do not completely block access, but they create significant barriers for users who rely on assistive technology.
 
 ### <span class="ama-warning">Warning</span>
 
-These best practices are considered "nice to have." Adhering to them enhances the accessibility of your app.
+These are enhancements. Addressing them improves the experience for a broader range of users.
 
 ## External references
 
-- https://www.w3.org/TR/WCAG21
-- https://www.bbc.co.uk/accessibility/forproducts/guides/mobile/
+- [W3C WCAG 2.1](https://www.w3.org/TR/WCAG21)
+- [BBC Mobile Accessibility Guidelines](https://www.bbc.co.uk/accessibility/forproducts/guides/mobile/)

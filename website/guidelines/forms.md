@@ -14,6 +14,29 @@ import NextKeyKeyboard from './next-key.jpg';
 <AMASection />
 <AssistiveTechnology name="Assistive Technologies" title="Screen Reader, Keyboard and Switch" />
 
+Forms collect input from users — email addresses, passwords, search queries, settings. For screen reader and keyboard users, an inaccessible form is one of the most common blockers: unlabelled fields, validation errors that aren't announced, and focus traps can make a form impossible to complete.
+
+## Expectations
+
+<ScreenReader>
+    <When title="A form field receives focus">
+        <Then noChildren>The label, input type, and any validation error are all announced together — users should not need to navigate elsewhere to hear the error</Then>
+    </When>
+    <When title="The user finishes entering a value">
+        <Then noChildren>The user can advance to the next field or submit the form using a keyboard action, without being forced to swipe</Then>
+    </When>
+</ScreenReader>
+
+---
+
+<VoiceControl>
+    <When title="The user pronounces a field label">
+        <Then title="Voice Control focuses the field">
+            <And noChildren>The user can dictate input directly — field labels must match their visible text so voice targeting works</And>
+        </Then>
+    </When>
+</VoiceControl>
+
 ## Labels
 
 <Critical label  />
@@ -128,6 +151,32 @@ The user should be able to submit a form using the **done** button on the keyboa
 Also, an error message should be displayed and autofocused when it fails to let the screen reader know about the issue.
 Alternatively, the first failed field should be autofocused if no message is available.
 
+## Best Practices
+
+### Label every field — never rely on placeholder text
+
+Placeholders disappear as soon as the user starts typing. Every field must have a persistent `accessibilityLabel`. If the visual label is a separate `<Text>` element, hide it from the accessibility tree and put the label text on the `TextInput` instead.
+
+### Include validation errors in the field's label or hint
+
+Don't display errors as separate focusable elements. Attach them to the field itself so the screen reader announces the error immediately when the field receives focus — users should not need to swipe to find out what went wrong.
+
+### Mark required fields in the label, not with an asterisk
+
+An asterisk is a visual convention that screen readers may not convey meaningfully. Use "required" as part of the `accessibilityLabel`:
+
+```jsx
+<TextInput accessibilityLabel="Email address, required" />
+```
+
+### Never trap focus in a field
+
+If the user wants to leave an input — even one with invalid data — let them. Programmatically forcing focus back to a field is a keyboard trap and fails WCAG 2.1.2.
+
+### Autofocus the error summary on failed submission
+
+When form submission fails, move focus to the error summary or the first failed field so screen reader users are immediately informed of what needs fixing.
+
 ## AMA dev runtime errors
 
 ### INPUT_HAS_NO_VISIBLE_LABEL
@@ -149,8 +198,11 @@ This rule cannot be turned off!
 
 ## Related AMA components
 
-- [Form](/forms/components/form)
-- [FormField](/forms/components/formfield)
-- [SwitchListItem](/react-native/components/switchlistitem)
-- [SwitchWrapper](/react-native/components/switchwrapper)
-- [TextInput](/forms/components/textinput)
+- [Form](/forms/components/Form)
+- [Form.Field](/forms/components/FormField)
+- [Form.Submit](/forms/components/FormSubmit)
+- [TextInput](/forms/components/TextInput)
+- [useFocus](/forms/hooks/useFocus)
+- [useFormField](/forms/hooks/useFormField)
+- [useFormSubmit](/forms/hooks/useFormSubmit)
+- [useTextInput](/forms/hooks/useTextInput)

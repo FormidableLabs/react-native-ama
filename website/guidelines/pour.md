@@ -3,19 +3,15 @@ sidebar_position: 1
 displayed_sidebar: guidelines
 ---
 
-# POUR - Accessibility Principles
+# POUR — Accessibility Principles
 
-The POUR principles, established by the W3C, consist of four fundamental guidelines that form the basis for making a mobile app accessible to all users.
+POUR stands for **Perceivable, Operable, Understandable, and Robust** — the four core principles of accessible design established by the W3C (World Wide Web Consortium) in the [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/TR/WCAG21/). Every guideline in this section maps to one of these four principles.
 
 ## Perceivable
 
 > Information and user interface components must be presentable to users in ways they can perceive.
 
-### What to do?
-
-Users typically perceive and interact with information presented in an app through **sight**, **sound**, and, in some instances, **touch**.
-
-The goal is to offer alternative ways for users to access information to accommodate senses that may be weaker or absent.
+**What it means:** Users take in information through sight, sound, and touch. If content is only available through one sense — for example, a video with no captions, or an image with no text description — users who lack that sense cannot access it. The goal is to offer alternative ways to access the same information.
 
 ### Examples
 
@@ -29,29 +25,23 @@ The goal is to offer alternative ways for users to access information to accommo
 
 > User interface components and navigation must be operable.
 
-### What to do?
-
-We must ensure the app is compatible with assistive technologies, including keyboards, switches, and screen readers. Also, we must provide enough time to complete and correct tasks.
+**What it means:** Users must be able to interact with the app using more than just touch. Some users rely on keyboards, switch access devices, or voice control. Elements must also give users enough time to complete tasks — not everything can assume fast, precise input.
 
 ### Examples
 
 - The app should be fully functional through keyboard inputs
 - [Users should be given ample time to complete tasks](/guidelines/timed-actions)
 - [The app should be designed in a way that minimizes the risk of triggering seizures or other involuntary reactions](/guidelines/animations)
-- [Focus order](/guidelines/focus), screen titles, [headings](/guidelines/headings), and [labels](/guidelines/accessibility-label) should be clearly defined to facilitate easy navigation
+- [Focus order](/guidelines/focus), screen titles, [headings](/guidelines/headers), and [labels](/guidelines/accessibility-label) should be clearly defined to facilitate easy navigation
 - The app should offer appropriately [sized touch targets](/guidelines/minimum-size) and alternative input methods
 
 ## Understandable
 
 > Information and the operation of user interface must be understandable.
 
-The Understandable principle includes guidelines for readable content, predictable content, and input assistance.
+**What it means:** Content and behaviour should be easy to understand. This means using clear language, consistent patterns, and helpful error messages — so users can always predict what will happen and recover when something goes wrong.
 
-### What to do?
-
-We must use clear language and functionality that are easy to understand. Additionally, maintaining consistent patterns helps users anticipate outcomes.
-
-### Example
+### Examples
 
 - The app should use a navigation structure that is both predictable and consistent
 - Abbreviations, jargon, and reading levels should be avoided to ensure the app is accessible to a broad audience
@@ -64,9 +54,9 @@ We must use clear language and functionality that are easy to understand. Additi
 
 > Content must be robust enough that it can be interpreted by a wide variety of user agents, including assistive technologies.
 
-We must ensure that our app functions effectively across various devices, including assistive technologies.
+**What it means:** The app must work correctly across different devices, operating systems, and assistive technologies — not just the most common setup. Robustness is mostly about using standard attributes and patterns that assistive technologies know how to interpret.
 
-### Example
+### Examples
 
 - Components should be clearly defined with appropriate [names](/guidelines/accessibility-label), [roles](/guidelines/accessibility-role), and values
 - Messages like "added to cart" should be conveyed to the user in a way that doesn't interrupt their workflow or shift their focus
@@ -75,4 +65,4 @@ We must ensure that our app functions effectively across various devices, includ
 
 - [What Does It Mean for Content to be POUR?](https://www.accessibility.com/blog/what-does-it-mean-for-content-to-be-pour)
 - [Web Accessibility: POUR Acronym Explained](https://equalizedigital.com/web-accessibility-p-o-u-r-acronym/)
-- [Unerstanding the Four Principles of Accessibility](https://www.w3.org/TR/UNDERSTANDING-WCAG20/intro.html#:~:text=Perceivable)
+- [Understanding the Four Principles of Accessibility](https://www.w3.org/TR/UNDERSTANDING-WCAG20/intro.html#:~:text=Perceivable)

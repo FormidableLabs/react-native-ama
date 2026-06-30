@@ -17,13 +17,32 @@ Headers play a vital accessibility role by helping screen reader users navigate 
 When a text element is marked as a header, assistive technologies can recognise its level and provide quick navigation shortcuts (e.g., jumping between headings). This allows non-visual users to understand the screen's structure and navigate sections without having to read everything sequentially.
 
 
-In React Native, any text element can be designated as a header by assigning the [aria-role](/guidelines/accessibility-role) property to "header".
+In React Native, any text element can be designated as a header by assigning the `accessibilityRole="header"` property to it.
 
 :::note
 
 Each page/screen should contain at least one header.
 
 :::
+
+## Expectations
+
+<ScreenReader>
+    <When title="A user navigates to a screen">
+        <Then noChildren>There is at least one element marked as a header so the user can orient themselves without reading all content linearly</Then>
+    </When>
+    <When title="A user opens the Rotor (iOS) or List feature (Android) and selects Headers">
+        <Then noChildren>They can jump directly between all sections marked as headers on the screen</Then>
+    </When>
+</ScreenReader>
+
+---
+
+<VoiceControl>
+    <When title="A user looks at the screen">
+        <Then noChildren>Headers are not interactive targets for voice commands, but they provide visible structure that helps all users — including Voice Control users — understand the page layout at a glance</Then>
+    </When>
+</VoiceControl>
 
 ## Understand the Navigation
 
@@ -78,6 +97,28 @@ We can do this by using an empty &gt;Text&lt; component with an accessible label
 ```jsx
 <Text accessibilityLabel="This is the header" accessibilityRole="header" />
 ```
+
+## Best Practices
+
+### Every screen needs at least one header
+
+Without a heading, screen reader users navigating by header have no entry point and must read the entire screen linearly. Mark the primary screen title as `accessibilityRole="header"`.
+
+### Don't skip heading levels
+
+Use heading hierarchy to reflect the actual structure of the content. Jumping from a top-level heading straight to a third-level sub-heading confuses users who rely on heading order to build a mental map of the page.
+
+### Add a screen-reader-only header when the design has no visible title
+
+If the screen design has no visible heading, add a `<Text>` element that is visually hidden but accessible:
+
+```jsx
+<Text accessibilityLabel="Products" accessibilityRole="header" />
+```
+
+### Keep heading text short and descriptive
+
+Headings are navigation landmarks — users hear them rapidly while scanning. A heading like "Settings" is better than "Here you can manage all your application settings".
 
 ## Related AMA components
 

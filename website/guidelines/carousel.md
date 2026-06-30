@@ -10,7 +10,7 @@ displayed_sidebar: guidelines
 
 <AMASection />
 
-When implementing a Carousel, it's essential to ensure that users can easily navigate through its items.
+A carousel displays a series of items one at a time, where users swipe left or right to move between them. For screen reader users, the standard swipe gesture conflicts with how they navigate the screen — so a carousel must expose `increment` and `decrement` accessibility actions instead, using the `adjustable` role to signal this to the screen reader.
 
 ## Expectations
 
@@ -35,6 +35,16 @@ When the Screen Reader is activated, navigation typically relies on specific ges
 
 - 1-finger swipe up: This gesture usually focuses on the next item
 - 1-finger swipe down: This gesture focuses on the previous item
+
+---
+
+<VoiceControl>
+    <When title="The user pronounces the carousel label">
+        <Then title="Voice Control highlights the carousel">
+            <And noChildren>The user can then issue swipe gestures verbally ("swipe left", "swipe right") to advance between items</And>
+        </Then>
+    </When>
+</VoiceControl>
 
 ## Example
 
@@ -65,7 +75,25 @@ To implement this navigation behavior in React Native when the Screen Reader is 
 />
 ```
 
-### Related AMA utility
+## Best Practices
 
-- [Carouse](/extras/components/Carousel)
-- [useCarousel](/extras/hooks/useCarousel)
+### Use the `adjustable` role with increment/decrement actions
+
+The `adjustable` role tells the screen reader that swipe-up/down adjusts a value. Without it, the user has no indication that the carousel can be navigated at all.
+
+```jsx
+accessibilityRole="adjustable"
+accessibilityActions={[{ name: 'increment' }, { name: 'decrement' }]}
+```
+
+### Announce the current position
+
+Include the item's position in its label or hint so the user knows where they are in the sequence.
+
+```jsx
+accessibilityLabel={`Carousel, item ${currentIndex + 1} of ${data.length}`}
+```
+
+### Provide a way to pause auto-advancing carousels
+
+If the carousel advances automatically, include a pause or stop control. Auto-advancing content that cannot be paused fails [WCAG 2.2.2 Pause, Stop, Hide](https://www.w3.org/WAI/WCAG21/Understanding/pause-stop-hide.html).
