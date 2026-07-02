@@ -1,9 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react-native';
 import React from 'react';
-import { AMARuleError } from './AMARuleError';
+import { AMARuleError as AMARuleErrorImpl } from './AMARuleError';
 
-const rn = jest.requireMock('react-native');
-
+const AMARuleError = AMARuleErrorImpl!;
 
 const baseIssue = {
   rule: 'NO_ACCESSIBILITY_LABEL' as const,

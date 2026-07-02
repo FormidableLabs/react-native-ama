@@ -2,6 +2,7 @@ import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { theme } from '../theme';
 import { Text } from './Text';
+import { useFocus } from '@react-native-ama/core';
 
 type HeaderProps = {
   title: string;

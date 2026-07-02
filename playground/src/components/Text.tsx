@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Text as RNText, TextProps as RNTextProps } from 'react-native';
 import { theme } from '../theme';
 import { StyleProps } from 'react-native-reanimated';
+import { useFocus } from '@react-native-ama/core';
 
 type TextProps = Omit<RNTextProps, 'style'> & {
   mb?: number;
@@ -9,9 +10,13 @@ type TextProps = Omit<RNTextProps, 'style'> & {
   bold?: boolean;
   style?: StyleProps
   white?: boolean
+  autoFocus?: boolean
 };
 
-export const Text = ({ mb, mt, bold, style, white, ...props }: TextProps) => {
+export const Text = ({ mb, mt, bold, style, white, autoFocus, ...props }: TextProps) => {
+  const ref = useRef()
+
+  useFocus(autoFocus ? ref : undefined)
   return (
     <RNText
       {...props}

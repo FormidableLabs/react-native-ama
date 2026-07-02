@@ -17,7 +17,7 @@ beforeEach(() => {
 
   jest
     .spyOn(UseBottomSheetGestureHandler, 'useBottomSheetGestureHandler')
-    .mockReturnValue({ gestureHandler: jest.fn() });
+    .mockReturnValue({ gestureHandler: jest.fn() as any });
 });
 
 jest.useFakeTimers();
@@ -253,7 +253,7 @@ describe('BottomSheet', () => {
   it.skip('passes the layout height into to the useBottomSheetGestureHandler hook', () => {
     const useBottomSheetGestureHandlerSpy = jest
       .spyOn(UseBottomSheetGestureHandler, 'useBottomSheetGestureHandler')
-      .mockReturnValue({ gestureHandler: jest.fn() });
+      .mockReturnValue({ gestureHandler: jest.fn() as any });
     const onClose = jest.fn();
 
     const { getByTestId } = render(

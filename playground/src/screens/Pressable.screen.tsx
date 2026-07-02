@@ -23,7 +23,7 @@ export const PressableScreen = () => {
          *  FIX: Set a role of "button"
          */}
         <TestCase title="Test case 1: Missing role">
-          <CTAPressable title="Missing role" role="" hasMaring />
+          <CTAPressable title="Missing role" role={"" as any} hasMaring />
         </TestCase>
 
         {/*

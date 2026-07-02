@@ -1,6 +1,30 @@
 import React from 'react';
 import { AccessibilityInfo } from 'react-native';
 
+type FlatListRule =
+  | 'FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE'
+  | 'FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE';
+
+let _useAMAContext:
+  | (() => {
+      trackError?: (rule: FlatListRule, ref?: React.RefObject<any>) => void;
+    } | null)
+  | null = null;
+try {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  _useAMAContext = require('@react-native-ama/core').useAMAContext;
+} catch {
+  // core is an optional peer — fall back to null
+}
+
+const getTrackError = () => {
+  try {
+    return _useAMAContext?.()?.trackError ?? null;
+  } catch {
+    return null;
+  }
+};
+
 export type UseDynamicList = {
   data: ArrayLike<any>;
   singularMessage: string;
@@ -19,23 +43,36 @@ export const useDynamicList = ({
   const isFirstRender = React.useRef(true);
   const initialCount = React.useRef(data?.length);
   const lastItemsCount = React.useRef<null | number>(null);
+  const trackError = __DEV__ ? getTrackError() : null;
 
   __DEV__ &&
     React.useEffect(() => {
       if (!singularMessage?.includes('%count%')) {
-        console.error('useDynamicFlatList', {
-          rule: 'FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE',
-          message: 'Special string %count% not found in singularMessage',
-          extra: singularMessage,
-        });
+        const rule = 'FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE';
+
+        if (trackError) {
+          trackError(rule);
+        } else {
+          console.error('useDynamicFlatList', {
+            rule,
+            message: 'Special string %count% not found in singularMessage',
+            extra: singularMessage,
+          });
+        }
       }
 
       if (!pluralMessage?.includes('%count%')) {
-        console.error('useDynamicFlatList', {
-          rule: 'FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE',
-          message: 'Special string %count% not found in pluralMessage',
-          extra: pluralMessage,
-        });
+        const rule = 'FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE';
+
+        if (trackError) {
+          trackError(rule);
+        } else {
+          console.error('useDynamicFlatList', {
+            rule,
+            message: 'Special string %count% not found in pluralMessage',
+            extra: pluralMessage,
+          });
+        }
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pluralMessage, singularMessage]);

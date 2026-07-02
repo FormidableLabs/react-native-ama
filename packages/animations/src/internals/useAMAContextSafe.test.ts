@@ -1,5 +1,4 @@
 import { renderHook } from '@testing-library/react-native';
-import { useAMAContextSafe } from './useAMAContextSafe';
 
 beforeEach(() => {
   jest.clearAllMocks();

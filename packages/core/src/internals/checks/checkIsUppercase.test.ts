@@ -1,4 +1,5 @@
 import type { AmaNode } from '../../ReactNativeAma.types';
+import type { AmaRule } from '../types';
 import { checkIsUppercase } from './checkIsUppercase';
 
 jest.mock('../utils/isA11yLabelAllowed', () => ({
@@ -278,7 +279,7 @@ describe('checkIsUppercase', () => {
                 content: 'UPPERCASE',
             });
 
-            const result = checkIsUppercase({ node, rule: 'CUSTOM_UPPERCASE_RULE' });
+            const result = checkIsUppercase({ node, rule: 'CUSTOM_UPPERCASE_RULE' as AmaRule });
             expect(result).toMatchObject({
                 rule: 'CUSTOM_UPPERCASE_RULE',
             });

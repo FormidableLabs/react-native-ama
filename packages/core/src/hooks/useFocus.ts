@@ -5,12 +5,12 @@ import {
   InteractionManager,
 } from 'react-native';
 
-const SHELL_COLORS = {
+const SHELL_COLORS = __DEV__ ? {
   BG_RED: '\x1b[41m',
   RESET: '\x1b[0m',
   BLUE: '\x1b[34m',
   YELLOW: '\x1b[33m',
-};
+} : null;
 
 export const useFocus = (refComponent?: React.RefObject<any>) => {
   const setFocus = React.useCallback(

@@ -172,7 +172,7 @@ describe('useFormField', () => {
 
     it('calls checkFocusTrap when hasFocusCallback is true and not the last field', async () => {
       const focusField = jest.fn();
-      const checkFocusTrapSpy = jest.spyOn(CheckFocusTrapModule, 'checkFocusTrap').mockResolvedValue(undefined);
+      const checkFocusTrapSpy = jest.spyOn(CheckFocusTrapModule as { checkFocusTrap: (...args: any[]) => Promise<void> }, 'checkFocusTrap').mockResolvedValue(undefined);
       jest.spyOn(Form, 'useForm').mockImplementation(() => ({
         refs: localRef,
         submitForm,
@@ -210,7 +210,7 @@ describe('useFormField', () => {
 
     it('does not call checkFocusTrap when hasFocusCallback is false', async () => {
       const focusField = jest.fn();
-      const checkFocusTrapSpy = jest.spyOn(CheckFocusTrapModule, 'checkFocusTrap').mockResolvedValue(undefined);
+      const checkFocusTrapSpy = jest.spyOn(CheckFocusTrapModule as { checkFocusTrap: (...args: any[]) => Promise<void> }, 'checkFocusTrap').mockResolvedValue(undefined);
       jest.spyOn(Form, 'useForm').mockImplementation(() => ({
         refs: localRef,
         submitForm,

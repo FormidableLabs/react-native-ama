@@ -58,7 +58,7 @@ describe('useBottomSheetGestureHandler', () => {
       }),
     );
 
-    result.current.gestureHandler._onStart(null);
+    (result.current.gestureHandler as any)._onStart(null);
 
     expect(mockStartY.value).toBe(42);
   });
@@ -77,12 +77,12 @@ describe('useBottomSheetGestureHandler', () => {
       }),
     );
 
-    result.current.gestureHandler._onStart(null);
-    result.current.gestureHandler._onUpdate({ translationY: 100 });
+    (result.current.gestureHandler as any)._onStart(null);
+    (result.current.gestureHandler as any)._onUpdate({ translationY: 100 });
 
     expect(translateY.value).toBe(142);
 
-    result.current.gestureHandler._onUpdate({ translationY: -500 });
+    (result.current.gestureHandler as any)._onUpdate({ translationY: -500 });
 
     expect(translateY.value).toBe(0);
   });
@@ -101,8 +101,8 @@ describe('useBottomSheetGestureHandler', () => {
         } as any),
       );
 
-      result.current.gestureHandler._onUpdate({ translationY: 249 });
-      result.current.gestureHandler._onEnd({ velocityY: 100 });
+      (result.current.gestureHandler as any)._onUpdate({ translationY: 249 });
+      (result.current.gestureHandler as any)._onEnd({ velocityY: 100 });
 
       expect(translateY.value).toBe(0);
       expect(mockWithTiming).toHaveBeenCalledWith(0, { duration: 300 });
@@ -124,8 +124,8 @@ describe('useBottomSheetGestureHandler', () => {
         }),
       );
 
-      result.current.gestureHandler._onUpdate({ translationY: 250 });
-      result.current.gestureHandler._onEnd(null);
+      (result.current.gestureHandler as any)._onUpdate({ translationY: 250 });
+      (result.current.gestureHandler as any)._onEnd(null);
 
       expect(mockRunOnJS).toHaveBeenCalledWith(onClose);
       expect(onClose).toHaveBeenCalledWith();
@@ -147,8 +147,8 @@ describe('useBottomSheetGestureHandler', () => {
         } as any),
       );
 
-      result.current.gestureHandler._onUpdate({ translationY: 42 });
-      result.current.gestureHandler._onEnd({ velocityY: 1001 });
+      (result.current.gestureHandler as any)._onUpdate({ translationY: 42 });
+      (result.current.gestureHandler as any)._onEnd({ velocityY: 1001 });
 
       expect(mockRunOnJS).toHaveBeenCalledWith(onClose);
       expect(onClose).toHaveBeenCalledWith();

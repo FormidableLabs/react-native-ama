@@ -1,28 +1,32 @@
 {
   "extends": "expo-module-scripts/tsconfig.base",
   "compilerOptions": {
-    "baseUrl": "./",
     "paths": {
       "@react-native-ama/animations": [
-        "packages/animations/src/index"
+        "./packages/animations/src/index"
       ],
       "@react-native-ama/core": [
-        "packages/core/src/index"
+        "./packages/core/src/index"
       ],
       "@react-native-ama/bottom-sheet": [
-        "packages/bottom-sheet/src/index"
+        "./packages/bottom-sheet/src/index"
       ],
       "@react-native-ama/forms": [
-        "packages/forms/src/index"
+        "./packages/forms/src/index"
       ],
       "@react-native-ama/lists": [
-        "packages/lists/src/index"
+        "./packages/lists/src/index"
       ]
     },
     "jsx": "react",
     "lib": [
       "esnext",
       "dom"
+    ],
+    "types": [
+      "node",
+      "jest",
+      "jest-require"
     ],
     "module": "esnext",
     "moduleResolution": "node",

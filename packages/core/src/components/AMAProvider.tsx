@@ -3,7 +3,6 @@ import * as React from 'react';
 import {
   AccessibilityChangeEventName,
   AccessibilityInfo,
-  LogBox,
   NativeEventSubscription,
   View,
 } from 'react-native';
@@ -85,8 +84,6 @@ const DEFAULT_VALUES = {
 } satisfies AMAContextValue;
 
 const AMAContext = React.createContext<AMAContextValue | null>(null);
-
-LogBox.ignoreAllLogs();
 
 export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
   const [values, setValues] = React.useState<AMAContextValue>(DEFAULT_VALUES);

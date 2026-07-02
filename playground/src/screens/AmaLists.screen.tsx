@@ -1,7 +1,7 @@
 import { DynamicFlatList } from '@react-native-ama/lists';
 import { TextInput } from '@react-native-ama/forms';
 import * as React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 
 import { Spacer } from '../components/Spacer';
 import { Text } from '../components/Text';

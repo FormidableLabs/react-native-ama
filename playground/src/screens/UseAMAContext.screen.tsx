@@ -4,7 +4,6 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { Spacer } from '../components/Spacer';
 import { Text } from '../components/Text';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { theme } from '../theme';
 
 export const UseAMAContextScreen = () => {

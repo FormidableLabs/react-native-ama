@@ -95,231 +95,231 @@ let lastNodesChecked: AmaNodes = {};
 
 export const useAMADev = __DEV__
   ? () => {
-      const isMonitoring = useRef(true);
-      const [issues, setIssues] = useState<AmaError[]>([]);
-      const previousIssues = useRef<AmaError[]>([]);
-      const jsFailedChecks = useRef<AmaError[]>([]);
+    const isMonitoring = useRef(true);
+    const [issues, setIssues] = useState<AmaError[]>([]);
+    const previousIssues = useRef<AmaError[]>([]);
+    const jsFailedChecks = useRef<AmaError[]>([]);
 
-      const checkNodes = (nodesToCheck: AmaNodes) => {
-        let allIssues: AmaError[] = [];
-        let hasAtLeastOneHeader = false;
-        let hasTextInput = false;
+    const checkNodes = (nodesToCheck: AmaNodes) => {
+      let allIssues: AmaError[] = [];
+      let hasAtLeastOneHeader = false;
+      let hasTextInput = false;
 
-        lastNodesChecked = nodesToCheck;
-        const nodes = Object.values(nodesToCheck);
+      lastNodesChecked = nodesToCheck;
+      const nodes = Object.values(nodesToCheck);
 
-        for (const node of nodes) {
-          if (node.type === "TextInput") {
-            hasTextInput = true;
+      for (const node of nodes) {
+        if (node.type === "TextInput") {
+          hasTextInput = true;
+        }
+
+        if (!hasAtLeastOneHeader && node.type === "Text") {
+          if (node.traits?.includes("header") || node.ariaRole === "header") {
+            hasAtLeastOneHeader = true;
           }
+        }
 
-          if (!hasAtLeastOneHeader && node.type === "Text") {
-            if (node.traits?.includes("header") || node.ariaRole === "header") {
-              hasAtLeastOneHeader = true;
+        allIssues.push.apply(allIssues, performChecks(node));
+      }
+
+      if (hasTextInput && projectRules.checks.forms) {
+        allIssues.push.apply(allIssues, checkTextInputs(nodes));
+      }
+
+      if (!hasAtLeastOneHeader) {
+        allIssues.push({ rule: "NO_HEADER_FOUND", viewId: -1 });
+      }
+
+      if (previousIssues.current.length) {
+        resetFixedIssues(
+          previousIssues.current,
+          allIssues,
+          jsFailedChecks.current
+        );
+      }
+
+      logFoundIssues?.(allIssues);
+
+      if (allIssues.length || jsFailedChecks.current.length) {
+        const issuesByViewId = [
+          ...allIssues,
+          ...jsFailedChecks.current,
+        ].reduce((groupedIssues, issue) => {
+          if (issue.viewId >= 0) {
+            if (!groupedIssues[issue.viewId]) {
+              groupedIssues[issue.viewId] = [];
             }
+            groupedIssues[issue.viewId].push(issue);
           }
+          return groupedIssues;
+        }, {} as Record<number, AmaError[]>);
 
-          allIssues.push.apply(allIssues, performChecks(node));
+        for (const viewIdStr of Object.keys(issuesByViewId)) {
+          const viewId = Number(viewIdStr);
+
+          const issuesForView = issuesByViewId[viewId];
+          if (issueHighlighted[viewId] !== issuesForView.length) {
+            const color = getHighestSeverityColor(issuesForView);
+            highlightComponent(viewId, color, issuesForView.length);
+            issueHighlighted[viewId] = issuesForView.length;
+          }
         }
 
-        if (hasTextInput && projectRules.checks.forms) {
-          allIssues.push.apply(allIssues, checkTextInputs(nodes));
-        }
+        setIssues((issues) => {
+          const a11yStateIssues =
+            keepNoStateHandledOrKeyboardTrapIssuesStillInView(
+              issues,
+              nodesToCheck
+            );
 
-        if (!hasAtLeastOneHeader) {
-          allIssues.push({ rule: "NO_HEADER_FOUND", viewId: -1 });
-        }
+          return [
+            ...a11yStateIssues,
+            ...allIssues.sort((a, b) => a.viewId - b.viewId),
+          ];
+        });
+      } else {
+        setIssues((issues) => {
+          const a11yStateIssues =
+            keepNoStateHandledOrKeyboardTrapIssuesStillInView(
+              issues,
+              nodesToCheck
+            );
 
-        if (previousIssues.current.length) {
-          resetFixedIssues(
-            previousIssues.current,
-            allIssues,
-            jsFailedChecks.current
+          return [...a11yStateIssues];
+        });
+      }
+
+      previousIssues.current = allIssues;
+    };
+
+    const checkResultUiInteraction = (data?: AmaUiSnapshotsData) => {
+      if (!data) {
+        return;
+      }
+
+      const itemsToFlag = Array.from(itemsWithNoStateUpdated(data));
+
+      setIssues((currentIssues) => {
+        if (itemsToFlag.length === 0) {
+          const issueIndex = currentIssues.findIndex(
+            (item) =>
+              item.viewId === data.rootTag &&
+              item.rule === "NO_ACCESSIBILITY_STATE_SET"
           );
-        }
 
-        logFoundIssues?.(allIssues);
+          if (issueIndex >= 0) {
+            amaClearHighlight?.(currentIssues[issueIndex]);
 
-        if (allIssues.length || jsFailedChecks.current.length) {
-          const issuesByViewId = [
-            ...allIssues,
-            ...jsFailedChecks.current,
-          ].reduce((groupedIssues, issue) => {
-            if (issue.viewId >= 0) {
-              if (!groupedIssues[issue.viewId]) {
-                groupedIssues[issue.viewId] = [];
-              }
-              groupedIssues[issue.viewId].push(issue);
-            }
-            return groupedIssues;
-          }, {} as Record<number, AmaError[]>);
+            currentIssues.splice(issueIndex, 1);
 
-          for (const viewIdStr of Object.keys(issuesByViewId)) {
-            const viewId = Number(viewIdStr);
-
-            const issuesForView = issuesByViewId[viewId];
-            if (issueHighlighted[viewId] !== issuesForView.length) {
-              const color = getHighestSeverityColor(issuesForView);
-              highlightComponent(viewId, color, issuesForView.length);
-              issueHighlighted[viewId] = issuesForView.length;
-            }
+            return [...currentIssues];
           }
 
-          setIssues((issues) => {
-            const a11yStateIssues =
-              keepNoStateHandledOrKeyboardTrapIssuesStillInView(
-                issues,
-                nodesToCheck
-              );
-
-            return [
-              ...a11yStateIssues,
-              ...allIssues.sort((a, b) => a.viewId - b.viewId),
-            ];
-          });
-        } else {
-          setIssues((issues) => {
-            const a11yStateIssues =
-              keepNoStateHandledOrKeyboardTrapIssuesStillInView(
-                issues,
-                nodesToCheck
-              );
-
-            return [...a11yStateIssues];
-          });
+          return currentIssues;
         }
 
-        previousIssues.current = allIssues;
-      };
-
-      const checkResultUiInteraction = (data?: AmaUiSnapshotsData) => {
-        if (!data) {
-          return;
-        }
-
-        const itemsToFlag = Array.from(itemsWithNoStateUpdated(data));
-
-        setIssues((currentIssues) => {
-          if (itemsToFlag.length === 0) {
-            const issueIndex = currentIssues.findIndex(
+        const newIssues = itemsToFlag
+          .map((viewId) => {
+            const found = currentIssues.find(
               (item) =>
-                item.viewId === data.rootTag &&
+                item.viewId === viewId &&
                 item.rule === "NO_ACCESSIBILITY_STATE_SET"
             );
 
-            if (issueIndex >= 0) {
-              amaClearHighlight?.(currentIssues[issueIndex]);
-
-              currentIssues.splice(issueIndex, 1);
-
-              return [...currentIssues];
+            if (found) {
+              return null;
             }
 
-            return currentIssues;
-          }
+            const rule: AmaError = {
+              rule: "NO_ACCESSIBILITY_STATE_SET",
+              viewId,
+            };
 
-          const newIssues = itemsToFlag
-            .map((viewId) => {
-              const found = currentIssues.find(
-                (item) =>
-                  item.viewId === viewId &&
-                  item.rule === "NO_ACCESSIBILITY_STATE_SET"
-              );
+            highlightComponent(viewId, AMA_COLORS.Critical, 1);
+            return rule;
+          })
+          .filter(nonNullable);
 
-              if (found) {
-                return null;
-              }
-
-              const rule: AmaError = {
-                rule: "NO_ACCESSIBILITY_STATE_SET",
-                viewId,
-              };
-
-              highlightComponent(viewId, AMA_COLORS.Critical, 1);
-              return rule;
-            })
-            .filter(nonNullable);
-
-          if (newIssues.length === 0) {
-            return currentIssues;
-          }
-
-          return [...currentIssues, ...newIssues];
-        });
-      };
-
-      const stopAMA = () => {
-        logger?.log("[React Native AMA]: 🙈 Stop Monitoring 🙈");
-
-        for (const issue of issues) {
-          amaClearHighlight?.(issue);
+        if (newIssues.length === 0) {
+          return currentIssues;
         }
 
-        ReactNativeAmaModule.stop();
-      };
+        return [...currentIssues, ...newIssues];
+      });
+    };
 
-      useEffect(() => {
+    const stopAMA = () => {
+      logger?.log("[React Native AMA]: 🙈 Stop Monitoring 🙈");
+
+      for (const issue of issues) {
+        amaClearHighlight?.(issue);
+      }
+
+      ReactNativeAmaModule.stop();
+    };
+
+    useEffect(() => {
+      startAMA();
+
+      const amaOnNodesListener = ReactNativeAmaModule.addListener(
+        "onAmaNodes",
+        checkNodes
+      );
+      const amaOnUiInteraction = ReactNativeAmaModule.addListener(
+        "onUIInteraction",
+        checkResultUiInteraction
+      );
+
+      return () => {
+        stopAMA();
+
+        amaOnNodesListener.remove();
+        amaOnUiInteraction.remove();
+      };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const toggleReactNativeAMA = () => {
+      if (isMonitoring.current) {
+        stopAMA();
+        setIssues([]);
+      } else {
         startAMA();
+      }
 
-        const amaOnNodesListener = ReactNativeAmaModule.addListener(
-          "onAmaNodes",
-          checkNodes
-        );
-        const amaOnUiInteraction = ReactNativeAmaModule.addListener(
-          "onUIInteraction",
-          checkResultUiInteraction
-        );
+      isMonitoring.current = !isMonitoring.current;
+    };
 
-        return () => {
-          stopAMA();
+    const trackError = (rule: AmaRule, ref?: React.RefObject<any>) => {
+      const viewId = ref?.current?.__nativeTag ?? -1;
+      const issue: AmaError = { rule, viewId };
 
-          amaOnNodesListener.remove();
-          amaOnUiInteraction.remove();
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, []);
+      logError?.(issue);
 
-      const toggleReactNativeAMA = () => {
-        if (isMonitoring.current) {
-          stopAMA();
-          setIssues([]);
-        } else {
-          startAMA();
-        }
+      const alreadyTracked = jsFailedChecks.current.some(
+        (item) => item.viewId === viewId && item.rule === rule
+      );
 
-        isMonitoring.current = !isMonitoring.current;
-      };
+      if (!alreadyTracked) {
+        jsFailedChecks.current.push(issue);
+        setIssues((currentIssues) => [...currentIssues, issue]);
+        checkNodes(lastNodesChecked);
+      }
+    };
 
-      const trackError = (rule: AmaRule, ref?: React.RefObject<any>) => {
-        const viewId = ref?.current?.__nativeTag ?? -1;
-        const issue: AmaError = { rule, viewId };
+    useEffect(() => {
+      DevSettings.addMenuItem(
+        "Toggle React Native AMA",
+        toggleReactNativeAMA
+      );
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-        logError?.(issue);
-
-        const alreadyTracked = jsFailedChecks.current.some(
-          (item) => item.viewId === viewId && item.rule === rule
-        );
-
-        if (!alreadyTracked) {
-          jsFailedChecks.current.push(issue);
-          setIssues((currentIssues) => [...currentIssues, issue]);
-          checkNodes(lastNodesChecked);
-        }
-      };
-
-      useEffect(() => {
-        DevSettings.addMenuItem(
-          "Toggle React Native AMA",
-          toggleReactNativeAMA
-        );
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, []);
-
-      return {
-        issues,
-        trackError,
-      };
-    }
+    return {
+      issues,
+      trackError,
+    };
+  }
   : null;
 
 const A11Y_STATE_KEY: AmaUiSnapshotKeys[] = [
@@ -386,8 +386,8 @@ function itemsWithNoStateUpdated(data: AmaUiSnapshotsData) {
 
     const hasStateChanged = A11Y_STATE_KEY.some(
       (key) =>
-        data.before[parentId][key] !== after[key] ||
-        (settled && before[parentId] !== settled[parentId])
+        before[key] !== after[key] ||
+        (settled && before !== settled)
     );
 
     if (parentId && !hasStateChanged) {

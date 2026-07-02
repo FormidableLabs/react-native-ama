@@ -1,19 +1,23 @@
 import { renderHook } from '@testing-library/react-native';
 
-const mockLogResult = jest.fn();
+const mockTrackError = jest.fn();
+const mockUseAMAContext = jest.fn(() => ({ trackError: mockTrackError }));
 
 jest.mock('@react-native-ama/core', () => ({
-  useChecks: jest.fn(() => ({ logResult: mockLogResult, debugStyle: {} })),
+  useAMAContext: () => mockUseAMAContext(),
 }));
 
 import { useDynamicList } from './useDynamicList';
 
 beforeEach(() => {
   jest.clearAllMocks();
+  mockUseAMAContext.mockReturnValue({ trackError: mockTrackError });
 });
 
 describe('useDynamicList validation checks', () => {
-  it('logs FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE when singularMessage lacks %count%', () => {
+  it('calls trackError with FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE when singularMessage lacks %count%', () => {
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
     renderHook(() =>
       useDynamicList({
         data: [1, 2],
@@ -22,13 +26,17 @@ describe('useDynamicList validation checks', () => {
       }),
     );
 
-    expect(mockLogResult).toHaveBeenCalledWith(
-      'useDynamicFlatList',
-      expect.objectContaining({ rule: 'FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE' }),
+    expect(mockTrackError).toHaveBeenCalledWith(
+      'FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE',
     );
+    expect(errorSpy).not.toHaveBeenCalled();
+
+    errorSpy.mockRestore();
   });
 
-  it('logs FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE when pluralMessage lacks %count%', () => {
+  it('calls trackError with FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE when pluralMessage lacks %count%', () => {
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
     renderHook(() =>
       useDynamicList({
         data: [1, 2],
@@ -37,13 +45,17 @@ describe('useDynamicList validation checks', () => {
       }),
     );
 
-    expect(mockLogResult).toHaveBeenCalledWith(
-      'useDynamicFlatList',
-      expect.objectContaining({ rule: 'FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE' }),
+    expect(mockTrackError).toHaveBeenCalledWith(
+      'FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE',
     );
+    expect(errorSpy).not.toHaveBeenCalled();
+
+    errorSpy.mockRestore();
   });
 
-  it('does not log when both messages contain %count%', () => {
+  it('does not call trackError or console.error when both messages contain %count%', () => {
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
     renderHook(() =>
       useDynamicList({
         data: [1, 2],
@@ -52,6 +64,35 @@ describe('useDynamicList validation checks', () => {
       }),
     );
 
-    expect(mockLogResult).not.toHaveBeenCalled();
+    expect(mockTrackError).not.toHaveBeenCalled();
+    expect(errorSpy).not.toHaveBeenCalled();
+
+    errorSpy.mockRestore();
+  });
+
+  it('falls back to console.error when no AMAProvider is present', () => {
+    mockUseAMAContext.mockImplementation(() => {
+      throw new Error('Please wrap your app with <AMAProvider />');
+    });
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+    renderHook(() =>
+      useDynamicList({
+        data: [1, 2],
+        singularMessage: 'one item',
+        pluralMessage: 'many items',
+      }),
+    );
+
+    expect(errorSpy).toHaveBeenCalledWith(
+      'useDynamicFlatList',
+      expect.objectContaining({ rule: 'FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE' }),
+    );
+    expect(errorSpy).toHaveBeenCalledWith(
+      'useDynamicFlatList',
+      expect.objectContaining({ rule: 'FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE' }),
+    );
+
+    errorSpy.mockRestore();
   });
 });

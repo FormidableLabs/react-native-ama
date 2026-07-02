@@ -85,8 +85,8 @@ describe('interpolateAnimationStates', () => {
         const [reduceMotionProgress, reduceMotionInterpolate] =
           createFakeProgress();
 
-        const initialState: Record = {};
-        const finalState: Record = {};
+        const initialState: Record<string, any> = {};
+        const finalState: Record<string, any> = {};
 
         initialState[motionAnimationKey] = 142;
         finalState[motionAnimationKey] = 42;
@@ -114,7 +114,7 @@ describe('interpolateAnimationStates', () => {
           outputRange: [142, 42],
         });
 
-        const expectedOutput: Record = {
+        const expectedOutput: Record<string, any> = {
           opacity: 'done',
           __hasOnlyMotionAnimation: false,
         };

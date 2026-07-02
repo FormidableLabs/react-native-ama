@@ -6,7 +6,6 @@
     "jsx": "react-native",
     "module": "CommonJS",
     "moduleResolution": "node",
-    "baseUrl": ".",
     "paths": {
       "@react-native-ama/core": ["../../node_modules/@react-native-ama/core/src/index"]
     },
