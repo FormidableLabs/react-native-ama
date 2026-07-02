@@ -42,7 +42,7 @@ When navigating to a new screen, make sure that the focus always starts from the
 
 :::tip
 
-The built-in [&lt;Text /&gt;](../components/Text) offers the `autofocus` property that automatically sets the focus when it gets rendered for the first time.
+The built-in &lt;Text /&gt; offers the `autofocus` property that automatically sets the focus when it gets rendered for the first time.
 
 :::
 

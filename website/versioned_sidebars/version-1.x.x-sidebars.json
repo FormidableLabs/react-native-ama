@@ -53,23 +53,9 @@
         },
         {
           "type": "link",
-          "label": "React Native",
-          "href": "/react-native/",
-          "description": "Extends react-native components with accessibility",
-          "autoAddBaseUrl": true
-        },
-        {
-          "type": "link",
           "label": "Lists",
           "href": "/lists/",
           "description": "Used to create accessible lists",
-          "autoAddBaseUrl": true
-        },
-        {
-          "type": "link",
-          "label": "Extras",
-          "href": "/extras/",
-          "description": "Provides extra accessible components and hooks",
           "autoAddBaseUrl": true
         }
       ]

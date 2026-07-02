@@ -38,7 +38,7 @@ Some people are sensitive to motion — animations can cause dizziness, nausea, 
 
 ## Example
 
-- GIFs and Videos: Autoplay should be disabled to prevent unexpected distractions and [potential issues](/guidelines/type-of-accessibility-issues#seizures) for users with certain disabilities
+- GIFs and Videos: Autoplay should be disabled to prevent unexpected distractions and [potential issues](/guidelines/type-of-accessibility-issues#cognitive) for users with certain disabilities
 - Navigation Motion: Any motion involved in navigation should be disabled
 - Interaction-Triggered Motion: Should be disabled, unless essential[^1]
 
@@ -69,11 +69,11 @@ AMA's `AnimatedContainer` and related hooks handle the Reduce Motion check autom
 
 ## Related AMA components & hooks
 
-- [AnimatedContainer](/animations/components/animatedcontainer)
+- [AnimatedContainer](/animations/components/AnimatedContainer)
 - [BottomSheet](/bottom-sheet/components/BottomSheet)
 - [useAMAContext](/core/hooks/useAMAContext)
 - [useAnimation](/animations/hooks/useAnimation)
-- [useAnimationDuration](/animations/hooks/useanimationduration)
+- [useAnimationDuration](/animations/hooks/useAnimationDuration)
 - [useReanimatedTiming](/animations/hooks/useReanimatedTiming)
 
 [^1]: If removed, it would fundamentally change the information or functionality of the content, and information and functionality cannot be achieved in another way that would conform. Basic content scrolling is considered an essential function and is excluded from this requirement.

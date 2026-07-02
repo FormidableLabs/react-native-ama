@@ -39,12 +39,12 @@ The possible log levels are:
 | [FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE](/guidelines/lists-grids)      | <Must />    | error   | <Yes />      |
 | [MINIMUM_SIZE](/guidelines/minimum-size)                            | <Must />    | error   | <Yes />      |
 | [NO_ACCESSIBILITY_LABEL](/guidelines/accessibility-label)[^1]       | <Must />    | error   | <No />       |
-| [NO_ACCESSIBILITY_ROLE](/guidelines/accessibility-rol) [^1]         | <Must />    | error   | <No />       |
+| [NO_ACCESSIBILITY_ROLE](/guidelines/accessibility-role) [^1]         | <Must />    | error   | <No />       |
 | [INPUT_HAS_NO_VISIBLE_LABEL](/guidelines/forms)                                  | <Must />    | error   | <Yes />      |
 | [NO_FORM_ERROR](/guidelines/forms)                                  | <Must />    | error   | <Yes />      |
-| [NO_KEYBOARD_TRAP](/guidelines/keyboard-trap) [^1]                  | <MustNot /> | error   | <No />       |
-| [UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL](/guidelines/uppercase-text) | <MustNot /> | error   | <Yes />      |
-| [NO_UPPERCASE_TEXT](/guidelines/uppercase-text)                     | <MustNot /> | error   | <Yes />      |
+| [NO_KEYBOARD_TRAP](/guidelines/forms#keyboard-trap) [^1]                  | <MustNot /> | error   | <No />       |
+| [UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL](/guidelines/text#uppercase_text_no_accessibility_label-) | <MustNot /> | error   | <Yes />      |
+| [NO_UPPERCASE_TEXT](/guidelines/text#no_uppercase_text-)                     | <MustNot /> | error   | <Yes />      |
 
 :::note
 
@@ -141,7 +141,7 @@ This can be turned off by specifying a level of **0**
 
 ### accessibilityLabelExceptions
 
-**AMA** performs various checks, including one for [uppercase](/guidelines/uppercase). This rule allows specifying a list of approved all-caps accessibility labels.
+**AMA** performs various checks, including one for [uppercase](/guidelines/text#no_uppercase_accessibility_label-). This rule allows specifying a list of approved all-caps accessibility labels.
 
 ```json title="ama.rules.json"
 {

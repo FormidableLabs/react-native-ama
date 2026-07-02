@@ -140,7 +140,7 @@ Here can be find more information about [error handling in Forms](/guidelines/fo
 
 ### `hasError`
 
-If true returns the [errorMessage](#error-message) as part of the `accessibilityHint`
+If true returns the [errorMessage](#errormessage) as part of the `accessibilityHint`
 
 | Type    | Default   |
 | ------- | --------- |
@@ -148,7 +148,7 @@ If true returns the [errorMessage](#error-message) as part of the `accessibility
 
 :::info
 
-The component will try to extract any text within the [errorComponent](#errorcomponent) if no [errorText](#errorText) is provided
+The component will try to extract any text within the `errorComponent` if no `errorText` is provided
 :::
 
 ### `errorMessage`

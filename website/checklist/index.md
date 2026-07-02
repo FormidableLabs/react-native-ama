@@ -19,7 +19,7 @@ General accessibility rules to look out for each component:
 
 - [ ] [Name](/guidelines/accessibility-label) (ex. "Submit")
 - [ ] [Role](/guidelines/accessibility-role) (ex. button)
-- [ ] [State](/guidelines/accessibility-state) (ex. disabled, checked, expanded, etc...)
+- [ ] [State](/guidelines/accessibility-states) (ex. disabled, checked, expanded, etc...)
 
 ### What happens when I click the thing?
 

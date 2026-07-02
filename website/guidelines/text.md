@@ -37,7 +37,7 @@ Additionally, it can cause issues with screen readers, potentially disrupting th
 
 :::note
 
-For [&lt;Text /&gt;](../components/Text.md) elements AMA checks if the style has the `textTransform` property set to `uppercase`, and if so throws an error if the `accessibilityLabel` one is not set.
+For &lt;Text /&gt; elements AMA checks if the style has the `textTransform` property set to `uppercase`, and if so throws an error if the `accessibilityLabel` one is not set.
 It also checks that the accessibilityLabel provided for the various component is not all caps.
 
 :::

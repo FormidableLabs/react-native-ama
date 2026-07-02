@@ -37,7 +37,7 @@ The possible log levels are:
 | [CONTRAST_FAILED_AAA](/guidelines/contrast) | <Should /> | warn | <Yes /> |
 | [FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE](/guidelines/lists-grids) | <Should /> | warn | <Yes /> |
 | [FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE](/guidelines/lists-grids) | <Must /> | error | <No /> |
-| [IMAGE_MISSING_ALT_TEXT](/guidelines/images) | <Must /> | error | <Yes /> |
+| IMAGE_MISSING_ALT_TEXT | <Must /> | error | <Yes /> |
 | [INCOMPATIBLE_ACCESSIBILITY_ROLE](/guidelines/accessibility-role) | <MustNot /> | error | <No /> |
 | [INCOMPATIBLE_ACCESSIBILITY_STATE](/guidelines/accessibility-role) | <Must /> | error | <No /> |
 | [INPUT_HAS_FOCUSABLE_LABEL](/guidelines/forms) | <Must /> | error | <Yes /> |
@@ -50,11 +50,11 @@ The possible log levels are:
 | [NO_ACCESSIBILITY_STATE_SET](/guidelines/accessibility-states) | <Must /> | error | <Yes /> |
 | [NO_FORM_ERROR](/guidelines/forms) | <Must /> | error | <Yes /> |
 | [NO_HEADER_FOUND](/guidelines/headers) | <Must /> | error | <No /> |
-| [NO_KEYBOARD_TRAP](/guidelines/keyboard-trap) [^1] | <MustNot /> | error | <No /> |
+| [NO_KEYBOARD_TRAP](/guidelines/forms#keyboard-trap) [^1] | <MustNot /> | error | <No /> |
 | [NO_UNDEFINED](/guidelines/accessibility-label) [^1] | <MustNot /> | error | <No /> |
 | [NO_UPPERCASE_ACCESSIBILITY_LABEL](/guidelines/accessibility-label) | <ShouldNot /> | warn | <Yes /> |
-| [NO_UPPERCASE_TEXT](/guidelines/uppercase-text) | <MustNot /> | error | <Yes /> |
-| [UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL](/guidelines/uppercase-text) | <MustNot /> | error | <Yes /> |
+| [NO_UPPERCASE_TEXT](/guidelines/text#no_uppercase_text-) | <MustNot /> | error | <Yes /> |
+| [UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL](/guidelines/text#uppercase_text_no_accessibility_label-) | <MustNot /> | error | <Yes /> |
 
 :::note
 
@@ -107,7 +107,7 @@ Non-overridable rules (marked <No /> in the table) ignore any value set here.
 
 ### accessibilityLabelExceptions
 
-**AMA** performs various checks, including one for [uppercase](/guidelines/uppercase). This key allows specifying a list of approved all-caps accessibility labels that should not trigger the uppercase rule.
+**AMA** performs various checks, including one for [uppercase](/guidelines/text#no_uppercase_accessibility_label-). This key allows specifying a list of approved all-caps accessibility labels that should not trigger the uppercase rule.
 
 ```json title="ama.config.json"
 {

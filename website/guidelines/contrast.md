@@ -80,11 +80,11 @@ AMA automatically checks the contrast ratio between a component's background and
 
 AMA performs a contrast check on native components at development time.
 
-The [minimum contrast](#contrast_failed) ratio expected is at least `4.5:1`, and by default, this is a mandatory requirement. While the [enhanced contrast](#contrast_failed_aaa) of at least `7:1` is a suggestion and therefore prints only a warning if it fails.
+The [minimum contrast](#contrast_failed-) ratio expected is at least `4.5:1`, and by default, this is a mandatory requirement. While the [enhanced contrast](#contrast_failed_aaa-) of at least `7:1` is a suggestion and therefore prints only a warning if it fails.
 
 :::tip
 
-Both Log level type and max depth level can be customised, [here for more info](/config-file#customising-the-log-levels)
+Both Log level type and max depth level can be customised, [here for more info](/docs/config-file#customizing-the-log-levels)
 :::
 
 ### CONTRAST_FAILED <Must />

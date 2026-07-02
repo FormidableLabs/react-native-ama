@@ -130,7 +130,7 @@ When on TextInput, the user should be able to access the next field or submit th
 
 :::tip
 
-The built-in [TextInput](/forms/components/TextInput) automatically handles the `returnKeyLabel` property and its action.
+The built-in [TextInput](/forms/TextInput) automatically handles the `returnKeyLabel` property and its action.
 
 :::
 
@@ -181,15 +181,15 @@ When form submission fails, move focus to the error summary or the first failed 
 
 ### INPUT_HAS_NO_VISIBLE_LABEL
 
-This error is used when no label has been provided for the [TextInput](/forms/components/TextInput) component.
+This error is used when no label has been provided for the [TextInput](/forms/TextInput) component.
 
 ### NO_FORM_ERROR
 
-This error is used when no error has been provided for the [TextInput](/forms/components/TextInput) component.
+This error is used when no error has been provided for the [TextInput](/forms/TextInput) component.
 
 ### INPUT_HAS_FOCUSABLE_LABEL <Must />
 
-This error is raised when the visible label for a [TextInput](/forms/components/TextInput) is focusable separately from the field, causing screen readers to announce it twice.
+This error is raised when the visible label for a [TextInput](/forms/TextInput) is focusable separately from the field, causing screen readers to announce it twice.
 
 :::note
 
@@ -198,7 +198,7 @@ This rule can be disabled by turning off the forms check in the [ama.config.json
 
 ### INPUT_HAS_NO_VISIBLE_LABEL_ENDING_WITH_ASTERISK <MustNot />
 
-This error is raised when the accessibility label for a [TextInput](/forms/components/TextInput) ends with an asterisk. Asterisks are a visual convention that screen readers do not reliably convey — mark required fields with "required" in the label text instead.
+This error is raised when the accessibility label for a [TextInput](/forms/TextInput) ends with an asterisk. Asterisks are a visual convention that screen readers do not reliably convey — mark required fields with "required" in the label text instead.
 
 :::note
 
@@ -207,7 +207,7 @@ This rule can be disabled by turning off the forms check in the [ama.config.json
 
 ### INPUT_INVALID_RETURN_KEY <Must />
 
-This error is raised when a [TextInput](/forms/components/TextInput) uses the default `Return` key, which dismisses the keyboard instead of advancing to the next field or submitting the form.
+This error is raised when a [TextInput](/forms/TextInput) uses the default `Return` key, which dismisses the keyboard instead of advancing to the next field or submitting the form.
 
 :::note
 
@@ -216,7 +216,7 @@ This rule can be disabled by turning off the forms check in the [ama.config.json
 
 ### NO_KEYBOARD_TRAP <MustNot />
 
-This error is triggered by the [TextInput](/forms/components/TextInput) component if the next input field does not have the focus as expected.
+This error is triggered by the [TextInput](/forms/TextInput) component if the next input field does not have the focus as expected.
 
 :::note
 
@@ -225,11 +225,11 @@ This rule cannot be turned off!
 
 ## Related AMA components
 
-- [Form](/forms/components/Form)
-- [Form.Field](/forms/components/FormField)
-- [Form.Submit](/forms/components/FormSubmit)
-- [TextInput](/forms/components/TextInput)
-- [useFocus](/forms/hooks/useFocus)
-- [useFormField](/forms/hooks/useFormField)
-- [useFormSubmit](/forms/hooks/useFormSubmit)
-- [useTextInput](/forms/hooks/useTextInput)
+- [Form](/forms/Form)
+- [Form.Field](/forms/FormField)
+- [Form.Submit](/forms/FormSubmit)
+- [TextInput](/forms/TextInput)
+- [useFocus](/core/hooks/useFocus)
+- [useFormField](/forms/useFormField)
+- [useFormSubmit](/forms/useFormSubmit)
+- [useTextInput](/forms/useTextInput)

@@ -88,5 +88,5 @@ This error is raised when the singular result-count message passed to a list com
 
 ## Related AMA components
 
-- [DynamicFlatList](../components/DynamicFlatList)
-- [StaticFlatList](../components/StaticFlatList)
+- [DynamicFlatList](/lists/DynamicFlatList)
+- [StaticFlatList](/lists/StaticFlatList)

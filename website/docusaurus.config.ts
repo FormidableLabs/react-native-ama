@@ -51,6 +51,7 @@ const config: Config = {
           path: 'docs/ama',
           includeCurrentVersion: true,
           lastVersion: 'current',
+          onlyIncludeVersions: ['current', '1.x.x'],
           versions: {
             current: {
               label: '2.x',

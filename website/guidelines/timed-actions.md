@@ -78,4 +78,4 @@ AMA's hook handles the recommended timeout check automatically and makes it stra
 
 ## Related AMA hooks
 
-- [useTimedAction](/hooks/useTimedAction)
+- [useTimedAction](/core/hooks/useTimedAction)

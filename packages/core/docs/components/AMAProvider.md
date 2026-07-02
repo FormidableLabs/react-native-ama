@@ -37,7 +37,7 @@ type AMAContextValue = {
 };
 ```
 
-Check [useAMAContext](./hooks/useAMAContext.md) for more info.
+Check [useAMAContext](../hooks/useAMAContext.md) for more info.
 
 :::dev
 
