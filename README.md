@@ -36,6 +36,12 @@ If any issues are found at the end of a scan, AMA will:
 You can use the built-in developer UI to get more information about the issues affecting each component.
 As you modify your code to fix them, AMA reacts to the changes and removes the issues from the report in real-time.
 
+### Known limitation: React Native LogBox
+
+AMA may report accessibility issues that originate from React Native's own LogBox/YellowBox overlay (the in-app warning and error UI), not from your own components. LogBox isn't built to AMA's accessibility standards, and there's no way for your code to fix it.
+
+This is a known limitation, not a bug in your app. If it bothers you, disable LogBox with [`LogBox.ignoreAllLogs()`](https://reactnative.dev/docs/logbox) — note this also silences every other LogBox warning, not just the ones AMA reports.
+
 | Real Time scanning | AMA in-app info |
 |---------|-------------|
 | ![AMA flags multiple accessibility issues in real time, including missing roles and contrast failures, and visually marks each element with severity indicators to guide developers toward immediate fixes.](/img/ama-checks.png) | ![AMA’s real-time accessibility checker detecting a missing role on a pressable element, with detailed guidance, severity level, and direct links to related guidelines.](/img/ama-issue.png) |

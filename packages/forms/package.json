@@ -91,7 +91,7 @@
       }
     },
     "transformIgnorePatterns": [
-      "node_modules/(?!(react-native-reanimated|expo|@expo)/)"
+      "node_modules/(?!(react-native|react-native-reanimated|expo|@expo)/)"
     ],
     "transform": {
       "\\.[jt]sx?$": "babel-jest"
@@ -105,7 +105,9 @@
       "^(\\.{1,2}/)*ama\\.config\\.json$": "<rootDir>/../../jest-mocks/ama-config.js",
       "^(\\.{1,2}/)*ReactNativeAmaModule$": "<rootDir>/../../jest-mocks/ReactNativeAmaModule.js",
       "^@react-native-ama/core$": "<rootDir>/../../packages/core/src/index.ts",
-      "^@react-native-ama/core/(.*)$": "<rootDir>/../../packages/core/$1"
+      "^@react-native-ama/core/(.*)$": "<rootDir>/../../packages/core/$1",
+      "^react-native$": "<rootDir>/../../node_modules/react-native",
+      "^react-native/(.*)$": "<rootDir>/../../node_modules/react-native/$1"
     },
     "verbose": true
   },

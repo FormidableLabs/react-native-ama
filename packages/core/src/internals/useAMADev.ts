@@ -387,7 +387,7 @@ function itemsWithNoStateUpdated(data: AmaUiSnapshotsData) {
     const hasStateChanged = A11Y_STATE_KEY.some(
       (key) =>
         before[key] !== after[key] ||
-        (settled && before !== settled)
+        (settled && before[key] !== settled[key])
     );
 
     if (parentId && !hasStateChanged) {
