@@ -1,6 +1,6 @@
 {
   "name": "@react-native-ama/lists",
-  "version": "2.0.0-beta.1",
+  "version": "1.2.1",
   "sideEffects": false,
   "exports": {
     "./DynamicFlatList": {
