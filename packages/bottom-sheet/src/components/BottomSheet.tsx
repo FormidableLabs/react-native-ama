@@ -1,5 +1,5 @@
-import * as React from 'react';
-import type { PropsWithChildren } from 'react';
+import * as React from "react";
+import type { PropsWithChildren } from "react";
 import {
   Dimensions,
   KeyboardAvoidingView,
@@ -10,14 +10,15 @@ import {
   Pressable,
   ScrollViewProps,
   StyleSheet,
+  useWindowDimensions,
   View,
   ViewStyle,
-} from 'react-native';
+} from "react-native";
 import {
   GestureDetector,
   GestureHandlerRootView,
   ScrollView,
-} from 'react-native-gesture-handler';
+} from "react-native-gesture-handler";
 import Animated, {
   runOnJS,
   SharedValue,
@@ -26,11 +27,11 @@ import Animated, {
   useReducedMotion,
   useSharedValue,
   withTiming,
-} from 'react-native-reanimated';
-import { useBottomSheetGestureHandler } from '../hooks/useBottomSheetGestureHandler';
-import { useKeyboard } from '../hooks/useKeyboard';
+} from "react-native-reanimated";
+import { useBottomSheetGestureHandler } from "../hooks/useBottomSheetGestureHandler";
+import { useKeyboard } from "../hooks/useKeyboard";
 
-const AnimaCore = require('@react-native-ama/core');
+const AnimaCore = require("@react-native-ama/core");
 
 export type BottomSheetProps = {
   animationDuration?: number;
@@ -40,7 +41,7 @@ export type BottomSheetProps = {
   closeActionAccessibilityLabel: string;
   closeDistance?: number;
   footerComponent?: React.ReactElement;
-  handleComponent?: React.ReactElement | 'none';
+  handleComponent?: React.ReactElement | "none";
   handleStyle?: ViewStyle | ViewStyle[];
   headerComponent?: React.ReactElement;
   maxHeight?: number;
@@ -54,14 +55,14 @@ export type BottomSheetProps = {
   hasScrollableContent?: boolean;
   scrollViewProps?: Omit<
     ScrollViewWrapperProps,
-    'testID' | 'maxScrollViewHeight'
+    "testID" | "maxScrollViewHeight"
   >;
   testID?: string;
   topInset: number;
   visible: boolean;
   ref?: React.RefObject<BottomSheetActions>;
   shouldHandleKeyboardEvents?: boolean;
-  supportedOrientations?: ModalProps['supportedOrientations'];
+  supportedOrientations?: ModalProps["supportedOrientations"];
   isOverlayAccessible?: boolean;
 };
 
@@ -70,9 +71,8 @@ export type BottomSheetActions = {
   isVisible: () => boolean;
 };
 
-const DEFAULT_MAX_HEIGHT = Dimensions.get('window').height * 0.9;
-const isIOS = Platform.OS === 'ios';
-const SCREEN_HEIGHT = Dimensions.get('screen').height;
+const isIOS = Platform.OS === "ios";
+const SCREEN_HEIGHT = Dimensions.get("screen").height;
 
 export const BottomSheet = React.forwardRef<
   BottomSheetActions,
@@ -100,7 +100,7 @@ export const BottomSheet = React.forwardRef<
       overlayOpacity = 1,
       footerComponent,
       avoidKeyboard,
-      maxHeight = DEFAULT_MAX_HEIGHT,
+      maxHeight: propMaxHeight,
       minVelocityToClose = 1000,
       topInset,
       onBottomSheetHidden,
@@ -128,6 +128,8 @@ export const BottomSheet = React.forwardRef<
       shouldHandleKeyboardEvents
     );
     const shouldReduceMotion = useReducedMotion();
+    const { height } = useWindowDimensions();
+    const maxHeight = propMaxHeight ?? height * 0.9;
 
     const duration = shouldReduceMotion ? 0 : animationDuration;
 
@@ -187,7 +189,19 @@ export const BottomSheet = React.forwardRef<
           }
         );
       }
-    }, [duration, autoCloseDelay, isModalVisible, onBottomSheetHidden, onClose, onTimeout, translateY, visible, dragOpacity, overlayOpacity, contentHeight.value]);
+    }, [
+      duration,
+      autoCloseDelay,
+      isModalVisible,
+      onBottomSheetHidden,
+      onClose,
+      onTimeout,
+      translateY,
+      visible,
+      dragOpacity,
+      overlayOpacity,
+      contentHeight.value,
+    ]);
 
     React.useEffect(() => {
       isMounted.current = true;
@@ -219,11 +233,11 @@ export const BottomSheet = React.forwardRef<
     useDerivedValue(() => {
       const maxScrollHeight = Math.ceil(
         maxHeight -
-        keyboardFinalHeight.value -
-        footerHeight -
-        headerHeight -
-        handleHeight -
-        topInset
+          keyboardFinalHeight.value -
+          footerHeight -
+          headerHeight -
+          handleHeight -
+          topInset
       );
 
       if (
@@ -294,7 +308,7 @@ export const BottomSheet = React.forwardRef<
                   testID={`${testID}-overlay-button`}
                   accessible={isOverlayAccessible && !persistent}
                   importantForAccessibility={
-                    persistent ? 'no-hide-descendants' : 'yes'
+                    persistent ? "no-hide-descendants" : "yes"
                   }
                   accessibilityElementsHidden={persistent}
                   onAccessibilityTap={maybeCloseBottomSheet}
@@ -327,14 +341,14 @@ export const BottomSheet = React.forwardRef<
                       setHandleHeight(event.nativeEvent.layout.height);
                     }}
                   >
-                    {handleComponent === 'none'
+                    {handleComponent === "none"
                       ? null
                       : handleComponent ?? (
-                        <View
-                          style={[styles.line, handleStyle]}
-                          testID={`${testID}-line`}
-                        />
-                      )}
+                          <View
+                            style={[styles.line, handleStyle]}
+                            testID={`${testID}-line`}
+                          />
+                        )}
                   </View>
                   <View
                     onLayout={(event) => {
@@ -372,7 +386,7 @@ const BottomSheetKeyboardAvoidingView = ({
 }: React.PropsWithChildren<{}>) => {
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
       pointerEvents="box-none"
       style={{ flex: 1 }}
     >
@@ -457,30 +471,30 @@ const FragmentWrapper: React.FC<React.PropsWithChildren<any>> = ({
 
 const styles = StyleSheet.create({
   overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
     flex: 1,
   },
   closeButton: {
     flex: 1,
   },
   contentWrapper: {
-    flexDirection: 'column',
+    flexDirection: "column",
     flex: 1,
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
-    alignSelf: 'flex-end',
-    width: '100%',
+    alignSelf: "flex-end",
+    width: "100%",
   },
   content: {
-    width: '100%',
-    backgroundColor: '#fff',
+    width: "100%",
+    backgroundColor: "#fff",
     flex: 1,
   },
   line: {
     width: 48,
     height: 4,
-    backgroundColor: 'grey',
-    alignSelf: 'center',
+    backgroundColor: "grey",
+    alignSelf: "center",
     marginBottom: 24,
     borderRadius: 2,
     marginTop: 12,

@@ -16,7 +16,6 @@ Then you can lint and test after making your changes:
 # Lint and tests
 $ yarn lint
 $ yarn ts:check
-$ yarn example:bare ts:check
 $ yarn test
 
 ```

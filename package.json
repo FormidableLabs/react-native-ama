@@ -9,6 +9,9 @@
     "playground": "cd playground && yarn start",
     "playground:ios": "cd playground && yarn ios",
     "playground:android": "cd playground && yarn android",
+    "playground:build:ios": "cd playground && npm run build:ios",
+    "playground:build:android": "cd playground && npm run build:android",
+    "playground:build": "cd playground && npm run build",
     "build:animations": "yarn workspace @react-native-ama/animations build",
     "build:core": "yarn workspace @react-native-ama/core build",
     "build:bottom-sheet": "yarn workspace @react-native-ama/bottom-sheet build",
@@ -16,7 +19,6 @@
     "build:lists": "yarn workspace @react-native-ama/lists build",
     "build:website": "cd website && yarn build",
     "build": "yarn build:core && yarn build:animations && yarn build:forms && yarn build:lists && yarn build:bottom-sheet && yarn build:website",
-    "pods": "cd examples/bare && pod-install --quiet",
     "doc": "cd website && yarn start",
     "ts:check": "tsc --noEmit",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore ./packages",
@@ -37,8 +39,7 @@
     "packages/bottom-sheet",
     "packages/forms",
     "packages/lists",
-    "packages/react-native",
-    "example"
+    "packages/react-native"
   ],
   "resolutions": {
     "@babel/core": "^7.26.0"
