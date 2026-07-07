@@ -102,8 +102,14 @@ jest.mock('react-native-reanimated', () => {
   const useAnimatedStyle = jest.fn((fn) => fn());
   const useDerivedValue = jest.fn((fn) => ({ value: fn() }));
   const useReducedMotion = jest.fn(() => false);
-  const withTiming = jest.fn((value) => value);
-  const runOnJS = jest.fn((callback) => callback);
+  const withTiming = jest.fn((value, config, callback) => {
+    if (callback) {
+      setTimeout(() => callback(true), config?.duration ?? 0);
+    }
+
+    return value;
+  });
+  const runOnJS = jest.fn((callback) => (...args) => callback(...args));
   const useAnimatedGestureHandler = jest.fn((p) => p);
 
   return {

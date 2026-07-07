@@ -1,16 +1,16 @@
-import { Form, type FormActions, TextInput } from "@react-native-ama/forms";
-import * as React from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { Form, type FormActions, TextInput } from '@react-native-ama/forms';
+import * as React from 'react';
+import { ScrollView, StyleSheet } from 'react-native';
 
-import { CTAPressable } from "../components/CTAPressable";
-import { Spacer } from "../components/Spacer";
-import { theme } from "../theme";
-import { Text } from "../components/Text";
+import { CTAPressable } from '../components/CTAPressable';
+import { Spacer } from '../components/Spacer';
+import { theme } from '../theme';
+import { Text } from '../components/Text';
 
 export const AmaFormScreen = () => {
-  const [emailAddress, setEmailAddress] = React.useState("");
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
+  const [emailAddress, setEmailAddress] = React.useState('');
+  const [firstName, setFirstName] = React.useState('');
+  const [lastName, setLastName] = React.useState('');
   const formRef = React.useRef<FormActions>(null);
   const [isValidating, setIsValidating] = React.useState(false);
   const [invalidFields, setInvalidFields] = React.useState<{
@@ -118,6 +118,6 @@ const styles = StyleSheet.create({
     marginVertical: theme.padding.normal,
   },
   error: {
-    color: "#A80000",
+    color: '#A80000',
   },
 });

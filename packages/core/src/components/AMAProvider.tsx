@@ -6,9 +6,8 @@ import {
   NativeEventSubscription,
   View,
 } from 'react-native';
-import { AMAErrorOverlay } from '../internals/components/AMAErrorOverlay';
-import { useAMADev } from '../internals/useAMADev';
 import type { AmaRule } from '../internals/types';
+import type { UseAMADev } from '../internals/useAMADev';
 
 type AMAProviderProps = {
   children: React.ReactNode;
@@ -84,6 +83,20 @@ const DEFAULT_VALUES = {
 } satisfies AMAContextValue;
 
 const AMAContext = React.createContext<AMAContextValue | null>(null);
+
+type AMAErrorOverlayModule = typeof import('../internals/components/AMAErrorOverlay');
+type UseAMADevModule = {
+  useAMADev: UseAMADev | null;
+};
+
+const AMAErrorOverlay = __DEV__
+  ? (require('../internals/components/AMAErrorOverlay') as AMAErrorOverlayModule)
+      .AMAErrorOverlay
+  : null;
+
+const useAMADev = __DEV__
+  ? (require('../internals/useAMADev') as UseAMADevModule).useAMADev
+  : null;
 
 export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
   const [values, setValues] = React.useState<AMAContextValue>(DEFAULT_VALUES);

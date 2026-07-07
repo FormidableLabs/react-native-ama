@@ -1,21 +1,21 @@
-import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Header } from "../components/Header";
-import { ListItem } from "../components/ListItem";
-import { Spacer } from "../components/Spacer";
-import { theme } from "../theme";
-import { Text } from "../components/Text";
+import { StatusBar } from 'expo-status-bar';
+import React from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Header } from '../components/Header';
+import { ListItem } from '../components/ListItem';
+import { Spacer } from '../components/Spacer';
+import { theme } from '../theme';
+import { Text } from '../components/Text';
 
 export const PackagesTabScreen = () => {
   return (
     <>
       <StatusBar style="light" />
-      <SafeAreaView style={theme.safeAreaViewBlue} edges={["top"]} />
+      <SafeAreaView style={theme.safeAreaViewBlue} edges={['top']} />
       <SafeAreaView
         style={theme.safeAreaView}
-        edges={["left", "right", "bottom"]}
+        edges={['left', 'right', 'bottom']}
       >
         <View style={styles.header}>
           <Header title="Packages" white autoFocus />

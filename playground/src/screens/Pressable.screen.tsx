@@ -1,13 +1,13 @@
-import { StatusBar } from "expo-status-bar";
-import * as React from "react";
-import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import Svg, { Path } from "react-native-svg";
-import { CTAPressable } from "../components/CTAPressable";
-import { Intro } from "../components/Intro";
-import { Pressable } from "../components/Pressable";
-import { Spacer } from "../components/Spacer";
-import { theme } from "../theme";
-import { TestCase } from "../components/TestCase";
+import { StatusBar } from 'expo-status-bar';
+import * as React from 'react';
+import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import Svg, { Path } from 'react-native-svg';
+import { CTAPressable } from '../components/CTAPressable';
+import { Intro } from '../components/Intro';
+import { Pressable } from '../components/Pressable';
+import { Spacer } from '../components/Spacer';
+import { theme } from '../theme';
+import { TestCase } from '../components/TestCase';
 
 export const PressableScreen = () => {
   return (
@@ -23,7 +23,7 @@ export const PressableScreen = () => {
          *  FIX: Set a role of "button"
          */}
         <TestCase title="Test case 1: Missing role">
-          <CTAPressable title="Missing role" role={"" as any} hasMaring />
+          <CTAPressable title="Missing role" role={'' as any} hasMaring />
         </TestCase>
 
         {/*
@@ -31,7 +31,7 @@ export const PressableScreen = () => {
          * FIX: Specify the aria-label property, e.g: aria-label="Go Back"
          */}
         <TestCase title="Test case 2: No accessibility label">
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: 'row' }}>
             <Pressable role="button" style={styles.iconOnlyButton}>
               <Svg width={32} height={32} viewBox="0 0 8.467 8.467">
                 <Path
@@ -49,7 +49,7 @@ export const PressableScreen = () => {
             </Pressable>
           </View>
         </TestCase>
-        <Spacer height={"normal"} />
+        <Spacer height={'normal'} />
 
         {/*
          * Issue: MINIMUM_SIZE
@@ -88,15 +88,15 @@ export const PressableScreen = () => {
         <TestCase title="Test case 5: Contrast failed">
           <CTAPressable
             title="Contrast failed"
-            style={{ backgroundColor: "#e0e0e0" }}
+            style={{ backgroundColor: '#e0e0e0' }}
             disabled
             hasMaring
           />
         </TestCase>
 
-        <Spacer height={"big"} />
-        <Spacer height={"big"} />
-        <Spacer height={"big"} />
+        <Spacer height={'big'} />
+        <Spacer height={'big'} />
+        <Spacer height={'big'} />
       </ScrollView>
     </SafeAreaView>
   );
@@ -107,38 +107,38 @@ const styles = StyleSheet.create({
     paddingHorizontal: theme.padding.big,
   },
   checkButton: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   checkLabel: {
     paddingLeft: theme.padding.normal,
   },
   testButtons: {
     paddingTop: theme.padding.normal,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   failingButtonStyle: {
     backgroundColor: theme.color.black,
     flex: 1,
     minHeight: 48,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: theme.padding.normal,
   },
   failingText_all: {
-    color: "#525252",
+    color: '#525252',
   },
   failingText_aa: {
-    color: "#c70000",
+    color: '#c70000',
   },
   failingText_aaa: {
-    color: "#FF0000",
+    color: '#FF0000',
   },
   minSizeFailing: {
     backgroundColor: theme.color.black,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: theme.padding.normal,
     height: 40,
     flex: 1,

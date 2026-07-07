@@ -1,10 +1,10 @@
-import { StatusBar } from "expo-status-bar";
-import * as React from "react";
-import { SafeAreaView, ScrollView, StyleSheet, View, Image } from "react-native";
-import { Intro } from "../components/Intro";
-import { Spacer } from "../components/Spacer";
-import { TestCase } from "../components/TestCase";
-import { theme } from "../theme";
+import { StatusBar } from 'expo-status-bar';
+import * as React from 'react';
+import { SafeAreaView, ScrollView, StyleSheet, View, Image } from 'react-native';
+import { Intro } from '../components/Intro';
+import { Spacer } from '../components/Spacer';
+import { TestCase } from '../components/TestCase';
+import { theme } from '../theme';
 
 export const ImagesScreen = () => {
     return (
@@ -27,7 +27,7 @@ export const ImagesScreen = () => {
                     >
                         <Image
                             source={{
-                                uri: 'https://reactnative.dev/img/tiny_logo.png'
+                                uri: 'https://reactnative.dev/img/tiny_logo.png',
                             }}
                             style={styles.image}
                         />
@@ -44,7 +44,7 @@ export const ImagesScreen = () => {
                     >
                         <Image
                             source={{
-                                uri: 'https://reactnative.dev/img/tiny_logo.png'
+                                uri: 'https://reactnative.dev/img/tiny_logo.png',
                             }}
                             style={styles.image}
                             accessibilityLabel="Product photo showing a blue widget"
@@ -62,7 +62,7 @@ export const ImagesScreen = () => {
                     >
                         <Image
                             source={{
-                                uri: 'https://reactnative.dev/img/tiny_logo.png'
+                                uri: 'https://reactnative.dev/img/tiny_logo.png',
                             }}
                             style={styles.image}
                             accessible={false}
@@ -85,17 +85,17 @@ const styles = StyleSheet.create({
         paddingHorizontal: theme.padding.big,
     },
     imageContainer: {
-        width: "100%",
+        width: '100%',
         height: 200,
-        justifyContent: "center",
-        alignItems: "center",
+        justifyContent: 'center',
+        alignItems: 'center',
         borderRadius: 8,
-        overflow: "hidden",
-        backgroundColor: "#E8E8E8",
+        overflow: 'hidden',
+        backgroundColor: '#E8E8E8',
     },
     image: {
-        width: "100%",
-        height: "100%",
-        resizeMode: 'contain'
+        width: '100%',
+        height: '100%',
+        resizeMode: 'contain',
     },
 });

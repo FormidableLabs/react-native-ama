@@ -1,25 +1,25 @@
-import React from "react";
+import React from 'react';
 import {
   AccessibilityState,
   ActivityIndicator,
   StyleSheet,
   Text,
   type PressableProps,
-} from "react-native";
-import { theme } from "../theme";
-import { Pressable } from "./Pressable";
+} from 'react-native';
+import { theme } from '../theme';
+import { Pressable } from './Pressable';
 
-type CTAPressableProps = Omit<PressableProps, "children"> & {
+type CTAPressableProps = Omit<PressableProps, 'children'> & {
   title: string;
   accessibilityLabel?: string;
-  textTransform?: "none" | "capitalize" | "uppercase" | "lowercase" | undefined;
+  textTransform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase' | undefined;
   hasMaring?: boolean;
   isLoading?: boolean;
 } & {
   marginLeft?: number;
   marginRight?: number;
 } & {
-  checked?: AccessibilityState["checked"];
+  checked?: AccessibilityState['checked'];
   selected?: boolean;
   expanded?: boolean;
 };
@@ -39,7 +39,7 @@ export const CTAPressable = ({
 }: CTAPressableProps) => {
   return (
     <Pressable
-      role={role ?? "button"}
+      role={role ?? 'button'}
       disabled={disabled}
       style={({ pressed }) => {
         const buttonStyles = getButtonStyle({
@@ -83,7 +83,7 @@ function getButtonStyle({
 }: {
   pressed: boolean;
   disabled?: boolean | null;
-  checked?: AccessibilityState["checked"];
+  checked?: AccessibilityState['checked'];
   selected?: boolean;
 }) {
   if (disabled) {
@@ -91,7 +91,7 @@ function getButtonStyle({
   } else if (pressed) {
     return styles.pressed;
   } else if (checked) {
-    return checked === "mixed" ? styles.mixed : styles.checked;
+    return checked === 'mixed' ? styles.mixed : styles.checked;
   } else if (selected) {
     return styles.selected;
   }
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.color.disabled,
   },
   text: {
-    textAlign: "center",
+    textAlign: 'center',
     color: theme.color.white,
     fontSize: theme.fontSize.medium,
   },

@@ -1,26 +1,26 @@
-import { useAMAContext } from "@react-native-ama/core";
-import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useAMAContext } from '@react-native-ama/core';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
-} from "@react-navigation/native-stack";
-import React from "react";
-import Svg, { Path, Rect } from "react-native-svg";
-import { BackButton } from "./components/BackButton";
-import { Header } from "./components/Header";
-import { ImagesScreen } from "./screens/Images.screen";
-import { InteractionsScreen } from "./screens/Interactions.screen";
-import { PressableScreen } from "./screens/Pressable.screen";
-import { TextScreen } from "./screens/Text.screen";
-import { theme } from "./theme";
-import { FormScreen } from "./screens/Form.screen";
-import { AmaBottomSheetScreen } from "./screens/AmaBottomSheet.screen";
-import { AmaFormScreen } from "./screens/AmaForm.screen";
-import { PlaygroundTabScreen } from "./screens/PlaygroundTab.screen";
-import { PackagesTabScreen } from "./screens/PackagesTab.screen";
-import { UseAMAContextScreen } from "./screens/UseAMAContext.screen";
-import { AmaListsScreen } from "./screens/AmaLists.screen";
+} from '@react-navigation/native-stack';
+import React from 'react';
+import Svg, { Path, Rect } from 'react-native-svg';
+import { BackButton } from './components/BackButton';
+import { Header } from './components/Header';
+import { ImagesScreen } from './screens/Images.screen';
+import { InteractionsScreen } from './screens/Interactions.screen';
+import { PressableScreen } from './screens/Pressable.screen';
+import { TextScreen } from './screens/Text.screen';
+import { theme } from './theme';
+import { FormScreen } from './screens/Form.screen';
+import { AmaBottomSheetScreen } from './screens/AmaBottomSheet.screen';
+import { AmaFormScreen } from './screens/AmaForm.screen';
+import { PlaygroundTabScreen } from './screens/PlaygroundTab.screen';
+import { PackagesTabScreen } from './screens/PackagesTab.screen';
+import { UseAMAContextScreen } from './screens/UseAMAContext.screen';
+import { AmaListsScreen } from './screens/AmaLists.screen';
 
 const PlaygroundIcon = ({ color }: { color: string }) => {
   return (
@@ -58,30 +58,81 @@ const PackageIcon = ({ color }: { color: string }) => {
   );
 };
 
+const renderPlaygroundTabIcon = ({ color }: { color: string }) => (
+  <PlaygroundIcon color={color} />
+);
+
+const renderPackagesTabIcon = ({ color }: { color: string }) => (
+  <PackageIcon color={color} />
+);
+
+const renderHeaderLeft = () => <BackButton />;
+
+const renderPressableHeaderTitle = () => (
+  <Header noMargin title={'Pressable elements'} autoFocus white />
+);
+
+const renderTextHeaderTitle = () => (
+  <Header noMargin title={'Text elements'} autoFocus white noHeader />
+);
+
+const renderInteractionsHeaderTitle = () => (
+  <Header noMargin title={'Interactions'} autoFocus white />
+);
+
+const renderFormHeaderTitle = () => (
+  <Header noMargin title={'Forms'} autoFocus white />
+);
+
+const renderImagesHeaderTitle = () => (
+  <Header noMargin title={'Images'} autoFocus white />
+);
+
+const renderAmaBottomSheetHeaderTitle = () => (
+  <Header
+    noMargin
+    title={'@react-native-ama/bottom-sheet'}
+    autoFocus
+    white
+  />
+);
+
+const renderAmaFormsHeaderTitle = () => (
+  <Header noMargin title={'@react-native-ama/forms'} autoFocus white />
+);
+
+const renderAmaCoreHeaderTitle = () => (
+  <Header noMargin title={'@react-native-ama/core'} autoFocus white />
+);
+
+const renderAmaListsHeaderTitle = () => (
+  <Header noMargin title={'@react-native-ama/lists'} autoFocus white />
+);
+
 const HomeTabs = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: "#0056B3",
-        tabBarInactiveTintColor: "#000",
+        tabBarActiveTintColor: '#0056B3',
+        tabBarInactiveTintColor: '#000',
       }}
     >
       <Tab.Screen
         name="PlaygroundTab"
         component={PlaygroundTabScreen}
         options={{
-          title: "Playground",
+          title: 'Playground',
           headerShown: false,
-          tabBarIcon: ({ color }) => <PlaygroundIcon color={color} />,
+          tabBarIcon: renderPlaygroundTabIcon,
         }}
       />
       <Tab.Screen
         name="PackagesTab"
         component={PackagesTabScreen}
         options={{
-          title: "Packages",
+          title: 'Packages',
           headerShown: false,
-          tabBarIcon: ({ color }) => <PackageIcon color={color} />,
+          tabBarIcon: renderPackagesTabIcon,
         }}
       />
     </Tab.Navigator>
@@ -101,7 +152,7 @@ export const AppNavigator = () => {
           headerStyle: {
             backgroundColor: theme.color.header,
           },
-          headerLeft: () => <BackButton />,
+          headerLeft: renderHeaderLeft,
         }}
       >
         <Stack.Screen
@@ -115,107 +166,63 @@ export const AppNavigator = () => {
           name="Pressable"
           component={PressableScreen}
           options={{
-            headerTitle: () => (
-              <Header noMargin title={"Pressable elements"} autofocus white />
-            ),
+            headerTitle: renderPressableHeaderTitle,
           }}
         />
         <Stack.Screen
           name="Text"
           component={TextScreen}
           options={{
-            headerTitle: () => (
-              <Header
-                noMargin
-                title={"Text elements"}
-                autofocus
-                white
-                noHeader
-              />
-            ),
+            headerTitle: renderTextHeaderTitle,
           }}
         />
         <Stack.Screen
           name="Interactions"
           component={InteractionsScreen}
           options={{
-            headerTitle: () => (
-              <Header noMargin title={"Interactions"} autofocus white />
-            ),
+            headerTitle: renderInteractionsHeaderTitle,
           }}
         />
         <Stack.Screen
           name="Form"
           component={FormScreen}
           options={{
-            headerTitle: () => (
-              <Header noMargin title={"Forms"} autofocus white />
-            ),
+            headerTitle: renderFormHeaderTitle,
           }}
         />
         <Stack.Screen
           name="Images"
           component={ImagesScreen}
           options={{
-            headerTitle: () => (
-              <Header noMargin title={"Images"} autofocus white />
-            ),
+            headerTitle: renderImagesHeaderTitle,
           }}
         />
         <Stack.Screen
           name="AmaBottomSheet"
           component={AmaBottomSheetScreen}
           options={{
-            headerTitle: () => (
-              <Header
-                noMargin
-                title={"@react-native-ama/bottom-sheet"}
-                autofocus
-                white
-              />
-            ),
+            headerTitle: renderAmaBottomSheetHeaderTitle,
           }}
         />
         <Stack.Screen
           name="AmaForms"
           component={AmaFormScreen}
           options={{
-            headerTitle: () => (
-              <Header
-                noMargin
-                title={"@react-native-ama/forms"}
-                autofocus
-                white
-              />
-            ),
+            headerTitle: renderAmaFormsHeaderTitle,
           }}
         />
         <Stack.Screen
           name="AmaCore"
           component={UseAMAContextScreen}
           options={{
-            headerTitle: () => (
-              <Header
-                noMargin
-                title={"@react-native-ama/core"}
-                autofocus
-                white
-              />
-            ),
+            headerTitle: renderAmaCoreHeaderTitle,
           }}
         />
         <Stack.Screen
           name="AmaLists"
           component={AmaListsScreen}
           options={{
-            headerTitle: () => (
-              <Header
-                noMargin
-                title={"@react-native-ama/lists"}
-                autofocus
-                white
-              />
-            ),
+            headerTitle: renderAmaListsHeaderTitle,
           }}
         />
       </Stack.Navigator>
@@ -227,7 +234,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<HomeTabsParamList>();
 
 const BaseNavigatorOptions: NativeStackNavigationOptions = {
-  headerTitleAlign: "center",
+  headerTitleAlign: 'center',
   headerBackVisible: false,
 };
 

@@ -6,7 +6,8 @@
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore src App.tsx index.ts metro.config.js babel.config.js webpack.config.js --fix"
   },
   "dependencies": {
     "@react-navigation/bottom-tabs": "^7.4.6",

@@ -31,10 +31,6 @@ export const useFocus = (refComponent?: React.RefObject<any>) => {
         try {
           const elementId = findNodeHandle(component);
 
-          console.log(
-            elementId,
-            '<--------------------------------------------------'
-          );
           if (elementId) {
             AccessibilityInfo.setAccessibilityFocus(elementId);
             setTimeout(() => {

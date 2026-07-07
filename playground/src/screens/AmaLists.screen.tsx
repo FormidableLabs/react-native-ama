@@ -53,13 +53,13 @@ export const AmaListsScreen = () => {
         <Spacer height="normal" />
         <TextInput
           suppressError={true}
-          renderLabel={() => <Text importantForAccessibility='no' accessibilityElementsHidden>Filter:</Text>}
+          renderLabel={() => <Text importantForAccessibility="no" accessibilityElementsHidden>Filter:</Text>}
           returnKeyType={'done'}
           style={styles.input}
           onChangeText={newText => filterList(newText)}
           defaultValue={filterText}
           hasValidation={false}
-          aria-label='Filter'
+          aria-label="Filter"
         />
         <Spacer height="normal" />
       </View>

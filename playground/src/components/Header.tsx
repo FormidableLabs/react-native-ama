@@ -1,7 +1,7 @@
-import * as React from "react";
-import { StyleSheet } from "react-native";
-import { theme } from "../theme";
-import { Text } from "./Text";
+import * as React from 'react';
+import { StyleSheet } from 'react-native';
+import { theme } from '../theme';
+import { Text } from './Text';
 
 type HeaderProps = {
   title: string;
@@ -24,7 +24,7 @@ export const Header = ({
         ...styles.title,
         color: white ? theme.color.white : undefined,
       }}
-      accessibilityRole={noHeader ? undefined : "header"}
+      accessibilityRole={noHeader ? undefined : 'header'}
       autoFocus={autoFocus}
       mb={noMargin ? undefined : 12}
       mt={noMargin ? undefined : 24}
@@ -38,6 +38,6 @@ export const Header = ({
 const styles = StyleSheet.create({
   title: {
     fontSize: theme.fontSize.big,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
 });

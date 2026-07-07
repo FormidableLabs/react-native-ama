@@ -1,9 +1,9 @@
-import { useNavigation } from "@react-navigation/native";
-import * as React from "react";
-import { StyleSheet } from "react-native";
-import Svg, { Path } from "react-native-svg";
-import { theme } from "../theme";
-import { Pressable } from "./Pressable";
+import { useNavigation } from '@react-navigation/native';
+import * as React from 'react';
+import { StyleSheet } from 'react-native';
+import Svg, { Path } from 'react-native-svg';
+import { theme } from '../theme';
+import { Pressable } from './Pressable';
 
 export const BackButton = () => {
   const navigation = useNavigation();
@@ -34,7 +34,7 @@ export const BackButton = () => {
 
 const styles = StyleSheet.create({
   button: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

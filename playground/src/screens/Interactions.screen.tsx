@@ -1,13 +1,13 @@
-import * as React from "react";
-import { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
-import { Accordion } from "../components/Accordion";
-import { CTAPressable } from "../components/CTAPressable";
-import { Pressable } from "../components/Pressable";
-import { Spacer } from "../components/Spacer";
-import { Switch } from "../components/Switch";
-import { Text } from "../components/Text";
-import { theme } from "../theme";
+import * as React from 'react';
+import { useEffect, useState } from 'react';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { Accordion } from '../components/Accordion';
+import { CTAPressable } from '../components/CTAPressable';
+import { Pressable } from '../components/Pressable';
+import { Spacer } from '../components/Spacer';
+import { Switch } from '../components/Switch';
+import { Text } from '../components/Text';
+import { theme } from '../theme';
 
 export const InteractionsScreen = () => {
   const [isChecked, setIsChecked] = useState(false);
@@ -35,11 +35,11 @@ export const InteractionsScreen = () => {
          * aria-checked={isChecked}
          */}
         <Pressable
-          style={{ flexDirection: "row" }}
+          style={{ flexDirection: 'row' }}
           onPress={() => setIsChecked((value) => !value)}
           role="switch"
         >
-          <Text style={{ flex: 1, alignSelf: "center" }}>Test switch</Text>
+          <Text style={{ flex: 1, alignSelf: 'center' }}>Test switch</Text>
           <Switch
             value={isChecked}
             onValueChange={(checked) => setIsChecked(checked)}
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     paddingTop: theme.padding.big,
   },
   textTransform: {
-    textTransform: "uppercase",
+    textTransform: 'uppercase',
   },
   textWithOnPress: {
     marginTop: 12,
@@ -85,8 +85,8 @@ const styles = StyleSheet.create({
     marginVertical: 32,
   },
   section: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   paragraph: {
     fontSize: 15,

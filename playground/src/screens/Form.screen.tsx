@@ -1,16 +1,16 @@
-import * as React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import * as React from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
 
-import { CTAPressable } from "../components/CTAPressable";
-import { Spacer } from "../components/Spacer";
-import { theme } from "../theme";
-import { Text } from "../components/Text";
-import { Form, TextInput } from "@react-native-ama/forms";
+import { CTAPressable } from '../components/CTAPressable';
+import { Spacer } from '../components/Spacer';
+import { theme } from '../theme';
+import { Text } from '../components/Text';
+import { Form, TextInput } from '@react-native-ama/forms';
 
 export const FormScreen = () => {
-  const [emailAddress, setEmailAddress] = React.useState("");
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
+  const [emailAddress, setEmailAddress] = React.useState('');
+  const [firstName, setFirstName] = React.useState('');
+  const [lastName, setLastName] = React.useState('');
   const lastNameRef = React.useRef(null);
 
   return (
@@ -90,6 +90,6 @@ const styles = StyleSheet.create({
     marginVertical: theme.padding.normal,
   },
   error: {
-    color: "#f00",
+    color: '#f00',
   },
 });

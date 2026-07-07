@@ -1,10 +1,10 @@
-import React, { useRef } from "react";
-import { Text as RNText, TextProps as RNTextProps } from "react-native";
-import { theme } from "../theme";
-import { StyleProps } from "react-native-reanimated";
-import { useFocus } from "@react-native-ama/core";
+import React, { useRef } from 'react';
+import { Text as RNText, TextProps as RNTextProps } from 'react-native';
+import { theme } from '../theme';
+import { StyleProps } from 'react-native-reanimated';
+import { useFocus } from '@react-native-ama/core';
 
-type TextProps = Omit<RNTextProps, "style"> & {
+type TextProps = Omit<RNTextProps, 'style'> & {
   mb?: number;
   mt?: number;
   bold?: boolean;
