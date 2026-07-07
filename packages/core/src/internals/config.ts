@@ -33,6 +33,7 @@ export type AmaProjectConfig = {
   };
   log: LogMode;
   uppercaseMinLength: number;
+  longNumberMinLength: number;
   checks: {
     ui: boolean;
     forms: boolean;

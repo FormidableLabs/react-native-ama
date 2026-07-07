@@ -6,6 +6,7 @@ import { checkAriaRole } from './checkAriaRole';
 import { checkContrast } from './checkContrast';
 import { checkImageAlt } from './checkImageAlt';
 import { checkIsUppercase } from './checkIsUppercase';
+import { checkLongNumber } from './checkLongNumber';
 import { checkMinimumSize } from './checkMinimumSize';
 
 export const performChecks = (node: AmaNode): AmaError[] => {
@@ -16,8 +17,8 @@ export const performChecks = (node: AmaNode): AmaError[] => {
     checkMinimumSize(node),
     checkIsUppercase({ node }),
     checkContrast(node),
+    checkLongNumber(node),
   ].filter(
     (item): item is AmaError => item !== null && !isRuleDisabled?.(item)
   );
 };
-

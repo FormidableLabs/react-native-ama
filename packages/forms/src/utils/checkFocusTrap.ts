@@ -1,11 +1,11 @@
-import React from "react";
-import type { TextInput } from "react-native";
+import React from 'react';
+import type { TextInput } from 'react-native';
 
 export type CheckFocusTrap = {
   ref: React.RefObject<TextInput>;
   shouldHaveFocus: boolean;
   trackError?:
-    | ((rule: "NO_KEYBOARD_TRAP", ref: React.RefObject<any>) => void)
+    | ((rule: 'NO_KEYBOARD_TRAP', ref: React.RefObject<any>) => void)
     | null;
 };
 
@@ -23,11 +23,11 @@ export const checkFocusTrap = __DEV__
 
           if (!hasFocus) {
             const message = shouldHaveFocus
-              ? "The component did not receive the focus"
-              : "The component did trap the focus";
+              ? 'The component did not receive the focus'
+              : 'The component did trap the focus';
 
             if (trackError) {
-              trackError("NO_KEYBOARD_TRAP", ref);
+              trackError('NO_KEYBOARD_TRAP', ref);
             } else {
               console.error(message);
             }

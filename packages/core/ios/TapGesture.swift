@@ -2,6 +2,25 @@ import UIKit
 import UIKit.UIGestureRecognizerSubclass
 
 
+/**
+ * A plain `UITapGestureRecognizer.location(in:)` queried from the `@objc`
+ * action target can come back as `(0, 0)` on device: this recognizer sits on
+ * the window alongside RN's own touch handler, and by the time our action
+ * fires, UIKit's touch bookkeeping for this recognizer may already be reset.
+ * Capturing the location eagerly in `touchesEnded`, before that happens,
+ * gives a reliable value.
+ */
+class WindowTapGestureRecognizer: UITapGestureRecognizer {
+    private(set) var capturedLocation: CGPoint = .zero
+
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent) {
+        if let touch = touches.first, let window = self.view as? UIWindow {
+            capturedLocation = touch.location(in: window)
+        }
+        super.touchesEnded(touches, with: event)
+    }
+}
+
 class GlobalTapProbeGestureRecognizer: UIGestureRecognizer, UIGestureRecognizerDelegate {
     private var downPoint: CGPoint = .zero
     private let tapThreshold: CGFloat = 20.0 // Max movement (in points) for a "tap"

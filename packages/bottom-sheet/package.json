@@ -3,6 +3,11 @@
   "version": "1.2.1",
   "sideEffects": false,
   "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "react-native": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
     "./BottomSheet": {
       "types": "./dist/components/BottomSheet.d.ts",
       "default": "./dist/components/BottomSheet.js"

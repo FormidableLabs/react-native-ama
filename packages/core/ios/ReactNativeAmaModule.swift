@@ -20,7 +20,7 @@ public class ReactNativeAmaModule: Module {
      */
     private var uiCheckDelay = 1000
 
-    private var windowTapRecognizer: UITapGestureRecognizer?
+    private var windowTapRecognizer: WindowTapGestureRecognizer?
     private var tapDelegate: AmaTapGestureDelegate?
     private var gap: CGFloat = 0
     private var borderWidth: CGFloat = 3
@@ -54,6 +54,7 @@ public class ReactNativeAmaModule: Module {
                     let currentView = viewController.view,
                     let window = currentView.window
                 else {
+                    Logger.info("start", "DEBUG guard failed — no viewController/decorView/window yet")
                     return
                 }
 
@@ -269,7 +270,7 @@ extension ReactNativeAmaModule {
         let delegate = AmaTapGestureDelegate(module: self)
         tapDelegate = delegate  // keep it alive
 
-        let recognizer = UITapGestureRecognizer(
+        let recognizer = WindowTapGestureRecognizer(
             target: self,
             action: #selector(handleWindowTap(_:))
         )
@@ -317,30 +318,37 @@ extension ReactNativeAmaModule {
     }
 
     @objc
-    func handleWindowTap(_ recognizer: UITapGestureRecognizer) {
+    func handleWindowTap(_ recognizer: WindowTapGestureRecognizer) {
         guard recognizer.state == .ended else { return }
-        guard let window = UIApplication.shared.currentKeyWindow else {
-            return
-        }
+        guard let window = UIApplication.shared.currentKeyWindow else { return }
+        // Hit-test from the RN root view rather than the window: on-device the
+        // window's own hitTest stops at the SwiftUI `UIViewControllerWrapperView`
+        // bridge (e.g. Expo Router native tabs) and never recurses into the
+        // Fabric view tree mounted inside it. Starting from `currentDecorView`
+        // (the actual RN root, already resolved via appContext.utilities) skips
+        // that boundary entirely.
+        guard let decorView = currentDecorView else { return }
 
-        let location = recognizer.location(in: window)
+        // Use the location captured eagerly in touchesEnded, not
+        // recognizer.location(in:) queried here — by the time this action
+        // fires, UIKit's touch bookkeeping for this recognizer can already be
+        // reset (observed as a stuck (0, 0) on device), since it shares the
+        // window with RN's own touch handler.
+        let windowLocation = recognizer.capturedLocation
+        let location = window.convert(windowLocation, to: decorView)
 
-        guard let hitView = window.hitTest(location, with: nil) else {
-            return
-        }
+        guard let hitView = decorView.hitTest(location, with: nil) else { return }
 
         // Find the closest pressable ancestor
         let pressable = findPressableAncestor(
             from: hitView,
-            root: window,
+            root: decorView,
             maxLevels: 8
         )
 
-        guard let targetView = pressable else {
-            return
-        }
+        guard let targetView = pressable else { return }
 
-        runMyChecks(tappedView: targetView, rootView: currentDecorView!)
+        runMyChecks(tappedView: targetView, rootView: decorView)
     }
 }
 

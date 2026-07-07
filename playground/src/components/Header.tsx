@@ -1,28 +1,31 @@
-import * as React from 'react';
-import { StyleSheet } from 'react-native';
-import { theme } from '../theme';
-import { Text } from './Text';
-import { useFocus } from '@react-native-ama/core';
+import * as React from "react";
+import { StyleSheet } from "react-native";
+import { theme } from "../theme";
+import { Text } from "./Text";
 
 type HeaderProps = {
   title: string;
-  autofocus?: boolean;
+  autoFocus?: boolean;
   noMargin?: boolean;
   white?: boolean;
   noHeader?: boolean;
 };
 
-export const Header = (
-  { title, autofocus, noMargin = false, white, noHeader }: HeaderProps,
-) => {
+export const Header = ({
+  title,
+  autoFocus,
+  noMargin = false,
+  white,
+  noHeader,
+}: HeaderProps) => {
   return (
     <Text
       style={{
         ...styles.title,
         color: white ? theme.color.white : undefined,
       }}
-      accessibilityRole={noHeader ? undefined : 'header'}
-      autofocus={autofocus}
+      accessibilityRole={noHeader ? undefined : "header"}
+      autoFocus={autoFocus}
       mb={noMargin ? undefined : 12}
       mt={noMargin ? undefined : 24}
       bold
@@ -35,6 +38,6 @@ export const Header = (
 const styles = StyleSheet.create({
   title: {
     fontSize: theme.fontSize.big,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });

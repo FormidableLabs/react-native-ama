@@ -3,6 +3,11 @@
   "version": "1.2.1",
   "sideEffects": false,
   "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "react-native": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
     "./Form": {
       "types": "./dist/components/Form.d.ts",
       "default": "./dist/components/Form.js"

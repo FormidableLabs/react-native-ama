@@ -11,7 +11,7 @@ let _useAMAContext:
     } | null)
   | null = null;
 try {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+
   _useAMAContext = require('@react-native-ama/core').useAMAContext;
 } catch {
   // core is an optional peer — fall back to null

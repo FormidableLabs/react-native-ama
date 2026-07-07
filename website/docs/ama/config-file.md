@@ -44,6 +44,7 @@ The possible log levels are:
 | [INPUT_HAS_NO_VISIBLE_LABEL](/guidelines/forms) | <Must /> | error | <No /> |
 | [INPUT_HAS_NO_VISIBLE_LABEL_ENDING_WITH_ASTERISK](/guidelines/forms) | <MustNot /> | error | <Yes /> |
 | [INPUT_INVALID_RETURN_KEY](/guidelines/forms) | <Must /> | error | <Yes /> |
+| [LONG_NUMBER_NOT_FORMATTED](/guidelines/text#long_number_not_formatted-) | <ShouldNot /> | warn | <Yes /> |
 | [MINIMUM_SIZE](/guidelines/minimum-size) | <Must /> | error | <Yes /> |
 | [NO_ACCESSIBILITY_LABEL](/guidelines/accessibility-label) [^1] | <Must /> | error | <No /> |
 | [NO_ACCESSIBILITY_ROLE](/guidelines/accessibility-role) [^1] | <Must /> | error | <No /> |
@@ -166,6 +167,20 @@ The minimum number of characters a text string must have before the uppercase ru
 ```json title="ama.config.json"
 {
   "uppercaseMinLength": 5
+}
+```
+
+### longNumberMinLength
+
+The minimum length of a consecutive run of unformatted digits before the long-number rule (`LONG_NUMBER_NOT_FORMATTED`) is applied. Digit runs shorter than this value are not flagged. Formatted numbers (with spaces, dashes, or parentheses breaking up the digits) are never flagged, regardless of their total length.
+
+| Type | Default |
+| ---- | ------- |
+| number | `12` |
+
+```json title="ama.config.json"
+{
+  "longNumberMinLength": 10
 }
 ```
 

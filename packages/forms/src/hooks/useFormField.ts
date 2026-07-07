@@ -1,7 +1,7 @@
-import React from "react";
-import { Keyboard, ViewStyle } from "react-native";
-import { useForm } from "../components/Form";
-import { checkFocusTrap } from "../utils/checkFocusTrap";
+import React from 'react';
+import { Keyboard, ViewStyle } from 'react-native';
+import { useForm } from '../components/Form';
+import { checkFocusTrap } from '../utils/checkFocusTrap';
 
 let _useAMAContext:
   | (() => {
@@ -9,8 +9,8 @@ let _useAMAContext:
     } | null)
   | null = null;
 try {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  _useAMAContext = require("@react-native-ama/core").useAMAContext;
+
+  _useAMAContext = require('@react-native-ama/core').useAMAContext;
 } catch {
   // core is an optional peer — fall back to null
 }
@@ -133,7 +133,7 @@ export const useFormField = ({
 
   const fullAccessibilityHint = [accessibilityHint, errorMessage]
     .filter(Boolean)
-    .join(",");
+    .join(',');
 
   return {
     focusNextFormField,

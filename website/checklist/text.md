@@ -26,6 +26,17 @@ import Text from './text.gif';
 If your design utilizes uppercase text, please provide a sentence case version using the `accessibility-label` property.
 :::
 
+## Long numbers
+
+|                          | I hear                                                  |
+| ------------------------ | -------------------------------------------------------- |
+| Unformatted long numbers | A screen reader reading the number as one large value (e.g. "four trillion...") instead of digit-by-digit |
+
+:::note
+
+If your text contains a long number that isn't a phone number (e.g. a card or account number), add spacing between digits via the `accessibility-label` property so a screen reader announces it digit-by-digit.
+:::
+
 ## Testing
 
 ### Procedures

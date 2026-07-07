@@ -5,12 +5,14 @@ import {
   InteractionManager,
 } from 'react-native';
 
-const SHELL_COLORS = __DEV__ ? {
-  BG_RED: '\x1b[41m',
-  RESET: '\x1b[0m',
-  BLUE: '\x1b[34m',
-  YELLOW: '\x1b[33m',
-} : null;
+const SHELL_COLORS = __DEV__
+  ? {
+      BG_RED: '\x1b[41m',
+      RESET: '\x1b[0m',
+      BLUE: '\x1b[34m',
+      YELLOW: '\x1b[33m',
+    }
+  : null;
 
 export const useFocus = (refComponent?: React.RefObject<any>) => {
   const setFocus = React.useCallback(
@@ -19,7 +21,7 @@ export const useFocus = (refComponent?: React.RefObject<any>) => {
         | null
         | number
         | React.Component<any, any>
-        | React.ComponentClass<any>,
+        | React.ComponentClass<any>
     ) => {
       if (!component) {
         return;
@@ -29,6 +31,10 @@ export const useFocus = (refComponent?: React.RefObject<any>) => {
         try {
           const elementId = findNodeHandle(component);
 
+          console.log(
+            elementId,
+            '<--------------------------------------------------'
+          );
           if (elementId) {
             AccessibilityInfo.setAccessibilityFocus(elementId);
             setTimeout(() => {
@@ -37,7 +43,7 @@ export const useFocus = (refComponent?: React.RefObject<any>) => {
           } else if (__DEV__) {
             console.warn(
               // @ts-ignore
-              `${SHELL_COLORS.BG_RED}AMA.${SHELL_COLORS.RESET} ${SHELL_COLORS.BLUE}useFocus${SHELL_COLORS.RESET}: ${SHELL_COLORS.YELLOW}Ref element not found${SHELL_COLORS.RESET}`,
+              `${SHELL_COLORS.BG_RED}AMA.${SHELL_COLORS.RESET} ${SHELL_COLORS.BLUE}useFocus${SHELL_COLORS.RESET}: ${SHELL_COLORS.YELLOW}Ref element not found${SHELL_COLORS.RESET}`
             );
           }
         } catch (error) {
@@ -45,13 +51,13 @@ export const useFocus = (refComponent?: React.RefObject<any>) => {
             console.warn(
               // @ts-ignore
               `${SHELL_COLORS.BG_RED}AMA.${SHELL_COLORS.RESET} ${SHELL_COLORS.BLUE}useFocus${SHELL_COLORS.RESET}: ${SHELL_COLORS.YELLOW}Error finding node handle${SHELL_COLORS.RESET} \n`,
-              error,
+              error
             );
           }
         }
       });
     },
-    [],
+    []
   );
 
   React.useEffect(() => {

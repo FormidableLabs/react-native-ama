@@ -18,30 +18,26 @@ export const PackagesTabScreen = () => {
         edges={["left", "right", "bottom"]}
       >
         <View style={styles.header}>
-          <Header title="Packages" white />
+          <Header title="Packages" white autoFocus />
 
           <Text white>
-            This section showcases packages developed by the React Native AMA team.
+            This section showcases packages developed by the React Native AMA
+            team.
           </Text>
           <Text white>
-            Each package includes a demo screen and documentation to help you get started.
+            Each package includes a demo screen and documentation to help you
+            get started.
           </Text>
         </View>
 
         <ScrollView style={styles.list}>
           <View style={styles.group}>
-            <ListItem
-              title="@react-native-ama/core"
-              navigateTo="AmaCore"
-            />
+            <ListItem title="@react-native-ama/core" navigateTo="AmaCore" />
             <ListItem
               title="@react-native-ama/bottom-sheet"
               navigateTo="AmaBottomSheet"
             />
-            <ListItem
-              title="@react-native-ama/forms"
-              navigateTo="AmaForms"
-            />
+            <ListItem title="@react-native-ama/forms" navigateTo="AmaForms" />
             <ListItem
               title="@react-native-ama/lists"
               border={false}

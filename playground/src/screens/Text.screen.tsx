@@ -16,6 +16,8 @@ export const TextScreen = () => {
         </Text>
         <Spacer height="small" />
         <Text style={{ color: "#999" }}>Insufficient contrast</Text>
+        <Spacer height="small" />
+        <Text>4111111111111111</Text>
       </View>
     </SafeAreaView>
   );

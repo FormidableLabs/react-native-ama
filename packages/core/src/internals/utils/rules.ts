@@ -23,7 +23,8 @@ export type AmaRule =
   | 'NO_HEADER_FOUND'
   | 'NO_ACCESSIBILITY_STATE_SET'
   | 'INPUT_INVALID_RETURN_KEY'
-  | 'INPUT_HAS_FOCUSABLE_LABEL';
+  | 'INPUT_HAS_FOCUSABLE_LABEL'
+  | 'LONG_NUMBER_NOT_FORMATTED';
 
 export type AmaRuleAction =
   | 'SHOULD_NOT'
@@ -72,6 +73,7 @@ export const LOGGER_RULES: Record<AmaRule, AmaRuleAction> | null = __DEV__
     NO_ACCESSIBILITY_STATE_SET: 'MUST',
     INPUT_INVALID_RETURN_KEY: 'MUST',
     INPUT_HAS_FOCUSABLE_LABEL: 'MUST',
+    LONG_NUMBER_NOT_FORMATTED: 'SHOULD_NOT',
   }
   : null;
 
@@ -332,6 +334,16 @@ export const RULES_HELP: RuleHelp | null = __DEV__
         'An accessibility property has an undefined value. This can cause screen readers to announce unexpected content.',
       howToFix:
         'Ensure all accessibility props are explicitly set to a defined value or omitted entirely.',
+    },
+
+    LONG_NUMBER_NOT_FORMATTED: {
+      url: '/guidelines/text',
+      issue: 'Long number not formatted for screen readers',
+      severity: 'Warning',
+      message:
+        'A long run of unformatted digits (e.g. a card or account number) is read by screen readers as one large number instead of digit-by-digit.',
+      howToFix:
+        'Add spacing between digits via the accessibility label so the number is announced digit-by-digit.',
     },
   }
   : null;

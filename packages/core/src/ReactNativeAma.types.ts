@@ -49,7 +49,7 @@ export type AmaUiSnapshotsData = {
   after: Record<number, AmaUiSnapshot>;
   afterSettled?: Record<number, AmaUiSnapshot>;
 	beforeModalVisible: boolean;
-	afterModalVisible: boolean
+	afterModalVisible: boolean;
 };
 
 export type AmaUiSnapshotKeys = keyof AmaUiSnapshot;

@@ -4,6 +4,7 @@ module.exports = {
   highlight: { mode: 'both' },
   log: 'inspect',
   uppercaseMinLength: 4,
+  longNumberMinLength: 12,
   checks: {
     ui: true,
     forms: true,

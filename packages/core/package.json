@@ -4,6 +4,11 @@
   "description": "Accessible Mobile App Library for React Native",
   "sideEffects": false,
   "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "react-native": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
     "./AMAProvider": {
       "types": "./dist/components/AMAProvider.d.ts",
       "default": "./dist/components/AMAProvider.js"

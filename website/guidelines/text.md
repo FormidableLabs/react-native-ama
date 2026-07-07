@@ -125,6 +125,10 @@ This error is raised when a text element contains all-caps content directly — 
 
 This error is raised when an `accessibilityLabel` is written in all caps. Screen readers may read uppercase labels with flat intonation or spell them out rather than pronouncing them naturally.
 
+### LONG_NUMBER_NOT_FORMATTED <ShouldNot />
+
+This is raised when a text element or accessibility label contains a long run of unformatted digits (12 or more by default) — screen readers read a solid digit run as one large number instead of digit-by-digit. The threshold is configurable via `longNumberMinLength` in `ama.config.json`.
+
 ## Known issues
 
 - Nested Text components with onPress property are not accessible [https://github.com/facebook/react-native/issues/24515](https://github.com/facebook/react-native/issues/24515)

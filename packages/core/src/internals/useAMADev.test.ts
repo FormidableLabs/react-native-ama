@@ -1,4 +1,5 @@
 import { renderHook, act } from '@testing-library/react-native';
+import projectRules from './config';
 
 let mockStart: jest.Mock;
 let mockStop: jest.Mock;
@@ -57,6 +58,10 @@ beforeEach(() => {
   onUIInteractionCallback = null;
   // @ts-ignore
   global.__DEV__ = true;
+});
+
+afterEach(() => {
+  projectRules.rules = {} as typeof projectRules.rules;
 });
 
 describe('useAMADev', () => {
@@ -251,4 +256,5 @@ describe('useAMADev', () => {
 
     expect(result.current.issues.some((i: any) => i.rule === 'NO_ACCESSIBILITY_STATE_SET')).toBe(false);
   });
+
 });
