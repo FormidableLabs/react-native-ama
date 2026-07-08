@@ -36,6 +36,9 @@ jobs:
         env:
           EXPO_NO_TELEMETRY: 1
 
+      - name: Yarn install
+        run: yarn install
+
       - name: Build packages
         run: yarn run build
 
