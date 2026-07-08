@@ -1,0 +1,58 @@
+import logger from './utils/logger';
+import { AmaRule, AmaRuleAction } from './utils/rules';
+
+export const NON_OVERRIDABLE_RULES: string[] | undefined = __DEV__
+  ? [
+    'NO_ACCESSIBILITY_ROLE',
+    'NO_ACCESSIBILITY_LABEL',
+    'NO_KEYBOARD_TRAP',
+    'NO_UNDEFINED',
+    'INPUT_HAS_NO_VISIBLE_LABEL',
+    'FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE',
+    'BOTTOM_SHEET_CLOSE_ACTION',
+    'INCOMPATIBLE_ACCESSIBILITY_STATE',
+    'INCOMPATIBLE_ACCESSIBILITY_ROLE',
+  ]
+  : undefined;
+
+export type HighlightMode = 'border' | 'background' | 'both';
+export type LogMode = 'always' | 'inspect';
+
+export type AmaProjectConfig = {
+  rules: Record<
+    | Partial<AmaRule>
+    | 'CONTRAST_CHECKER_MAX_DEPTH'
+    | 'IGNORE_CONTRAST_FOR_DISABLED_ELEMENTS',
+    AmaRuleAction
+  > | null;
+  accessibilityLabelExceptions: string[];
+  highlight: {
+    mode: HighlightMode;
+    borderWidth?: number;
+    gap?: number;
+  };
+  log: LogMode;
+  uppercaseMinLength: number;
+  longNumberMinLength: number;
+  checks: {
+    ui: boolean;
+    forms: boolean;
+    delay: number;
+  };
+};
+
+const defaultRules: AmaProjectConfig = require('./../../ama.config.json');
+let projectRules = defaultRules;
+
+try {
+  // look upwards to user's project root
+  const userDefinedRules: Partial<AmaProjectConfig> = require('./../../../../ama.config.json');
+  projectRules = Object.assign(projectRules, userDefinedRules);
+
+  logger?.log("Using project's config file");
+} catch (_) {
+  logger?.log('Project config not found, using default one!');
+}
+
+logger?.log(JSON.stringify(projectRules, null, 2));
+export default projectRules;

@@ -1,7 +1,6 @@
 import * as AMAProvider from '@react-native-ama/core';
-import { MOTION_ANIMATIONS } from '@react-native-ama/internal';
+import { MOTION_ANIMATIONS } from '../internals/animationConstants';
 import { renderHook } from '@testing-library/react-native';
-
 import { useReanimatedTiming } from './useReanimatedTiming';
 
 beforeEach(() => {
@@ -79,8 +78,8 @@ const amaContextValues = {
   isScreenReaderEnabled: false,
 };
 
-let withSpring: jest.Mock;
-let withTiming: jest.Mock;
+var withSpring: jest.Mock;
+var withTiming: jest.Mock;
 
 function mockReanimated() {
   withSpring = jest.fn();

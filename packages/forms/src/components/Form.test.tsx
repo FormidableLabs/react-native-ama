@@ -1,7 +1,5 @@
-import * as UseChecks from '@react-native-ama/core/src/hooks/useChecks';
 import { render, waitFor } from '@testing-library/react-native';
 import * as React from 'react';
-
 import { Form, FormContext } from './Form';
 
 beforeEach(() => {
@@ -9,56 +7,6 @@ beforeEach(() => {
 });
 
 describe('Form', () => {
-  let checkFocusTrap: jest.Mock;
-
-  beforeEach(function () {
-    checkFocusTrap = jest.fn().mockResolvedValue(null);
-
-    // @ts-ignore
-    jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
-      checkFocusTrap,
-      hasErrors: true,
-    } as any);
-  });
-
-  it('checks that next field has the focus if it has the focus callback', async () => {
-    const focus = jest.fn();
-    const ref = { current: { focus, isFocused: jest.fn() } };
-    const secondField = {
-      ref,
-      hasFocusCallback: true,
-      hasValidation: false,
-      isEditable: true,
-      id: 'second',
-    };
-
-    let providerValues = customRender();
-
-    providerValues.refs?.push({
-      ref: { current: 'random ref' },
-      hasFocusCallback: false,
-      hasValidation: false,
-      id: 'first',
-    });
-
-    // next field
-    providerValues.refs?.push(secondField);
-
-    providerValues.focusField?.(secondField);
-
-    await waitFor(() =>
-      expect(checkFocusTrap).toHaveBeenCalledWith({
-        ref: {
-          current: {
-            focus: expect.any(Function),
-            isFocused: expect.any(Function),
-          },
-        },
-        shouldHaveFocus: true,
-      }),
-    );
-  });
-
   it('calls setFocus if the next field has no .focus callback', () => {
     const ref = { current: 'whatever' };
     const secondField = {
@@ -141,23 +89,10 @@ describe('Form', () => {
     providerValues.focusField?.(secondField);
 
     expect(focus).not.toHaveBeenCalled();
-    expect(checkFocusTrap).not.toHaveBeenCalled();
 
     jest.advanceTimersByTime(51);
 
     expect(focus).toHaveBeenCalledWith();
-
-    await waitFor(() =>
-      expect(checkFocusTrap).toHaveBeenCalledWith({
-        ref: {
-          current: {
-            focus: expect.any(Function),
-            isFocused: expect.any(Function),
-          },
-        },
-        shouldHaveFocus: true,
-      }),
-    );
 
     jest.useRealTimers();
   });
@@ -188,6 +123,35 @@ describe('Form', () => {
     providerValues.focusField?.(secondField);
 
     expect(setFocus).toHaveBeenCalledWith(ref.current);
+  });
+
+  it('focusFieldAt focuses the field at the given index', async () => {
+    const focus = jest.fn();
+    const ref = React.createRef<any>();
+    (ref as any).current = { focus, isFocused: jest.fn().mockReturnValue(false) };
+
+    let formRef = React.createRef<any>();
+
+    render(
+      <Form ref={formRef} onSubmit={jest.fn()}>
+        <FormContext.Consumer>
+          {value => {
+            value?.refs?.push({
+              ref: { current: ref } as any,
+              hasFocusCallback: true,
+              hasValidation: false,
+              isEditable: true,
+              id: 'field0',
+            });
+            return null;
+          }}
+        </FormContext.Consumer>
+      </Form>,
+    );
+
+    formRef.current?.focusFieldAt(0);
+
+    await waitFor(() => expect(focus).toHaveBeenCalled());
   });
 
   it('focuses the first failed component when submitForm fails', async () => {
@@ -222,7 +186,7 @@ describe('Form', () => {
   });
 });
 
-let setFocus: jest.Mock;
+var setFocus: jest.Mock;
 
 function mockUseFocus() {
   setFocus = jest.fn();
@@ -255,8 +219,37 @@ function customRender(onSubmit = jest.fn()) {
 }
 
 jest.mock('../hooks/useFocus', () => mockUseFocus());
-jest.mock('../internal/checks/checkFocusTrap', () => {
-  return {
-    checkFocusTrap: jest.fn().mockResolvedValue(null),
-  };
+
+describe('useForm', () => {
+  it('returns default context value when suppressError is true and no Form wrapper', () => {
+    const { useForm } = require('./Form');
+    const { renderHook } = require('@testing-library/react-native');
+
+    const { result } = renderHook(() => useForm({ suppressError: true }));
+    expect(result.current.refs).toEqual([]);
+    expect(typeof result.current.submitForm).toBe('function');
+  });
+
+  it('throws when called outside Form and suppressError is false', () => {
+    const { useForm } = require('./Form');
+    const { renderHook } = require('@testing-library/react-native');
+
+    expect(() => renderHook(() => useForm())).toThrow(
+      'useForm must be used within a FormContextProvider',
+    );
+  });
+
+  it('logs a console.error in __DEV__ when called outside Form', () => {
+    const { useForm } = require('./Form');
+    const { renderHook } = require('@testing-library/react-native');
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    // @ts-ignore
+    global.__DEV__ = true;
+
+    expect(() => renderHook(() => useForm())).toThrow();
+    expect(errorSpy).toHaveBeenCalled();
+    errorSpy.mockRestore();
+    // @ts-ignore
+    global.__DEV__ = true;
+  });
 });

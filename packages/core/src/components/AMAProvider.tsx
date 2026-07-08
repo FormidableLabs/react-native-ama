@@ -1,14 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
-
-import { RED } from '@react-native-ama/internal';
 import * as React from 'react';
 import {
   AccessibilityChangeEventName,
   AccessibilityInfo,
   NativeEventSubscription,
-  Text,
   View,
 } from 'react-native';
+import type { AmaRule } from '../internals/types';
+import type { UseAMADev } from '../internals/useAMADev';
 
 type AMAProviderProps = {
   children: React.ReactNode;
@@ -21,14 +20,16 @@ type SharedContextValue = {
   isInvertColorsEnabled: boolean;
   isReduceMotionEnabled: boolean;
   isReduceTransparencyEnabled: boolean;
+  isHighTextContrastEnabled: boolean;
+  isDarkerSystemColorsEnabled: boolean;
   reactNavigationScreenOptions: {
     animationEnabled: boolean;
     animation: 'default' | 'fade';
   };
 };
+
 export type AMADevContextValue = SharedContextValue & {
-  trackError: (id: string) => void;
-  removeError: (id: string) => void;
+  trackError: (rule: AmaRule, ref?: React.RefObject<any>) => void;
 };
 
 export type AMAProdContextValue = SharedContextValue & {};
@@ -39,7 +40,7 @@ type AccessibilityEvents = Exclude<AccessibilityChangeEventName, 'change'>;
 
 type AccessibilityInfoKey = Exclude<
   keyof AMAContextValue,
-  'reactNavigationScreenOptions' | 'trackError' | 'removeError'
+  'reactNavigationScreenOptions' | 'trackError'
 >;
 
 type Extractor<S extends AccessibilityEvents> = S extends `${infer R}Changed`
@@ -57,10 +58,12 @@ const eventsMapping: AccessibilityInfoEvents = {
   boldTextChanged: 'isBoldTextEnabled',
   invertColorsChanged: 'isInvertColorsEnabled',
   screenReaderChanged: 'isScreenReaderEnabled',
+  highTextContrastChanged: 'isHighTextContrastEnabled',
+  darkerSystemColorsChanged: 'isDarkerSystemColorsEnabled',
 };
 
 export const isDevContextValue = (
-  value: AMAContextValue,
+  value: AMAContextValue
 ): value is AMADevContextValue =>
   (value as AMADevContextValue).trackError !== undefined;
 
@@ -71,6 +74,8 @@ const DEFAULT_VALUES = {
   isInvertColorsEnabled: false,
   isReduceMotionEnabled: false,
   isScreenReaderEnabled: false,
+  isHighTextContrastEnabled: false,
+  isDarkerSystemColorsEnabled: false,
   reactNavigationScreenOptions: {
     animationEnabled: true,
     animation: 'default',
@@ -79,12 +84,28 @@ const DEFAULT_VALUES = {
 
 const AMAContext = React.createContext<AMAContextValue | null>(null);
 
+type AMAErrorOverlayModule = typeof import('../internals/components/AMAErrorOverlay');
+type UseAMADevModule = {
+  useAMADev: UseAMADev | null;
+};
+
+const AMAErrorOverlay = __DEV__
+  ? (require('../internals/components/AMAErrorOverlay') as AMAErrorOverlayModule)
+      .AMAErrorOverlay
+  : null;
+
+const useAMADev = __DEV__
+  ? (require('../internals/useAMADev') as UseAMADevModule).useAMADev
+  : null;
+
 export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
   const [values, setValues] = React.useState<AMAContextValue>(DEFAULT_VALUES);
 
+  const { issues, trackError } = (__DEV__ && useAMADev?.()) || {};
+
   const handleAccessibilityInfoChanged = (key: AccessibilityInfoKey) => {
     return (newValue: boolean) => {
-      setValues(oldValues => {
+      setValues((oldValues) => {
         const newValues = { ...oldValues };
         newValues[key] = newValue;
 
@@ -107,27 +128,27 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
     const allInitPromises: Promise<boolean>[] = [];
 
     const subscriptions: NativeEventSubscription[] = Object.entries(
-      eventsMapping,
+      eventsMapping
     ).map(([eventName, contextKey]) => {
       allInitPromises.push(AccessibilityInfo[contextKey]());
 
       return AccessibilityInfo.addEventListener(
         eventName as AccessibilityEvents,
-        handleAccessibilityInfoChanged(contextKey),
+        handleAccessibilityInfoChanged(contextKey)
       );
     });
 
-    Promise.all(allInitPromises).then(promisesValues => {
+    Promise.all(allInitPromises).then((promisesValues) => {
       const newValues = Object.values(eventsMapping).reduce(
         (list, key, index) => {
           list[key] = promisesValues[index] as boolean;
 
           return list;
         },
-        {} as AMAContextValue,
+        {} as AMAContextValue
       );
 
-      setValues(oldValues => {
+      setValues((oldValues) => {
         return {
           ...oldValues,
           ...newValues,
@@ -136,52 +157,22 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
     });
 
     return () => {
-      subscriptions.forEach(subscription => subscription?.remove());
+      subscriptions.forEach((subscription) => subscription?.remove());
     };
   }, []);
 
-  const [failedItems, setFailedItems] = React.useState<string[]>([]);
-
   if (__DEV__) {
-    const trackError = (id: string) => {
-      if (failedItems.includes(id)) {
-        return;
-      }
-
-      setFailedItems(items => [...items, id]);
-
-      AccessibilityInfo.announceForAccessibility(
-        "One or more component didn't pass the accessibility check, please check the console for more info",
-      );
-    };
-
-    const removeError = (id: string) => {
-      setFailedItems(items => {
-        const index = items.indexOf(id);
-
-        if (index >= 0) {
-          items.splice(index);
-
-          return [...items];
-        }
-
-        return items;
-      });
-    };
-
     return (
       <AMAContext.Provider
         value={{
           ...values,
-          trackError,
-          removeError,
-        }}>
+          trackError: trackError || (() => { }),
+        }}
+      >
         <View style={{ flex: 1 }}>
           <>
             {children}
-            {failedItems.length > 0 ? (
-              <AMAError count={failedItems.length} />
-            ) : null}
+            {AMAErrorOverlay && <AMAErrorOverlay issues={issues} />}
           </>
         </View>
       </AMAContext.Provider>
@@ -191,36 +182,9 @@ export const AMAProvider: React.FC<AMAProviderProps> = ({ children }) => {
   return <AMAContext.Provider value={values}>{children}</AMAContext.Provider>;
 };
 
-const AMAError = ({ count }: { count: number }) => {
-  const error = `${count} component(s) didn't pass the accessibility check(s)`;
-
-  return (
-    <View
-      accessibilityLabel={error}
-      accessibilityHint="Please check the console for more info..."
-      style={{
-        paddingHorizontal: 24,
-        paddingTop: 24,
-        paddingBottom: 48,
-        backgroundColor: RED,
-      }}
-      testID="amaError">
-      <View accessible={true}>
-        <Text
-          style={{ color: 'white', fontSize: 16, lineHeight: 26 }}
-          testID="amaError.message">
-          {error}
-        </Text>
-        <Text style={{ color: 'white', fontSize: 16, lineHeight: 24 }}>
-          Please check the console for more info...
-        </Text>
-      </View>
-    </View>
-  );
-};
-
 export const useAMAContext = () => {
   const context = React.useContext(AMAContext);
+
   if (!context) {
     throw new Error('Please wrap your app with <AMAProvider />');
   }

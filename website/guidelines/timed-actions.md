@@ -10,8 +10,9 @@ displayed_sidebar: guidelines
 
 <AMASection />
 
-Timed actions refer to tasks or functions within an app that are set to occur after a specific duration or at particular intervals.
-When implementing timed actions, it's essential to take into account the following considerations to ensure accessibility and a positive user experience:
+A timed action is any task in your app that must be completed within a set time limit — a session timeout, a countdown to confirm a purchase, or an auto-dismissing alert. Users with motor impairments, cognitive differences, or those using assistive technologies often need more time to read, navigate, and respond than the default allows.
+
+WCAG requires that time limits be adjustable or removable unless they meet one of the following exceptions:
 
 - **Turn off**: The user is allowed to turn off the limit before encountering it.
 - **Adjust**: The user is allowed to adjust the time limit before encountering it over a wide range that is at least ten times the length of the default setting.
@@ -23,8 +24,8 @@ When implementing timed actions, it's essential to take into account the followi
 ## Expectations
 
 <ScreenReader>
-    <When title="A non-essential action is happening">
-        <Then noChildren>The timout should be disabled</Then>
+    <When title="A non-essential timed action is happening">
+        <Then noChildren>The timeout should be disabled or extended — screen reader users navigate more slowly and a standard timeout will expire before they can respond</Then>
     </When>
 </ScreenReader>
 
@@ -36,12 +37,45 @@ When implementing timed actions, it's essential to take into account the followi
     </When>
 </AssistiveTechnology>
 
+---
+
+<VoiceControl>
+    <When title="A non-essential timed action is happening">
+        <Then noChildren>The timeout should be disabled or extended — issuing voice commands takes longer than tapping, so standard timeouts will frequently expire before a voice control user can act</Then>
+    </When>
+</VoiceControl>
+
 :::tip
 
 The **Time to take action** value can be retrieved by using the [getRecommendedTimeoutMillis](https://reactnative.dev/docs/accessibilityinfo#getrecommendedtimeoutmillis-android) utility.
 
 :::
 
+## Best Practices
+
+### Disable timeouts for non-essential actions
+
+If the time limit does not fall under one of the WCAG exceptions, remove it. A disabled timeout is always preferable to a complex "extend" flow.
+
+### Respect the Android "Time to take action" setting
+
+Android lets users set how long they need to respond to timed prompts. Use `AccessibilityInfo.getRecommendedTimeoutMillis` to read this value and apply it as your timeout duration instead of a hardcoded default.
+
+```tsx
+import { AccessibilityInfo } from 'react-native';
+
+const timeout = await AccessibilityInfo.getRecommendedTimeoutMillis(5000);
+// Use `timeout` instead of a hardcoded value
+```
+
+### Warn users before a timeout expires
+
+If a timeout must exist, display a warning with enough time remaining for the user to extend it. The extension action must be simple — a single tap or key press — and must be available at least ten times.
+
+### Use AMA's `useTimedAction` hook
+
+AMA's hook handles the recommended timeout check automatically and makes it straightforward to integrate accessible timed actions into your components.
+
 ## Related AMA hooks
 
-- [useTimedAction](/hooks/useTimedAction)
+- [useTimedAction](/core/hooks/useTimedAction)

@@ -1,0 +1,17 @@
+{
+  "rules": {},
+  "accessibilityLabelExceptions": [],
+  "highlight": {
+    "mode": "both",
+    "borderWidth": 3,
+    "gap": 4
+  },
+  "log": "inspect",
+  "uppercaseMinLength": 4,
+  "longNumberMinLength": 12,
+  "checks": {
+    "ui": true,
+    "forms": true,
+    "delay": "1000"
+  }
+}

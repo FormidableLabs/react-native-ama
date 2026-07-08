@@ -1,17 +1,33 @@
 {
+  "extends": "expo-module-scripts/tsconfig.base",
   "compilerOptions": {
-    "baseUrl": "./",
     "paths": {
-      "@react-native-ama/animations": ["packages/animations/src/index"],
-      "@react-native-ama/core": ["packages/core/src/index"],
-      "@react-native-ama/extras": ["packages/extras/src/index"],
-      "@react-native-ama/forms": ["packages/forms/src/index"],
-      "@react-native-ama/internal": ["packages/internal/src/index"],
-      "@react-native-ama/lists": ["packages/lists/src/index"],
-      "@react-native-ama/react-native": ["packages/react-native/src/index"]
+      "@react-native-ama/animations": [
+        "./packages/animations/src/index"
+      ],
+      "@react-native-ama/core": [
+        "./packages/core/src/index"
+      ],
+      "@react-native-ama/bottom-sheet": [
+        "./packages/bottom-sheet/src/index"
+      ],
+      "@react-native-ama/forms": [
+        "./packages/forms/src/index"
+      ],
+      "@react-native-ama/lists": [
+        "./packages/lists/src/index"
+      ]
     },
     "jsx": "react",
-    "lib": ["esnext"],
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "types": [
+      "node",
+      "jest",
+      "jest-require"
+    ],
     "module": "esnext",
     "moduleResolution": "node",
     "target": "esnext",
@@ -26,6 +42,7 @@
   },
   "exclude": [
     "website",
+    "playground",
     "**/**/dist",
     "**/**/node_modules",
     "node_modules",

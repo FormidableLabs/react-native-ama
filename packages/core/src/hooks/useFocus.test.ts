@@ -1,16 +1,29 @@
-import { SHELL_COLORS } from '@react-native-ama/internal';
 import { renderHook } from '@testing-library/react-native';
-
 import { useFocus } from './useFocus';
 
-beforeEach(() => {
-  jest.clearAllMocks();
-
-  jest.spyOn(console, 'warn').mockImplementation();
-});
+const SHELL_COLORS = {
+  BG_RED: '\x1b[41m',
+  RESET: '\x1b[0m',
+  BLUE: '\x1b[34m',
+  YELLOW: '\x1b[33m',
+};
 
 let findNodeHandleMock: jest.Mock;
 let setAccessibilityFocusMock: jest.Mock;
+
+beforeEach(() => {
+  jest.useFakeTimers();
+  jest.clearAllMocks();
+  jest.spyOn(console, 'warn').mockImplementation();
+
+  const rn = jest.requireMock('react-native');
+  findNodeHandleMock = rn.findNodeHandle;
+  setAccessibilityFocusMock = rn.AccessibilityInfo.setAccessibilityFocus;
+});
+
+afterEach(() => {
+  jest.useRealTimers();
+});
 
 describe('useFocus', () => {
   it.each([null, undefined])('does nothing if the Ref is %s', refElement => {
@@ -24,6 +37,7 @@ describe('useFocus', () => {
     findNodeHandleMock.mockReturnValue('element-id');
 
     renderHook(() => useFocus({ current: 'test-element' }));
+    jest.runAllTimers();
 
     expect(findNodeHandleMock).toHaveBeenCalledWith('test-element');
     expect(setAccessibilityFocusMock).toHaveBeenNthCalledWith(1, 'element-id');
@@ -70,6 +84,7 @@ describe('useFocus', () => {
     const { result } = renderHook(() => useFocus());
 
     result.current.setFocus('component' as any);
+    jest.runAllTimers();
 
     expect(findNodeHandleMock).toHaveBeenCalledWith('component');
     expect(setAccessibilityFocusMock).toHaveBeenNthCalledWith(
@@ -82,18 +97,3 @@ describe('useFocus', () => {
     );
   });
 });
-
-function mockReactNative() {
-  findNodeHandleMock = jest.fn();
-  setAccessibilityFocusMock = jest.fn();
-
-  return {
-    findNodeHandle: findNodeHandleMock,
-    AccessibilityInfo: {
-      setAccessibilityFocus: setAccessibilityFocusMock,
-    },
-    Platform: {},
-  };
-}
-
-jest.mock('react-native', () => mockReactNative());

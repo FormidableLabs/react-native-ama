@@ -140,7 +140,7 @@ Here can be find more information about [error handling in Forms](/guidelines/fo
 
 ### `hasError`
 
-If true returns the [errorMessage](#error-message) as part of the `accessibilityHint`
+If true returns the [errorMessage](#errormessage) as part of the `accessibilityHint`
 
 | Type    | Default   |
 | ------- | --------- |
@@ -148,7 +148,7 @@ If true returns the [errorMessage](#error-message) as part of the `accessibility
 
 :::info
 
-The component will try to extract any text within the [errorComponent](#errorcomponent) if no [errorText](#errorText) is provided
+The component will try to extract any text within the `errorComponent` if no `errorText` is provided
 :::
 
 ### `errorMessage`
@@ -166,6 +166,21 @@ The error message to be announced by the screen reader.
 | string | undefined |
 
 The required message to be announced by the screen reader as part of the accessibility hint.
+
+## Returns
+
+The hook returns all passed-in props merged with the following overrides:
+
+| Property | Type | Description |
+| -------- | ---- | ----------- |
+| `accessibilityLabel` | string | The label text, optionally suffixed with `requiredMessage` when `required` is `true` |
+| `returnKeyType` | `ReturnKeyTypeOptions` | `"done"` for the last field in the form, `"next"` for all others |
+| `onSubmitEditing` | function | Calls the original `onSubmitEditing` then moves focus to the next field or submits the form |
+| `onLayout` | function | Calls the original `onLayout` then re-evaluates whether this is the last field |
+| `blurOnSubmit` | boolean | `true` when `returnKeyType` is `"done"` |
+| `accessibilityHint` | string | Combined accessibility hint including any error message |
+| `focusNextFormField` | `() => void` | From `useFormField` — focuses the next field or submits the form |
+| `isLastField` | `() => boolean` | From `useFormField` — returns `true` if this is the last registered field |
 
 ## Related guidelines
 

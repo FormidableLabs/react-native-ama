@@ -29,8 +29,8 @@ const config: Config = {
     process.env.VERCEL_ENV === 'preview'
       ? '/'
       : '/open-source/react-native-ama/',
-  // TODO: change in throw
-  onBrokenLinks: 'ignore',
+  onBrokenLinks: 'throw',
+  onBrokenAnchors: 'throw',
   onBrokenMarkdownLinks: 'warn',
   organizationName: 'NearForm',
   customFields: {
@@ -51,10 +51,13 @@ const config: Config = {
           path: 'docs/ama',
           includeCurrentVersion: true,
           lastVersion: 'current',
+          onlyIncludeVersions: ['current', '1.x.x'],
           versions: {
             current: {
-              label: '1.2.x',
-              // path: '1.0.x',
+              label: '2.x',
+            },
+            '1.x.x': {
+              label: '1.2.0',
             },
           },
           // routeBasePath: 'docs',
@@ -120,6 +123,16 @@ const config: Config = {
     [
       '@docusaurus/plugin-content-docs',
       {
+        id: 'bottom-sheet',
+        path: '../packages/bottom-sheet/docs',
+        routeBasePath: '/bottom-sheet/',
+        sidebarPath: './sidebarsPackages.ts',
+        ...defaultPresets,
+      },
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
         id: 'forms',
         path: '../packages/forms/docs',
         routeBasePath: '/forms/',
@@ -130,29 +143,9 @@ const config: Config = {
     [
       '@docusaurus/plugin-content-docs',
       {
-        id: 'react-native',
-        path: '../packages/react-native/docs',
-        routeBasePath: '/react-native/',
-        sidebarPath: './sidebarsPackages.ts',
-        ...defaultPresets,
-      },
-    ],
-    [
-      '@docusaurus/plugin-content-docs',
-      {
         id: 'lists',
         path: '../packages/lists/docs',
         routeBasePath: '/lists/',
-        sidebarPath: './sidebarsPackages.ts',
-        ...defaultPresets,
-      },
-    ],
-    [
-      '@docusaurus/plugin-content-docs',
-      {
-        id: 'extras',
-        path: '../packages/extras/docs',
-        routeBasePath: '/extras/',
         sidebarPath: './sidebarsPackages.ts',
         ...defaultPresets,
       },
@@ -218,20 +211,16 @@ const config: Config = {
               to: '/animations/',
             },
             {
+              label: 'BottomSheet',
+              to: '/bottom-sheet/',
+            },
+            {
               label: 'Forms',
               to: '/forms/',
             },
             {
-              label: 'React Native',
-              to: '/react-native/',
-            },
-            {
               label: 'Lists',
               to: '/lists/',
-            },
-            {
-              label: 'Extras',
-              to: '/extras/',
             },
           ],
         },
@@ -278,6 +267,7 @@ const config: Config = {
     zoom: {
       selector: '.zoom-me',
     },
+    staticDirectories: ['static'],
   } satisfies ThemeConfig,
 };
 

@@ -72,7 +72,19 @@ const sidebars: SidebarsConfig = {
       href: 'config-file',
       autoAddBaseUrl: true,
     },
-    { type: 'link', label: 'Usage', href: 'usage', autoAddBaseUrl: true },
+    {
+      type: 'link',
+      label: 'Migration — @react-native-ama/react-native',
+      href: 'migration-react-native',
+      autoAddBaseUrl: true,
+    },
+    {
+      type: 'link',
+      label: 'Migration — @react-native-ama/internal',
+      href: 'migration-internal',
+      autoAddBaseUrl: true,
+    },
+    { type: 'link', label: 'Accessibility Checks', href: 'checks', autoAddBaseUrl: true },
     {
       type: 'category',
       label: 'Packages',
@@ -96,6 +108,13 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: 'link',
+          label: 'BottomSheet',
+          href: '/bottom-sheet/',
+          description: 'Accessible bottom sheet with gesture and focus management',
+          autoAddBaseUrl: true,
+        },
+        {
+          type: 'link',
           label: 'Forms',
           href: '/forms/',
           description: 'Used to create accessible forms',
@@ -103,23 +122,9 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: 'link',
-          label: 'React Native',
-          href: '/react-native/',
-          description: 'Extends react-native components with accessibility',
-          autoAddBaseUrl: true,
-        },
-        {
-          type: 'link',
           label: 'Lists',
           href: '/lists/',
           description: 'Used to create accessible lists',
-          autoAddBaseUrl: true,
-        },
-        {
-          type: 'link',
-          label: 'Extras',
-          href: '/extras/',
-          description: 'Provides extra accessible components and hooks',
           autoAddBaseUrl: true,
         },
       ],

@@ -4,7 +4,6 @@ import {
   TouchableWithoutFeedbackProps,
   View,
 } from 'react-native';
-
 import { UseFormField, useFormField } from '../hooks/useFormField';
 
 export type FormFieldProps = React.PropsWithChildren<

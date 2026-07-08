@@ -2,13 +2,15 @@ import { act, render } from '@testing-library/react-native';
 import { flushMicroTasks } from '@testing-library/react-native/build/flush-micro-tasks';
 import * as React from 'react';
 import { AccessibilityInfo } from 'react-native';
-
 import { AMAContextValue, AMAProvider } from './AMAProvider';
 
 var mockProvider: jest.Mock;
 
 beforeEach(() => {
   jest.clearAllMocks();
+  if (mockProvider) {
+    mockProvider.mockReturnValue(null);
+  }
 });
 
 describe('AMAProvider', () => {
@@ -103,8 +105,9 @@ describe('AMAProvider', () => {
         expect.objectContaining({
           value: expect.objectContaining(state),
         }),
-        {},
+        undefined,
       );
+
 
       jest.clearAllMocks();
 
@@ -117,8 +120,9 @@ describe('AMAProvider', () => {
         expect.objectContaining({
           value: expect.objectContaining(state),
         }),
-        {},
+        undefined,
       );
+
 
       jest.clearAllMocks();
 
@@ -131,8 +135,9 @@ describe('AMAProvider', () => {
         expect.objectContaining({
           value: expect.objectContaining(state),
         }),
-        {},
+        undefined,
       );
+
     },
   );
 

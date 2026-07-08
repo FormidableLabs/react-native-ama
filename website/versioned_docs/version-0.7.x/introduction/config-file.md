@@ -31,7 +31,7 @@ AMA guidelines are categorised as:
 | [MINIMUM_SIZE](../guidelines/minimum-size)                                                          | <Must />    |
 | [NO_ACCESSIBILITY_LABEL](../guidelines/accessibility-label)[^1]                                     | <Must />    |
 | [NO_ACCESSIBILITY_ROLE](../guidelines/accessibility-role) [^1]                                      | <Must />    |
-| [NO_FORM_LABEL](../guidelines/forms/#no_form_label)                                                 | <Must />    |
+| [INPUT_HAS_NO_VISIBLE_LABEL](../guidelines/forms/#INPUT_HAS_NO_VISIBLE_LABEL)                                                 | <Must />    |
 | [NO_FORM_ERROR](../guidelines/forms/#no_form_error)                                                 | <Must />    |
 | [NO_KEYBOARD_TRAP](../guidelines/forms/#keyboard-trap) [^1]                                         | <MustNot /> |
 | [UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL](../guidelines/text/#uppercase_text_no_accessibility_label-) | <MustNot /> |

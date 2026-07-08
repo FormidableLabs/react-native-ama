@@ -1,13 +1,12 @@
 import * as AMAProvider from '@react-native-ama/core';
 import { renderHook } from '@testing-library/react-native';
-
 import { useReanimatedAnimationBuilder } from './useReanimatedAnimationBuilder';
 
 beforeEach(() => {
   jest.clearAllMocks();
 });
 
-let withTiming: jest.Mock;
+var withTiming: jest.Mock;
 
 describe('useReanimatedAnimationBuilder', () => {
   describe('entering animation', () => {

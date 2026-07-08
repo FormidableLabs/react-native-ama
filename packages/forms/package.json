@@ -1,17 +1,41 @@
 {
   "name": "@react-native-ama/forms",
   "version": "1.2.1",
-  "react-native": "src/index",
-  "types": "dist/index.d.ts",
-  "main": "dist/index.js",
+  "sideEffects": false,
   "exports": {
-    ".": [
-      {
-        "imports": "./dist/index.js",
-        "types": "./dist/index.d.ts"
-      },
-      "./dist/index.js"
-    ]
+    ".": {
+      "types": "./dist/index.d.ts",
+      "react-native": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./Form": {
+      "types": "./dist/components/Form.d.ts",
+      "default": "./dist/components/Form.js"
+    },
+    "./FormField": {
+      "types": "./dist/components/FormField.d.ts",
+      "default": "./dist/components/FormField.js"
+    },
+    "./FormSubmit": {
+      "types": "./dist/components/FormSubmit.d.ts",
+      "default": "./dist/components/FormSubmit.js"
+    },
+    "./TextInput": {
+      "types": "./dist/components/TextInput.d.ts",
+      "default": "./dist/components/TextInput.js"
+    },
+    "./useFormField": {
+      "types": "./dist/hooks/useFormField.d.ts",
+      "default": "./dist/hooks/useFormField.js"
+    },
+    "./useFormSubmit": {
+      "types": "./dist/hooks/useFormSubmit.d.ts",
+      "default": "./dist/hooks/useFormSubmit.js"
+    },
+    "./useTextInput": {
+      "types": "./dist/hooks/useTextInput.d.ts",
+      "default": "./dist/hooks/useTextInput.js"
+    }
   },
   "files": [
     "src",
@@ -22,14 +46,15 @@
     "typecheck": "tsc --noEmit",
     "test": "jest"
   },
-  "dependencies": {
-    "@react-native-ama/core": "~1.2.1",
-    "@react-native-ama/internal": "~1.2.1",
-    "@react-native-ama/react-native": "~1.2.1"
-  },
   "peerDependencies": {
+    "@react-native-ama/core": "~2.0.0",
     "react": "*",
     "react-native": "*"
+  },
+  "peerDependenciesMeta": {
+    "@react-native-ama/core": {
+      "optional": true
+    }
   },
   "keywords": [
     "react-native",
@@ -51,7 +76,10 @@
   "author": "",
   "license": "MIT",
   "jest": {
-    "preset": "jest-expo",
+    "preset": "react-native",
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.js"
+    ],
     "modulePathIgnorePatterns": [
       "<rootDir>/node_modules",
       "<rootDir>/dist/"
@@ -68,10 +96,23 @@
       }
     },
     "transformIgnorePatterns": [
-      "node_modules/(?!(@react-native|react-native|react-native-reanimated/))"
+      "node_modules/(?!(react-native|react-native-reanimated|expo|@expo)/)"
     ],
     "transform": {
       "\\.[jt]sx?$": "babel-jest"
+    },
+    "moduleDirectories": [
+      "node_modules",
+      "../../playground/node_modules"
+    ],
+    "moduleNameMapper": {
+      "@react-native/js-polyfills/error-guard": "<rootDir>/../../jest-mocks/error-guard.js",
+      "^(\\.{1,2}/)*ama\\.config\\.json$": "<rootDir>/../../jest-mocks/ama-config.js",
+      "^(\\.{1,2}/)*ReactNativeAmaModule$": "<rootDir>/../../jest-mocks/ReactNativeAmaModule.js",
+      "^@react-native-ama/core$": "<rootDir>/../../packages/core/src/index.ts",
+      "^@react-native-ama/core/(.*)$": "<rootDir>/../../packages/core/$1",
+      "^react-native$": "<rootDir>/../../node_modules/react-native",
+      "^react-native/(.*)$": "<rootDir>/../../node_modules/react-native/$1"
     },
     "verbose": true
   },

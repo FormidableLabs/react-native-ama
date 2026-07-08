@@ -1,5 +1,3 @@
-import { useChecks } from '@react-native-ama/core';
-import { applyStyle } from '@react-native-ama/internal';
 import * as React from 'react';
 import type {
   LayoutChangeEvent,
@@ -10,7 +8,6 @@ import type {
   TextStyle,
   ViewStyle,
 } from 'react-native';
-
 import { TextInputProps } from '../components/TextInput';
 import { UseFormField, useFormField } from './useFormField';
 
@@ -18,9 +15,9 @@ export type UseTextInput = Omit<UseFormField, 'hasFocusCallback'> & {
   onLayout?: (event: LayoutChangeEvent) => void;
   returnKeyType?: ReturnKeyTypeOptions;
   onSubmitEditing?: (
-    event: NativeSyntheticEvent<TextInputSubmitEditingEventData>,
+    event: NativeSyntheticEvent<TextInputSubmitEditingEventData>
   ) => void;
-  accessibilityLabel: string;
+  accessibilityLabel?: string;
   editable?: boolean;
   style?: ViewStyle | StyleProp<TextStyle> | null;
   required: boolean;
@@ -40,15 +37,15 @@ export const useTextInput = ({
   ...rest
 }: UseTextInput) => {
   const [theReturnKeyType, setTheReturnKeyType] = React.useState(
-    returnKeyType || 'next',
+    returnKeyType || 'next'
   );
-  const { style: formFieldStyle, ...formField } = useFormField({
+  const formField = useFormField({
     hasFocusCallback: true,
     ...rest,
   });
 
   const handleOnSubmitEditing = (
-    event: NativeSyntheticEvent<TextInputSubmitEditingEventData>,
+    event: NativeSyntheticEvent<TextInputSubmitEditingEventData>
   ) => {
     onSubmitEditing?.(event);
 
@@ -66,37 +63,6 @@ export const useTextInput = ({
     onLayout?.(event);
   };
 
-  const checks = __DEV__ ? useChecks?.() : undefined;
-
-  __DEV__ &&
-    checks?.noUndefinedProperty({
-      properties: { accessibilityLabel },
-      property: 'accessibilityLabel',
-      rule: 'NO_FORM_LABEL',
-    });
-  __DEV__ &&
-    checks?.noUppercaseStringChecker({
-      text: accessibilityLabel,
-    });
-  __DEV__ &&
-    checks?.noUppercaseStringChecker({
-      text: rest.accessibilityHint,
-    });
-  __DEV__ &&
-    accessibilityLabel?.trim().slice(-1) === '*' &&
-    checks?.logResult('NO_FORM_LABEL_ENDING_WITH_ASTERISK', {
-      rule: 'NO_FORM_LABEL_ENDING_WITH_ASTERISK',
-      message:
-        'Form labels should not end with an asterisk. Please remove it and provide a required message instead.',
-    });
-  __DEV__ &&
-    required &&
-    checks?.noUndefinedProperty({
-      properties: { requiredMessage },
-      property: 'requiredMessage',
-      rule: 'NO_FORM_LABEL_ENDING_WITH_ASTERISK',
-    });
-
   const fullAccessibilityLabel = required
     ? `${accessibilityLabel}, ${requiredMessage}`
     : accessibilityLabel;
@@ -109,20 +75,9 @@ export const useTextInput = ({
     blurOnSubmit: theReturnKeyType === 'done',
   };
 
-  return __DEV__
-    ? {
-        ...rest,
-        ...formField,
-        ...advancedProps,
-        style: applyStyle?.({
-          // @ts-ignore
-          style: formFieldStyle,
-          debugStyle: checks?.debugStyle,
-        }) as any,
-      }
-    : {
-        ...rest,
-        ...formField,
-        ...advancedProps,
-      };
+  return {
+    ...rest,
+    ...formField,
+    ...advancedProps,
+  };
 };

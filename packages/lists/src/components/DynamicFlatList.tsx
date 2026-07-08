@@ -1,6 +1,5 @@
 import React from 'react';
 import { FlatList, FlatListProps } from 'react-native';
-
 import { useDynamicList } from '../hooks/useDynamicList';
 
 type DynamicFlatListProps<T> = FlatListProps<T> & {
@@ -17,7 +16,7 @@ export const DynamicFlatList = React.forwardRef<
     { data, singularMessage, pluralMessage, isPlural, ...rest },
     forwardedRef,
   ) => {
-    const dynamicList = useDynamicList({
+    useDynamicList({
       data: data ?? [],
       pluralMessage,
       singularMessage,
@@ -30,7 +29,7 @@ export const DynamicFlatList = React.forwardRef<
         data={data}
         {...rest}
         ref={forwardedRef}
-        style={dynamicList.style}
+        role="list"
       />
     ) : (
       <FlatList data={data} {...rest} ref={forwardedRef} />

@@ -6,7 +6,7 @@ import Button from './button.png';
 
 # Button
 
-**Guidelines**: [Accessibility Label](/guidelines/accessibility-label), [Accessibility Role](/guidelines/accessibility-role), [Accessibility State](/guidelines/accessibility-state)
+**Guidelines**: [Accessibility Label](/guidelines/accessibility-label), [Accessibility Role](/guidelines/accessibility-role), [Accessibility State](/guidelines/accessibility-states)
 
 For any component that leads to an internal screen, the _button_ [accessibility role](/guidelines/accessibility-role) should be used.
 

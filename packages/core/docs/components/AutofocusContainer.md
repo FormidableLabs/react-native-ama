@@ -5,7 +5,7 @@ It is a utility component that automatically calls the [useFocus](../hooks/useFo
 ## Usage
 
 ```jsx
-import { AutofocusContainer } from 'react-native-ama';
+import { AutofocusContainer } from '@react-native-ama/core';
 
 <AutofocusContainer>{children}</AutofocusContainer>;
 ```
@@ -41,18 +41,30 @@ The label to assign to the wrapping View container.
 
 ### `wrapChildrenInAccessibleView`
 
-Weather or not the child should be wrapped in an accessible View. By default, this is the case.
+Whether or not the children should be wrapped in an accessible View. By default, this is the case.
 
 :::warning
 **Autofocus may not work as expected when this prop is false!**
 
-If `wrapChildrenInAccessibleView` is set to `false` the children of the AutofocusContainer will not be wrapped in an accessible view and **autofocus** will only works if the container contains accessible elements, like Text, Buttons, etc.
+If `wrapChildrenInAccessibleView` is set to `false` the children of the AutofocusContainer will not be wrapped in an accessible view and **autofocus** will only work if the container contains accessible elements, like Text, Buttons, etc.
 
 :::
 
 | Type    | Default |
 | ------- | ------- |
 | boolean | true    |
+
+### `touchableContainerAccessibilityProps`
+
+Accessibility props passed directly to the inner `TouchableWithoutFeedback` wrapper. Useful for accessibility props that are not recognised on the accessible `View` (e.g. `accessibilityActions`, `onAccessibilityAction`).
+
+| Type | Default |
+| ---- | ------- |
+| `Pick<TouchableWithoutFeedbackProps, AccessibilityPropKeys>` | `undefined` |
+
+## Methods
+
+None — this is a declarative component with no imperative API.
 
 ## Related guidelines
 

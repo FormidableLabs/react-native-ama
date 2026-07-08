@@ -1,10 +1,8 @@
-import * as AMAProvider from '@react-native-ama/core';
-import { renderHook } from '@testing-library/react-native';
-import { waitFor } from '@testing-library/react-native';
+import { renderHook, waitFor } from '@testing-library/react-native';
 import * as React from 'react';
-
 import * as Form from '../components/Form';
 import { useFormField } from './useFormField';
+import * as CheckFocusTrapModule from '../utils/checkFocusTrap';
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -16,10 +14,6 @@ describe('useFormField', () => {
   let localRef: any[] = [];
 
   beforeEach(() => {
-    jest.spyOn(AMAProvider, 'useAMAContext').mockReturnValue({
-      isScreenReaderEnabled: true,
-    } as any);
-
     jest.spyOn(Form, 'useForm').mockImplementation(() => {
       return { refs: localRef, submitForm };
     });
@@ -75,51 +69,7 @@ describe('useFormField', () => {
   });
 
   describe('focusNextFormField', () => {
-    describe('Given the form field is not the last of the refs', () => {
-      describe('checks for focus when calling focusNextFormField', function () {
-        it('checks only against the current field if next one does not have the focus callback', async () => {
-          const focus = jest.fn();
-          const ref = { current: { focus, isFocused: jest.fn() } };
-
-          const { result } = renderHook(
-            () => {
-              const first = useFormField({
-                ref: { current: 'random ref' },
-                hasFocusCallback: true,
-                hasValidation: false,
-              });
-
-              // next field
-              useFormField({
-                ref,
-                hasFocusCallback: false,
-                hasValidation: false,
-              });
-
-              return first;
-            },
-            { wrapper: renderHookWrapper },
-          );
-
-          result.current.focusNextFormField();
-
-          await waitFor(() =>
-            expect(checkFocusTrap).toHaveBeenCalledWith({
-              ref: { current: 'random ref' },
-              shouldHaveFocus: false,
-            }),
-          );
-
-          expect(checkFocusTrap).toHaveBeenCalledTimes(1);
-        });
-      });
-    });
-
     it('triggers submitForm when the element is the last one of the ref', async () => {
-      jest.spyOn(AMAProvider, 'useAMAContext').mockReturnValue({
-        isScreenReaderEnabled: true,
-      } as any);
-
       const ref = { current: 'whatever' };
 
       const { result } = renderHook(
@@ -146,38 +96,193 @@ describe('useFormField', () => {
         expect(submitForm).toHaveBeenCalledWith();
       });
     });
+
+    it('calls focusField with the next ref when not the last field', async () => {
+      const focusField = jest.fn();
+      jest.spyOn(Form, 'useForm').mockImplementation(() => ({
+        refs: localRef,
+        submitForm,
+        focusField,
+      }));
+
+      const { result } = renderHook(
+        () => {
+          // first field
+          const first = useFormField({
+            ref: { current: 'first' },
+            hasFocusCallback: false,
+            hasValidation: false,
+          });
+
+          // second field
+          useFormField({
+            ref: { current: 'second' },
+            hasFocusCallback: false,
+            hasValidation: false,
+          });
+
+          return first;
+        },
+        { wrapper: renderHookWrapper },
+      );
+
+      await waitFor(() => {
+        result.current.focusNextFormField();
+        expect(focusField).toHaveBeenCalled();
+      });
+    });
+
+    it('uses nextFormFieldRef when provided', async () => {
+      const focusField = jest.fn();
+      jest.spyOn(Form, 'useForm').mockImplementation(() => ({
+        refs: localRef,
+        submitForm,
+        focusField,
+      }));
+
+      const nextFormFieldRef = { current: 'explicit-next' };
+
+      const { result } = renderHook(
+        () => {
+          const first = useFormField({
+            ref: { current: 'first' },
+            hasFocusCallback: false,
+            hasValidation: false,
+            nextFormFieldRef,
+          });
+
+          useFormField({
+            ref: { current: 'second' },
+            hasFocusCallback: false,
+            hasValidation: false,
+          });
+
+          return first;
+        },
+        { wrapper: renderHookWrapper },
+      );
+
+      await waitFor(() => {
+        result.current.focusNextFormField();
+        expect(focusField).toHaveBeenCalledWith(
+          expect.objectContaining({ ref: nextFormFieldRef }),
+        );
+      });
+    });
+
+    it('calls checkFocusTrap when hasFocusCallback is true and not the last field', async () => {
+      const focusField = jest.fn();
+      const checkFocusTrapSpy = jest.spyOn(CheckFocusTrapModule as { checkFocusTrap: (...args: any[]) => Promise<void> }, 'checkFocusTrap').mockResolvedValue(undefined);
+      jest.spyOn(Form, 'useForm').mockImplementation(() => ({
+        refs: localRef,
+        submitForm,
+        focusField,
+      }));
+
+      const { result } = renderHook(
+        () => {
+          const first = useFormField({
+            ref: { current: 'first' },
+            hasFocusCallback: true,
+            hasValidation: false,
+          });
+
+          useFormField({
+            ref: { current: 'second' },
+            hasFocusCallback: false,
+            hasValidation: false,
+          });
+
+          return first;
+        },
+        { wrapper: renderHookWrapper },
+      );
+
+      await waitFor(() => {
+        result.current.focusNextFormField();
+        expect(checkFocusTrapSpy).toHaveBeenCalledWith(
+          expect.objectContaining({ shouldHaveFocus: false }),
+        );
+      });
+
+      checkFocusTrapSpy.mockRestore();
+    });
+
+    it('does not call checkFocusTrap when hasFocusCallback is false', async () => {
+      const focusField = jest.fn();
+      const checkFocusTrapSpy = jest.spyOn(CheckFocusTrapModule as { checkFocusTrap: (...args: any[]) => Promise<void> }, 'checkFocusTrap').mockResolvedValue(undefined);
+      jest.spyOn(Form, 'useForm').mockImplementation(() => ({
+        refs: localRef,
+        submitForm,
+        focusField,
+      }));
+
+      const { result } = renderHook(
+        () => {
+          const first = useFormField({
+            ref: { current: 'first' },
+            hasFocusCallback: false,
+            hasValidation: false,
+          });
+
+          useFormField({
+            ref: { current: 'second' },
+            hasFocusCallback: false,
+            hasValidation: false,
+          });
+
+          return first;
+        },
+        { wrapper: renderHookWrapper },
+      );
+
+      await waitFor(() => {
+        result.current.focusNextFormField();
+        expect(checkFocusTrapSpy).not.toHaveBeenCalled();
+      });
+
+      checkFocusTrapSpy.mockRestore();
+    });
+
+    it('uses nextFieldId to find the next ref when provided', async () => {
+      const focusField = jest.fn();
+      jest.spyOn(Form, 'useForm').mockImplementation(() => ({
+        refs: localRef,
+        submitForm,
+        focusField,
+      }));
+
+      const { result } = renderHook(
+        () => {
+          const first = useFormField({
+            ref: { current: 'first' },
+            hasFocusCallback: false,
+            hasValidation: false,
+            nextFieldId: 'second-field',
+          });
+
+          useFormField({
+            ref: { current: 'second' },
+            hasFocusCallback: false,
+            hasValidation: false,
+            id: 'second-field',
+          });
+
+          return first;
+        },
+        { wrapper: renderHookWrapper },
+      );
+
+      await waitFor(() => {
+        result.current.focusNextFormField();
+        expect(focusField).toHaveBeenCalledWith(
+          expect.objectContaining({ id: 'second-field' }),
+        );
+      });
+    });
   });
 });
 
-let setFocus: jest.Mock;
-let checkFocusTrap: jest.Mock;
-
-function mockAMACore() {
-  const original = jest.requireActual('@react-native-ama/core');
-
-  setFocus = jest.fn();
-
-  return {
-    ...original,
-    useFocus: () => {
-      return {
-        setFocus,
-      };
-    },
-  };
-}
-
-function mockAMAInternal() {
-  const original = jest.requireActual('@react-native-ama/internal');
-
-  checkFocusTrap = jest.fn().mockResolvedValue(null);
-
-  return { ...original, checkFocusTrap };
-}
-
-const renderHookWrapper = ({ children }) => (
-  <AMAProvider.AMAProvider>{children}</AMAProvider.AMAProvider>
+const renderHookWrapper = ({ children }: { children: React.ReactNode }) => (
+  <>{children}</>
 );
-
-jest.mock('@react-native-ama/core', () => mockAMACore());
-jest.mock('@react-native-ama/internal', () => mockAMAInternal());

@@ -2,7 +2,7 @@ import { Required } from '@site/src/components';
 
 # Form
 
-The `<Form />` component provides a "local" context for the [`TextInput`](./TextInput.mdx), [`FormField`](./FormField.md) and [`SwitchListItem`](/react-native/SwitchListItem) components.
+The `<Form />` component provides a "local" context for the [`TextInput`](./TextInput.mdx), [`FormField`](./FormField.md) and `SwitchListItem` components.
 
 The provider hosts the `ref` values used by the [TextInput](./TextInput.mdx) to know which [`returnKey`](./TextInput.mdx#returnkeytype) and what would be the next field to focus.
 
@@ -18,7 +18,6 @@ The provider hosts the `ref` values used by the [TextInput](./TextInput.mdx) to 
 
 ```jsx
 import { Form, TextInput } from '@react-native-ama/forms';
-import { SwitchListItem } from '@react-native-ama/react-native';
 
 const ExampleForm = () => {
   return (
@@ -46,8 +45,8 @@ const ExampleForm = () => {
         defaultValue={text}
         label={<Text>Email address:</Text>}
       />
-      <FormSubmit accessibilityLabel="Submit">
-        <CustomSubmitButton />
+      <FormSubmit>
+        {({ onPress }) => <CustomSubmitButton onPress={onPress} />}
       </FormSubmit>
     </Form>
   );

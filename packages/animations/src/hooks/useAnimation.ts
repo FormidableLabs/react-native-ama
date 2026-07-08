@@ -1,5 +1,5 @@
-import { useAMAContext } from '@react-native-ama/core';
-import { interpolateAnimationStates } from '@react-native-ama/internal';
+import { useAMAContextSafe } from '../internals/useAMAContextSafe';
+import { interpolateAnimationStates } from '../internals/animationStates';
 import * as React from 'react';
 import type { ViewStyle } from 'react-native';
 import { Animated } from 'react-native';
@@ -19,7 +19,7 @@ export const useAnimation = ({
   to,
   skipIfReduceMotionEnabled = false,
 }: UseAnimation) => {
-  const { isReduceMotionEnabled } = useAMAContext();
+  const { isReduceMotionEnabled } = useAMAContextSafe();
   const progress = React.useRef(new Animated.Value(0)).current;
   const reduceMotionProgress = React.useRef(new Animated.Value(0)).current;
   const hasOnlyMotionAnimation = React.useRef(false);

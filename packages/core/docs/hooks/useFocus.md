@@ -11,9 +11,25 @@ import { useFocus } from '@react-native-ama/core';
 const { setFocus } = useFocus(refComponent);
 ```
 
-- **refComponent**: _(Optional)_ Is the [React Ref](https://reactjs.org/docs/refs-and-the-dom.html) of the component we
-  want to autofocus on mount
-- **setFocus**: Allows to focus an element programmatically
+## Parameters
+
+### `refComponent` _(optional)_
+
+A [React Ref](https://reactjs.org/docs/refs-and-the-dom.html) of the component to autofocus when the hook mounts. When provided, `setFocus` is called automatically on mount.
+
+| Type | Default |
+| ---- | ------- |
+| `React.RefObject<any>` | `undefined` |
+
+## Returns
+
+### `setFocus`
+
+Focuses an element programmatically. Waits for any pending interactions to complete before setting accessibility focus, and retries once after 100 ms to work around a React Native focus reliability issue.
+
+```ts
+setFocus(component: null | number | React.Component<any> | React.ComponentClass<any>): void
+```
 
 ## Example
 
@@ -46,7 +62,6 @@ const MyFancyScreen = () => {
 
 ```tsx
 import { useFocus } from '@react-native-ama/core';
-import { Pressable } from '@react-native-ama/react-native';
 import * as React from 'react';
 import { Text } from 'react-native';
 

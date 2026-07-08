@@ -18,7 +18,7 @@ npm install @react-native-ama/forms
 
 ## Usage
 
-Each form needs to be wrapped by the [Form](/forms/form) provider.
+Each form needs to be wrapped by the [Form](/forms/Form) provider.
 
 ```jsx
 <Form onSubmit={handleSubmit} ref={ref}>

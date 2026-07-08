@@ -1,5 +1,5 @@
-import { useAMAContext } from '@react-native-ama/core';
-import type { MotionAnimationKey } from '@react-native-ama/internal';
+import type { MotionAnimationKey } from '../internals/animationConstants';
+import { useAMAContextSafe } from '../internals/useAMAContextSafe';
 import React from 'react';
 import {
   AnimationCallback,
@@ -8,11 +8,10 @@ import {
   WithSpringConfig,
   WithTimingConfig,
 } from 'react-native-reanimated';
-
 import { isMotionAnimation } from '../utils/isMotionAnimation';
 
 export const useReanimatedTiming = () => {
-  const { isReduceMotionEnabled } = useAMAContext();
+  const { isReduceMotionEnabled } = useAMAContextSafe();
 
   const withTiming = React.useCallback(
     (

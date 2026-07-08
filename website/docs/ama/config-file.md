@@ -20,130 +20,97 @@ The library does not perform any accessibility checks on the production build!
 
 **AMA** guidelines are categorised as:
 
-- <Must /> and <MustNot />: Those best practices are <b>enforced</b> and AMA overlays an error when fail
-- <Should /> and <ShouldNot />: Those best practices are <b>preferred</b> and AMA prints only prints a warning message when fail
+- <Must /> and <MustNot />: Those best practices are <b>enforced</b> and AMA overlays an error when they fail
+- <Should /> and <ShouldNot />: Those best practices are <b>preferred</b> and AMA prints only a warning message when they fail
 
 The possible log levels are:
 
-- **error**: The **AMA** error overlay when a check fails
+- **error**: The **AMA** error overlay is shown when a check fails
 - **warn**: A `console.warn` is performed when a check fails
 
-### AMA Rules
+### ama.config rules
 
-| Log key                                                             | Guideline   | Default | Can override |
-| ------------------------------------------------------------------- | ----------- | ------- | ------------ |
-| [BOTTOM_SHEET_CLOSE_ACTION](/guidelines/bottomsheet)                | <Must />    | error   | <Yes />      |
-| [CONTRAST_FAILED](/guidelines/contrast)                             | <Must />    | error   | <Yes />      |
-| [CONTRAST_FAILED_AAA](/guidelines/contrast)                         | <Should />  | warn    | <Yes />      |
-| [FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE](/guidelines/lists-grids)    | <Should />  | warn    | <Yes />      |
-| [FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE](/guidelines/lists-grids)      | <Must />    | error   | <Yes />      |
-| [MINIMUM_SIZE](/guidelines/minimum-size)                            | <Must />    | error   | <Yes />      |
-| [NO_ACCESSIBILITY_LABEL](/guidelines/accessibility-label)[^1]       | <Must />    | error   | <No />       |
-| [NO_ACCESSIBILITY_ROLE](/guidelines/accessibility-rol) [^1]         | <Must />    | error   | <No />       |
-| [NO_FORM_LABEL](/guidelines/forms)                                  | <Must />    | error   | <Yes />      |
-| [NO_FORM_ERROR](/guidelines/forms)                                  | <Must />    | error   | <Yes />      |
-| [NO_KEYBOARD_TRAP](/guidelines/keyboard-trap) [^1]                  | <MustNot /> | error   | <No />       |
-| [UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL](/guidelines/uppercase-text) | <MustNot /> | error   | <Yes />      |
-| [NO_UPPERCASE_TEXT](/guidelines/uppercase-text)                     | <MustNot /> | error   | <Yes />      |
+| Log key | Guideline | Default | Can override |
+| ------- | --------- | ------- | ------------ |
+| [BOTTOM_SHEET_CLOSE_ACTION](/guidelines/bottomsheet) | <Must /> | error | <No /> |
+| [CONTRAST_FAILED](/guidelines/contrast) | <Must /> | error | <Yes /> |
+| [CONTRAST_FAILED_AAA](/guidelines/contrast) | <Should /> | warn | <Yes /> |
+| [FLATLIST_NO_COUNT_IN_SINGULAR_MESSAGE](/guidelines/lists-grids) | <Should /> | warn | <Yes /> |
+| [FLATLIST_NO_COUNT_IN_PLURAL_MESSAGE](/guidelines/lists-grids) | <Must /> | error | <No /> |
+| IMAGE_MISSING_ALT_TEXT | <Must /> | error | <Yes /> |
+| [INCOMPATIBLE_ACCESSIBILITY_ROLE](/guidelines/accessibility-role) | <MustNot /> | error | <No /> |
+| [INCOMPATIBLE_ACCESSIBILITY_STATE](/guidelines/accessibility-role) | <Must /> | error | <No /> |
+| [INPUT_HAS_FOCUSABLE_LABEL](/guidelines/forms) | <Must /> | error | <Yes /> |
+| [INPUT_HAS_NO_VISIBLE_LABEL](/guidelines/forms) | <Must /> | error | <No /> |
+| [INPUT_HAS_NO_VISIBLE_LABEL_ENDING_WITH_ASTERISK](/guidelines/forms) | <MustNot /> | error | <Yes /> |
+| [INPUT_INVALID_RETURN_KEY](/guidelines/forms) | <Must /> | error | <Yes /> |
+| [LONG_NUMBER_NOT_FORMATTED](/guidelines/text#long_number_not_formatted-) | <ShouldNot /> | warn | <Yes /> |
+| [MINIMUM_SIZE](/guidelines/minimum-size) | <Must /> | error | <Yes /> |
+| [NO_ACCESSIBILITY_LABEL](/guidelines/accessibility-label) [^1] | <Must /> | error | <No /> |
+| [NO_ACCESSIBILITY_ROLE](/guidelines/accessibility-role) [^1] | <Must /> | error | <No /> |
+| [NO_ACCESSIBILITY_STATE_SET](/guidelines/accessibility-states) | <Must /> | error | <Yes /> |
+| [NO_FORM_ERROR](/guidelines/forms) | <Must /> | error | <Yes /> |
+| [NO_HEADER_FOUND](/guidelines/headers) | <Must /> | error | <No /> |
+| [NO_KEYBOARD_TRAP](/guidelines/forms#keyboard-trap) [^1] | <MustNot /> | error | <No /> |
+| [NO_UNDEFINED](/guidelines/accessibility-label) [^1] | <MustNot /> | error | <No /> |
+| [NO_UPPERCASE_ACCESSIBILITY_LABEL](/guidelines/accessibility-label) | <ShouldNot /> | warn | <Yes /> |
+| [NO_UPPERCASE_TEXT](/guidelines/text#no_uppercase_text-) | <MustNot /> | error | <Yes /> |
+| [UPPERCASE_TEXT_NO_ACCESSIBILITY_LABEL](/guidelines/text#uppercase_text_no_accessibility_label-) | <MustNot /> | error | <Yes /> |
 
 :::note
 
-Rules marked with <No /> are considered bad practices and cannot be turned off!
+Rules marked with <No /> are considered essential practices and cannot be turned off.
 :::
 
 ## Customizing the Log Levels
 
-A JSON file called `ama.config.json` should have been automatically generated in the project's root folder (If it didn't simply create it). This file is used to customize the log rules, then specify the custom log level for the wanted key. `accessibilityLabelExceptions` can also be specified in this file. Any changes to this file will automatically be picked up by AMA's config and applied to the applications warnings and errors in Dev mode. (You will need to restart your application to see the changes applied)
-
-<p id="monorepo-options">
-:::warning
-If you are running a monorepo setup this file won't automatically generate and you will have two options customize AMA's config.
-
-<details>
-  <summary>Options for monorepos (Expand me)</summary>
-
-You have two options to add `userDefinedRules` to AMA's config:
-
-- You can create a symlink to the `ama.rules.json` file in the root of your project _(recommended)_
-- You can create a new `ama.rules.json` file in the root of your project and copy this file over the `ama.rules.json` file in `@react-native-ama/internal` package every time you make changes to it.
-  (This will also need to be done every time you update or delete and reinstall AMA node_modules)
-
-**Option 1:** _(recommended)_
-
-To create a symlink to the `ama.rules.json` file in the root of your project, run the following command:
-
-```bash
-
-# In the root of your App or root of your project create a symlink to the ama.rules.json file
-# Adjust the file path as needed depending on where the ama.rules.json file is located in your monorepo relative to the root of your project
-ln -s node_modules/@react-native-ama/internal/ama.rules.json ./ama.rules.json
-```
-
-**Option 2:**
-
-To create a new `ama.rules.json` file in the root of your project, run the following command:
-
-```bash
-# In the root of your App or root of your project
-# Adjust the file path as needed depending on where the ama.rules.json file is located in your monorepo relative to the root of your project
-cp node_modules/@react-native-ama/internal/ama.rules.json ./ama.rules.json
-```
-
-Don't forget if you make changes to the `ama.rules.json` file in the root you will need to copy the changes over to the `ama.rules.json` file in the `@react-native-ama/internal` package of your project.
-
-```bash
-# In the root of your App or root of your project
-# Adjust the file path as needed depending on where the ama.rules.json file is located in your monorepo relative to the root of your project
-cp ama.rules.json node_modules/@react-native-ama/internal/ama.rules.json
-
-# Restart your application to see the changes
-```
-
-</details>
-
-:::
-
-</p>
+A JSON file called `ama.config.json` should have been automatically generated in the project's root folder (if it didn't, simply create it). Specify the custom log level for the keys you want to override. Any changes to this file are automatically picked up by AMA in dev mode — you will need to restart your application to see them applied.
 
 ### Example
 
 The JSON file does not need to contain all log keys. **AMA** uses the default rule if a key is not present:
 
-```json title="ama.rules.json"
-{
-  rules: {
-    "CONTRAST_FAILED": "warn",
-    "CONTRAST_CHECKER_MAX_DEPTH": 0,
-  }
-  "accessibilityLabelExceptions": ["FAQ"]
-}
-```
-
-### Constants
-
-Elements that perform a contrast check do it on all the children up to the level specified by `CONTRAST_CHECKER_MAX_DEPTH`.
-
-| Constant key               | Default value |
-| -------------------------- | ------------- |
-| CONTRAST_CHECKER_MAX_DEPTH | 5             |
-
-```json title="ama.rules.json"
+```json title="ama.config.json"
 {
   "rules": {
+    "CONTRAST_FAILED": "warn",
     "CONTRAST_CHECKER_MAX_DEPTH": 0
+  },
+  "accessibilityLabelExceptions": ["FAQ"],
+  "highlight": {
+    "mode": "border",
+    "borderWidth": 2,
+    "gap": 8
+  },
+  "log": "always",
+  "uppercaseMinLength": 5,
+  "checks": {
+    "ui": true,
+    "forms": true,
+    "delay": 300
   }
 }
 ```
 
-:::tip
-This can be turned off by specifying a level of **0**
-:::
+## Configuration keys
+
+### rules
+
+Per-rule severity overrides. Each key is an `AmaRule` string (see table above) and each value is one of:
+
+| Value | Effect |
+| ----- | ------ |
+| `"MUST"` / `"MUST_NOT"` | Triggers the AMA error overlay |
+| `"SHOULD"` / `"SHOULD_NOT"` | Prints a `console.warn` |
+| `"PLEASE_FORGIVE_ME"` | Silences the rule entirely |
+
+Non-overridable rules (marked <No /> in the table) ignore any value set here.
 
 ### accessibilityLabelExceptions
 
-**AMA** performs various checks, including one for [uppercase](/guidelines/uppercase). This rule allows specifying a list of approved all-caps accessibility labels.
+**AMA** performs various checks, including one for [uppercase](/guidelines/text#no_uppercase_accessibility_label-). This key allows specifying a list of approved all-caps accessibility labels that should not trigger the uppercase rule.
 
-```json title="ama.rules.json"
+```json title="ama.config.json"
 {
   "accessibilityLabelExceptions": ["FAQ"]
 }
@@ -151,7 +118,108 @@ This can be turned off by specifying a level of **0**
 
 :::note
 
-The key `accessibilityLabelExceptions` is not nested under the `rules` key as the above values must be.
+`accessibilityLabelExceptions` is a top-level key, not nested under `rules`.
 :::
+
+### highlight
+
+Controls how AMA visually marks failing elements in the dev overlay.
+
+| Key | Type | Default | Description |
+| --- | ---- | ------- | ----------- |
+| `mode` | `"border"` \| `"background"` \| `"both"` | `"both"` | Whether to outline, fill, or both when highlighting a failing element |
+| `borderWidth` | number | `3` | Width of the highlight border in dp |
+| `gap` | number | `4` | Minimum gap between highlighted elements in dp |
+
+```json title="ama.config.json"
+{
+  "highlight": {
+    "mode": "border",
+    "borderWidth": 2,
+    "gap": 8
+  }
+}
+```
+
+### log
+
+Controls when AMA logs accessibility issues to the console.
+
+| Value | Behaviour |
+| ----- | --------- |
+| `"inspect"` _(default)_ | Logs only when the AMA inspector is open |
+| `"always"` | Always logs to the console in dev mode |
+
+```json title="ama.config.json"
+{
+  "log": "always"
+}
+```
+
+### uppercaseMinLength
+
+The minimum number of characters a text string must have before the uppercase rule (`NO_UPPERCASE_TEXT`) is applied. Strings shorter than this value are not checked for uppercase.
+
+| Type | Default |
+| ---- | ------- |
+| number | `4` |
+
+```json title="ama.config.json"
+{
+  "uppercaseMinLength": 5
+}
+```
+
+### longNumberMinLength
+
+The minimum length of a consecutive run of unformatted digits before the long-number rule (`LONG_NUMBER_NOT_FORMATTED`) is applied. Digit runs shorter than this value are not flagged. Formatted numbers (with spaces, dashes, or parentheses breaking up the digits) are never flagged, regardless of their total length.
+
+| Type | Default |
+| ---- | ------- |
+| number | `12` |
+
+```json title="ama.config.json"
+{
+  "longNumberMinLength": 10
+}
+```
+
+### checks
+
+Feature gates that enable or disable categories of AMA runtime checks.
+
+| Key | Type | Default | Description |
+| --- | ---- | ------- | ----------- |
+| `ui` | boolean | `true` | Enable UI interaction checks |
+| `forms` | boolean | `true` | Enable form and node checks |
+| `delay` | number | `1000` | Milliseconds to wait before re-checking after an interaction |
+
+```json title="ama.config.json"
+{
+  "checks": {
+    "ui": true,
+    "forms": true,
+    "delay": 300
+  }
+}
+```
+
+## Constants
+
+These values are set inside the `rules` object and control internal check behaviour rather than rule severity.
+
+| Constant key | Default | Description |
+| ------------ | ------- | ----------- |
+| `CONTRAST_CHECKER_MAX_DEPTH` | `5` | How many levels deep AMA checks children for contrast. Set to `0` to disable contrast checking entirely. |
+| `IGNORE_CONTRAST_FOR_DISABLED_ELEMENTS` | `false` | When `true`, contrast checks are skipped for elements that are disabled. |
+
+```json title="ama.config.json"
+{
+  "rules": {
+    "CONTRAST_CHECKER_MAX_DEPTH": 0,
+    "IGNORE_CONTRAST_FOR_DISABLED_ELEMENTS": true
+  }
+}
+```
 
 [^1]: The rule cannot be overridden

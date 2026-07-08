@@ -10,12 +10,12 @@ displayed_sidebar: guidelines
 
 <AMASection />
 
-When dealing with Drawers/BottomSheets, we need to take care of:
+A bottom sheet (or drawer) is a panel that slides up from the bottom of the screen to present additional content or actions. When one opens, four things must be handled correctly for accessible navigation:
 
-1. Check if animations are enabled
-1. Handling the focus
-1. Can be dismissed
-1. Focus stays inside it
+1. Animations respect the user's motion preference
+2. Focus moves into the sheet automatically
+3. The sheet can be dismissed without relying on a drag gesture
+4. Focus stays inside the sheet while it is open
 
 ## Expectations
 
@@ -25,6 +25,8 @@ When dealing with Drawers/BottomSheets, we need to take care of:
     </When>
 </ReduceMotion>
 
+---
+
 <ScreenReader>
     <When title="The BottomSheet/Drawer is displayed">
         <Then title="The first element inside it should receive the focus">
@@ -33,6 +35,16 @@ When dealing with Drawers/BottomSheets, we need to take care of:
         </Then>
     </When>
 </ScreenReader>
+
+---
+
+<VoiceControl>
+    <When title="The BottomSheet/Drawer is displayed">
+        <Then title="Only elements inside the sheet are targetable by voice commands">
+            <And noChildren>A labelled close control must be present so the user can dismiss the sheet by voice</And>
+        </Then>
+    </When>
+</VoiceControl>
 
 ### 1. Animations
 
@@ -50,6 +62,33 @@ If the BottomSheet/Drawer can be closed by dragging, ensure there's also a close
 
 Ensure that when the BottomSheet/Drawer is open, the user's focus is restricted to its content. Elements beneath it should not be accessible to prevent confusion, ensuring that the user can only navigate within its content.
 
+## Best Practices
+
+### Always provide a non-gesture dismiss path
+
+Drag-to-dismiss is a motor gesture that screen reader and switch-access users cannot perform. Provide a labelled close button, or make the overlay tappable to dismiss.
+
+```jsx
+<BottomSheet>
+  <Pressable accessibilityLabel="Close" accessibilityRole="button" onPress={close}>
+    <CloseIcon />
+  </Pressable>
+  {/* sheet content */}
+</BottomSheet>
+```
+
+### Move focus to the first interactive element on open
+
+When the sheet appears, shift focus to the first actionable element inside it. Users should not have to navigate past the rest of the screen to reach the sheet's content.
+
+### Trap focus while the sheet is open
+
+Focus must not reach elements beneath the sheet. The simplest way to guarantee this is to back the sheet with a React Native `Modal` — it handles focus containment on both platforms automatically.
+
+### Use the AMA BottomSheet component
+
+AMA's `BottomSheet` handles focus management, focus trapping, and Reduce Motion automatically. Prefer it over a custom implementation.
+
 ## Related AMA components
 
-- [BottomSheet](../components/bottomsheet)
+- [BottomSheet](/bottom-sheet/components/BottomSheet)

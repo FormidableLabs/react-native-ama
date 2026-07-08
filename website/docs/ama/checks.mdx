@@ -1,0 +1,149 @@
+---
+displayed_sidebar: docs
+---
+
+# Native Accessibility Checks
+
+This page details the complete set of accessibility checks that AMA automatically runs on your app to help identify and resolve common issues.
+AMA currently supports 13 rules:
+
+## Pressable element checks
+
+<CardContainer>
+	<Card shadow='tl'>
+		<CardHeader>
+			<h3>Missing accessibility role</h3>
+		</CardHeader>
+		<CardBody>This issue is reported when a Pressable element does not specify an ```aria-role``` attribute.</CardBody>
+	</Card>
+
+  <Card shadow='tl'>
+		<CardHeader>
+			<h3>Missing accessibility label</h3>
+		</CardHeader>
+		<CardBody>This issue is reported when a Pressable component has no visible text and does not define an ```aria-label``` attribute.</CardBody>
+	</Card>
+
+  <Card shadow='tl'>
+		<CardHeader>
+			<h3>Contrast ratio too low</h3>
+		</CardHeader>
+		<CardBody>This issue is reported when a Pressable does not have sufficient contrast between its text and background color.</CardBody>
+	</Card>
+
+  <Card shadow='tl'>
+		<CardHeader>
+			<h3>Tappable area too small</h3>
+		</CardHeader>
+		<CardBody>This issue is reported when a Pressable element has a tap target smaller than the recommended size.</CardBody>
+	</Card>
+
+  <Card shadow='tl'>
+		<CardHeader>
+			<h3>Text in all caps</h3>
+		</CardHeader>
+		<CardBody>This issue is reported when a Pressable uses all-caps text and does not define a properly cased ```aria-label```.</CardBody>
+	</Card>
+
+  <Card shadow='tl'>
+		<CardHeader>
+			<h3>Accessibility label in all caps</h3>
+		</CardHeader>
+		<CardBody>This issue is reported when a Pressable element has an ```aria-label``` written entirely in capital letters.</CardBody>
+	</Card>
+
+</CardContainer>
+
+## Text element checks
+
+<CardContainer>
+
+  <Card shadow='tl'>
+		<CardHeader>
+			<h3>Contrast ratio too low</h3>
+		</CardHeader>
+		<CardBody>This issue is reported when a Text element does not have sufficient contrast between its text and background color.</CardBody>
+	</Card>
+
+  <Card shadow='tl'>
+		<CardHeader>
+			<h3>Text in all caps</h3>
+		</CardHeader>
+		<CardBody>This issue is reported when a Text element uses all-caps text and does not define a properly cased ```aria-label```.</CardBody>
+	</Card>
+
+  <Card shadow='tl'>
+		<CardHeader>
+			<h3>No headings used</h3>
+		</CardHeader>
+		<CardBody>This issue is reported when no elements on the screen are marked with an ```aria-role``` of **heading**.</CardBody>
+	</Card>
+
+</CardContainer>
+
+## UI Interactions
+
+<CardContainer>
+
+  <Card shadow='tl'>
+		<CardHeader>
+			<h3>Missing accessibility state handling</h3>
+		</CardHeader>
+		<CardBody>
+		This issue is reported when an interactive element changes state but the corresponding ARIA state is not updated.
+
+		Examples include:
+			- aria-checked
+			- aria-expanded
+			- aria-selected
+			- aria-disabled
+			- aria-busy
+    &nbsp; 
+		</CardBody>
+	</Card>
+
+</CardContainer>
+
+## Forms
+
+
+<CardContainer>
+
+  <Card shadow='tl'>
+		<CardHeader>
+			<h3>Return key not handled</h3>
+		</CardHeader>
+		<CardBody>
+This issue is reported when a form field does not handle the keyboard return action, preventing focus from moving to the next field.
+		</CardBody>
+	</Card>
+
+  <Card shadow='tl'>
+		<CardHeader>
+			<h3>Missing visible label</h3>
+		</CardHeader>
+		<CardBody>
+This issue is reported when a form field has no visible text label associated with it.
+		</CardBody>
+	</Card>
+
+  <Card shadow='tl'>
+		<CardHeader>
+			<h3>Duplicate accessible name</h3>
+		</CardHeader>
+		<CardBody>
+This issue is reported when a form field exposes both a visible label and an `aria-label` with the same value, resulting in a duplicated accessible name.
+		</CardBody>
+	</Card>
+
+
+  <Card shadow='tl'>
+		<CardHeader>
+			<h3>Keyboard focus trap</h3>
+		</CardHeader>
+		<CardBody>
+This issue is reported when focus does not move away from a form field after the user taps the keyboard **next** button, trapping the user in that field.
+		</CardBody>
+	</Card>
+</CardContainer>
+

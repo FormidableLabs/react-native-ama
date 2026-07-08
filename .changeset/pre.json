@@ -1,0 +1,12 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "@react-native-ama/animations": "1.2.1",
+    "@react-native-ama/bottom-sheet": "1.2.1",
+    "@react-native-ama/core": "1.2.1",
+    "@react-native-ama/forms": "1.2.1",
+    "@react-native-ama/lists": "1.2.1"
+  },
+  "changesets": []
+}

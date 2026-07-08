@@ -1,0 +1,104 @@
+{
+  "name": "@react-native-ama/bottom-sheet",
+  "version": "1.2.1",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "react-native": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./BottomSheet": {
+      "types": "./dist/components/BottomSheet.d.ts",
+      "default": "./dist/components/BottomSheet.js"
+    },
+    "./useBottomSheetGestureHandler": {
+      "types": "./dist/hooks/useBottomSheetGestureHandler.d.ts",
+      "default": "./dist/hooks/useBottomSheetGestureHandler.js"
+    },
+    "./useKeyboard": {
+      "types": "./dist/hooks/useKeyboard.d.ts",
+      "default": "./dist/hooks/useKeyboard.js"
+    }
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && tsc -p ./tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "jest"
+  },
+  "peerDependencies": {
+    "@react-native-ama/core": "~2.0.0",
+    "react": "*",
+    "react-native": ">=0.62.0",
+    "react-native-gesture-handler": ">=2.0.0",
+    "react-native-reanimated": ">=2.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@react-native-ama/core": {
+      "optional": true
+    }
+  },
+  "keywords": [
+    "react-native",
+    "accessibility"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FormidableLabs/react-native-ama",
+    "directory": "packages/bottom-sheet"
+  },
+  "bugs": {
+    "url": "https://github.com/FormidableLabs/react-native-ama/issues"
+  },
+  "homepage": "https://github.com/FormidableLabs/react-native-ama#readme",
+  "publishConfig": {
+    "provenance": true
+  },
+  "author": "",
+  "license": "MIT",
+  "jest": {
+    "preset": "react-native",
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.js"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/node_modules",
+      "<rootDir>/dist/"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!src/index.ts"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 80,
+        "branches": 77,
+        "functions": 70,
+        "lines": 80
+      }
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!(react-native-reanimated|react-native-gesture-handler|expo|@expo)/)"
+    ],
+    "transform": {
+      "\\.[jt]sx?$": "babel-jest"
+    },
+    "moduleDirectories": [
+      "node_modules",
+      "../../playground/node_modules"
+    ],
+    "moduleNameMapper": {
+      "@react-native/js-polyfills/error-guard": "<rootDir>/../../jest-mocks/error-guard.js",
+      "^(\\.{1,2}/)*ama\\.config\\.json$": "<rootDir>/../../jest-mocks/ama-config.js",
+      "^(\\.{1,2}/)*ReactNativeAmaModule$": "<rootDir>/../../jest-mocks/ReactNativeAmaModule.js",
+      "^(\\.{1,2}/)*ReactNativeAmaView(\\.web)?$": "<rootDir>/../../jest-mocks/ReactNativeAmaModule.js",
+      "^@react-native-ama/core$": "<rootDir>/../../jest-mocks/ama-core.js",
+      "^@react-native-ama/core/(.*)$": "<rootDir>/../../packages/core/$1"
+    },
+    "verbose": true
+  }
+}

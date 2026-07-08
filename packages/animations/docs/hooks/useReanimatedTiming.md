@@ -1,34 +1,33 @@
 # useReanimatedTiming
 
-This hooks allow using custom [withTiming](#withtiming) and `withSpring` functions that are reduce motion aware.
+A hook that provides reduce-motion-aware `withTiming` and `withSpring` functions for [Reanimated](https://docs.swmansion.com/react-native-reanimated/) animations.
 
 ## Usage
 
 ```js
-import { useReanimatedTiming } from 'react-native-ama';
+import { useReanimatedTiming } from '@react-native-ama/animations';
 
-const { withTiming, withSrping } = useReanimatedTiming();
+const { withTiming, withSpring } = useReanimatedTiming();
 ```
+
+## Parameters
+
+None — the hook reads `isReduceMotionEnabled` from the AMA context automatically.
+
+## Returns
+
+| Property | Type | Description |
+| -------- | ---- | ----------- |
+| `withTiming` | function | Reduce-motion-aware wrapper around Reanimated's `withTiming` |
+| `withSpring` | function | Reduce-motion-aware wrapper around Reanimated's `withSpring` |
 
 ## Example
 
 ```tsx
-import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
-import {
-  ClickableSpan,
-  Span,
-  isMotionAnimation,
-  useAMAContext,
-  useAnimationDuration,
-  useReanimatedTiming,
-} from 'react-native-ama';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-} from 'react-native-reanimated';
+import { useReanimatedTiming } from '@react-native-ama/animations';
+import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 
-export const ReanimatedReduceMotionScreen = () => {
+const Example = () => {
   const value = useSharedValue(0);
   const { withTiming, withSpring } = useReanimatedTiming();
 
@@ -47,75 +46,34 @@ export const ReanimatedReduceMotionScreen = () => {
   };
 
   return (
-    <View style={styles.view}>
-      <Span style={styles.intro}>
-        This example shows how to use the{' '}
-        <ClickableSpan onPress={() => {}}>getAnimationDuration</ClickableSpan>{' '}
-        with Reanimated for a more accessible animations.
-      </Span>
-      <Animated.View style={[styles.box, animatedStyles]} />
-
-      <Pressable onPress={testWithTiming}>
-        <Text>withTiming</Text>
-      </Pressable>
-      <Pressable onPress={testWithSpring}>
-        <Text>withSpring</Text>
-      </Pressable>
-    </View>
+    <Animated.View style={animatedStyles} />
   );
 };
-
-const styles = StyleSheet.create({
-  view: {
-    paddingHorizontal: theme.padding.big,
-  },
-  box: {
-    width: 100,
-    height: 100,
-    borderRadius: 20,
-    backgroundColor: theme.color.mixed,
-  },
-  intro: {
-    lineHeight: theme.lineHeight.medium,
-  },
-});
 ```
 
 ## withTiming
 
-Under the hood calls the
-reanimated [withTiming](https://docs.swmansion.com/react-native-reanimated/docs/animations/withTiming) function.
-
-If the given `propertyKey` is a motion one and [reduce motion](/core/hooks/useAMAContext#isreducemotionenabled) is enabled, the
-force the duration to be 0, before calling `withTiming`.
+Wraps Reanimated's [withTiming](https://docs.swmansion.com/react-native-reanimated/docs/animations/withTiming). When `propertyKey` is a motion property and [Reduce Motion](/core/hooks/useAMAContext#isreducemotionenabled) is enabled, forces `duration` to `0`.
 
 ### Syntax
 
-```js
+```ts
 withTiming(
-    propertyKey
-:
-keyof
-ViewStyle,
-    toValue
-:
-number,
-    config
-:
-WithTimingConfig = {},
-    callback ? : AnimationCallback
-)
-;
+  propertyKey: MotionAnimationKey,
+  toValue: number,
+  config?: WithTimingConfig,
+  callback?: AnimationCallback,
+): number
 ```
 
-| Property    | Description                                                                                                                                                    |
-| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| propertyKey | The animation key that will be used with the `useSharedValue`                                                                                                  |
-| toValue     | The [target value](https://docs.swmansion.com/react-native-reanimated/docs/animations/withTiming#tovalue-number) parameter passed to the original `withTiming` |
-| config      | The [config](https://docs.swmansion.com/react-native-reanimated/docs/animations/withTiming#config-) parameter passed to the original `withTiming`              |
-| callback    | The [callback](https://docs.swmansion.com/react-native-reanimated/docs/animations/withTiming#callback-) parameter passed to the original `withTiming`          |
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| `propertyKey` | `MotionAnimationKey` | The animated style property (e.g. `'translateX'`). Motion properties get `duration=0` when reduce motion is on. |
+| `toValue` | `number` | Target value, passed to Reanimated's `withTiming`. |
+| `config` | `WithTimingConfig` | Optional timing config. |
+| `callback` | `AnimationCallback` | Optional completion callback. |
 
-#### Example
+### Example
 
 ```js
 value.value = withTiming('translateX', Math.random(), { duration: 300 });
@@ -123,37 +81,27 @@ value.value = withTiming('translateX', Math.random(), { duration: 300 });
 
 ## withSpring
 
-Under the hood calls the
-reanimated [withSpring](https://docs.swmansion.com/react-native-reanimated/docs/animations/withSpring) function.
-
-If the given `propertyKey` is a motion one and [reduce motion](/core/hooks/useAMAContext#isreducemotionenabled) is enabled,
-then calls `withTiming` function with duration 0 instead.
+Wraps Reanimated's [withSpring](https://docs.swmansion.com/react-native-reanimated/docs/animations/withSpring). When `propertyKey` is a motion property and [Reduce Motion](/core/hooks/useAMAContext#isreducemotionenabled) is enabled, calls `withTiming` with `duration=0` instead.
 
 ### Syntax
 
-```js
-withTiming(
-    propertyKey
-:
-keyof
-ViewStyle,
-    toValue
-:
-number,
-    config ? : WithSpringConfig,
-    callback ? : AnimationCallback,
-)
-;
+```ts
+withSpring(
+  propertyKey: MotionAnimationKey,
+  toValue: number,
+  config?: WithSpringConfig,
+  callback?: AnimationCallback,
+): number
 ```
 
-| Property    | Description                                                                                                                                                    |
-| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| propertyKey | The animation key that will be used with the `useSharedValue`                                                                                                  |
-| toValue     | The [target value](https://docs.swmansion.com/react-native-reanimated/docs/animations/withTiming#tovalue-number) parameter passed to the original `withTiming` |
-| config      | The [config](https://docs.swmansion.com/react-native-reanimated/docs/animations/withTiming#config-) parameter passed to the original `withTiming`              |
-| callback    | The [callback](https://docs.swmansion.com/react-native-reanimated/docs/animations/withTiming#callback-) parameter passed to the original `withTiming`          |
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| `propertyKey` | `MotionAnimationKey` | The animated style property. Motion properties skip the spring when reduce motion is on. |
+| `toValue` | `number` | Target value, passed to Reanimated's `withSpring`. |
+| `config` | `WithSpringConfig` | Optional spring config. |
+| `callback` | `AnimationCallback` | Optional completion callback. |
 
-#### Example
+### Example
 
 ```js
 value.value = withSpring('translateX', Math.random());

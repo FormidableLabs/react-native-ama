@@ -5,7 +5,7 @@ import { DevOnly, Required } from '@site/src/components';
 TextInput is an extension of the [React Native TextInput](https://reactnative.dev/docs/textinput) component, [focused on accessibility](#accessibility-improvements).
 
 ```tsx
-import { TextInput } from 'react-native-ama';
+import { TextInput } from '@react-native-ama/forms';
 
 <TextInput
   style={styles.input}
@@ -165,7 +165,7 @@ If true the component sets the given error as part of the `accessibilityHint`
 
 :::info
 
-The component will try to extract any text within the [errorComponent](#errorcomponent) if no [errorText](#errorText) is provided
+The component will try to extract any text within the [errorComponent](#errorcomponent) if no `errorText` is provided
 :::
 
 ### `errorComponent`

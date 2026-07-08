@@ -5,9 +5,14 @@
     "target": "ES2016",
     "jsx": "react-native",
     "module": "CommonJS",
+    "moduleResolution": "node",
+    "paths": {
+      "@react-native-ama/core": ["../../node_modules/@react-native-ama/core/src/index"]
+    },
     "esModuleInterop": true,
     "strict": true,
     "skipLibCheck": true,
+    "rootDir": "./src",
     "outDir": "./dist",
     "declaration": true
   }

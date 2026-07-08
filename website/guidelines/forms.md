@@ -14,6 +14,29 @@ import NextKeyKeyboard from './next-key.jpg';
 <AMASection />
 <AssistiveTechnology name="Assistive Technologies" title="Screen Reader, Keyboard and Switch" />
 
+Forms collect input from users — email addresses, passwords, search queries, settings. For screen reader and keyboard users, an inaccessible form is one of the most common blockers: unlabelled fields, validation errors that aren't announced, and focus traps can make a form impossible to complete.
+
+## Expectations
+
+<ScreenReader>
+    <When title="A form field receives focus">
+        <Then noChildren>The label, input type, and any validation error are all announced together — users should not need to navigate elsewhere to hear the error</Then>
+    </When>
+    <When title="The user finishes entering a value">
+        <Then noChildren>The user can advance to the next field or submit the form using a keyboard action, without being forced to swipe</Then>
+    </When>
+</ScreenReader>
+
+---
+
+<VoiceControl>
+    <When title="The user pronounces a field label">
+        <Then title="Voice Control focuses the field">
+            <And noChildren>The user can dictate input directly — field labels must match their visible text so voice targeting works</And>
+        </Then>
+    </When>
+</VoiceControl>
+
 ## Labels
 
 <Critical label  />
@@ -107,7 +130,7 @@ When on TextInput, the user should be able to access the next field or submit th
 
 :::tip
 
-The built-in [TextInput](/forms/components/TextInput) automatically handles the `returnKeyLabel` property and its action.
+The built-in [TextInput](/forms/TextInput) automatically handles the `returnKeyLabel` property and its action.
 
 :::
 
@@ -128,19 +151,72 @@ The user should be able to submit a form using the **done** button on the keyboa
 Also, an error message should be displayed and autofocused when it fails to let the screen reader know about the issue.
 Alternatively, the first failed field should be autofocused if no message is available.
 
-## AMA dev runtime errors
+## Best Practices
 
-### NO_FORM_LABEL
+### Label every field — never rely on placeholder text
 
-This error is used when no label has been provided for the [TextInput](/forms/components/TextInput) component.
+Placeholders disappear as soon as the user starts typing. Every field must have a persistent `accessibilityLabel`. If the visual label is a separate `<Text>` element, hide it from the accessibility tree and put the label text on the `TextInput` instead.
+
+### Include validation errors in the field's label or hint
+
+Don't display errors as separate focusable elements. Attach them to the field itself so the screen reader announces the error immediately when the field receives focus — users should not need to swipe to find out what went wrong.
+
+### Mark required fields in the label, not with an asterisk
+
+An asterisk is a visual convention that screen readers may not convey meaningfully. Use "required" as part of the `accessibilityLabel`:
+
+```jsx
+<TextInput accessibilityLabel="Email address, required" />
+```
+
+### Never trap focus in a field
+
+If the user wants to leave an input — even one with invalid data — let them. Programmatically forcing focus back to a field is a keyboard trap and fails WCAG 2.1.2.
+
+### Autofocus the error summary on failed submission
+
+When form submission fails, move focus to the error summary or the first failed field so screen reader users are immediately informed of what needs fixing.
+
+## AMA dev runtime errors <DevOnly />
+
+### INPUT_HAS_NO_VISIBLE_LABEL
+
+This error is used when no label has been provided for the [TextInput](/forms/TextInput) component.
 
 ### NO_FORM_ERROR
 
-This error is used when no error has been provided for the [TextInput](/forms/components/TextInput) component.
+This error is used when no error has been provided for the [TextInput](/forms/TextInput) component.
+
+### INPUT_HAS_FOCUSABLE_LABEL <Must />
+
+This error is raised when the visible label for a [TextInput](/forms/TextInput) is focusable separately from the field, causing screen readers to announce it twice.
+
+:::note
+
+This rule can be disabled by turning off the forms check in the [ama.config.json](/docs/config-file#checks) file.
+:::
+
+### INPUT_HAS_NO_VISIBLE_LABEL_ENDING_WITH_ASTERISK <MustNot />
+
+This error is raised when the accessibility label for a [TextInput](/forms/TextInput) ends with an asterisk. Asterisks are a visual convention that screen readers do not reliably convey — mark required fields with "required" in the label text instead.
+
+:::note
+
+This rule can be disabled by turning off the forms check in the [ama.config.json](/docs/config-file#checks) file.
+:::
+
+### INPUT_INVALID_RETURN_KEY <Must />
+
+This error is raised when a [TextInput](/forms/TextInput) uses the default `Return` key, which dismisses the keyboard instead of advancing to the next field or submitting the form.
+
+:::note
+
+This rule can be disabled by turning off the forms check in the [ama.config.json](/docs/config-file#checks) file.
+:::
 
 ### NO_KEYBOARD_TRAP <MustNot />
 
-This error is triggered by the [TextInput](/forms/components/TextInput) component if the next input field does not have the focus as expected.
+This error is triggered by the [TextInput](/forms/TextInput) component if the next input field does not have the focus as expected.
 
 :::note
 
@@ -149,8 +225,11 @@ This rule cannot be turned off!
 
 ## Related AMA components
 
-- [Form](/forms/components/form)
-- [FormField](/forms/components/formfield)
-- [SwitchListItem](/react-native/components/switchlistitem)
-- [SwitchWrapper](/react-native/components/switchwrapper)
-- [TextInput](/forms/components/textinput)
+- [Form](/forms/Form)
+- [Form.Field](/forms/FormField)
+- [Form.Submit](/forms/FormSubmit)
+- [TextInput](/forms/TextInput)
+- [useFocus](/core/hooks/useFocus)
+- [useFormField](/forms/useFormField)
+- [useFormSubmit](/forms/useFormSubmit)
+- [useTextInput](/forms/useTextInput)

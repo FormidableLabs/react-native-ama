@@ -1,17 +1,29 @@
 {
   "name": "@react-native-ama/lists",
   "version": "1.2.1",
-  "react-native": "src/index",
-  "types": "dist/index.d.ts",
-  "main": "dist/index.js",
+  "sideEffects": false,
   "exports": {
-    ".": [
-      {
-        "imports": "./dist/index.js",
-        "types": "./dist/index.d.ts"
-      },
-      "./dist/index.js"
-    ]
+    ".": {
+      "types": "./dist/index.d.ts",
+      "react-native": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./DynamicFlatList": {
+      "types": "./dist/components/DynamicFlatList.d.ts",
+      "default": "./dist/components/DynamicFlatList.js"
+    },
+    "./FlatList": {
+      "types": "./dist/components/FlatList.d.ts",
+      "default": "./dist/components/FlatList.js"
+    },
+    "./StaticFlatList": {
+      "types": "./dist/components/StaticFlatList.d.ts",
+      "default": "./dist/components/StaticFlatList.js"
+    },
+    "./useDynamicList": {
+      "types": "./dist/hooks/useDynamicList.d.ts",
+      "default": "./dist/hooks/useDynamicList.js"
+    }
   },
   "files": [
     "src",
@@ -19,18 +31,19 @@
   ],
   "scripts": {
     "build": "rm -rf dist && tsc -p ./tsconfig.build.json",
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@react-native-ama/core": "~1.2.1",
-    "@react-native-ama/internal": "~1.2.1"
+    "typecheck": "tsc --noEmit",
+    "test": "jest"
   },
   "peerDependencies": {
+    "@react-native-ama/core": "~2.0.0",
     "expo": ">=47.0.0",
     "react": "*",
     "react-native": "*"
   },
   "peerDependenciesMeta": {
+    "@react-native-ama/core": {
+      "optional": true
+    },
     "expo": {
       "optional": true
     }
@@ -53,5 +66,46 @@
     "provenance": true
   },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "jest": {
+    "preset": "react-native",
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.js"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/node_modules",
+      "<rootDir>/dist/"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!src/index.ts"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 100,
+        "branches": 85,
+        "functions": 100,
+        "lines": 100
+      }
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!(react-native-reanimated|expo|@expo)/)"
+    ],
+    "transform": {
+      "\\.[jt]sx?$": "babel-jest"
+    },
+    "moduleDirectories": [
+      "node_modules",
+      "../../playground/node_modules"
+    ],
+    "moduleNameMapper": {
+      "@react-native/js-polyfills/error-guard": "<rootDir>/../../jest-mocks/error-guard.js",
+      "^(\\.{1,2}/)*ama\\.config\\.json$": "<rootDir>/../../jest-mocks/ama-config.js",
+      "^(\\.{1,2}/)*ReactNativeAmaModule$": "<rootDir>/../../jest-mocks/ReactNativeAmaModule.js",
+      "^(\\.{1,2}/)*ReactNativeAmaView(\\.web)?$": "<rootDir>/../../jest-mocks/ReactNativeAmaModule.js",
+      "^@react-native-ama/core$": "<rootDir>/../../jest-mocks/ama-core.js",
+      "^@react-native-ama/core/(.*)$": "<rootDir>/../../packages/core/$1"
+    },
+    "verbose": true
+  }
 }

@@ -23,7 +23,7 @@ import { DynamicFlatList } from '@react-native-ama/lists';
 ### Dynamic list
 
 A dynamic list must announce the number of items displayed if they change due to filtering.
-Check [here](/guidelines/lists-grids#number-of-results) for more info.
+Check [here](/guidelines/lists-grids#always-announce-the-result-count-after-filtering) for more info.
 
 ## Additional props
 
@@ -57,7 +57,7 @@ For this reason, allows specifying a custom function that should return **true**
 #### Example:
 
 ```js
-import { DynamicFlatList } from 'react-native-ama';
+import { DynamicFlatList } from '@react-native-ama/lists';
 
 <DynamicFlatList
   data={items}
@@ -95,6 +95,10 @@ The number of columns of the list.
 | Type   | Default   |
 | ------ | --------- |
 | number | undefined |
+
+## Methods
+
+None — this component exposes no imperative methods.
 
 ## Related guidelines
 

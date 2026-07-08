@@ -10,13 +10,15 @@ displayed_sidebar: guidelines
 
 <AMASection />
 
-Accessibility states are specific attributes that can be added to a component to communicate its current status to assistive technology.
+Accessibility states are attributes you add to a component to tell assistive technologies — such as screen readers (VoiceOver, TalkBack) and voice control software — about its current condition. They communicate things like whether a checkbox is ticked, a button is disabled, or a section is expanded.
+
+Without these attributes, a screen reader user may see the correct label and role but have no way to know the element's current state.
 
 ## aria-busy
 
 <Serious label dot padding />
 
-Indicates an element is being modified and that assistive technologies may want to wait until the changes are complete before informing the user about the update.[^1]
+Indicates that an element is being updated and that assistive technologies should wait until the update is complete before announcing the change.[^1]
 
 | Type    | Default |
 | ------- | ------- |
@@ -31,6 +33,14 @@ Indicates an element is being modified and that assistive technologies may want 
         </And>
     </When>
 </ScreenReader>
+
+---
+
+<VoiceControl>
+    <When title="The user pronounces the label while the component is busy">
+        <Then noChildren>If the component is non-interactive while busy, Voice Control shows no interactive target — the command has no effect</Then>
+    </When>
+</VoiceControl>
 
 ### Screen Reader behaviour
 
@@ -98,6 +108,16 @@ Indicates the state of a checkable element. This field can either take a boolean
     </When>
 </ScreenReader>
 
+---
+
+<VoiceControl>
+    <When title="The user pronounces the label">
+        <Then title="The Voice Control software recognizes the label">
+          <And noChildren>The Voice Control software toggles the element — the checked state does not affect command recognition</And>
+        </Then>
+    </When>
+</VoiceControl>
+
 :::caution
 
 `aria-checked` is not to be confused with `aria-selected`.
@@ -145,7 +165,7 @@ Assuming the button `label` is: **Add me to the list**
 
 <Serious label dot padding />
 
-Indicates that the element is perceivable but disabled, so it is not editable or otherwise operable.
+Indicates that the element is visible but disabled — it cannot be edited or interacted with.
 
 | Type    | Default |
 | ------- | ------- |
@@ -162,6 +182,14 @@ Indicates that the element is perceivable but disabled, so it is not editable or
         </And>
     </When>
 </ScreenReader>
+
+---
+
+<VoiceControl>
+    <When title="The user pronounces the label">
+        <Then noChildren>Disabled elements cannot be targeted by voice commands — Voice Control does not show an interactive overlay on disabled components</Then>
+    </When>
+</VoiceControl>
 
 ### Screen Reader behaviour
 
@@ -204,6 +232,16 @@ Indicates whether an expandable element is currently expanded or collapsed.
         </And>
     </When>
 </ScreenReader>
+
+---
+
+<VoiceControl>
+    <When title="The user pronounces the label">
+        <Then title="The Voice Control software recognizes the label">
+          <And noChildren>The Voice Control software executes the action — the expanded or collapsed state does not affect command recognition</And>
+        </Then>
+    </When>
+</VoiceControl>
 
 ### Screen Reader behaviour
 
@@ -256,6 +294,16 @@ Indicates whether a selectable element is currently selected or not.
     </When>
 </ScreenReader>
 
+---
+
+<VoiceControl>
+    <When title="The user pronounces the label">
+        <Then title="The Voice Control software recognizes the label">
+          <And noChildren>The Voice Control software selects the element — the selected state does not affect command recognition</And>
+        </Then>
+    </When>
+</VoiceControl>
+
 ### Screen Reader behaviour
 
 ```jsx {1-5,7-18,20-99}
@@ -299,12 +347,41 @@ const TestScreen = () => {
 | true                       |           | _accessibility label_, selected | <Good /> |
 | false                      |           |                                 | <Good /> |
 
-## Related AMA components
+## AMA dev runtime errors <DevOnly />
 
-- [ExpandablePressable](/react-native/components/expandablepressable)
-- [Pressable](/react-native/components/pressable)
-- [TouchableOpacity](/react-native/components/touchableopacity)
-- [TouchableWithoutFeedback](/react-native/components/TouchableWithoutFeedback)
+---
+
+### NO_ACCESSIBILITY_STATE_SET <Must />
+
+This error is raised when the UI state changes but assistive technologies are not informed — for example, a component's visual state updates without a corresponding accessibility state attribute.
+
+:::note
+
+This rule can be disabled by turning off the UI check in the [ama.config.json](/docs/config-file#checks) file.
+:::
+
+## Best Practices
+
+### Use the right state for the right meaning
+
+`aria-checked` and `aria-selected` are not interchangeable:
+
+- Use `aria-checked` for checkboxes and toggle buttons.
+- Use `aria-selected` for items within a selection group — tabs, options in a list, radio-style buttons.
+
+Using the wrong one causes screen readers to announce incorrect semantics to the user.
+
+### Keep state in sync with visual presentation
+
+The state attribute must always reflect what the user sees. If a checkbox appears ticked, `aria-checked` must be `true`. Mismatches between visual and accessible state confuse all AT users and can fail automated accessibility audits.
+
+### Use `aria-disabled` to keep elements discoverable
+
+A hidden or removed element cannot be found at all. Use `aria-disabled` when the element should remain visible and focusable for context, but not operable — for example, a "Submit" button that is disabled until a form is complete.
+
+### Announce `aria-busy` during async operations
+
+Whenever a component triggers an async action and temporarily ignores interaction, set `ariaBusy={true}`. This prevents screen reader users from wondering why their action had no effect.
 
 ## External references
 
@@ -314,11 +391,3 @@ const TestScreen = () => {
 - [MDN: aria-expanded](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-expanded)
 - [MDN: aria-selected](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-selected)
 - [How Not To Misuse ARIA States, Properties and Roles](https://www.levelaccess.com/blog/how-not-to-misuse-aria-states-properties-and-roles/)
-
-```
-
-```
-
-```
-
-```

@@ -7,19 +7,42 @@ displayed_sidebar: guidelines
 ---
 
 import AndroidListFeature from './android-list-feature.gif';
+import IosRotor from './ios-rotor.gif';
 
 # Headers
 
 <AMASection />
 
-Headers are crucial in organizing and structuring content in a mobile app. They provide a clear hierarchy, guiding users through the content and making it more accessible and understandable.
-In React Native, any text element can be designated as a header by assigning the [accessibilityRole](/guidelines/accessibility-role) property to "header".
+Headers play a vital accessibility role by helping screen reader users navigate content efficiently.
+When a text element is marked as a header, assistive technologies can recognise its level and provide quick navigation shortcuts (e.g., jumping between headings). This allows non-visual users to understand the screen's structure and navigate sections without having to read everything sequentially.
+
+
+In React Native, any text element can be designated as a header by assigning the `accessibilityRole="header"` property to it.
 
 :::note
 
 Each page/screen should contain at least one header.
 
 :::
+
+## Expectations
+
+<ScreenReader>
+    <When title="A user navigates to a screen">
+        <Then noChildren>There is at least one element marked as a header so the user can orient themselves without reading all content linearly</Then>
+    </When>
+    <When title="A user opens the Rotor (iOS) or List feature (Android) and selects Headers">
+        <Then noChildren>They can jump directly between all sections marked as headers on the screen</Then>
+    </When>
+</ScreenReader>
+
+---
+
+<VoiceControl>
+    <When title="A user looks at the screen">
+        <Then noChildren>Headers are not interactive targets for voice commands, but they provide visible structure that helps all users — including Voice Control users — understand the page layout at a glance</Then>
+    </When>
+</VoiceControl>
 
 ## Understand the Navigation
 
@@ -36,6 +59,8 @@ Using the Rotor feature on iOS or the List feature on Android, users can easily 
 By selecting the headers navigation option, they can quickly skim the screen's content and gain an understanding of its layout and information.
 
 ##### VoiceOver
+
+<img src={IosRotor} />
 
 ##### Talkback
 
@@ -73,9 +98,31 @@ We can do this by using an empty &gt;Text&lt; component with an accessible label
 <Text accessibilityLabel="This is the header" accessibilityRole="header" />
 ```
 
-## Related AMA components
+## Best Practices
 
-- [Text](../components/text)
+### Every screen needs at least one header
+
+Without a heading, screen reader users navigating by header have no entry point and must read the entire screen linearly. Mark the primary screen title as `accessibilityRole="header"`.
+
+### Add a screen-reader-only header when the design has no visible title
+
+If the screen design has no visible heading, add a `<Text>` element that is visually hidden but accessible:
+
+```jsx
+<Text accessibilityLabel="Products" accessibilityRole="header" />
+```
+
+### Keep heading text short and descriptive
+
+Headings are navigation landmarks — users hear them rapidly while scanning. A heading like "Settings" is better than "Here you can manage all your application settings".
+
+## AMA dev runtime errors <DevOnly />
+
+---
+
+### NO_HEADER_FOUND <Must />
+
+This error is raised when a screen contains no element with `accessibilityRole="header"`. Screen reader users rely on headers to orient themselves and navigate efficiently — without one, they must read the entire screen linearly.
 
 ## External Resources
 

@@ -1,241 +1,105 @@
-import * as UseChecks from '@react-native-ama/core/src/hooks/useChecks';
-import { ERROR_STYLE } from '@react-native-ama/internal';
 import { fireEvent, render } from '@testing-library/react-native';
 import * as React from 'react';
 import { Text } from 'react-native';
-
 import * as UseFormField from '../hooks/useFormField';
 import { TextInput } from './TextInput';
 
 beforeEach(() => {
   jest.clearAllMocks();
+  (UseFormField.useFormField as jest.Mock).mockReturnValue({
+    isLastField: jest.fn().mockReturnValue(false),
+    focusNextFormField: jest.fn(),
+  });
 });
 
 describe('TextInput', () => {
-  it('register itself as form field by using the useFormField hook', () => {
-    const useFormField = jest.spyOn(UseFormField, 'useFormField');
-
-    render(
-      <TextInput
-        labelComponent={<Text testID="text">Test</Text>}
-        hasValidation={false}
-        returnKeyType="done"
-      />,
-    );
-
-    expect(useFormField.mock.calls[0][0]).toMatchObject({
-      ref: expect.objectContaining({ current: expect.any(Object) }),
-      errorMessage: undefined,
-      hasError: undefined,
-      hasValidation: false,
-      id: undefined,
-      nextFieldId: undefined,
-      nextFormFieldRef: undefined,
-    });
-  });
-
-  it('renders the given labelComponent before the text input when labelPosition is undefined', () => {
+  it('renders the given renderLabel before the text input when labelPosition is undefined', () => {
     const renderAPI = render(
       <TextInput
-        labelComponent={<Text testID="text">labelComponent</Text>}
-        returnKeyType="done"
+        renderLabel={(a11yProps) => <Text {...a11yProps} testID="label">Label</Text>}
+        accessibilityLabel="First name"
         hasValidation={false}
       />,
     );
 
-    expect(renderAPI.toJSON()).toMatchInlineSnapshot(`
-      Array [
-        <Text
-          accessibilityElementsHidden={true}
-          importantForAccessibility="no"
-          testID="text"
-        >
-          labelComponent
-        </Text>,
-        <TextInput
-          accessibilityHint=""
-          accessibilityLabel="labelComponent"
-          hasValidation={false}
-          onLayout={[Function]}
-          onSubmitEditing={[Function]}
-          returnKeyType="done"
-          style={Object {}}
-        />,
-      ]
-    `);
+    const json = renderAPI.toJSON() as any[];
+    expect(json[0].props.testID).toBe('label');
+    expect(json[0].props.importantForAccessibility).toBe('no-hide-descendants');
+    expect(json[0].props.accessibilityElementsHidden).toBe(true);
   });
 
-  it('renders the given labelComponent after the text input when labelPosition is "afterInput"', () => {
+  it('renders the given renderLabel after the text input when labelPosition is "afterInput"', () => {
     const renderAPI = render(
       <TextInput
-        labelComponent={<Text testID="text"> labelComponent after</Text>}
+        renderLabel={(a11yProps) => <Text {...a11yProps} testID="label">Label</Text>}
+        accessibilityLabel="First name"
         labelPosition="afterInput"
-        returnKeyType="done"
         hasValidation={false}
       />,
     );
 
-    expect(renderAPI.toJSON()).toMatchInlineSnapshot(`
-      Array [
-        <TextInput
-          accessibilityHint=""
-          accessibilityLabel=" labelComponent after"
-          hasValidation={false}
-          onLayout={[Function]}
-          onSubmitEditing={[Function]}
-          returnKeyType="done"
-          style={Object {}}
-        />,
-        <Text
-          accessibilityElementsHidden={true}
-          importantForAccessibility="no"
-          testID="text"
-        >
-           labelComponent after
-        </Text>,
-      ]
-    `);
+    const json = renderAPI.toJSON() as any[];
+    expect(json[json.length - 1].props.testID).toBe('label');
   });
 
-  it('renders the given errorComponent after the labelComponent when errorPosition is "belowLabel"', () => {
+  it('renders the given renderError after the text input when errorPosition is "afterInput"', () => {
     const renderAPI = render(
       <TextInput
-        labelComponent={<Text testID="text">the labelComponent</Text>}
-        returnKeyType="done"
+        renderLabel={(a11yProps) => <Text {...a11yProps}>Label</Text>}
+        renderError={(a11yProps) => <Text {...a11yProps} testID="error">Error</Text>}
+        accessibilityLabel="First name"
         hasValidation={true}
-        errorComponent={<Text>This is the errorComponent</Text>}
+        hasError={true}
+        errorPosition="afterInput"
+      />,
+    );
+
+    const json = renderAPI.toJSON() as any[];
+    expect(json[json.length - 1].props.testID).toBe('error');
+  });
+
+  it('renders the given renderError below the label when errorPosition is "belowLabel"', () => {
+    const renderAPI = render(
+      <TextInput
+        renderLabel={(a11yProps) => <Text {...a11yProps} testID="label">Label</Text>}
+        renderError={(a11yProps) => <Text {...a11yProps} testID="error">Error</Text>}
+        accessibilityLabel="First name"
+        hasValidation={true}
+        hasError={true}
         errorPosition="belowLabel"
-        hasError={true}
       />,
     );
 
-    expect(renderAPI.toJSON()).toMatchInlineSnapshot(`
-      Array [
-        <Text
-          accessibilityElementsHidden={true}
-          importantForAccessibility="no"
-          testID="text"
-        >
-          the labelComponent
-        </Text>,
-        <Text
-          accessibilityElementsHidden={true}
-          importantForAccessibility="no"
-        >
-          This is the errorComponent
-        </Text>,
-        <TextInput
-          accessibilityHint="This is the errorComponent"
-          accessibilityLabel="the labelComponent"
-          hasError={true}
-          hasValidation={true}
-          onLayout={[Function]}
-          onSubmitEditing={[Function]}
-          returnKeyType="done"
-          style={Object {}}
-        />,
-      ]
-    `);
+    const json = renderAPI.toJSON() as any[];
+    expect(json[0].props.testID).toBe('label');
+    expect(json[1].props.testID).toBe('error');
   });
 
-  it('renders the given errorComponent after the input when errorPosition is "afterInput"', () => {
+  it('does not render errorComponent when hasError is false', () => {
     const renderAPI = render(
       <TextInput
-        labelComponent={<Text testID="text">the labelComponent</Text>}
-        returnKeyType="done"
+        renderLabel={(a11yProps) => <Text {...a11yProps}>Label</Text>}
+        renderError={(a11yProps) => <Text {...a11yProps} testID="error">Error</Text>}
+        accessibilityLabel="First name"
         hasValidation={true}
-        errorComponent={<Text>This is the errorComponent</Text>}
+        hasError={false}
         errorPosition="afterInput"
-        hasError={true}
       />,
     );
 
-    expect(renderAPI.toJSON()).toMatchInlineSnapshot(`
-      Array [
-        <Text
-          accessibilityElementsHidden={true}
-          importantForAccessibility="no"
-          testID="text"
-        >
-          the labelComponent
-        </Text>,
-        <TextInput
-          accessibilityHint="This is the errorComponent"
-          accessibilityLabel="the labelComponent"
-          hasError={true}
-          hasValidation={true}
-          onLayout={[Function]}
-          onSubmitEditing={[Function]}
-          returnKeyType="done"
-          style={Object {}}
-        />,
-        <Text
-          accessibilityElementsHidden={true}
-          importantForAccessibility="no"
-        >
-          This is the errorComponent
-        </Text>,
-      ]
-    `);
-  });
-
-  it('hides the labelComponent from the screen readers', () => {
-    const renderAPI = render(
-      <TextInput
-        labelComponent={<Text testID="text">Test</Text>}
-        labelPosition="afterInput"
-        returnKeyType="done"
-        hasValidation={false}
-      />,
-    );
-
-    expect(renderAPI.getByTestId('text').props.importantForAccessibility).toBe(
-      'no',
-    );
-    expect(
-      renderAPI.getByTestId('text').props.accessibilityElementsHidden,
-    ).toBe(true);
-  });
-
-  it('hides the errorComponent component from the screen readers', () => {
-    const renderAPI = render(
-      <TextInput
-        labelComponent={<Text>Test</Text>}
-        labelPosition="afterInput"
-        returnKeyType="done"
-        hasValidation={true}
-        errorComponent={
-          <Text testID="errorComponent-test-id">
-            This is the errorComponent
-          </Text>
-        }
-        errorPosition="afterInput"
-        hasError={true}
-      />,
-    );
-
-    expect(
-      renderAPI.getByTestId('errorComponent-test-id').props
-        .importantForAccessibility,
-    ).toBe('no');
-    expect(
-      renderAPI.getByTestId('errorComponent-test-id').props
-        .accessibilityElementsHidden,
-    ).toBe(true);
+    expect(renderAPI.queryByTestId('error')).toBeNull();
   });
 
   describe('returnKeyType', () => {
     it('sets the `returnKeyType="next"` if more fields have been registered', async () => {
-      const isLastField = jest.fn().mockReturnValue(false);
-
-      jest.spyOn(UseFormField, 'useFormField').mockReturnValue({
-        isLastField,
-      } as any);
+      (UseFormField.useFormField as jest.Mock).mockReturnValue({
+        isLastField: jest.fn().mockReturnValue(false),
+        focusNextFormField: jest.fn(),
+      });
 
       const renderAPI = render(
         <TextInput
-          labelComponent={<Text testID="text">labelComponent</Text>}
-          labelPosition="afterInput"
+          accessibilityLabel="First name"
           testID="test-id"
           hasValidation={false}
         />,
@@ -248,23 +112,21 @@ describe('TextInput', () => {
       );
     });
 
-    it('sets the `returnKeyType="done"` if is last field registered', () => {
-      const isLastField = jest.fn().mockReturnValue(true);
-
-      jest.spyOn(UseFormField, 'useFormField').mockReturnValue({
-        isLastField,
-      } as any);
+    it('sets the `returnKeyType="done"` if is last field registered', async () => {
+      (UseFormField.useFormField as jest.Mock).mockReturnValue({
+        isLastField: jest.fn().mockReturnValue(true),
+        focusNextFormField: jest.fn(),
+      });
 
       const renderAPI = render(
         <TextInput
-          labelComponent={<Text testID="text">labelComponent</Text>}
-          labelPosition="afterInput"
+          accessibilityLabel="First name"
           testID="test-id"
           hasValidation={false}
         />,
       );
 
-      fireEvent(renderAPI.getByTestId('test-id'), 'onLayout');
+      await fireEvent(renderAPI.getByTestId('test-id'), 'onLayout');
 
       expect(renderAPI.getByTestId('test-id').props.returnKeyType).toEqual(
         'done',
@@ -274,16 +136,14 @@ describe('TextInput', () => {
     it.each([true, false])(
       'keeps the `returnKeyType` value passed as prop',
       async isLastFieldValue => {
-        const isLastField = jest.fn().mockReturnValue(isLastFieldValue);
-
-        jest.spyOn(UseFormField, 'useFormField').mockReturnValue({
-          isLastField,
-        } as any);
+        (UseFormField.useFormField as jest.Mock).mockReturnValue({
+          isLastField: jest.fn().mockReturnValue(isLastFieldValue),
+          focusNextFormField: jest.fn(),
+        });
 
         const renderAPI = render(
           <TextInput
-            labelComponent={<Text testID="text">labelComponent</Text>}
-            labelPosition="afterInput"
+            accessibilityLabel="First name"
             testID="test-id"
             returnKeyType="google"
             hasValidation={false}
@@ -299,71 +159,49 @@ describe('TextInput', () => {
     );
   });
 
-  describe('accessibilityLabel', () => {
-    describe('Given no accessibility labelComponent is provided', () => {
-      it('Then applies the given labelComponent content as accessibilityLabel', () => {
-        const renderAPI = render(
-          <TextInput
-            labelComponent={<Text>First name:</Text>}
-            returnKeyType="done"
-            testID="text-input"
-            hasValidation={false}
-          />,
-        );
+  it('uses the accessibilityLabel prop', () => {
+    const renderAPI = render(
+      <TextInput
+        accessibilityLabel="Please insert your first name"
+        testID="text-input"
+        hasValidation={false}
+      />,
+    );
 
-        expect(
-          renderAPI.getByTestId('text-input').props.accessibilityLabel,
-        ).toBe('First name:');
-      });
+    expect(renderAPI.getByTestId('text-input').props.accessibilityLabel).toBe(
+      'Please insert your first name',
+    );
+  });
 
-      it('strips the ending * from the labelComponent content before using as accessibility labelComponent', () => {
-        const renderAPI = render(
-          <TextInput
-            labelComponent={<Text>First name (required)*</Text>}
-            returnKeyType="done"
-            testID="text-input"
-            hasValidation={false}
-          />,
-        );
+  it('uses aria-label when accessibilityLabel is not provided', () => {
+    const renderAPI = render(
+      <TextInput
+        aria-label="aria label value"
+        testID="text-input"
+        hasValidation={false}
+      />,
+    );
 
-        expect(
-          renderAPI.getByTestId('text-input').props.accessibilityLabel,
-        ).toBe('First name (required)');
-      });
-    });
-
-    it('uses the accessibilityLabel only if provided', () => {
-      const renderAPI = render(
-        <TextInput
-          labelComponent={<Text>First name (required)*</Text>}
-          returnKeyType="done"
-          testID="text-input"
-          accessibilityLabel="Please insert your first name"
-          hasValidation={false}
-        />,
-      );
-
-      expect(renderAPI.getByTestId('text-input').props.accessibilityLabel).toBe(
-        'Please insert your first name',
-      );
-    });
+    expect(renderAPI.getByTestId('text-input').props.accessibilityLabel).toBe(
+      'aria label value',
+    );
   });
 
   it('calls focusNextFormField onSubmitEditing event', () => {
     const focusNextFormField = jest.fn();
 
-    jest.spyOn(UseFormField, 'useFormField').mockReturnValue({
+    (UseFormField.useFormField as jest.Mock).mockReturnValue({
       focusNextFormField,
-    } as any);
+      isLastField: jest.fn().mockReturnValue(false),
+    });
 
     const fn = jest.fn();
 
     const renderAPI = render(
       <TextInput
-        labelComponent={<Text>First name (required)*</Text>}
+        accessibilityLabel="Please insert your first name"
         returnKeyType="next"
         testID="text-input"
-        accessibilityLabel="Please insert your first name"
         onSubmitEditing={fn}
         hasValidation={false}
       />,
@@ -376,165 +214,13 @@ describe('TextInput', () => {
     );
 
     expect(fn).toHaveBeenCalledWith('whatever');
-  });
-
-  it('ignores the errorComponent message if hasError is not true', () => {
-    const renderAPI = render(
-      <TextInput
-        labelComponent={<Text>First name (required)*</Text>}
-        returnKeyType="next"
-        testID="text-input"
-        accessibilityLabel="Please insert your first name"
-        hasValidation={true}
-        hasError={false}
-        errorMessage={'This is the errorComponent'}
-        errorComponent={<></>}
-      />,
-    );
-
-    expect(renderAPI.getByTestId('text-input').props.accessibilityHint).toBe(
-      '',
-    );
-  });
-
-  it('when hasError uses the text from the errorComponent as part of the accessibilityHint', () => {
-    const renderAPI = render(
-      <TextInput
-        labelComponent={<Text>First name (required)*</Text>}
-        returnKeyType="next"
-        testID="text-input"
-        accessibilityLabel="Please insert your first name"
-        accessibilityHint="The hint"
-        hasValidation={true}
-        hasError={true}
-        errorComponent={<Text>The first name cannot be blank</Text>}
-      />,
-    );
-
-    expect(renderAPI.getByTestId('text-input').props.accessibilityHint).toBe(
-      'The hint, The first name cannot be blank',
-    );
-  });
-
-  it('when hasError uses the errorText, if specified, as part of the accessibilityHint', () => {
-    const renderAPI = render(
-      <TextInput
-        labelComponent={<Text>First name (required)*</Text>}
-        returnKeyType="next"
-        testID="text-input"
-        accessibilityLabel="Please insert your first name"
-        accessibilityHint="The hint"
-        hasValidation={true}
-        hasError={true}
-        errorMessage="This text will be used"
-        errorComponent={<Text>The first name cannot be blank</Text>}
-      />,
-    );
-
-    expect(renderAPI.getByTestId('text-input').props.accessibilityHint).toBe(
-      'The hint, This text will be used',
-    );
-  });
-
-  it('apply the style returned by useFormField', () => {
-    const focusNextFormField = jest.fn();
-
-    jest.spyOn(UseFormField, 'useFormField').mockReturnValue({
-      focusNextFormField,
-      style: ERROR_STYLE,
-    } as any);
-
-    const renderAPI = render(
-      <TextInput
-        labelComponent={<Text>First name (required)*</Text>}
-        returnKeyType="next"
-        testID="text-input"
-        accessibilityLabel="Please insert your first name"
-        hasValidation={false}
-      />,
-    );
-
-    expect(renderAPI.getByTestId('text-input').props.style).toEqual(
-      ERROR_STYLE,
-    );
-  });
-
-  describe('When __DEV__ is false', () => {
-    let TextInputWithoutDev: typeof TextInput;
-    let accessibilityLabelChecker: jest.Mock;
-    let uppercaseChecker: jest.Mock;
-    let onLayout: jest.Mock;
-    let noUndefinedProperty: jest.Mock;
-
-    beforeEach(function () {
-      // @ts-ignore
-      global.__DEV__ = false;
-
-      accessibilityLabelChecker = jest.fn();
-      noUndefinedProperty = jest.fn();
-      uppercaseChecker = jest.fn();
-      onLayout = jest.fn();
-
-      // @ts-ignore
-      jest.spyOn(UseChecks, 'useChecks').mockReturnValue({
-        noUppercaseStringChecker: accessibilityLabelChecker,
-        noUndefinedProperty,
-        uppercaseChecker,
-        onLayout,
-      } as any);
-
-      TextInputWithoutDev = require('./TextInput').TextInput;
-    });
-
-    it('does not perform any check', () => {
-      render(
-        <TextInputWithoutDev
-          labelComponent={<Text>First name (required)*</Text>}
-          returnKeyType="next"
-          testID="text-input"
-          accessibilityLabel="Please insert your first name"
-          hasValidation={false}
-        />,
-      );
-
-      expect(noUndefinedProperty).not.toHaveBeenCalled();
-    });
-
-    it('does not apply the debug style', () => {
-      jest.spyOn(UseFormField, 'useFormField').mockReturnValue({
-        style: ERROR_STYLE,
-      } as any);
-
-      const { getByTestId } = render(
-        <TextInputWithoutDev
-          labelComponent={<Text>First name (required)*</Text>}
-          returnKeyType="next"
-          testID="text-input"
-          accessibilityLabel="Please insert your first name"
-          hasValidation={false}
-        />,
-      );
-
-      expect(getByTestId('text-input').props.style).toEqual(undefined);
-    });
+    expect(focusNextFormField).toHaveBeenCalledWith();
   });
 });
 
-jest.mock('../hooks/useFormField', () => {
-  return {
-    useFormField: jest.fn().mockReturnValue({}),
-  };
-});
-
-jest.mock('@react-native-ama/core', () => {
-  const originalModule = jest.requireActual('@react-native-ama/core');
-
-  return {
-    ...originalModule,
-    useAMAContext: () => {
-      return {
-        isScreenReaderEnabled: true,
-      };
-    },
-  };
-});
+jest.mock('../hooks/useFormField', () => ({
+  useFormField: jest.fn(() => ({
+    isLastField: jest.fn().mockReturnValue(false),
+    focusNextFormField: jest.fn(),
+  })),
+}));

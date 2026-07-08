@@ -1,7 +1,6 @@
 import { AutofocusContainer } from '@react-native-ama/core';
 import { render } from '@testing-library/react-native';
 import * as React from 'react';
-
 import * as UseReanimatedAnimationBuilder from '../hooks/useReanimatedAnimationBuilder';
 import { AnimatedContainer } from './AnimatedContainer';
 
@@ -27,14 +26,16 @@ describe('AnimatedContainer', () => {
     expect(useReanimatedAnimationBuilder).toHaveBeenCalledWith({
       from,
       to,
+      exitFrom: undefined,
+      exitTo: undefined,
       duration: 300,
-      exit: undefined,
     });
 
     expect(getByTestId('test-id').props).toEqual({
       children: undefined,
       entering: 'entering',
       exiting: 'exiting',
+      ref: null,
       style: undefined,
       testID: 'test-id',
     });
@@ -52,14 +53,16 @@ describe('AnimatedContainer', () => {
     expect(useReanimatedAnimationBuilder).toHaveBeenCalledWith({
       from,
       to,
+      exitFrom: undefined,
+      exitTo: undefined,
       duration: 600,
-      exit: undefined,
     });
 
     expect(getByTestId('test-id').props).toEqual({
       children: undefined,
       entering: 'entering',
       exiting: 'exiting',
+      ref: null,
       style: undefined,
       testID: 'test-id',
     });
@@ -81,15 +84,6 @@ describe('AnimatedContainer', () => {
 });
 
 jest.mock('../hooks/useReanimatedAnimationBuilder');
-jest.mock('../hooks/useFocus', () => {
-  return {
-    useFocus: () => {
-      return {
-        setFocus: jest.fn(),
-      };
-    },
-  };
-});
 
 jest.mock('react-native-reanimated', () => {
   const { View } = require('react-native');

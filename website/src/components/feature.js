@@ -18,6 +18,14 @@ export const ScreenReader = props => {
   );
 };
 
+export const VoiceControl = props => {
+  return (
+    <AssistiveTechnology title="Voice Control">
+      {props.children}
+    </AssistiveTechnology>
+  );
+};
+
 export const ReduceMotion = props => {
   return (
     <AssistiveTechnology title="Reduce Motion">

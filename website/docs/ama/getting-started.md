@@ -11,10 +11,9 @@ pagination_prev: 'index'
 
 - `@react-native-ama/core`: the core components and hooks, providers and consumers used by AMA packages
 - `@react-native-ama/animations`: to create accessible animations with support for user motion preferences
-- `@react-native-ama/react-native`: for accessibility-first replacement for core React Native components
 - `@react-native-ama/forms`: to create accessible forms
 - `@react-native-ama/lists`: to create accessible lists
-- `@react-native-ama/extras`: extra compound components and hooks beyond the scope of the base React Native components for building accessible react native apps
+- `@react-native-ama/bottom-sheet`: accessible bottom sheet component
 
 ## Setup
 
@@ -26,25 +25,31 @@ Start off by installing `core` and then any other packages you wish to make use 
 npm install  @react-native-ama/core
 ```
 
+### Usage
+
+Wrap your app with the [AMAProvider](/core/components/AMAProvider) component to start accessibility checks.
+
+```jsx {1-4,8-9}
+import { AMAProvider } from '@react-native-ama/core';
+
+const App = () => {
+  return (
+    <AMAProvider>
+      <YourApp />
+    </AMAProvider>
+  );
+};
+```
+
+#### Toggle Accessibility Checks
+
+You can toggle the accessibility checks on and off via the [DevMenu](https://reactnative.dev/docs/debugging)
+
+![AMA Dev Menu](/img/dev-menu.png)
+
 ### Config File
 
-When you install the `@react-native-ama/core` package, `the ama.rules.json` file should be generated automatically in the root of your project. This file can be used to customize AMA Log Levels and Exceptions. If you are running a monorepo setup this file won't automatically generate and you will have two options customize AMA's config.
+When you install the `@react-native-ama/core` package, `the ama.config.json` file should be generated automatically in the root of your project. This file can be used to customize AMA Log Levels and Exceptions. If you are running a monorepo setup this file won't automatically generate and you will have two options customize AMA's config.
 
 See more on configuring **AMA** rules and severity [here](./config-file.md).
 
-### Jest
-
-When running a test, if jest fails with the following error:
-
-> Cannot find module './../../ama.rules.json' from 'node_modules/@react-native-ama/internal/dist/utils/logger.js'
-
-Add the following mock to your jest setup file which can be configured via the `.jest.config.js` or `.jest.config.ts` file (see [setupFilesAfterEnv](https://jestjs.io/docs/configuration#setupfilesafterenv-array)):
-
-```js title="setup-jest.js"
-jest.mock('@react-native-ama/internal/dist/utils/logger.js', () => {
-  return {
-    getContrastCheckerMaxDepth: () => 5,
-    shouldIgnoreContrastCheckForDisabledElement: () => true,
-  };
-});
-```

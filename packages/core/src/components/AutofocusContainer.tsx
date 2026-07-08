@@ -5,9 +5,21 @@ import {
   View,
   ViewProps,
 } from 'react-native';
-
 import { useFocus } from '../hooks/useFocus';
-import { PickAccessibleProps } from '@react-native-ama/internal';
+
+type AccessibilityPropKeys =
+  | 'accessibilityActions'
+  | 'accessibilityElementsHidden'
+  | 'accessibilityHint'
+  | 'accessibilityLabel'
+  | 'accessibilityLiveRegion'
+  | 'accessibilityRole'
+  | 'accessibilityState'
+  | 'accessibilityViewIsModal'
+  | 'onAccessibilityAction'
+  | 'testID';
+
+type PickAccessibleProps<T> = Pick<T, Extract<keyof T, AccessibilityPropKeys>>;
 
 type TouchableAccessibleProps =
   PickAccessibleProps<TouchableWithoutFeedbackProps>;
@@ -46,18 +58,21 @@ export const AutofocusContainer = ({
   return wrapChildrenInAccessibleView ? (
     <TouchableWithoutFeedback
       ref={containerRef}
-      {...touchableContainerAccessibilityProps}>
+      {...touchableContainerAccessibilityProps}
+    >
       <View
         accessible={true}
         testID="autofocusContainer.accessibleView"
-        {...viewProps}>
+        {...viewProps}
+      >
         {children}
       </View>
     </TouchableWithoutFeedback>
   ) : (
     <TouchableWithoutFeedback
       ref={containerRef}
-      {...touchableContainerAccessibilityProps}>
+      {...touchableContainerAccessibilityProps}
+    >
       {children}
     </TouchableWithoutFeedback>
   );

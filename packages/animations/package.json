@@ -1,33 +1,53 @@
 {
   "name": "@react-native-ama/animations",
   "version": "1.2.1",
-  "react-native": "src/index",
-  "types": "dist/index.d.ts",
-  "main": "dist/index.js",
+  "sideEffects": false,
   "exports": {
-    ".": [
-      {
-        "imports": "./dist/index.js",
-        "types": "./dist/index.d.ts"
-      },
-      "./dist/index.js"
-    ]
+    ".": {
+      "types": "./dist/index.d.ts",
+      "react-native": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./AnimatedContainer": {
+      "types": "./dist/components/AnimatedContainer.d.ts",
+      "default": "./dist/components/AnimatedContainer.js"
+    },
+    "./useAnimation": {
+      "types": "./dist/hooks/useAnimation.d.ts",
+      "default": "./dist/hooks/useAnimation.js"
+    },
+    "./useAnimationDuration": {
+      "types": "./dist/hooks/useAnimationDuration.d.ts",
+      "default": "./dist/hooks/useAnimationDuration.js"
+    },
+    "./useReanimatedAnimationBuilder": {
+      "types": "./dist/hooks/useReanimatedAnimationBuilder.d.ts",
+      "default": "./dist/hooks/useReanimatedAnimationBuilder.js"
+    },
+    "./useReanimatedTiming": {
+      "types": "./dist/hooks/useReanimatedTiming.d.ts",
+      "default": "./dist/hooks/useReanimatedTiming.js"
+    }
   },
   "files": [
     "src",
     "dist"
   ],
   "scripts": {
-    "build": "rm -rf dist && tsc -p ./tsconfig.build.json",
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@react-native-ama/core": "~1.2.1",
-    "@react-native-ama/internal": "~1.2.1"
+    "build": "rm -rf dist && ../../node_modules/.bin/tsc -p ./tsconfig.build.json",
+    "typecheck": "../../node_modules/.bin/tsc --noEmit",
+    "test": "jest"
   },
   "peerDependencies": {
+    "@react-native-ama/core": "~2.0.0",
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "react-native-reanimated": ">=2.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@react-native-ama/core": {
+      "optional": true
+    }
   },
   "keywords": [
     "react-native",
@@ -47,5 +67,45 @@
     "provenance": true
   },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "jest": {
+    "preset": "react-native",
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.js"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/node_modules",
+      "<rootDir>/dist/"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!src/index.ts"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 100,
+        "branches": 95,
+        "functions": 100,
+        "lines": 100
+      }
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!(react-native-reanimated|expo|@expo)/)"
+    ],
+    "transform": {
+      "\\.[jt]sx?$": "babel-jest"
+    },
+    "moduleDirectories": [
+      "node_modules",
+      "../../playground/node_modules"
+    ],
+    "moduleNameMapper": {
+      "@react-native/js-polyfills/error-guard": "<rootDir>/../../jest-mocks/error-guard.js",
+      "^(\\.{1,2}/)*ama\\.config\\.json$": "<rootDir>/../../jest-mocks/ama-config.js",
+      "^(\\.{1,2}/)*ReactNativeAmaModule$": "<rootDir>/../../jest-mocks/ReactNativeAmaModule.js",
+      "^(\\.{1,2}/)*ReactNativeAmaView(\\.web)?$": "<rootDir>/../../jest-mocks/ReactNativeAmaModule.js",
+      "^@react-native-ama/core$": "<rootDir>/../../jest-mocks/ama-core.js"
+    },
+    "verbose": true
+  }
 }

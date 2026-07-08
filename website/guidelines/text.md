@@ -10,8 +10,23 @@ displayed_sidebar: guidelines
 
 <AMASection />
 
-The text in our app must be clear and easy for everyone to read.
-While this may seem obvious, sometimes, design choices can unintentionally make it harder for some people, especially those with disabilities, to understand the content. We must be mindful of this when making design decisions.
+Text in your app must be clear and easy to read. Design choices like ALL CAPS, tight letter spacing, or very small font sizes can make content harder — or impossible — to read for people with low vision, dyslexia, or cognitive differences. They can also cause screen readers (software that reads content aloud for blind users) to mispronounce or spell out words.
+
+## Expectations
+
+<ScreenReader>
+    <When title="Text is displayed on screen">
+        <Then noChildren>The Screen Reader reads the text with correct pronunciation — ALL CAPS text bypasses natural language processing and causes words to be spelled out or read with flat intonation</Then>
+    </When>
+</ScreenReader>
+
+---
+
+<VoiceControl>
+    <When title="The user speaks a label to target an element">
+        <Then noChildren>Voice Control matches the spoken phrase against the visible text — if React Native has converted text to uppercase internally, the visible label and the recognised phrase may not match, making the element unreachable by voice</Then>
+    </When>
+</VoiceControl>
 
 ## Avoid uppercase
 
@@ -22,7 +37,7 @@ Additionally, it can cause issues with screen readers, potentially disrupting th
 
 :::note
 
-For [&lt;Text /&gt;](../components/Text.md) elements AMA checks if the style has the `textTransform` property set to `uppercase`, and if so throws an error if the `accessibilityLabel` one is not set.
+For &lt;Text /&gt; elements AMA checks if the style has the `textTransform` property set to `uppercase`, and if so throws an error if the `accessibilityLabel` one is not set.
 It also checks that the accessibilityLabel provided for the various component is not all caps.
 
 :::
@@ -72,7 +87,29 @@ For the given example we have:
 | Contact U.S.      | Contact U.S.    |
 
 In this case, VoiceOver does the spelling of the word `ADD` while talkback reads it correctly.
-The word `CONTACT` is read correctly, but both screen readers spell the word `US` as it is interpreted as `U.S.` for `United States.
+The word `CONTACT` is read correctly, but both screen readers spell the word `US` as it is interpreted as `U.S.` for `United States.`
+
+## Best Practices
+
+### Always set `accessibilityLabel` when using `textTransform: 'uppercase'`
+
+React Native passes the transformed (uppercase) string to the screen reader. Provide an `accessibilityLabel` with the correctly cased text so the screen reader pronounces it naturally.
+
+```jsx
+<Text
+  style={{ textTransform: 'uppercase' }}
+  accessibilityLabel="Add to the cart">
+  Add to the cart
+</Text>
+```
+
+### Never write ALL CAPS directly in accessibility labels
+
+An `accessibilityLabel` written in ALL CAPS has the same problem as uppercase-transformed text. Always use sentence or title case in labels, even if the visual design calls for uppercase.
+
+### Use `textTransform` for visual styling, not for content
+
+If your design requires uppercase text, keep the source string in sentence case and apply `textTransform: 'uppercase'` via style. This separates visual presentation from the text content the screen reader uses.
 
 ## AMA Errors
 
@@ -80,16 +117,25 @@ The word `CONTACT` is read correctly, but both screen readers spell the word `US
 
 This is used when a component uses the `textTransform: uppercase` style without providing an accessible label.
 
+### NO_UPPERCASE_TEXT <MustNot />
+
+This error is raised when a text element contains all-caps content directly — uppercase text reduces readability and causes screen readers to mispronounce or spell out words.
+
+### NO_UPPERCASE_ACCESSIBILITY_LABEL <ShouldNot />
+
+This error is raised when an `accessibilityLabel` is written in all caps. Screen readers may read uppercase labels with flat intonation or spell them out rather than pronouncing them naturally.
+
+### LONG_NUMBER_NOT_FORMATTED <ShouldNot />
+
+This is raised when a text element or accessibility label contains a long run of unformatted digits (12 or more by default) — screen readers read a solid digit run as one large number instead of digit-by-digit. The threshold is configurable via `longNumberMinLength` in `ama.config.json`.
+
 ## Known issues
 
 - Nested Text components with onPress property are not accessible [https://github.com/facebook/react-native/issues/24515](https://github.com/facebook/react-native/issues/24515)
 
 ## Resources
 
-Some helpful resources about accessibility and all caps.
-
-- https://www.mity.com.au/blog/writing-readable-content-and-why-all-caps-is-so-hard-to-read
-- http://uxmovement.com/content/how-letterspacing-can-make-all-caps-easier-to-read/
-- http://ux.stackexchange.com/questions/67454/how-does-capitalization-affect-readability
-- http://www.sciencedirect.com/science/article/pii/S0042698907002830
-- http://www.dyslexia.ie/information/computers-and-technology/making-information-accessible-dyslexia-friendly-style-guide/
+- [Writing readable content and why all caps is so hard to read](https://www.mity.com.au/blog/writing-readable-content-and-why-all-caps-is-so-hard-to-read)
+- [How letter-spacing can make all caps easier to read](http://uxmovement.com/content/how-letterspacing-can-make-all-caps-easier-to-read/)
+- [How does capitalisation affect readability?](http://ux.stackexchange.com/questions/67454/how-does-capitalization-affect-readability)
+- [Dyslexia-friendly style guide](http://www.dyslexia.ie/information/computers-and-technology/making-information-accessible-dyslexia-friendly-style-guide/)

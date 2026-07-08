@@ -1,6 +1,5 @@
 import { render, waitFor } from '@testing-library/react-native';
 import * as React from 'react';
-
 import * as UseFocus from '../hooks/useFocus';
 import { AutofocusContainer } from './AutofocusContainer';
 
@@ -9,7 +8,7 @@ beforeEach(() => {
 });
 
 describe('AutofocusContainer', () => {
-  it('it call setFocus when gets rendered', async () => {
+  it('call setFocus when gets rendered', async () => {
     const setFocus = jest.fn();
     jest.spyOn(UseFocus, 'useFocus').mockReturnValue({
       setFocus,
@@ -21,7 +20,7 @@ describe('AutofocusContainer', () => {
       </AutofocusContainer>,
     );
 
-    await waitFor(() => expect(setFocus).toBeCalled());
+    await waitFor(() => expect(setFocus).toHaveBeenCalled());
   });
 
   it.each([undefined, true])(
@@ -38,7 +37,7 @@ describe('AutofocusContainer', () => {
         </AutofocusContainer>,
       );
 
-      await waitFor(() => expect(setFocus).toBeCalled());
+      await waitFor(() => expect(setFocus).toHaveBeenCalled());
 
       expect(
         renderAPI.getByTestId('autofocusContainer.accessibleView'),
@@ -58,7 +57,7 @@ describe('AutofocusContainer', () => {
       </AutofocusContainer>,
     );
 
-    await waitFor(() => expect(setFocus).toBeCalled());
+    await waitFor(() => expect(setFocus).toHaveBeenCalled());
 
     expect(
       renderAPI.queryByTestId('autofocusContainer.accessibleView'),

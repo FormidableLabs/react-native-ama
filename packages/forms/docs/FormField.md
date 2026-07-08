@@ -4,6 +4,16 @@ import { Required } from '@site/src/components';
 
 This is a generic form field element capable of receiving focus from a [TextInput](./TextInput.mdx) components or by using the [useFocus](/core/hooks/useFocus) hook.
 
+## Usage
+
+```jsx
+import { Form } from '@react-native-ama/forms';
+
+<Form.Field id="field-id" hasValidation hasError={false}>
+  {/* focusable field content */}
+</Form.Field>;
+```
+
 ## Example
 
 ```jsx
@@ -80,6 +90,10 @@ Form Fields are wrapped inside an accessible\* view by default, to disable this 
 | boolean | true    |
 
 > *accessible: *When true, indicates that the view is an accessibility element. By default, all the touchable elements are accessible.\*
+
+## Methods
+
+None — this component exposes no imperative methods.
 
 ## Related guidelines
 

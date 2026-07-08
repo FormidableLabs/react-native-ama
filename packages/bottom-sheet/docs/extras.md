@@ -1,0 +1,33 @@
+---
+slug: /
+title: The Bottom Sheet Package
+sidebar_position: 1
+---
+
+# Intro
+
+The `@react-native-ama/bottom-sheet` package provides an accessible bottom sheet component and supporting hooks for React Native apps.
+
+## Installation
+
+Install the `@react-native-ama/bottom-sheet` package with your favourite package manager:
+
+```bash npm2yarn
+npm install @react-native-ama/bottom-sheet
+```
+
+### Dependencies
+
+The package relies on [react-native-reanimated](https://github.com/software-mansion/react-native-reanimated) and [react-native-gesture-handler](https://github.com/software-mansion/react-native-gesture-handler), so these must also be installed.
+
+```bash npm2yarn
+npm install react-native-reanimated
+```
+
+Follow the specific installation instructions for React Native Reanimated [here](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/getting-started/#installation).
+
+```bash npm2yarn
+npm install react-native-gesture-handler
+```
+
+Follow the specific installation instructions for React Native Gesture Handler [here](https://docs.swmansion.com/react-native-gesture-handler/docs/fundamentals/installation), specifically wrapping the entry point of the app in a `GestureHandlerRootView`.

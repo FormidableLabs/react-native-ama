@@ -33,7 +33,7 @@ If the property `exitFrom` is not specified, it will then play the animation in 
 
 ## Accessibility
 
-For both, `from` and `exitFrom` starting animation, the hook will use a `duration={0}` for each [motion property](../utils/isMotionAnimation) when [Reduce Motion](/core/hooks/useAMAContext#isreducemotionenabled) option is enabled.
+For both, `from` and `exitFrom` starting animation, the hook will use a `duration={0}` for each motion property when [Reduce Motion](/core/hooks/useAMAContext#isreducemotionenabled) option is enabled.
 
 ## Props
 
@@ -47,7 +47,7 @@ The preferred animation duration.
 
 :::note
 
-The hook will use a `duration={0}` for each [motion property](../utils/isMotionAnimation) when [Reduce Motion](/core/hooks/useAMAContext#isreducemotionenabled) option is enabled.
+The hook will use a `duration={0}` for each motion property when [Reduce Motion](/core/hooks/useAMAContext#isreducemotionenabled) option is enabled.
 
 :::
 
@@ -101,12 +101,12 @@ In additional to `ViewStyle` this property also allows to access to special [val
 | currentGlobalOriginX | X coordinate of top left corner in global coordinate system   |
 | currentGlobalOriginY | Y coordinate of top left corner in global coordinate system   |
 
-Because in the [from](#from) animation, we did specify the special value **targetHeight** we need to provide a "different" value for the exiting animation
+Because in the `from` animation, we did specify the special value **targetHeight** we need to provide a "different" value for the exiting animation
 as that special name does not exist for the exitFrom animation.
 
 :::note
 
-If not specified, the [from](#from) value is used as the final one for the unmounting animation.
+If not specified, the `from` value is used as the final one for the unmounting animation.
 
 :::
 
@@ -117,6 +117,17 @@ The final value for the unmounting animation.
 | Type      |
 | --------- |
 | ViewStyle |
+
+## Returns
+
+| Property | Type | Description |
+| -------- | ---- | ----------- |
+| `entering` | Reanimated `EntryExitAnimationFunction` | Animation function passed to an `Animated.*` component's `entering` prop |
+| `exiting` | Reanimated `EntryExitAnimationFunction` | Animation function passed to an `Animated.*` component's `exiting` prop |
+
+## Methods
+
+None — this hook returns animation functions, not an imperative API.
 
 ## Related guidelines
 

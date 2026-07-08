@@ -1,39 +1,34 @@
-// Components
-
-import { isFocused } from '@react-native-ama/internal';
-
+import React from 'react';
 import {
-  type FormActions,
   Form as FormProvider,
+  type FormActions,
   type FormProps,
 } from './components/Form';
 import { FormField, type FormFieldProps } from './components/FormField';
-import { FormSubmit, type FormSubmitProps } from './components/FormSubmit';
-import { FormSwitch, type FormSwitchProps } from './components/FormSwitch';
+import {
+  FormSubmit,
+  type FormSubmitProps,
+  type FormSubmitRenderProps,
+} from './components/FormSubmit';
 
-type FormComponent = React.FunctionComponent<FormProps> & {
-  Submit: (props: FormSubmitProps) => JSX.Element;
-  Field: React.FunctionComponent<FormFieldProps>;
-  Switch: (props: FormSwitchProps) => JSX.Element;
+type FormComponent = typeof FormProvider & {
+  Submit: (props: FormSubmitProps) => React.ReactElement;
+  Field: typeof FormField;
 };
 
-// @ts-ignore
-const Form: FormComponent = FormProvider;
+const Form = FormProvider as unknown as FormComponent;
 Form.Submit = FormSubmit;
 Form.Field = FormField;
-Form.Switch = FormSwitch;
 
-export { Form, FormField, FormSubmit, FormSwitch };
+export { Form, FormField, FormSubmit };
 
 // Components
 export { TextInput, type TextInputProps } from './components/TextInput';
 
 // Hooks
 export { useFormField, type UseFormField } from './hooks/useFormField';
+export { useFormSubmit, type UseFormSubmit } from './hooks/useFormSubmit';
 export { useTextInput, type UseTextInput } from './hooks/useTextInput';
-
-// utils
-export { isFocused };
 
 // Types
 export {
@@ -41,5 +36,5 @@ export {
   type FormActions,
   type FormFieldProps,
   type FormSubmitProps,
-  type FormSwitchProps,
+  type FormSubmitRenderProps,
 };

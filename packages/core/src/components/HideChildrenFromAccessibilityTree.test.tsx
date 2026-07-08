@@ -1,33 +1,39 @@
-/* eslint-disable jest/no-disabled-tests */
 import { act, render } from '@testing-library/react-native';
 import { flushMicroTasks } from '@testing-library/react-native/build/flush-micro-tasks';
 import * as React from 'react';
 import { Pressable, Text } from 'react-native';
-
 import { AMAProvider } from './AMAProvider';
 import { HideChildrenFromAccessibilityTree } from './HideChildrenFromAccessibilityTree';
 
-beforeEach(() => {
-  jest.clearAllMocks();
+jest.mock('./AMAProvider', () => {
+  const originalModule = jest.requireActual('./AMAProvider');
+  return {
+    ...originalModule,
+    useAMAContext: jest.fn().mockReturnValue({ isScreenReaderEnabled: true }),
+  };
 });
 
-describe.skip('HideChildrenFromAccessibilityTree', () => {
+let useAMAContext: jest.Mock;
+
+beforeEach(() => {
+  jest.clearAllMocks();
+  useAMAContext = jest.requireMock('./AMAProvider').useAMAContext;
+  useAMAContext.mockReturnValue({ isScreenReaderEnabled: true });
+});
+
+describe('HideChildrenFromAccessibilityTree', () => {
   describe('iOS', () => {
     beforeEach(() => {
-      const Platform = jest.requireActual(
-        'react-native/Libraries/Utilities/Platform',
-      );
-
-      Platform.select = (params: any) => {
-        return params.ios;
-      };
+      const rn = jest.requireMock('react-native');
+      rn.Platform.OS = 'ios';
+      rn.Platform.select = (params: any) => params.ios ?? params.default;
     });
 
     it('hides all the children from the accessibility tree when the screen reader is enabled', async () => {
       const { getByTestId } = await renderHideChildrenFromAccessibilityTree();
 
       ['test-text', 'test-button', 'nested-text'].forEach(testID => {
-        expect(getByTestId(testID).props).toEqual(
+        expect(getByTestId(testID, { includeHiddenElements: true }).props).toEqual(
           expect.objectContaining({
             importantForAccessibility: 'no',
             accessibilityElementsHidden: true,
@@ -36,7 +42,7 @@ describe.skip('HideChildrenFromAccessibilityTree', () => {
       });
     });
 
-    it('does nothing if the SR is turned off %s', async () => {
+    it('does nothing if the SR is turned off', async () => {
       const { getByTestId } = await renderHideChildrenFromAccessibilityTree({
         isScreenReaderEnabled: false,
       });
@@ -45,7 +51,6 @@ describe.skip('HideChildrenFromAccessibilityTree', () => {
         expect(getByTestId(testID).props).not.toHaveProperty(
           'importantForAccessibility',
         );
-
         expect(getByTestId(testID).props).not.toHaveProperty(
           'accessibilityElementsHidden',
         );
@@ -55,26 +60,22 @@ describe.skip('HideChildrenFromAccessibilityTree', () => {
 
   describe('Android', () => {
     beforeEach(() => {
-      const Platform = jest.requireActual(
-        'react-native/Libraries/Utilities/Platform',
-      );
-
-      Platform.select = (params: any) => {
-        return params.default;
-      };
+      const rn = jest.requireMock('react-native');
+      rn.Platform.OS = 'android';
+      rn.Platform.select = (params: any) => params.default ?? params.android;
     });
 
     it('hides all the children from the accessibility tree when the screen reader is enabled', async () => {
       const { getByTestId } = await renderHideChildrenFromAccessibilityTree();
 
-      expect(getByTestId('test-wrapper').props).toEqual(
+      expect(getByTestId('test-wrapper', { includeHiddenElements: true }).props).toEqual(
         expect.objectContaining({
           importantForAccessibility: 'no-hide-descendants',
         }),
       );
     });
 
-    it('does nothing if the SR is turned off %s', async () => {
+    it('does nothing if the SR is turned off', async () => {
       const { queryByTestId } = await renderHideChildrenFromAccessibilityTree({
         isScreenReaderEnabled: false,
       });
@@ -110,20 +111,3 @@ const renderHideChildrenFromAccessibilityTree = async (params?: {
 
   return renderAPI;
 };
-
-let useAMAContext: jest.Mock;
-
-function mockAMAProvider() {
-  const originalModule = jest.requireActual('./AMAProvider');
-
-  useAMAContext = jest.fn().mockReturnValue({
-    isScreenReaderEnabled: true,
-  });
-
-  return {
-    ...originalModule,
-    useAMAContext,
-  };
-}
-
-jest.mock('./AMAProvider', () => mockAMAProvider());

@@ -1,4 +1,5 @@
-dist
+dist/
+**/dist/
 .DS_Store
 
 # CocoaPods
@@ -47,3 +48,13 @@ coverage
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+example/.yarn
+playground/.yarn/cache/
+playground/android
+playground/ios
+
+.java-version
+_mano
+_mano_output
+AGENTS.md
+CLAUDE.md

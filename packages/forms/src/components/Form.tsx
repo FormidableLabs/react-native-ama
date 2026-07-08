@@ -1,11 +1,9 @@
-import { useChecks, useFocus } from '@react-native-ama/core';
-import { isFocused } from '@react-native-ama/internal';
 import * as React from 'react';
-import { InteractionManager } from 'react-native';
+import { InteractionManager, TextInput } from 'react-native';
+import { useFocus } from '../hooks/useFocus';
 
 export type FormProps = React.PropsWithChildren<{
   onSubmit: () => boolean | Promise<boolean>;
-  ref?: React.RefObject<FormActions>; // need to explicitly type for inference in <Form /> component
 }>;
 
 export type FormActions = {
@@ -17,8 +15,6 @@ export const Form = React.forwardRef<FormActions, FormProps>(
   ({ children, onSubmit }, ref) => {
     const refs = React.useRef<FormRef[]>([]);
     const { setFocus } = useFocus();
-
-    const checks = __DEV__ ? useChecks?.() : undefined;
 
     const focusField = React.useCallback(
       (nextField?: Partial<FormRef> | undefined) => {
@@ -35,14 +31,6 @@ export const Form = React.forwardRef<FormActions, FormProps>(
           nextField?.hasFocusCallback &&
           nextField?.isEditable;
 
-        __DEV__ &&
-          nextRefElement == null &&
-          checks?.logResult('nextRefElement', {
-            message:
-              'No next field found. Make sure you wrapped your form inside the <Form /> component',
-            rule: 'NO_UNDEFINED',
-          });
-
         if (callFocus) {
           /**
            * On some apps, if we call focus immediately and the field is already focused we lose the focus.
@@ -52,51 +40,33 @@ export const Form = React.forwardRef<FormActions, FormProps>(
 
           setTimeout(() => {
             nextRefElement?.current?.focus();
-
-            __DEV__ &&
-              nextRefElement &&
-              checks?.checkFocusTrap({
-                ref: nextRefElement,
-                shouldHaveFocus: true,
-              });
           }, timeoutValue);
         } else if (nextRefElement?.current) {
           setFocus(nextRefElement?.current);
         }
       },
-      [checks, setFocus],
+      [setFocus]
     );
 
-    const focusFieldAt = React.useCallback(
-      (position: number) => {
-        InteractionManager.runAfterInteractions(() => {
-          setTimeout(() => {
-            const fieldWithError = refs.current[position];
+    const focusFieldAt = (position: number) => {
+      InteractionManager.runAfterInteractions(() => {
+        setTimeout(() => {
+          const fieldWithError = refs.current[position];
 
-            focusField(fieldWithError);
-          }, 0);
-        });
-      },
-      [focusField],
-    );
+          focusField(fieldWithError);
+        }, 0);
+      });
+    };
 
-    const focusFirstInvalidField = React.useCallback(() => {
+    const focusFirstInvalidField = () => {
       const fieldWithError = (refs.current || []).findIndex(
-        fieldRef => fieldRef.hasValidation && fieldRef.hasError,
+        (fieldRef) => fieldRef.hasValidation && fieldRef.hasError
       );
 
-      __DEV__ &&
-        fieldWithError == null &&
-        checks?.logResult('Form', {
-          message:
-            'The form validation has failed, but no component with error was found',
-          rule: 'NO_UNDEFINED',
-        });
-
       focusFieldAt(fieldWithError);
-    }, [focusFieldAt, checks]);
+    };
 
-    const submitForm = React.useCallback(async () => {
+    const submitForm = async () => {
       const isValid = await onSubmit();
 
       if (isValid) {
@@ -104,7 +74,7 @@ export const Form = React.forwardRef<FormActions, FormProps>(
       }
 
       focusFirstInvalidField();
-    }, [focusFirstInvalidField, onSubmit]);
+    };
 
     React.useImperativeHandle(ref, () => ({
       focusFirstInvalidField,
@@ -113,11 +83,12 @@ export const Form = React.forwardRef<FormActions, FormProps>(
 
     return (
       <FormContext.Provider
-        value={{ refs: refs.current, submitForm, focusField }}>
+        value={{ refs: refs.current, submitForm, focusField }}
+      >
         {children}
       </FormContext.Provider>
     );
-  },
+  }
 );
 
 export type FormContextValue = {
@@ -140,11 +111,11 @@ export const FormContext = React.createContext<FormContextValue | null>(null);
 const DEFAULT_CONTEXT_VALUE: FormContextValue = {
   refs: [],
   submitForm: () => Promise.resolve(),
-  focusField: () => {},
+  focusField: () => { },
 };
 
 export const useForm = (
-  { suppressError }: { suppressError?: boolean } = { suppressError: false },
+  { suppressError }: { suppressError?: boolean } = { suppressError: false }
 ) => {
   const context = React.useContext(FormContext);
 
@@ -155,12 +126,17 @@ export const useForm = (
   if (!context) {
     __DEV__ &&
       console.error(
-        'Please wrap your form field inside the <Form /> component',
+        'Please wrap your form field inside the <Form /> component'
       );
     throw new Error(
-      'useForm must be used within a FormContextProvider, please wrap your form field inside the <Form /> component',
+      'useForm must be used within a FormContextProvider, please wrap your form field inside the <Form /> component'
     );
   }
 
   return context;
+};
+
+
+const isFocused = (input: TextInput | undefined | null) => {
+  return input?.isFocused();
 };
