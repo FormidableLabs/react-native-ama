@@ -32,7 +32,7 @@ jobs:
         working-directory: playground
 
       - name: Build playground
-        run: yarn run playground:build
+        run: npm run playground:build
         env:
           EXPO_NO_TELEMETRY: 1
 
