@@ -27,8 +27,14 @@ jobs:
       - name: Install dependencies
         uses: ./.github/actions/setup
 
-      - name: Run example bare app
-        run: yarn run example:bare
+      - name: Install playground dependencies
+        run: npm install
+        working-directory: playground
+
+      - name: Build playground
+        run: yarn run playground:build
+        env:
+          EXPO_NO_TELEMETRY: 1
 
       - name: Build packages
         run: yarn run build
