@@ -1,4 +1,4 @@
-# @react-native-ama/lists
+# @react-native-ama/react-native
 
 ## 1.2.1
 

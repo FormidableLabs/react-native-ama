@@ -1,5 +1,14 @@
 # @react-native-ama/extras
 
+## 1.2.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @react-native-ama/animations@1.2.1
+  - @react-native-ama/core@1.2.1
+  - @react-native-ama/internal@1.2.1
+
 ## 1.2.0
 
 ### Minor Changes
