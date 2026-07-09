@@ -47,11 +47,11 @@ export default function Home(): JSX.Element {
           },
           {
             imgSrc: feature2,
-            alt: 'Compositional Architecture',
-            title: 'Compositional Architecture',
+            alt: 'Works with Any UI Library',
+            title: 'Works with Any UI Library',
             html: {
               __html:
-                'AMA features a compositional architecture with well-defined sub-packages, enabling developers to include only the accessibility features they need. This approach keeps apps lightweight and efficient while ensuring all necessary accessibility concerns are addressed.',
+                "AMA's checks run natively on iOS and Android, inspecting your app's real view hierarchy — not a fixed set of components you have to adopt. That means AMA works with your own components, a third-party UI library, or anything else you're already using. Independent sub-packages let you install only what you need.",
             },
           },
           {
