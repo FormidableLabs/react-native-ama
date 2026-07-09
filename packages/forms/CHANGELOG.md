@@ -1,5 +1,16 @@
 # @react-native-ama/forms
 
+## 2.0.0-beta.0
+
+### Major Changes
+
+- v2.0 release: removes `@react-native-ama/internal` (inlined into each consuming package) and retires `@react-native-ama/react-native`. Restructures `ama.config.json` — `highlight` becomes a nested object (`mode`, `borderWidth`, `gap`); `log` is removed as a standalone key; `checks` scopes feature gates and `delay`. Adds the new `@react-native-ama/bottom-sheet` package. ([#327](https://github.com/FormidableLabs/react-native-ama/pull/327))
+
+### Patch Changes
+
+- Updated dependencies [[`8e591fe51ee525e199bf1f6e55a5d674401d8e12`](https://github.com/FormidableLabs/react-native-ama/commit/8e591fe51ee525e199bf1f6e55a5d674401d8e12), [`4f544c1aab79c0ecdb93c5b744fdf99834ca0503`](https://github.com/FormidableLabs/react-native-ama/commit/4f544c1aab79c0ecdb93c5b744fdf99834ca0503)]:
+  - @react-native-ama/core@2.0.0-beta.0
+
 ## 1.2.1
 
 ### Patch Changes

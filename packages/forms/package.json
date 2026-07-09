@@ -1,6 +1,6 @@
 {
   "name": "@react-native-ama/forms",
-  "version": "1.2.1",
+  "version": "2.0.0-beta.0",
   "sideEffects": false,
   "exports": {
     ".": {
@@ -47,7 +47,7 @@
     "test": "jest"
   },
   "peerDependencies": {
-    "@react-native-ama/core": "~2.0.0",
+    "@react-native-ama/core": "~2.0.0-beta.0",
     "react": "*",
     "react-native": "*"
   },

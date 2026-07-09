@@ -8,5 +8,8 @@
     "@react-native-ama/forms": "1.2.1",
     "@react-native-ama/lists": "1.2.1"
   },
-  "changesets": []
+  "changesets": [
+    "five-otters-swim",
+    "orange-paws-count"
+  ]
 }
