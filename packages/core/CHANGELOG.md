@@ -1,5 +1,15 @@
 # @react-native-ama/core
 
+## 2.0.0-beta.0
+
+### Major Changes
+
+- v2.0 release: removes `@react-native-ama/internal` (inlined into each consuming package) and retires `@react-native-ama/react-native`. Restructures `ama.config.json` — `highlight` becomes a nested object (`mode`, `borderWidth`, `gap`); `log` is removed as a standalone key; `checks` scopes feature gates and `delay`. Adds the new `@react-native-ama/bottom-sheet` package. ([#327](https://github.com/FormidableLabs/react-native-ama/pull/327))
+
+### Patch Changes
+
+- fix: export for repack ([#328](https://github.com/FormidableLabs/react-native-ama/pull/328))
+
 ## 1.2.1
 
 ### Patch Changes
