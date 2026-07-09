@@ -30,8 +30,7 @@ public class ReactNativeAmaModule: Module {
 
         Events("onAmaNodes", "onUIInteraction")
 
-        Function("start") { (arguments: [Any]) in
-            let options = arguments.first as? [String: Any]
+        Function("start") { (options: [String: Any]?) in
             let uiCheck = options?["ui"] as? Bool ?? false
             uiCheckDelay = options?["delay"] as? Int ?? uiCheckDelay
             gap = options?["gap"] as? CGFloat ?? gap

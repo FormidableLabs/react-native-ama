@@ -3,6 +3,7 @@
   "version": "2.0.0-beta.1",
   "description": "Accessible Mobile App Library for React Native",
   "sideEffects": false,
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -44,7 +45,12 @@
   },
   "files": [
     "src",
-    "dist"
+    "dist",
+    "ama.config.json",
+    "expo-module.config.json",
+    "ios",
+    "android",
+    "!android/build"
   ],
   "scripts": {
     "build": "rm -rf dist && ../../node_modules/.bin/tsc -p ./tsconfig.build.json",
