@@ -36,8 +36,8 @@ jobs:
         env:
           EXPO_NO_TELEMETRY: 1
 
-      - name: Yarn install
-        run: yarn install
+      - name: Re-sync root Yarn state
+        run: rm -f node_modules/.yarn-state.yml && yarn install
 
       - name: Build packages
         run: yarn run build
