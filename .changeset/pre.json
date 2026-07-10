@@ -10,6 +10,7 @@
   },
   "changesets": [
     "five-otters-swim",
-    "orange-paws-count"
+    "orange-paws-count",
+    "postinstall-missing-dist-scripts"
   ]
 }
