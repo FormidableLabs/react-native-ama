@@ -1,5 +1,12 @@
 # @react-native-ama/animations
 
+## 2.0.0-beta.1
+
+### Patch Changes
+
+- Updated dependencies [[`587cc28a97127be6a22961be218290be24198ee9`](https://github.com/FormidableLabs/react-native-ama/commit/587cc28a97127be6a22961be218290be24198ee9)]:
+  - @react-native-ama/core@2.0.0-beta.1
+
 ## 2.0.0-beta.0
 
 ### Major Changes
