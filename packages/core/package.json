@@ -44,8 +44,7 @@
   },
   "files": [
     "src",
-    "dist",
-    "dist/scripts"
+    "dist"
   ],
   "scripts": {
     "build": "rm -rf dist && ../../node_modules/.bin/tsc -p ./tsconfig.build.json",
