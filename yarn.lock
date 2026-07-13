@@ -4109,7 +4109,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@react-native-ama/animations@workspace:packages/animations"
   peerDependencies:
-    "@react-native-ama/core": ~2.0.0-beta.1
+    "@react-native-ama/core": ~2.0.0-beta.2
     react: "*"
     react-native: "*"
     react-native-reanimated: ">=2.0.0"
@@ -4123,7 +4123,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@react-native-ama/bottom-sheet@workspace:packages/bottom-sheet"
   peerDependencies:
-    "@react-native-ama/core": ~2.0.0-beta.1
+    "@react-native-ama/core": ~2.0.0-beta.2
     react: "*"
     react-native: ">=0.62.0"
     react-native-gesture-handler: ">=2.0.0"
@@ -4151,7 +4151,7 @@ __metadata:
   dependencies:
     jest-expo: ^49.0.0
   peerDependencies:
-    "@react-native-ama/core": ~2.0.0-beta.1
+    "@react-native-ama/core": ~2.0.0-beta.2
     react: "*"
     react-native: "*"
   peerDependenciesMeta:
@@ -4164,7 +4164,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@react-native-ama/lists@workspace:packages/lists"
   peerDependencies:
-    "@react-native-ama/core": ~2.0.0-beta.1
+    "@react-native-ama/core": ~2.0.0-beta.2
     expo: ">=47.0.0"
     react: "*"
     react-native: "*"

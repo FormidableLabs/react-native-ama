@@ -1,5 +1,12 @@
 # @react-native-ama/lists
 
+## 2.0.0-beta.2
+
+### Patch Changes
+
+- Updated dependencies [[`e424ffc79bd9a497e743529e4bb5c7899572fe86`](https://github.com/FormidableLabs/react-native-ama/commit/e424ffc79bd9a497e743529e4bb5c7899572fe86)]:
+  - @react-native-ama/core@2.0.0-beta.2
+
 ## 2.0.0-beta.1
 
 ### Patch Changes

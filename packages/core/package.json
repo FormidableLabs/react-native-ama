@@ -1,6 +1,6 @@
 {
   "name": "@react-native-ama/core",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0-beta.2",
   "description": "Accessible Mobile App Library for React Native",
   "sideEffects": false,
   "types": "./dist/index.d.ts",
