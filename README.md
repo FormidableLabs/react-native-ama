@@ -87,6 +87,17 @@ export const App = () => {
 };
 ```
 
+### Expo Go is not supported
+
+AMA registers a native module (iOS Swift / Android Kotlin), so it cannot run inside **Expo Go** — Expo Go is a fixed, pre-built sandbox that only supports Expo's own bundled native modules and can't load arbitrary third-party native code. You'll need a [development build](https://docs.expo.dev/develop/development-builds/introduction/) instead:
+
+```sh
+npx expo install expo-dev-client
+npx expo run:ios      # or npx expo run:android
+```
+
+`npx expo start` will then target your dev build rather than Expo Go.
+
 ### Playground
 
 You can use the playground app within this repository to see how AMA checks work in practice.
