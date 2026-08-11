@@ -21,6 +21,17 @@ const defaultPresets = {
 };
 
 const config: Config = {
+  future: {
+    // docusuarus new infrastructure is a breaking change and can be turned on with the experimental flag
+    experimental_faster: {
+      swcJsLoader: false,
+      swcJsMinimizer: false,
+      swcHtmlMinimizer: false,
+      lightningCssMinimizer: false,
+      rspackBundler: false,
+      mdxCrossCompilerCache: false,
+    },
+  },
   title: 'React Native AMA',
   tagline: 'A comprehensive drop-in accessibility library for React Native.',
   url: 'https://commerce.nearform.com/',
