@@ -1,0 +1,67 @@
+# Tech Spec — [Project Name]
+
+<!-- Project-wide. Generated once by `mano spec`, extended on later phases. -->
+
+## Tech Stack
+
+<!-- Specific: "React Native with Expo (managed), TypeScript" not just "React Native". -->
+
+## Project Scaffold
+
+<!-- Greenfield only. If the chosen generator expects an empty target, record its exact guarded command using `node _mano/scripts/scaffold.js run ... -- ... {target}`. Omit when the application is already scaffolded or no generator is needed. -->
+
+## Libraries & Dependencies
+
+<!-- Use exact versions only when syncing from a real manifest or lockfile. Otherwise keep the install command provisional instead of inventing a version number here. -->
+
+| Category | Decision | Why | Install |
+|----------|----------|-----|---------|
+| | | | |
+
+## Data Model
+
+| Entity | Fields | Notes |
+|--------|--------|-------|
+| | | |
+
+<!-- When an Exit Criterion depends on a starting or first-use state, name the owning initial/default field here (for example initial_radius, starting_capacity, or initial_delay). Never leave that value to a story. -->
+
+## Public / Integration Interface Contracts
+
+<!-- Include only when the product exposes or consumes a public, package, protocol, command, event, plugin, persisted/wire, external-integration, or independently-owned cross-component interface. Exact consumer-visible contracts belong here; reusable coding/signature conventions belong in project-rules.md. -->
+
+| Surface | Exact operation / event | Inputs & defaults | Result / failure | Canonical mapping / ownership |
+|---------|-------------------------|-------------------|------------------|-------------------------------|
+| | | | | |
+
+<!-- For fluent/builder/pipeline APIs, also trace chain closure. Omit otherwise. -->
+
+| Expression before call | Operation / modifier | Exact returned type | Context retained | Terminals still callable |
+|------------------------|----------------------|---------------------|------------------|--------------------------|
+| | | | | |
+
+## Storage Strategy
+
+<!-- Library, location, offline behaviour. Schema if SQL. -->
+
+## Key Technical Decisions
+
+-
+-
+
+## Platform Constraints
+
+-
+-
+
+## Cross-Environment Boundaries
+
+<!-- Only needed if features span app + widget, app + watch, web + native, etc. -->
+<!-- For each boundary: what's shared, what's not, and what that means for implementation. -->
+
+
+## Product Principle Constraints
+
+<!-- Optional. Only include technical constraints derived from principles explicitly present in the current phase brief or provided context. Omit if none apply. -->
+
+-
