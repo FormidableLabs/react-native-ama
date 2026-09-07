@@ -44,7 +44,7 @@ This is a known limitation, not a bug in your app. If it bothers you, disable Lo
 
 | Real Time scanning | AMA in-app info |
 |---------|-------------|
-| ![AMA flags multiple accessibility issues in real time, including missing roles and contrast failures, and visually marks each element with severity indicators to guide developers toward immediate fixes.](/img/ama-checks.png) | ![AMA’s real-time accessibility checker detecting a missing role on a pressable element, with detailed guidance, severity level, and direct links to related guidelines.](/img/ama-issue.png) |
+| ![AMA flags multiple accessibility issues in real time, including missing roles and contrast failures, and visually marks each element with severity indicators to guide developers toward immediate fixes.](/website/static/img/ama-checks.png) | ![AMA’s real-time accessibility checker detecting a missing role on a pressable element, with detailed guidance, severity level, and direct links to related guidelines.](/website/static/img//ama-issue.png) |
 
 ## Getting started
 
