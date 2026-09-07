@@ -1,12 +1,13 @@
 #if DEBUG
-import ExpoModulesCore
+import React
 import UIKit
 
 struct Constants {
     static let debounce: TimeInterval = 2.0
 }
 
-public class ReactNativeAmaModule: Module {
+@objc(ReactNativeAmaModule)
+public class ReactNativeAmaModule: RCTEventEmitter {
     private var isMonitoring = false
     private var currentDecorView: UIView?
     private var displayLink: CADisplayLink?
@@ -25,72 +26,99 @@ public class ReactNativeAmaModule: Module {
     private var gap: CGFloat = 0
     private var borderWidth: CGFloat = 3
 
-    public func definition() -> ModuleDefinition {
-        Name("ReactNativeAma")
+    private var hasListeners = false
 
-        Events("onAmaNodes", "onUIInteraction")
+    @objc override public static func requiresMainQueueSetup() -> Bool {
+        return true
+    }
 
-        Function("start") { (options: [String: Any]?) in
-            let uiCheck = options?["ui"] as? Bool ?? false
-            uiCheckDelay = options?["delay"] as? Int ?? uiCheckDelay
-            gap = options?["gap"] as? CGFloat ?? gap
-            borderWidth = options?["borderWidth"] as? CGFloat ?? borderWidth
+    @objc override public func supportedEvents() -> [String]! {
+        return ["onAmaNodes", "onUIInteraction"]
+    }
 
-            guard !isMonitoring else { return }
+    @objc override public func startObserving() {
+        hasListeners = true
+    }
 
-            Logger.info("start", "👀 Start Monitoring 👀")
+    @objc override public func stopObserving() {
+        hasListeners = false
+    }
 
-            self.a11yChecker = NodesGrabber(appContext: self.appContext!)
-            self.highlighter = Highlight()
+    @objc(start:)
+    public func start(_ options: [String: Any]?) {
+        let uiCheck = options?["ui"] as? Bool ?? false
+        uiCheckDelay = options?["delay"] as? Int ?? uiCheckDelay
+        gap = options?["gap"] as? CGFloat ?? gap
+        borderWidth = options?["borderWidth"] as? CGFloat ?? borderWidth
 
-            isMonitoring = true
+        guard !isMonitoring else { return }
 
-            DispatchQueue.main.async {
-                guard
-                    let viewController = self.appContext?.utilities?
-                        .currentViewController(),
-                    let decorView = viewController.view,
-                    let currentView = viewController.view,
-                    let window = currentView.window
-                else {
-                    Logger.info("start", "DEBUG guard failed — no viewController/decorView/window yet")
-                    return
-                }
+        Logger.info("start", "👀 Start Monitoring 👀")
 
-                self.currentDecorView = decorView
-                self.setupDisplayLink()
+        self.a11yChecker = NodesGrabber()
+        self.highlighter = Highlight()
 
-                if uiCheck {
-                    self.attachWindowTapProbe()
-                }
-            }
-        }
+        isMonitoring = true
 
-        Function("stop") {
-            guard isMonitoring else { return }
-
-            if let recognizer = self.windowTapRecognizer,
-                let window = UIApplication.shared.currentKeyWindow
-            {
-                window.removeGestureRecognizer(recognizer)
-            }
-
-            self.windowTapRecognizer = nil
-            self.isMonitoring = false
-
-            DispatchQueue.main.async {
-                self.displayLink?.invalidate()
-                self.displayLink = nil
-            }
-        }
-
-        AsyncFunction("highlight") {
-            (viewId: Int, mode: String, hexColor: String, issueCount: Int) async -> [Double]? in
+        DispatchQueue.main.async {
             guard
-                let root = self.currentDecorView,
-                let target = await root.viewWithTag(viewId)
+                let viewController = RCTPresentedViewController(),
+                let decorView = viewController.view,
+                let currentView = viewController.view,
+                let window = currentView.window
             else {
-                return nil
+                Logger.info("start", "DEBUG guard failed — no viewController/decorView/window yet")
+                return
+            }
+
+            self.currentDecorView = decorView
+            self.setupDisplayLink()
+
+            if uiCheck {
+                self.attachWindowTapProbe()
+            }
+        }
+    }
+
+    @objc(stop)
+    public func stop() {
+        guard isMonitoring else { return }
+
+        if let recognizer = self.windowTapRecognizer,
+            let window = UIApplication.shared.currentKeyWindow
+        {
+            window.removeGestureRecognizer(recognizer)
+        }
+
+        self.windowTapRecognizer = nil
+        self.isMonitoring = false
+
+        DispatchQueue.main.async {
+            self.displayLink?.invalidate()
+            self.displayLink = nil
+        }
+    }
+
+    @objc(highlight:mode:hexColor:issueCount:resolver:rejecter:)
+    public func highlight(
+        _ viewId: NSNumber,
+        mode: String,
+        hexColor: String,
+        issueCount: NSNumber,
+        resolver: @escaping RCTPromiseResolveBlock,
+        rejecter: @escaping RCTPromiseRejectBlock
+    ) {
+        Task {
+            guard let root = self.currentDecorView else {
+                resolver(nil)
+                return
+            }
+
+            let target = await MainActor.run { root.viewWithTag(viewId.intValue) }
+
+            guard let target = target else {
+                resolver(nil)
+                return
             }
 
             await MainActor.run {
@@ -109,9 +137,9 @@ public class ReactNativeAmaModule: Module {
                     view: target,
                     mode: mode,
                     hexColor: hexColor,
-                    gap: gap ?? 0,
-                    lineWidth: borderWidth ?? 3,
-                    issueCount: issueCount
+                    gap: self.gap,
+                    lineWidth: self.borderWidth,
+                    issueCount: issueCount.intValue
                 )
             }
 
@@ -119,18 +147,19 @@ public class ReactNativeAmaModule: Module {
                 target.convert(target.bounds, to: nil)
             }
 
-            return [
+            resolver([
                 bounds.origin.x,
                 bounds.origin.y,
                 bounds.width,
                 bounds.height,
-            ]
+            ])
         }
+    }
 
-        AsyncFunction("clearHighlight") { (viewId: Int) in
-            await MainActor.run {
-                self.highlighter?.clearHighlight(viewId: viewId)
-            }
+    @objc(clearHighlight:)
+    public func clearHighlight(_ viewId: NSNumber) {
+        DispatchQueue.main.async {
+            self.highlighter?.clearHighlight(viewId: viewId.intValue)
         }
     }
 
@@ -174,7 +203,7 @@ public class ReactNativeAmaModule: Module {
         guard let result = a11yChecker?.getNodesToCheck(on: currentDecorView)
         else { return }
 
-        if let shouldSend = result.send as? Bool, shouldSend {
+        if let shouldSend = result.send as? Bool, shouldSend, hasListeners {
             // Since result.nodes is not optional, we can access it directly here.
             let nodes = result.nodes
             let nodesWithStringKeys = Dictionary(
@@ -184,8 +213,8 @@ public class ReactNativeAmaModule: Module {
             )
 
             sendEvent(
-                "onAmaNodes",
-                nodesWithStringKeys
+                withName: "onAmaNodes",
+                body: nodesWithStringKeys
             )
         }
     }
@@ -324,8 +353,8 @@ extension ReactNativeAmaModule {
         // window's own hitTest stops at the SwiftUI `UIViewControllerWrapperView`
         // bridge (e.g. Expo Router native tabs) and never recurses into the
         // Fabric view tree mounted inside it. Starting from `currentDecorView`
-        // (the actual RN root, already resolved via appContext.utilities) skips
-        // that boundary entirely.
+        // (the actual RN root, already resolved via RCTPresentedViewController())
+        // skips that boundary entirely.
         guard let decorView = currentDecorView else { return }
 
         // Use the location captured eagerly in touchesEnded, not
@@ -414,7 +443,10 @@ extension ReactNativeAmaModule {
                 ]
 
                 isCheckScheduled = false
-                self.sendEvent("onUIInteraction", payload)
+
+                if self.hasListeners {
+                    self.sendEvent(withName: "onUIInteraction", body: payload)
+                }
             }
         }
     }
@@ -558,11 +590,37 @@ extension ReactNativeAmaModule {
     }
 }
 #else
-import ExpoModulesCore
+import React
 
-public class ReactNativeAmaModule: Module {
-  public func definition() -> ModuleDefinition {
-    Name("ReactNativeAma")
-  }
+@objc(ReactNativeAmaModule)
+public class ReactNativeAmaModule: RCTEventEmitter {
+    @objc override public static func requiresMainQueueSetup() -> Bool {
+        return false
+    }
+
+    @objc override public func supportedEvents() -> [String]! {
+        return []
+    }
+
+    @objc(start:)
+    public func start(_ options: [String: Any]?) {}
+
+    @objc(stop)
+    public func stop() {}
+
+    @objc(highlight:mode:hexColor:issueCount:resolver:rejecter:)
+    public func highlight(
+        _ viewId: NSNumber,
+        mode: String,
+        hexColor: String,
+        issueCount: NSNumber,
+        resolver: @escaping RCTPromiseResolveBlock,
+        rejecter: @escaping RCTPromiseRejectBlock
+    ) {
+        resolver(nil)
+    }
+
+    @objc(clearHighlight:)
+    public func clearHighlight(_ viewId: NSNumber) {}
 }
 #endif

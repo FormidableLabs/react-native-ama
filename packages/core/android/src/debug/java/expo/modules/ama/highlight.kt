@@ -7,10 +7,10 @@ import android.graphics.drawable.LayerDrawable
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.RectShape
 import android.view.View
-import expo.modules.kotlin.AppContext
+import com.facebook.react.bridge.ReactApplicationContext
 import java.util.concurrent.ConcurrentHashMap
 
-class Highlight(private val appContext: AppContext) {
+class Highlight(private val reactContext: ReactApplicationContext) {
     private val originalBackgrounds = ConcurrentHashMap<Int, Drawable?>()
 
     /**
@@ -19,7 +19,7 @@ class Highlight(private val appContext: AppContext) {
      * @param mode "background" | "border" | "both"
      */
     fun highlight(viewId: Int, mode: String, hexColor: String, gap: Int = 0, lineWidth: Float = 6f, issueCount: Int = 1) {
-        val activity: Activity = appContext.currentActivity ?: return
+        val activity: Activity = reactContext.currentActivity ?: return
         val color = hexColor.toColor()
 
         activity.runOnUiThread {
@@ -41,7 +41,7 @@ class Highlight(private val appContext: AppContext) {
     }
 
     fun clearHighlight(viewId: Int) {
-        val activity: Activity = appContext.currentActivity ?: return
+        val activity: Activity = reactContext.currentActivity ?: return
 
         activity.runOnUiThread {
             val view = activity.findViewById<View>(viewId) ?: return@runOnUiThread

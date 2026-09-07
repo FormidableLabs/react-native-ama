@@ -1,9 +1,3 @@
-import type { StyleProp, ViewStyle } from 'react-native';
-
-export type OnLoadEventPayload = {
-  url: string;
-};
-
 export type AmaNode = {
   type: 'Pressable' | 'Text' | 'TextInput' | 'Image';
   viewId: number;
@@ -57,14 +51,4 @@ export type AmaUiSnapshotKeys = keyof AmaUiSnapshot;
 export type ReactNativeAmaModuleEvents = {
   onAmaNodes: (nodes: AmaNodes) => void;
   onUIInteraction: (nodes: AmaUiSnapshotsData) => void;
-};
-
-export type ChangeEventPayload = {
-  value: string;
-};
-
-export type ReactNativeAmaViewProps = {
-  url: string;
-  onLoad: (event: { nativeEvent: OnLoadEventPayload }) => void;
-  style?: StyleProp<ViewStyle>;
 };

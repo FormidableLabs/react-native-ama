@@ -34,20 +34,18 @@
       "types": "./dist/ReactNativeAmaModule.d.ts",
       "default": "./dist/ReactNativeAmaModule.js"
     },
-    "./ReactNativeAmaView": {
-      "types": "./dist/ReactNativeAmaView.d.ts",
-      "default": "./dist/ReactNativeAmaView.js"
-    },
     "./ReactNativeAma.types": {
       "types": "./dist/ReactNativeAma.types.d.ts",
       "default": "./dist/ReactNativeAma.types.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "files": [
     "src",
     "dist",
     "ama.config.json",
     "expo-module.config.json",
+    "ReactNativeAma.podspec",
     "ios",
     "android",
     "!android/build"
@@ -59,8 +57,14 @@
     "postinstall": "node ./src/postinstall.js"
   },
   "peerDependencies": {
+    "expo-modules-core": "*",
     "react": "*",
     "react-native": "*"
+  },
+  "peerDependenciesMeta": {
+    "expo-modules-core": {
+      "optional": true
+    }
   },
   "keywords": [
     "react-native",
@@ -96,10 +100,10 @@
     "collectCoverageFrom": [
       "src/**/*.{ts,tsx}",
       "!src/index.ts",
-      "!src/ReactNativeAmaModule.ts",
+      "!src/ReactNativeAmaModule.ios.ts",
+      "!src/ReactNativeAmaModule.android.ts",
       "!src/ReactNativeAmaModule.web.ts",
-      "!src/ReactNativeAmaView.tsx",
-      "!src/ReactNativeAmaView.web.tsx",
+      "!src/ReactNativeAmaModule.ts",
       "!src/ReactNativeAma.types.ts"
     ],
     "coverageThreshold": {
