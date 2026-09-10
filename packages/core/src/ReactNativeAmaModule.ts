@@ -1,8 +1,7 @@
-import { NativeModule, requireNativeModule } from 'expo';
 import { ReactNativeAmaModuleEvents } from './ReactNativeAma.types';
 import { Position } from './internals/types';
 
-declare class ReactNativeAmaModule extends NativeModule<ReactNativeAmaModuleEvents> {
+type ReactNativeAmaModuleType = {
   start(config?: any): void;
   stop(): void;
   highlight(
@@ -12,7 +11,24 @@ declare class ReactNativeAmaModule extends NativeModule<ReactNativeAmaModuleEven
     issueCount: number,
   ): Promise<Position>;
   clearHighlight(viewId: number): void;
-}
+  addListener<EventName extends keyof ReactNativeAmaModuleEvents>(
+    eventName: EventName,
+    listener: ReactNativeAmaModuleEvents[EventName],
+  ): { remove(): void };
+};
 
-// This call loads the native module object from the JSI.
-export default requireNativeModule<ReactNativeAmaModule>('ReactNativeAma');
+const unsupported = (): never => {
+  throw new Error(
+    'ReactNativeAmaModule: no platform-specific implementation was resolved for this platform.',
+  );
+};
+
+const ReactNativeAmaModule: ReactNativeAmaModuleType = {
+  start: unsupported,
+  stop: unsupported,
+  highlight: unsupported,
+  clearHighlight: unsupported,
+  addListener: unsupported,
+};
+
+export default ReactNativeAmaModule;

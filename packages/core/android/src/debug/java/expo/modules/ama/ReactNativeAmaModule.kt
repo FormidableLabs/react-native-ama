@@ -16,8 +16,13 @@ import android.widget.Checkable
 import android.widget.ScrollView
 import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
-import expo.modules.kotlin.modules.Module
-import expo.modules.kotlin.modules.ModuleDefinition
+import com.facebook.react.bridge.Arguments
+import com.facebook.react.bridge.Promise
+import com.facebook.react.bridge.ReactApplicationContext
+import com.facebook.react.bridge.ReactContextBaseJavaModule
+import com.facebook.react.bridge.ReactMethod
+import com.facebook.react.bridge.ReadableMap
+import com.facebook.react.modules.core.DeviceEventManagerModule
 import kotlin.math.max
 
 object Constants {
@@ -25,7 +30,8 @@ object Constants {
     var uiCheckDelay: Long = 1000
 }
 
-class ReactNativeAmaModule : Module() {
+class ReactNativeAmaModule(reactContext: ReactApplicationContext) :
+        ReactContextBaseJavaModule(reactContext) {
     private var isMonitoring = false
     private var currentDecorView: View? = null
     private val drawListener = ViewTreeObserver.OnDrawListener { scheduleA11yCheck() }
@@ -36,84 +42,117 @@ class ReactNativeAmaModule : Module() {
     private var highlighter: Highlight? = null
     private var gap: Int = 0
     private var borderWidth: Float = 6f
+    private var listenerCount = 0
 
-    override fun definition() = ModuleDefinition {
-        Name("ReactNativeAma")
+    override fun getName() = "ReactNativeAmaModule"
 
-        Events("onAmaNodes", "onUIInteraction")
+    private fun sendEvent(eventName: String, params: Any?) {
+        if (listenerCount <= 0) {
+            return
+        }
 
-        Function("start") { args: Map<String, Any?>? ->
-            val uiCheck = args?.get("ui") as? Boolean ?: false
-            Constants.uiCheckDelay = args?.get("delay") as? Long ?: Constants.uiCheckDelay
-            gap = (args?.get("gap") as? Number)?.toInt() ?: gap
-            borderWidth = (args?.get("borderWidth") as? Number)?.toFloat() ?: borderWidth
+        reactApplicationContext
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
+                .emit(eventName, params)
+    }
 
-            if (highlighter == null) {
-                highlighter = Highlight(appContext)
+    // Required by RN's NativeEventEmitter, which calls these to track active JS listeners.
+    @ReactMethod
+    fun addListener(eventName: String) {
+        listenerCount++
+    }
+
+    @ReactMethod
+    fun removeListeners(count: Int) {
+        listenerCount = max(0, listenerCount - count)
+    }
+
+    @ReactMethod
+    fun start(options: ReadableMap?) {
+        val uiCheck = options?.takeIf { it.hasKey("ui") }?.getBoolean("ui") ?: false
+        Constants.uiCheckDelay =
+                options?.takeIf { it.hasKey("delay") }?.getDouble("delay")?.toLong()
+                        ?: Constants.uiCheckDelay
+        gap = options?.takeIf { it.hasKey("gap") }?.getDouble("gap")?.toInt() ?: gap
+        borderWidth =
+                options?.takeIf { it.hasKey("borderWidth") }?.getDouble("borderWidth")?.toFloat()
+                        ?: borderWidth
+
+        if (highlighter == null) {
+            highlighter = Highlight(reactApplicationContext)
+        }
+
+        if (!isMonitoring) {
+            Logger.info("start", "👀 Start Monitoring 👀" + options.toString())
+
+            a11yChecker = NodesGrabber(reactApplicationContext)
+
+            val activity = getCurrentActivity()
+
+            if (uiCheck) {
+                attachWindowTapProbe(activity)
             }
 
-            if (!isMonitoring) {
-                Logger.info("start", "👀 Start Monitoring 👀" + args.toString())
+            activity?.window?.decorView?.let {
+                currentDecorView = it
+                it.viewTreeObserver.addOnDrawListener(drawListener)
+            }
 
-                a11yChecker = NodesGrabber(appContext)
+            isMonitoring = true
+        }
+    }
 
-                val activity = getCurrentActivity()
+    @ReactMethod
+    fun stop() {
+        if (isMonitoring) {
+            currentDecorView?.let { it.viewTreeObserver.removeOnDrawListener(drawListener) }
 
-                if (uiCheck) {
-                    attachWindowTapProbe(activity)
-                }
+            isMonitoring = false
+        }
+    }
 
-                activity?.window?.decorView?.let {
-                    currentDecorView = it
-                    it.viewTreeObserver.addOnDrawListener(drawListener)
-                }
+    @ReactMethod
+    fun highlight(viewId: Int, mode: String, hexColor: String, issueCount: Int, promise: Promise) {
+        val activity = reactApplicationContext.currentActivity
+        val root = activity?.window?.decorView as? ViewGroup
+        val target = root?.findViewById<View>(viewId)
 
-                isMonitoring = true
+        if (activity == null || root == null || target == null) {
+            promise.resolve(null)
+            return
+        }
+
+        val scroll =
+                generateSequence(target.parent) { (it as? View)?.parent }
+                        .filterIsInstance<ScrollView>()
+                        .firstOrNull()
+        scroll?.let { sv ->
+            val frame = Rect().apply { target.getDrawingRect(this) }
+            sv.offsetDescendantRectToMyCoords(target, frame)
+
+            val topVisible = frame.top >= 0
+            val bottomVisible = frame.bottom <= sv.height
+
+            if (!topVisible || !bottomVisible) {
+                val mPx = (10 * activity.resources.displayMetrics.density).toInt()
+                val scrollToY =
+                        when {
+                            frame.top < 0 -> max(0, frame.top - mPx)
+                            frame.bottom > sv.height -> frame.bottom - sv.height + mPx
+                            else -> sv.scrollY
+                        }
+                sv.scrollTo(sv.scrollX, scrollToY)
             }
         }
 
-        Function("stop") {
-            if (isMonitoring) {
-                currentDecorView?.let { it.viewTreeObserver.removeOnDrawListener(drawListener) }
+        highlighter?.highlight(viewId, mode, hexColor, gap, borderWidth, issueCount)
 
-                isMonitoring = false
-            }
-        }
+        promise.resolve(Arguments.fromList(target.getGlobalDpBounds(root)))
+    }
 
-        AsyncFunction("highlight") { viewId: Int, mode: String, hexColor: String, issueCount: Int ->
-            val activity = appContext.activityProvider?.currentActivity ?: return@AsyncFunction null
-            val root = activity.window.decorView as? ViewGroup ?: return@AsyncFunction null
-            val target = root.findViewById<View>(viewId) ?: return@AsyncFunction null
-
-            val scroll =
-                    generateSequence(target.parent) { (it as? View)?.parent }
-                            .filterIsInstance<ScrollView>()
-                            .firstOrNull()
-            scroll?.let { sv ->
-                val frame = Rect().apply { target.getDrawingRect(this) }
-                sv.offsetDescendantRectToMyCoords(target, frame)
-
-                val topVisible = frame.top >= 0
-                val bottomVisible = frame.bottom <= sv.height
-
-                if (!topVisible || !bottomVisible) {
-                    val mPx = (10 * activity.resources.displayMetrics.density).toInt()
-                    val scrollToY =
-                            when {
-                                frame.top < 0 -> max(0, frame.top - mPx)
-                                frame.bottom > sv.height -> frame.bottom - sv.height + mPx
-                                else -> sv.scrollY
-                            }
-                    sv.scrollTo(sv.scrollX, scrollToY)
-                }
-            }
-
-            highlighter?.highlight(viewId, mode, hexColor, gap, borderWidth, issueCount)
-
-            target.getGlobalDpBounds(root)
-        }
-
-        AsyncFunction("clearHighlight") { viewId: Int -> highlighter?.clearHighlight(viewId) }
+    @ReactMethod
+    fun clearHighlight(viewId: Int) {
+        highlighter?.clearHighlight(viewId)
     }
 
     private fun attachWindowTapProbe(activity: Activity?) {
@@ -175,10 +214,6 @@ class ReactNativeAmaModule : Module() {
                 }
     }
 
-    private fun getCurrentActivity(): Activity? {
-        return appContext.activityProvider?.currentActivity
-    }
-
     private fun scheduleA11yCheck() {
         checkRunnable?.let { checkHandler.removeCallbacks(it) }
         checkRunnable = Runnable { getNodesToCheck() }
@@ -191,7 +226,7 @@ class ReactNativeAmaModule : Module() {
         val nodesWithStringKeys = issues.mapKeys { it.key.toString() }.mapValues { it.value }
 
         if (send) {
-            sendEvent("onAmaNodes", nodesWithStringKeys)
+            sendEvent("onAmaNodes", Arguments.makeNativeMap(nodesWithStringKeys))
         }
 
         return nodesWithStringKeys
@@ -289,7 +324,10 @@ class ReactNativeAmaModule : Module() {
                                                                     )
                                                                 }
 
-                                                        sendEvent("onUIInteraction", event)
+                                                        sendEvent(
+                                                                "onUIInteraction",
+                                                                Arguments.fromBundle(event)
+                                                        )
                                                     }
                                                 },
                                                 Constants.uiCheckDelay

@@ -13,6 +13,7 @@
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore src App.tsx index.ts metro.config.js babel.config.js webpack.config.js --fix"
   },
   "dependencies": {
+    "@react-native-ama/core": "~2.0.0-beta.2",
     "@react-navigation/bottom-tabs": "^7.4.6",
     "@react-navigation/core": "^7.12.1",
     "@react-navigation/native": "^7.1.14",

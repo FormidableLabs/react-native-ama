@@ -15,7 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
-import expo.modules.kotlin.AppContext
+import com.facebook.react.bridge.ReactApplicationContext
 
 data class NodePayload(
         val type: String,
@@ -58,8 +58,8 @@ enum class NodeType {
     Image
 }
 
-class NodesGrabber(private val appContext: AppContext) {
-    val activity = appContext.activityProvider?.currentActivity
+class NodesGrabber(private val reactContext: ReactApplicationContext) {
+    val activity = reactContext.currentActivity
 
     private var nodesToCheck = mutableMapOf<Int, NodePayload>()
     private lateinit var rootView: View

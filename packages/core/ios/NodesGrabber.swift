@@ -1,4 +1,3 @@
-import ExpoModulesCore
 import UIKit
 
 public struct NodePayload: Equatable {
@@ -38,12 +37,9 @@ public struct NodePayload: Equatable {
 }
 
 public class NodesGrabber {
-    private let appContext: AppContext
     private var nodesToCheck: [Int: NodePayload] = [:]
 
-    public init(appContext: AppContext) {
-        self.appContext = appContext
-    }
+    public init() {}
 
     public func getNodesToCheck(on rootView: UIView?) -> (
         nodes: [Int: NodePayload], send: Bool
