@@ -214,10 +214,6 @@ class ReactNativeAmaModule(reactContext: ReactApplicationContext) :
                 }
     }
 
-    private fun getCurrentActivity(): Activity? {
-        return reactApplicationContext.currentActivity
-    }
-
     private fun scheduleA11yCheck() {
         checkRunnable?.let { checkHandler.removeCallbacks(it) }
         checkRunnable = Runnable { getNodesToCheck() }
