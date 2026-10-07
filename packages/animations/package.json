@@ -56,13 +56,13 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/FormidableLabs/react-native-ama",
+    "url": "https://github.com/react-native-ama/react-native-ama",
     "directory": "packages/animations"
   },
   "bugs": {
-    "url": "https://github.com/FormidableLabs/react-native-ama/issues"
+    "url": "https://github.com/react-native-ama/react-native-ama/issues"
   },
-  "homepage": "https://github.com/FormidableLabs/react-native-ama#readme",
+  "homepage": "https://github.com/react-native-ama/react-native-ama#readme",
   "publishConfig": {
     "provenance": true
   },

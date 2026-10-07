@@ -3,7 +3,7 @@
   "name": "@react-native-ama/monorepo",
   "version": "1.0.1-alpha.2",
   "description": "Accessibility as a First-Class Citizen with React Native AMA",
-  "repository": "https://github.com/FormidableLabs/react-native-ama.git",
+  "repository": "https://github.com/react-native-ama/react-native-ama.git",
   "homepage": "https://commerce.nearform.com/open-source/react-native-ama/",
   "scripts": {
     "playground": "cd playground && yarn start",
